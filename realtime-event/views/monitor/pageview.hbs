@@ -1,0 +1,277 @@
+<div class="row">
+    <div class="col-lg-3">
+        <div class="panel panel-default">
+            <select class="form-control" id="site">
+                <option value="-1">Please select site</option>
+                {{#each sites}}
+                    <option value="{{value}}">{{label}}</option>
+                {{/each}}
+            </select>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>
+                    <strong>Hourly Report: PageView in last 24 hours</strong></h3>
+            </div>
+            <div class="panel-body">
+                <div id="chart_hourly_pv" class="graph" style='height:250px;'>
+                    <svg></svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>
+                    <strong>Daily Report: PageView in last 20 days</strong></h3>
+            </div>
+            <div class="panel-body">
+                <div id="chart_daily_pv" class="graph" style='height:250px;'>
+                    <svg></svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr/>
+<div class="row">
+    <div class="col-lg-3">
+        <div class="panel panel-default">
+            <select class="form-control" id="event" disabled>
+
+            </select>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>
+                    <strong>Hourly Report: User in last 24 hours</strong></h3>
+            </div>
+            <div class="panel-body">
+                <div id="chart_hourly_user" class="graph" style='height:250px;'>
+                    <svg></svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>
+                    <strong>Daily Report: User in last 20 days</strong></h3>
+            </div>
+            <div class="panel-body">
+                <div id="chart_daily_user" class="graph" style='height:250px;'>
+                    <svg></svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var filterDate = new moment().format("YYYY-MM-DD");
+    var now = moment();
+    var currentDayHour = now.format("YYYY-MM-DD-HH");
+    var previousDayHour = now.subtract(1, 'days').format("YYYY-MM-DD-HH");
+    var currentDay = now.format("YYYY-MM-DD");
+    var previous20Day = now.subtract(20, 'days').format("YYYY-MM-DD");
+
+    var ChartContainer = function (element, chart, selector) {
+        this.element = element;
+        this.chart = chart;
+        this.selector = selector;
+    };
+
+
+    // Maintian an instance of the chart
+    var hourlyPageviewChart = new ChartContainer('#chart_hourly_pv svg');
+    var dailyPageviewChart = new ChartContainer('#chart_daily_pv svg');
+    var hourlyUserChart = new ChartContainer('#chart_hourly_user svg');
+    var dailyUserChart = new ChartContainer('#chart_daily_user svg');
+
+    $("#site").change(function() {
+        var site = $(this).val();
+        var $event = $("#event");
+        if (site === "-1") {
+            $event.prop('disabled', true);
+        } else {
+            var hourlyUrl = "{{site.ssl_api_domain}}/api/sites/" + site + "/pv?type=hourly&begin=" + previousDayHour + "&end=" + currentDayHour;
+            var dailyUrl = "{{site.ssl_api_domain}}/api/sites/" + site + "/pv?type=daily&begin=" + previous20Day + "&end=" + currentDay;
+            drawLineChart(hourlyUrl, hourlyPageviewChart, buildPageviewData, updateXandYForHourlyChart);
+            drawLineChart(dailyUrl, dailyPageviewChart, buildPageviewData, updateXandYForDailyChart);
+
+            $.get("{{site.ssl_api_domain}}/api/sites/" + site + "/events", function( data ) {
+                var html = setEventsHtml(data);
+
+                $event.html(html);
+                $event.prop('disabled', false);
+            });
+        }
+    });
+
+    $("#event").change(function() {
+        var site = $("#site").val();
+        var event = $(this).val();
+        if (site !== "-1" && event !== "-1") {
+            var hourlyUrl = "{{site.ssl_api_domain}}/api/sites/" + site + "/u?type=hourly&begin=" + previousDayHour + "&end=" + currentDayHour + "&event=" + event;
+            var dailyUrl = "{{site.ssl_api_domain}}/api/sites/" + site + "/u?type=daily&begin=" + previous20Day + "&end=" + currentDay + "&event=" + event;
+            drawLineChart(hourlyUrl, hourlyUserChart, buildUserData, updateXandYForHourlyChart);
+            drawLineChart(dailyUrl, dailyUserChart, buildUserData, updateXandYForDailyChart);
+        }
+    });
+
+    var setEventsHtml = function (data) {
+        var html = '<option value="-1">Please select event</option>';
+        data.forEach(function (d) {
+            html += '<option value="' + d + '">' + d + '</option>';
+        });
+        return html;
+    };
+    //format time for Chart
+    var formatTime = function (x) {
+        return new moment(x).format("YYYY-MM-DD");
+    };
+
+    var drawLineChart = function (url, chartContainer, buildDataCallback, updateXandY) {
+        d3.json(url, function (error, data) {
+            var hourlyUserData = buildDataCallback(data);
+
+
+
+            if (chartContainer.selector == null) {
+                nv.addGraph(function () {
+                    chartContainer.chart = nv.models.lineChart()
+                            .interpolate("cardinal")
+                            .useInteractiveGuideline(true).showLegend(true).showYAxis(true).showXAxis(true)
+                    ;
+                    updateXandY(chartContainer.chart, data);
+
+                    chartContainer.selector = d3.select(chartContainer.element).datum(hourlyUserData);
+                    chartContainer.selector.transition().duration(500).call(chartContainer.chart);
+
+                    nv.utils.windowResize(chartContainer.chart.update);
+                    return chartContainer.chart;
+                });
+            } else {
+                // Update the SVG with the new data and call chart
+                updateXandY(chartContainer.chart, data);
+                chartContainer.selector.datum(hourlyUserData).transition().duration(500).call(chartContainer.chart);
+                nv.utils.windowResize(chartContainer.chart.update);
+            }
+
+        });
+    };
+
+    var updateXandYForHourlyChart = function (chart, data) {
+        var timeArray = buildHourlyTimeArray(data);
+        var x = chart.xAxis;
+        x.tickValues(timeArray);
+        x.tickFormat(function (d) {
+            return new moment(d).format("HH:mm");
+        });
+        var y = chart.yAxis;
+        y.axisLabel('View');
+        y.tickFormat(d3.format(',r'));
+    };
+
+    var updateXandYForDailyChart = function (chart, data) {
+        var timeArray = buildTimeArray(data);
+        var x = chart.xAxis;
+        x.tickValues(timeArray);
+        x.tickFormat(formatTime);
+        var y = chart.yAxis;
+        y.axisLabel('View');
+        y.tickFormat(d3.format(',r'));
+    };
+
+    var buildPageviewData = function (data) {
+        var pvs = [];
+        data.forEach(function (d) {
+            pvs.push({x: d.t, y: d.c});
+        });
+        return [
+            {key: "View", color: '#7777ff', values: pvs}
+        ];
+    };
+
+    var buildUserData = function (data) {
+        var pvs = [];
+        data.forEach(function (d) {
+            pvs.push({x: d.t, y: d.c});
+        });
+        return [
+            {key: "User", color: '#7777ff', values: pvs}
+        ];
+    };
+
+    var buildImpressionAndTrueViewData = function (data) {
+        var impressions = [];
+        var trvs = [];
+        data.forEach(function (d) {
+            impressions.push({x: d.t, y: d.imp});
+            trvs.push({x: d.t, y: d.trv});
+        });
+        return [
+            {key: "Impression", color: '#ff7f0e', values: impressions}
+            ,
+            {key: "Completed View", color: '#2ca02c', values: trvs}
+        ];
+    };
+
+    var buildClickData = function (data) {
+        var clicks = [];
+        data.forEach(function (d) {
+            clicks.push({x: d.t, y: d.c});
+        });
+        return [
+            {key: "Click", color: '#7777ff', values: clicks}
+        ];
+    };
+
+    var buildReachData = function (data) {
+        var reachs = [];
+        data.forEach(function (d) {
+            reachs.push({x: d.t, y: d.reach});
+        });
+        return [
+            {key: "Reach", color: '#D64889', values: reachs}
+        ];
+    };
+
+    var buildHourlyTimeArray = function (data) {
+        var timeArray = [];
+        var i = 0;
+        data.forEach(function (d) {
+            if (i % 3 == 0) {
+                timeArray.push(d.t);
+            }
+            i++;
+        });
+        return timeArray;
+    };
+
+    var buildTimeArray = function (data) {
+        var timeArray = [];
+        var i = 0;
+        data.forEach(function (d) {
+            if (i % 2 == 0) {
+                timeArray.push(d.t);
+            }
+            i++
+        });
+        return timeArray;
+    };
+</script>

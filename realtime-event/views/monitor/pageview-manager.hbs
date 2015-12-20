@@ -1,0 +1,72 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">
+            Live TV Ad Manager
+        </h1>
+    </div>
+</div>
+
+<div id="alert-ok" class="alert alert-success" style="display: none">
+    <strong id="alert-ok-msg">Success!</strong>
+</div>
+
+<br><br>
+
+<div class='col-lg-12'>
+    <div class='col-lg-4'>
+        <div class="checkbox">
+            <label style="font-weight: bold"><input id="live-tv-ad-on" type="checkbox"> Bật quảng cáo cho Live TV Bóng đá </label>
+        </div>
+    </div>
+    <div class='col-lg-2'>
+        <input type="button" class="form-control" value=" OK " onclick="turnOnLiveTvAd()">
+    </div>
+</div>
+
+<br><br><br><br>
+
+<div class='col-lg-12'>
+    <div class='col-lg-4'>
+        <div class="checkbox">
+            <label style="font-weight: bold"><input id="live-tv-ad-off" type="checkbox"> Tắt quảng cáo cho Live TV Bóng đá </label>
+        </div>
+    </div>
+    <div class='col-lg-2'>
+        <input type="button" class="form-control" value=" OK " onclick="turnOffLiveTvAd()">
+    </div>
+</div>
+
+<br><br><br><br><br><br>
+
+
+<script>
+    function turnOnLiveTvAd(){
+        if( $('#live-tv-ad-on').is(':checked') ){
+            jQuery.get('/monitor/pageview-manager/on',{}, function(rs){
+                console.log(rs);
+                if(rs.ok == 1){
+                    $('#alert-ok-msg').html('Bật quảng cáo OK !');
+                    $('#alert-ok').show();
+                    setTimeout(function(){
+                        $('#alert-ok').hide();
+                    }, 3000);
+                }
+            });
+        }
+    }
+
+    function turnOffLiveTvAd(){
+        if( $('#live-tv-ad-off').is(':checked') ){
+            jQuery.get('/monitor/pageview-manager/off',{}, function(rs){
+                console.log(rs);
+                if(rs.ok == 1){
+                    $('#alert-ok-msg').html('Tắt quảng cáo OK !');
+                    $('#alert-ok').show();
+                    setTimeout(function(){
+                        $('#alert-ok').hide();
+                    }, 3000);
+                }
+            });
+        }
+    }
+</script>
