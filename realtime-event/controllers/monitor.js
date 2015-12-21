@@ -18,11 +18,10 @@ router.get('/geolocation', auth, function (req, res) {
 
 router.get('/event', auth, function (req, res) {
     var data = modelUtils.baseModel(req);
-    data.dashboard_title = "Event Analytics";
+    data.dashboard_title = "Real-time Marketing - Event Analytics";
     data.sites = [];
-    for (var prop in constantUtils.sites) {
-        data.sites.push({value: prop, label: constantUtils.sites[prop]});
-    }
+    data.sites.push({value: "tgrm2016-imp", label: "Tiger Remix 2016 - Ad Impression" });
+    data.sites.push({value: "tgrm2016-pv", label: "Tiger Remix 2016 - PageView" });
     res.render('monitor/event', data)
 });
 

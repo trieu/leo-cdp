@@ -14,9 +14,10 @@ router.use('/user', require('./user'))
 router.use('/content', require('./content'))
 
 router.get('/', auth, function(req, res) {
-    var data = modelUtils.baseModel(req);
-    data.graphName = req.query.graphName != null ? req.query.graphName : 'ImpressionVsClick';
-    res.render('monitor/summary', data);
+    //var data = modelUtils.baseModel(req);
+    //data.graphName = req.query.graphName != null ? req.query.graphName : 'ImpressionVsClick';
+    //res.render('monitor/event', data);
+    res.redirect('/monitor/event');
 })
 
 router.get('/403', function (req, res) {

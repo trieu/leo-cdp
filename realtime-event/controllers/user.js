@@ -32,11 +32,11 @@ router.post('/login', function (req, res) {
    // console.log((req.body));
     if(username === "realtime-admin" && password === "2016@realtime"){
         res.cookie('sessionid', '1000', {  httpOnly: true, path: '/',  maxAge: 7200000 });
-        res.redirect('/');
+        res.redirect('/monitor/event');
     }
     else if(username === "grey" && password === 'tigerremix2016'){
         res.cookie('sessionid', '1002', {  httpOnly: true, path: '/',  maxAge: 7200000 });
-        res.redirect('/creative/list/all');
+        res.redirect('/monitor/event');
     }
 
     else {
