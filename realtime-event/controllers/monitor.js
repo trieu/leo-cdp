@@ -16,27 +16,27 @@ router.get('/geolocation', auth, function (req, res) {
     res.render('monitor/geo-heatmap', data)
 });
 
-router.get('/pageview', auth, function (req, res) {
+router.get('/event', auth, function (req, res) {
     var data = modelUtils.baseModel(req);
-    data.dashboard_title = "Pageview Analytics";
+    data.dashboard_title = "Event Analytics";
     data.sites = [];
     for (var prop in constantUtils.sites) {
         data.sites.push({value: prop, label: constantUtils.sites[prop]});
     }
-    res.render('monitor/pageview', data)
+    res.render('monitor/event', data)
 });
 
-router.get('/pageview-manager', auth, function (req, res) {
+router.get('/event-manager', auth, function (req, res) {
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "Live TV Ad Manager";
-    res.render('monitor/pageview-manager', data)
+    res.render('monitor/event-manager', data)
 });
 
-router.get('/pageview-manager/on', auth, function (req, res) {
+router.get('/event-manager/on', auth, function (req, res) {
     res.json({ok:1});
 });
 
-router.get('/pageview-manager/off', auth, function (req, res) {
+router.get('/event-manager/off', auth, function (req, res) {
     res.json({ok:1});
 });
 

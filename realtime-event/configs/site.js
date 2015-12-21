@@ -3,7 +3,7 @@
  */
 
 module.exports = {
-    base_domain : 'https://monitor.adsplay.net'
+    base_domain : 'https://realtime.adsplay.net'
     , api_domain :  'http://api.adsplay.net'
     , ssl_api_domain :  'https://api.adsplay.net'
 };

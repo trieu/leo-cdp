@@ -42,7 +42,7 @@
 <script>
     function turnOnLiveTvAd(){
         if( $('#live-tv-ad-on').is(':checked') ){
-            jQuery.get('/monitor/pageview-manager/on',{}, function(rs){
+            jQuery.get('/monitor/event-manager/on',{}, function(rs){
                 console.log(rs);
                 if(rs.ok == 1){
                     $('#alert-ok-msg').html('Bật quảng cáo OK !');
@@ -57,7 +57,7 @@
 
     function turnOffLiveTvAd(){
         if( $('#live-tv-ad-off').is(':checked') ){
-            jQuery.get('/monitor/pageview-manager/off',{}, function(rs){
+            jQuery.get('/monitor/event-manager/off',{}, function(rs){
                 console.log(rs);
                 if(rs.ok == 1){
                     $('#alert-ok-msg').html('Tắt quảng cáo OK !');

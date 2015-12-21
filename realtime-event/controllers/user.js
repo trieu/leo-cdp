@@ -30,11 +30,11 @@ router.post('/login', function (req, res) {
     var password = req.body.password;
 
    // console.log((req.body));
-    if(username === "admin" && password === "2016@itvad"){
+    if(username === "realtime-admin" && password === "2016@realtime"){
         res.cookie('sessionid', '1000', {  httpOnly: true, path: '/',  maxAge: 7200000 });
         res.redirect('/');
     }
-    else if(username === "customer" && password === '2015@adsplay'){
+    else if(username === "grey" && password === 'tigerremix2016'){
         res.cookie('sessionid', '1002', {  httpOnly: true, path: '/',  maxAge: 7200000 });
         res.redirect('/creative/list/all');
     }
