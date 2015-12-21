@@ -26,18 +26,28 @@ router.get('/event', auth, function (req, res) {
 });
 
 router.get('/event-manager', auth, function (req, res) {
-    var data = modelUtils.baseModel(req);
-    data.dashboard_title = "Live TV Ad Manager";
-    res.render('monitor/event-manager', data)
+    if(req.sessionid == 1000){
+        var data = modelUtils.baseModel(req);
+        data.dashboard_title = "Live TV Ad Manager";
+        res.render('monitor/event-manager', data)
+    } else {
+        res.clearCookie('sessionid');
+        res.redirect('/');
+    }
+
 });
 
-router.get('/event-manager/on', auth, function (req, res) {
-    res.json({ok:1});
+router.get('/event-manager/:metricKey/:deltaNum', auth, function (req, res) {
+    if(req.sessionid == 1000){
+        console.log(req.params.metricKey);
+        console.log(req.params.deltaNum);
+        res.json({ok:1});
+    } else {
+        res.json({ok:0});
+    }
 });
 
-router.get('/event-manager/off', auth, function (req, res) {
-    res.json({ok:1});
-});
+
 
 router.get('/summary/:graphId', function (req, res) {
     var cb = function (data) {

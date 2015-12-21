@@ -3,15 +3,16 @@
  */
 
 var redis = require('redis');
+var redisPoolsConfig = require('../configs/redis-pools');
 
-var hostAdServer = "127.0.0.1"
-var portAdServer = 6379
+var hostAdServer = redisPoolsConfig.dataMonitor.host;
+var portAdServer =  redisPoolsConfig.dataMonitor.port;
 
-var hostAdData = "127.0.0.1"
-var portAdData = 6379
+var hostAdData = redisPoolsConfig.dataReport.host;
+var portAdData =  redisPoolsConfig.dataReport.port;
 
-var hostLocationData =  "127.0.0.1"
-var portLocationData = 6379
+var hostLocationData = redisPoolsConfig.dataLocation.host;
+var portLocationData =  redisPoolsConfig.dataLocation.port;
 
 var clientAdServer = redis.createClient(portAdServer, hostAdServer);
 clientAdServer.on("error", function (err) {
