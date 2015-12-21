@@ -8,6 +8,7 @@ var express = require('express')
     , modelUtils = require('../helpers/model_utils')
     , constantUtils = require('../helpers/constant_utils')
     , Summary = require('../models/summary')
+    , request = require('request')
     , moment = require('moment');
 
 router.get('/geolocation', auth, function (req, res) {
@@ -18,11 +19,22 @@ router.get('/geolocation', auth, function (req, res) {
 
 router.get('/event', auth, function (req, res) {
     var data = modelUtils.baseModel(req);
+    var event = "tgrm2016";
     data.dashboard_title = "Real-time Marketing - Event Analytics";
     data.sites = [];
     data.sites.push({value: "tgrm2016-imp", label: "Tiger Remix 2016 - Ad Impression" });
     data.sites.push({value: "tgrm2016-pv", label: "Tiger Remix 2016 - PageView" });
-    res.render('monitor/event', data)
+    request(data.site.api_domain + '/api/sites/' + event + '/sum', function (error, response, body) {
+
+        if (!error && response.statusCode == 200) {
+            var json = JSON.parse(body);
+            data.pv = json.pv;
+            data.imp = json.imp;
+            data.reach = json.reach;
+        }
+        res.render('monitor/event', data)
+    });
+
 });
 
 router.get('/event-manager', auth, function (req, res) {
