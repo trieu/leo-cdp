@@ -1,47 +1,63 @@
 <div class="row" style="text-align: center">
     <h1>
-        Real-time Report: Tiger Remix 2016
-        <img style="width: 100px; display: inline"
+        Real-time Report:
+        <a target="_blank" href="http://fptplay.net/tigerremix2016"  >Tiger Remix 2016</a>
+        <img style="width: 120px; display: inline"
              src="http://st.galaxypub.vn/staticFile/Subject/2015/12/08/454939/dai-nhac-hoi-tiger-remix-2016-danh-thuc-mua-xuan_8934250.jpg">
+
+        <button type="button" class="btn btn-success" onclick="location.reload()" >Refresh</button>
     </h1>
 </div>
 
 <!-- Event Summary Statistics -->
 <div class="row" id="dSummaryStats" >
 
-    <div id="dPageviewTotal" class="col-lg-4 col-md-6">
-        <div class="panel panel-yellow">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-9 text-right">
-                        <div class="huge" id="cPageviewTotal"> {{pv}}</div>
-                        <div>PageView</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="dImpressionTotal" class="col-lg-4 col-md-6">
+    <div id="dPageviewTotal" class="col-lg-6 col-md-6">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <div class="row">
-                    <div class="col-xs-9 text-right">
-                        <div class="huge" id="cImpressionTotal"> {{imp}}</div>
-                        <div>Impression</div>
+                    <div class="col-xs-12 text-right">
+                        <div class="huge" id="cPageviewTotal"> 0</div>
+                        <div>Total Live Streaming View ( No data until January 2rd, 2016 ) </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="dView100" class="col-lg-4 col-md-6">
+    <div id="dPageviewTotal" class="col-lg-6 col-md-6">
         <div class="panel panel-yellow">
             <div class="panel-heading">
                 <div class="row">
-                    <div class="col-xs-9 text-right">
+                    <div class="col-xs-12 text-right">
+                        <div class="huge" id="cPageviewTotal"> {{pv}}</div>
+                        <div>Total Page View ( from Landing Page at http://fptplay.net/tigerremix2016 ) </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="dImpressionTotal" class="col-lg-6 col-md-6">
+        <div class="panel panel-green">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-12 text-right">
+                        <div class="huge" id="cImpressionTotal"> {{imp}}</div>
+                        <div>Total Advertising View (from Banner Ads and Video Ads) </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="dView100" class="col-lg-6 col-md-6">
+        <div class="panel panel-red">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-12 text-right">
                         <div class="huge" id="cUserReach"> {{reach}}</div>
-                        <div>User Reach</div>
+                        <div>Total Unique User (from Advertising and Live Streaming)</div>
                     </div>
                 </div>
             </div>
@@ -52,10 +68,9 @@
 <div class="row">
     <div class="col-lg-6">
         <div class="panel panel-default">
-            <div class="panel-heading"><i class="fa fa-fw fa-list"></i> <strong>Event Name</strong></div>
+            <div class="panel-heading"><i class="fa fa-fw fa-list"></i> <strong>KPI Name</strong></div>
             <div class="panel-body">
                 <select class="form-control" id="site">
-                    <option value="-1">Please select site</option>
                     {{#each sites}}
                         <option value="{{value}}">{{label}}</option>
                     {{/each}}
@@ -71,7 +86,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>
-                    <strong>Hourly Report: PageView in last 24 hours</strong></h3>
+                    <strong>Hourly Report: View in last 24 hours</strong></h3>
             </div>
             <div class="panel-body">
                 <div id="chart_hourly_pv" class="graph" style='height:250px;'>
@@ -86,7 +101,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>
-                    <strong>Daily Report: PageView in last 20 days</strong></h3>
+                    <strong>Daily Report: View in last 20 days</strong></h3>
             </div>
             <div class="panel-body">
                 <div id="chart_daily_pv" class="graph" style='height:250px;'>
@@ -97,18 +112,20 @@
     </div>
 </div>
 <hr/>
-<div class="row">
+
+<div class="row" style="display: none" >
     <div class="col-lg-6">
         <div class="panel panel-default">
-            <div class="panel-heading fa-bold"><i class="fa fa-fw fa-list"></i> <strong>Event Source</strong></div>
+            <div class="panel-heading fa-bold"><i class="fa fa-fw fa-list"></i><strong>User Reach</strong></div>
             <div class="panel-body">
+                Channel Source:
                 <select class="form-control" id="event" disabled>
                 </select>
             </div>
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row" style="display: none">
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -123,7 +140,7 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row" style="display: none">
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -200,7 +217,13 @@ $("#event").change(function () {
 var setEventsHtml = function (data) {
     var html = '<option value="-1">Please select event</option>';
     data.forEach(function (d) {
-        html += '<option value="' + d + '">' + d + '</option>';
+        var v = ''+d;
+        if(d == 'adsplay.net'){
+            d = 'fptplay.net';
+        }
+        if(d == 'fptplay.net' || d == 'nhacso.net' ){
+            html += '<option value="' + v + '">' + d + '</option>';
+        }
     });
     return html;
 };
@@ -212,7 +235,6 @@ var formatTime = function (x) {
 var drawLineChart = function (url, chartContainer, buildDataCallback, updateXandY) {
     d3.json(url, function (error, data) {
         var hourlyUserData = buildDataCallback(data);
-
 
         if (chartContainer.selector == null) {
             nv.addGraph(function () {
