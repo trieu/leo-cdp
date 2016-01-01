@@ -11,6 +11,11 @@ var express = require('express')
     , request = require('request')
     , moment = require('moment');
 
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 router.get('/geolocation', auth, function (req, res) {
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "Geo-Location";
@@ -19,18 +24,21 @@ router.get('/geolocation', auth, function (req, res) {
 
 router.get('/event', auth, function (req, res) {
     var data = modelUtils.baseModel(req);
-    var event = "tgrm2016";
+
     data.dashboard_title = "Real-time Marketing - Event Analytics";
     data.sites = [];
     data.sites.push({value: "tgrm2016-imp", label: "Tiger Remix 2016 - Ad Impression" });
     data.sites.push({value: "tgrm2016-pv", label: "Tiger Remix 2016 - PageView" });
-    request(data.site.api_domain + '/api/sites/' + event + '/sum', function (error, response, body) {
 
+    request(data.site.api_domain + '/api/sites/tgrm2016/sum', function (error, response, body) {
         if (!error && response.statusCode == 200) {
             var json = JSON.parse(body);
-            data.pv = json.pv;
-            data.imp = json.imp;
-            data.reach = json.reach;
+            data.pv = numberWithCommas(json.pv);
+            data.imp = numberWithCommas(json.imp);
+            data.impNgoiSao = numberWithCommas(json.impNgoiSao);
+            data.impVideoAd = numberWithCommas(json.impVideoAd);
+            data.plvLive = numberWithCommas(json.plvLive);
+            data.reach = numberWithCommas(json.reach);
         }
         res.render('monitor/event', data)
     });

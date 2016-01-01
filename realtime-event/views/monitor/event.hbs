@@ -1,6 +1,6 @@
 <div class="row" style="text-align: center">
     <h1>
-        Real-time Report:
+        Real-time Marketing Report:
         <a target="_blank" href="http://fptplay.net/tigerremix2016"  >Tiger Remix 2016</a>
         <img style="width: 120px; display: inline"
              src="http://st.galaxypub.vn/staticFile/Subject/2015/12/08/454939/dai-nhac-hoi-tiger-remix-2016-danh-thuc-mua-xuan_8934250.jpg">
@@ -17,21 +17,8 @@
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-12 text-right">
-                        <div class="huge" id="cPageviewTotal"> 0</div>
-                        <div>Total Live Streaming View ( No data until January 2rd, 2016 ) </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="dPageviewTotal" class="col-lg-6 col-md-6">
-        <div class="panel panel-yellow">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-12 text-right">
-                        <div class="huge" id="cPageviewTotal"> {{pv}}</div>
-                        <div>Total Page View ( from Landing Page at http://fptplay.net/tigerremix2016 ) </div>
+                        <div class="huge" id="cPageviewTotal"> {{plvLive}}</div>
+                        <div style="font-weight: bolder" >Total Live Streaming View ( No data until January 2rd, 2016 ) </div>
                     </div>
                 </div>
             </div>
@@ -44,7 +31,33 @@
                 <div class="row">
                     <div class="col-xs-12 text-right">
                         <div class="huge" id="cImpressionTotal"> {{imp}}</div>
-                        <div>Total Advertising View (from Banner Ads and Video Ads) </div>
+                        <div style="font-weight: bolder">Total Ad Impression (real-time data) </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="dPageviewTotal" class="col-lg-6 col-md-6">
+        <div class="panel panel-yellow">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-12 text-right">
+                        <div class="huge" id="cPageviewTotal"> {{pv}}</div>
+                        <div style="font-weight: bolder">Total Page View at <a style="color: blue!important;" target="_blank" href="http://fptplay.net/tigerremix2016"  >FptPlay Landing Page</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="dImpressionNgoiSaoTotal" class="col-lg-6 col-md-6">
+        <div class="panel panel-green">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-12 text-right">
+                        <div class="huge" id="cImpressionNgoiSaoTotal"> {{impNgoiSao}}</div>
+                        <div  style="font-weight: bolder" >Ad Impression (daily data from NgoiSao.net) </div>
                     </div>
                 </div>
             </div>
@@ -57,12 +70,26 @@
                 <div class="row">
                     <div class="col-xs-12 text-right">
                         <div class="huge" id="cUserReach"> {{reach}}</div>
-                        <div>Total Unique User (from Advertising and Live Streaming)</div>
+                        <div  style="font-weight: bolder" >Total Unique Visitor from Advertising and Live Streaming</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div id="dImpressionTVCTotal" class="col-lg-6 col-md-6">
+        <div class="panel panel-green">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-12 text-right">
+                        <div class="huge" id="cImpressionTVCTotal"> {{impVideoAd}}</div>
+                        <div style="font-weight: bolder">Ad Impression (from TVC Video Ad) </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <div class="row">
@@ -113,24 +140,24 @@
 </div>
 <hr/>
 
-<div class="row" style="display: none" >
+<div class="row" style="display: " >
     <div class="col-lg-6">
         <div class="panel panel-default">
-            <div class="panel-heading fa-bold"><i class="fa fa-fw fa-list"></i><strong>User Reach</strong></div>
+            <div class="panel-heading"><i class="fa fa-fw fa-list"></i> <strong>Unique Visitor</strong></div>
             <div class="panel-body">
-                Channel Source:
                 <select class="form-control" id="event" disabled>
+                    <option value="fptplay.net">fptplay.net/tigerremix2016</option>
                 </select>
             </div>
         </div>
     </div>
 </div>
-<div class="row" style="display: none">
+<div class="row" style="display: ">
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>
-                    <strong>Hourly Report: User in last 24 hours</strong></h3>
+                    <strong>Hourly Report: Unique Visitor in last 24 hours</strong></h3>
             </div>
             <div class="panel-body">
                 <div id="chart_hourly_user" class="graph" style='height:250px;'>
@@ -140,12 +167,12 @@
         </div>
     </div>
 </div>
-<div class="row" style="display: none">
+<div class="row" style="display: ">
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>
-                    <strong>Daily Report: User in last 20 days</strong></h3>
+                    <strong>Daily Report: Unique Visitor in last 20 days</strong></h3>
             </div>
             <div class="panel-body">
                 <div id="chart_daily_user" class="graph" style='height:250px;'>
@@ -188,12 +215,7 @@ function loadEventData(site) {
         drawLineChart(hourlyUrl, hourlyPageviewChart, buildPageviewData, updateXandYForHourlyChart);
         drawLineChart(dailyUrl, dailyPageviewChart, buildPageviewData, updateXandYForDailyChart);
 
-        $.get("{{site.ssl_api_domain}}/api/sites/" + site + "/events", function (data) {
-            var html = setEventsHtml(data);
 
-            $event.html(html);
-            $event.prop('disabled', false);
-        });
     }
 }
 
@@ -202,31 +224,23 @@ $("#site").change(function () {
     loadEventData(site);
 });
 
+var loadGraphUniqueVisitor = function(site, event){
 
-$("#event").change(function () {
-    var site = $("#site").val();
-    var event = $(this).val();
     if (site !== "-1" && event !== "-1") {
         var hourlyUrl = "{{site.ssl_api_domain}}/api/sites/" + site + "/u?type=hourly&begin=" + previousDayHour + "&end=" + currentDayHour + "&event=" + event;
         var dailyUrl = "{{site.ssl_api_domain}}/api/sites/" + site + "/u?type=daily&begin=" + previous20Day + "&end=" + currentDay + "&event=" + event;
         drawLineChart(hourlyUrl, hourlyUserChart, buildUserData, updateXandYForHourlyChart);
         drawLineChart(dailyUrl, dailyUserChart, buildUserData, updateXandYForDailyChart);
     }
+}
+
+$("#event").change(function () {
+    var site = $("#site").val();
+    var event = $(this).val();
+    loadGraphUniqueVisitor(site, event);
 });
 
-var setEventsHtml = function (data) {
-    var html = '<option value="-1">Please select event</option>';
-    data.forEach(function (d) {
-        var v = ''+d;
-        if(d == 'adsplay.net'){
-            d = 'fptplay.net';
-        }
-        if(d == 'fptplay.net' || d == 'nhacso.net' ){
-            html += '<option value="' + v + '">' + d + '</option>';
-        }
-    });
-    return html;
-};
+
 //format time for Chart
 var formatTime = function (x) {
     return new moment(x).format("YYYY-MM-DD");
@@ -364,5 +378,6 @@ $(document).ready(function () {
     var defaultOption = $("#site").find('option[value="tgrm2016-pv"]');
     defaultOption.attr('selected', 'selected');
     loadEventData(defaultOption.val());
+    loadGraphUniqueVisitor(defaultOption.val(), 'fptplay.net');
 });
 </script>
