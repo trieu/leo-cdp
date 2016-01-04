@@ -27,8 +27,9 @@ router.get('/event', auth, function (req, res) {
 
     data.dashboard_title = "Real-time Marketing - Event Analytics";
     data.sites = [];
+    data.sites.push({value: "tgrm2016-plv", label: "Tiger Remix 2016 - Live Streaming View" });
     data.sites.push({value: "tgrm2016-imp", label: "Tiger Remix 2016 - Ad Impression" });
-    data.sites.push({value: "tgrm2016-pv", label: "Tiger Remix 2016 - PageView" });
+    data.sites.push({value: "tgrm2016-pv", label: "Tiger Remix 2016 - PageView of Landing Page" });
 
     request(data.site.api_domain + '/api/sites/tgrm2016/sum', function (error, response, body) {
         if (!error && response.statusCode == 200) {
