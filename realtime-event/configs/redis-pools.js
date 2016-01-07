@@ -3,16 +3,9 @@
  */
 
 
-module.exports = {
-    dataMonitor : {host: '118.69.190.46', port: 6480}
-    , dataReport : {host: '118.69.190.46', port: 6480}
-    , dataLocation : {host: '118.69.190.46', port: 6480}
-};
 
-/*
 module.exports = {
-    dataMonitor : {host: "42.119.252.88", port: 6480}
-    , dataReport : {host: "42.119.252.88", port: 6480}
-    , dataLocation : {host: "42.119.252.88", port: 6480}
+    dataMonitor : {host: "127.0.0.1", port: 6480}
+    , dataReport : {host: "127.0.0.1", port: 6480}
+    , dataLocation : {host: "127.0.0.1", port: 6480}
 };
- */
