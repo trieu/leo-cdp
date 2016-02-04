@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vn">
+
+<head>
+    {{>head}}
+</head>
+
+<body>
+
+{{>header}}
+
+<!---start-wrap---->
+
+<!---start-content---->
+<div class="main-content">
+    <div class="wrap">
+        <div class="left-sidebar">
+            {{>left-content}}
+        </div>
+        <div class="right-content">
+            <!-- MAIN BODY here -->
+            {{{body}}}
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div class="clear"> </div>
+<!---End-content---->
+
+<!---End-wrap---->
+
+{{>footer}}
+
+</body>
+
+</html>
