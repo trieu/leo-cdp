@@ -1,8 +1,8 @@
-Base NodeJS Web Project
+XemGiDay
 ====================
 
 
-Core Contributors:
+Core Engineers:
 ====================
 	TrieuNT@fpt.com.vn
 	
