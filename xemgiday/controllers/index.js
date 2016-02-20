@@ -15,6 +15,12 @@ router.get('/', function(req, res) {
     res.render('home/content', data);
 })
 
+router.get('/play-content/:source/:id', function(req, res) {
+    var data = modelUtils.baseModel(req);
+    data.dashboard_title = data.dashboard_title + " - " + "‘One Day’ - một ngày để yêu";
+    res.render('home/play-content', data);
+})
+
 router.get('/profile', auth, function(req, res) {
     var data = modelUtils.baseModel(req);
     res.render('home/default', data);

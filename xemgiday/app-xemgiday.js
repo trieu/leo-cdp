@@ -11,6 +11,10 @@ var cookieParser = require('cookie-parser');// pull information from HTML cookie
 var siteConfigs = require('./configs/site.js');
 var dbConfig = require('./configs/database');
 
+var mongoose = require('mongoose');
+// Connect to DB
+mongoose.connect(dbConfig.url);
+
 //console.log(siteConfigs);
 //console.log(dbConfig.url);
 app.use(favicon(__dirname + '/public/images/favicon.ico'));
