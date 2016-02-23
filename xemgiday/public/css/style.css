@@ -430,23 +430,19 @@ img{max-width:100%;}
 /*---start-copyright-----*/
 .copy-right{
 	padding:1em 0;
-	background:#000;
-	text-align:center;	
+	text-align:right;
 }
 .copy-right p{
-	background: #000;
-	color: #FFF;
+    margin-right: 10px;
 	outline: none;
 	font-family: 'gandhi_sansregular';
-	text-transform: uppercase;
+	text-transform: capitalize;
 	font-size: 0.875em;
 }
 .copy-right p a{
-	background: #000;
 	transition: 0.5s ease;
 	-o-transition: 0.5s ease;
 	-webkit-transition: 0.5s ease;
-	color: #FFF;
 	outline: none;
 	font-family: 'gandhi_sansregular';
 	text-transform: uppercase;

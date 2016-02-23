@@ -17,8 +17,6 @@
         <div class="title">
             <h3>{{playContent.description}}</h3>
             <ul>
-                <li><h4>By:</h4></li>
-                <li><a href="#">{{playContent.author}}</a></li>
                 <li style="display: none;"><a href="#"><img src="images/sub.png" title="subscribe">subscribe</a></li>
             </ul>
         </div>
@@ -29,13 +27,13 @@
         <div class="clear"></div>
         <div class="video-details">
             <ul>
-                <li><p>Shared on <a href="#">Feb 14, 2016</a> by <a href="#">Trieu NT</a></p></li>
+                <li><p>Chia sẻ bởi <a href="#">Feb 14, 2016</a> by <a href="#">{{playContent.author}}</a></p></li>
             </ul>
         </div>
         <div class="clear"></div>
         <div class="tags">
             <ul>
-                <li><h3>Tags:</h3></li>
+                <li><h3>Từ khóa:</h3></li>
                 {{#each playContent.tags}}
                     <li><a href="#">{{this}}</a> ,</li>
                 {{/each}}
@@ -43,14 +41,14 @@
         </div>
         <div class="clear"></div>
         <div class="share-artical">
-            <h3> Also share on</h3>
+            <h3> Chia sẻ mạng xã hội</h3>
             <ul>
                 <li><a href="#"><img src="images/facebook.png" title="facebook">Facebook</a></li>
                 <li><a href="#"><img src="images/twiter.png" title="Twitter">Twitter</a></li>
             </ul>
         </div>
         <div class="artical-commentbox">
-            <h3>leave a comment</h3>
+            <h3>Hãy để lại một lời bình luận</h3>
             <div class="table-form">
                 <div class="fb-comments" data-numposts="5"></div>
             </div>
