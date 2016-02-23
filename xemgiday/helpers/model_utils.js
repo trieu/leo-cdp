@@ -26,5 +26,10 @@ exports.baseModel = function(req) {
         data.isAdminGroup = false;
     }
 
+    //Facebook Open Graph
+    data.og_url = req.protocol + '://' + req.get('host') + req.originalUrl;
+    data.og_image = 'http://xemgiday.com/images/xemgiday.png';
+    data.og_description = '';
+
     return data;
 }
