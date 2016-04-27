@@ -1,6 +1,10 @@
+var request = require('request');
+
+
+var sampleAdData = 
 {
 	"id":0,
-	"name":"iTVad-Hyundai-trial-test-2016",
+	"name":"unit-test",
 	"desc":"",
 	"status":2,
 	"adType":1,
@@ -30,4 +34,18 @@
 	"tgpms":[101,102,201],
 	"tgpfs":[1,5,4],
 	"tggds":[2]
-}
+};
+request('http://d1.adsplay.net/ping', function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+		console.log(body);
+	}
+});
+
+var urlSave = 'http://api.adsplay.net/creative/save/json';
+request.post({url:urlSave, form: JSON.stringify(sampleAdData)}, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+                console.log(body);
+        } else {
+		console.error(error)
+	}
+});
