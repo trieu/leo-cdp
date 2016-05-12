@@ -102,13 +102,13 @@
                     <span class="menu-item"> In-stream form</span>
                 </a>
                 <ul class="list-unstyled menu-item">
-                    <li><a href="<?php echo site_url('advertiser/metadata/instream'); ?>">Create In-stream</a></li>
+                    <li><a href="<?php echo site_url('admin_metadata/metadata/instream'); ?>">Create In-stream</a></li>
                     <!--<li><a href="form-components.html">All Creative</a></li>-->
 
                 </ul>
             </li>
             <li>
-                <a class="sa-side-widget" href="<?php echo site_url('advertiser/metadata/expandable'); ?>">
+                <a class="sa-side-widget" href="<?php echo site_url('admin_metadata/metadata/expandable'); ?>">
                     <span class="menu-item"> Expandable logo</span>
                 </a>
             </li>
@@ -122,7 +122,7 @@
                     <span class="menu-item"> Advertiser</span>
                 </a>
                 <ul class="list-unstyled menu-item">
-                    <li><a href="<?php echo site_url('advertiser/advertiser'); ?>">Create Advertiser</a></li>
+                    <li><a onclick="add_data_modal('Advertiser')" href="javascript:void(0);">Create Advertiser</a></li>
                     <li><a href="<?php echo site_url('admin_advertisers/advertisers'); ?>">All Advertiser</a></li>
                 </ul>
             </li>
@@ -131,7 +131,7 @@
                     <span class="menu-item"> Publisher </span>
                 </a>
                 <ul class="list-unstyled menu-item">
-                    <li><a href="<?php echo site_url('advertiser/publisher'); ?>">Create Publisher</a></li>
+                    <li><a onclick="add_data_modal('Publisher')" href="javascript:void(0);">Create Publisher</a></li>
                     <li><a href="<?php echo site_url('admin_publishers/publishers'); ?>">All Publisher</a></li>
                 </ul>
             </li>
