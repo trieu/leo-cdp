@@ -17,6 +17,17 @@ class Publishers extends MY_Controller
         if(!$this->ion_auth->logged_in()){
             redirect('admin_auth/auth', 'refresh');
         }
+        $this->userId = $this->ion_auth->get_user_id();
+        $this->is_admin = $this->ion_auth->is_admin();
+        $this->params = NULL;
+        if(!$this->is_admin){
+
+            $this->params = array(
+                'table' => 'publishers',
+                'list' => TRUE,
+                'type' => 'object',
+                'param_where' => array('user_id' => (int)$this->userId));
+        }
     }
     public function index(){
 
@@ -27,8 +38,8 @@ class Publishers extends MY_Controller
     // Load du lieu thei kieu ajax
     public  function  getAjax(){
 
-        $query = $this->MPublishers->get();
-        $count= $this->MPublishers->getCount();
+        $query = $this->MPublishers->get($this->params);
+        $count= $this->MPublishers->getCount($this->params);
         $num_row=1;
         $data = array();
         // $no = $_POST['start'];

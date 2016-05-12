@@ -1,6 +1,6 @@
 <?php
 /******************************
-- C?u trúc m?c ğ?nh kh?i t?o s?n c?a Model
+- C?u trï¿½c m?c ï¿½?nh kh?i t?o s?n c?a Model
  ********************************/
 class MY_Model extends CI_Model{
 
@@ -9,13 +9,13 @@ class MY_Model extends CI_Model{
     }
 
     /******************************
-    L?y d? li?u theo tùy ch?n
+    L?y d? li?u theo tï¿½y ch?n
     - select: Nh?ng c?t c?n l?y ra
-    - orderby: D? li?u ğı?c s?p x?p theo
-    - table: D? li?u ğı?c l?y ra t? b?ng
+    - orderby: D? li?u ï¿½ï¿½?c s?p x?p theo
+    - table: D? li?u ï¿½ï¿½?c l?y ra t? b?ng
     - type: Ki?u d? li?u tr? v? object hay array
-    - limit: V? trí d? li?u l?y ra
-    - list: Ğıa ra nhi?u d?ng d? li?u
+    - limit: V? trï¿½ d? li?u l?y ra
+    - list: ï¿½ï¿½a ra nhi?u d?ng d? li?u
      ********************************/
     public function _general($param = NULL){
         if(isset($param['select']) && !empty($param['select'])){
@@ -66,13 +66,13 @@ class MY_Model extends CI_Model{
     }
 
     /******************************
-    L?y d? li?u ğõn gi?n
+    L?y d? li?u ï¿½ï¿½n gi?n
     - select: Nh?ng c?t c?n l?y ra
-    - orderby: D? li?u ğı?c s?p x?p theo
-    - table: D? li?u ğı?c l?y ra t? b?ng
-    - limit: V? trí d? li?u l?y ra
+    - orderby: D? li?u ï¿½ï¿½?c s?p x?p theo
+    - table: D? li?u ï¿½ï¿½?c l?y ra t? b?ng
+    - limit: V? trï¿½ d? li?u l?y ra
     - type: Ki?u d? li?u tr? v? object hay array
-    - list: Ğıa ra nhi?u d?ng d? li?u
+    - list: ï¿½ï¿½a ra nhi?u d?ng d? li?u
      ********************************/
     public function _get($param = NULL){
         if(isset($param['select']) && !empty($param['select'])){
@@ -114,8 +114,8 @@ class MY_Model extends CI_Model{
     }
 
     /******************************
-    L?y d? li?u ğõn gi?n v?i ği?u ki?n where
-    - param_where:M?ng ği?u ki?n
+    L?y d? li?u ï¿½ï¿½n gi?n v?i ï¿½i?u ki?n where
+    - param_where:M?ng ï¿½i?u ki?n
      ********************************/
     public function _getwhere($param = NULL){
         if(isset($param['param_where']) && is_array($param['param_where'])){
@@ -125,9 +125,9 @@ class MY_Model extends CI_Model{
     }
 
     /******************************
-    L?y d? li?u ğõn gi?n v?i ği?u ki?n wherein
-    - field_where_in:Trı?ng d? li?u
-    - param_where_in: T?p h?p giá tr? th?a m?n
+    L?y d? li?u ï¿½ï¿½n gi?n v?i ï¿½i?u ki?n wherein
+    - field_where_in:Trï¿½?ng d? li?u
+    - param_where_in: T?p h?p giï¿½ tr? th?a m?n
      ********************************/
     public function _getwherein($param = NULL){
         if(isset($param['field_where_in']) && !empty($param['field_where_in']) && isset($param['param_where_in']) && is_array($param['param_where_in'])){
@@ -137,7 +137,7 @@ class MY_Model extends CI_Model{
     }
 
     /******************************
-    L?y d? li?u ğõn gi?n v?i ği?u ki?n like
+    L?y d? li?u ï¿½ï¿½n gi?n v?i ï¿½i?u ki?n like
     - type == 'array':/ WHERE title LIKE '%match%' AND page1 LIKE '%match%' AND page2 LIKE '%match%'
      ********************************/
     public function _getlike($param = NULL, $type = 'single'){
@@ -158,9 +158,9 @@ class MY_Model extends CI_Model{
     }
 
     /******************************
-    Hàm insert ho?c update
-    N?u có ği?u ki?n truy?n vào s? là update.
-    Ngı?c l?i là insert
+    Hï¿½m insert ho?c update
+    N?u cï¿½ ï¿½i?u ki?n truy?n vï¿½o s? lï¿½ update.
+    Ngï¿½?c l?i lï¿½ insert
      ********************************/
     public function _save($param = NULL){
         $flag = 0;
@@ -222,8 +222,8 @@ class MY_Model extends CI_Model{
         return 0;
     }
     /******************************************
-     *Hàm Join
-     * @param['join'] là 1 array ch?a nhi?u b?ng join v?i nhau
+     *Hï¿½m Join
+     * @param['join'] lï¿½ 1 array ch?a nhi?u b?ng join v?i nhau
      * vd: 'join'=>array(
                             array('groups','groups.groupid=users.groupid','left'),
                             array('comments','comments.userid=users.userid','inner')
