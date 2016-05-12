@@ -7,7 +7,7 @@
  */
 class MMetaData extends My_Model
 {
-   // private $tableBrand = 'brands';
+    // private $tableBrand = 'brands';
     public function InsertOrUpdate($param = NULL){
         if(isset($param) && is_array($param))
         {
@@ -17,9 +17,9 @@ class MMetaData extends My_Model
     public function get($param = NULL){
         if(isset($param))
         {
-          $join=array();
-          $table='brands';
-          $select='*';
+            $join=array();
+            $table='brands';
+            $select='*';
             if($param=="product")
             {
                 $table='products';
@@ -63,6 +63,40 @@ class MMetaData extends My_Model
 
     }
 
+    public function getAllCampaign(){
+        return $this->_general(array(
+            'table' => 'campaigns',
+            'list' => TRUE,
+            'type' => 'object'
+
+        ));
+
+    }
+    public function getProductByBrandId($brandId)
+    {
+
+        return $this->_getwhere(array(
+            'table' => 'products',
+            'list' => TRUE,
+            'type' => 'object',
+            'param_where' => array(
+                'brand_id' => $brandId
+            ),
+
+        ));
+    }
+    public function getSectorByProductId($productId)
+    {
+        return $this->_getwhere(array(
+            'table' => 'sectors',
+            'list' => TRUE,
+            'type' => 'object',
+            'param_where' => array(
+                'product_id' => $productId
+            ),
+
+        ));
+    }
     public function getById($id=NULL,$param=NULL){
         if(isset($param)&&isset($id))
         {
