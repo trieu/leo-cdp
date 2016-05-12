@@ -23,6 +23,7 @@ class Welcome extends My_Controller {
 		if(!$this->ion_auth->logged_in()){
 			redirect('admin_auth/auth', 'refresh');
 		}
-		$this->load->view('welcome_message');
+		$this->data['the_view_content'] = 'welcome_message';
+		$this->_render_page('template/master_view', $this->data);
 	}
 }

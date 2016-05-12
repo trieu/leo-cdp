@@ -31,7 +31,7 @@ class MY_Controller extends CI_Controller
 		else
 		{
 			$this->data['the_view_content'] = (is_null($the_view)) ? '' : $this->load->view($the_view, $this->data, TRUE);
-			$this->load->view('templates/' . $template . '_view', $this->data);
+			$this->load->view('template/' . $template . '_view', $this->data);
 		}
 	}
 	protected function _render_page($view, $data=null, $returnhtml=false)//I think this makes more sense

@@ -12,9 +12,10 @@ class Upload extends CI_Controller
         $this->controllerName = $this->router->fetch_class();
         $this->methodName = $this->router->fetch_method();
         $this->load->Model("media_file");
-        if(!$this->ion_auth->logged_in()){
-            redirect('admin_auth/auth', 'refresh');
-        }
+
+//        if(!$this->ion_auth->logged_in()){
+//            redirect('admin_auth/auth', 'refresh');
+//        }
 
     }
 
