@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class Welcome extends My_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -20,6 +20,9 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
+		if(!$this->ion_auth->logged_in()){
+			redirect('admin_auth/auth', 'refresh');
+		}
 		$this->load->view('welcome_message');
 	}
 }

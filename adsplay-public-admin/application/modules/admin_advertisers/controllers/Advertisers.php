@@ -14,6 +14,9 @@ class Advertisers extends MY_Controller
         $this->load->helper(array('form', 'url'));
         $this->load->model('MAdvertisers');
         $this->load->library('form_validation');
+        if(!$this->ion_auth->logged_in()){
+            redirect('admin_auth/auth', 'refresh');
+        }
     }
     public function index(){
 
