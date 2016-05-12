@@ -14,6 +14,9 @@ class Product extends MY_Controller
         $this->load->helper(array('form', 'url'));
         $this->load->model('MMetaData');
         $this->load->library('form_validation');
+        if(!$this->ion_auth->logged_in()){
+            redirect('admin_auth/auth', 'refresh');
+        }
     }
 
     public  function  getAjax(){
@@ -57,6 +60,19 @@ class Product extends MY_Controller
     {
         $query = $this->MMetaData->getAllBrand();
         echo json_encode($query);
+    }
+
+    /**
+     * lấy danh sách product bởi brand id
+     * @author Mith
+     */
+    public function getProductByBrandId()
+    {
+        $brandId = (int)$this->input->post('brandId');
+
+        $query = $this->MMetaData->getProductByBrandId($brandId);
+        echo json_encode($query);
+
     }
     public function Insert()
     {

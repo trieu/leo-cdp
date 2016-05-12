@@ -14,6 +14,9 @@ class Sector extends MY_Controller
         $this->load->helper(array('form', 'url'));
         $this->load->model('MMetaData');
         $this->load->library('form_validation');
+        if(!$this->ion_auth->logged_in()){
+            redirect('admin_auth/auth', 'refresh');
+        }
     }
 
     public  function  getAjax(){
@@ -57,6 +60,30 @@ class Sector extends MY_Controller
     {
         $query = $this->MMetaData->getAllProduct();
         echo json_encode($query);
+    }
+    /**
+     * lấy danh sách products bởi brand id
+     * @author Mith
+     */
+    public function getProductByBrandId()
+    {
+        $brandId = (int)$this->input->post('brandId');
+
+        $query = $this->MMetaData->getProductByBrandId($brandId);
+        echo json_encode($query);
+
+    }
+    /**
+     * lấy danh sách sector bởi product id
+     * @author Mith
+     */
+    public function getSectorByProductId()
+    {
+        $productId = (int)$this->input->post('productId');
+
+        $query = $this->MMetaData->getSectorByProductId($productId);
+        echo json_encode($query);
+
     }
     public function Insert()
     {
