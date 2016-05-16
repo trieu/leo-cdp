@@ -16,6 +16,7 @@ class MetaData extends MY_Controller
         if(!$this->ion_auth->logged_in()){
             redirect('admin_auth/auth', 'refresh');
         }
+
     }
     public function index(){
 
