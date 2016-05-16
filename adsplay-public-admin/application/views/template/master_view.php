@@ -79,7 +79,7 @@
                     </a>
                     <ul class="dropdown-menu profile-menu">
                         <li><a href="<?php echo site_url('admin/user/profile');?>">My Profile</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
-                        <li><a href="<?php echo site_url('admin/user/logout'); ?>">Sign Out</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
+                        <li><a href="<?php echo site_url('admin_auth/auth/logout'); ?>">Sign Out</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
                     </ul>
                     <h4 class="m-0"> <?php  //echo $this->ion_auth->user()->row()->username;?></h4>
                 </div>
