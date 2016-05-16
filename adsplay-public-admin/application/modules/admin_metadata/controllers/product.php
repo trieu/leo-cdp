@@ -31,12 +31,12 @@ class Product extends MY_Controller
             //  $no++;
             $row = array();
             $row[] = $pro->id;
-            $row[] ='<a href="javascript:void()" onclick="getProductByID('."'".$pro->id."'".')">'.$pro->product_name.'</a>';
+            $row[] ='<a href="javascript:void(0);" onclick="getProductByID('."'".$pro->id."'".')">'.$pro->product_name.'</a>';
             $row[] = $pro->brand_name;
             $row[] = $pro->date_created;
             // $row[] = $adver->user_id;
             //
-            $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void()" title="Edit" onclick="getProductByID('."'".$pro->id."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>';
+            $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0);" title="Edit" onclick="getProductByID('."'".$pro->id."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>';
             $data[] = $row;
         }
 

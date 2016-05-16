@@ -31,12 +31,12 @@ class Sector extends MY_Controller
             //  $no++;
             $row = array();
             $row[] = $sector->id;
-            $row[] ='<a href="javascript:void()" onclick="getSectorByID('."'".$sector->id."'".')">'.$sector->sector_name.'</a>';
+            $row[] ='<a href="javascript:void(0);" onclick="getSectorByID('."'".$sector->id."'".')">'.$sector->sector_name.'</a>';
             $row[] = $sector->product_name;
             $row[] = $sector->date_created;
             // $row[] = $adver->user_id;
             //
-            $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void()" title="Edit" onclick="getSectorByID('."'".$sector->id."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>';
+            $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0);" title="Edit" onclick="getSectorByID('."'".$sector->id."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>';
             $data[] = $row;
         }
 
