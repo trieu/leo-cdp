@@ -5,9 +5,11 @@
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
+            <?php if($this->ion_auth->in_group('superAdmin')):?>
             <p class="text-muted font-13 m-b-30">
                 <button class="btn btn-success" onclick="add_data_modal('Campaign')"><i class="glyphicon glyphicon-plus"></i> Add Campaigns</button>
             </p>
+            <?php endif; ?>
             <table id="list-datatable" class="data-campaign table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                 <thead>
                 <tr>
