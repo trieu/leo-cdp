@@ -23,6 +23,10 @@ $(document).ready(function() {
         changeSelect("product_id");
 
     }
+    if($('#list-datatable').hasClass('data-user')){
+        url = "getajax";
+        chos = '';
+    }
     table = $('#list-datatable').DataTable({
         // Load data for the table's content from an Ajax source
         "ajax": {
@@ -158,6 +162,9 @@ function getByIDCamp(id)
             else if(param == 'Campaign'){
                 url = "campaigns/Insert";
             }
+            //else if(param == 'User'){
+            //    url = "create_user";
+            //}
         }
         else
         {
