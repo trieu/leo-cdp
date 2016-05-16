@@ -15,7 +15,7 @@
             <table id="list-datatable" class="data-advertiser table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                 <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>ID </th>
                     <th>Name</th>
                     <th>Info</th>
                     <th>Control</th>
