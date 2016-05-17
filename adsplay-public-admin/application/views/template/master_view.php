@@ -122,7 +122,7 @@
                     <span class="menu-item"> Advertisers</span>
                 </a>
                 <ul class="list-unstyled menu-item">
-                    <li><a onclick="add_data_modal('Advertiser')" href="javascript:void(0);">Create Advertiser</a></li>
+                   <!-- <li><a onclick="add_data_modal('Advertiser')" href="javascript:void(0);">Create Advertiser</a></li>-->
                     <li><a href="<?php echo site_url('admin_advertisers/advertisers'); ?>">All Advertisers</a></li>
                 </ul>
             </li>
@@ -131,13 +131,13 @@
                     <span class="menu-item"> Publishers </span>
                 </a>
                 <ul class="list-unstyled menu-item">
-                    <li><a onclick="add_data_modal('Publisher')" href="javascript:void(0);">Create Publisher</a></li>
+                    <!--<li><a onclick="add_data_modal('Publisher')" href="javascript:void(0);">Create Publisher</a></li>-->
                     <li><a href="<?php echo site_url('admin_publishers/publishers'); ?>">All Publishers</a></li>
                 </ul>
             </li>
 
             <li>
-                <a class="sa-side-form" href="<?php echo site_url('admin_campaigns/campaigns'); ?>">
+                <a class="sa-side-folder" href="<?php echo site_url('admin_campaigns/campaigns'); ?>">
                     <span class="menu-item">Campaigns</span>
                 </a>
             </li>
