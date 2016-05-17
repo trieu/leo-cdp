@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!-- saved from url=(0067)https://adsplay.net/ads/interactive-banner/169/300x250/300x250.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="referrer" content="unsafe-url">
+<meta name="ad.size" content="width=300,height=250">
+<title>300x250</title>
+
+<script src="./assets/easeljs-0.6.0.min.js"></script>
+<script src="./assets/tweenjs-0.4.0.min.js"></script>
+<script src="./assets/movieclip-0.6.0.min.js"></script>
+<script src="./assets/preloadjs-0.3.0.min.js"></script>
+<script src="./assets/300x250.js"></script>
+
+<script>
+var canvas, stage, exportRoot;
+
+function init() {
+	createjs.MotionGuidePlugin.install();
+
+	canvas = document.getElementById("canvas");
+	images = images||{};
+
+	var manifest = [
+		{src:"assets/images/_2iphone6.png", id:"_2iphone6"},
+		{src:"assets/images/CHAI360ML.png", id:"CHAI360ML"},
+		{src:"assets/images/CHAIBATNAP.png", id:"CHAIBATNAP"},
+		{src:"assets/images/DAURUNG.png", id:"DAURUNG"},
+		{src:"assets/images/iceback.jpg", id:"iceback"},
+		{src:"assets/images/icefront.png", id:"icefront"},
+		{src:"assets/images/image10.png", id:"image10"},
+		{src:"assets/images/IPHONE1.png", id:"IPHONE1"},
+		{src:"assets/images/IPHONE2.png", id:"IPHONE2"},
+		{src:"assets/images/khampha.png", id:"khampha"},
+		{src:"assets/images/moingay.png", id:"moingay"},
+		{src:"assets/images/napchai.png", id:"napchai"},
+		{src:"assets/images/splash2.png", id:"splash2"},
+		{src:"assets/images/trong2thang.png", id:"trong2thang"},
+		{src:"assets/images/trung.png", id:"trung"},
+		{src:"assets/images/x.png", id:"x"}
+	];
+
+	var loader = new createjs.LoadQueue(false);
+	loader.addEventListener("fileload", handleFileLoad);
+	loader.addEventListener("complete", handleComplete);
+	loader.loadManifest(manifest);
+}
+
+function handleFileLoad(evt) {
+	if (evt.item.type == "image") { images[evt.item.id] = evt.result; }
+}
+
+function handleComplete() {
+	exportRoot = new lib._300x250();
+
+	stage = new createjs.Stage(canvas);
+	stage.addChild(exportRoot);
+	stage.update();
+	stage.enableMouseOver();
+
+	createjs.Ticker.setFPS(24);
+	createjs.Ticker.addEventListener("tick", stage);
+	setTimeout(function() {
+
+         StopAnimationandPlayAgain();
+
+    }, 30000);
+}
+function StopAnimationandPlayAgain(){
+	console.log(createjs.Ticker.getTime()/1000);
+	createjs.Ticker.removeEventListener("tick", stage);
+	//setTimeout(function(){handleComplete();},30000 );
+}
+</script>
+</head>
+
+<body onload="init();" style="background-color:#D4D4D4">
+	<canvas id="canvas" width="300" height="250" style="position: absolute; left: 0px; top: 0px; background-color: rgb(255, 255, 255);" onclick=" AdsPlayClickTrack.handleClickAndTracking();"></canvas>
+    <script src="./assets/adsplay-click-track.min.js"></script>
+
+</body></html>

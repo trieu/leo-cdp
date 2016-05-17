@@ -1,0 +1,298 @@
+<style>
+    #chart svg {
+        height: 400px;
+        background-color: #D8D8D8!important;
+    }
+    .nv-point-paths {
+        padding-left: 5px;
+    }
+</style>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">
+            Summary Report in 30 days
+        </h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="container">
+            <div class='col-lg-3'>
+                <div class="form-group">
+                    <div class='input-group date' id='dtpBegin'>
+                        <input type='text' class="form-control" autocomplete="off"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                    </div>
+                </div>
+            </div>
+            <div class='col-lg-3'>
+                <div class="form-group">
+                    <div class='input-group date' id='dtpEnd'>
+                        <input type='text' class="form-control" autocomplete="off"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                    </div>
+                </div>
+            </div>
+            <input class="btn btn-default" type="button" id='btnTime' value="OK">
+        </div>
+        <script type="text/javascript">
+            $(function () {
+                $('#dtpBegin').datetimepicker({
+                    format: 'YYYY-MM-DD',
+                    defaultDate: "{{begin}}"
+                });
+                $('#dtpEnd').datetimepicker({
+                    useCurrent: false, //Important! See issue #1075
+                    format: 'YYYY-MM-DD',
+                    defaultDate: "{{end}}"
+                });
+                $("#dtpBegin").on("dp.change", function (e) {
+                    $('#dtpEnd').data("DateTimePicker").minDate(e.date);
+                });
+                $("#dtpEnd").on("dp.change", function (e) {
+                    $('#dtpBegin').data("DateTimePicker").maxDate(e.date);
+                });
+
+                //console.log($('#dtpBegin').data("DateTimePicker").viewDate().format('YYYY-MM-DD'));
+                //console.log($('#dtpEnd').data("DateTimePicker").viewDate().format('YYYY-MM-DD'));
+            });
+        </script>
+    </div>
+</div>
+
+<div class="row" id="dSummaryStats">
+
+    <div class="col-lg-3 col-md-6" style=" ">
+        <div class="panel panel-red">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-11 text-right">
+                        <div class="huge" id="cTotalPv" >0</div>
+                        <div>Total Playview</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6" style=" ">
+        <div class="panel panel-green">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-11 text-right">
+                        <div class="huge" id="cTotalImp" >0</div>
+                        <div>Total Impression</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6" style=" ">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-9 text-right">
+                        <div class="huge" id="cTotalTrv">0</div>
+                        <div>Total Completed-View</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="dImpressionTotal" class="col-lg-3 col-md-6" style="">
+        <div class="panel panel-yellow">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-9 text-right">
+                        <div class="huge" id="cTotalClick"> 0</div>
+                        <div>Total Click</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Daily Play View (<span class="beginDate">{{begin}}</span> &#10145; <span class="endDate">{{end}}</span>)</h3>
+
+            </div>
+            <div class="panel-body">
+                <div id="pv_stats_chart"></div>
+            </div>
+        </div>
+    </div>
+</div
+
+><div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Daily impression (<span class="beginDate">{{begin}}</span> &#10145; <span class="endDate">{{end}}</span>)</h3>
+
+            </div>
+            <div class="panel-body">
+                <div id="imp_stats_chart"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Daily completed-view (<span class="beginDate">{{begin}}</span> &#10145; <span class="endDate">{{end}}</span>)</h3>
+            </div>
+            <div class="panel-body">
+                <div id="trv_stats_chart"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Daily click (<span class="beginDate">{{begin}}</span> &#10145; <span class="endDate">{{end}}</span>)</h3>
+            </div>
+            <div class="panel-body">
+                <div id="click_stats_chart"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var formatTime = function (x) {
+        return new moment(x).format("YYYY-MM-DD");
+    };
+
+    var transformData = function(data){
+        data.sort(function(a, b) {return a.period - b.period });
+
+        var barchartData = [];
+        var cTotalPv = 0, cTotalImp = 0, cTotalTrv = 0, cTotalClick = 0;
+        for(var k in data){
+            var obj = data[k];
+            var date =  formatTime(obj.period);
+//            console.log(date);
+
+           // if(obj.totalImp > 0 &&  obj.totalTrv > 0 )
+            {
+                cTotalPv += obj.totalPv;
+                cTotalImp += obj.totalImp;
+                cTotalTrv += obj.totalTrv;
+                cTotalClick += obj.totalClick;
+                barchartData.push({period : date, totalPv: obj.totalPv , totalImp: obj.totalImp , totalTrv: obj.totalTrv , totalClick: obj.totalClick })
+            }
+
+        }
+        $('#cTotalPv').html(formatNumber(cTotalPv));
+        $('#cTotalImp').html(formatNumber(cTotalImp));
+        $('#cTotalTrv').html(formatNumber(cTotalTrv));
+        $('#cTotalClick').html(formatNumber(cTotalClick));
+
+        <!--d3.json("{{site.ssl_api_domain}}/api/placement/stats?begin=" + '{{begin}}' + "&end=" + '{{end}}', function (error, placementData) {-->
+            <!--for(var k in placementData){-->
+                <!--var obj = placementData[k];-->
+                <!--var date =  formatTime(obj.period);-->
+
+                <!--cTotalPv += obj.totalPv;-->
+                <!--barchartData.push({period : date, totalPv: obj.totalPv})-->
+                <!--console.log(k);-->
+            <!--}-->
+            <!--$('#cTotalPv').html(formatNumber(cTotalPv));-->
+        <!--});-->
+        <!--console.log(JSON.stringify(barchartData));-->
+        return barchartData;
+    };
+
+    $(function() {
+        var pvChart, impChart, trueImpChart, clickChart;
+        function getCreativeStats(beginDate, endDate, callback) {
+            d3.json("{{site.ssl_api_domain}}/api/adstats?begin=" + beginDate + "&end=" + endDate, callback);
+        }
+
+        function drawCharts (error, data) {
+            data = transformData(data);
+
+            pvChart = Morris.Bar({
+                element: 'pv_stats_chart',
+                data: data,
+                xkey: 'period',
+                ykeys: ['totalPv'],
+                labels: ['Play View'],
+                pointSize: 2,
+                hideHover: 'auto',
+                resize: true
+
+            });
+
+            impChart = Morris.Bar({
+                element: 'imp_stats_chart',
+                data: data,
+                xkey: 'period',
+                ykeys: ['totalImp'],
+                labels: ['Impression'],
+                pointSize: 2,
+                hideHover: 'auto',
+                resize: true
+
+            });
+
+            trueImpChart = Morris.Bar({
+                element: 'trv_stats_chart',
+                data: data,
+                xkey: 'period',
+                ykeys: ['totalTrv'],
+                labels: ['Completed View'],
+                pointSize: 2,
+                hideHover: 'auto',
+                resize: true,
+                dateFormat: formatTime
+            });
+
+            clickChart = Morris.Bar({
+                element: 'click_stats_chart',
+                data: data,
+                xkey: 'period',
+                ykeys: ['totalClick'],
+                labels: ['Click'],
+                pointSize: 2,
+                hideHover: 'auto',
+                resize: true,
+                dateFormat: formatTime
+            });
+        }
+
+        function updateCharts (error, data) {
+            data = transformData(data);
+            pvChart.setData(data);
+            impChart.setData(data);
+            trueImpChart.setData(data);
+            clickChart.setData(data);
+        }
+        getCreativeStats('{{begin}}', '{{end}}', drawCharts);
+
+        $('#btnTime').click(function() {
+            var beginDate = $('#dtpBegin').data("DateTimePicker").date().format('YYYY-MM-DD');
+            var endDate = $('#dtpEnd').data("DateTimePicker").date().format('YYYY-MM-DD');
+            getCreativeStats(beginDate, endDate, updateCharts);
+            $('.beginDate').text(beginDate);
+            $('.endDate').text(endDate);
+        });
+    });
+</script>

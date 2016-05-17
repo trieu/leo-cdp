@@ -10,6 +10,7 @@
 **/lda_model/
 **/target/
 **/.gradle/
+adsplay-report/public/ads/
 
 **.zip
 **.class

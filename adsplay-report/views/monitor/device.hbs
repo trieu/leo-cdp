@@ -1,0 +1,109 @@
+<style type="text/css">
+    .chart-div svg {
+        height: 420px;
+        background-color: #D8D8D8 !important;
+    }
+</style>
+
+<!-- Page Heading -->
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">
+            Most popular devices
+            <small></small>
+        </h1>
+    </div>
+</div>
+
+
+<div class="row" >
+    <div class="col-lg-4 text-center">
+        <div class="panel">
+            <div class="panel-body">
+                <div id='chart_platform' class='span4'>
+                    <h3>Device Type</h3>
+                    <svg style='height:400px;width:100%'></svg>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-8 text-center">
+        <div class="panel">
+            <div class="panel-body">
+                <div id='chart_os' class='span4' >
+                    <h3>Operating System</h3>
+                    <svg style='height:600px;width:100%'></svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="application/javascript">
+
+    var filterDate = moment().subtract(1, 'days').format('YYYY-MM-DD');
+
+     d3.json("{{buildUrl '/monitor/summary/chartPiePlatform'}}?filterDate=" + filterDate, function (error, data) {
+        var labels = {'1': 'PC', '2': 'Mobile Web', '3': 'Tablet', '4': 'Mobile Native App'};
+        nv.addGraph(function () {
+            var chart = nv.models.pieChart()
+                            .x(function (d) {
+                                return labels[d.label]
+                            })
+                            .y(function (d) {
+                                return d.value
+                            })
+                            .showLabels(true)
+                            .labelThreshold(.02)  //Configure the minimum slice size for labels to show up
+                            .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
+                            .donut(true)          //Turn on Donut mode. Makes pie chart look tasty!
+                            .donutRatio(0.25)     //Configure how big you want the donut hole size to be.
+                    ;
+            ;
+            d3.select("#chart_platform svg")
+                    .datum(data)
+                    .transition().duration(350)
+                    .call(chart);
+            return chart;
+        });
+    });
+
+    d3.json("{{buildUrl '/monitor/summary/chartPieOS'}}?filterDate=" + filterDate, function (error, data) {
+        nv.addGraph(function () {
+            var chart = nv.models.pieChart()
+                            .x(function (d) {
+                                if(d.label == 'Linux'){
+                                    d.label = 'SmartTV-Sony';
+                                }
+                                else if(d.label == 'Other'){
+                                    d.label = 'Mobile-Android-App';
+                                }
+                                else if(d.label.indexOf('Windows') ===0 || d.label.indexOf('Mac') ===0){
+                                    d.label = 'PC-'+d.label;
+                                }
+                                else if(d.label.indexOf('Android') ===0 || d.label.indexOf('iOS')===0 ) {
+                                    d.label = 'Mobile-'+d.label;
+                                }
+
+                                return d.label;
+                            })
+                            .y(function (d) {
+                                return d.value
+                            })
+                            .showLabels(true)
+                            .labelThreshold(.03)  //Configure the minimum slice size for labels to show up
+                            .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
+                            .donut(true)          //Turn on Donut mode. Makes pie chart look tasty!
+                            .donutRatio(0.20)     //Configure how big you want the donut hole size to be.
+                    ;
+            d3.select("#chart_os svg")
+                    .datum(data)
+                    .transition().duration(350)
+                    .call(chart);
+            return chart;
+        });
+    });
+
+    ///////////////////////////////////////////////////////////////
+</script>
