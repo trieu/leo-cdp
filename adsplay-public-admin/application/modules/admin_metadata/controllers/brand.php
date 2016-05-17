@@ -31,11 +31,11 @@ class Brand extends MY_Controller
             //  $no++;
             $row = array();
             $row[] = $bra->id;
-            $row[] ='<a href="javascript:void()" onclick="getBrandByID('."'".$bra->id."'".')">'.$bra->brand_name.'</a>';
+            $row[] ='<a href="javascript:void(0);" onclick="getBrandByID('."'".$bra->id."'".')">'.$bra->brand_name.'</a>';
             $row[] = $bra->date_created;
             // $row[] = $adver->user_id;
             //
-            $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void()" title="Edit" onclick="getBrandByID('."'".$bra->id."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>';
+            $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0);" title="Edit" onclick="getBrandByID('."'".$bra->id."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>';
             $data[] = $row;
         }
 

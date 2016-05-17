@@ -17,6 +17,17 @@ class Campaigns extends MY_Controller
         if(!$this->ion_auth->logged_in()){
             redirect('admin_auth/auth', 'refresh');
         }
+        $this->userId = $this->ion_auth->get_user_id();
+        $this->is_admin = $this->ion_auth->is_admin();
+        $this->params = NULL;
+        if(!$this->is_admin){
+
+            $this->params = array(
+                'table' => 'campaigns',
+                'list' => TRUE,
+                'type' => 'object',
+                'param_where' => array('user_id' => (int)$this->userId));
+        }
     }
     public function index(){
 
@@ -28,9 +39,9 @@ class Campaigns extends MY_Controller
     // Load du lieu thei kieu ajax
     public  function  getAjax(){
 
-        $query = $this->MCampaigns->get();
+        $query = $this->MCampaigns->get($this->params);
 
-        $count= $this->MCampaigns->getCount();
+        $count= $this->MCampaigns->getCount( $this->params);
         $num_row=1;
         $data = array();
         // $no = $_POST['start'];
@@ -38,7 +49,7 @@ class Campaigns extends MY_Controller
             //  $no++;
             $row = array();
             $row[] = $camp->id;
-            $row[] ='<a href="javascript:void()" onclick="getByIDCamp('."'".$camp->id."'".')">'.$camp->campaign_name.'</a>';
+            $row[] ='<a href="javascript:void(0);" onclick="getByIDCamp('."'".$camp->id."'".')">'.$camp->campaign_name.'</a>';
             $row[] = $camp->brand_name;
             $row[] = $camp->product_name;
             $row[] = $camp->sector_name;
@@ -46,7 +57,7 @@ class Campaigns extends MY_Controller
             $row[] = $camp->date_created;
            // $row[] = $adver->user_id;
             //
-            $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void()" title="Edit" onclick="getByIDCamp('."'".$camp->id."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>';
+            $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0);" title="Edit" onclick="getByIDCamp('."'".$camp->id."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>';
             $data[] = $row;
         }
 

@@ -39,6 +39,7 @@ class Auth extends MY_Controller {
 			{
 				$data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
 			}
+
 			$this->data['the_view_content'] = 'admin_auth/index';
 			$this->_render_page('template/login_master_view');
 		}
@@ -510,16 +511,27 @@ class Auth extends MY_Controller {
 			//check to see if we are creating the user
 			//redirect them back to the admin page
 			$this->session->set_flashdata('message', $this->ion_auth->messages());
-			redirect("auth", 'refresh');
+		//	redirect("auth", 'refresh');
+			echo json_encode(array("status" => TRUE));
 		}
 		else
 		{
 			//display the create user form
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-			$this->data['groups'] = $this->ion_auth->groups()->result();
-			$this->data['the_view_content'] = 'admin_auth/create_user_view';
-			$this->_render_page('template/master_view',$this->data);
+			$data = array(
+				"status" => FALSE,
+				'first_name' => form_error('first_name'),
+				'last_name' => form_error('last_name'),
+				'email' => form_error('email'),
+				'phone' => form_error('phone'),
+				'company' => form_error('company'),
+				'password' => form_error('password'),
+				'password_confirm' => form_error('password_confirm')
+			);
+			//echo json_encode(array("status" => FALSE));
+			echo json_encode($data);
+			exit();
 		}
 	}
 
@@ -806,7 +818,9 @@ class Auth extends MY_Controller {
 	function List_User()
 	{
 		$this->data['the_view_content'] = 'admin_auth/List_User';
-		$this->data['javascript']='admin_auth/admin_auth_javascript';
+		//$this->data['javascript']='admin_auth/admin_auth_javascript';
+		$this->data['groups'] = $this->ion_auth->groups()->result();
+		$this->data['javascript']='admin_auth/create_user_view';
 		$this->_render_page('template/master_view', $this->data);
 	}
 

@@ -119,29 +119,34 @@
             </li>-->
             <li class="dropdown">
                 <a class="sa-side-form" href="">
-                    <span class="menu-item"> Advertiser</span>
+                    <span class="menu-item"> Advertisers</span>
                 </a>
                 <ul class="list-unstyled menu-item">
                     <li><a onclick="add_data_modal('Advertiser')" href="javascript:void(0);">Create Advertiser</a></li>
-                    <li><a href="<?php echo site_url('admin_advertisers/advertisers'); ?>">All Advertiser</a></li>
+                    <li><a href="<?php echo site_url('admin_advertisers/advertisers'); ?>">All Advertisers</a></li>
                 </ul>
             </li>
             <li class="dropdown">
                 <a class="sa-side-ui" href="">
-                    <span class="menu-item"> Publisher </span>
+                    <span class="menu-item"> Publishers </span>
                 </a>
                 <ul class="list-unstyled menu-item">
                     <li><a onclick="add_data_modal('Publisher')" href="javascript:void(0);">Create Publisher</a></li>
-                    <li><a href="<?php echo site_url('admin_publishers/publishers'); ?>">All Publisher</a></li>
+                    <li><a href="<?php echo site_url('admin_publishers/publishers'); ?>">All Publishers</a></li>
                 </ul>
             </li>
 
+            <li>
+                <a class="sa-side-form" href="<?php echo site_url('admin_campaigns/campaigns'); ?>">
+                    <span class="menu-item">Campaigns</span>
+                </a>
+            </li>
             <li>
                 <a class="sa-side-chart" href="">
                     <span class="menu-item">Charts</span>
                 </a>
             </li>
-            <?php //if($this->ion_auth->in_group('superAdmin')):?>
+            <?php if($this->ion_auth->in_group('superAdmin')):?>
                 <li>
                     <a class="sa-side-folder" href="<?php echo site_url('admin_metadata/metadata'); ?>">
                         <span class="menu-item"> Meta Data</span>
@@ -152,7 +157,7 @@
                         <span class="menu-item"> Users</span>
                     </a>
                 </li>
-            <?php// endif; ?>
+            <?php endif; ?>
 
         </ul>
 
