@@ -104,6 +104,7 @@ $(document).ready(function() {
 function getByIdUser(id)
 {
     save_method = 'update';
+    resetError();
     $('#formUser')[0].reset(); // reset form on modals
     $( ".checkRole" ).each(function( index ) {
 
@@ -199,6 +200,7 @@ function getByIDCamp(id)
     function add_data_modal(data)
     {
         save_method = 'add';
+
         if(data=='User')
         {
             $( ".checkRole" ).each(function( index ) {
@@ -207,6 +209,7 @@ function getByIDCamp(id)
                 $(this).closest('div.icheckbox_minimal').attr('aria-checked',false).removeClass('checked');
 
             });
+            resetError();
         }
 
         $('#form'+data)[0].reset(); // reset form on modals
@@ -301,9 +304,20 @@ function saveUser()
                 $('#modal_form_User').modal('hide');
                 reload_table();
             }
-            else
-            {
-                alert(result['errors']);
+            else {
+                if (save_method == 'add') {
+                    $('.first_name').html(result['first_name']);
+                    $('.last_name').html(result['last_name']);
+                    $('.email').html(result['email']);
+                    $('.company').html(result['company']);
+                    $('.phone').html(result['phone']);
+                    $('.password').html(result['password']);
+                    $('.password_confirm').html(result['password_confirm']);
+                } else {
+                    alert(result['errors']);
+                }
+
+
             }
         },
         error: function(){
@@ -413,5 +427,15 @@ function getAllProduct(id){
             alert('Error get data from ajax');
         }
     });
+}
+function resetError()
+{
+    $('.first_name').html('');
+    $('.last_name').html('');
+    $('.email').html('');
+    $('.company').html('');
+    $('.phone').html('');
+    $('.password').html('');
+    $('.password_confirm').html('');
 }
 ///////////////////////////
