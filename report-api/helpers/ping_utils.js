@@ -35,7 +35,6 @@ Ping_Utils.prototype.pingSave = function(){
 				if (err) return handleError(err);
 			});
 		}
-		console.log(doc);
 	});
 
 }

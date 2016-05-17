@@ -8,11 +8,10 @@ var express = require('express')
     , auth = require('../middlewares/auth')
     , router = express.Router();
 
-var pingUtils = require('../helpers/ping_utils.js');
-
 var database = require('../configs/database.js');
 var Ping = database.ping;
 
+var pingUtils = require('../helpers/ping_utils.js');
 //auto ping
 pingUtils.pingSave();
 setInterval(pingUtils.pingSave(), 3600000);//Auto Ping after 1 hour
