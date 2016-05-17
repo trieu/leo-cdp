@@ -536,8 +536,10 @@ class Auth extends MY_Controller {
 	}
 
 	//edit a user
-	function edit_user($id)
+	function edit_user()
 	{
+		$id=$this->input->post('id');
+
 		$data['title'] = "Edit User";
 		$data['page_title'] = 'Edit User';
 		$data['module'] = 'auth';
@@ -549,8 +551,6 @@ class Auth extends MY_Controller {
 		}
 
 		$user = $this->ion_auth->user($id)->row();
-		$groups=$this->ion_auth->groups()->result_array();
-		$currentGroups = $this->ion_auth->get_users_groups($id)->result();
 
 		//validate form input
 		$this->form_validation->set_rules('first_name', $this->lang->line('edit_user_validation_fname_label'), 'required');
@@ -613,30 +613,28 @@ class Auth extends MY_Controller {
 				if($this->ion_auth->update($user->id, $data))
 				{
 					//redirect them back to the admin page if admin, or to the base url if non admin
-					$this->session->set_flashdata('message', $this->ion_auth->messages() );
-					if ($this->ion_auth->is_admin())
-					{
-						redirect('auth', 'refresh');
-					}
-					else
-					{
-						redirect('/', 'refresh');
-					}
-
+					//$this->session->set_flashdata('message', $this->ion_auth->messages() );
+					echo json_encode(array("status" => TRUE));
+					exit();
 				}
 				else
 				{
 					//redirect them back to the admin page if admin, or to the base url if non admin
-					$this->session->set_flashdata('message', $this->ion_auth->errors() );
-					if ($this->ion_auth->is_admin())
-					{
-						redirect('auth', 'refresh');
-					}
-					else
-					{
-						redirect('/', 'refresh');
-					}
-
+//					$this->session->set_flashdata('message', $this->ion_auth->errors() );
+//					if ($this->ion_auth->is_admin())
+//					{
+//						redirect('auth', 'refresh');
+//					}
+//					else
+//					{
+//						redirect('/', 'refresh');
+//					}
+					$data = array(
+						"status" => FALSE,
+						'errors' => $this->ion_auth->errors()
+					);
+					echo json_encode($data);
+					exit();
 				}
 
 			}
@@ -650,49 +648,20 @@ class Auth extends MY_Controller {
 
 		//pass the user to the view
 		$data['user'] = $user;
-		$data['groups'] = $groups;
-		$data['currentGroups'] = $currentGroups;
+//		$data['groups'] = $groups;
+//		$data['currentGroups'] = $currentGroups;
+//		$data['the_view_content'] = 'admin_auth/edit_user_view';
+//		$this->_render_page('template/master_view',$data);
+		echo json_encode($user);
 
-//		$data['first_name'] = array(
-//			'name'  => 'first_name',
-//			'id'    => 'first_name',
-//			'type'  => 'text',
-//			'value' => $this->form_validation->set_value('first_name', $user->first_name),
-//		);
-//		$data['last_name'] = array(
-//			'name'  => 'last_name',
-//			'id'    => 'last_name',
-//			'type'  => 'text',
-//			'value' => $this->form_validation->set_value('last_name', $user->last_name),
-//		);
-//		$data['company'] = array(
-//			'name'  => 'company',
-//			'id'    => 'company',
-//			'type'  => 'text',
-//			'value' => $this->form_validation->set_value('company', $user->company),
-//		);
-//		$data['phone'] = array(
-//			'name'  => 'phone',
-//			'id'    => 'phone',
-//			'type'  => 'text',
-//			'value' => $this->form_validation->set_value('phone', $user->phone),
-//		);
-//		$data['password'] = array(
-//			'name' => 'password',
-//			'id'   => 'password',
-//			'type' => 'password'
-//		);
-//		$data['password_confirm'] = array(
-//			'name' => 'password_confirm',
-//			'id'   => 'password_confirm',
-//			'type' => 'password'
-//		);
-//
-//
-//		echo Modules::run('templates', $data);
-		$data['the_view_content'] = 'admin_auth/edit_user_view';
-		$this->_render_page('template/master_view',$data);
 
+	}
+	// get current group by id user
+	function get_current_group()
+	{
+		$id=$this->input->post('id');
+		$currentGroups = $this->ion_auth->get_users_groups($id)->result();
+		echo json_encode($currentGroups);
 	}
 
 	// create a new group
@@ -826,7 +795,7 @@ class Auth extends MY_Controller {
 
 	// Load du lieu thei kieu ajax
 	function  getAjax(){
-		$query =$this->db->select('users.id as ID, users.username as Username,users.email as Email,users.active as Active,groups.name as GroupName')
+		$query =$this->db->select('users.id as ID, users.username as Username,users.email as Email,users.active as Active,groups.name as GroupName, groups.id as GroupId')
 						 ->from('users_groups')
 						 ->join('users','users.id = users_groups.user_id','inner')
 						 ->join('groups','groups.id=users_groups.group_id','inner')
@@ -849,7 +818,7 @@ class Auth extends MY_Controller {
 			$row[] = $user->GroupName;
 			if($user->Active==1)
 			{
-				$row[] = '<a class="btn btn-sm btn-primary btn-grid" href="javascript:void()" title="Edit" onclick="getByID('."'".$user->ID."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>'.
+				$row[] = '<a class="btn btn-sm btn-primary btn-grid" href="javascript:void()" title="Edit" onclick="getByIdUser('."'".$user->ID."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>'.
 						 '<a class="btn btn-sm btn-primary btn-grid" href="javascript:void()" title="Lock" onclick="LockAndUnlockUser('."'".$user->ID."'".')"><i class="glyphicon glyphicon-pencil"></i> Lock</a>';
 
 			}else{

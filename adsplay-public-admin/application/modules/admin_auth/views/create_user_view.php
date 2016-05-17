@@ -18,6 +18,7 @@
             <div class="modal-body form">
                 <?php echo form_open('',array('class'=>'form-horizontal','id'=>'formUser'));?>
                 <div class="form-group">
+                    <input type="hidden" value="" name="id"/>
                     <div class="error-input first_name"><?php echo form_error('first_name');  ?></div>
                     <?php
                     echo form_label('First name','first_name', array('class'=>'col-sm-3 control-label'));?>
@@ -90,7 +91,7 @@
                         {
                             echo '<div class="col-sm-9 checkbox" style="float: right">';
                             echo '<label class="col-sm-3">';
-                            echo form_checkbox('groups[]', $group->id, set_checkbox('groups[]', $group->id));
+                            echo form_checkbox('groups[]', $group->id, set_checkbox('groups[]', $group->id),'class="checkRole"');
                             echo ' '.$group->name;
                             echo '</label>';
                             echo '</div>';
@@ -103,7 +104,7 @@
                 <?php echo form_close();?>
             </div>
             <div class="modal-footer">
-                <button type="submit" id="btnSave_user" class="btn btn-primary">Save</button>
+                <button type="submit" id="btnSave_user" onclick="saveUser()" class="btn btn-primary">Save</button>
                 <button type="submit" class="btn btn-danger" data-dismiss="modal">Cancel</button>
             </div>
         </div><!-- /.modal-content onclick="save()" -->
@@ -127,31 +128,8 @@
     $(document).ready(function(){
         $( "#btnSave_user" ).click(function( event ) {
 
-            $.ajax({
-                type: "POST",
-                url: "create_user",
-                data: $('#formUser').serialize(),
-                success: function(result) {
-                    result=jQuery.parseJSON(result);
-                    console.log(result);
-                    if(result['status'] == true)
-                        alert('Tạo user thành công!');
-                    else
-                    {
-                        $('.first_name').html(result['first_name']);
-                        $('.last_name').html(result['last_name']);
-                        $('.email').html(result['email']);
-                        $('.company').html(result['company']);
-                        $('.phone').html(result['phone']);
-                        $('.password').html(result['password']);
-                        $('.password_confirm').html(result['password_confirm']);
-                    }
-                },
-                error: function(){
-                    alert("failure");
-                }
+
         });
-    });
     });
 </script>
 <style>

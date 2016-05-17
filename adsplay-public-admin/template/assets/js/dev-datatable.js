@@ -101,6 +101,71 @@ $(document).ready(function() {
             }
         });
     }
+function getByIdUser(id)
+{
+    save_method = 'update';
+    $('#formUser')[0].reset(); // reset form on modals
+    $( ".checkRole" ).each(function( index ) {
+
+                $(this).prop('checked', false);
+                $(this).closest('div.icheckbox_minimal').attr('aria-checked',false).removeClass('checked');
+
+    });
+    //console.log(id);
+    $.ajax({
+        url : 'get_current_group' ,
+        data:{id:id},
+        type: "POST",
+        dataType: "JSON",
+        success: function(datagroup)
+        {
+            console.log(datagroup);
+            $( ".checkRole" ).each(function( index ) {
+                var val=$( this ).val();
+                for(var k in datagroup) {
+
+                    if(val==datagroup[k].id)
+                    {
+                        $(this).prop('checked', true);
+                        $(this).closest('div.icheckbox_minimal').attr('aria-checked',true).addClass('checked');
+                    }
+                }
+            });
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error get data from ajax group');
+        }
+    });
+
+    $.ajax({
+        url : 'edit_user' ,
+        data:{id:id},
+        type: "POST",
+        dataType: "JSON",
+        success: function(data)
+        {
+            console.log(data);
+            $('[name="id"]').val(data.id);
+            $('[name="first_name"]').val(data.first_name);
+            $('[name="last_name"]').val(data.last_name);
+            $('[name="company"]').val(data.company);
+            $('[name="phone"]').val(data.phone);
+            $('[name="username"]').val(data.username);
+            $('[name="email"]').val(data.email);
+           // $('[name="phone"]').val(data.phone);
+
+            $('#modal_form_User').modal('show'); // show bootstrap modal when complete loaded
+            $('.modal-title').text('Edit User'); // Set title to Bootstrap modal title
+
+        }
+        ,error: function (jqXHR, textStatus, errorThrown)
+        {
+            //alert('Error get data from ajax user');
+            console.log(textStatus);
+        }
+    });
+}
 function getByIDCamp(id)
 {
     save_method = 'update';
@@ -134,6 +199,16 @@ function getByIDCamp(id)
     function add_data_modal(data)
     {
         save_method = 'add';
+        if(data=='User')
+        {
+            $( ".checkRole" ).each(function( index ) {
+
+                $(this).prop('checked', false);
+                $(this).closest('div.icheckbox_minimal').attr('aria-checked',false).removeClass('checked');
+
+            });
+        }
+
         $('#form'+data)[0].reset(); // reset form on modals
         $('.note-editable').html('');
         $('#modal_form_'+data).modal('show'); // show bootstrap modal
@@ -203,6 +278,41 @@ function getByIDCamp(id)
             }
         });
     }
+
+// save for user
+function saveUser()
+{
+    if(save_method == 'add')
+    {
+        url="create_user";
+    }else
+    {
+        url="edit_user";
+    }
+    $.ajax({
+        type: "POST",
+        url:url ,
+        data: $('#formUser').serialize(),
+        success: function(result) {
+            result = jQuery.parseJSON(result);
+            console.log(result);
+            if (result['status'] == true)
+            {
+                $('#modal_form_User').modal('hide');
+                reload_table();
+            }
+            else
+            {
+                alert(result['errors']);
+            }
+        },
+        error: function(){
+            alert("failure");
+        }
+    });
+}
+
+
 /*Campaign*/
 function getAllBrand(){
     //Ajax Load data from ajax
