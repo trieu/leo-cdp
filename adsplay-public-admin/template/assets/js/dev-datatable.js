@@ -244,7 +244,7 @@ function getByIDCamp(id)
                 if(selectProduct==null || selectSector==null)
                 {
                    // alert("Có trý?ng b? r?ng b?n không th? hoàn t?t thao tác này");
-                  //  return false;
+                  //  return false;//
                     $('#modal_form_'+param).modal('hide');
                 }
             }
