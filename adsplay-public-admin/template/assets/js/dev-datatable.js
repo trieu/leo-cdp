@@ -239,6 +239,14 @@ function getByIDCamp(id)
             }
             else if(param == 'Campaign'){
                 url = "campaigns/Insert";
+                var selectProduct = $('select[name=product_id]').val();
+                var  selectSector = $('select[name=sector_id]').val();
+                if(selectProduct==null || selectSector==null)
+                {
+                   // alert("Có trý?ng b? r?ng b?n không th? hoàn t?t thao tác này");
+                  //  return false;
+                    $('#modal_form_'+param).modal('hide');
+                }
             }
             //else if(param == 'User'){
             //    url = "create_user";
