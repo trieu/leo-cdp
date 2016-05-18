@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |http://my.hmvc_admin.com/
 */
 //$config['base_url'] = 'http://my.hmvc_admin.com/';
- $config['base_url'] = '';
+ $config['base_url'] = 'http://localhost:8800/Git_HMVC_Admin/adsplay-frontend/adsplay-public-admin/';
 /*
 |--------------------------------------------------------------------------
 | Index File
