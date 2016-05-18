@@ -1,3 +1,12 @@
+Array.prototype.insert = function (index, item) {
+  this.splice(index, 0, item);
+};
+function isNull(value){
+	if (typeof value  !== "undefined" && value) {
+		return false;
+	}
+	return true;
+}
 function unique(array) {
 	var unique = [];
 	for (var i = 0; i < array.length; i++) {

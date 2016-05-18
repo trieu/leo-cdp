@@ -45,7 +45,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
-            <div class="panel-heading">History All Api (30 day)</div>
+            <div class="panel-heading" id="history-title">Recent History All Api (30 day)</div>
             <div class="panel-body">
               <div id="chart-history"></div>
             </div>
@@ -191,6 +191,7 @@ $.ajax({
 		var filterApiError = function(){
 			//filter array api status error
 			var apiError = [];
+			var apiSuccess = [];
 			for (var i = data.length-1; i >= 0; i--) {
 				var fields = data[i].fields;
 
@@ -201,50 +202,67 @@ $.ajax({
 					if (fields[j].status == 0) {
 						apiError.push({time: n , api: fields[j].api });
 					}
+					else{
+						apiSuccess.push({time: n , api: fields[j].api });
+					}
 				}
 				
 			}
 
 			//group by date
-			var groupData = groupBy(apiError, function(item)
+			var groupError = groupBy(apiError, function(item)
 			{
 				return [item.time];
 			});
+
+			var groupSuccess = groupBy(apiSuccess, function(item)
+			{
+				return [item.time];
+			});
+
+			//get array api time error
+			var resultSuccess = uniqueArray(groupSuccess);
+			var resultError = uniqueArray(groupError);
+
+			//html render chart api
+			for (var i = 0; i < resultSuccess.length; i++) {
+				var count = i+1;
+				$('#chart-history').append('<div class="history" data-toggle="popover" data-time="'+resultSuccess[i].time+'" title="API Success ('+resultSuccess[i].time+')" data-content="'+resultSuccess[i].api.join(' ')+'"><span>'+count+'</span></div>');
+			}
 			
-			//unique data api by date
+			$(".history").each(function(index) {
+
+				for (var i = 0; i < resultError.length; i++) {
+					if($(this).attr('data-time') == resultError[i].time){
+						$(this).addClass('error');
+						$(this).attr('title','API Error ('+resultError[i].time+')');
+						$(this).attr('data-content',resultError[i].api.join(' '));
+					}
+				}
+				
+			});
+		}
+		
+		function uniqueArray(arr){
+			//get array api time error
 			var result = [];
-			for(var i = 0; i < groupData.length; i++) {
+			for(var i = 0; i < arr.length; i++) {
 
-				var time = groupData[i][0].time;
-				var apiArr = [];
-			    var dataChild = groupData[i];
+				var time = arr[i][0].time;
+				var apiArray = [];
 
-			    for(var j = 0; j < dataChild.length; j++) {
-			    	apiArr.push(dataChild[j].api);
-			    }
-			    var apiUnique = unique(apiArr);
-			    console.log(apiUnique)
+				for(var j = 0; j < arr[i].length; j++) {
+					apiArray.push(arr[i][j].api);
+				}
+				var apiUnique = unique(apiArray);
 
-			    result.push({time: time, api: apiUnique});
+				result.push({time: time, api: apiUnique});
+				
 			}
 			return result;
 		}
 
-		
-		//html render chart api
-
-		var historyAPI = filterApiError();
-		console.log(historyAPI);
-		for (var i = 0; i < historyAPI.length; i++) {
-			// var d = new Date(historyAPI[i].time);
-			// var day = d.getDate();
-			// var month = getMonth()+1;
-			// var year = getFullYear();
-			$('#chart-history').append('<div class="history error" data-toggle="popover" title="API Error" data-content="'+historyAPI[i].api.join(' ')+'"></div>');
-			
-			
-			
-		}
+		filterApiError();
 
 		$('[data-toggle="popover"]').popover({
 			placement:"top",

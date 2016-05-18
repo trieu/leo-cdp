@@ -68,7 +68,8 @@ body {
 #chart-history{
 	float: left;
 	width: 100%;
-	text-align: center;
+	text-align: left;
+	margin-bottom: 10px;
 }
 #chart-history .history{
 	display: inline-block;
@@ -77,12 +78,21 @@ body {
 	line-height: 30px;
 	margin-right: 1px;
 	background-color: #86c35d;
+	position: relative;
 }
 #chart-history .error{
 	background-color: #dc2620;
 }
 #chart-history .warning{
 	background-color: #ff9e00;
+}
+#chart-history .history > span{
+	position: absolute;
+	top: 100%;
+	left: 0;
+	width: 100%;
+	text-align: center;
+	line-height: 20px;
 }
 @media (max-width: 767px) {
   .col-1of8{
@@ -92,7 +102,6 @@ body {
 }
 
 /*add new*/
-
 
 div .btnfile{
     border: 1px solid gray;
