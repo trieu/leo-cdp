@@ -211,6 +211,15 @@ function getByIDCamp(id)
             });
             resetError();
         }
+        if(data=='Campaign')
+        {
+            var selectBran = 1;
+            $('select[name=brand_id]').val('1');
+            console.log(selectBran);
+            $('select[name="product_id"]').empty();
+            $('select[name="sector_id"]').empty();
+            getAllProduct(selectBran);
+        }
 
         $('#form'+data)[0].reset(); // reset form on modals
         $('.note-editable').html('');
@@ -239,14 +248,16 @@ function getByIDCamp(id)
             }
             else if(param == 'Campaign'){
                 url = "campaigns/Insert";
+                var selectBran = $('select[name=brand_id]').val();
                 var selectProduct = $('select[name=product_id]').val();
                 var  selectSector = $('select[name=sector_id]').val();
                 if(selectProduct==null || selectSector==null)
                 {
-                   // alert("Có trý?ng b? r?ng b?n không th? hoàn t?t thao tác này");
+                    alert("");
                   //  return false;//
                     $('#modal_form_'+param).modal('hide');
                 }
+                data={name:$('[name="name"]').val(),brand_id:selectBran,product_id:selectProduct,sector_id:selectSector,unit:$('[name="unit"]').val()}
             }
             //else if(param == 'User'){
             //    url = "create_user";
@@ -360,6 +371,7 @@ function getAllBrand(){
         }
     });
 }
+//changeSelect('brand_id')
 function changeSelect(name)
 {
     $('[name="'+name+'"]').on('change',function(){

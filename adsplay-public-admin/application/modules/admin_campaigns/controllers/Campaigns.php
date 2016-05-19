@@ -102,7 +102,7 @@ class Campaigns extends MY_Controller
         $this->form_validation->set_rules('name', 'Name', 'required');
         $this->form_validation->set_rules('unit', 'Unit', 'required');
         $date=date('Y-m-d H:i:s');
-        //echo $date; die;
+      //  echo json_encode(array("abc" => $this->form_validation->run())) ; die;
         if($this->form_validation->run())
         {
             $query=array(
@@ -116,7 +116,7 @@ class Campaigns extends MY_Controller
                     'date_created'=> $date
                 )
             );
-
+// echo json_encode($query) ; die;
             $this->MCampaigns->InsertOrUpdate($query);
             echo json_encode(array("status" => TRUE));
         }else
