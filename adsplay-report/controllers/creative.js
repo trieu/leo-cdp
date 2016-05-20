@@ -313,45 +313,6 @@ router.get('/new/local-ad-unit/video', function (req, res) {
 
 });
 
-router.post('/upload/video', function (req, res) {
-    //require
-    //var fs = require('fs');
-    upload.video(req.body.link, function(obj){
-        res.json(obj);
-    });
-
-});
-
-router.post('/upload/image', function (req, res) {
-    upload.image(req, function(obj){
-        res.json(obj);
-    });
-});
-
-router.post('/upload/unzip', function (req, res) {
-    upload.unzip(req, function(obj){
-        res.json(obj);
-    });
-});
-
-router.post('/save', function(req, res) {
-    var data = modelUtils.baseModel(req);
-    if (data.isAdminGroup) {
-        
-        /* check adType = {'fm_tvc_video': 1, 'fm_overlay_banner': 2, 'fm_display_banner': 3, 'fm_breaking_news': 4}*/
-        if (req.body.adType == 1) {
-            upload.video(req.body.link, function(obj){
-                upload.ftp_video(obj.url, function(data){
-                    res.json({url: data.url, filename: data.filename, size: obj.size});
-                });
-            });
-        }
-    }
-    else {
-        res.status(403).end();
-    }
-});
-
 router.post('/save/tvc-ad', function(req, res) {
     var data = modelUtils.baseModel(req);
     var urlSave = data.site.api_domain +'/creative/save/json';
@@ -367,7 +328,7 @@ router.post('/save/tvc-ad', function(req, res) {
             var crt = JSON.parse(rawCrt);
             crt.adType = 1;
 
-            if(typeof(youtube_url) !== "undefined" && youtube_url !== null){
+            if(typeof(youtube_url) !== "undefined" && youtube_url !== null && youtube_url.indexOf(crt.media) < 0){
 
                 var seedStr = stringUtils.removeUnicodeSpace(crt.name) + (new Date()).getTime();
                 var hash = crypto.createHash('md5').update(seedStr).digest('hex');
@@ -382,6 +343,7 @@ router.post('/save/tvc-ad', function(req, res) {
                 });
             }
             else{
+                console.log('ffff')
                 saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
             }
             
@@ -526,7 +488,7 @@ router.post('/save/breaking-news', function(req, res) {
 var saveJson = function(obj, res){
 
     request.post(obj, function (error, response, body) {
-        console.log('request')
+        //console.log('==> request');
         if (!error && response.statusCode == 200) {
             res.status(200).end(body);
         } else {

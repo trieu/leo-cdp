@@ -96,14 +96,12 @@
                                 var link = "http://ads.fptplay.net.vn/static/ads/instream/"+data[k];
                                 $('#youtube_url').val(link);
 
-                                var iframe = '<video id="video_1" class="video-js vjs-default-skin vjs-big-play-centered"><source src="'+link+'" type="video/mp4"></video>';
+                                var iframe = '<video id="video_ads" class="video-js vjs-default-skin vjs-big-play-centered"><source src="'+link+'" type="video/mp4"></video>';
                                 $('.iframeVideo').html(iframe);
-                                videojs("video_1", {
-                                    "width": '100%',
-                                    "height": 300,
+                                videojs("video_ads", {
                                     "poster": "//adsplay.net/img/logo.png",
-                                    "controls": true,
-                                    "autoplay": true
+                                    "width": '100%', "height": 300,
+                                    "controls": true, "autoplay": true,
                                 });
                             }
                             else if(data['adType'] == 2){
@@ -122,6 +120,7 @@
                                 media = data[k];
                                 $('.break-news').show();
                                 $('#news-marquee').html(media);
+                                $('#BreakingNews_Text').val(media);
                             }
 
                         }
@@ -214,7 +213,6 @@
                 data['id'] = id_edit;
                 data['media'] = media;
             }
-            console.log(media);
 
             if(data.name.length < 10){
                 modal_alert('Name must be more 10 characters!');
