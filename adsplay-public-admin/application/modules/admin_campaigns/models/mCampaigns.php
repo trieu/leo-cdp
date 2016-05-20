@@ -32,6 +32,18 @@ class MCampaigns extends My_Model
             ));
         }
     }
+    public function getCampaign($param = NULL){
+        if(isset($param) && is_array($param))
+        {
+            return $this->_general($param);
+        }else {
+            return $this->_general(array(
+                'table' => $this->table,
+                'list' => TRUE,
+                'type' => 'object'
+            ));
+        }
+    }
     public function getAllBrand(){
 
         return $this->_general(array(
@@ -105,6 +117,13 @@ class MCampaigns extends My_Model
                 array('sectors','sectors.id=campaigns.sector_id','inner')
             ),
             'count'=>true
+        ));
+    }
+    public function getCountCampaign($param = NULL){
+        return $this->_general(array(
+            'table' => $this->table,
+            'count' => TRUE
+
         ));
     }
 

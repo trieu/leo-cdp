@@ -27,6 +27,11 @@ $(document).ready(function() {
         url = "getajax";
         chos = '';
     }
+    if($('#list-datatable').hasClass('data-creative')){
+        var campid = $('#list-datatable').attr('data-id');
+        url = "getAjax?campId="+campid;
+        chos = '';
+    }
     table = $('#list-datatable').DataTable({
         // Load data for the table's content from an Ajax source
         "ajax": {
@@ -37,7 +42,7 @@ $(document).ready(function() {
     getAllUser(chos);
 
 });
-/*L?y t?t c? danh sách user*/
+/*L?y t?t c? danh sï¿½ch user*/
     function getAllUser(param){
         if(param == 'advertiser')
             url = "advertisers/getAllUser";

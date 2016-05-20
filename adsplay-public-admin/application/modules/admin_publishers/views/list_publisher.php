@@ -17,6 +17,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
+                    <th>Page Url</th>
                     <th>Info</th>
                     <th>Control</th>
                 </tr>

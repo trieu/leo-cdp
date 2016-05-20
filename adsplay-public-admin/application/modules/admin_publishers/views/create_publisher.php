@@ -19,6 +19,14 @@
 
                         </div>
                         <div class="form-group item">
+                            <label class="control-label col-md-2 col-sm-3 col-xs-12" for="page-url">Page Url <span class="required">*</span>
+                            </label>
+                            <div class="col-md-5 col-sm-6 col-xs-12">
+                                <input type="text" name="page_url" required="required" class="form-control col-md-7 col-xs-12">
+                            </div>
+
+                        </div>
+                        <div class="form-group item">
                             <label for="middle-name" class="control-label col-md-2 col-sm-3 col-xs-12">User</label>
                             <div class="col-md-5 col-sm-6 col-xs-12">
                                 <select name="user_id" class="form-control">

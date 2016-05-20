@@ -48,6 +48,7 @@ class Publishers extends MY_Controller
             $row = array();
             $row[] = $adver->id;
             $row[] ='<a href="javascript:void(0);" onclick="getByID('."'".$adver->id."'".",'Publisher'".')">'.$adver->name.'</a>';
+            $row[] = $adver->page_url;
             $row[] = $adver->contact_info;
            // $row[] = $adver->user_id;
             //
@@ -81,6 +82,8 @@ class Publishers extends MY_Controller
     {
         // username => name input, Username => ten hien thi trong tb loi
         $this->form_validation->set_rules('name', 'Name', 'required');
+        $this->form_validation->set_rules('page_url', 'Page Url', 'required');
+//        var_dump($this->input->post('page_url'));die;
         if($this->form_validation->run())
         {
             $query=array(
@@ -88,7 +91,9 @@ class Publishers extends MY_Controller
                 'data' => array(
                     'name' => $this->input->post('name'),
                     'user_id' => $this->input->post('user_id'),
-                    'contact_info' => $this->input->post('contact_info')
+                    'contact_info' => $this->input->post('contact_info'),
+                    'page_url' => $this->input->post('page_url')
+
                 )
             );
 
