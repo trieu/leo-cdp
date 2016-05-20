@@ -167,11 +167,15 @@
 </div>
 
 <script>
-//preview TVC Instream Video Ads auto
-var player = videojs('video_ads');
-setTimeout(function () {
-    player.pause();
-}, 9000);
+
+try {
+    setTimeout(function () {
+        videojs('video_ads_html5_api').pause();
+    }, 9000);
+}catch (e){
+    console.error(e);
+}
+
 
 //format time for Chart
 var formatTime = function (x) {

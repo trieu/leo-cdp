@@ -454,9 +454,7 @@ router.post('/save/display-banner', function(req, res) {
     var urlSave = data.site.api_domain +'/creative/save/json';
 
     if (data.isAdminGroup) {
-
         var form = new formidable.IncomingForm();
-
         form.parse(req, function(err, fields, files) {
             if(err){
                 console.error(err);
