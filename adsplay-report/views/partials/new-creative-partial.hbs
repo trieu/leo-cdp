@@ -43,6 +43,22 @@
                     </td>
                 </tr>
                 <tr>
+                    <td><strong>Status</strong></td>
+                    <td>
+                        <div class="panel-body text-left">
+                            <div class="form-group">
+                                <select class="form-control" id="ads_status" data-creative-field="status"  >
+                                    <option value="0">Invalid</option>
+                                    <option value="1" selected>Pending</option>
+                                    <option value="2">Running</option>
+                                    <option value="3">Finished</option>
+                                    <option value="4">Expired</option>
+                                </select>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
                     <td><strong>Cost for 1 impression / complete-view</strong></td>
                     <td>
                         <input type="number" class="form-control" id="ads_basecost" data-creative-field="cost" required min="0"  placeholder="Enter Base Cost" value="0" >

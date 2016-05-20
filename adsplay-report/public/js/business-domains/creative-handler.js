@@ -7,7 +7,7 @@
             {id: 3, adtype: 'fm_overlay_banner', name: 'overlay'},
             {id: 4, adtype: 'fm_breaking_news', name: 'news'},
         ];
-    var adtype,media,status = null;
+    var adtype,media = null;
 
     function logError(e) {
         if (window.console) {
@@ -81,10 +81,7 @@
                         });
                     }
                     else{
-                        if (k == 'status') {
-                            status = data[k];
-                        }
-                        else if (k == 'runDateL' || k == 'expDateL') {
+                        if (k == 'runDateL' || k == 'expDateL') {
                             var nameTime = (k == 'runDateL') ? 'runDate' : 'expiredDate';
                             var time = moment(data[k]).format('YYYY-MM-DD');
                             $('[data-creative-field="'+nameTime+'"]').val(time);
@@ -215,7 +212,6 @@
             if(id_edit != false){
                 data['id'] = id_edit;
                 data['media'] = media;
-                data['status'] = status;
             }
 
             if(data.name.length < 10){
