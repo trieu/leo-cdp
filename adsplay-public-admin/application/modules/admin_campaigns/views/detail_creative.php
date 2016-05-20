@@ -30,7 +30,7 @@
         <!-- Calendar -->
         <div class="tile">
             <div class="panel panel-default">
-                <h2 class="tile-title">Summary Report </h2>
+                <h2 class="tile-title">Summary Report from <?php echo date("d-m-Y",$data[0]->created_date); ?> to <?php echo date("d-m-Y",$data[0]->expired_date); ?> </h2>
                 <div class="panel-body">
                     <div class="block-area" id="tableStriped">
                         <div class="table-responsive overflow">
@@ -38,12 +38,12 @@
                                 <tbody>
                                 <tr>
                                     <td>Created date</td>
-                                    <td><?php echo date("Y-m-d",$data[0]->created_date); ?> </td>
+                                    <td><?php echo date("d-m-Y",$data[0]->created_date); ?> </td>
 
                                 </tr>
                                 <tr>
                                     <td>Expired date</td>
-                                    <td><?php echo date("Y-m-d",$data[0]->expired_date); ?></td>
+                                    <td><?php echo date("d-m-Y",$data[0]->expired_date); ?></td>
 
                                 </tr>
                                 <tr>

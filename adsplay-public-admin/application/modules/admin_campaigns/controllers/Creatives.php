@@ -32,6 +32,14 @@ class Creatives extends MY_Controller
     public function index(){
 
     }
+    // data Test Creative
+    public function getCreativeDataTest(){
+
+        $this->data['data'] = $this->MCreatives->getDetailCreative();
+        $this->data['the_view_content'] = 'admin_campaigns/detail_creative_test';
+
+        $this->_render_page('template/master_view', $this->data);
+    }
     public function getCreativeByCampId(){
         $campId = (int)$this->input->get('campId');
 
