@@ -21,7 +21,12 @@ var formidable = require('formidable');
 router.get('/list/all', function (req, res) {
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "All Advertising Units";
-
+    data.statuses = constantUtils.statuses;
+    var statuses = [];
+    for (var stt in constantUtils.statuses) {
+        statuses.push({value: stt, label: constantUtils.getStatus(stt)});
+    }
+    data.statuses = statuses;
     data.begin = req.query.begin;
     data.end = req.query.end;
     if (!data.begin || !data.end) {
@@ -41,14 +46,21 @@ router.get('/list/all', function (req, res) {
                 if (crt.name === 'Default') {
                     crt.name = 'Default Creative';
                 }
-                crt.runDate = crt.runDate || 'Jul 1, 2015 12:00:00 AM';
-                crt.expiredDate = crt.expiredDate || 'Jul 21, 2015 12:00:00 AM';
+                // crt.runDate = crt.runDate || 'Jul 1, 2015 12:00:00 AM';
+                // crt.expiredDate = crt.expiredDate || 'Jul 21, 2015 12:00:00 AM';
 
-                var runDate = moment(crt.runDate, 'MMM D, YYYY hh:mm:ss A');
-                crt.runDate = runDate.format('YYYY-MM-DD');
-                var expiredDate = moment(crt.expiredDate, 'MMM D, YYYY hh:mm:ss A');
-                crt.expiredDate = expiredDate.format('YYYY-MM-DD');
-
+                if (crt.runDate) {
+                    var runDate = moment(crt.runDate, 'MMM D, YYYY hh:mm:ss A');
+                    crt.runDate = runDate.format('YYYY-MM-DD');
+                } else {
+                    crt.runDate = 'N/A';
+                }
+                if (crt.expiredDate) {
+                    var expiredDate = moment(crt.expiredDate, 'MMM D, YYYY hh:mm:ss A');
+                    crt.expiredDate = expiredDate.format('YYYY-MM-DD');
+                } else {
+                    crt.expiredDate = 'N/A';
+                }
                 crt.active = crt.status == 2;
                 crt.status = constantUtils.getStatus(crt.status);
                 crt.ctr = (crt.ctr * 100).toFixed(2);
@@ -77,6 +89,84 @@ router.get('/list/all', function (req, res) {
         }
         Creative.allByUser(req.user.id, data, function (err, data) {
             res.render('ad-report/creative-list-all', data)
+        });
+
+    });
+});
+
+router.get('/list', function (req, res) {
+    var data = modelUtils.baseModel(req);
+    data.dashboard_title = "All Advertising Units";
+    data.statuses = constantUtils.statuses;
+    var statuses = [];
+    for (var stt in constantUtils.statuses) {
+        statuses.push({value: stt, label: constantUtils.getStatus(stt)});
+    }
+    data.statuses = statuses;
+
+    var status = req.query.status || -1;
+    var url = data.site.api_domain + '/api/creative/summary?status=' + status;
+
+    data.begin = req.query.begin;
+    data.end = req.query.end;
+    if (!data.begin || !data.end) {
+        var end = moment();
+        var begin = end.clone().subtract(20, 'days');
+
+        data.begin = begin.format("YYYY-MM-DD");
+        data.end = end.format("YYYY-MM-DD");
+    }
+    request(url, function (error, response, body) {
+
+        if (!error && response.statusCode == 200) {
+            var creatives = JSON.parse(body);
+            var filteredList = [];
+            creatives.forEach(function (crt) {
+                crt.name = crt.name || '-';
+                if (crt.name === 'Default') {
+                    crt.name = 'Default Creative';
+                }
+                if (crt.runDate) {
+                    var runDate = moment(crt.runDate, 'MMM D, YYYY hh:mm:ss A');
+                    crt.runDate = runDate.format('YYYY-MM-DD');
+                } else {
+                    crt.runDate = 'N/A';
+                }
+                if (crt.expiredDate) {
+                    var expiredDate = moment(crt.expiredDate, 'MMM D, YYYY hh:mm:ss A');
+                    crt.expiredDate = expiredDate.format('YYYY-MM-DD');
+                } else {
+                    crt.expiredDate = 'N/A';
+                }
+
+                crt.active = crt.status == 2;
+                crt.status = constantUtils.getStatus(crt.status);
+                crt.ctr = (crt.ctr * 100).toFixed(2);
+                crt.tvr = (crt.tvr * 100).toFixed(2);
+                if (crt.totalRevenue == 0) {
+                    crt.totalRevenue = "-";
+                }
+
+                if(data.isAdminGroup){
+                    filteredList.push(crt);
+                }
+                else if(data.ssid === 1002 && crt.name.toLowerCase().indexOf('vivid') >= 0){
+                    filteredList.push(crt);
+                }
+                else if(data.ssid === 1003 && crt.name.toLowerCase().indexOf('fptplay') >= 0){
+                    filteredList.push(crt);
+                }
+                else if(data.ssid === 1004 && crt.name.toLowerCase().indexOf('lava') >= 0){
+                    filteredList.push(crt);
+                }
+                else if(data.ssid === 1005 && crt.name.toLowerCase().indexOf('ambient') >= 0){
+                    filteredList.push(crt);
+                }
+            });
+            data.creatives = filteredList;
+        }
+        Creative.allByUser(req.user.id, data, function (err, data) {
+            res.json(filteredList);
         });
 
     });
@@ -141,12 +231,18 @@ router.get('/:id', function (req, res) {
         if (!error && response.statusCode == 200) {
             var crt = JSON.parse(body);
 
-            var createdDate = moment(crt.crtDateL);
-            crt.crtDate = createdDate.format('LL');
-            var runDate = moment(crt.runDateL);
-            crt.runDate = runDate.format('LL');
-            var expiredDate = moment(crt.expDateL);
-            crt.expDate = expiredDate.format('LL');
+            if (crt.crtDateL && crt.crtDateL > 0) {
+                var createdDate = moment(crt.crtDateL);
+                crt.crtDate = createdDate.format('LL');
+            }
+            if (crt.runDateL && crt.runDateL > 0) {
+                var runDate = moment(crt.runDateL);
+                crt.runDate = runDate.format('LL');
+            }
+            if (crt.expDateL && crt.expDateL > 0) {
+                var expiredDate = moment(crt.expDateL);
+                crt.expDate = expiredDate.format('LL');
+            }
             crt.status = constantUtils.getStatus(crt.status);
             if (crt.totalRevenue == 0) {
                 crt.totalRevenue = "-";
@@ -176,7 +272,6 @@ router.get('/:id', function (req, res) {
         }
         Creative.get(req.params.id, data, function (err, data) {
             try {
-                console.log(data);
                 res.render('ad-report/creative-details', data)
             }
             catch(e){
@@ -343,7 +438,6 @@ router.post('/save/tvc-ad', function(req, res) {
                 });
             }
             else{
-                console.log('ffff')
                 saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
             }
             
