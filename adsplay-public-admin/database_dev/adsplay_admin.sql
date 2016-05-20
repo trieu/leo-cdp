@@ -11,6 +11,7 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 -- Dumping database structure for adsplay_admin
+
 CREATE DATABASE IF NOT EXISTS `adsplay_admin` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
 USE `adsplay_admin`;
 
