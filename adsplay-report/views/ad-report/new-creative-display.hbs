@@ -15,11 +15,10 @@
     <div class="col-lg-4 text-center">
         <div class="panel">
             <div class="panel-body">
-                <div class="htmlFrame"></div>
+                <div id="iframeHtml"></div>
                 <form id="uploadhtml" action="/creative/upload/unzip" method="post" enctype="multipart/form-data">
                     <label>Select Zip Display Banner</label><br/>
                     <input type="file" name="file" id="file" required /><br/>
-                    <input type="submit" value="Upload" class="btn btn-default" /><br/>
                 </form>
             </div>
         </div>
@@ -28,30 +27,3 @@
         {{>new-creative-partial}}
     </div>
 </div>
-
-<script>
-    $('input.ads_cancel').click(function () {
-        window.location.href = "/creative/new/local-ad-unit";
-    });
-
-    $("#uploadhtml").submit(function(e) {
-        e.preventDefault();
-        if (!$('#file')[0].files[0].name.match(/\.(zip)$/)){
-            return alert('Incorrect file .zip');
-        }
-        $.ajax({
-            url: $(this).attr('action'),
-            type: "POST",
-            data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
-            contentType: false,       // The content type used when sending data to the server.
-            cache: false,             // To unable request pages to be cached
-            processData:false,        // To send DOMDocument or non processed data file it is set to false
-            beforeSend: function(){
-                $('.htmlFrame').html('<span>loading ... ... </span>');
-            },
-            success: function(res){
-                $('.htmlFrame').html('<iframe src="'+res.url+'" width="100%" height="300" frameBorder="0"></iframe>');
-            }
-        });
-    });
-</script>

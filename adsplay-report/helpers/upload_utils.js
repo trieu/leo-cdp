@@ -98,50 +98,34 @@ Upload.prototype.ftp_video = function(localFile, mediaName, callback){
     });
 };
 
-Upload.prototype.image = function(req, callback){
+Upload.prototype.image = function(file, callback){
 
 	var dir = storage('overlay');
-    var form = new formidable.IncomingForm();
+    var dirSplit = dir.split("/"); 
+    var output = dir + file.name;
+    var url = output.split("public/");
 
-    form.parse(req, function(err, fields, files) {
-        if(err){
+    fs.copy(file.path, output, function(err) {  
+        if (err) {
             console.error(err);
-        }
-        else{
-            var output = dir + files.file.name;
-            var url = output.split("public/");
-
-            fs.copy(files.file.path, output, function(err) {  
-                if (err) {
-                    console.error(err);
-                } else {
-                    var obj = {filename: files.file.name, url: url[1]};
-                    callback(obj);
-                }
-            });
+        } else {
+            var obj = {url: url[1], folder: dirSplit[dirSplit.length - 1], filename: file.name};
+            callback(obj);
         }
     });
 }
 
-Upload.prototype.unzip = function(req, callback){
+Upload.prototype.unzip = function(file, callback){
 
-	var dir = storage('display');
-    var form = new formidable.IncomingForm();
+	var dir = storage('overlay');
+    var dirSplit = dir.split("/"); 
+    var output = dir + 'index.html';
+    var url = output.split("public/");
 
-    form.parse(req, function(err, fields, files) {
-        if(err){
-            console.error(err);
-        }
-        else{
-            var output = dir + 'index.html';
-            var url = output.split("public/");
-
-            var extract = require('extract-zip');
-                extract(files.file.path, {dir: dir}, function (err) {
-                    var obj = {url : '/display-banner/'+url[1]};
-                    callback(obj);
-                });
-        }
+    var extract = require('extract-zip');
+    extract(file.path, {dir: dir}, function (err) {
+        var obj = {url : '/display-banner/'+url[1], folder: dirSplit[dirSplit.length - 1]};
+        callback(obj);
     });
 
 }

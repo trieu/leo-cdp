@@ -2,7 +2,7 @@
 <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
 <script src="https://vjs.zencdn.net/5.9.2/video.js"></script>
 <style type="text/css">
-    .youtubeIframe{
+    .iframeVideo{
         position: relative;
         background-image: url('https://lh3.googleusercontent.com/HRXqHkMXMh4yC0vCNMoqG3QpNZGuw__ZABPBdZsq2ZwHn3k-FIZw3nK5i7O9Z9AQeA=w300');
         background-size: contain;
@@ -11,25 +11,25 @@
         width: 100%;
         height: 300px;
         margin-bottom: 15px;
+        cursor: pointer;
     }
-    .youtubeIframe iframe{
+    .iframeVideo iframe,
+    .iframeVideo .video-js{
         width: 100%;
         height: 100%;
+    }
+    .videoOpen{
+        position: absolute;
+        margin-top: -20px;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        padding: 10px;
+        background-color: rgba(255, 255, 255, 0.4);
     }
     #my-video{
         width: 100%;
         height: 300px;
-    }
-    .loader {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(255, 255, 255, 0.6);
-        background-image: url('img/loader.gif');
-        background-repeat: no-repeat;
-        background-position: center;
     }
 </style>
 <div class="row">
@@ -49,8 +49,8 @@
     <div class="col-lg-4 text-center">
         <div class="panel">
             <div class="panel-body">
-            <div class="frameVideo">
-                <div class="youtubeIframe"></div>
+            <div class="iframeFrame">
+                <div class="iframeVideo"></div>
                 <input type="text" class="form-control" placeholder="Enter Youtube TVC Video URL" required pattern="https?://.+" name="youtube_url" id="youtube_url">
             </div>
             </div>

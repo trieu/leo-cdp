@@ -1,33 +1,3 @@
-<style type="text/css">
-
-    /*BreakingNews*/
-    .video-container-breakingnews{
-        position: relative;
-        z-index: 10;
-        height: 80%;
-        width: 100%;
-
-    }
-
-    .video-container-breakingnews .break-news{
-        height: 20px;
-        width: 100%;
-        display: none;
-        position: absolute;
-        z-index: 2;
-
-    }
-    .video-container-breakingnews #my-video{
-        width: 100%;
-    }
-    .break-news{
-        background-color: yellow;
-    }
-
-
-
-
-</style>
 <div class="row">
     <div class="col-lg-12">
         <ol class="breadcrumb">
@@ -46,7 +16,7 @@
         <div class="panel">
             <div class="panel-body">
                 <div class="video-container-breakingnews" >
-                    <div class="break-news"><marquee id="mymarquee"></marquee></div>
+                    <div class="break-news"><marquee id="news-marquee"></marquee></div>
                     <video id="my-video" class="video-js vjs-default-skin" autoplay controls preload="auto" data-setup='{}'  >
                         <source src="http://ads.fptplay.net.vn/static/videos/demo-sport-2.mp4" type='video/mp4' />
                         <!-- <source src="http://ads.fptplay.net.vn/static/videos/demo-sport-2.mp4" type='video/mp4' /> -->
@@ -64,32 +34,6 @@
     </div>
 </div>
 <script>
-    $('input.ads_cancel').click(function () {
-        window.location.href = "/creative/new/local-ad-unit";
-    });
-
-    $("#uploadhtml").submit(function(e) {
-        e.preventDefault();
-        if (!$('#file')[0].files[0].name.match(/\.(zip)$/)){
-            return alert('Incorrect file .zip');
-        }
-        $.ajax({
-            url: $(this).attr('action'),
-            type: "POST",
-            data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
-            contentType: false,       // The content type used when sending data to the server.
-            cache: false,             // To unable request pages to be cached
-            processData:false,        // To send DOMDocument or non processed data file it is set to false
-            beforeSend: function(){
-                $('.htmlFrame').html('<span>loading ... ... </span>');
-            },
-            success: function(res){
-                $('.htmlFrame').html('<iframe src="'+res.url+'" width="100%" height="300" frameBorder="0"></iframe>');
-            }
-        });
-    });
-</script>
-<script>
     $(document).ready(function() {
 
         setTimeout(playText, 1000000);
@@ -101,7 +45,7 @@
         $('#BreakingNews_Text').keyup(function(){
             $('.break-news').show();
             var text = $('#BreakingNews_Text').val();
-            $('#mymarquee').html(text);
+            $('#news-marquee').html(text);
 
         });
 

@@ -15,6 +15,8 @@ var express = require('express')
     , commonConfigs = require('../configs/common')
     , fs = require('fs.extra')
     , upload = require('../helpers/upload_utils.js');
+var formidable = require('formidable');
+
 
 router.get('/list/all', function (req, res) {
     var data = modelUtils.baseModel(req);
@@ -174,7 +176,8 @@ router.get('/:id', function (req, res) {
         }
         Creative.get(req.params.id, data, function (err, data) {
             try {
-                res.render('ad-report/creative-details-' + data.crt.adType, data)
+                console.log(data);
+                res.render('ad-report/creative-details', data)
             }
             catch(e){
                 console.error(e);
@@ -226,9 +229,27 @@ router.get('/:id/edit', function (req, res) {
                     data.stt.push({value: k, text: constantUtils.getStatus(k)});
                 }
             }
+            
+            var nameAdType;
+            if (data.crt.adType == 1) {
+                nameAdType = 'new-creative-video';
+            }
+            else if (data.crt.adType == 2) {
+                nameAdType = 'new-creative-display';
+            }
+            else if (data.crt.adType == 3) {
+                nameAdType = 'new-creative-overlay';
+            }
+            else if (data.crt.adType == 4) {
+                nameAdType = 'new-creative-news';
+            }
+            else{
+                nameAdType = 'new-creative';
+            }
             Creative.get(req.params.id, data, function (err, data) {
-                res.render('ad-report/creative-details-' + data.crt.adType + '-edit', data)
-            })
+                res.render('ad-report/' + nameAdType, data);
+            });
+
         });
     } else {
         res.redirect('/403');
@@ -331,42 +352,39 @@ router.post('/save', function(req, res) {
     }
 });
 
-
-
 router.post('/save/tvc-ad', function(req, res) {
     var data = modelUtils.baseModel(req);
+    var urlSave = data.site.api_domain +'/creative/save/json';
+    
     if (data.isAdminGroup) {
         var result = {};
 
         var rawCrt = req.body.creative;
         var adtype = req.body.adtype;
         var youtube_url = req.body.youtube_url;
+
         if (typeof rawCrt === 'string' && typeof youtube_url === 'string' && adtype === 'fm_tvc_video' ) {
             var crt = JSON.parse(rawCrt);
-            console.log(crt);
-            var seedStr = stringUtils.removeUnicodeSpace(crt.name) + (new Date()).getTime();
-            var hash = crypto.createHash('md5').update(seedStr).digest('hex');
-            var mediaName = hash + '.mp4';
-            crt.media = mediaName;
-            console.log(mediaName);
+            crt.adType = 1;
 
-            var urlSave = 'http://api.adsplay.net/creative/save/json';
-            request.post({url:urlSave, form: JSON.stringify(crt)}, function (error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    console.log(body);
+            if(typeof(youtube_url) !== "undefined" && youtube_url !== null){
 
-                    upload.video(youtube_url, function(obj){
-                        console.log(obj);
-                        upload.ftp_video(obj.url, mediaName, function(data){
-                            var rs = {url: data.url, filename: data.filename, size: obj.size};
-                            console.log(rs);
-                        });
+                var seedStr = stringUtils.removeUnicodeSpace(crt.name) + (new Date()).getTime();
+                var hash = crypto.createHash('md5').update(seedStr).digest('hex');
+                var mediaName = hash + '.mp4';
+                crt.media = mediaName;
+
+                upload.video(youtube_url, function(obj){
+                    upload.ftp_video(obj.url, mediaName, function(data){
+                        var rs = {url: data.url, filename: data.filename, size: obj.size};
+                        saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
                     });
-                    res.status(200).end(body);
-                } else {
-                    console.error(error)
-                }
-            });
+                });
+            }
+            else{
+                saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
+            }
+            
         }
 
     }
@@ -374,5 +392,147 @@ router.post('/save/tvc-ad', function(req, res) {
         res.status(403).end();
     }
 });
+
+router.post('/save/display-banner', function(req, res) {
+    var data = modelUtils.baseModel(req);
+    var urlSave = data.site.api_domain +'/creative/save/json';
+
+    if (data.isAdminGroup) {
+
+        var form = new formidable.IncomingForm();
+
+        form.parse(req, function(err, fields, files) {
+            if(err){
+                console.error(err);
+            }
+            else{
+                var rawCrt = fields.creative;
+                var adtype = fields.adtype;
+                var file = files.file;
+
+                if (typeof rawCrt === 'string' && adtype === 'fm_display_banner' ) {
+                    var crt = JSON.parse(rawCrt);
+                    crt.adType = 2;
+                    
+                    if(typeof(file) !== "undefined" && file !== null){
+                        upload.unzip(file, function(obj){
+                            //obj = {url: "local/folder/output.jpg", folder: "name folder"}
+                            crt.media = obj.url;
+                            saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
+                        });
+                    }
+                    else{
+                        saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
+                    }
+
+                }
+
+            }
+        });
+
+    }
+    else {
+        res.status(403).end();
+    }
+});
+
+router.post('/save/overlay-banner', function(req, res) {
+    
+    var data = modelUtils.baseModel(req);
+    var urlSave = data.site.api_domain +'/creative/save/json';
+
+    if (data.isAdminGroup) {
+
+        var form = new formidable.IncomingForm();
+
+        form.parse(req, function(err, fields, files) {
+            if(err){
+                console.error(err);
+            }
+            else{
+                var rawCrt = fields.creative;
+                var adtype = fields.adtype;
+                var file = files.file;
+
+                if (typeof rawCrt === 'string' && adtype === 'fm_overlay_banner' ) {
+                    var crt = JSON.parse(rawCrt);
+                    crt.adType = 3;
+
+                    if(typeof(file) !== "undefined" && file !== null){
+                        upload.image(file, function(obj){
+                            //obj = {url: "local/folder/output.jpg", folder: "name folder", filename: "output.jpg"}
+                            crt.media = obj.url;
+                            saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
+                        });
+                    }
+                    else{
+                        saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
+                    }
+
+                }
+
+            }
+        });
+
+    }
+    else {
+        res.status(403).end();
+    }
+
+});
+
+router.post('/save/breaking-news', function(req, res) {
+
+    var data = modelUtils.baseModel(req);
+    var urlSave = data.site.api_domain +'/creative/save/json';
+
+    if (data.isAdminGroup) {
+
+        var form = new formidable.IncomingForm();
+
+        form.parse(req, function(err, fields, files) {
+            if(err){
+                console.error(err);
+            }
+            else{
+                var rawCrt = fields.creative;
+                var adtype = fields.adtype;
+                var text = fields.breakingNews;
+
+                if (typeof rawCrt === 'string' && adtype === 'fm_breaking_news' ) {
+                    var crt = JSON.parse(rawCrt);
+                    crt.adType = 4;
+
+                    if(typeof(text) !== "undefined" && text !== null){
+                        crt.media = text;
+                        saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
+                    }
+                    else{
+                        saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
+                    }
+
+                }
+
+            }
+        });
+
+    }
+    else {
+        res.status(403).end();
+    }
+
+});
+
+var saveJson = function(obj, res){
+
+    request.post(obj, function (error, response, body) {
+        console.log('request')
+        if (!error && response.statusCode == 200) {
+            res.status(200).end(body);
+        } else {
+            console.error(error)
+        }
+    });
+};
 
 module.exports = router;
