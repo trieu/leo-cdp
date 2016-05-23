@@ -30,9 +30,11 @@ class Creatives extends MY_Controller
     }
 
     public function index(){
-
+        $this->_render_page('template/master_view', $this->data);
     }
+
     // data Test Creative
+
     public function getCreativeDataTest(){
 
         $this->data['data'] = $this->MCreatives->getDetailCreative();
@@ -40,6 +42,9 @@ class Creatives extends MY_Controller
 
         $this->_render_page('template/master_view', $this->data);
     }
+
+    // get list creatives by campaign id
+
     public function getCreativeByCampId(){
         $campId = (int)$this->input->get('campId');
 
@@ -48,6 +53,9 @@ class Creatives extends MY_Controller
 
         $this->_render_page('template/master_view', $this->data);
     }
+
+    // ajax get creative
+
     public  function  getAjax(){
         $campId = (int)$this->input->get('campId');
         $this->params = array(
@@ -83,6 +91,9 @@ class Creatives extends MY_Controller
         echo json_encode($output);
 
     }
+
+    // get detail creative by id
+
     public function getCreativeById(){
 
         $creativeId = (int)$this->input->get('creativeId');

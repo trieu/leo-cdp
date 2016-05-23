@@ -21,11 +21,7 @@ class MCampaigns extends My_Model
         }
     }
     public function get($param = NULL){
-        if(isset($param) && is_array($param))
-        {
-            return $this->_general($param);
-        }else {
-            return $this->_getjoin(array(
+             $query = $this->_getjoin(array(
                 'table' => $this->table,
                 'select'=>'campaigns.id,campaigns.date_created,unit_title,campaign_name,brand_name,product_name,sector_name',
                 'join'=>array(
@@ -34,9 +30,11 @@ class MCampaigns extends My_Model
                     array('sectors','sectors.id=campaigns.sector_id','inner')
                 ),
                 'list' => TRUE,
-                'type' => 'object'
+                'type' => 'object',
+                 'param_where'=>$param
             ));
-        }
+            return $query;
+
     }
     public function getCampaign($param = NULL){
         if(isset($param) && is_array($param))

@@ -42,14 +42,14 @@
                             </div>
                             <div class="test"></div>
                         </div>
-                        <div class="form-group item">
+                        <!--<div class="form-group item">
                             <label class="control-label col-md-2 col-sm-3 col-xs-12" for="first-name">Unit <span class="required">*</span>
                             </label>
                             <div class="col-md-5 col-sm-6 col-xs-12">
                                 <input type="text" name="unit" required="required" class="form-control col-md-7 col-xs-12">
                             </div>
 
-                        </div>
+                        </div>-->
 
                     </div>
                 </form>

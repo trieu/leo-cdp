@@ -23,10 +23,7 @@ class Campaigns extends MY_Controller
         if(!$this->is_admin){
 
             $this->params = array(
-                'table' => 'campaigns',
-                'list' => TRUE,
-                'type' => 'object',
-                'param_where' => array('user_id' => (int)$this->userId));
+             'user_id' => (int)$this->userId);
         }
     }
     public function index(){
@@ -53,7 +50,7 @@ class Campaigns extends MY_Controller
             $row[] = $camp->brand_name;
             $row[] = $camp->product_name;
             $row[] = $camp->sector_name;
-            $row[] = $camp->unit_title;
+//            $row[] = $camp->unit_title;
             $row[] = $camp->date_created;
            // $row[] = $adver->user_id;
             //

@@ -18,7 +18,7 @@
                     <th>Brand name</th>
                     <th>Product name</th>
                     <th>Sector name</th>
-                    <th>Unit</th>
+                    <!--<th>Unit</th>-->
                     <th>Date create</th>
                     <th>Control</th>
                 </tr>
