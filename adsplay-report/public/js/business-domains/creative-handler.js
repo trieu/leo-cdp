@@ -27,9 +27,15 @@
         $('body *[data-creative-field]').each(function(){
             var fieldName = $(this).attr('data-creative-field');
             var type = $(this).attr('type');
-            var value = $(this).val().trim();
+            console.log('fieldName: '+ fieldName + ' type: ' + type + ' val: ' + $(this).val());
+
+            var value = $(this).val() ? $(this).val().trim() : '';
             if(numFields[fieldName] === 1){
-                value = parseInt(value);
+                if(value === ''){
+                    value = 0;
+                } else {
+                    value = parseInt(value);
+                }
             }
 
             //console.log(fieldName + " ==> " + value);
@@ -260,6 +266,9 @@
                 return false;
             }
 
+            console.log(data);
+            //return;
+
             if (adtype == "fm_tvc_video") {
                 var ytb_url = $('#youtube_url').val();
                 var postData = {creative: JSON.stringify(data), adtype : adtype, youtube_url:ytb_url};
@@ -272,7 +281,16 @@
                         $('#wrapper').append('<div class="loader"></div>');
                     },
                     success: function(data){
-                        window.location = 'https://monitor.adsplay.net/creative/'+data;
+                        var adId = parseInt(data);
+                        if(adId>0){
+                            window.location = 'https://monitor.adsplay.net/creative/'+adId;
+                        }
+                        else if(adId == -100){
+                            alert('No Authorization');
+                        }
+                        else {
+                            alert(data);
+                        }
                     }
                 });
             }

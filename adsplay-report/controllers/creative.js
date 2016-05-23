@@ -221,11 +221,6 @@ router.get('/:id', function (req, res) {
     data.begin = req.query.begin;
     data.end = req.query.end;
 
-    // TODO check permission on specify ad
-    if(data.ssid === 1004 && data.crtId != 145){
-        res.redirect('/login?errorcode=1');
-    }
-
     request(data.site.api_domain + '/api/creatives/' + data.crtId, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             var crt = JSON.parse(body);
@@ -271,7 +266,8 @@ router.get('/:id', function (req, res) {
         }
         Creative.get(req.params.id, data, function (err, data) {
             try {
-                res.render('ad-report/creative-details', data)
+                //res.render('ad-report/creative-details', data)
+                res.render('ad-report/creative-details-' + data.crt.adType, data)
             }
             catch(e){
                 console.error(e);
