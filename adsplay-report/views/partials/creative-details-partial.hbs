@@ -168,14 +168,13 @@
 
 <script>
 
-try {
-    setTimeout(function () {
-        videojs('video_ads_html5_api').pause();
-    }, 9000);
-}catch (e){
-    console.error(e);
-}
-
+// try {
+//     setTimeout(function () {
+//         videojs('video_ads').pause();
+//     }, 9000);
+// }catch (e){
+//     console.error(e);
+// }
 
 //format time for Chart
 var formatTime = function (x) {
@@ -290,6 +289,7 @@ var loadLineChartWithData = function () {
         drawLineChart('#chart_click svg', clickData, null, timeArray, 'Click');
         drawLineChart('#chart_reach svg', reachData, null, timeArray, 'Audience Reach');
         drawStackMultiBarChart('#chartPercentComplete svg', data);
+        
     });
 };
 
@@ -492,8 +492,9 @@ function convertToStackBarData(rawData) {
 
     //console.log(csvText);
     var source = $("#tpl_crt_pf_report").html();
-    var template = Handlebars.compile(source);
+    var template = Handlebars.compile(source);    
     var htmlTable = template(crtStatsModel);
+    //console.log(crtStatsModel);
 
     $('#csv_raw_data').html(csvText);
     $('#crt_pf_details').append(htmlTable);
@@ -646,12 +647,15 @@ $(document).ready(function () {
 </script>
 
 <script type="text/javascript">
-    var adType = {{crt.adType}};
-    var media_source = "{{crt.media}}";
+var adType = {{crt.adType}};
+var media_source = "{{crt.media}}";
+
+$(window).load(function() {
     if(adType == 1){
         $('#media-html').html('<video id="video_ads" class="video-js vjs-default-skin vjs-big-play-centered" muted autoplay controls loop preload="auto" poster="//adsplay.net/img/logo.png" width="100%" height="300">'+
                     '<source src="http://ads.fptplay.net.vn/static/ads/instream/'+media_source+'" type="video/mp4">'+
                 '</video>');
+        videojs("video_ads");
     }
     else if(adType == 2){
         $('#media-html').html('<iframe src="'+media_source+'" width="100%" height="300" frameBorder="0"></iframe>');
@@ -667,6 +671,7 @@ $(document).ready(function () {
                     '</video>'+
                 '</div>');
         $('.break-news').show();
+        videojs("video_ads");
     }
-    videojs("video_ads");
+});    
 </script>
