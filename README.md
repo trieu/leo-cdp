@@ -1,3 +1,4 @@
-# adsplay-frontend projects:
-* AdsPlay Admin (PHP + MySQL): Ad Unit Management and tools
-* Adsplay Monitor (NodeJS + MongoDB): Real-time Data Monitoring
+# adsplay-frontend version 1
+* Real-time Data Monitoring
+* Tools for Ad Unit Management
+

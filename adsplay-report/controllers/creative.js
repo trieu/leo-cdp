@@ -17,7 +17,6 @@ var express = require('express')
     , upload = require('../helpers/upload_utils.js');
 var formidable = require('formidable');
 
-
 router.get('/list/all', function (req, res) {
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "All Advertising Units";
