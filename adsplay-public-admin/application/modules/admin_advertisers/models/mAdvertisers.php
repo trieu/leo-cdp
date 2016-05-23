@@ -14,6 +14,12 @@ class MAdvertisers extends My_Model
             $this->_save($param);
         }
     }
+    public function Delete($param = NULL){
+        if(isset($param) && is_array($param))
+        {
+            $this->_del($param);
+        }
+    }
     public function get($param = NULL){
         if(isset($param) && is_array($param))
         {

@@ -51,7 +51,9 @@ class Advertisers extends MY_Controller
             $row[] = $adver->contact_info;
            // $row[] = $adver->user_id;
             //
-            $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0);" title="Edit" onclick="getByID('."'".$adver->id."'".",'Advertiser'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>';
+            $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0);" title="Edit" onclick="getByID('."'".$adver->id."'".",'Advertiser'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>'
+                     . '<a class="btn btn-sm btn-primary" href="javascript:void(0);" title="Delete" onclick="deleteItemByID('."'".$adver->id."'".",'Advertisers'".')"><i class="glyphicon glyphicon-pencil"></i> Delete</a>';
+
             $data[] = $row;
         }
 
@@ -117,6 +119,20 @@ class Advertisers extends MY_Controller
         );
 
         $this->MAdvertisers->InsertOrUpdate($query);
+        echo json_encode(array("status" => TRUE));
+    }
+    public function Delete()
+    {
+
+        $id=$this->input->post('id');
+        $query=array(
+            'table' =>'advertisers',
+            'param_where' =>array(
+                'id' => $id
+            )
+        );
+
+        $this->MAdvertisers->Delete($query);
         echo json_encode(array("status" => TRUE));
     }
 }

@@ -463,4 +463,50 @@ function resetError()
     $('.password').html('');
     $('.password_confirm').html('');
 }
-///////////////////////////
+
+// delete item theo ID
+function deleteItemByID(id,param)
+{
+
+    if(param == 'Campaigns'){
+        url = "Campaigns/delete";
+    }
+    else if(param == 'Advertisers')
+    {
+        url = "Advertisers/delete";
+    }
+    else if(param == 'Publishers')
+    {
+        url = "Publishers/delete";
+    }
+
+    $('#modal_form_Delete #btnDelete').attr('_id',id);
+    $('#modal_form_Delete #btnDelete').attr('_url',url);
+    $('#modal_form_Delete').modal('show');
+
+
+}
+function deleteItem(id,url)
+{
+    $.ajax({
+        url : url ,
+        data:{id:id},
+        type: "POST",
+        dataType: "JSON",
+        success: function(data)
+        {
+            $('#modal_form_Delete').modal('hide');
+            if(data.status == true)
+            {
+                reload_table();
+               // alert("item deleted successfully");
+
+            }
+
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error get data from ajax');
+        }
+    });
+}
