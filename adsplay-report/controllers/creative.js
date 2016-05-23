@@ -379,6 +379,8 @@ router.get('/new/local-ad-unit', function (req, res) {
 router.get('/new/local-ad-unit/display', function (req, res) {
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "New Creative Display Banner";
+    data.femaleKeywords = constantUtils.getFemaleKeywords();
+    data.maleKeywords = constantUtils.getMaleKeywords();
 
     res.render('ad-report/new-creative-display', data)
 
@@ -387,6 +389,8 @@ router.get('/new/local-ad-unit/display', function (req, res) {
 router.get('/new/local-ad-unit/news', function (req, res) {
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "New Creative Breaking News";
+    data.femaleKeywords = constantUtils.getFemaleKeywords();
+    data.maleKeywords = constantUtils.getMaleKeywords();
 
     res.render('ad-report/new-creative-news', data)
 
@@ -395,6 +399,8 @@ router.get('/new/local-ad-unit/news', function (req, res) {
 router.get('/new/local-ad-unit/overlay', function (req, res) {
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "New Creative Overlay Banner";
+    data.femaleKeywords = constantUtils.getFemaleKeywords();
+    data.maleKeywords = constantUtils.getMaleKeywords();
 
     res.render('ad-report/new-creative-overlay', data)
 
@@ -403,6 +409,8 @@ router.get('/new/local-ad-unit/overlay', function (req, res) {
 router.get('/new/local-ad-unit/video', function (req, res) {
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "New Creative Video";
+    data.femaleKeywords = constantUtils.getFemaleKeywords();
+    data.maleKeywords = constantUtils.getMaleKeywords();
 
     res.render('ad-report/new-creative-video', data)
 

@@ -15,6 +15,8 @@ var placements = {
 var userNames = {1000:'Admin', 1001: 'Manager', 1002: 'Customer', 1003 : 'epl_fptplay', 1004: 'Lava', 1005: 'Ambient'};
 var sites = {'www.fshare.vn': 'FShare' , 'fptplay-live':'FptPlay-LiveEvent' };
 var platforms = {1: 'PC Web' , 2:'Mobile Web', 3: 'Tablet', 4:'Mobile App' , 5:'SmartTV' , 6:'IPTV'};
+var femaleKeywords = [];
+var maleKeyWords = [];
 
 exports.getStatus = function(id) {
     return statuses[id];
@@ -40,6 +42,46 @@ exports.getSite = function(id) {
 exports.getPlatform = function(id) {
     return platforms[id];
 };
+
+exports.getFemaleKeywords = function(){
+    femaleKeyWords.push("Phim bộ HOT");
+    femaleKeyWords.push("Phim bộ Hoa Ngữ");
+    femaleKeyWords.push("Phim bộ Hàn Quốc");
+    femaleKeyWords.push("Phim bộ Việt Nam");
+    femaleKeyWords.push("Quốc Gia Khác");
+    femaleKeyWords.push("Tâm Lý Tình Cảm");
+    femaleKeyWords.push("Hài Hước");
+    femaleKeyWords.push("TV Show HOT");
+    femaleKeyWords.push("TVShow Nổi Bật");
+    femaleKeyWords.push("Trò Chơi Truyền Hình");
+    femaleKeyWords.push("Lễ Trao Giải");
+    femaleKeyWords.push("Sự Kiện");
+    femaleKeyWords.push("Đàm Luận");
+    return femaleKeyWords;
+};
+
+exports.getMaleKeywords = function(){
+    maleKeyWords.push("Phim lẻ HOT");
+    maleKeyWords.push("Phim Lẻ");
+    maleKeyWords.push("Viễn Tưởng Thần Thoại");
+    maleKeyWords.push("Phim Lẻ Nổi Bật, ");
+    maleKeyWords.push("Kinh Dị");
+    maleKeyWords.push("Hành Động Phiêu Lưu");
+    maleKeyWords.push("Bóng Đá Quốc Tế");
+    maleKeyWords.push("Bản Tin");
+    maleKeyWords.push("Bóng Đá Việt Nam");
+    maleKeyWords.push("Xem Lại Trận Đấu Hấp Dẫn");
+    maleKeyWords.push("Các Môn Thể Thao Khác");
+    maleKeyWords.push("Đối Kháng");
+    maleKeyWords.push("Tốc Độ");
+    maleKeyWords.push("Quần Vợt");
+    maleKeyWords.push("Huyền Thoại Sân Cỏ");
+    maleKeyWords.push("League Of Legends");
+    maleKeyWords.push("Dota 2");
+    maleKeyWords.push("Thường Thức");
+    maleKeyWords.push("Trailer");
+    return maleKeyWords;
+}
 
 exports.statuses= statuses;
 exports.placements = placements;
