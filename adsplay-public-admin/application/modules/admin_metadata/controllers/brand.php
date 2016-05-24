@@ -35,7 +35,7 @@ class Brand extends MY_Controller
             $row[] = $bra->date_created;
             // $row[] = $adver->user_id;
             //
-            $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0);" title="Edit" onclick="getBrandByID('."'".$bra->id."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>';
+            $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0);" title="Edit" onclick="getBrandByID('."'".$bra->id."'".')"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>';
             $data[] = $row;
         }
 

@@ -36,7 +36,7 @@ class Sector extends MY_Controller
             $row[] = $sector->date_created;
             // $row[] = $adver->user_id;
             //
-            $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0);" title="Edit" onclick="getSectorByID('."'".$sector->id."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>';
+            $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0);" title="Edit" onclick="getSectorByID('."'".$sector->id."'".')"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>';
             $data[] = $row;
         }
 

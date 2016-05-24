@@ -51,8 +51,8 @@ class Advertisers extends MY_Controller
             $row[] = $adver->contact_info;
            // $row[] = $adver->user_id;
             //
-            $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0);" title="Edit" onclick="getByID('."'".$adver->id."'".",'Advertiser'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>'
-                     . '<a class="btn btn-sm btn-primary" href="javascript:void(0);" title="Delete" onclick="deleteItemByID('."'".$adver->id."'".",'Advertisers'".')"><i class="glyphicon glyphicon-pencil"></i> Delete</a>';
+            $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0);" title="Edit" onclick="getByID('."'".$adver->id."'".",'Advertiser'".')"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>'
+                     . '<a class="btn btn-sm btn-primary" href="javascript:void(0);" title="Delete" onclick="deleteItemByID('."'".$adver->id."'".",'Advertisers'".')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>';
 
             $data[] = $row;
         }
