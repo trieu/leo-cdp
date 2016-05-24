@@ -510,3 +510,21 @@ function deleteItem(id,url)
         }
     });
 }
+function LockAndUnlockUser(id)
+{
+    // ajax adding data to database
+
+    $.ajax({
+        url : "LockAndUnlockUser",
+        type: "POST",
+        data: {id:id},
+        success: function(data) {
+            //if success close modal and reload ajax table
+            reload_table();
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error adding / update data');
+        }
+    });
+}

@@ -818,12 +818,12 @@ class Auth extends MY_Controller {
 			$row[] = $user->GroupName;
 			if($user->Active==1)
 			{
-				$row[] = '<a class="btn btn-sm btn-primary btn-grid" href="javascript:void()" title="Edit" onclick="getByIdUser('."'".$user->ID."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>'.
-						 '<a class="btn btn-sm btn-primary btn-grid" href="javascript:void()" title="Lock" onclick="LockAndUnlockUser('."'".$user->ID."'".')"><i class="glyphicon glyphicon-pencil"></i> Lock</a>';
+				$row[] = '<a class="btn btn-sm btn-primary btn-grid" href="javascript:void()" title="Edit" onclick="getByIdUser('."'".$user->ID."'".')"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>'.
+						 '<a class="btn btn-sm btn-primary btn-grid" href="javascript:void()" title="Lock" onclick="LockAndUnlockUser('."'".$user->ID."'".')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>';
 
 			}else{
-				$row[] = '<a class="btn btn-sm btn-primary btn-grid" href="javascript:void()" title="Edit" onclick="getByID('."'".$user->ID."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>'.
-					'<a class="btn btn-sm btn-primary btn-grid" href="javascript:void()" title="Un Lock" onclick="LockAndUnlockUser('."'".$user->ID."'".')"><i class="glyphicon glyphicon-pencil"></i>Un Lock</a>';
+				$row[] = '<a class="btn btn-sm btn-primary btn-grid" href="javascript:void()" title="Edit" onclick="getByID('."'".$user->ID."'".')"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>'.
+					'<a class="btn btn-sm btn-primary btn-grid" href="javascript:void()" title="Un Lock" onclick="LockAndUnlockUser('."'".$user->ID."'".')"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>';
 
 			}
 
