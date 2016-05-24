@@ -142,8 +142,8 @@
                 </a>
             </li>
             <li>
-                <a class="sa-side-chart" href="">
-                    <span class="menu-item">Charts</span>
+                <a class="sa-side-chart" href="<?php echo site_url('admin_advertisers/advertisers/chart'); ?>">
+                    <span class="menu-item">Summary Report</span>
                 </a>
             </li>
             <?php if($this->ion_auth->in_group('superAdmin')):?>

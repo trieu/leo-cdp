@@ -74,6 +74,13 @@ class Advertisers extends MY_Controller
         $data = $this->MAdvertisers->getById($id);
         echo json_encode($data);
     }
+
+    // Get chart summary report
+    public function chart(){
+
+        $this->data['the_view_content'] = 'admin_advertisers/chart';
+        $this->_render_page('template/master_view', $this->data);
+    }
     public function  getAllUser()
     {
         $query = $this->MAdvertisers->getAllUsers();
