@@ -15,8 +15,8 @@ var placements = {
 var userNames = {1000:'Admin', 1001: 'Manager', 1002: 'Customer', 1003 : 'epl_fptplay', 1004: 'Lava', 1005: 'Ambient'};
 var sites = {'www.fshare.vn': 'FShare' , 'fptplay-live':'FptPlay-LiveEvent' };
 var platforms = {1: 'PC Web' , 2:'Mobile Web', 3: 'Tablet', 4:'Mobile App' , 5:'SmartTV' , 6:'IPTV'};
-var femaleKeywords = [];
-var maleKeyWords = [];
+
+
 
 exports.getStatus = function(id) {
     return statuses[id];
@@ -44,6 +44,7 @@ exports.getPlatform = function(id) {
 };
 
 exports.getFemaleKeywords = function(){
+    var femaleKeyWords = [];
     femaleKeyWords.push("Phim bộ HOT");
     femaleKeyWords.push("Phim bộ Hoa Ngữ");
     femaleKeyWords.push("Phim bộ Hàn Quốc");
@@ -61,6 +62,7 @@ exports.getFemaleKeywords = function(){
 };
 
 exports.getMaleKeywords = function(){
+    var maleKeyWords = [];
     maleKeyWords.push("Phim lẻ HOT");
     maleKeyWords.push("Phim Lẻ");
     maleKeyWords.push("Viễn Tưởng Thần Thoại");
