@@ -347,7 +347,19 @@
                     }
                 });
             }
-        })
+        });
+
+        //fix date month 2 
+        $('#ads_running_date,#ads_expired_date').change(function(){
+
+            if (moment($(this).val()).isValid()) {
+                $(this).attr('data-lastday', moment($(this).val()).endOf('month').format("YYYY-MM-DD"));
+            }
+            else {
+                $(this).val($(this).attr('data-lastday'))
+            }
+        });
+
     });
 
 })(typeof window === 'undefined' ? this : window);

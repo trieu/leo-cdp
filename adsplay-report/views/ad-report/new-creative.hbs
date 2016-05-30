@@ -74,7 +74,12 @@
 
 <script>
     $('#ads_format_ok').click(function () {
-        window.location.href = $('input[name=ads_format]:checked').val()
+        if ($('input[name=ads_format]').is(":checked")) {
+           window.location.href = $('input[name=ads_format]:checked').val();
+        }
+        else{
+            alert("Please ! Choose an advertising format .");
+        }
     });
 
 </script>
