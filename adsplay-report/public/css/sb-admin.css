@@ -261,3 +261,13 @@ ul.alert-dropdown {
 .break-news{
     background-color: yellow;
 }
+
+input[type=date]::-webkit-outer-spin-button,
+input[type=date]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=date] {
+    -moz-appearance:textfield;
+}

@@ -192,6 +192,8 @@
         document.getElementById("ads_running_date").valueAsDate = new Date();
         document.getElementById("ads_expired_date").valueAsDate = moment().add(1, 'days').toDate();
 
+        var nodes = $('#target_ad_placements').find('input');
+        /*
         var h1 = function(){
             var v = $(this).val() ;
             var checked = $(this).is(':checked');
@@ -204,7 +206,7 @@
         };
         $('#ad_target_device input:checked').each(h1);
         $('#ad_target_device input').change(h1);
-
+        */
         $('#ads_action_ok').click(function(){
             var data = collectCreativeData();
             
@@ -257,6 +259,10 @@
                     msg += ($(this).attr('placeholder') + '\n')
                 });
                 modal_alert('Some information is invalid, please: \n' + msg);
+                return false;
+            }
+            if(!$('#target_ad_placements input[type="checkbox"]').is(':checked')){
+                modal_alert('Some information is invalid, please: \n' + 'Target Placement');
                 return false;
             }
 
@@ -349,17 +355,9 @@
             }
         });
 
-        //fix date month 2 
-        $('#ads_running_date,#ads_expired_date').change(function(){
-
-            if (moment($(this).val()).isValid()) {
-                $(this).attr('data-lastday', moment($(this).val()).endOf('month').format("YYYY-MM-DD"));
-            }
-            else {
-                $(this).val($(this).attr('data-lastday'))
-            }
+        $('#ads_running_date,#ads_expired_date').keydown(function(e) {
+           e.preventDefault();
         });
-
     });
 
 })(typeof window === 'undefined' ? this : window);
