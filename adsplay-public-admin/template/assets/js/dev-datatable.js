@@ -28,8 +28,8 @@ $(document).ready(function() {
         chos = '';
     }
     if($('#list-datatable').hasClass('data-creative')){
-        var campid = $('#list-datatable').attr('data-id');
-        url = "getAjax?campId="+campid;
+        var campaignId = $('#list-datatable').attr('data-id');
+        url = "getAjax?campaignId="+campaignId;
         chos = '';
     }
     table = $('#list-datatable').DataTable({

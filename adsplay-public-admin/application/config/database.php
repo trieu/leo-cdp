@@ -72,13 +72,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $active_group = 'default';
 $query_builder = TRUE;
-
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
-	'database' => 'ci_template',
+	'hostname' => '42.119.252.87',
+	'port'	   => '11491',
+	'username' => 'dev',
+	'password' => 'Qazxsw@12345',
+	'database' => 'adsplay_admin_v2',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
@@ -94,3 +94,43 @@ $db['default'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
+
+//$db['default'] = array(
+//	'dsn'	=> '',
+//	'hostname' => 'localhost',
+//	'username' => 'root',
+//	'password' => '',
+//	'database' => 'ci_template',
+//	'dbdriver' => 'mysqli',
+//	'dbprefix' => '',
+//	'pconnect' => FALSE,
+//	'db_debug' => (ENVIRONMENT !== 'production'),
+//	'cache_on' => FALSE,
+//	'cachedir' => '',
+//	'char_set' => 'utf8',
+//	'dbcollat' => 'utf8_general_ci',
+//	'swap_pre' => '',
+//	'encrypt' => FALSE,
+//	'compress' => FALSE,
+//	'stricton' => FALSE,
+//	'failover' => array(),
+//	'save_queries' => TRUE
+//);
+// Connect Postpres database
+$db['postgres']['hostname'] = "42.119.252.88";
+$db['postgres']['username'] = "postgres";
+$db['postgres']['password'] = "cG9zdGdyZXM=";
+$db['postgres']['database'] = "db_creative";
+$db['postgres']['dbdriver'] = "postgre";
+$db['postgres']['dbprefix'] = "";
+$db['postgres']['pconnect'] = TRUE;
+$db['postgres']['db_debug'] = FALSE;
+$db['postgres']['cache_on'] = FALSE;
+$db['postgres']['cachedir'] = "";
+$db['postgres']['char_set'] = "utf8";
+$db['postgres']['dbcollat'] = "utf8_general_ci";
+$db['postgres']['swap_pre'] = "";
+$db['postgres']['autoinit'] = TRUE;
+$db['postgres']['stricton'] = FALSE;
+$db['postgres']['port'] = 5432;
+

@@ -9,7 +9,7 @@
 <?php // var_dump($data);die; ?>
 <h4 class="page-title">DETAIL CREATIVE</h4>
 
-
+<?php //echo $data->CreativeID; // var_dump($data);die;  ?>
 <div class="block-area">
     <div class="row m-container">
 
@@ -30,7 +30,7 @@
         <!-- Calendar -->
         <div class="tile">
             <div class="panel panel-default">
-                <h2 class="tile-title">Summary Report from <?php echo date("d-m-Y",$data[0]->created_date); ?> to <?php echo date("d-m-Y",$data[0]->expired_date); ?> </h2>
+                <h2 class="tile-title">Summary Report from <?php echo $data->CreatedDate; ?> to <?php echo $data->ExpiredDate; ?> </h2>
                 <div class="panel-body">
                     <div class="block-area" id="tableStriped">
                         <div class="table-responsive overflow">
@@ -38,42 +38,42 @@
                                 <tbody>
                                 <tr>
                                     <td>Created date</td>
-                                    <td><?php echo date("d-m-Y",$data[0]->created_date); ?> </td>
+                                    <td><?php echo $data->CreatedDate; ?> </td>
 
                                 </tr>
                                 <tr>
                                     <td>Expired date</td>
-                                    <td><?php echo date("d-m-Y",$data[0]->expired_date); ?></td>
+                                    <td><?php echo $data->ExpiredDate; ?></td>
 
                                 </tr>
                                 <tr>
                                     <td>Status</td>
-                                    <td><?php echo $data[0]->status ?></td>
+                                    <td><?php echo $data->Status ; ?></td>
 
                                 </tr>
                                 <tr>
                                     <td>Click Through URL</td>
-                                    <td><?php echo $data[0]->click_through ?></td>
+                                    <td><a title="<?php echo $data->Name ?>" href="<?php echo $data->ClickThrough ?>" target="_blank"><?php echo $data->ClickThrough ?></a></td>
 
                                 </tr>
                                 <tr>
                                     <td>Total Booking</td>
-                                    <td>0</td>
+                                    <td><?php echo $data->TotalBooking ?></td>
 
                                 </tr>
                                 <tr>
                                     <td>Daily Booking</td>
-                                    <td>0</td>
+                                    <td><?php echo $data->DailyBooking ?></td>
 
                                 </tr>
                                 <tr>
                                     <td>Hourly Booking</td>
-                                    <td>0</td>
+                                    <td><?php echo $data->HourlyBooking ?></td>
 
                                 </tr>
                                 <tr>
                                     <td>Discount</td>
-                                    <td>0</td>
+                                    <td><?php echo $data->Discount ?></td>
 
                                 </tr>
                                 <tr>
@@ -108,7 +108,7 @@
                                 </tr>
                                 <tr>
                                     <td>Total Revenue</td>
-                                    <td>0</td>
+                                    <td><?php echo $data->TotalRevenue ?></td>
 
                                 </tr>
                                 </tbody>

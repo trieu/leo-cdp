@@ -46,7 +46,7 @@ class Campaigns extends MY_Controller
             //  $no++;
             $row = array();
             $row[] = $camp->id;
-            $row[] ='<a href="creatives/getCreativeByCampId?campId='.$camp->id.'">'.$camp->campaign_name.'</a>';
+            $row[] ='<a href="creatives/getCreativeByCampaignID?campaignId='.$camp->id.'">'.$camp->campaign_name.'</a>';
             $row[] = $camp->brand_name;
             $row[] = $camp->product_name;
             $row[] = $camp->sector_name;
