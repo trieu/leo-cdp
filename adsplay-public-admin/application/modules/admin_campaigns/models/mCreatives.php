@@ -16,19 +16,20 @@ class MCreatives extends My_Model
     }
     // get list creative from postgre
     public function getCreativeByCampaignID($campaignID){
-        $this->db2 = $this->load->database('postgres', TRUE);
-        $this->db2->select('*')
+
+        $this->db->select('*')
             ->from($this->table)
             ->where('CampaignID',$campaignID);
-        $query = $this->db2->get();
+        $query = $this->db->get();
         return $query->result_array();
+
     }
     public function detailCreative($creativeID){
-        $this->db2 = $this->load->database('postgres', TRUE);
-        $this->db2->select('*')
+
+        $this->db->select('*')
             ->from($this->table)
             ->where('CreativeID',$creativeID);
-        $query = $this->db2->get();
+        $query = $this->db->get();
         return $query->row();
     }
 
