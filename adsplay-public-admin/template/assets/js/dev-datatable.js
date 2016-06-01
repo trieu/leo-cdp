@@ -5,7 +5,24 @@ var save_method; //for save method string
 var table;
 var url;
 var chos;
-var urlHost='http://localhost:8800/Git_HMVC_Admin/adsplay-frontend/adsplay-public-admin/index.php/';
+var urlHost='';
+var arrayHost=$(location).attr('href').split("/");
+for(i=0;i<(arrayHost.length-2);i++)
+{
+    if(i==0)
+    {
+        urlHost=urlHost+arrayHost[i];
+    }else if(i==1)
+    {
+        urlHost=urlHost+'//'+arrayHost[i];
+    }else
+    {
+        urlHost=urlHost+'/'+arrayHost[i];
+    }
+
+}
+//console.log(urlHost);
+//console.log(arrayHost[0]);
 $(document).ready(function() {
 
     if($('#list-datatable').hasClass('data-advertiser')){
@@ -450,6 +467,7 @@ function getByIdUser(id)
 /*Campaign*/
 function getAllBrand(){
     //Ajax Load data from ajax
+   // console.log(urlHost);
     url=urlHost+"/admin_campaigns/campaigns/getAllBrand";
     $.ajax({
         url :url ,
