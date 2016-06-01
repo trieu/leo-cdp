@@ -72,49 +72,66 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $active_group = 'default';
 $query_builder = TRUE;
-
+//
 //$db['default'] = array(
-//	'dsn'	=> '',
-//	'hostname' => 'localhost',
-//	'username' => 'root',
-//	'password' => '',
-//	'database' => 'ci_template',
-//	'dbdriver' => 'mysqli',
-//	'dbprefix' => '',
-//	'pconnect' => FALSE,
-//	'db_debug' => (ENVIRONMENT !== 'production'),
-//	'cache_on' => FALSE,
-//	'cachedir' => '',
-//	'char_set' => 'utf8',
-//	'dbcollat' => 'utf8_general_ci',
-//	'swap_pre' => '',
-//	'encrypt' => FALSE,
-//	'compress' => FALSE,
-//	'stricton' => FALSE,
-//	'failover' => array(),
-//	'save_queries' => TRUE
-//);
-
-
-$db['default'] = array(
-	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'postgres',
-	'password' => 'hung17071989',
-	'database' => 'ci_template',
-	'dbdriver' => 'postgre',
-	'dbprefix' => '',
-	'pconnect' => FALSE,
-	'db_debug' => TRUE,
-	'cache_on' => FALSE,
-	'cachedir' => '',
-	'char_set' => 'utf8',
-	'dbcollat' => 'utf8_general_ci',
-	'swap_pre' => '',
-	'encrypt' => FALSE,
-	'compress' => FALSE,
-	'stricton' => FALSE,
-	'failover' => array(),
-	'save_queries' => TRUE,
-	'port'=>'5432'
-);
+//		'dsn'	=> '',
+//		'hostname' => '42.119.252.87',
+//		'port'	   => '11491',
+//		'username' => 'dev',
+//		'password' => 'Qazxsw@12345',
+//		'database' => 'adsplay_admin_v2',
+//		'dbdriver' => 'mysqli',
+//		'dbprefix' => '',
+//		'pconnect' => FALSE,
+//		'db_debug' => (ENVIRONMENT !== 'production'),
+//		'cache_on' => FALSE,
+//		'cachedir' => '',
+//		'char_set' => 'utf8',
+//		'dbcollat' => 'utf8_general_ci',
+//		'swap_pre' => '',
+//		'encrypt' => FALSE,
+//		'compress' => FALSE,
+//		'stricton' => FALSE,
+//		'failover' => array(),
+//		'save_queries' => TRUE
+//		);
+// Connect Postpres database
+$db['default']['hostname'] = "42.119.252.88";
+$db['default']['username'] = "postgres";
+$db['default']['password'] = "cG9zdGdyZXM=";
+$db['default']['database'] = "db_creative";
+$db['default']['dbdriver'] = "postgre";
+$db['default']['dbprefix'] = "";
+$db['default']['pconnect'] = TRUE;
+$db['default']['db_debug'] = FALSE;
+$db['default']['cache_on'] = FALSE;
+$db['default']['cachedir'] = "";
+$db['default']['char_set'] = "utf8";
+$db['default']['dbcollat'] = "utf8_general_ci";
+$db['default']['swap_pre'] = "";
+$db['default']['autoinit'] = TRUE;
+$db['default']['stricton'] = FALSE;
+$db['default']['port'] = 5432;
+////////////////////////////////
+//$db['default'] = array(
+//		'dsn'	=> '',
+//		'hostname' => 'localhost',
+//		'username' => 'postgres',
+//		'password' => 'mith160688',
+//		'database' => 'adsplay_admin',
+//		'dbdriver' => 'postgre',
+//		'dbprefix' => '',
+//		'pconnect' => FALSE,
+//		'db_debug' => TRUE,
+//		'cache_on' => FALSE,
+//		'cachedir' => '',
+//		'char_set' => 'utf8',
+//		'dbcollat' => 'utf8_general_ci',
+//		'swap_pre' => '',
+//		'encrypt' => FALSE,
+//		'compress' => FALSE,
+//		'stricton' => FALSE,
+//		'failover' => array(),
+//		'save_queries' => TRUE,
+//		'port'=>'5432'
+//		);
