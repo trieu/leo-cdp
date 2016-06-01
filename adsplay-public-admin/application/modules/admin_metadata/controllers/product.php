@@ -59,24 +59,24 @@ class Product extends MY_Controller
         $data = $this->MMetaData->getById($id,'product');
         echo json_encode($data);
     }
-//    public function  getAllBrand()
-//    {
-//        $query = $this->MMetaData->getAllBrand();
-//        echo json_encode($query);
-//    }
+    public function  getAllBrand()
+    {
+        $query = $this->MMetaData->getAllBrand();
+        echo json_encode($query);
+    }
+//
+//    /**
+//     * lấy danh sách product bởi brand id
+//     * @author Mith
+//     */
+    public function getProductByBrandId()
+    {
+        $brandId = (int)$this->input->post('brandId');
 
-    /**
-     * lấy danh sách product bởi brand id
-     * @author Mith
-     */
-//    public function getProductByBrandId()
-//    {
-//        $brandId = (int)$this->input->post('brandId');
-//
-//        $query = $this->MMetaData->getProductByBrandId($brandId);
-//        echo json_encode($query);
-//
-//    }
+        $query = $this->MMetaData->getProductByBrandId($brandId);
+        echo json_encode($query);
+
+    }
     public function Insert()
     {
         // username => name input, Username => ten hien thi trong tb loi

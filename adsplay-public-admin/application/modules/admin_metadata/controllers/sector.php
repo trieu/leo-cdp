@@ -59,35 +59,35 @@ class Sector extends MY_Controller
         $data = $this->MMetaData->getById($id,'sector');
         echo json_encode($data);
     }
-//    public function  getAllProduct()
-//    {
-//        $query = $this->MMetaData->getAllProduct();
-//        echo json_encode($query);
-//    }
-    /**
-     * lấy danh sách products bởi brand id
-     * @author Mith
-     */
-//    public function getProductByBrandId()
-//    {
-//        $brandId = (int)$this->input->post('brandId');
-//
-//        $query = $this->MMetaData->getProductByBrandId($brandId);
-//        echo json_encode($query);
-//
-//    }
-    /**
-     * lấy danh sách sector bởi product id
-     * @author Mith
-     */
-//    public function getSectorByProductId()
-//    {
-//        $productId = (int)$this->input->post('productId');
-//
-//        $query = $this->MMetaData->getSectorByProductId($productId);
-//        echo json_encode($query);
-//
-//    }
+    public function  getAllProduct()
+    {
+        $query = $this->MMetaData->getAllProduct();
+        echo json_encode($query);
+    }
+//    /**
+//     * lấy danh sách products bởi brand id
+//     * @author Mith
+//     */
+    public function getProductByBrandId()
+    {
+        $brandId = (int)$this->input->post('brandId');
+
+        $query = $this->MMetaData->getProductByBrandId($brandId);
+        echo json_encode($query);
+
+    }
+//    /**
+//     * lấy danh sách sector bởi product id
+//     * @author Mith
+//     */
+    public function getSectorByProductId()
+    {
+        $productId = (int)$this->input->post('productId');
+
+        $query = $this->MMetaData->getSectorByProductId($productId);
+        echo json_encode($query);
+
+    }
     public function Insert()
     {
         // username => name input, Username => ten hien thi trong tb loi
