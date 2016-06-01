@@ -11,11 +11,11 @@
     </div>
 
     <div class="tab-pane" id="product">
-        <?php $this->load->view('admin_metadata/product/List_Product');?>
+
     </div>
 
     <div class="tab-pane" id="sectors">
-        <?php $this->load->view('admin_metadata/sector/List_Sector');?>
+
     </div>
 
 </div>

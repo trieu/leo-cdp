@@ -7,10 +7,10 @@
         <div class="x_content">
             <?php if($this->ion_auth->in_group('superAdmin')):?>
             <p class="text-muted font-13 m-b-30">
-                <button class="btn btn-success" onclick="add_Product()"><i class="glyphicon glyphicon-plus"></i> Add Product</button>
+                <button class="btn btn-success" onclick="add_data_modal('Product')"><i class="glyphicon glyphicon-plus"></i> Add Product</button>
             </p>
             <?php endif; ?>
-            <table id="datatable-Product" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+            <table id="list-datatable" class="data-product table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                 <thead>
                 <tr>
                     <th>ID</th>
@@ -30,7 +30,7 @@
     </div>
 </div>
 <style>
-    select[name="datatable-Product_length"]
+    select[name="list-datatable_length"]
     {
         background: none;
     }

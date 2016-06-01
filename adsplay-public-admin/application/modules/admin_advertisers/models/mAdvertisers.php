@@ -7,7 +7,7 @@
  */
 class MAdvertisers extends My_Model
 {
-    private $table = 'advertisers';
+    private $table = '"advertisers"';
     public function InsertOrUpdate($param = NULL){
         if(isset($param) && is_array($param))
         {

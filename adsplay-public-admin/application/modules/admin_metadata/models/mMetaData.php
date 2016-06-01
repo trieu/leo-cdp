@@ -14,25 +14,31 @@ class MMetaData extends My_Model
             $this->_save($param);
         }
     }
+    public function Delete($param = NULL){
+        if(isset($param) && is_array($param))
+        {
+            $this->_del($param);
+        }
+    }
     public function get($param = NULL){
         if(isset($param))
         {
             $join=array();
-            $table='brands';
+            $table='"brands"';
             $select='*';
             if($param=="product")
             {
-                $table='products';
+                $table='"products"';
                 $select='products.id as id,product_name,brand_id,products.date_created,brand_name ';
                 $join=array(
-                    array('brands','brands.id=products.brand_id','inner')
+                    array('"brands"','brands.id=products.brand_id','inner')
                 );
             }else if($param=="sector")
             {
-                $table='sectors';
+                $table='"sectors"';
                 $select='sectors.id as id,sector_name,product_id,sectors.date_created,product_name';
                 $join=array(
-                    array('products','products.id=sectors.product_id','inner')
+                    array('"products"','products.id=sectors.product_id','inner')
                 );
             }
             return $this->_getjoin(array(
@@ -47,7 +53,7 @@ class MMetaData extends My_Model
     public function getAllBrand(){
 
         return $this->_general(array(
-            'table' => 'brands',
+            'table' => '"brands"',
             'list' => TRUE,
             'type' => 'object'
         ));
@@ -55,7 +61,7 @@ class MMetaData extends My_Model
     }
     public function getAllProduct(){
         return $this->_general(array(
-            'table' => 'products',
+            'table' => '"products"',
             'list' => TRUE,
             'type' => 'object'
 
@@ -65,7 +71,7 @@ class MMetaData extends My_Model
 
     public function getAllCampaign(){
         return $this->_general(array(
-            'table' => 'campaigns',
+            'table' => '"campaigns"',
             'list' => TRUE,
             'type' => 'object'
 
@@ -76,7 +82,7 @@ class MMetaData extends My_Model
     {
 
         return $this->_getwhere(array(
-            'table' => 'products',
+            'table' => '"products"',
             'list' => TRUE,
             'type' => 'object',
             'param_where' => array(
@@ -88,7 +94,7 @@ class MMetaData extends My_Model
     public function getSectorByProductId($productId)
     {
         return $this->_getwhere(array(
-            'table' => 'sectors',
+            'table' => '"sectors"',
             'list' => TRUE,
             'type' => 'object',
             'param_where' => array(
@@ -101,20 +107,20 @@ class MMetaData extends My_Model
         if(isset($param)&&isset($id))
         {
             $join=array();
-            $table='brands';
+            $table='"brands"';
             $select='*';
             $idWhere='id';
             if($param=="product")
             {
-                $table='products';
+                $table='"products"';
                 $select='products.id as id,product_name,brand_id,products.date_created,brand_name ';
                 $idWhere='products.id';
                 $join=array(
-                    array('brands','brands.id=products.brand_id','inner')
+                    array('"brands"','brands.id=products.brand_id','inner')
                 );
             }else if($param=="sector")
             {
-                $table='sectors';
+                $table='"sectors"';
                 $select='sectors.id as id,sector_name,product_id,sectors.date_created,product_name';
                 $idWhere='sectors.id';
                 $join=array(
@@ -139,21 +145,21 @@ class MMetaData extends My_Model
         if(isset($param))
         {
             $join=array();
-            $table='brands';
+            $table='"brands"';
             $select='*';
             if($param=="product")
             {
-                $table='products';
+                $table='"products"';
                 $select='products.id as id,product_name,brand_id,products.date_created,brand_name ';
                 $join=array(
-                    array('brands','brands.id=products.brand_id','inner')
+                    array('"brands"','brands.id=products.brand_id','inner')
                 );
             }else if($param=="sector")
             {
-                $table='sectors';
+                $table='"sectors"';
                 $select='sectors.id as id,sector_name,product_id,sectors.date_created,product_name';
                 $join=array(
-                    array('products','products.id=sectors.product_id','inner')
+                    array('"products"','products.id=sectors.product_id','inner')
                 );
             }
             return $this->_getjoin(array(

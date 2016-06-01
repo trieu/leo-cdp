@@ -18,7 +18,10 @@ class Product extends MY_Controller
             redirect('admin_auth/auth', 'refresh');
         }
     }
-
+    public  function index()
+    {
+        $this->load->view('admin_metadata/product/List_Product');
+    }
     public  function  getAjax(){
 
         $query = $this->MMetaData->get('product');
@@ -56,24 +59,24 @@ class Product extends MY_Controller
         $data = $this->MMetaData->getById($id,'product');
         echo json_encode($data);
     }
-    public function  getAllBrand()
-    {
-        $query = $this->MMetaData->getAllBrand();
-        echo json_encode($query);
-    }
+//    public function  getAllBrand()
+//    {
+//        $query = $this->MMetaData->getAllBrand();
+//        echo json_encode($query);
+//    }
 
     /**
      * lấy danh sách product bởi brand id
      * @author Mith
      */
-    public function getProductByBrandId()
-    {
-        $brandId = (int)$this->input->post('brandId');
-
-        $query = $this->MMetaData->getProductByBrandId($brandId);
-        echo json_encode($query);
-
-    }
+//    public function getProductByBrandId()
+//    {
+//        $brandId = (int)$this->input->post('brandId');
+//
+//        $query = $this->MMetaData->getProductByBrandId($brandId);
+//        echo json_encode($query);
+//
+//    }
     public function Insert()
     {
         // username => name input, Username => ten hien thi trong tb loi
@@ -83,7 +86,7 @@ class Product extends MY_Controller
         if($this->form_validation->run())
         {
             $query=array(
-                'table' =>'products',
+                'table' =>'"products"',
                 'data' => array(
                     'product_name' => $this->input->post('name'),
                     'brand_id' => $this->input->post('brand_id'),
@@ -105,7 +108,7 @@ class Product extends MY_Controller
         $this->form_validation->set_rules('name', 'Name', 'required');
         $id=$this->input->post('id');
         $query=array(
-            'table' =>'products',
+            'table' =>'"products"',
             'data' => array(
                 'product_name' => $this->input->post('name'),
                 'brand_id' => $this->input->post('brand_id')

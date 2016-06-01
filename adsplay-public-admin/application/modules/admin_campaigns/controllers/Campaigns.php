@@ -73,7 +73,6 @@ class Campaigns extends MY_Controller
     // Lay thong tin theo ID
     public  function  getByID(){
         $id = $_POST['id'];
-
         $data = $this->MCampaigns->getById($id);
         echo json_encode($data);
     }
@@ -84,8 +83,13 @@ class Campaigns extends MY_Controller
     }
     public  function  getAllProduct(){
         $id = $_POST['id'];
-
-        $data = $this->MCampaigns->getAllProduct($id);
+        if($id==0)
+        {
+            $data = $this->MCampaigns->getAllProduct();
+        }else
+        {
+            $data = $this->MCampaigns->getAllProduct($id);
+        }
         echo json_encode($data);
     }
     public  function  getAllSector(){
@@ -99,13 +103,13 @@ class Campaigns extends MY_Controller
     {
         // username => name input, Username => ten hien thi trong tb loi
         $this->form_validation->set_rules('name', 'Name', 'required');
-        $this->form_validation->set_rules('unit', 'Unit', 'required');
+      //  $this->form_validation->set_rules('unit', 'Unit', 'required');
         $date=date('Y-m-d H:i:s');
       //  echo json_encode(array("abc" => $this->form_validation->run())) ; die;
         if($this->form_validation->run())
         {
             $query=array(
-                'table' =>'campaigns',
+                'table' =>'"campaigns"',
                 'data' => array(
                     'campaign_name' => $this->input->post('name'),
                     'brand_id' => $this->input->post('brand_id'),
@@ -115,7 +119,7 @@ class Campaigns extends MY_Controller
                     'date_created'=> $date
                 )
             );
-// echo json_encode($query) ; die;
+
             $this->MCampaigns->InsertOrUpdate($query);
             echo json_encode(array("status" => TRUE));
         }else
@@ -131,7 +135,7 @@ class Campaigns extends MY_Controller
         $this->form_validation->set_rules('unit', 'Unit', 'required');
         $id=$this->input->post('id');
         $query=array(
-            'table' =>'campaigns',
+            'table' =>'"campaigns"',
             'data' => array(
                 'campaign_name' => $this->input->post('name'),
                 'brand_id' => $this->input->post('brand_id'),
@@ -152,7 +156,7 @@ class Campaigns extends MY_Controller
 
         $id=$this->input->post('id');
         $query=array(
-            'table' =>'campaigns',
+            'table' =>'"campaigns"',
             'param_where' =>array(
                 'id' => $id
             )

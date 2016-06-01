@@ -796,9 +796,9 @@ class Auth extends MY_Controller {
 	// Load du lieu thei kieu ajax
 	function  getAjax(){
 		$query =$this->db->select('users.id as ID, users.username as Username,users.email as Email,users.active as Active,groups.name as GroupName, groups.id as GroupId')
-						 ->from('users_groups')
-						 ->join('users','users.id = users_groups.user_id','inner')
-						 ->join('groups','groups.id=users_groups.group_id','inner')
+						 ->from('"users_groups"')
+						 ->join('"users"','users.id = users_groups.user_id','inner')
+						 ->join('"groups"','groups.id=users_groups.group_id','inner')
 						->get()->result_object();
 		// $this->Users_model->listUsers();
 //		print_r($query);
@@ -844,7 +844,7 @@ class Auth extends MY_Controller {
 		$id=$this->input->post('id');
 
 		$query = $this->db->select("*")
-			->from("users")
+			->from('"users"')
 			->where('id',$id)
 			->get()->result_object();
 
@@ -856,12 +856,12 @@ class Auth extends MY_Controller {
 				// update lai trang thai cua user
 				$query[0]->active=0;
 				$this->db->where('id', $query[0]->id)
-				->update('users', $query[0]);
+				->update('"users"', $query[0]);
 			}else
 			{
 				$query[0]->active=1;
 				$this->db->where('id', $query[0]->id)
-					->update('users', $query[0]);
+					->update('"users"', $query[0]);
 			}
 
 		}

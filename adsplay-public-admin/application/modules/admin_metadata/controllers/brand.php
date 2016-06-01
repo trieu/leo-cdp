@@ -18,6 +18,10 @@ class Brand extends MY_Controller
             redirect('admin_auth/auth', 'refresh');
         }
     }
+    public  function index()
+    {
+        $this->load->view('admin_metadata/brand/List_Brand');
+    }
 
     public  function  getAjax(){
 
@@ -63,8 +67,9 @@ class Brand extends MY_Controller
         //echo $date; die;
         if($this->form_validation->run())
         {
+
             $query=array(
-                'table' =>'brands',
+                'table' =>'"brands"',
                 'data' => array(
                     'brand_name' => $this->input->post('name'),
                     'date_created'=> $date
@@ -85,7 +90,7 @@ class Brand extends MY_Controller
         $this->form_validation->set_rules('name', 'Name', 'required');
         $id=$this->input->post('id');
         $query=array(
-            'table' =>'brands',
+            'table' =>'"brands"',
             'data' => array(
                 'brand_name' => $this->input->post('name')
             ),

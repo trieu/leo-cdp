@@ -18,7 +18,10 @@ class Sector extends MY_Controller
             redirect('admin_auth/auth', 'refresh');
         }
     }
-
+    public  function index()
+    {
+        $this->load->view('admin_metadata/sector/List_Sector');
+    }
     public  function  getAjax(){
 
         $query = $this->MMetaData->get('sector');
@@ -56,35 +59,35 @@ class Sector extends MY_Controller
         $data = $this->MMetaData->getById($id,'sector');
         echo json_encode($data);
     }
-    public function  getAllProduct()
-    {
-        $query = $this->MMetaData->getAllProduct();
-        echo json_encode($query);
-    }
+//    public function  getAllProduct()
+//    {
+//        $query = $this->MMetaData->getAllProduct();
+//        echo json_encode($query);
+//    }
     /**
      * lấy danh sách products bởi brand id
      * @author Mith
      */
-    public function getProductByBrandId()
-    {
-        $brandId = (int)$this->input->post('brandId');
-
-        $query = $this->MMetaData->getProductByBrandId($brandId);
-        echo json_encode($query);
-
-    }
+//    public function getProductByBrandId()
+//    {
+//        $brandId = (int)$this->input->post('brandId');
+//
+//        $query = $this->MMetaData->getProductByBrandId($brandId);
+//        echo json_encode($query);
+//
+//    }
     /**
      * lấy danh sách sector bởi product id
      * @author Mith
      */
-    public function getSectorByProductId()
-    {
-        $productId = (int)$this->input->post('productId');
-
-        $query = $this->MMetaData->getSectorByProductId($productId);
-        echo json_encode($query);
-
-    }
+//    public function getSectorByProductId()
+//    {
+//        $productId = (int)$this->input->post('productId');
+//
+//        $query = $this->MMetaData->getSectorByProductId($productId);
+//        echo json_encode($query);
+//
+//    }
     public function Insert()
     {
         // username => name input, Username => ten hien thi trong tb loi
@@ -94,7 +97,7 @@ class Sector extends MY_Controller
         if($this->form_validation->run())
         {
             $query=array(
-                'table' =>'sectors',
+                'table' =>'"sectors"',
                 'data' => array(
                     'sector_name' => $this->input->post('name'),
                     'product_id' => $this->input->post('product_id'),
@@ -116,7 +119,7 @@ class Sector extends MY_Controller
         $this->form_validation->set_rules('name', 'Name', 'required');
         $id=$this->input->post('id');
         $query=array(
-            'table' =>'sectors',
+            'table' =>'"sectors"',
             'data' => array(
                 'sector_name' => $this->input->post('name'),
                 'product_id' => $this->input->post('product_id')

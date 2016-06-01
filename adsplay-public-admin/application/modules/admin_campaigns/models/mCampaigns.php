@@ -7,7 +7,7 @@
  */
 class MCampaigns extends My_Model
 {
-    private $table = 'campaigns';
+    private $table = '"campaigns"';
     public function InsertOrUpdate($param = NULL){
         if(isset($param) && is_array($param))
         {
@@ -69,6 +69,14 @@ class MCampaigns extends My_Model
                 'type' => 'object'
 
             ));
+        }else
+        {
+            return $this->_general(array(
+                'table' => 'products',
+                'list' => TRUE,
+                'type' => 'object'
+
+            ));
         }
 
 
@@ -79,7 +87,7 @@ class MCampaigns extends My_Model
             return $this->_general(array(
                 'table' => 'sectors',
                 'param_where' => array(
-                    'id' => $id
+                    'product_id' => $id
                 ),
                 'list' => TRUE,
                 'type' => 'object'

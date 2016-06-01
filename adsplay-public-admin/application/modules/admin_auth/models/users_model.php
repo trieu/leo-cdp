@@ -16,21 +16,21 @@ class Users_model extends CI_Model{
     public function addPublisher($data){
 
 //        var_dump($data);die;
-        $this->db->insert('publishers', $data);
+        $this->db->insert('"publishers"', $data);
 
         return ($this->db->affected_rows() > 0) ? true : false;
     }
 
     public function listUsers(){
         $this->db->select('*')
-            ->from('users');
+            ->from('"users"');
         $query = $this->db->get();
 
         return $query->result_object();
     }
     public function listGroups(){
         $this->db->select('*')
-            ->from('groups');
+            ->from('"groups"');
         $query = $this->db->get();
 
         return $query->result_object();
@@ -38,14 +38,14 @@ class Users_model extends CI_Model{
     public function updateUser($data){
         if($this->checkUser($data)){
             $this->db->where('id', $data['id']);
-            $this->db->update('users', $data);
+            $this->db->update('"users"', $data);
             return true;
         }
         return false;
     }
     public function checkUser($data){
         $this->db->select("*")
-            ->from("users");
+            ->from('"users"');
         if(isset($data['first_name'])){
             $this->db->where('first_name',$data['first_name']);
         }
@@ -64,11 +64,11 @@ class Users_model extends CI_Model{
     }
     //pagination
     public function record_count() {
-        return $this->db->count_all("users");
+        return $this->db->count_all('"users"');
     }
     function get_by_range($page,$perPage){
 
-        $query = $this->db->get('users', $perPage, (($page-1) * $perPage));
+        $query = $this->db->get('"users"', $perPage, (($page-1) * $perPage));
 
         return $query->result_array();
     }

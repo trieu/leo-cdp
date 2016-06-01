@@ -23,7 +23,7 @@ class Publishers extends MY_Controller
         if(!$this->is_admin){
 
             $this->params = array(
-                'table' => 'publishers',
+                'table' => '"publishers"',
                 'list' => TRUE,
                 'type' => 'object',
                 'param_where' => array('user_id' => (int)$this->userId));
@@ -89,7 +89,7 @@ class Publishers extends MY_Controller
         if($this->form_validation->run())
         {
             $query=array(
-                'table' =>'publishers',
+                'table' =>'"publishers"',
                 'data' => array(
                     'name' => $this->input->post('name'),
                     'user_id' => $this->input->post('user_id'),
@@ -112,7 +112,7 @@ class Publishers extends MY_Controller
     {
         $id=$this->input->post('id');
         $query=array(
-            'table' =>'publishers',
+            'table' =>'"publishers"',
             'data' => array(
                 'name' => $this->input->post('name'),
                 'user_id' => $this->input->post('user_id'),
@@ -131,7 +131,7 @@ class Publishers extends MY_Controller
 
         $id=$this->input->post('id');
         $query=array(
-            'table' =>'publishers',
+            'table' =>'"publishers"',
             'param_where' =>array(
                 'id' => $id
             )

@@ -5,6 +5,7 @@ var save_method; //for save method string
 var table;
 var url;
 var chos;
+var urlHost='http://localhost:8800/Git_HMVC_Admin/adsplay-frontend/adsplay-public-admin/index.php/';
 $(document).ready(function() {
 
     if($('#list-datatable').hasClass('data-advertiser')){
@@ -16,11 +17,13 @@ $(document).ready(function() {
         chos = 'publisher';
     }
     if($('#list-datatable').hasClass('data-campaign')){
-        url = "campaigns/getajax";
-        chos = 'campaign';
+        url='';
         getAllBrand();
         changeSelect("brand_id");
         changeSelect("product_id");
+        url = "campaigns/getajax";
+        chos = 'campaign';
+
 
     }
     if($('#list-datatable').hasClass('data-user')){
@@ -32,6 +35,12 @@ $(document).ready(function() {
         url = "getAjax?campaignId="+campaignId;
         chos = '';
     }
+    if($('#list-datatable').hasClass('data-brand')){
+
+        url = "brand/getajax";
+        chos = '';
+    }
+    console.log(url);
     table = $('#list-datatable').DataTable({
         // Load data for the table's content from an Ajax source
         "ajax": {
@@ -42,166 +51,8 @@ $(document).ready(function() {
     getAllUser(chos);
 
 });
-/*L?y t?t c? danh s�ch user*/
-    function getAllUser(param){
-        if(param == 'advertiser')
-            url = "advertisers/getAllUser";
-        else if(param == 'publisher')
-            url = "publishers/getAllUser";
-        else
-            return;
-        //Ajax Load data from ajax
-        $.ajax({
-            url : url,
-            type: "GET",
-            dataType: "JSON",
-            success: function(data)
-            {
-                $.each(data, function(key, value) {
-                    $('[name="user_id"]')
-                        .append($("<option></option>")
-                            .attr("value",value.id)
-                            .text(value.username));
-                });
-            },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-                alert('Error get data from ajax');
-            }
-        });
-    }
 
-/*Advertiser*/
-/*l?y user b?i id*/
-    function getByID(id,param)
-    {
-        save_method = 'update';
-        $('#form'+param)[0].reset(); // reset form on modals
-        if(param == 'Advertiser'){
-            url = "advertisers/getByID";
-        }else if(param == 'Publisher')
-            url = "publishers/getByID";
 
-        //Ajax Load data from ajax
-        $.ajax({
-            url : url ,
-            data:{id:id},
-            type: "POST",
-            dataType: "JSON",
-            success: function(data)
-            {
-
-                $('[name="id"]').val(data[0].id);
-                $('[name="name"]').val(data[0].name);
-                $('[name="user_id"]').val(data[0].user_id);
-                $('.note-editable').html(data[0].contact_info);
-                // $('[name="groupid"]').val(data.groupid);
-                $('#modal_form_'+param).modal('show'); // show bootstrap modal when complete loaded
-                $('.modal-title').text('Edit Person'); // Set title to Bootstrap modal title
-
-            },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-                alert('Error get data from ajax');
-            }
-        });
-    }
-function getByIdUser(id)
-{
-    save_method = 'update';
-    resetError();
-    $('#formUser')[0].reset(); // reset form on modals
-    $( ".checkRole" ).each(function( index ) {
-
-                $(this).prop('checked', false);
-                $(this).closest('div.icheckbox_minimal').attr('aria-checked',false).removeClass('checked');
-
-    });
-    //console.log(id);
-    $.ajax({
-        url : 'get_current_group' ,
-        data:{id:id},
-        type: "POST",
-        dataType: "JSON",
-        success: function(datagroup)
-        {
-            console.log(datagroup);
-            $( ".checkRole" ).each(function( index ) {
-                var val=$( this ).val();
-                for(var k in datagroup) {
-
-                    if(val==datagroup[k].id)
-                    {
-                        $(this).prop('checked', true);
-                        $(this).closest('div.icheckbox_minimal').attr('aria-checked',true).addClass('checked');
-                    }
-                }
-            });
-        },
-        error: function (jqXHR, textStatus, errorThrown)
-        {
-            alert('Error get data from ajax group');
-        }
-    });
-
-    $.ajax({
-        url : 'edit_user' ,
-        data:{id:id},
-        type: "POST",
-        dataType: "JSON",
-        success: function(data)
-        {
-            console.log(data);
-            $('[name="id"]').val(data.id);
-            $('[name="first_name"]').val(data.first_name);
-            $('[name="last_name"]').val(data.last_name);
-            $('[name="company"]').val(data.company);
-            $('[name="phone"]').val(data.phone);
-            $('[name="username"]').val(data.username);
-            $('[name="email"]').val(data.email);
-           // $('[name="phone"]').val(data.phone);
-
-            $('#modal_form_User').modal('show'); // show bootstrap modal when complete loaded
-            $('.modal-title').text('Edit User'); // Set title to Bootstrap modal title
-
-        }
-        ,error: function (jqXHR, textStatus, errorThrown)
-        {
-            //alert('Error get data from ajax user');
-            console.log(textStatus);
-        }
-    });
-}
-function getByIDCamp(id)
-{
-    save_method = 'update';
-    $('#formCampaign')[0].reset(); // reset form on modals
-    //Ajax Load data from ajax
-    $.ajax({
-        url : "campaigns/getByID" ,
-        data:{id:id},
-        type: "POST",
-        dataType: "JSON",
-        success: function(data)
-        {
-            getAllProduct(data[0].BraID);
-            getAllSector(data[0].ProID);
-            $('[name="id"]').val(data[0].id);
-            $('[name="name"]').val(data[0].campaign_name);
-            $('[name="unit"]').val(data[0].unit_title);
-            $('[name="brand_id"]').val(data[0].BraID);
-            $('[name="product_id"]').val(data[0].ProID);
-            $('[name="sector_id"]').val(data[0].SecID);
-            $('#modal_form_Campaign').modal('show'); // show bootstrap modal when complete loaded
-            $('.modal-title').text('Edit Person'); // Set title to Bootstrap modal title
-
-        },
-        error: function (jqXHR, textStatus, errorThrown)
-        {
-            alert('Error get data from ajax');
-        }
-    });
-}
     function add_data_modal(data)
     {
         save_method = 'add';
@@ -223,9 +74,8 @@ function getByIDCamp(id)
             console.log(selectBran);
             $('select[name="product_id"]').empty();
             $('select[name="sector_id"]').empty();
-            getAllProduct(selectBran);
+            getAllProductByID(selectBran);
         }
-
         $('#form'+data)[0].reset(); // reset form on modals
         $('.note-editable').html('');
         $('#modal_form_'+data).modal('show'); // show bootstrap modal
@@ -253,20 +103,30 @@ function getByIDCamp(id)
             }
             else if(param == 'Campaign'){
                 url = "campaigns/Insert";
-                var selectBran = $('select[name=brand_id]').val();
-                var selectProduct = $('select[name=product_id]').val();
-                var  selectSector = $('select[name=sector_id]').val();
-                if(selectProduct==null || selectSector==null)
-                {
-                    alert("");
-                  //  return false;//
-                    $('#modal_form_'+param).modal('hide');
-                }
-                data={name:$('[name="name"]').val(),brand_id:selectBran,product_id:selectProduct,sector_id:selectSector,unit:$('[name="unit"]').val()}
+                data = $('#formCampaign').serialize();
+               // console.log(data);
             }
-            //else if(param == 'User'){
-            //    url = "create_user";
-            //}
+            else if(param == 'Brand'){
+                if (!validator.checkAll($('form'))) {
+                    return false;
+                }
+                url = "brand/Insert";
+                data = $('#formBrand').serialize();
+            }
+            else if(param == 'Product'){
+                if (!validator.checkAll($('form'))) {
+                    return false;
+                }
+                url = "product/Insert";
+                data = $('#formProduct').serialize();
+            }
+            else if(param == 'Sector'){
+                if (!validator.checkAll($('form'))) {
+                    return false;
+                }
+                url = "sector/Insert";
+                data = $('#formSector').serialize();
+            }
         }
         else
         {
@@ -278,6 +138,26 @@ function getByIDCamp(id)
             }else if(param == 'Campaign'){
                 url = "campaigns/Update";
                 data = $('#formCampaign').serialize();
+
+            } else if(param == 'Brand'){
+                if (!validator.checkAll($('form'))) {
+                    return false;
+                }
+                url = "brand/Update";
+                data = $('#formBrand').serialize();
+            } else if(param == 'Product'){
+                if (!validator.checkAll($('form'))) {
+                    return false;
+                }
+                url = "product/Update";
+                data = $('#formProduct').serialize();
+            }
+            else if(param == 'Sector'){
+                if (!validator.checkAll($('form'))) {
+                    return false;
+                }
+                url = "sector/Update";
+                data = $('#formSector').serialize();
             }
 
         }
@@ -350,17 +230,234 @@ function saveUser()
     });
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////======================== Get By ID    ========================///////////////////////////
 
-/*Campaign*/
-function getAllBrand(){
+function getBrandByID(id)
+{
+    save_method= 'update';
+    $('#formBrand')[0].reset(); // reset form on modals
     //Ajax Load data from ajax
     $.ajax({
-        url : "campaigns/getAllBrand",
-        type: "GET",
+        url : "brand/getByID" ,
+        data:{id:id},
+        type: "POST",
         dataType: "JSON",
         success: function(data)
         {
 
+            $('[name="id"]').val(data[0].id);
+            $('[name="name"]').val(data[0].brand_name);
+            $('#modal_form_Brand').modal('show'); // show bootstrap modal when complete loaded
+            $('.modal-title').text('Edit Brand'); // Set title to Bootstrap modal title
+
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error get data from ajax');
+        }
+    });
+}
+function getProductByID(id)
+{
+
+    save_method = 'update';
+    $('#formProduct')[0].reset(); // reset form on modals
+    //Ajax Load data from ajax
+    $.ajax({
+        url : "product/getByID" ,
+        data:{id:id},
+        type: "POST",
+        async: false,
+        dataType: "JSON",
+        success: function(data)
+        {
+            //debugger;
+
+            var brandVal=data[0].brand_id;
+            $('[name="id"]').val(data[0].id);
+            $('[name="name"]').val(data[0].product_name);
+            $('[name="brand_id"]').val(data[0].brand_id);
+            $('#modal_form_Product').modal('show'); // show bootstrap modal when complete loaded
+            $('.modal-title').text('Edit Product'); // Set title to Bootstrap modal title
+
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error get data from ajax');
+        }
+    });
+}
+function getSectorByID(id)
+{
+    save_method = 'update';
+    $('#formSector')[0].reset(); // reset form on modals
+    //Ajax Load data from ajax
+    $.ajax({
+        url : "sector/getByID" ,
+        data:{id:id},
+        type: "POST",
+        dataType: "JSON",
+        success: function(data)
+        {
+
+            $('[name="id"]').val(data[0].id);
+            $('[name="name"]').val(data[0].sector_name);
+            $('[name="product_id"]').val(data[0].product_id);
+            $('#modal_form_Sector').modal('show'); // show bootstrap modal when complete loaded
+            $('.modal-title').text('Edit Product'); // Set title to Bootstrap modal title
+
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error get data from ajax');
+        }
+    });
+}
+function getByIDCamp(id)
+{
+    save_method = 'update';
+    $('#formCampaign')[0].reset(); // reset form on modals
+    //Ajax Load data from ajax
+    $.ajax({
+        url : "campaigns/getByID" ,
+        data:{id:id},
+        type: "POST",
+        dataType: "JSON",
+        success: function(data)
+        {
+            getAllProductByID(data[0].BraID);
+            getAllSector(data[0].ProID);
+            $('[name="id"]').val(data[0].id);
+            $('[name="name"]').val(data[0].campaign_name);
+            $('[name="unit"]').val(data[0].unit_title);
+            $('[name="brand_id"]').val(data[0].BraID);
+            $('[name="product_id"]').val(data[0].ProID);
+            $('[name="sector_id"]').val(data[0].SecID);
+            $('#modal_form_Campaign').modal('show'); // show bootstrap modal when complete loaded
+            $('.modal-title').text('Edit Person'); // Set title to Bootstrap modal title
+
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error get data from ajax');
+        }
+    });
+}
+
+function getByID(id,param)
+{
+    save_method = 'update';
+    $('#form'+param)[0].reset(); // reset form on modals
+    if(param == 'Advertiser'){
+        url = "advertisers/getByID";
+    }else if(param == 'Publisher')
+        url = "publishers/getByID";
+
+    //Ajax Load data from ajax
+    $.ajax({
+        url : url ,
+        data:{id:id},
+        type: "POST",
+        dataType: "JSON",
+        success: function(data)
+        {
+
+            $('[name="id"]').val(data[0].id);
+            $('[name="name"]').val(data[0].name);
+            $('[name="user_id"]').val(data[0].user_id);
+            $('.note-editable').html(data[0].contact_info);
+            // $('[name="groupid"]').val(data.groupid);
+            $('#modal_form_'+param).modal('show'); // show bootstrap modal when complete loaded
+            $('.modal-title').text('Edit Person'); // Set title to Bootstrap modal title
+
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error get data from ajax');
+        }
+    });
+}
+function getByIdUser(id)
+{
+    save_method = 'update';
+    resetError();
+    $('#formUser')[0].reset(); // reset form on modals
+    $( ".checkRole" ).each(function( index ) {
+
+        $(this).prop('checked', false);
+        $(this).closest('div.icheckbox_minimal').attr('aria-checked',false).removeClass('checked');
+
+    });
+    //console.log(id);
+    $.ajax({
+        url : 'get_current_group' ,
+        data:{id:id},
+        type: "POST",
+        dataType: "JSON",
+        success: function(datagroup)
+        {
+            console.log(datagroup);
+            $( ".checkRole" ).each(function( index ) {
+                var val=$( this ).val();
+                for(var k in datagroup) {
+
+                    if(val==datagroup[k].id)
+                    {
+                        $(this).prop('checked', true);
+                        $(this).closest('div.icheckbox_minimal').attr('aria-checked',true).addClass('checked');
+                    }
+                }
+            });
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error get data from ajax group');
+        }
+    });
+
+    $.ajax({
+        url : 'edit_user' ,
+        data:{id:id},
+        type: "POST",
+        dataType: "JSON",
+        success: function(data)
+        {
+            console.log(data);
+            $('[name="id"]').val(data.id);
+            $('[name="first_name"]').val(data.first_name);
+            $('[name="last_name"]').val(data.last_name);
+            $('[name="company"]').val(data.company);
+            $('[name="phone"]').val(data.phone);
+            $('[name="username"]').val(data.username);
+            $('[name="email"]').val(data.email);
+            // $('[name="phone"]').val(data.phone);
+
+            $('#modal_form_User').modal('show'); // show bootstrap modal when complete loaded
+            $('.modal-title').text('Edit User'); // Set title to Bootstrap modal title
+
+        }
+        ,error: function (jqXHR, textStatus, errorThrown)
+        {
+            //alert('Error get data from ajax user');
+            console.log(textStatus);
+        }
+    });
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////======================== Get All    ========================///////////////////////////
+/*Campaign*/
+function getAllBrand(){
+    //Ajax Load data from ajax
+    url=urlHost+"/admin_campaigns/campaigns/getAllBrand";
+    $.ajax({
+        url :url ,
+        type: "GET",
+        dataType: "JSON",
+        success: function(data)
+        {
+            $('[name="brand_id"]').html('');
             $.each(data, function(key, value) {
                 $('[name="brand_id"]')
                     .append($("<option></option>")
@@ -368,7 +465,7 @@ function getAllBrand(){
                         .text(value.brand_name));
             });
 
-            getAllProduct(data[0].id);
+            getAllProductByID(data[0].id);
         },
         error: function (jqXHR, textStatus, errorThrown)
         {
@@ -385,7 +482,7 @@ function changeSelect(name)
         {
             $('[name="product_id"]').empty();
             $('[name="sector_id"]').empty();
-            getAllProduct(value);
+            getAllProductByID(value);
         }else
         {
             getAllSector(value);
@@ -394,14 +491,15 @@ function changeSelect(name)
 }
 function getAllSector(id){
     //Ajax Load data from ajax
+    url=urlHost+"/admin_campaigns/campaigns/getAllSector";
     $.ajax({
-        url : "campaigns/getAllSector",
+        url : url,
         type: "POST",
         data: {id:id},
         dataType: "JSON",
         success: function(data)
         {
-
+            $('[name="sector_id"]').html('');
             $.each(data, function(key, value) {
                 $('[name="sector_id"]')
                     .append($("<option></option>")
@@ -420,11 +518,36 @@ function getAllSector(id){
         }
     });
 }
-
-function getAllProduct(id){
+function getAllProduct(){
     //Ajax Load data from ajax
+    url=urlHost+"/admin_campaigns/campaigns/getAllProduct";
     $.ajax({
-        url : "campaigns/getAllProduct",
+        url : url,
+        type: "POST",
+        data: {id:0},
+        dataType: "JSON",
+        success: function(data)
+        {
+            $('[name="product_id"]').html('');
+            $.each(data, function(key, value) {
+                $('[name="product_id"]')
+                    .append($("<option></option>")
+                        .attr("value",value.id)
+                        .text(value.product_name));
+            });
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error get data from ajax');
+        }
+    });
+}
+
+function getAllProductByID(id){
+    //Ajax Load data from ajax
+    url=urlHost+"/admin_campaigns/campaigns/getAllProduct";
+    $.ajax({
+        url : url,
         type: "POST",
         data: {id:id},
         dataType: "JSON",
@@ -453,6 +576,40 @@ function getAllProduct(id){
         }
     });
 }
+
+function getAllUser(param){
+    if(param == 'advertiser')
+        url = "advertisers/getAllUser";
+    else if(param == 'publisher')
+        url = "publishers/getAllUser";
+    else
+        return;
+    //Ajax Load data from ajax
+    $.ajax({
+        url : url,
+        type: "GET",
+        dataType: "JSON",
+        success: function(data)
+        {
+            $.each(data, function(key, value) {
+                $('[name="user_id"]')
+                    .append($("<option></option>")
+                        .attr("value",value.id)
+                        .text(value.username));
+            });
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error get data from ajax');
+        }
+    });
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////======================== Different Function    ========================///////////////////////////
+
+
+
 function resetError()
 {
     $('.first_name').html('');
@@ -478,6 +635,15 @@ function deleteItemByID(id,param)
     else if(param == 'Publishers')
     {
         url = "Publishers/delete";
+    }else if(param == 'Brand')
+    {
+        url = "Brand/delete";
+    }else if(param == 'Product')
+    {
+        url = "Product/delete";
+    }else if(param == 'Sector')
+    {
+        url = "Sector/delete";
     }
 
     $('#modal_form_Delete #btnDelete').attr('_id',id);
@@ -528,3 +694,95 @@ function LockAndUnlockUser(id)
         }
     });
 }
+function LoadTable()
+{
+    if($('#list-datatable').hasClass('data-brand')){
+
+        url = "brand/getajax";
+        chos = '';
+    }
+    if($('#list-datatable').hasClass('data-product')){
+
+        url = "product/getajax";
+        chos = '';
+    }
+    if($('#list-datatable').hasClass('data-sector')){
+
+        url = "sector/getajax";
+        chos = '';
+    }
+    table = $('#list-datatable').DataTable({
+        // Load data for the table's content from an Ajax source
+        "ajax": {
+            "url": url,
+            "type": "POST"
+        }
+    });
+}
+$(document).on('click', '#MetaDataTab a', function(e) {
+    e.preventDefault();
+    $(this).tab('show');
+    var id = $(this).attr('data-target');
+    if(id=='#brand')
+    {
+        $('.tab-pane').html('');
+        $(id).html('');
+        $.ajax({
+            url : "brand/index",
+            type: "POST",
+            data: {id:id},
+            success: function(data) {
+                $(id).html(data);
+                LoadTable();
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error adding / update data');
+            }
+        });
+
+
+
+    }else if(id=='#product')
+    {
+        $('.tab-pane').html('');
+        $(id).html('');
+        $.ajax({
+            url : "product/index",
+            type: "POST",
+            data: {id:id},
+            success: function(data) {
+                $(id).html(data);
+                LoadTable();
+                getAllBrand();
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error adding / update data');
+            }
+        });
+
+
+
+    }else if(id=='#sectors')
+    {
+        $('.tab-pane').html('');
+        $(id).html('');
+        $.ajax({
+            url : "sector/index",
+            type: "POST",
+            data: {id:id},
+            success: function(data) {
+                $(id).html(data);
+                LoadTable();
+                getAllProduct();
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error adding / update data');
+            }
+        });
+
+    }
+
+});

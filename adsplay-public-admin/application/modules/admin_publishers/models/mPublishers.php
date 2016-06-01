@@ -7,7 +7,7 @@
  */
 class MPublishers extends My_Model
 {
-    private $table = 'publishers';
+    private $table = '"publishers"';
     public function InsertOrUpdate($param = NULL){
         if(isset($param) && is_array($param))
         {
@@ -35,7 +35,7 @@ class MPublishers extends My_Model
     public function getAllUsers(){
 
             return $this->_general(array(
-                'table' => 'users',
+                'table' => '"users"',
                 'list' => TRUE,
                 'type' => 'object'
             ));

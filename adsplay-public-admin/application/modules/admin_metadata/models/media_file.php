@@ -16,7 +16,7 @@ class media_file extends CI_Model
 
     public function addMediaFile($data)
     {
-        $this->db->insert('media_files', $data);
+        $this->db->insert('"media_files"', $data);
 
         return ($this->db->affected_rows() > 0) ? true : false;
     }
