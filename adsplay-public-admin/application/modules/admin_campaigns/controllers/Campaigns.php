@@ -165,4 +165,5 @@ class Campaigns extends MY_Controller
         $this->MCampaigns->Delete($query);
         echo json_encode(array("status" => TRUE));
     }
+
 }

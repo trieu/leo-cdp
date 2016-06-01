@@ -33,56 +33,32 @@ class Creatives extends MY_Controller
         $this->_render_page('template/master_view', $this->data);
     }
 
-    // data Test Creative
 
-    public function getCreativeDataTest(){
-
-        $this->data['data'] = $this->MCreatives->getDetailCreative();
-        $this->data['the_view_content'] = 'admin_campaigns/detail_creative_test';
-
-        $this->_render_page('template/master_view', $this->data);
-    }
-
-    // get list creatives by campaign id
-
-    public function getCreativeByCampId(){
-        $campId = (int)$this->input->get('campId');
-
-        $this->data['the_view_content'] = 'admin_campaigns/list_creatives';
-        $this->data['campId'] = $campId;
-
-        $this->_render_page('template/master_view', $this->data);
-    }
 
     // ajax get creative
 
     public  function  getAjax(){
-        $campId = (int)$this->input->get('campId');
-        $this->params = array(
-                'table' => '"creatives"',
-                'list' => TRUE,
-                'type' => 'object',
-                'param_where' => array('campaign_id' => $campId));
-        $query = $this->MCreatives->getCreative($this->params);
 
-        $count= $this->MCreatives->getCount( $this->params);
+        $campaignId = (int)$this->input->get('campaignId');
+
+        $query = $this->MCreatives->getCreativeByCampaignID($campaignId);;
+        $count= count($query);
         $num_row=1;
         $data = array();
-
         foreach ($query as $creative) {
             //  $no++;
             $row = array();
-            $row[] = $creative->id;
-            $row[] ='<a href="getCreativeById?creativeId='.$creative->id.'">'.$creative->name.'</a>';
-            $row[] = $creative->description;
-            $row[] = $creative->status;
-
-            $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0);" title="Edit" onclick="getByIDCamp('."'".$creative->id."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>';
+            $row[] = $creative['CreativeID'];
+            $row[] ='<a href="getCreativeById?creativeId='.$creative['CreativeID'].'">'.$creative['Name'].'</a>';
+            $row[] = $creative['Status'];
+            $row[] = 0;
+            $row[] = 0;
+            $row[] = $creative['DailyBooking'];
+            $row[] = $creative['TotalRevenue'];
+            $row[] = '<a class="btn btn-sm btn-primary" href="javascript:void(0);" title="Edit" onclick="getByIDCamp('."'".$creative['CreativeID']."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>';
             $data[] = $row;
         }
-
         $output = array(
-
             "recordsTotal" => $count,
             "recordsFiltered" => $num_row,
             "data" => $data,
@@ -93,18 +69,19 @@ class Creatives extends MY_Controller
     }
 
     // get detail creative by id
-
     public function getCreativeById(){
 
         $creativeId = (int)$this->input->get('creativeId');
-        $this->params = array(
-            'table' => '"creatives"',
-            'list' => TRUE,
-            'type' => 'object',
-            'param_where' => array('id' => $creativeId));
-
-        $this->data['data'] = $this->MCreatives->getCreative($this->params);
+        $this->data['data'] = $this->MCreatives->detailCreative($creativeId);
         $this->data['the_view_content'] = 'admin_campaigns/detail_creative';
+        $this->_render_page('template/master_view', $this->data);
+    }
+    // Get data from Postgres
+    public function getCreativeByCampaignID(){
+
+        $campaignId = (int)$this->input->get('campaignId');
+        $this->data['campaignId'] = $campaignId;
+        $this->data['the_view_content'] = 'admin_campaigns/creatives';
         $this->_render_page('template/master_view', $this->data);
     }
 }
