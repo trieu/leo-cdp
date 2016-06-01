@@ -63,7 +63,7 @@ class MCampaigns extends My_Model
             return $this->_general(array(
                 'table' => 'products',
                 'param_where' => array(
-                    'id' => $id
+                    'brand_id' => $id
                 ),
                 'list' => TRUE,
                 'type' => 'object'
