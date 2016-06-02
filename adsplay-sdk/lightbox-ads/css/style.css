@@ -1,0 +1,38 @@
+body{
+	margin: 0px;
+	background-image:none;
+	position:static;
+	left:auto;
+	
+}
+.imgbg img {
+
+	width: 100%;
+}
+.test{
+	position: relative;
+}
+.example-video-container{
+	position: absolute;
+	z-index: 10;
+	top: 6%;
+	left: 23.5%;
+	height: 57%;
+	width: 53%;
+	overflow: hidden;
+	/* border: 1px solid red; */
+
+}
+.example-video-container #my-video{
+	height: 100%;
+	width: 100%;
+}
+.example-video-container #box{
+      position: absolute;
+      z-index: 2000;
+      right:-1%;
+      bottom: 6.5%;
+}
+
+	
+	
