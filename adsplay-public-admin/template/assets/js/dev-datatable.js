@@ -88,7 +88,6 @@ $(document).ready(function() {
         {
             var selectBran = 1;
             $('select[name=brand_id]').val('1');
-            console.log(selectBran);
             $('select[name="product_id"]').empty();
             $('select[name="sector_id"]').empty();
             getAllProductByID(selectBran);
@@ -96,20 +95,25 @@ $(document).ready(function() {
         $('#form'+data)[0].reset(); // reset form on modals
         $('.note-editable').html('');
         $('#modal_form_'+data).modal('show'); // show bootstrap modal
-        $('.modal-title').text('Add Person'); // Set Title to Bootstrap modal title
+        $('.modal-title').text('Add '+ data); // Set Title to Bootstrap modal title
     }
     function reload_table()
     {
         table.ajax.reload(null,false); //reload datatable ajax
     }
+
     function save(param)
     {
 
+        var pageUrl = '';
         if (!validator.checkAll($('form'))) {
             return false;
         }
-        //var url;
-        var data={name:$('[name="name"]').val(),user_id:$('[name="user_id"]').val(),contact_info:$('.note-editable').html()}
+        if($('[name="page_url"]').val()){
+            pageUrl = $('[name="page_url"]').val();
+        }
+        var data={name:$('[name="name"]').val(),user_id:$('[name="user_id"]').val(),contact_info:$('.note-editable').html(),page_url:pageUrl};
+
         if(save_method == 'add')
         {
             if(param == "Advertiser"){
@@ -117,6 +121,7 @@ $(document).ready(function() {
             }
             else if(param == 'Publisher'){
                 url = "publishers/Insert";
+
             }
             else if(param == 'Campaign'){
                 url = "campaigns/Insert";
