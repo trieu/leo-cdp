@@ -78,9 +78,16 @@ $(document).ready(function() {
         {
             $( ".checkRole" ).each(function( index ) {
 
-                $(this).prop('checked', false);
-                $(this).closest('div.icheckbox_minimal').attr('aria-checked',false).removeClass('checked');
 
+                if($(this).val()==3)
+                {
+                    $(this).prop('checked', true);
+                    $(this).closest('div.icheckbox_minimal').attr('aria-checked',true).addClass('checked');
+                }else
+                {
+                    $(this).prop('checked', false);
+                    $(this).closest('div.icheckbox_minimal').attr('aria-checked',false).removeClass('checked');
+                }
             });
             resetError();
         }
