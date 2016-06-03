@@ -136,12 +136,13 @@
 <!--                    <li><a href="--><?php //echo site_url('admin_publishers/publishers'); ?><!--">All Publishers</a></li>-->
 <!--                </ul>-->
             </li>
-
+            <?php if($this->ion_auth->in_group('superAdmin')):?>
             <li>
                 <a class="sa-side-folder" href="<?php echo site_url('admin_campaigns/campaigns'); ?>">
                     <span class="menu-item">Campaigns</span>
                 </a>
             </li>
+            <?php endif; ?>
             <li>
                 <a class="sa-side-chart" href="<?php echo site_url('admin_advertisers/advertisers/chart'); ?>">
                     <span class="menu-item">Summary Report</span>

@@ -22,8 +22,7 @@ class Campaigns extends MY_Controller
         $this->params = NULL;
         if(!$this->is_admin){
 
-            $this->params = array(
-             'user_id' => (int)$this->userId);
+            echo '<p class="text-center">Bạn Không Có Quyền Truy Cập Trang Này. Quay về <a title="Trang chủ" href="'. base_url().'">Trang Chủ</a></p>';die;
         }
     }
     public function index(){
@@ -32,6 +31,7 @@ class Campaigns extends MY_Controller
         $this->data['javascript']='admin_campaigns/create_campaigns';
         $this->_render_page('template/master_view', $this->data);
     }
+
 
     // Load du lieu thei kieu ajax
     public  function  getAjax(){

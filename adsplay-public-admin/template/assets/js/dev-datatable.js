@@ -242,6 +242,7 @@ function saveUser()
                     $('.first_name').html(result['first_name']);
                     $('.last_name').html(result['last_name']);
                     $('.email').html(result['email']);
+                    $('.username').html(result['username']);
                     $('.company').html(result['company']);
                     $('.phone').html(result['phone']);
                     $('.password').html(result['password']);
@@ -645,6 +646,7 @@ function resetError()
     $('.first_name').html('');
     $('.last_name').html('');
     $('.email').html('');
+    $('.username').html('');
     $('.company').html('');
     $('.phone').html('');
     $('.password').html('');
