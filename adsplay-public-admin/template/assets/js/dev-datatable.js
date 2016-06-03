@@ -218,13 +218,13 @@ function saveUser()
     {
         url="edit_user";
     }
+    console.log(save_method);
     $.ajax({
         type: "POST",
         url:url ,
         data: $('#formUser').serialize(),
         success: function(result) {
             result = jQuery.parseJSON(result);
-            console.log(result);
             if (result['status'] == true)
             {
                 $('#modal_form_User').modal('hide');
