@@ -151,7 +151,6 @@
             <!--<div class="row" >-->
                 <svg id="platform-wrapp" class="report-detail-piechart"></svg>
 
-
             <!--</div>-->
         </div>
         <div id="tc-csv-export" class="tab-pane fade">
@@ -444,6 +443,7 @@ function convertToStackBarData(rawData) {
 
     for (var i in rawData) {
         var obj = rawData[i];
+        console.log(obj);
 
         var date = obj.t;
         var v1 = obj.imp;
@@ -615,6 +615,7 @@ $(document).ready(function () {
         <tr>
             <th>Date</th>
             <th>Impressions</th>
+            <th>Completed-View</th>
             <!--<th>Unique Impressions</th>-->
             <!--<th>Frequency</th>-->
             <th>Clicks</th>
@@ -653,7 +654,7 @@ var media_source = "{{crt.media}}";
 $(window).load(function() {
     if(adType == 1){
         $('#media-html').html('<video id="video_ads" class="video-js vjs-default-skin vjs-big-play-centered" muted autoplay controls loop preload="auto" poster="//adsplay.net/img/logo.png" width="100%" height="300">'+
-                    '<source src="http://ads.fptplay.net.vn/static/ads/instream/'+media_source+'" type="video/mp4">'+
+                    '<source src="https://ads-cdn.fptplay.net/static/ads/instream/'+media_source+'" type="video/mp4">'+
                 '</video>');
         videojs("video_ads");
     }
@@ -667,7 +668,7 @@ $(window).load(function() {
         $('#media-html').html('<div class="video-container-breakingnews" >'+
                     '<div class="break-news"><marquee id="news-marquee">'+media_source+'</marquee></div>'+
                     '<video id="video_ads" class="video-js vjs-default-skin vjs-big-play-centered" muted autoplay controls loop preload="auto" poster="//adsplay.net/img/logo.png" width="100%" height="300">'+
-                    '<source src="http://ads.fptplay.net.vn/static/videos/demo-sport-2.mp4" type="video/mp4">'+
+                    '<source src="https://ads-cdn.fptplay.net/static/videos/demo-sport-2.mp4" type="video/mp4">'+
                     '</video>'+
                 '</div>');
         $('.break-news').show();

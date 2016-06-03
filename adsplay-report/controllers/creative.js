@@ -267,7 +267,12 @@ router.get('/:id', function (req, res) {
         Creative.get(req.params.id, data, function (err, data) {
             try {
                 //res.render('ad-report/creative-details', data)
-                res.render('ad-report/creative-details-' + data.crt.adType, data)
+                if(data.crt && data.crt.adType){
+                    res.render('ad-report/creative-details-' + data.crt.adType, data)
+                } else {
+                    data.errorMessage = 'Not data for creative id:'+data.crtId;
+                    res.render('common/system-error', data)
+                }
             }
             catch(e){
                 console.error(e);

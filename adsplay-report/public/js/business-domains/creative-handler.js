@@ -99,7 +99,7 @@
                                 adtype = "fm_tvc_video";
                                 media = data[k];
 
-                                var link = "http://ads.fptplay.net.vn/static/ads/instream/"+data[k];
+                                var link = "https://ads-cdn.fptplay.net/static/ads/instream/"+data[k];
                                 $('#youtube_url').val(link);
 
                                 var iframe = '<video id="video_ads" class="video-js vjs-default-skin vjs-big-play-centered"><source src="'+link+'" type="video/mp4"></video>';
@@ -173,6 +173,11 @@
             change_form_value(url);
         }
 
+        //disable video data fields on other ad type
+        if( $('video').length == 0 ){
+            $('#row_ads_thirdparty_url, #row_ads_skip, #row_ads_duration').hide();
+        }
+
         //get iframe video
         $("#youtube_url").keyup(function() {
             var value = $(this).val();
@@ -197,6 +202,10 @@
 
         document.getElementById("ads_running_date").valueAsDate = new Date();
         document.getElementById("ads_expired_date").valueAsDate = moment().add(1, 'days').toDate();
+
+        $('#ads_running_date,#ads_expired_date').keydown(function(e) {
+            e.preventDefault();
+        });
 
         var h1 = function(){
             var v = $(this).val() ;
@@ -247,6 +256,11 @@
 
             if(document.getElementById("ads_running_date").valueAsDate.getTime() >= document.getElementById("ads_expired_date").valueAsDate.getTime()){
                 modal_alert('Running date must be before Expire Date!');
+                return false;
+            }
+
+            if( ! $('#target_ad_placements input[type="checkbox"]').is(':checked') ){
+                modal_alert('Some information is invalid, please: \n' + 'Target Placement');
                 return false;
             }
 

@@ -3,7 +3,8 @@
  */
 
 var statuses = {0:'Invalid', 1:'Pending', 2: 'Running', 3 : 'Finished', 4 : 'Expired'};
-var adTypes = {0:'Invalid', 1:'In-Stream', 2: 'Expandable Overlay Banner', 3 : 'Overlay Banner', 4 : 'Break-News'};
+var adTypes = {0:'Invalid', 1:'In-Stream', 2: 'Expandable Overlay Banner',
+    3 : 'Overlay Banner', 4 : 'Break-News'};
 
 var placements = {
     0 : 'Demo',
