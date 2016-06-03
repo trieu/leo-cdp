@@ -30,7 +30,7 @@
         <!-- Calendar -->
         <div class="tile">
             <div class="panel panel-default">
-                <h2 class="tile-title">Summary Report from <?php echo $data->CreatedDate; ?> to <?php echo $data->ExpiredDate; ?> </h2>
+                <h2 class="tile-title">Summary Report from <?php echo $data->createddate; ?> to <?php echo $data->expireddate; ?> </h2>
                 <div class="panel-body">
                     <div class="block-area" id="tableStriped">
                         <div class="table-responsive overflow">
@@ -38,42 +38,42 @@
                                 <tbody>
                                 <tr>
                                     <td>Created date</td>
-                                    <td><?php echo $data->CreatedDate; ?> </td>
+                                    <td><?php echo $data->createddate; ?> </td>
 
                                 </tr>
                                 <tr>
                                     <td>Expired date</td>
-                                    <td><?php echo $data->ExpiredDate; ?></td>
+                                    <td><?php echo $data->expireddate; ?></td>
 
                                 </tr>
                                 <tr>
                                     <td>Status</td>
-                                    <td><?php echo $data->Status ; ?></td>
+                                    <td><?php echo $data->status ; ?></td>
 
                                 </tr>
                                 <tr>
                                     <td>Click Through URL</td>
-                                    <td><a title="<?php echo $data->Name ?>" href="<?php echo $data->ClickThrough ?>" target="_blank"><?php echo $data->ClickThrough ?></a></td>
+                                    <td><a title="<?php echo $data->name ?>" href="<?php echo $data->clickthrough ?>" target="_blank"><?php echo $data->clickthrough ?></a></td>
 
                                 </tr>
                                 <tr>
                                     <td>Total Booking</td>
-                                    <td><?php echo $data->TotalBooking ?></td>
+                                    <td><?php echo $data->totalbooking ?></td>
 
                                 </tr>
                                 <tr>
                                     <td>Daily Booking</td>
-                                    <td><?php echo $data->DailyBooking ?></td>
+                                    <td><?php echo $data->dailybooking ?></td>
 
                                 </tr>
                                 <tr>
                                     <td>Hourly Booking</td>
-                                    <td><?php echo $data->HourlyBooking ?></td>
+                                    <td><?php echo $data->hourlybooking ?></td>
 
                                 </tr>
                                 <tr>
                                     <td>Discount</td>
-                                    <td><?php echo $data->Discount ?></td>
+                                    <td><?php echo $data->discount ?></td>
 
                                 </tr>
                                 <tr>
@@ -108,7 +108,7 @@
                                 </tr>
                                 <tr>
                                     <td>Total Revenue</td>
-                                    <td><?php echo $data->TotalRevenue ?></td>
+                                    <td><?php echo $data->totalrevenue ?></td>
 
                                 </tr>
                                 </tbody>

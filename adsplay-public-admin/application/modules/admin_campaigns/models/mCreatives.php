@@ -19,7 +19,7 @@ class MCreatives extends My_Model
 
         $this->db->select('*')
             ->from($this->table)
-            ->where('CampaignID',$campaignID);
+            ->where('campaignid',$campaignID);
         $query = $this->db->get();
         return $query->result_array();
 
@@ -28,7 +28,7 @@ class MCreatives extends My_Model
 
         $this->db->select('*')
             ->from($this->table)
-            ->where('CreativeID',$creativeID);
+            ->where('creativeid',$creativeID);
         $query = $this->db->get();
         return $query->row();
     }
