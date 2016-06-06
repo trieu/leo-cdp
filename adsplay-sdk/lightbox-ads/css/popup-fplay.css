@@ -37,8 +37,7 @@
 	cursor: pointer;
 }
 .popup-point img{
-	width: 200px;
-	height: 100px;
+	width: 200px;	
 }
 .popup-output{
 	display: none;
