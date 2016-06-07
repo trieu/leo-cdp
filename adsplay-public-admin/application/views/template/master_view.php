@@ -5,11 +5,10 @@
     <meta name="format-detection" content="telephone=no">
     <meta charset="UTF-8">
 
-    <meta name="description" content="Nền tảng quảng cáo truyền hình trực tuyến adsplay">
-    <meta name="keywords" content="adsplay, itvad, quảng cáo">
+    <meta name="description" content="AdsPlay - Real-time Dashboard">
     <link rel="shortcut icon" href="<?php echo base_url('assets/images/favicon.ico') ?>"/>
 
-    <title>AdsPlay Admin V3</title>
+    <title>AdsPlay - Real-time Dashboard</title>
 
     <!-- CSS -->
     <link href="<?php echo base_url('template/assets/temp_new/css/bootstrap.min.css'); ?>" rel="stylesheet">
@@ -81,7 +80,7 @@
                         <li><a href="<?php echo site_url('admin/user/profile');?>">My Profile</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
                         <li><a href="<?php echo site_url('admin_auth/auth/logout'); ?>">Sign Out</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
                     </ul>
-<!--                    --><?php //var_dump($this->ion_auth->user()->row()); ?>
+
                     <h4 class="m-0"> <?php echo $this->ion_auth->user()->row()->username;?></h4>
                 </div>
 
@@ -102,39 +101,25 @@
                 <a class="sa-side-form" href="<?php echo site_url('admin_metadata/metadata/instream'); ?>">
                     <span class="menu-item"> In-stream form</span>
                 </a>
-<!--                <ul class="list-unstyled menu-item">-->
-<!--                    <li><a href="--><?php //echo site_url('admin_metadata/metadata/instream'); ?><!--">Create In-stream</a></li>-->
-<!--                    <!--<li><a href="form-components.html">All Creative</a></li>-->
-<!---->
-<!--                </ul>-->
+
             </li>
             <li>
                 <a class="sa-side-widget" href="<?php echo site_url('admin_metadata/metadata/expandable'); ?>">
                     <span class="menu-item"> Expandable logo</span>
                 </a>
             </li>
-            <!--<li>
-                <a class="sa-side-table" href="tables.html">
-                    <span class="menu-item">Tables</span>
-                </a>
-            </li>-->
+
             <li>
                 <a class="sa-side-form" href="<?php echo site_url('admin_advertisers/advertisers'); ?>">
                     <span class="menu-item"> Advertisers</span>
                 </a>
-<!--                <ul class="list-unstyled menu-item">-->
-<!--                   <!-- <li><a onclick="add_data_modal('Advertiser')" href="javascript:void(0);">Create Advertiser</a></li>-->
-<!--                    <li><a href="--><?php //echo site_url('admin_advertisers/advertisers'); ?><!--">All Advertisers</a></li>-->
-<!--                </ul>-->
+
             </li>
             <li>
                 <a class="sa-side-ui" href="<?php echo site_url('admin_publishers/publishers'); ?>">
                     <span class="menu-item"> Publishers </span>
                 </a>
-<!--                <ul class="list-unstyled menu-item">-->
-<!--                    <!--<li><a onclick="add_data_modal('Publisher')" href="javascript:void(0);">Create Publisher</a></li>-->
-<!--                    <li><a href="--><?php //echo site_url('admin_publishers/publishers'); ?><!--">All Publishers</a></li>-->
-<!--                </ul>-->
+
             </li>
             <?php if($this->ion_auth->in_group('superAdmin')):?>
             <li>
