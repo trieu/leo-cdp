@@ -12,30 +12,30 @@
 mean-stack/
  │
  ├── app/
- │   ├──components/					*
+ │   ├──components/
  │   │   ├──folder
- │   │   
- │   └──controllers/				*
+ │   │
+ │   └──controllers/
  │   │   └──file
- │   │   
+ │   │
  │   └──views
  │   │   ├──partial folder
  │   │	 └──pages file
- │   │  
- │   ├──index.js					* config route angular & add module angular & run app
- │   └──layout.html					* root layout
+ │   │
+ │   ├──index.js              * config route angular & add module angular & run app
+ │   └──layout.html           * root layout
  │
  ├── public/
  │   ├──css
  │   ├──js
  │   └──template    
- │   
+ │
  └── server/
-   	 ├──configs/					*
-   	 │   ├──routes.js 
-  	 │   ├──passport-config.js
-   	 │	 └──.......
-  	 │ 
-     ├──controllers/				* all file api
+     ├──configs/
+     │   ├──routes.js
+     │   ├──passport-config.js
+     │   └──.......
+     │
+     ├──controllers/          * all file api
      ├──helpers/
-     └──..../  
+     └──..../
