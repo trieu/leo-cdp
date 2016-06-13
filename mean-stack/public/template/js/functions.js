@@ -158,21 +158,24 @@ $(document).ready(function(){
 	Calendar
     -----------------------------------------------------------*/
     (function(){
-	
+	   
         //Sidebar
-        if ($('#sidebar-calendar')[0]) {
-            var date = new Date();
-            var d = date.getDate();
-            var m = date.getMonth();
-            var y = date.getFullYear();
-            $('#sidebar-calendar').fullCalendar({
-                editable: false,
-                events: [],
-                header: {
-                    left: 'title'
-                }
-            });
-        }
+        setTimeout(function(){
+            if ($('#sidebar-calendar')[0]) {
+                var date = new Date();
+                var d = date.getDate();
+                var m = date.getMonth();
+                var y = date.getFullYear();
+                $('#sidebar-calendar').fullCalendar({
+                    editable: false,
+                    events: [],
+                    header: {
+                        left: 'title'
+                    }
+                });
+            }
+        }, 1000);
+        
 
         //Content widget
         if ($('#calendar-widget')[0]) {

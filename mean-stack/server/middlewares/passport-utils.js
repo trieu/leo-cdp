@@ -94,17 +94,18 @@ module.exports = function(passport) {
 				else{
 					req.logIn(user, function(err) {
 						if (err) { return next(err); }
-						res.json({ message: user });
+						res.json({ self: user });
 					});
 				}
 			})(req, res, next);
 		},
 		isLoggedIn: function(req, res, next){
 			if (req.isAuthenticated()){
-				return next();
+				console.log(req.user)
+				res.json({ self: req.user });
 			}
 			else{
-				res.json({ message: false });
+				res.sendStatus(401); //unauthorized
 			}
 		},
 		logOut: function(req, res){
