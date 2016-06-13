@@ -9,6 +9,8 @@
 2. `npm start`
 
 ## File Structure
+
+```
 mean-stack/
  │
  ├── app/
@@ -39,3 +41,4 @@ mean-stack/
      ├──controllers/          * all file api
      ├──helpers/
      └──..../
+```
