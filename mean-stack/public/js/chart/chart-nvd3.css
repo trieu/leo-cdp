@@ -1,0 +1,15 @@
+.nv-barsWrap.nvd3-svg{
+	margin-left: 30px;
+}
+.nvd3 text,
+.nvd3 .nv-discretebar .nv-groups text,
+.nvd3 .nv-multibarHorizontal .nv-groups text {
+	fill: rgba(255, 255, 255, 0.8);
+	text-shadow: 0 0 4px #000;
+}
+.nvd3 .nv-axis line {
+	stroke: rgba(255, 255, 255, 0.1);
+}
+.nvd3 .nv-axis path{
+	stroke: rgba(255, 255, 255, 0.1);
+}

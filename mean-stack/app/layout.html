@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="webApp">
+<!--[if IE 9 ]><html class="ie9"><![endif]-->
+    <head>
+        <base href="/">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <meta name="format-detection" content="telephone=no">
+        <meta charset="UTF-8">
+
+        <meta name="description" content="Violate Responsive Admin Template">
+        <meta name="keywords" content="Super Admin, Admin, Template, Bootstrap">
+
+        <title>Super Admin Responsive Template</title>
+            
+        <!-- CSS -->
+        <link href="public/template/css/bootstrap.min.css" rel="stylesheet">
+        <link href="public/template/css/animate.min.css" rel="stylesheet">
+        <link href="public/template/css/font-awesome.min.css" rel="stylesheet">
+        <link href="public/template/css/form.css" rel="stylesheet">
+        <link href="public/template/css/calendar.css" rel="stylesheet">
+        <link href="public/template/css/style.css" rel="stylesheet">
+        <link href="public/template/css/icons.css" rel="stylesheet">
+        <link href="public/template/css/generics.css" rel="stylesheet"> 
+
+    </head>
+    <body id="skin-blur-blue">
+
+        <!-- Header -->
+        <header-partial></header-partial>
+        
+        <section id="main" class="p-relative" role="main">
+            
+            <!-- Sidebar -->
+            <sidebar-partial></sidebar-partial>
+        
+            <!-- Content -->
+            <section id="content" class="container">
+            
+                <!-- Messages Drawer -->
+                <messages-partial></messages-partial>
+                
+                <!-- Notification Drawer -->
+                <notifications-partial></notifications-partial>
+                
+                <!-- Breadcrumb -->
+                <!-- <breadcrumb-partial></breadcrumb-partial> -->
+                
+                <h4 class="page-title">DASHBOARD</h4>
+                
+                <!-- Main Widgets -->
+                <ng-view></ng-view>
+                
+            </section>
+
+        </section>
+        
+        <!-- jQuery -->
+        <script src="public/template/js/jquery.min.js"></script> <!-- jQuery Library -->
+        <script src="public/template/js/jquery-ui.min.js"></script> <!-- jQuery UI -->
+        <script src="public/template/js/jquery.easing.1.3.js"></script> <!-- jQuery Easing - Requirred for Lightbox + Pie Charts-->
+
+        <!-- Bootstrap -->
+        <script src="public/template/js/bootstrap.min.js"></script>
+
+        <!-- Map -->
+        <script src="public/template/js/maps/jvectormap.min.js"></script> <!-- jVectorMap main library -->
+        <script src="public/template/js/maps/usa.js"></script> <!-- USA Map for jVectorMap -->
+
+        <!--  Form Related -->
+        <script src="public/template/js/icheck.js"></script> <!-- Custom Checkbox + Radio -->
+
+        <!-- UX -->
+        <script src="public/template/js/scroll.min.js"></script> <!-- Custom Scrollbar -->
+
+        <!-- Other -->
+        <script src="public/template/js/calendar.min.js"></script> <!-- Calendar -->
+        <script src="public/template/js/feeds.min.js"></script> <!-- News Feeds -->
+        
+
+        <!-- All JS functions -->
+        <script src="public/template/js/functions.js"></script>
+
+        <!-- import angular full source compress in folder -->
+        <script src="public/js/angular-full.js"></script>
+
+        <!-- angular progress -->
+        <link href="public/js/progress/ngprogress-lite.css" rel="stylesheet">
+        <script src="public/js/progress/ngprogress-lite.min.js"></script>
+        <!-- angular chart-->
+        <script src="public/js/chart/d3/d3.min.js"></script>
+        <link href="public/js/chart/nvd3/nv.d3.css" rel="stylesheet">
+        <script src="public/js/chart/nvd3/nv.d3.min.js"></script>
+        <link href="public/js/chart/chart-nvd3.css" rel="stylesheet">
+        <script src="public/js/chart/angular-nvd3.min.js"></script>
+
+        <!-- all code js from app.folder -->
+        <script src="public/js/angular-app.js"></script>
+    </body>
+</html>
