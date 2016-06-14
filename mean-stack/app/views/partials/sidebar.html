@@ -3,15 +3,14 @@
     <!-- Sidbar Widgets -->
     <div class="side-widgets overflow">
         <!-- Profile Menu -->
-        <div class="text-center s-widget m-b-25 dropdown open" id="profile-menu" ng-show="isAuth">
+        <div class="text-center s-widget m-b-25 dropdown" id="profile-menu" ng-show="isAuth">
             <a href="" data-toggle="dropdown">
                 <img class="profile-pic animated" src="public/template/img/profile-pic.png" alt="">
             </a>
             <ul class="dropdown-menu profile-menu">
-                <li><a href="#">Sign Out</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
+                <li><a href="#" logout>Sign Out</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
             </ul>
-            <h4 class="m-0">Malinda Hollaway</h4>
-            @malinda-h
+            <h4 class="m-0">{{user.username}}</h4>
         </div>
         
         <!-- Calendar -->

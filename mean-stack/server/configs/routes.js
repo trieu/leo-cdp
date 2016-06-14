@@ -9,13 +9,13 @@ module.exports = function(app) {
   var auth = require('../middlewares/passport-utils.js')(passport);
   app.get('/loggedin', auth.isLoggedIn);
   app.post('/login', auth.loginLocal);
-  app.post('/logout', auth.logOut);
+  app.get('/logout', auth.logOut);
   //end passport
 
-  app.use((req, res, next) => {
-    console.log('======>>>I sense a disturbance in the force...'); // DEBUG
-    next();
-  });
+  // app.use((req, res, next) => {
+  //   console.log(' ====== DEBUG ====== '); // DEBUG
+  //   next();
+  // });
   
   // all other routes are handled by Angular
   app.get('/*', function(req, res) {

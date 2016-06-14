@@ -9,14 +9,17 @@ webApp.config(function($routeProvider, $locationProvider){
 	.when('/login',{
 		templateUrl: 'app/views/login.html'
 	})
-	.otherwise({redirectTo: '/'});
+	.when('/404',{
+		templateUrl: 'app/views/404.html'
+	})
+	.otherwise({redirectTo: '/404'});
 	$locationProvider.html5Mode({
 		enabled: true,
 		requireBase: false
 	});
 });
-
-webApp.run(function($rootScope, $cookies, $http, ngProgressLite, $location){
+//when application run
+webApp.run(function($rootScope, Auth, $cookies, ngProgressLite, $location){
 
 	$rootScope.isUser = function(id){
 		if (!_null($rootScope.user)) {
@@ -34,11 +37,13 @@ webApp.run(function($rootScope, $cookies, $http, ngProgressLite, $location){
 		else{
 			$rootScope.isAuth = true;
 			$rootScope.user = data.self;
+			$location.path(back_url);
 		}
 	};
 
+	var back_url = ($location.path() == '/login') ? '/' : $location.path();
 	//run check once logged in
-	$http.get('/loggedin').success(function(data){
+	Auth._loggedin().success(function(data){
 		$rootScope.checkAuth(data);
 	}).error(function(){
 		$location.path('/login');
@@ -55,6 +60,9 @@ webApp.run(function($rootScope, $cookies, $http, ngProgressLite, $location){
 	});
 
 });
+
+// handle all authentication
+
 webApp.factory('Auth', function($http) {
 	return {
 		_signup : function(data) {
@@ -64,7 +72,10 @@ webApp.factory('Auth', function($http) {
 			return $http.post('/login', data);
 		},
 		_logout : function() {
-			return $http.post('/logout');
+			return $http.get('/logout');
+		},
+		_loggedin : function() {
+			return $http.get('/loggedin');
 		}
 	}
 });
@@ -74,10 +85,23 @@ webApp.controller('loginCtrl', function($scope, Auth, $location) {
 		Auth._login({username: $scope.username, password: $scope.password})
 		.success(function(data){
 			$scope.checkAuth(data);
-			$location.path('/');
 		}).error(function(){alert('Tài khoản hoặc mật khẩu không đúng')});
 	};
 
+});
+
+webApp.directive('logout', function($rootScope, Auth, $location){
+	return{
+		restrict: 'A',
+		link: function($scope, element, attributes){
+			element.on('click', function(){
+				Auth._logout();
+				$rootScope.isAuth = false;
+				$rootScope.user = null;
+				$location.path('/login');
+			});
+		}
+	};
 });
 
 

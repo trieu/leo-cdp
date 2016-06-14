@@ -1,6 +1,5 @@
 var express = require('express');
-var morgan = require('morgan'); // logger
-var assert = require('assert');
+var favicon = require('serve-favicon');
 var morgan = require('morgan');             // log requests to the console (express4)
 var bodyParser = require('body-parser');    // pull information from HTML POST (express4)
 var cookieParser = require('cookie-parser');// pull information from HTML cookies (express4)
@@ -8,6 +7,7 @@ var expressSession = require('express-session');
 
 var app = express();
 
+app.use(favicon(__dirname + '/../public/img/favicon.ico'));
 app.use('/public', express.static(__dirname + '/../public'));
 app.use('/app', express.static(__dirname + '/../app'));
 
@@ -20,7 +20,8 @@ app.use(expressSession({
 	saveUninitialized: false
 }));
 
-app.use(morgan('dev'));
+//app.use(morgan('dev'));
+app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal']);
 
 require('./configs/database.js');
 //router
