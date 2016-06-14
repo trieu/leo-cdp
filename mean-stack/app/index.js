@@ -9,6 +9,9 @@ webApp.config(function($routeProvider, $locationProvider){
 	.when('/login',{
 		templateUrl: 'app/views/login.html'
 	})
+	.when('/creative',{
+		templateUrl: 'app/views/creative/list.html'
+	})
 	.when('/404',{
 		templateUrl: 'app/views/404.html'
 	})
@@ -17,4 +20,16 @@ webApp.config(function($routeProvider, $locationProvider){
 		enabled: true,
 		requireBase: false
 	});
+});
+
+webApp.directive("titlePage", function($http, $rootScope){
+	return{
+		restrict: 'A',
+		link: function(scope, element, attrs){
+			scope.$on('title-page', function (event, data) {
+				console.log(data);
+				element.text(data || 'Ads Play');
+			});
+		}
+	}
 });

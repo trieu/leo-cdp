@@ -1,6 +1,6 @@
 var LocalStrategy = require('passport-local').Strategy;
 
-var dataDemo = require('../configs/passport-config');
+var dataDemo = require('../configs/users_data.js');
 
 //bcrypt = require('bcryptjs'); //thư viện mã hóa
 module.exports = function(passport) {
@@ -71,7 +71,8 @@ module.exports = function(passport) {
 				objects = objects.concat(getObjects(obj[i], key, val));    
 			} 
 			else if (i == key && obj[i] == val || i == key && val == '') {
-				//if key matches and value matches or if key matches and value is not passed (eliminating the case where key matches but passed value does not)
+				/*if key matches and value matches or if key matches and value is not passed
+				(eliminating the case where key matches but passed value does not) */
 				objects.push(obj);
 			}
 			else if (obj[i] == val && key == ''){

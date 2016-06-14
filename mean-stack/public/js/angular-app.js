@@ -9,6 +9,9 @@ webApp.config(function($routeProvider, $locationProvider){
 	.when('/login',{
 		templateUrl: 'app/views/login.html'
 	})
+	.when('/creative',{
+		templateUrl: 'app/views/creative/list.html'
+	})
 	.when('/404',{
 		templateUrl: 'app/views/404.html'
 	})
@@ -18,8 +21,20 @@ webApp.config(function($routeProvider, $locationProvider){
 		requireBase: false
 	});
 });
+
+webApp.directive("titlePage", function($http, $rootScope){
+	return{
+		restrict: 'A',
+		link: function(scope, element, attrs){
+			scope.$on('title-page', function (event, data) {
+				console.log(data);
+				element.text(data || 'Ads Play');
+			});
+		}
+	}
+});
 //when application run
-webApp.run(function($rootScope, Auth, $cookies, ngProgressLite, $location){
+webApp.run(function($rootScope, auth, $cookies, ngProgressLite, $location){
 
 	$rootScope.isUser = function(id){
 		if (!_null($rootScope.user)) {
@@ -29,13 +44,13 @@ webApp.run(function($rootScope, Auth, $cookies, ngProgressLite, $location){
 		return false;
 	};
 
-	$rootScope.checkAuth = function(data){
+	$rootScope.checkauth = function(data){
 		//login (false) => data.self == false , (true) data.self = user data json
 		if(data.self == false){
-			$rootScope.isAuth = false;
+			$rootScope.isauth = false;
 		}
 		else{
-			$rootScope.isAuth = true;
+			$rootScope.isauth = true;
 			$rootScope.user = data.self;
 			$location.path(back_url);
 		}
@@ -43,8 +58,8 @@ webApp.run(function($rootScope, Auth, $cookies, ngProgressLite, $location){
 
 	var back_url = ($location.path() == '/login') ? '/' : $location.path();
 	//run check once logged in
-	Auth._loggedin().success(function(data){
-		$rootScope.checkAuth(data);
+	auth._loggedin().success(function(data){
+		$rootScope.checkauth(data);
 	}).error(function(){
 		$location.path('/login');
 	});
@@ -63,7 +78,7 @@ webApp.run(function($rootScope, Auth, $cookies, ngProgressLite, $location){
 
 // handle all authentication
 
-webApp.factory('Auth', function($http) {
+webApp.factory('auth', function($http) {
 	return {
 		_signup : function(data) {
 			return $http.post('/signup', data);
@@ -80,23 +95,24 @@ webApp.factory('Auth', function($http) {
 	}
 });
 
-webApp.controller('loginCtrl', function($scope, Auth, $location) {
+webApp.controller('loginCtrl', function($scope, auth, $location) {
 	$scope.login = function(){
-		Auth._login({username: $scope.username, password: $scope.password})
+		auth._login({username: $scope.username, password: $scope.password})
 		.success(function(data){
-			$scope.checkAuth(data);
+			$scope.checkauth(data);
 		}).error(function(){alert('Tài khoản hoặc mật khẩu không đúng')});
 	};
 
 });
 
-webApp.directive('logout', function($rootScope, Auth, $location){
+/* example tag: <a logout> link name </a> */
+webApp.directive('logout', function($rootScope, auth, $location){
 	return{
 		restrict: 'A',
 		link: function($scope, element, attributes){
 			element.on('click', function(){
-				Auth._logout();
-				$rootScope.isAuth = false;
+				auth._logout();
+				$rootScope.isauth = false;
 				$rootScope.user = null;
 				$location.path('/login');
 			});
@@ -105,6 +121,34 @@ webApp.directive('logout', function($rootScope, Auth, $location){
 });
 
 
+webApp.factory('creative', function($http) {
+	return {
+		_list : function() {
+			return $http.get('/creative/api/');
+		},
+		_read : function(id) {
+			return $http.get('/creative/api/' + id);
+		},
+		_update : function(id, data) {
+			return $http.put('/creative/api/' + id, data);
+		},
+		_delete : function(id) {
+			return $http.delete('/creative/api/' + id);
+		}
+	}
+});
+
+webApp.controller('creativeListCtrl', function($scope, creative) {
+	$scope.items = {};
+	
+	$scope.$emit("title-page", "Creative List");
+
+	creative._list()
+	.success(function(data){
+		$scope.items = data;
+	});
+
+});
 
 webApp.directive('headerPartial', function(){
 	return{

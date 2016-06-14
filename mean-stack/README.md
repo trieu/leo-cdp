@@ -11,8 +11,9 @@
 2. `npm start` 
 
 ## Action
-> `npm test` (gulp) compress file and watch file changed + nodemon auto restart
-> `npm start` (gulp) compress minimize file <not watch file> + nodemon auto restart 
+1. `npm test` (gulp) compress file and watch file changed + nodemon auto restart
+
+2. `npm start` (gulp) compress minimize file <not watch file> + nodemon auto restart 
 
 ## File Structure
 

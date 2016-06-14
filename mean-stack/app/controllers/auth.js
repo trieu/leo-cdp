@@ -1,5 +1,5 @@
 //when application run
-webApp.run(function($rootScope, Auth, $cookies, ngProgressLite, $location){
+webApp.run(function($rootScope, auth, $cookies, ngProgressLite, $location){
 
 	$rootScope.isUser = function(id){
 		if (!_null($rootScope.user)) {
@@ -9,13 +9,13 @@ webApp.run(function($rootScope, Auth, $cookies, ngProgressLite, $location){
 		return false;
 	};
 
-	$rootScope.checkAuth = function(data){
+	$rootScope.checkauth = function(data){
 		//login (false) => data.self == false , (true) data.self = user data json
 		if(data.self == false){
-			$rootScope.isAuth = false;
+			$rootScope.isauth = false;
 		}
 		else{
-			$rootScope.isAuth = true;
+			$rootScope.isauth = true;
 			$rootScope.user = data.self;
 			$location.path(back_url);
 		}
@@ -23,8 +23,8 @@ webApp.run(function($rootScope, Auth, $cookies, ngProgressLite, $location){
 
 	var back_url = ($location.path() == '/login') ? '/' : $location.path();
 	//run check once logged in
-	Auth._loggedin().success(function(data){
-		$rootScope.checkAuth(data);
+	auth._loggedin().success(function(data){
+		$rootScope.checkauth(data);
 	}).error(function(){
 		$location.path('/login');
 	});
@@ -43,7 +43,7 @@ webApp.run(function($rootScope, Auth, $cookies, ngProgressLite, $location){
 
 // handle all authentication
 
-webApp.factory('Auth', function($http) {
+webApp.factory('auth', function($http) {
 	return {
 		_signup : function(data) {
 			return $http.post('/signup', data);
@@ -60,23 +60,24 @@ webApp.factory('Auth', function($http) {
 	}
 });
 
-webApp.controller('loginCtrl', function($scope, Auth, $location) {
+webApp.controller('loginCtrl', function($scope, auth, $location) {
 	$scope.login = function(){
-		Auth._login({username: $scope.username, password: $scope.password})
+		auth._login({username: $scope.username, password: $scope.password})
 		.success(function(data){
-			$scope.checkAuth(data);
+			$scope.checkauth(data);
 		}).error(function(){alert('Tài khoản hoặc mật khẩu không đúng')});
 	};
 
 });
 
-webApp.directive('logout', function($rootScope, Auth, $location){
+/* example tag: <a logout> link name </a> */
+webApp.directive('logout', function($rootScope, auth, $location){
 	return{
 		restrict: 'A',
 		link: function($scope, element, attributes){
 			element.on('click', function(){
-				Auth._logout();
-				$rootScope.isAuth = false;
+				auth._logout();
+				$rootScope.isauth = false;
 				$rootScope.user = null;
 				$location.path('/login');
 			});

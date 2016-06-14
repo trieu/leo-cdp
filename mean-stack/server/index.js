@@ -24,8 +24,9 @@ app.use(expressSession({
 app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal']);
 
 require('./configs/database.js');
-//router
-var routes = require('./configs/routes.js');
+
+//all routes
+var routes = require('./controllers/routes.js');
 routes(app);
 
 //listen port

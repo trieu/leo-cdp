@@ -1,0 +1,30 @@
+<div class="block-area" id="tableHover" ng-controller="creativeListCtrl">
+	<div class="table-responsive overflow">
+		<table class="table table-bordered table-hover tile">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Status</th>
+					<th>Total Impression</th>
+					<th>Total Click</th>
+					<th>CTR</th>
+					<th>Booking Time</th>
+					<th>Revenue</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="it in items">
+					<td>{{it.id}}</td>
+					<td>{{it.name}}</td>
+					<td>{{it.status}}</td>
+					<td>{{it.imp}}</td>
+					<td>{{it.c}}</td>
+					<td>{{it.ctr}}</td>
+					<td>{{it.runDate}} &#10145; {{it.expiredDate}}</td>
+					<td>{{it.totalRevenue}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
