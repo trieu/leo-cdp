@@ -1,15 +1,18 @@
+var Sync = require('sync');
 var site = require('../configs/site.js');
+var req_utils = require('../helpers/request_utils.js');
 var creativeModel = require('../models/creative.js');
 
 module.exports = function(app) {
-	
-	var _list = function(req, res, next) {
 
-		var data = creativeModel.list(site.api_domain + '/api/creative/summary/');
-		console.log('1');
-		res.json(data);
+	app.get('/creative/api', function(req, res, next) {
 
-	};
-
-	app.get('/creative/api', _list);
+		var url = site.api_domain + '/api/creative/summary/';
+		
+		Sync(function(){
+			// result from callback
+			var result = creativeModel.list.sync(null, url, req.user);
+			res.json(result);
+		})
+	});
 };

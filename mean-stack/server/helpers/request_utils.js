@@ -6,6 +6,6 @@ exports.get = function (url, callback) {
         if (!error && response.statusCode == 200) {
             data = JSON.parse(body);
         }
-        callback(data);
+        callback(null, data);
     });
 };

@@ -15,6 +15,11 @@
 
 2. `npm start` (gulp) compress minimize file <not watch file> + nodemon auto restart 
 
+## Passport
+Login success (call session request in router express js)
+1. req.user => json object {id: , username: , roles:}
+2. req.isAuthenticated() => true
+
 ## File Structure
 
 ```

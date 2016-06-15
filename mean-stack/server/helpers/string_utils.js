@@ -2,9 +2,8 @@
  * Created by trieu on 5/2/16.
  */
 
-
-exports.removeUnicodeSpace = function (str){
-    var s = str;
+exports.removeCharacters = function (value){
+    var s = value;
     s= s.toLowerCase();
     s= s.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a");
     s= s.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e");
@@ -18,3 +17,10 @@ exports.removeUnicodeSpace = function (str){
     s= s.replace(/^\-+|\-+$/g,"");
     return s;
 };
+
+exports.formatCurrency = function (value) { 
+    return value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+};
+
+exports.json = function (value) { return JSON.stringify(value) };
+

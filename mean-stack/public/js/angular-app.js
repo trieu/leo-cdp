@@ -47,10 +47,10 @@ webApp.run(function($rootScope, auth, $cookies, ngProgressLite, $location){
 	$rootScope.checkauth = function(data){
 		//login (false) => data.self == false , (true) data.self = user data json
 		if(data.self == false){
-			$rootScope.isauth = false;
+			$rootScope.isAuth = false;
 		}
 		else{
-			$rootScope.isauth = true;
+			$rootScope.isAuth = true;
 			$rootScope.user = data.self;
 			$location.path(back_url);
 		}
@@ -112,7 +112,7 @@ webApp.directive('logout', function($rootScope, auth, $location){
 		link: function($scope, element, attributes){
 			element.on('click', function(){
 				auth._logout();
-				$rootScope.isauth = false;
+				$rootScope.isAuth = false;
 				$rootScope.user = null;
 				$location.path('/login');
 			});
@@ -146,6 +146,7 @@ webApp.controller('creativeListCtrl', function($scope, creative) {
 	creative._list()
 	.success(function(data){
 		$scope.items = data;
+		console.log(data)
 	});
 
 });
