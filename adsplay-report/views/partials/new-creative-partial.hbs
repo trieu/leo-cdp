@@ -12,6 +12,7 @@
     }
 </style>
 
+
 <div class="panel panel-default">
     <div class="panel-heading"><h2>Ad Information</h2></div>
     <div class="panel-body">
@@ -324,6 +325,22 @@
                 </tr>
 
                 <tr>
+                    <td><strong>Target Content Categories</strong></td>
+                    <td>
+                        <div class="panel-body text-left" id="ad_target_location">
+                            <div>
+                                <em>PayTV - Show Ads at these categories</em>
+                                <select id="ad_target_content_cats" data-placeholder="PayTV - Show Ads at these categories" style="width:350px;" multiple class="chosen-select" >
+                                    {{#each payTVCategories}}
+                                        <option value="{{ID}}">{{Category}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
                     <td><strong>Target Location</strong></td>
                     <td>
                         <div class="panel-body text-left" id="ad_target_location">
@@ -342,6 +359,8 @@
                         </div>
                     </td>
                 </tr>
+
+
 
                 <tr>
                     <td><strong>Target Audience Gender</strong></td>
@@ -364,6 +383,10 @@
         </div>
     </div>
 </div>
+
+
+
+
 
 <hr>
 
@@ -402,3 +425,18 @@
 
 <script src="js/business-domains/creative-handler.js?v=31052016"></script>
 <script>var api_domain = "{{site.ssl_api_domain}}";</script>
+
+<link rel="stylesheet" href="https://harvesthq.github.io/chosen/chosen.css">
+<script src="https://harvesthq.github.io/chosen/chosen.jquery.js" ></script>
+<script type="text/javascript">
+    var config = {
+        '.chosen-select'           : {},
+        '.chosen-select-deselect'  : {allow_single_deselect:true},
+        '.chosen-select-no-single' : {disable_search_threshold:10},
+        '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
+        '.chosen-select-width'     : {width:"95%"}
+    }
+    for (var selector in config) {
+        $(selector).chosen(config[selector]);
+    }
+</script>

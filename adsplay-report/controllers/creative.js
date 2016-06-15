@@ -411,7 +411,7 @@ router.get('/new/local-ad-unit/video', function (req, res) {
     data.dashboard_title = "New Creative Video";
     data.femaleKeywords = constantUtils.getFemaleKeywords();
     data.maleKeywords = constantUtils.getMaleKeywords();
-
+    data.payTVCategories = constantUtils.getPayTVCategories();
     res.render('ad-report/new-creative-video', data)
 
 });

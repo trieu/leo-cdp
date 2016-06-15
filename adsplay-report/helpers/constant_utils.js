@@ -86,6 +86,66 @@ exports.getMaleKeywords = function(){
     return maleKeyWords;
 }
 
+//http://dev-fbox-onetv.fpt.vn/OneTVWS.ashx?method=ITVad_TotalView&begintime=2016-06-10&endtime=2016-06-12
+exports.getPayTVCategories = function(){
+    var cats;
+    cats = [
+        {
+            "ID": "2",
+            "Category": "Hành Động"
+        },
+        {
+            "ID": "6",
+            "Category": "KINH DỊ"
+        },
+        {
+            "ID": "11",
+            "Category": "HOẠT HÌNH"
+        },
+        {
+            "ID": "13",
+            "Category": "TÂM LÝ"
+        },
+        {
+            "ID": "14",
+            "Category": "PHIM BỘ HOA NGỮ"
+        },
+        {
+            "ID": "15",
+            "Category": "HÀI"
+        },
+        {
+            "ID": "16",
+            "Category": "TÀI LIỆU"
+        },
+        {
+            "ID": "20",
+            "Category": "PHIM BỘ HÀN QUỐC"
+        },
+        {
+            "ID": "23",
+            "Category": "PHIM BỘ VIỆT NAM"
+        },
+        {
+            "ID": "24",
+            "Category": "TÌNH CẢM"
+        },
+        {
+            "ID": "25",
+            "Category": "PHIM BỘ ÂU MỸ"
+        },
+        {
+            "ID": "28",
+            "Category": "PHIM GIA ĐÌNH"
+        },
+        {
+            "ID": "33",
+            "Category": "PHIM BỘ KHÁC"
+        }
+    ];
+    return cats;
+}
+
 exports.statuses= statuses;
 exports.placements = placements;
 exports.sites = sites;
