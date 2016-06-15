@@ -23,7 +23,6 @@ webApp.controller('creativeListCtrl', function($scope, creative) {
 	creative._list()
 	.success(function(data){
 		$scope.items = data;
-		console.log(data)
 	});
 
 });

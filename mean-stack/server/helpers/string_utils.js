@@ -24,3 +24,10 @@ exports.formatCurrency = function (value) {
 
 exports.json = function (value) { return JSON.stringify(value) };
 
+exports.isNull = function (value) {
+    if (typeof value !== "undefined" && value !== null){ 
+        return false;
+    }
+    return true;
+};
+
