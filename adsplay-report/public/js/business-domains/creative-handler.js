@@ -92,6 +92,13 @@
                             var time = moment(data[k]).format('YYYY-MM-DD');
                             $('[data-creative-field="'+nameTime+'"]').val(time);
                         }
+                        else if(k == 'prcModel'){
+                            $('[data-creative-field="'+k+'"]').each(function(i) {
+                                if( $(this).val() == data[k] ){
+                                    $(this).prop('checked', true);
+                                }
+                            });
+                        }
                         else if(k == 'media'){
 
                             if (data['adType'] == 1) {

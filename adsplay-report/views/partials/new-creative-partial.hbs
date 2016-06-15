@@ -141,10 +141,6 @@
                     <td>
                         <div class="panel-body text-left" >
                             <div class="radio">
-                                <label title="CPD (Cost per Day)">
-                                    <input type="radio"  name="prcModel" data-creative-field="prcModel" value="5" > CPD (Cost per Day)</label>
-                            </div>
-                            <div class="radio">
                                 <label title="CPV (Cost per Complete-View)">
                                     <input type="radio"  name="prcModel" data-creative-field="prcModel" value="1" > CPV (Cost per Complete-View)</label>
                             </div>
@@ -156,9 +152,13 @@
                                 <label title="CPC (Cost per Click)">
                                     <input type="radio"  name="prcModel" data-creative-field="prcModel" value="3"> CPC (Cost per Click)</label>
                             </div>
-                            <div class="radio">
+                            <div class="radio" style="display: none">
                                 <label title="CPE (Cost per Engagement)">
                                     <input type="radio"  name="prcModel" data-creative-field="prcModel" value="4"> CPE (Cost per Engagement)</label>
+                            </div>
+                            <div class="radio" style="display: none">
+                                <label title="CPD (Cost per Day)">
+                                    <input type="radio"  name="prcModel" data-creative-field="prcModel" value="5" > CPD (Cost per Day)</label>
                             </div>
                         </div>
                     </td>
@@ -182,7 +182,7 @@
                         <div class="panel-body text-left">
                             <div class="form-group">
                                 <select class="form-control" id="ad_score" data-creative-field="score" >
-                                    <option value="10" >10%</option>
+                                    <option value="10">10%</option>
                                     <option value="20">20%</option>
                                     <option value="30">30%</option>
                                     <option value="40">40%</option>
@@ -228,44 +228,96 @@
                     <td><strong>Target Placement</strong></td>
                     <td>
                         <div class="panel-body text-left" id="target_ad_placements">
-                            <div class="checkbox">
-                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="1" value="101">FPT_PLAY_LIVE_TV</label>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="1" value="102">FPT_PLAY_VOD</label>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="5" value="201">FPT_PLAY_SMARTTV_LIVE_TV</label>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="5" value="202">FPT_PLAY_SMART_TV_VOD</label>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="4" value="301">FPT_PLAY_LIVE_STREAM_IOS</label>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="4" value="302">FPT_PLAY_VOD_IOS</label>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="4" value="303">FPT_PLAY_LIVE_STREAM_ANDROID_BOX</label>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="4" value="304">FPT_PLAY_VOD_ANDROID_BOX</label>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="4" value="305">FPT_PLAY_LIVE_STREAM_ANDROID_APP</label>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="4" value="306">FPT_PLAY_VOD_ANDROID_APP</label>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="4" value="307">FPT_PLAY_LIVE_STREAM_ANDROID_SMART_TV</label>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="4" value="308">FPT_PLAY_VOD_ANDROID_SMART_TV</label>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="1" value="120">FSHARE_TVC_PLACEMENT</label>
+                            <div class="panel-group" id="accordion">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#fptplay_ad_placements">FptPlay.net Ad Placements</a>
+                                        </h4>
+                                    </div>
+                                    <div id="fptplay_ad_placements" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+                                            <div class="checkbox">
+                                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="1" value="101">FPT_PLAY_LIVE_TV</label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="1" value="102">FPT_PLAY_VOD</label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="5" value="201">FPT_PLAY_SMARTTV_LIVE_TV</label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="5" value="202">FPT_PLAY_SMART_TV_VOD</label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="4" value="301">FPT_PLAY_LIVE_STREAM_IOS</label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="4" value="302">FPT_PLAY_VOD_IOS</label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="4" value="303">FPT_PLAY_LIVE_STREAM_ANDROID_BOX</label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="4" value="304">FPT_PLAY_VOD_ANDROID_BOX</label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="4" value="305">FPT_PLAY_LIVE_STREAM_ANDROID_APP</label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="4" value="306">FPT_PLAY_VOD_ANDROID_APP</label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="4" value="307">FPT_PLAY_LIVE_STREAM_ANDROID_SMART_TV</label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="4" value="308">FPT_PLAY_VOD_ANDROID_SMART_TV</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#paytv_ad_placements">PayTV Ad Placements</a>
+                                        </h4>
+                                    </div>
+                                    <div id="paytv_ad_placements" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <div class="checkbox">
+                                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="1" value="320">PAYTV_TVC_PLACEMENT</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#fshare_ad_placements">FShare Ad Placements</a>
+                                        </h4>
+                                    </div>
+                                    <div id="fshare_ad_placements" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <div class="checkbox">
+                                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="1" value="120">FSHARE_TVC_PLACEMENT</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#nhacso_ad_placements">NhacSo.net Ad Placements</a>
+                                        </h4>
+                                    </div>
+                                    <div id="nhacso_ad_placements" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <div class="checkbox">
+                                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="1" value="103">NHACSO_TVC_PLACEMENT</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </td>
@@ -317,10 +369,10 @@
 
 <div class="panel">
     <div class="col-lg-12 text-center">
-        <div class="col-lg-4 ">
+        <div class="col-lg-5 ">
             <button style="width: 100%" id="ads_action_ok" type="button" class="btn btn-success"> OK </button>
         </div>
-        <div class="col-lg-4 ">
+        <div class="col-lg-5 ">
             <button style="width: 100%" id="ads_action_cancel" type="button" class="btn btn-warning"> Cancel </button>
         </div>
     </div>
