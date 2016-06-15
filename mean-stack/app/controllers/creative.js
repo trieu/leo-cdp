@@ -17,12 +17,25 @@ webApp.factory('creative', function($http) {
 
 webApp.controller('creativeListCtrl', function($scope, creative) {
 	$scope.items = {};
-	
-	$scope.$emit("title-page", "Creative List");
 
 	creative._list()
 	.success(function(data){
+		$scope.$emit("title-page", "Creative List");
+
 		$scope.items = data;
 	});
 
 });
+
+webApp.controller('creativeSummaryCtrl', function($scope, creative) {
+	$scope.items = {};
+
+	creative._list()
+	.success(function(data){
+		$scope.$emit("title-page", "Summary Report");
+
+		$scope.items = data;
+	});
+
+});
+

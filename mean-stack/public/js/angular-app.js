@@ -12,6 +12,9 @@ webApp.config(function($routeProvider, $locationProvider){
 	.when('/creative',{
 		templateUrl: 'app/views/creative/list.html'
 	})
+	.when('/creative/summary',{
+		templateUrl: 'app/views/creative/summary.html'
+	})
 	.when('/404',{
 		templateUrl: 'app/views/404.html'
 	})
@@ -140,15 +143,29 @@ webApp.factory('creative', function($http) {
 
 webApp.controller('creativeListCtrl', function($scope, creative) {
 	$scope.items = {};
-	
-	$scope.$emit("title-page", "Creative List");
 
 	creative._list()
 	.success(function(data){
+		$scope.$emit("title-page", "Creative List");
+
 		$scope.items = data;
 	});
 
 });
+
+webApp.controller('creativeSummaryCtrl', function($scope, creative) {
+	$scope.items = {};
+
+	creative._list()
+	.success(function(data){
+		$scope.$emit("title-page", "Summary Report");
+
+		$scope.items = data;
+	});
+
+});
+
+
 
 webApp.directive('headerPartial', function(){
 	return{
@@ -189,7 +206,7 @@ webApp.directive('historicalBarChart', function(){
 		restrict: 'AE',
 		scope: {
 			ngTitle: '@',
-			ngChart : '@ngChart'
+			ngChart : '@'
 		},
 		template: `
 			<div class="tile">

@@ -3,7 +3,7 @@ webApp.directive('historicalBarChart', function(){
 		restrict: 'AE',
 		scope: {
 			ngTitle: '@',
-			ngChart : '@ngChart'
+			ngChart : '@'
 		},
 		template: `
 			<div class="tile">

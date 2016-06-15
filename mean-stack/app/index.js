@@ -12,6 +12,9 @@ webApp.config(function($routeProvider, $locationProvider){
 	.when('/creative',{
 		templateUrl: 'app/views/creative/list.html'
 	})
+	.when('/creative/summary',{
+		templateUrl: 'app/views/creative/summary.html'
+	})
 	.when('/404',{
 		templateUrl: 'app/views/404.html'
 	})
