@@ -1,17 +1,43 @@
 <div class="block-area" ng-controller="creativeSummaryCtrl">
 	<div class="row">
 
-		<div class="col-md-3 col-xs-6">
+		<div class="col-md-3 col-sm-6 col-xs-12">
 			<div class="tile quick-stats">
-				<div id="stats-line-2" class="pull-left"><canvas width="254" height="65" style="display: inline-block; width: 254px; height: 65px; vertical-align: top;"></canvas></div>
 				<div class="data">
-					<h2 data-value="98">98</h2>
-					<small>Tickets Today</small>
+					<h2>{{sTotalPv}}</h2>
+					<small>Total Playview</small>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-3 col-sm-6 col-xs-12">
+			<div class="tile quick-stats">
+				<div class="data">
+					<h2>{{sTotalImp}}</h2>
+					<small>Total Impression</small>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-3 col-sm-6 col-xs-12">
+			<div class="tile quick-stats">
+				<div class="data">
+					<h2>{{sTotalTrv}}</h2>
+					<small>Total Completed-View</small>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-3 col-sm-6 col-xs-12">
+			<div class="tile quick-stats">
+				<div class="data">
+					<h2>{{sTotalClick}}</h2>
+					<small>Total Click</small>
 				</div>
 			</div>
 		</div>
 
 	</div>
 
-	<historical-bar-chart ng-title="Historical Bar Chart"></historical-bar-chart>
+	<historical-bar-chart ng-title="Historical Bar Chart" ng-chart-data="{{chart}}"></historical-bar-chart>
 </div>
