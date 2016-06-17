@@ -83,6 +83,12 @@ router.get('/list/all', function (req, res) {
                 else if(data.ssid === 1005 && crt.name.toLowerCase().indexOf('ambient') >= 0){
                     filteredList.push(crt);
                 }
+                else if(data.ssid === 1006 && crt.name.toLowerCase().indexOf('itvad') >= 0){
+                    filteredList.push(crt);
+                }
+                else if(data.ssid === 1007 && crt.name.toLowerCase().indexOf('paytv') >= 0){
+                    filteredList.push(crt);
+                }
             });
             data.creatives = filteredList;
         }

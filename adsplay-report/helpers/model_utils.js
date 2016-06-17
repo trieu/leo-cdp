@@ -5,6 +5,9 @@
 var siteConfigs = require('../configs/site');
 var constant_utils = require('./constant_utils');
 
+var adminIds = {1000: 1, 1001: 1};
+var operatorIds = {1007: 1};
+
 exports.baseModel = function(req) {
     var data = {};
     data.site = siteConfigs;
@@ -22,12 +25,17 @@ exports.baseModel = function(req) {
         }
         data.auth = (ssid > 0);
         data.ssid = ssid;
-        data.isAdminGroup = (ssid == 1000 || ssid == 1001);
+        data.isAdminGroup = adminIds[ssid] == 1;
+        data.isOperatorGroup = operatorIds[ssid] == 1;
+        if(data.isAdminGroup){
+            data.isOperatorGroup = true;
+        }
         data.userName = constant_utils.getUserName(ssid);
     } else {
         data.auth = false;
         data.ssid = -1;
         data.isAdminGroup = false;
+        data.isOperatorGroup = false;
         data.userName = "Guest";
     }
 

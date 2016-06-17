@@ -101,6 +101,7 @@
                             <a href="/"><i class="fa fa-fw fa-line-chart"></i> Ad Metrics</a>
                         </li>
 
+                        {{#if isAdminGroup }}
                         <li class="">
                             <a href="/monitor/user"><i class="fa fa-fw fa-bar-chart-o"></i> Audience Analytics</a>
                         </li>
@@ -116,26 +117,32 @@
                         <li class="" style="display: none">
                             <a href="/monitor/pageview"><i class="fa fa-fw fa-bar-chart-o"></i> Real-time PageView</a>
                         </li>
+                        {{/if}}
 
                     </ul>
                 </li>
 
-
-            {{#if isAdminGroup }}
+            {{#if isOperatorGroup }}
                 <li>
                     <a href="javascript:;" data-toggle="collapse"
-                       data-target="#menuAdManagement"><i class="fa fa-fw fa-play"></i> Ad Management<i
+                       data-target="#menuAdManagement"><i class="fa fa-fw fa-play"></i> Ad Creator<i
                             class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="menuAdManagement" class="collapse in" aria-expanded="true" style="">
-                        <li class="">
-                            <a href="/creative/new/local-ad-unit"><i class="fa fa-fw fa-list"></i> New Advertising Unit</a>
-                        </li>
-                        <li class="">
-                            <a href="/booking/new/"><i class="fa fa-fw fa-list"></i> New Booking</a>
-                        </li>
-                        <li>
-                            <a href="/monitor/live-tv-ad-manager"><i class="fa fa-fw fa-exchange"></i> Live TV Ad Manager</a>
-                        </li>
+
+                            <li class="">
+                                <a href="/creative/new/local-ad-unit"><i class="fa fa-fw fa-list"></i> New Advertising Unit</a>
+                            </li>
+
+
+                        {{#if isAdminGroup }}
+                            <li style="display: none">
+                                <a href="/booking/new/"><i class="fa fa-fw fa-list"></i> New Booking</a>
+                            </li>
+                            <li style="display: none">
+                                <a href="/monitor/live-tv-ad-manager"><i class="fa fa-fw fa-exchange"></i> Live TV Ad Manager</a>
+                            </li>
+                        {{/if}}
+
                     </ul>
                 </li>
             {{/if}}

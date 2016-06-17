@@ -13,7 +13,8 @@ var placements = {
     301 : 'Live TV for Mobile App', 302 : 'VOD for Mobile App',333 : 'Demo', 307 : 'Android-Box LiveTV',308 : 'Android-Box VOD',
     401 : 'FptPlay-Overlay'
 };
-var userNames = {1000:'Admin', 1001: 'Manager', 1002: 'Customer', 1003 : 'epl_fptplay', 1004: 'Lava', 1005: 'Ambient'};
+var userNames = {1000:'Admin', 1001: 'Manager', 1002: 'Customer', 1003 : 'epl_fptplay',
+    1004: 'Lava', 1005: 'Ambient', 1006: 'iTVad_Sale',1007:'PayTV_Admin'};
 var sites = {'www.fshare.vn': 'FShare' , 'fptplay-live':'FptPlay-LiveEvent' };
 var platforms = {1: 'PC Web' , 2:'Mobile Web', 3: 'Tablet', 4:'Mobile App' , 5:'SmartTV' , 6:'IPTV'};
 
