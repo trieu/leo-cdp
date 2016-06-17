@@ -14,7 +14,8 @@ var express = require('express')
     , moment = require('moment')
     , commonConfigs = require('../configs/common')
     , fs = require('fs.extra')
-    , upload = require('../helpers/upload_utils.js');
+    , upload = require('../helpers/upload_utils.js')
+    , convert = require('../helpers/convert_utils.js');
 var formidable = require('formidable');
 
 router.get('/list/all', function (req, res) {
@@ -427,35 +428,71 @@ router.post('/save/tvc-ad', function(req, res) {
     var urlSave = data.site.api_domain +'/creative/save/json';
     
     if (data.isAdminGroup) {
-        var result = {};
+         var form = new formidable.IncomingForm();
 
-        var rawCrt = req.body.creative;
-        var adtype = req.body.adtype;
-        var youtube_url = req.body.youtube_url;
-
-        if (typeof rawCrt === 'string' && typeof youtube_url === 'string' && adtype === 'fm_tvc_video' ) {
-            var crt = JSON.parse(rawCrt);
-            crt.adType = 1;
-
-            if(typeof(youtube_url) !== "undefined" && youtube_url !== null && youtube_url.indexOf(crt.media) < 0){
-
-                var seedStr = stringUtils.removeUnicodeSpace(crt.name) + (new Date()).getTime();
-                var hash = crypto.createHash('md5').update(seedStr).digest('hex');
-                var mediaName = hash + '.mp4';
-                crt.media = mediaName;
-
-                upload.video(youtube_url, function(obj){
-                    upload.ftp_video(obj.url, mediaName, function(data){
-                        var rs = {url: data.url, filename: data.filename, size: obj.size};
-                        saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
-                    });
-                });
+        form.parse(req, function(err, fields, files) {
+            if(err){
+                console.error(err);
             }
             else{
-                saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
+                var result = {};
+
+                var rawCrt = fields.creative;
+                var adtype = fields.adtype;
+                var file = files.file;
+
+                console.log(file)
+                var crt = JSON.parse(rawCrt);
+                    crt.adType = 1;
+                if(typeof(file) !== "undefined" && file !== null){
+                    upload.video(file, function(obj){
+                        
+                        console.log(obj.url);
+
+                        var input = obj.url;
+                        //output file convert
+                        var output = obj.folder+"convert-"+obj.filename;
+                        var option = {videoCodec: 'libx264', audioCodec: 'libmp3lame', format: 'mp4', bitrate: '360p'};
+    
+                        convert.command(input, output, option, function(){
+                            // path video convert is output
+                            // console.log(output);
+                            crt.media = obj.url;
+                            saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
+                        });
+                        
+                    });
+                }
+                else{
+                    saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
+                }
+
+                // if (typeof rawCrt === 'string' && adtype === 'fm_tvc_video' ) {
+                //     var crt = JSON.parse(rawCrt);
+                //     crt.adType = 1;
+
+                //     if(typeof(video_url) !== "undefined" && video_url !== null && video_url.indexOf(crt.media) < 0){
+
+                //         var seedStr = stringUtils.removeUnicodeSpace(crt.name) + (new Date()).getTime();
+                //         var hash = crypto.createHash('md5').update(seedStr).digest('hex');
+                //         var mediaName = hash + '.mp4';
+                //         crt.media = mediaName;
+
+                //         upload.youtube(video_url, function(obj){
+                //             upload.ftp_video(obj.url, mediaName, function(data){
+                //                 var rs = {url: data.url, filename: data.filename, size: obj.size};
+                //                 saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
+                //             });
+                //         });
+                //     }
+                //     else{
+                //         saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
+                //     }
+
+                // }
+
             }
-            
-        }
+        });
 
     }
     else {

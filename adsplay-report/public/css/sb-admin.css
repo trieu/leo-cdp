@@ -224,13 +224,14 @@ ul.alert-dropdown {
 }
 /*loader*/
 .loader{
-    z-index: 999;
+    z-index: 9999;
     position: fixed;
-    top: 55px;
-    right: 25px;
-    width: 64px;
-    height: 44px;
-    background-image: url('../img/loader.gif');
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    background-image: url('../img/loader.svg');
     background-repeat: no-repeat;
     background-position: center;
 }

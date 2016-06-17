@@ -1,9 +1,10 @@
-var fs = require('fs.extra')
-	, formidable = require('formidable');
-var Upload = function () {};
-var stringUtils = require('./string_utils')
+var fs = require('fs.extra');
+
+var stringUtils = require('./string_utils');
 //const ftpBaseFolderPath = '/static/videos/';
 const ftpBaseFolderPath = '/static/ads/instream/';
+
+var Upload = function () {};
 
 var storage = function(output){
 	var d = new Date();
@@ -24,7 +25,7 @@ Upload.prototype.folder = function(output){
 };
 
 
-Upload.prototype.video = function (link, callback) {
+Upload.prototype.youtube = function (link, callback) {
 
 	var youtubedl = require('youtube-dl');
     
@@ -52,6 +53,25 @@ Upload.prototype.video = function (link, callback) {
     });
 
 };
+
+
+Upload.prototype.video = function(file, callback){
+
+    var dir = storage('video');
+    var dirSplit = dir.split("/"); 
+    var output = dir + file.name;
+    var url = output.split("public/");
+
+    fs.copy(file.path, output, function(err) {  
+        if (err) {
+            console.error(err);
+        } else {
+            var obj = {url: url[1], folder: dirSplit[dirSplit.length - 1], filename: file.name};
+            callback(obj);
+        }
+    });
+}
+
 
 Upload.prototype.ftp_video = function(localFile, mediaName, callback){
 

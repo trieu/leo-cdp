@@ -1,4 +1,4 @@
-
+var fs = require('fs');
 var express = require('express');
 var app = express();
 var expressHbs = require('express-handlebars');
@@ -41,6 +41,25 @@ app.engine('hbs', expressHbs(hbsConfigs));
 app.set('view engine', 'hbs');
 //TODO enable cache for production only
 //app.enable('view cache');
+
+
+//++++++++create folder
+var folder = ['overlay','display','video'];
+var adsFolder = __dirname + '/public/ads/';
+if (!fs.existsSync(adsFolder)) {
+	fs.mkdirSync(adsFolder);
+}
+else{
+	for (var i = 0; i < folder.length; i++) {
+
+		var dir = adsFolder+folder[i]+'/';
+
+		if (!fs.existsSync(dir)){
+			fs.mkdirSync(dir); 
+		}
+	}
+}
+//++++++++end create folder
 
 //TODO
 app.listen(8181);

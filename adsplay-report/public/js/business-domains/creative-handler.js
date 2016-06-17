@@ -71,7 +71,7 @@
         }
         return data;
     }
-    window.collectCreativeData = collectCreativeData;
+    //window.collectCreativeData = collectCreativeData;
 
     function change_form_value(url){
         $.ajax({
@@ -111,7 +111,7 @@
                                 media = data[k];
 
                                 var link = "https://ads-cdn.fptplay.net/static/ads/instream/"+data[k];
-                                $('#youtube_url').val(link);
+                                $('#video_url').val(link);
 
                                 var iframe = '<video id="video_ads" class="video-js vjs-default-skin vjs-big-play-centered"><source src="'+link+'" type="video/mp4"></video>';
                                 $('.iframeVideo').html(iframe);
@@ -190,7 +190,7 @@
         }
 
         //get iframe video
-        $("#youtube_url").keyup(function() {
+        $("#video_url").keyup(function() {
             var value = $(this).val();
             if(typeof(value) !== 'undefined'&& value.indexOf("youtu") != -1){
                 var code = youtube(value);
@@ -233,7 +233,8 @@
 
         $('#ads_action_ok').click(function(){
             var data = collectCreativeData();
-            
+            console.log(data);
+
             var id_edit = url_edit_id(url_current);
             if(id_edit != false){
                 data['id'] = id_edit;
@@ -281,7 +282,7 @@
 
             if (media != null) {
                 $('#file').removeAttr('required');
-                $('#youtube_url').removeAttr('required');
+                $('#video_url').removeAttr('required');
             }
 
             //validate all data
@@ -295,17 +296,42 @@
                 return false;
             }
 
-            console.log(data);
             //return;
 
             if (adtype == "fm_tvc_video") {
-                var ytb_url = $('#youtube_url').val();
-                var postData = {creative: JSON.stringify(data), adtype : adtype, youtube_url:ytb_url};
+                var ytb_url = $('#video_url').val();
+                var video_file = $('#video_file')[0];
+
+                if(ytb_url.length == 0 && video_file.files.length == 0){
+                    return alert("Please check input file ");
+                }
+                else{
+                    var video_save;
+
+                    if (ytb_url.length != 0) {
+                        video_save = ytb_url;
+                    }
+                    else{
+                        var fSize = video_file.files[0].size;
+                        if(fSize > 20971520){
+                            return alert("Please check file size ");
+                        }
+                        else{
+                            video_save = video_file.files[0];
+                        }
+                    }
+                }
+                var postData = new FormData();
+                postData.append('creative', JSON.stringify(data));
+                postData.append('adtype', adtype);
+                postData.append('file', video_save);
 
                 $.ajax({
                     url: 'creative/save/tvc-ad',
                     type: "POST",
                     data: postData,
+                    contentType: false,
+                    processData:false,
                     beforeSend: function(){
                         $('#wrapper').append('<div class="loader"></div>');
                     },
