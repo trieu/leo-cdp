@@ -58,15 +58,13 @@ Upload.prototype.youtube = function (link, callback) {
 Upload.prototype.video = function(file, callback){
 
     var dir = storage('video');
-    var dirSplit = dir.split("/"); 
     var output = dir + file.name;
-    var url = output.split("public/");
 
     fs.copy(file.path, output, function(err) {  
         if (err) {
             console.error(err);
         } else {
-            var obj = {url: url[1], folder: dirSplit[dirSplit.length - 1], filename: file.name};
+            var obj = {url: output, folder: dir, filename: file.name};
             callback(obj);
         }
     });
@@ -129,7 +127,7 @@ Upload.prototype.image = function(file, callback){
         if (err) {
             console.error(err);
         } else {
-            var obj = {url: url[1], folder: dirSplit[dirSplit.length - 1], filename: file.name};
+            var obj = {url: output, folder: dirSplit[dirSplit.length - 1], filename: file.name};
             callback(obj);
         }
     });

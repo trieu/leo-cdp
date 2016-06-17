@@ -435,61 +435,58 @@ router.post('/save/tvc-ad', function(req, res) {
                 console.error(err);
             }
             else{
-                var result = {};
-
                 var rawCrt = fields.creative;
                 var adtype = fields.adtype;
+                var video_url = fields.video_url;
                 var file = files.file;
 
-                console.log(file)
-                var crt = JSON.parse(rawCrt);
+                if (typeof rawCrt === 'string' && adtype === 'fm_tvc_video' ) {
+                    var crt = JSON.parse(rawCrt);
                     crt.adType = 1;
-                if(typeof(file) !== "undefined" && file !== null){
-                    upload.video(file, function(obj){
-                        
-                        console.log(obj.url);
 
-                        var input = obj.url;
-                        //output file convert
-                        var output = obj.folder+"convert-"+obj.filename;
-                        var option = {videoCodec: 'libx264', audioCodec: 'libmp3lame', format: 'mp4', bitrate: '360p'};
-    
-                        convert.command(input, output, option, function(){
-                            // path video convert is output
-                            // console.log(output);
-                            crt.media = obj.url;
-                            saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
+                    var seedStr = stringUtils.removeUnicodeSpace(crt.name) + (new Date()).getTime();
+                    var hash = crypto.createHash('md5').update(seedStr).digest('hex');
+                    var mediaName = hash + '.mp4';
+
+                    //upload file
+                    if(typeof(file) !== "undefined" && file !== null){
+                        upload.video(file, function(obj){
+                            
+                            var input = obj.url;
+                            //output file convert with name = convert-video.mp4
+                            var output = obj.folder+"/convert-video.mp4";
+                            var option = {videoCodec: 'libx264', audioCodec: 'libmp3lame', format: 'mp4', bitrate: '360p'};
+        
+                            convert.command(input, output, option, function(){
+
+                                // output push on cdn
+                                upload.ftp_video(output, mediaName, function(data){
+                                    //var rs = {url: data.url, filename: data.filename, size: obj.size};
+                                    crt.media = mediaName;
+                                    saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
+                                });
+
+                            });
+                            
+                        });
+                    }
+                    //upload video from youtube
+                    else if (typeof(video_url) !== "undefined" && video_url !== null && video_url.indexOf(crt.media) < 0){
+
+                        upload.youtube(video_url, function(obj){
+                            upload.ftp_video(obj.url, mediaName, function(data){
+                                //var rs = {url: data.url, filename: data.filename, size: obj.size};
+                                crt.media = mediaName;
+                                saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
+                            });
                         });
                         
-                    });
+                    }
+                    else{
+                        saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
+                    }
+
                 }
-                else{
-                    saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
-                }
-
-                // if (typeof rawCrt === 'string' && adtype === 'fm_tvc_video' ) {
-                //     var crt = JSON.parse(rawCrt);
-                //     crt.adType = 1;
-
-                //     if(typeof(video_url) !== "undefined" && video_url !== null && video_url.indexOf(crt.media) < 0){
-
-                //         var seedStr = stringUtils.removeUnicodeSpace(crt.name) + (new Date()).getTime();
-                //         var hash = crypto.createHash('md5').update(seedStr).digest('hex');
-                //         var mediaName = hash + '.mp4';
-                //         crt.media = mediaName;
-
-                //         upload.youtube(video_url, function(obj){
-                //             upload.ftp_video(obj.url, mediaName, function(data){
-                //                 var rs = {url: data.url, filename: data.filename, size: obj.size};
-                //                 saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
-                //             });
-                //         });
-                //     }
-                //     else{
-                //         saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
-                //     }
-
-                // }
 
             }
         });

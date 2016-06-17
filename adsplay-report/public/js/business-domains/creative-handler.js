@@ -306,10 +306,12 @@
                     return alert("Please check input file ");
                 }
                 else{
-                    var video_save;
+                    var postData = new FormData();
+                    postData.append('creative', JSON.stringify(data));
+                    postData.append('adtype', adtype);
 
                     if (ytb_url.length != 0) {
-                        video_save = ytb_url;
+                        postData.append('video_url', ytb_url);
                     }
                     else{
                         var fSize = video_file.files[0].size;
@@ -317,14 +319,11 @@
                             return alert("Please check file size ");
                         }
                         else{
-                            video_save = video_file.files[0];
+                            postData.append('file', video_file.files[0]);
                         }
                     }
                 }
-                var postData = new FormData();
-                postData.append('creative', JSON.stringify(data));
-                postData.append('adtype', adtype);
-                postData.append('file', video_save);
+                
 
                 $.ajax({
                     url: 'creative/save/tvc-ad',
