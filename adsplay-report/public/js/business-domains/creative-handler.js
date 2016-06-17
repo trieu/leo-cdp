@@ -55,7 +55,10 @@
                 data[fieldName] = $(this)[0].value;
             }
             else if(type === 'radio' ){
-                data[fieldName] = value;
+                var checked = $(this).is(':checked');
+                if(checked){
+                    data[fieldName] = value;
+                }
             }
             else {
                 data[fieldName] = value;
@@ -68,6 +71,7 @@
         }
         return data;
     }
+    window.collectCreativeData = collectCreativeData;
 
     function change_form_value(url){
         $.ajax({
@@ -258,6 +262,10 @@
             }
             if(data.tgpfs.length === 0){
                 modal_alert('Device Platform must be selected !');
+                return false;
+            }
+            if( ! data.prcModel){
+                modal_alert('Pricing Model must be selected !');
                 return false;
             }
 
