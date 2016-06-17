@@ -9,7 +9,7 @@ webApp.directive('historicalBarChart', function(){
 		template: '<div class="tile">'+
 					'<h2 class="tile-title">{{ngTitle}}</h2>'+
 					'<div class="p-10">'+
-						'<nvd3 options="options" data="data" api="api"></nvd3>'+
+						'<nvd3 options="options" data="data" api="api" config="{refreshDataOnly: true, deepWatchDataDepth: 0}"></nvd3>'+
 					'</div>'+
 				'</div>',
 		link: function ($scope, element, attributes) {
@@ -41,7 +41,6 @@ webApp.directive('historicalBarChart', function(){
 							tickFormat: function(d) {
 								return d3.time.format('%x')(new Date(d))
 							},
-							rotateLabels: 30,
 							showMaxMin: false
 						},
 						yAxis: {
@@ -54,35 +53,32 @@ webApp.directive('historicalBarChart', function(){
 								return d3.time.format('%x')(new Date(d));
 							}
 						},
-						zoom: {
-							enabled: true,
-							scaleExtent: [1, 10],
-							useFixedDomain: false,
-							useNiceScale: false,
-							horizontalOff: false,
-							verticalOff: true,
-							unzoomEventType: 'dblclick.zoom'
-						},
-						color: function(d, i) { return "rgba(255,255,255,0.5)"; }
+						color: function(d, i) { return "rgba(255,255,255,0.5)"; },
+						clipEdge: true,
+						padData: true,
+						// showLegend: true
 					}
 				};
 
-			var run = function(values){
+			var run = function(values, key){
 				
 				$scope.data = [
 				{
-					"key" : "Quantity" ,
+					"key" : key,
 					"bar": true,
 					"values" : values
 				}];
 			};
 			
-            run(dataDemo);
+			//run first data demo
+			run(dataDemo, "Quantity");
 
             $scope.$watch('ngChartData', function (newValue, oldValue) {
             	var data = JSON.parse(newValue);
+
 				if (data.length > 0) {
-					run(dataDemo);
+					//update data
+					run(data, $scope.ngChartKey);
 					$scope.api.refresh();
 				}
 			});

@@ -1,10 +1,26 @@
 <div class="block-area" ng-controller="creativeSummaryCtrl">
+
+	<div class="row">
+		<div class="col-md-12">
+			<h3 class="block-title">Change date</h3>
+		</div>
+		<form>
+			<div class="col-md-4 col-sm-6 col-xs-12 m-b-15">
+				<date-pick></date-pick>
+			</div>
+			<div class="col-md-4 col-sm-6 col-xs-12 m-b-15">
+				<date-pick></date-pick>
+			</div>
+			<button type="submit" class="btn btn-sm"> OK </button>
+		</form>
+	</div>
+
 	<div class="row">
 
 		<div class="col-md-3 col-sm-6 col-xs-12">
 			<div class="tile quick-stats">
 				<div class="data">
-					<h2>{{sTotalPv}}</h2>
+					<h2>{{sumTotalPv}}</h2>
 					<small>Total Playview</small>
 				</div>
 			</div>
@@ -13,7 +29,7 @@
 		<div class="col-md-3 col-sm-6 col-xs-12">
 			<div class="tile quick-stats">
 				<div class="data">
-					<h2>{{sTotalImp}}</h2>
+					<h2>{{sumTotalImp}}</h2>
 					<small>Total Impression</small>
 				</div>
 			</div>
@@ -22,7 +38,7 @@
 		<div class="col-md-3 col-sm-6 col-xs-12">
 			<div class="tile quick-stats">
 				<div class="data">
-					<h2>{{sTotalTrv}}</h2>
+					<h2>{{sumTotalTrv}}</h2>
 					<small>Total Completed-View</small>
 				</div>
 			</div>
@@ -31,7 +47,7 @@
 		<div class="col-md-3 col-sm-6 col-xs-12">
 			<div class="tile quick-stats">
 				<div class="data">
-					<h2>{{sTotalClick}}</h2>
+					<h2>{{sumTotalClick}}</h2>
 					<small>Total Click</small>
 				</div>
 			</div>
@@ -39,5 +55,12 @@
 
 	</div>
 
-	<historical-bar-chart ng-title="Historical Bar Chart" ng-chart-data="{{chart}}"></historical-bar-chart>
+	<historical-bar-chart ng-title="Daily Play View" ng-chart-data="{{chartPv}}" ng-chart-key="Total Click"></historical-bar-chart>
+
+	<historical-bar-chart ng-title="Daily impression" ng-chart-data="{{chartImp}}" ng-chart-key="Total Click"></historical-bar-chart>
+
+	<historical-bar-chart ng-title="Daily completed-view" ng-chart-data="{{chartTrv}}" ng-chart-key="Total Click"></historical-bar-chart>
+
+	<historical-bar-chart ng-title="Daily click" ng-chart-data="{{chartClick}}" ng-chart-key="Total Click"></historical-bar-chart>
+
 </div>

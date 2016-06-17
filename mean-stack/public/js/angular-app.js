@@ -158,28 +158,37 @@ webApp.controller('creativeListCtrl', function($scope, creative) {
 
 webApp.controller('creativeSummaryCtrl', function($scope, creative) {
 	$scope.items = {};
-	$scope.chart = new Array();
-	//////////////////
-	$scope.sTotalPv = 0;
-	$scope.sTotalImp = 0;
-	$scope.sTotalTrv = 0;
-	$scope.sTotalClick = 0;
+
+	//sum
+	$scope.sumTotalPv = 0;
+	$scope.sumTotalImp = 0;
+	$scope.sumTotalTrv = 0;
+	$scope.sumTotalClick = 0;
+
+	//chart data
+	$scope.chartPv = new Array();
+	$scope.chartImp = new Array();
+	$scope.chartTrv = new Array();
+	$scope.chartClick = new Array();
 
 	creative._test()
 	.success(function(data){
 		$scope.$emit("title-page", "Summary Report");
 
 		for(var i in data){
-			var date = new moment(data[i].period).format("YYYY-MM-DD");
-			data[i].period = date;
-			$scope.sTotalPv += data[i].totalPv;
-			$scope.sTotalImp += data[i].totalImp;
-			$scope.sTotalTrv += data[i].totalTrv;
-			$scope.sTotalClick += data[i].totalClick;
+			// var date = new moment(data[i].period).format("YYYY-MM-DD");
+			// data[i].period = date;
+			$scope.sumTotalPv += data[i].totalPv;
+			$scope.sumTotalImp += data[i].totalImp;
+			$scope.sumTotalTrv += data[i].totalTrv;
+			$scope.sumTotalClick += data[i].totalClick;
 		}
 
 		for(var i in data){
-			$scope.chart.push([data[i].period, data[i].totalPv]);
+			$scope.chartPv.push([data[i].period, data[i].totalPv]);
+			$scope.chartImp.push([data[i].period, data[i].totalImp]);
+			$scope.chartTrv.push([data[i].period, data[i].totalTrv]);
+			$scope.chartClick.push([data[i].period, data[i].totalClick]);
 		};
 
 
@@ -234,7 +243,7 @@ webApp.directive('historicalBarChart', function(){
 		template: '<div class="tile">'+
 					'<h2 class="tile-title">{{ngTitle}}</h2>'+
 					'<div class="p-10">'+
-						'<nvd3 options="options" data="data" api="api"></nvd3>'+
+						'<nvd3 options="options" data="data" api="api" config="{refreshDataOnly: true, deepWatchDataDepth: 0}"></nvd3>'+
 					'</div>'+
 				'</div>',
 		link: function ($scope, element, attributes) {
@@ -266,7 +275,6 @@ webApp.directive('historicalBarChart', function(){
 							tickFormat: function(d) {
 								return d3.time.format('%x')(new Date(d))
 							},
-							rotateLabels: 30,
 							showMaxMin: false
 						},
 						yAxis: {
@@ -279,40 +287,62 @@ webApp.directive('historicalBarChart', function(){
 								return d3.time.format('%x')(new Date(d));
 							}
 						},
-						zoom: {
-							enabled: true,
-							scaleExtent: [1, 10],
-							useFixedDomain: false,
-							useNiceScale: false,
-							horizontalOff: false,
-							verticalOff: true,
-							unzoomEventType: 'dblclick.zoom'
-						},
-						color: function(d, i) { return "rgba(255,255,255,0.5)"; }
+						color: function(d, i) { return "rgba(255,255,255,0.5)"; },
+						clipEdge: true,
+						padData: true,
+						// showLegend: true
 					}
 				};
 
-			var run = function(values){
+			var run = function(values, key){
 				
 				$scope.data = [
 				{
-					"key" : "Quantity" ,
+					"key" : key,
 					"bar": true,
 					"values" : values
 				}];
 			};
 			
-            run(dataDemo);
+			//run first data demo
+			run(dataDemo, "Quantity");
 
             $scope.$watch('ngChartData', function (newValue, oldValue) {
             	var data = JSON.parse(newValue);
+
 				if (data.length > 0) {
-					run(dataDemo);
+					//update data
+					run(data, $scope.ngChartKey);
 					$scope.api.refresh();
 				}
 			});
 
 
+		}
+	}
+});
+webApp.directive('datePick', function(){
+	return{
+		restrict: 'E',
+		scope: {
+			ngTitle: '@',
+		},
+		template: '<div class="input-icon datetime-pick date-only">'+
+					'<input data-format="dd/MM/yyyy" type="text" class="form-control input-sm" />'+
+					'<span class="add-on">'+
+					'<i class="sa-plus"></i>'+
+					'</span>'+
+				   '</div>',
+		link: function ($scope, element, attributes) {
+			var that = element.find('.date-only');
+
+			element.datetimepicker({
+				pickTime: false
+			});
+
+			element.find('input:text').on('click', function(){
+	            $(this).closest('.datetime-pick').find('.add-on i').click();
+			});
 		}
 	}
 });

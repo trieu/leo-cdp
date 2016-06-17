@@ -32,28 +32,37 @@ webApp.controller('creativeListCtrl', function($scope, creative) {
 
 webApp.controller('creativeSummaryCtrl', function($scope, creative) {
 	$scope.items = {};
-	$scope.chart = new Array();
-	//////////////////
-	$scope.sTotalPv = 0;
-	$scope.sTotalImp = 0;
-	$scope.sTotalTrv = 0;
-	$scope.sTotalClick = 0;
+
+	//sum
+	$scope.sumTotalPv = 0;
+	$scope.sumTotalImp = 0;
+	$scope.sumTotalTrv = 0;
+	$scope.sumTotalClick = 0;
+
+	//chart data
+	$scope.chartPv = new Array();
+	$scope.chartImp = new Array();
+	$scope.chartTrv = new Array();
+	$scope.chartClick = new Array();
 
 	creative._test()
 	.success(function(data){
 		$scope.$emit("title-page", "Summary Report");
 
 		for(var i in data){
-			var date = new moment(data[i].period).format("YYYY-MM-DD");
-			data[i].period = date;
-			$scope.sTotalPv += data[i].totalPv;
-			$scope.sTotalImp += data[i].totalImp;
-			$scope.sTotalTrv += data[i].totalTrv;
-			$scope.sTotalClick += data[i].totalClick;
+			// var date = new moment(data[i].period).format("YYYY-MM-DD");
+			// data[i].period = date;
+			$scope.sumTotalPv += data[i].totalPv;
+			$scope.sumTotalImp += data[i].totalImp;
+			$scope.sumTotalTrv += data[i].totalTrv;
+			$scope.sumTotalClick += data[i].totalClick;
 		}
 
 		for(var i in data){
-			$scope.chart.push([data[i].period, data[i].totalPv]);
+			$scope.chartPv.push([data[i].period, data[i].totalPv]);
+			$scope.chartImp.push([data[i].period, data[i].totalImp]);
+			$scope.chartTrv.push([data[i].period, data[i].totalTrv]);
+			$scope.chartClick.push([data[i].period, data[i].totalClick]);
 		};
 
 
