@@ -10,11 +10,16 @@
         background-position: right top;
         background-repeat: no-repeat;
     }
+    #ad_target_content_cats_chosen {
+        width: 300px!important;
+    }
 </style>
 
 
 <div class="panel panel-default">
-    <div class="panel-heading"><h2>Ad Information</h2></div>
+    <div class="panel-heading">
+        <h2><i class="fa fa-info-circle" aria-hidden="true"></i> Ad Information</h2>
+    </div>
     <div class="panel-body">
         <div class="table-responsive">
             <table class="table table-bordered table-hover table-striped">
@@ -43,7 +48,7 @@
                         <input type="url" class="form-control" id="ads_thirdparty_url"  data-creative-field="vastXml3rd" pattern="https?://.+" placeholder="Enter Third-party Ad URL">
                     </td>
                 </tr>
-                <tr>
+                <tr id="row_ads_status">
                     <td><strong>Status</strong></td>
                     <td>
                         <div class="panel-body text-left">
@@ -171,14 +176,16 @@
 </div>
 <hr>
 <div class="panel panel-default">
-    <div class="panel-heading"><h2>Targeting Information</h2></div>
+    <div class="panel-heading">
+        <h2><i class="fa fa-crosshairs" aria-hidden="true"></i> Targeting Information</h2>
+    </div>
     <div class="panel-body">
         <div class="table-responsive">
             <table class="table table-bordered table-hover table-striped">
                 <tbody>
 
                 <tr>
-                    <td><strong>Probability Ad Score <br> (higher is better)</strong></td>
+                    <td><strong>Ad Weight <br> (higher is better)</strong></td>
                     <td>
                         <div class="panel-body text-left">
                             <div class="form-group">
@@ -200,7 +207,7 @@
                 </tr>
 
                 <tr data-ad-type="1" >
-                    <td><strong>Target Device Platform</strong></td>
+                    <td><strong>Device Platform</strong></td>
                     <td>
                         <div class="panel-body text-left" id="ad_target_device">
                             <div class="checkbox">
@@ -226,14 +233,15 @@
                 </tr>
 
                 <tr data-ad-type="1" >
-                    <td><strong>Target Placement</strong></td>
+                    <td><strong>Ad Placement</strong></td>
                     <td>
                         <div class="panel-body text-left" id="target_ad_placements">
-                            <div class="panel-group" >
+                            <div class="panel-group" id="accordion_ad_placements" >
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#fptplay_ad_placements">FptPlay.net Ad Placements</a>
+                                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                            <a data-toggle="collapse" data-parent="#accordion_ad_placements" href="#fptplay_ad_placements">FptPlay.net Ad Placements</a>
                                         </h4>
                                     </div>
                                     <div id="fptplay_ad_placements" class="panel-collapse collapse in">
@@ -280,13 +288,27 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#paytv_ad_placements">PayTV Ad Placements</a>
+                                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                            <a data-toggle="collapse" data-parent="#accordion_ad_placements" href="#paytv_ad_placements">PayTV Ad Placements</a>
                                         </h4>
                                     </div>
                                     <div id="paytv_ad_placements" class="panel-collapse collapse">
                                         <div class="panel-body">
                                             <div class="checkbox">
-                                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="1" value="320">PAYTV_TVC_PLACEMENT</label>
+                                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="6" value="320">PAYTV_TVC_PLACEMENT</label>
+                                            </div>
+                                            <div>
+                                                <div class="bold">Only play TVC Ads in these categories</<div>
+                                                <div>
+                                                    <select id="ad_target_content_cats" data-placeholder="PayTV - Show Ads in these categories" style="width:350px!important;" multiple class="chosen-select" >
+                                                        {{#each payTVCategories}}
+                                                            <option  value="{{ID}}">{{Category}}</option>
+                                                        {{/each}}
+                                                    </select>
+                                                    <script>
+                                                        $('#ad_target_content_cats').find('option[value=2]').attr('selected','selected');
+                                                    </script>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -294,7 +316,8 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#fshare_ad_placements">FShare Ad Placements</a>
+                                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                            <a data-toggle="collapse" data-parent="#accordion_ad_placements" href="#fshare_ad_placements">FShare Ad Placements</a>
                                         </h4>
                                     </div>
                                     <div id="fshare_ad_placements" class="panel-collapse collapse">
@@ -308,7 +331,8 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#nhacso_ad_placements">NhacSo.net Ad Placements</a>
+                                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                            <a data-toggle="collapse" data-parent="#accordion_ad_placements" href="#nhacso_ad_placements">NhacSo.net Ad Placements</a>
                                         </h4>
                                     </div>
                                     <div id="nhacso_ad_placements" class="panel-collapse collapse">
@@ -323,28 +347,8 @@
                         </div>
                     </td>
                 </tr>
-
                 <tr>
-                    <td><strong>Target Content Categories</strong></td>
-                    <td>
-                        <div class="panel-body text-left" id="ad_target_location">
-                            <div>
-                                <em>PayTV - Show Ads at these categories</em>
-                                <select id="ad_target_content_cats" data-placeholder="PayTV - Show Ads at these categories" style="width:350px;" multiple class="chosen-select" >
-                                    {{#each payTVCategories}}
-                                        <option  value="{{ID}}">{{Category}}</option>
-                                    {{/each}}
-                                </select>
-                                <script>
-                                    $('#ad_target_content_cats').find('option[value=2]').attr('selected','selected');
-                                </script>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td><strong>Target Location</strong></td>
+                    <td><strong>Location</strong></td>
                     <td>
                         <div class="panel-body text-left" id="ad_target_location">
                             <div class="checkbox">
@@ -366,7 +370,7 @@
 
 
                 <tr>
-                    <td><strong>Target Audience Gender</strong></td>
+                    <td><strong>Audience Gender</strong></td>
                     <td>
                         <div class="panel-body text-left" id="ad_target_gender">
                             <div class="checkbox">
