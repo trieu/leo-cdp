@@ -182,6 +182,14 @@
         if(id_edit != false){
             var url = api_domain+'/api/creatives/'+ id_edit;
             change_form_value(url);
+
+            //move iframe video
+            if($('.iframeVideo').length > 0){
+                $(".iframeVideo").detach().prependTo('#accordion_tvc_upload')
+            }
+
+        } else {
+            $('#row_ads_status').hide();
         }
 
         //disable video data fields on other ad type
@@ -218,7 +226,7 @@
             e.preventDefault();
         });
 
-        var h1 = function(){
+        var ad_target_device_handler = function(){
             var v = $(this).val() ;
             var checked = $(this).is(':checked');
             var nodes = $('#target_ad_placements').find('input[data-device-id='+v+']');
@@ -228,8 +236,8 @@
                 nodes.removeAttr('checked');
             }
         };
-        $('#ad_target_device input:checked').each(h1);
-        $('#ad_target_device input').change(h1);
+        $('#ad_target_device input:checked').each(ad_target_device_handler);
+        //$('#ad_target_device input').change(ad_target_device_handler);
 
         $('#ads_action_ok').click(function(){
             var data = collectCreativeData();
@@ -310,10 +318,7 @@
                     postData.append('creative', JSON.stringify(data));
                     postData.append('adtype', adtype);
 
-                    if (ytb_url.length != 0) {
-                        postData.append('video_url', ytb_url);
-                    }
-                    else{
+                    if (video_file.files.length != 0) {
                         var fSize = video_file.files[0].size;
                         if(fSize > 20971520){
                             return alert("Please check file size ");
@@ -321,6 +326,9 @@
                         else{
                             postData.append('file', video_file.files[0]);
                         }
+                    }
+                    else{
+                        postData.append('video_url', ytb_url);
                     }
                 }
                 
@@ -331,6 +339,7 @@
                     data: postData,
                     contentType: false,
                     processData:false,
+                    timeout: 60000, //60s
                     beforeSend: function(){
                         $('#wrapper').append('<div class="loader"></div>');
                     },
@@ -358,13 +367,13 @@
                 postData.append('file', $('#file')[0].files[0]);
                 postData.append('creative', JSON.stringify(data));
                 postData.append('adtype', adtype);
-
                 $.ajax({
                     url: 'creative/save/display-banner',
                     type: "POST",
                     data: postData,
                     contentType: false,
                     processData:false,
+                    timeout: 60000, //60s
                     beforeSend: function(){
                         $('#wrapper').append('<div class="loader"></div>');
                     },
