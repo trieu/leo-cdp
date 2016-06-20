@@ -29,7 +29,7 @@
             var type = $(this).attr('type');
             console.log('fieldName: '+ fieldName + ' type: ' + type + ' val: ' + $(this).val());
 
-            var value = $(this).val() ? $(this).val().trim() : '';
+            var value = $(this).val() ? $(this).val() : '';
             if(numFields[fieldName] === 1){
                 if(value === ''){
                     value = 0;
@@ -60,6 +60,11 @@
                     data[fieldName] = value;
                 }
             }
+            else if(type === 'select' ){
+                if(typeof value === 'object'){
+                    data[fieldName] = value;
+                }
+            }
             else {
                 data[fieldName] = value;
             }
@@ -71,7 +76,7 @@
         }
         return data;
     }
-    //window.collectCreativeData = collectCreativeData;
+    window.collectCreativeData = collectCreativeData;
 
     function change_form_value(url){
         $.ajax({
@@ -81,14 +86,22 @@
 
                 for(var k in data){
                     if($.isArray(data[k])){
-                        $('[data-creative-field="'+k+'"]').each(function( index ) {
-                            var value = $(this).val();
-                            for (var i = 0; i < data[k].length; i++) {
-                                if (data[k][i] == value) {
-                                    $(this).attr('checked', true);
-                                }
+                        if(k == 'tgcats'){
+                            var arr = data[k];
+                            for(var i=0;i<arr.length;i++){
+                                var val = arr[i];
+                                $('#ad_target_content_cats').find('option[value='+val+']').attr('selected','selected');
                             }
-                        });
+                        } else {
+                            $('[data-creative-field="'+k+'"]').each(function( index ) {
+                                var value = $(this).val();
+                                for (var i = 0; i < data[k].length; i++) {
+                                    if (data[k][i] == value) {
+                                        $(this).attr('checked', true);
+                                    }
+                                }
+                            });
+                        }
                     }
                     else{
                         if (k == 'runDateL' || k == 'expDateL') {

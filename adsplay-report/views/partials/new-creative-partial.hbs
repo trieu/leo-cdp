@@ -300,14 +300,11 @@
                                             <div>
                                                 <div class="bold">Only play TVC Ads in these categories</<div>
                                                 <div>
-                                                    <select id="ad_target_content_cats" data-placeholder="PayTV - Show Ads in these categories" style="width:350px!important;" multiple class="chosen-select" >
+                                                    <select id="ad_target_content_cats" type="select" data-creative-field="tgcats" data-placeholder="PayTV - Show Ads in these categories" style="width:350px!important;" multiple class="chosen-select" >
                                                         {{#each payTVCategories}}
                                                             <option  value="{{ID}}">{{Category}}</option>
                                                         {{/each}}
                                                     </select>
-                                                    <script>
-                                                        $('#ad_target_content_cats').find('option[value=2]').attr('selected','selected');
-                                                    </script>
                                                 </div>
                                             </div>
                                         </div>
@@ -435,14 +432,17 @@
 
 <script src="js/chosen.jquery.js" ></script>
 <script type="text/javascript">
-    var config = {
-        '.chosen-select'           : {},
-        '.chosen-select-deselect'  : {allow_single_deselect:true},
-        '.chosen-select-no-single' : {disable_search_threshold:10},
-        '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
-        '.chosen-select-width'     : {width:"95%"}
+    function initJqueryChosen(){
+        var config = {
+            '.chosen-select'           : {},
+            '.chosen-select-deselect'  : {allow_single_deselect:true},
+            '.chosen-select-no-single' : {disable_search_threshold:10},
+            '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
+            '.chosen-select-width'     : {width:"95%"}
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
     }
-    for (var selector in config) {
-        $(selector).chosen(config[selector]);
-    }
+    setTimeout(initJqueryChosen,500)
 </script>

@@ -295,6 +295,9 @@ router.get('/:id/edit', function (req, res) {
     var data = modelUtils.baseModel(req);
     if (data.isAdminGroup) {
         data.dashboard_title = "Update Creative Details";
+        data.femaleKeywords = constantUtils.getFemaleKeywords();
+        data.maleKeywords = constantUtils.getMaleKeywords();
+        data.payTVCategories = constantUtils.getPayTVCategories();
 
         data.crtId = req.params.id || -1;
         data.type = req.query.type || "daily";
