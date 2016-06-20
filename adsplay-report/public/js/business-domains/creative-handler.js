@@ -333,7 +333,7 @@
                     data: postData,
                     contentType: false,
                     processData:false,
-                    timeout: 120000, //120s
+                    timeout: 60000, //60s
                     beforeSend: function(){
                         $('#wrapper').append('<div class="loader"></div>');
                     },
@@ -393,7 +393,6 @@
                     data: postData,
                     contentType: false,
                     processData:false,
-                    timeout: 60000, //60s
                     beforeSend: function(){
                         $('#wrapper').append('<div class="loader"></div>');
                     },
@@ -415,7 +414,6 @@
                     data: postData,
                     contentType: false,
                     processData:false,
-                    timeout: 60000, //60s
                     beforeSend: function(){
                         $('#wrapper').append('<div class="loader"></div>');
                     },
