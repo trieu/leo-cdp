@@ -182,6 +182,12 @@
         if(id_edit != false){
             var url = api_domain+'/api/creatives/'+ id_edit;
             change_form_value(url);
+
+            //move iframe video
+            if($('.iframeVideo').length > 0){
+                $(".iframeVideo").detach().prependTo('#accordion_tvc_upload')
+            }
+
         } else {
             $('#row_ads_status').hide();
         }
