@@ -310,10 +310,7 @@
                     postData.append('creative', JSON.stringify(data));
                     postData.append('adtype', adtype);
 
-                    if (ytb_url.length != 0) {
-                        postData.append('video_url', ytb_url);
-                    }
-                    else{
+                    if (video_file.files.length != 0) {
                         var fSize = video_file.files[0].size;
                         if(fSize > 20971520){
                             return alert("Please check file size ");
@@ -321,6 +318,9 @@
                         else{
                             postData.append('file', video_file.files[0]);
                         }
+                    }
+                    else{
+                        postData.append('video_url', ytb_url);
                     }
                 }
                 
@@ -331,6 +331,7 @@
                     data: postData,
                     contentType: false,
                     processData:false,
+                    timeout: 120000, //120s
                     beforeSend: function(){
                         $('#wrapper').append('<div class="loader"></div>');
                     },
@@ -365,6 +366,7 @@
                     data: postData,
                     contentType: false,
                     processData:false,
+                    timeout: 60000, //60s
                     beforeSend: function(){
                         $('#wrapper').append('<div class="loader"></div>');
                     },
@@ -390,6 +392,7 @@
                     data: postData,
                     contentType: false,
                     processData:false,
+                    timeout: 60000, //60s
                     beforeSend: function(){
                         $('#wrapper').append('<div class="loader"></div>');
                     },
@@ -411,6 +414,7 @@
                     data: postData,
                     contentType: false,
                     processData:false,
+                    timeout: 60000, //60s
                     beforeSend: function(){
                         $('#wrapper').append('<div class="loader"></div>');
                     },
