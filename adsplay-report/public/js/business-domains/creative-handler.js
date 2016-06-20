@@ -182,6 +182,8 @@
         if(id_edit != false){
             var url = api_domain+'/api/creatives/'+ id_edit;
             change_form_value(url);
+        } else {
+            $('#row_ads_status').hide();
         }
 
         //disable video data fields on other ad type
@@ -218,7 +220,7 @@
             e.preventDefault();
         });
 
-        var h1 = function(){
+        var ad_target_device_handler = function(){
             var v = $(this).val() ;
             var checked = $(this).is(':checked');
             var nodes = $('#target_ad_placements').find('input[data-device-id='+v+']');
@@ -228,8 +230,8 @@
                 nodes.removeAttr('checked');
             }
         };
-        $('#ad_target_device input:checked').each(h1);
-        $('#ad_target_device input').change(h1);
+        $('#ad_target_device input:checked').each(ad_target_device_handler);
+        //$('#ad_target_device input').change(ad_target_device_handler);
 
         $('#ads_action_ok').click(function(){
             var data = collectCreativeData();
@@ -358,7 +360,6 @@
                 postData.append('file', $('#file')[0].files[0]);
                 postData.append('creative', JSON.stringify(data));
                 postData.append('adtype', adtype);
-
                 $.ajax({
                     url: 'creative/save/display-banner',
                     type: "POST",
