@@ -207,7 +207,7 @@
 
         //disable video data fields on other ad type
         if( $('video').length == 0 ){
-            $('#row_ads_thirdparty_url, #row_ads_skip, #row_ads_duration').hide();
+            $('#row_ads_thirdparty_url, #row_ads_skip, #row_ads_duration, #row_ads_startime').hide();
         }
 
         //get iframe video

@@ -127,7 +127,7 @@ Upload.prototype.image = function(file, callback){
         if (err) {
             console.error(err);
         } else {
-            var obj = {url: output, folder: dirSplit[dirSplit.length - 1], filename: file.name};
+            var obj = {url: url[1], folder: dirSplit[dirSplit.length - 1], filename: file.name};
             callback(obj);
         }
     });
