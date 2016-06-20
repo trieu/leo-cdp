@@ -274,22 +274,23 @@
             <div class="table-responsive" id="crt_pf_details">
             </div>
         </div>
+
         <div id="tc-audience" class="tab-pane fade">
-            <!--<div class="row" >-->
+
             <div class="row">
                 <div class="col-lg-12">
                     <svg id="audience-wrapp" class="report-detail-piechart"></svg>
                 </div>
             </div>
 
-            <!--</div>-->
+
         </div>
         <div id="tc-platform" class="tab-pane fade" style="display: none">
-            <!--<div class="row" >-->
+
                 <svg id="platform-wrapp" class="report-detail-piechart"></svg>
 
 
-            <!--</div>-->
+
         </div>
         <div id="tc-csv-export" class="tab-pane fade">
             <div class="container">
@@ -662,6 +663,7 @@ $(document).ready(function () {
     var platformPieChartData = [];
     d3.json("{{site.ssl_api_domain}}/api/creatives/{{crtId}}/platforms", function (error, data) {
 //        console.log(JSON.stringify(data));
+
         var platforms = {{{json platforms}}};
         if (data.length > 0) {
             for(var i = 0; i < data.length;i++){

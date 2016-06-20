@@ -20,6 +20,9 @@ var formidable = require('formidable');
 
 router.get('/list/all', function (req, res) {
     var data = modelUtils.baseModel(req);
+    console.log(222222)
+    console.log(data)
+
     data.dashboard_title = "All Advertising Units";
     data.statuses = constantUtils.statuses;
     var statuses = [];
@@ -220,6 +223,7 @@ router.get('/visualize/metrics', function (req, res) {
 });
 
 router.get('/:id', function (req, res) {
+
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "Creative Details";
 
@@ -272,6 +276,9 @@ router.get('/:id', function (req, res) {
             data.placements = constantUtils.placements;
         }
         Creative.get(req.params.id, data, function (err, data) {
+            //addtest
+            console.log(11111)
+            console.log(data)
             try {
                 //res.render('ad-report/creative-details', data)
                 if(data.crt && data.crt.adType){
@@ -286,6 +293,7 @@ router.get('/:id', function (req, res) {
                 data.errorMessage = JSON.stringify(e);
                 res.render('common/system-error', data)
             }
+
         })
     });
 

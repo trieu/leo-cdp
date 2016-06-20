@@ -21,6 +21,13 @@ router.get('/inventory', function (req, res) {
     data.platforms = constantUtils.platforms
     res.render('monitor/inventory', data)
 });
+//paytv
+router.get('/inventory-paytv', function (req, res) {
+    var data = modelUtils.baseModel(req);
+    data.dashboard_title = "Ad Inventory-PayTV";
+    data.platforms = constantUtils.platforms
+    res.render('monitor/inventory-paytv', data)
+});
 router.get('/pageview', function (req, res) {
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "Pageview Analytics";
