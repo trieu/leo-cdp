@@ -1,10 +1,6 @@
 <style>
-    #chart svg {
+    .pieChartWrap svg {
         height: 400px;
-        background-color: #D8D8D8!important;
-    }
-    .nv-point-paths {
-        padding-left: 5px;
     }
 </style>
 
@@ -17,53 +13,27 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-12">
-        <div class="container">
-            <div class='col-lg-3'>
-                <div class="form-group">
-                    <div class='input-group date' id='dtpBegin'>
-                        <input type='text' class="form-control" autocomplete="off"/>
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-                    </div>
-                </div>
+    <div class='col-lg-3'>
+        <div class="form-group">
+            <div class='input-group date' id='dtpBegin'>
+                <input type='text' class="form-control" autocomplete="off"/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
             </div>
-            <div class='col-lg-3'>
-                <div class="form-group">
-                    <div class='input-group date' id='dtpEnd'>
-                        <input type='text' class="form-control" autocomplete="off"/>
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-                    </div>
-                </div>
-            </div>
-            <input class="btn btn-default" type="button" id='btnTime' value="OK">
         </div>
-        <script type="text/javascript">
-            $(function () {
-                $('#dtpBegin').datetimepicker({
-                    format: 'YYYY-MM-DD',
-                    defaultDate: "{{begin}}"
-                });
-                $('#dtpEnd').datetimepicker({
-                    useCurrent: false, //Important! See issue #1075
-                    format: 'YYYY-MM-DD',
-                    defaultDate: "{{end}}"
-                });
-                $("#dtpBegin").on("dp.change", function (e) {
-                    $('#dtpEnd').data("DateTimePicker").minDate(e.date);
-                });
-                $("#dtpEnd").on("dp.change", function (e) {
-                    $('#dtpBegin').data("DateTimePicker").maxDate(e.date);
-                });
-
-                //console.log($('#dtpBegin').data("DateTimePicker").viewDate().format('YYYY-MM-DD'));
-                //console.log($('#dtpEnd').data("DateTimePicker").viewDate().format('YYYY-MM-DD'));
-            });
-        </script>
     </div>
+    <div class='col-lg-3'>
+        <div class="form-group">
+            <div class='input-group date' id='dtpEnd'>
+                <input type='text' class="form-control" autocomplete="off"/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <input class="btn btn-default" type="button" id='btnTime' value="OK">
 </div>
 
 <div class="row" id="dSummaryStats">
@@ -121,125 +91,89 @@
     </div>
 </div>
 
+<div class="row" id="pieChartPayTv">
+<div class="pieChartWrap col-md-6 col-xs-12" id="totalChart">
+    <svg></svg>
+</div>
+</div>
 
-<script>
-    var formatTime = function (x) {
-        return new moment(x).format("YYYY-MM-DD");
-    };
+<script type="text/javascript">
+    $(function () {
+        $('#dtpBegin').datetimepicker({
+            format: 'YYYY-MM-DD',
+            defaultDate: "{{begin}}"
+        });
+        $('#dtpEnd').datetimepicker({
+            useCurrent: false, //Important! See issue #1075
+            format: 'YYYY-MM-DD',
+            defaultDate: "{{end}}"
+        });
+        $("#dtpBegin").on("dp.change", function (e) {
+            $('#dtpEnd').data("DateTimePicker").minDate(e.date);
+        });
+        $("#dtpEnd").on("dp.change", function (e) {
+            $('#dtpBegin').data("DateTimePicker").maxDate(e.date);
+        });
 
-    var transformData = function(data){
-        data.sort(function(a, b) {return a.period - b.period });
+        //console.log($('#dtpBegin').data("DateTimePicker").viewDate().format('YYYY-MM-DD'));
+        //console.log($('#dtpEnd').data("DateTimePicker").viewDate().format('YYYY-MM-DD'));
+    });
 
-        var barchartData = [];
-        var cTotalPv = 0, cTotalImp = 0, cTotalTrv = 0, cTotalClick = 0;
-        for(var k in data){
-            var obj = data[k];
-            var date =  formatTime(obj.period);
-//            console.log(date);
+    function renderChart(){
+       var jqxhr = $.getJSON("https://dev-fbox-onetv.fpt.vn/OneTVWS.ashx?method=ITVad_TotalView&begintime=2016-06-10&endtime=2016-06-12");
+        jqxhr.done(function(json) {
+            var totalChart = [];
 
-            // if(obj.totalImp > 0 &&  obj.totalTrv > 0 )
-            {
-                cTotalPv += obj.totalPv;
-                cTotalImp += obj.totalImp;
-                cTotalTrv += obj.totalTrv;
-                cTotalClick += obj.totalClick;
-                barchartData.push({period : date, totalPv: obj.totalPv , totalImp: obj.totalImp , totalTrv: obj.totalTrv , totalClick: obj.totalClick })
+            var data = json.Root.item;
+            for(var i in data){
+
+                //append div chart
+                var placement = '#pieChart' +i+ ' svg';
+                $('#pieChartPayTv').append('<div id="pieChart'+i+'" class="pieChartWrap col-md-6 col-xs-12"><svg></svg></div>');
+
+                //handle data
+                
+                var totalView = 0;
+
+                var chartData = [];
+                var list = data[i].ListView;
+                for(var j in list){
+                    chartData.push(list[j]);
+                    totalView += parseInt(list[j].ToltalView);
+                }
+
+                totalChart.push({TypeID : data[i].TypeID, Category : data[i].TypeName, ToltalView : totalView});
+
+                //create pieChart
+                pieChart(chartData, placement);
             }
 
-        }
-        $('#cTotalPv').html(formatNumber(cTotalPv));
-        $('#cTotalImp').html(formatNumber(cTotalImp));
-        $('#cTotalTrv').html(formatNumber(cTotalTrv));
-        $('#cTotalClick').html(formatNumber(cTotalClick));
+            //console.log(totalChart)
+            pieChart(totalChart, "#totalChart svg")
+        }); 
+    }
+    
 
-        <!--d3.json("{{site.ssl_api_domain}}/api/placement/stats?begin=" + '{{begin}}' + "&end=" + '{{end}}', function (error, placementData) {-->
-        <!--for(var k in placementData){-->
-        <!--var obj = placementData[k];-->
-        <!--var date =  formatTime(obj.period);-->
+    function pieChart(data, placement){
+        
+        nv.addGraph(function() {
+          var chart = nv.models.pieChart()
+                .x(function(d) { return d.Category })
+                .y(function(d) { return d.ToltalView })
+                .showLabels(false)
+                .showLegend(true)
+                .showLabels(true)
+                .labelThreshold(.03)
+                .labelType("percent");
 
-        <!--cTotalPv += obj.totalPv;-->
-        <!--barchartData.push({period : date, totalPv: obj.totalPv})-->
-        <!--console.log(k);-->
-        <!--}-->
-        <!--$('#cTotalPv').html(formatNumber(cTotalPv));-->
-        <!--});-->
-        <!--console.log(JSON.stringify(barchartData));-->
-        return barchartData;
-    };
+            d3.select(placement)
+                .datum(data)
+                .transition().duration(1200)
+                .call(chart);
 
-    $(function() {
-        var pvChart, impChart, trueImpChart, clickChart;
-        function getCreativeStats(beginDate, endDate, callback) {
-            d3.json("{{site.ssl_api_domain}}/api/adstats?begin=" + beginDate + "&end=" + endDate, callback);
-        }
-
-        function drawCharts (error, data) {
-            data = transformData(data);
-
-            pvChart = Morris.Bar({
-                element: 'pv_stats_chart',
-                data: data,
-                xkey: 'period',
-                ykeys: ['totalPv'],
-                labels: ['Play View'],
-                pointSize: 2,
-                hideHover: 'auto',
-                resize: true
-
-            });
-
-            impChart = Morris.Bar({
-                element: 'imp_stats_chart',
-                data: data,
-                xkey: 'period',
-                ykeys: ['totalImp'],
-                labels: ['Impression'],
-                pointSize: 2,
-                hideHover: 'auto',
-                resize: true
-
-            });
-
-            trueImpChart = Morris.Bar({
-                element: 'trv_stats_chart',
-                data: data,
-                xkey: 'period',
-                ykeys: ['totalTrv'],
-                labels: ['Completed View'],
-                pointSize: 2,
-                hideHover: 'auto',
-                resize: true,
-                dateFormat: formatTime
-            });
-
-            clickChart = Morris.Bar({
-                element: 'click_stats_chart',
-                data: data,
-                xkey: 'period',
-                ykeys: ['totalClick'],
-                labels: ['Click'],
-                pointSize: 2,
-                hideHover: 'auto',
-                resize: true,
-                dateFormat: formatTime
-            });
-        }
-
-        function updateCharts (error, data) {
-            data = transformData(data);
-            pvChart.setData(data);
-            impChart.setData(data);
-            trueImpChart.setData(data);
-            clickChart.setData(data);
-        }
-        getCreativeStats('{{begin}}', '{{end}}', drawCharts);
-
-        $('#btnTime').click(function() {
-            var beginDate = $('#dtpBegin').data("DateTimePicker").date().format('YYYY-MM-DD');
-            var endDate = $('#dtpEnd').data("DateTimePicker").date().format('YYYY-MM-DD');
-            getCreativeStats(beginDate, endDate, updateCharts);
-            $('.beginDate').text(beginDate);
-            $('.endDate').text(endDate);
+            return chart;
         });
-    });
+    }
+
+    renderChart();
 </script>
