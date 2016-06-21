@@ -1,4 +1,7 @@
 <style>
+    .pieChartWrap h3{
+        text-align: center;
+    }
     .pieChartWrap svg {
         height: 400px;
     }
@@ -46,10 +49,6 @@
 
 <div class="row" id="pieChartPayTv">
 
-    <div class="pieChartWrap col-md-6 col-xs-12" id="totalChart">
-        <svg></svg>
-    </div>
-
 </div>
 
 <script type="text/javascript">
@@ -88,7 +87,7 @@
         renderChart(begin, end);
     
         function renderChart(begin, end){
-           var jqxhr = $.getJSON("https://dev-fbox-onetv.fpt.vn/OneTVWS.ashx?method=ITVad_TotalView&begintime="+begin+"&endtime="+end);
+           var jqxhr = $.getJSON("/monitor/inventory-paytv/api/"+begin+"/"+end);
             jqxhr.done(function(json) {
 
                 $("#totalViewGroup").html("");
@@ -101,7 +100,7 @@
 
                     //append div chart
                     var placement = '#pieChart' +i+ ' svg';
-                    $('#pieChartPayTv').append('<div id="pieChart'+i+'" class="pieChartWrap col-md-6 col-xs-12"><svg></svg></div>');
+                    $('#pieChartPayTv').append('<div id="pieChart'+i+'" class="pieChartWrap col-md-6 col-xs-12"><h3>'+data[i].TypeName+'</h3><svg></svg></div>');
 
                     
                     //handle data
@@ -134,6 +133,7 @@
                 }
 
                 //show totalChart
+                $('#pieChartPayTv').append('<div class="pieChartWrap col-md-6 col-xs-12" id="totalChart"><h3>Tổng lượt xem</h3><svg></svg></div>');
                 pieChart(totalChart, "#totalChart svg");
 
                 var totalNumber = 0;

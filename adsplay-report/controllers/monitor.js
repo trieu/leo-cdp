@@ -4,6 +4,7 @@
 
 var express = require('express')
     , router = express.Router()
+    , request = require('request')
     , modelUtils = require('../helpers/model_utils')
     , constantUtils = require('../helpers/constant_utils')
     , Summary = require('../models/summary')
@@ -28,6 +29,18 @@ router.get('/inventory-paytv', function (req, res) {
     data.platforms = constantUtils.platforms
     res.render('monitor/inventory-paytv', data)
 });
+
+router.get('/inventory-paytv/api/:begin/:end', function(req, res){
+    var begin = req.params.begin;
+    var end = req.params.end;
+    request("https://dev-fbox-onetv.fpt.vn/OneTVWS.ashx?method=ITVad_TotalView&begintime="+begin+"&endtime="+end,
+        function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                res.json(JSON.parse(body));
+            }
+    });
+});
+
 router.get('/pageview', function (req, res) {
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "Pageview Analytics";
