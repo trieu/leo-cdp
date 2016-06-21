@@ -2,24 +2,35 @@ webApp.directive('datePick', function(){
 	return{
 		restrict: 'E',
 		scope: {
-			ngTitle: '@',
+			ngDateValue: '@',
+			ngDateMin: '@',
+			ngDateMax: '@'
 		},
-		template: '<div class="input-icon datetime-pick date-only">'+
-					'<input data-format="dd/MM/yyyy" type="text" class="form-control input-sm" />'+
-					'<span class="add-on">'+
-					'<i class="sa-plus"></i>'+
-					'</span>'+
-				   '</div>',
+		template: `<div class='input-icon date-only'>
+                    <input type='text' class="form-control input-sm" />
+                    <span class="add-on">
+                        <span class="sa-plus"></span>
+                    </span>
+                </div>`
+				   ,
 		link: function ($scope, element, attributes) {
-			var that = element.find('.date-only');
 
-			element.datetimepicker({
-				pickTime: false
+			element.find("input").datetimepicker({
+				format: 'YYYY-MM-DD',
+				defaultDate: $scope.ngDateValue
 			});
 
-			element.find('input:text').on('click', function(){
-	            $(this).closest('.datetime-pick').find('.add-on i').click();
+			element.find("input").on("dp.change", function (e) {
+				if ( typeof($scope.ngDateMin) !== "undefined" && $scope.ngDateMin !== null ) {
+					$($scope.ngDateMin+" input").data("DateTimePicker").maxDate(e.date);
+				}
+				if ( typeof($scope.ngDateMax) !== "undefined" && $scope.ngDateMax !== null ) {
+					$($scope.ngDateMax+" input").data("DateTimePicker").minDate(e.date);
+				}
+				
 			});
+
+			
 		}
 	}
 });

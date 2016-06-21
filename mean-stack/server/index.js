@@ -30,7 +30,7 @@ var routes = require('./controllers/routes.js');
 routes(app);
 
 //listen port
-app.listen(8181, function() {
-  console.log('Angular app listening on port 8181');
+app.listen(3000, function() {
+  console.log('Angular app listening on port 3000');
 });
 

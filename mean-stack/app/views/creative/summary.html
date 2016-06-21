@@ -6,12 +6,12 @@
 		</div>
 		<form>
 			<div class="col-md-4 col-sm-6 col-xs-12 m-b-15">
-				<date-pick></date-pick>
+				<date-pick id="date-begin" ng-date-value="{{begin}}" ng-date-max="#date-end"></date-pick>
 			</div>
 			<div class="col-md-4 col-sm-6 col-xs-12 m-b-15">
-				<date-pick></date-pick>
+				<date-pick id="date-end" ng-date-value="{{end}}" ng-date-min="#date-begin"></date-pick>
 			</div>
-			<button type="submit" class="btn btn-sm"> OK </button>
+			<button type="button" class="btn btn-sm" ng-click="submit()"> OK </button>
 		</form>
 	</div>
 

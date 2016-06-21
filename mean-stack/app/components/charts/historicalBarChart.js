@@ -56,7 +56,7 @@ webApp.directive('historicalBarChart', function(){
 						color: function(d, i) { return "rgba(255,255,255,0.5)"; },
 						clipEdge: true,
 						padData: true,
-						// showLegend: true
+						showLegend: true
 					}
 				};
 
@@ -75,7 +75,6 @@ webApp.directive('historicalBarChart', function(){
 
             $scope.$watch('ngChartData', function (newValue, oldValue) {
             	var data = JSON.parse(newValue);
-
 				if (data.length > 0) {
 					//update data
 					run(data, $scope.ngChartKey);

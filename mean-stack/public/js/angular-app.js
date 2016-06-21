@@ -138,8 +138,8 @@ webApp.factory('creative', function($http) {
 		_delete : function(id) {
 			return $http.delete('/creative/api/' + id);
 		},
-		_test : function(){
-			return $http.get('https://api.adsplay.net/api/adstats?begin=2016-05-17&end=2016-06-16');
+		_test : function(begin, end){
+			return $http.get('https://api.adsplay.net/api/adstats?begin='+begin+'&end='+end);
 		}
 	}
 });
@@ -159,6 +159,9 @@ webApp.controller('creativeListCtrl', function($scope, creative) {
 webApp.controller('creativeSummaryCtrl', function($scope, creative) {
 	$scope.items = {};
 
+	$scope.end = new moment().format("YYYY-MM-DD");
+	$scope.begin = new moment().subtract(30, 'days').format("YYYY-MM-DD");
+
 	//sum
 	$scope.sumTotalPv = 0;
 	$scope.sumTotalImp = 0;
@@ -171,28 +174,40 @@ webApp.controller('creativeSummaryCtrl', function($scope, creative) {
 	$scope.chartTrv = new Array();
 	$scope.chartClick = new Array();
 
-	creative._test()
-	.success(function(data){
-		$scope.$emit("title-page", "Summary Report");
+	function render(begin, end){
+		$scope.sumTotalPv = $scope.sumTotalImp = $scope.sumTotalTrv = $scope.sumTotalClick = 0;
+		//chart data
+	$scope.chartPv = new Array();
+	$scope.chartImp = new Array();
+	$scope.chartTrv = new Array();
+	$scope.chartClick = new Array();
+		creative._test(begin, end)
+		.success(function(data){
+			$scope.$emit("title-page", "Summary Report");
 
-		for(var i in data){
-			// var date = new moment(data[i].period).format("YYYY-MM-DD");
-			// data[i].period = date;
-			$scope.sumTotalPv += data[i].totalPv;
-			$scope.sumTotalImp += data[i].totalImp;
-			$scope.sumTotalTrv += data[i].totalTrv;
-			$scope.sumTotalClick += data[i].totalClick;
-		}
+			for(var i in data){
+				// var date = new moment(data[i].period).format("YYYY-MM-DD");
+				// data[i].period = date;
+				$scope.sumTotalPv += data[i].totalPv;
+				$scope.sumTotalImp += data[i].totalImp;
+				$scope.sumTotalTrv += data[i].totalTrv;
+				$scope.sumTotalClick += data[i].totalClick;
+			}
 
-		for(var i in data){
-			$scope.chartPv.push([data[i].period, data[i].totalPv]);
-			$scope.chartImp.push([data[i].period, data[i].totalImp]);
-			$scope.chartTrv.push([data[i].period, data[i].totalTrv]);
-			$scope.chartClick.push([data[i].period, data[i].totalClick]);
-		};
+			for(var i in data){
+				$scope.chartPv.push([data[i].period, data[i].totalPv]);
+				$scope.chartImp.push([data[i].period, data[i].totalImp]);
+				$scope.chartTrv.push([data[i].period, data[i].totalTrv]);
+				$scope.chartClick.push([data[i].period, data[i].totalClick]);
+			};
+		});
+	}
 
+	render($scope.begin, $scope.end);
 
-	});
+	$scope.submit = function(){
+		render($scope.begin, $scope.end);
+	}
 
 });
 
@@ -290,7 +305,7 @@ webApp.directive('historicalBarChart', function(){
 						color: function(d, i) { return "rgba(255,255,255,0.5)"; },
 						clipEdge: true,
 						padData: true,
-						// showLegend: true
+						showLegend: true
 					}
 				};
 
@@ -309,7 +324,6 @@ webApp.directive('historicalBarChart', function(){
 
             $scope.$watch('ngChartData', function (newValue, oldValue) {
             	var data = JSON.parse(newValue);
-
 				if (data.length > 0) {
 					//update data
 					run(data, $scope.ngChartKey);
@@ -325,24 +339,35 @@ webApp.directive('datePick', function(){
 	return{
 		restrict: 'E',
 		scope: {
-			ngTitle: '@',
+			ngDateValue: '@',
+			ngDateMin: '@',
+			ngDateMax: '@'
 		},
-		template: '<div class="input-icon datetime-pick date-only">'+
-					'<input data-format="dd/MM/yyyy" type="text" class="form-control input-sm" />'+
-					'<span class="add-on">'+
-					'<i class="sa-plus"></i>'+
-					'</span>'+
-				   '</div>',
+		template: `<div class='input-icon date-only'>
+                    <input type='text' class="form-control input-sm" />
+                    <span class="add-on">
+                        <span class="sa-plus"></span>
+                    </span>
+                </div>`
+				   ,
 		link: function ($scope, element, attributes) {
-			var that = element.find('.date-only');
 
-			element.datetimepicker({
-				pickTime: false
+			element.find("input").datetimepicker({
+				format: 'YYYY-MM-DD',
+				defaultDate: $scope.ngDateValue
 			});
 
-			element.find('input:text').on('click', function(){
-	            $(this).closest('.datetime-pick').find('.add-on i').click();
+			element.find("input").on("dp.change", function (e) {
+				if ( typeof($scope.ngDateMin) !== "undefined" && $scope.ngDateMin !== null ) {
+					$($scope.ngDateMin+" input").data("DateTimePicker").maxDate(e.date);
+				}
+				if ( typeof($scope.ngDateMax) !== "undefined" && $scope.ngDateMax !== null ) {
+					$($scope.ngDateMax+" input").data("DateTimePicker").minDate(e.date);
+				}
+				
 			});
+
+			
 		}
 	}
 });
