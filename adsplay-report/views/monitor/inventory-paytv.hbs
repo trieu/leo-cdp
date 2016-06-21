@@ -33,80 +33,43 @@
             </div>
         </div>
     </div>
-    <input class="btn btn-default" type="button" id='btnTime' value="OK">
+    <div class='col-lg-3'>
+        <p>
+            <input class="btn btn-default" type="button" id='btnTime' value="OK">
+        </p>
+    </div>
 </div>
 
-<div class="row" id="dSummaryStats">
+<div class="row" id="totalViewGroup">
 
-    <div class="col-lg-3 col-md-6" style=" ">
-        <div class="panel panel-red">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-11 text-right">
-                        <div class="huge" id="cTotalPv" >0</div>
-                        <div>Total Playview</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-3 col-md-6" style=" ">
-        <div class="panel panel-green">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-11 text-right">
-                        <div class="huge" id="cTotalImp" >0</div>
-                        <div>Total Impression</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-3 col-md-6" style=" ">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-9 text-right">
-                        <div class="huge" id="cTotalTrv">0</div>
-                        <div>Total Completed-View</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="dImpressionTotal" class="col-lg-3 col-md-6" style="">
-        <div class="panel panel-yellow">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-9 text-right">
-                        <div class="huge" id="cTotalClick"> 0</div>
-                        <div>Total Click</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 <div class="row" id="pieChartPayTv">
-<div class="pieChartWrap col-md-6 col-xs-12" id="totalChart">
-    <svg></svg>
-</div>
+
+    <div class="pieChartWrap col-md-6 col-xs-12" id="totalChart">
+        <svg></svg>
+    </div>
+
 </div>
 
 <script type="text/javascript">
+
     $(function () {
+        var end = new moment().format("YYYY-MM-DD");
+        var begin = new moment().subtract(30, 'days').format("YYYY-MM-DD");
+
+        var formatTime = function (x) {
+            return new moment(x).format("YYYY-MM-DD");
+        };
+
         $('#dtpBegin').datetimepicker({
             format: 'YYYY-MM-DD',
-            defaultDate: "{{begin}}"
+            defaultDate: begin
         });
         $('#dtpEnd').datetimepicker({
             useCurrent: false, //Important! See issue #1075
             format: 'YYYY-MM-DD',
-            defaultDate: "{{end}}"
+            defaultDate: end
         });
         $("#dtpBegin").on("dp.change", function (e) {
             $('#dtpEnd').data("DateTimePicker").minDate(e.date);
@@ -115,65 +78,107 @@
             $('#dtpBegin').data("DateTimePicker").maxDate(e.date);
         });
 
-        //console.log($('#dtpBegin').data("DateTimePicker").viewDate().format('YYYY-MM-DD'));
-        //console.log($('#dtpEnd').data("DateTimePicker").viewDate().format('YYYY-MM-DD'));
-    });
 
-    function renderChart(){
-       var jqxhr = $.getJSON("https://dev-fbox-onetv.fpt.vn/OneTVWS.ashx?method=ITVad_TotalView&begintime=2016-06-10&endtime=2016-06-12");
-        jqxhr.done(function(json) {
-            var totalChart = [];
+        $('#btnTime').click(function() {
+            var begin = $('#dtpBegin').data("DateTimePicker").date().format('YYYY-MM-DD');
+            var end = $('#dtpEnd').data("DateTimePicker").date().format('YYYY-MM-DD');
+            renderChart(begin, end);
+        });
 
-            var data = json.Root.item;
-            for(var i in data){
+        renderChart(begin, end);
+    
+        function renderChart(begin, end){
+           var jqxhr = $.getJSON("https://dev-fbox-onetv.fpt.vn/OneTVWS.ashx?method=ITVad_TotalView&begintime="+begin+"&endtime="+end);
+            jqxhr.done(function(json) {
 
-                //append div chart
-                var placement = '#pieChart' +i+ ' svg';
-                $('#pieChartPayTv').append('<div id="pieChart'+i+'" class="pieChartWrap col-md-6 col-xs-12"><svg></svg></div>');
-
-                //handle data
+                $("#totalViewGroup").html("");
+                var color = ["green","primary","yellow"];
                 
-                var totalView = 0;
+                var totalChart = [];
+                var data = json.Root.item;
 
-                var chartData = [];
-                var list = data[i].ListView;
-                for(var j in list){
-                    chartData.push(list[j]);
-                    totalView += parseInt(list[j].ToltalView);
+                for(var i in data){
+
+                    //append div chart
+                    var placement = '#pieChart' +i+ ' svg';
+                    $('#pieChartPayTv').append('<div id="pieChart'+i+'" class="pieChartWrap col-md-6 col-xs-12"><svg></svg></div>');
+
+                    
+                    //handle data
+                    var totalView = 0;
+
+                    var chartData = [];
+                    var list = data[i].ListView;
+                    for(var j in list){
+                        chartData.push(list[j]);
+                        totalView += parseInt(list[j].ToltalView);
+                    }
+
+                    totalChart.push({TypeID : data[i].TypeID, Category : data[i].TypeName, ToltalView : totalView});
+                    //create pieChart
+                    pieChart(chartData, placement);
+
+                    //number show total view
+                    var viewText;
+                    if(data[i].TypeID == 1){
+                        viewText = "Total View Film";
+                    }
+                    else if(data[i].TypeID == 2){
+                        viewText = "Total View Children";
+                    }
+                    else if(data[i].TypeID == 3){
+                        viewText = "Total View Entertainment";
+                    }
+
+                    renderNumberBox(color[i], totalView, viewText);
                 }
 
-                totalChart.push({TypeID : data[i].TypeID, Category : data[i].TypeName, ToltalView : totalView});
+                //show totalChart
+                pieChart(totalChart, "#totalChart svg");
 
-                //create pieChart
-                pieChart(chartData, placement);
-            }
-
-            //console.log(totalChart)
-            pieChart(totalChart, "#totalChart svg")
-        }); 
-    }
-    
-
-    function pieChart(data, placement){
+                var totalNumber = 0;
+                for (var i in totalChart) {
+                    totalNumber += parseInt(totalChart[i].ToltalView);
+                }
+                renderNumberBox("red", totalNumber, "Total View");
+            }); 
+        }
         
-        nv.addGraph(function() {
-          var chart = nv.models.pieChart()
-                .x(function(d) { return d.Category })
-                .y(function(d) { return d.ToltalView })
-                .showLabels(false)
-                .showLegend(true)
-                .showLabels(true)
-                .labelThreshold(.03)
-                .labelType("percent");
+        function renderNumberBox(color, totalView, viewText){
+            $("#totalViewGroup").append('<div class="col-lg-3 col-md-6 col-xs-12">'+
+                                    '<div class="panel panel-'+color+'">'+
+                                        '<div class="panel-heading">'+
+                                            '<div class="text-right">'+
+                                                '<div class="huge">'+formatNumber(totalView)+'</div>'+
+                                                '<div class="total-view-text">'+viewText+'</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>');
+        }
 
-            d3.select(placement)
-                .datum(data)
-                .transition().duration(1200)
-                .call(chart);
+        function pieChart(data, placement){
+            
+            nv.addGraph(function() {
+              var chart = nv.models.pieChart()
+                    .x(function(d) { return d.Category })
+                    .y(function(d) { return d.ToltalView })
+                    .showLabels(false)
+                    .showLegend(true)
+                    .showLabels(true)
+                    .labelThreshold(.03)
+                    .labelType("percent");
 
-            return chart;
-        });
-    }
+                d3.select(placement)
+                    .datum(data)
+                    .transition().duration(1200)
+                    .call(chart);
 
-    renderChart();
+                return chart;
+            });
+        }
+
+        
+    });
+
 </script>
