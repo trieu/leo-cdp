@@ -36,28 +36,28 @@ webApp.controller('creativeSummaryCtrl', function($scope, creative) {
 	$scope.end = new moment().format("YYYY-MM-DD");
 	$scope.begin = new moment().subtract(30, 'days').format("YYYY-MM-DD");
 
-	//sum
-	$scope.sumTotalPv = 0;
-	$scope.sumTotalImp = 0;
-	$scope.sumTotalTrv = 0;
-	$scope.sumTotalClick = 0;
+	$scope.$emit("title-page", "Summary Report");
 
-	//chart data
-	$scope.chartPv = new Array();
-	$scope.chartImp = new Array();
-	$scope.chartTrv = new Array();
-	$scope.chartClick = new Array();
+	function initialize(){
+		//sum
+		$scope.sumTotalPv = 0;
+		$scope.sumTotalImp = 0;
+		$scope.sumTotalTrv = 0;
+		$scope.sumTotalClick = 0;
+
+		//chart data
+		$scope.chartPv = new Array();
+		$scope.chartImp = new Array();
+		$scope.chartTrv = new Array();
+		$scope.chartClick = new Array();
+	}
+	initialize();
 
 	function render(begin, end){
-		$scope.sumTotalPv = $scope.sumTotalImp = $scope.sumTotalTrv = $scope.sumTotalClick = 0;
+		initialize();
 		//chart data
-	$scope.chartPv = new Array();
-	$scope.chartImp = new Array();
-	$scope.chartTrv = new Array();
-	$scope.chartClick = new Array();
 		creative._test(begin, end)
 		.success(function(data){
-			$scope.$emit("title-page", "Summary Report");
 
 			for(var i in data){
 				// var date = new moment(data[i].period).format("YYYY-MM-DD");
@@ -80,7 +80,10 @@ webApp.controller('creativeSummaryCtrl', function($scope, creative) {
 	render($scope.begin, $scope.end);
 
 	$scope.submit = function(){
-		render($scope.begin, $scope.end);
+		$scope.$watchGroup(['begin', 'end'], 
+		function (newVal){
+			render(newVal[0], newVal[1]);
+        },true);
 	}
 
 });

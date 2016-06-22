@@ -4,7 +4,7 @@ webApp.directive('historicalBarChart', function(){
 		scope: {
 			ngTitle: '@',
 			ngChartKey : '@',
-			ngChartData : '@'
+			ngChartData : '=ngModel'
 		},
 		template: '<div class="tile">'+
 					'<h2 class="tile-title">{{ngTitle}}</h2>'+
@@ -73,14 +73,12 @@ webApp.directive('historicalBarChart', function(){
 			//run first data demo
 			run(dataDemo, "Quantity");
 
-            $scope.$watch('ngChartData', function (newValue, oldValue) {
-            	var data = JSON.parse(newValue);
-				if (data.length > 0) {
-					//update data
-					run(data, $scope.ngChartKey);
+			$scope.$watch('ngChartData', function (newVal, oldVal) {
+				if (newVal != oldVal) {
+					run(newVal, $scope.ngChartKey);
 					$scope.api.refresh();
 				}
-			});
+			}, true);
 
 
 		}

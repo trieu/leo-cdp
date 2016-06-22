@@ -6,10 +6,10 @@
 		</div>
 		<form>
 			<div class="col-md-4 col-sm-6 col-xs-12 m-b-15">
-				<date-pick id="date-begin" ng-date-value="{{begin}}" ng-date-max="#date-end"></date-pick>
+				<date-pick id="date-begin" ng-model="begin" ng-date-max="#date-end"></date-pick>
 			</div>
 			<div class="col-md-4 col-sm-6 col-xs-12 m-b-15">
-				<date-pick id="date-end" ng-date-value="{{end}}" ng-date-min="#date-begin"></date-pick>
+				<date-pick id="date-end" ng-model="end" ng-date-min="#date-begin"></date-pick>
 			</div>
 			<button type="button" class="btn btn-sm" ng-click="submit()"> OK </button>
 		</form>
@@ -55,12 +55,12 @@
 
 	</div>
 
-	<historical-bar-chart ng-title="Daily Play View" ng-chart-data="{{chartPv}}" ng-chart-key="Total Click"></historical-bar-chart>
+	<historical-bar-chart ng-title="Daily Play View" ng-model="chartPv" ng-chart-key="Total Click"></historical-bar-chart>
 
-	<historical-bar-chart ng-title="Daily impression" ng-chart-data="{{chartImp}}" ng-chart-key="Total Click"></historical-bar-chart>
+	<historical-bar-chart ng-title="Daily impression" ng-model="chartImp" ng-chart-key="Total Click"></historical-bar-chart>
 
-	<historical-bar-chart ng-title="Daily completed-view" ng-chart-data="{{chartTrv}}" ng-chart-key="Total Click"></historical-bar-chart>
+	<historical-bar-chart ng-title="Daily completed-view" ng-model="chartTrv" ng-chart-key="Total Click"></historical-bar-chart>
 
-	<historical-bar-chart ng-title="Daily click" ng-chart-data="{{chartClick}}" ng-chart-key="Total Click"></historical-bar-chart>
+	<historical-bar-chart ng-title="Daily click" ng-model="chartClick" ng-chart-key="Total Click"></historical-bar-chart>
 
 </div>

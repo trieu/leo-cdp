@@ -2,12 +2,13 @@ webApp.directive('datePick', function(){
 	return{
 		restrict: 'E',
 		scope: {
-			ngDateValue: '@',
+			ngModel: '=',
 			ngDateMin: '@',
 			ngDateMax: '@'
 		},
+		require: 'ngModel',
 		template: `<div class='input-icon date-only'>
-                    <input type='text' class="form-control input-sm" />
+                    <input type='text' class="form-control input-sm" ng-model="ngModel" />
                     <span class="add-on">
                         <span class="sa-plus"></span>
                     </span>
@@ -17,10 +18,13 @@ webApp.directive('datePick', function(){
 
 			element.find("input").datetimepicker({
 				format: 'YYYY-MM-DD',
-				defaultDate: $scope.ngDateValue
+				defaultDate: $scope.ngModel
 			});
 
 			element.find("input").on("dp.change", function (e) {
+				// //set value of ngModel
+				 $scope.ngModel = $(this).val();
+
 				if ( typeof($scope.ngDateMin) !== "undefined" && $scope.ngDateMin !== null ) {
 					$($scope.ngDateMin+" input").data("DateTimePicker").maxDate(e.date);
 				}
