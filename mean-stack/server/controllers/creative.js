@@ -15,4 +15,18 @@ module.exports = function(app) {
 			res.json(result);
 		})
 	});
+
+	app.get('/creative/api/summary', function(req, res, next) {
+
+		var begin = req.query.begin;
+		var end = req.query.end;
+
+		var url = site.api_domain + '/api/adstats?begin='+begin+'&end='+end;
+		
+		Sync(function(){
+			// result from callback
+			var result = req_utils.get.sync(null, url);
+			res.json(result);
+		})
+	});
 };

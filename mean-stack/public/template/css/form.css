@@ -1807,3 +1807,10 @@ div.spinedit span:hover {
    border: 0;
 
 }
+
+/* -----------------------------------------
+   fix form
+-------------------------------------------*/
+@media (min-width: 768px){
+  .form-inline .form-control{width: 100%}
+}

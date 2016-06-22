@@ -15,6 +15,12 @@ webApp.config(function($routeProvider, $locationProvider){
 	.when('/creative/summary',{
 		templateUrl: 'app/views/creative/summary.html'
 	})
+	.when('/monitor/inventory/paytv',{
+		templateUrl: 'app/views/monitor/inventory_paytv.html'
+	})
+	.when('/monitor/inventory/fptplay',{
+		templateUrl: 'app/views/monitor/inventory_fptplay.html'
+	})
 	.when('/404',{
 		templateUrl: 'app/views/404.html'
 	})

@@ -1,4 +1,5 @@
 var creative = require('./creative.js');
+var monitor = require('./monitor.js');
 
 module.exports = function(app) {
 
@@ -14,6 +15,7 @@ module.exports = function(app) {
   //end passport
 
   creative(app);
+  monitor(app);
   // app.use((req, res, next) => {
   //   console.log(' ====== DEBUG ====== '); // DEBUG
   //   next();

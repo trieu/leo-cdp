@@ -302,29 +302,18 @@ $(document).ready(function(){
     (function(){
         //Date Only
 	if($('.date-only')[0]) {
-	    $('.date-only').datetimepicker({
-		pickTime: false
-	    });
+	    $('.date-only').find("input:text").datetimepicker({
+            format: 'YYYY-MM-DD'
+        });
 	}
 
         //Time only
 	if($('.time-only')[0]) {
-	    $('.time-only').datetimepicker({
-		pickDate: false
+	    $('.time-only').find("input:text").datetimepicker({
+		    format: 'LT'
 	    });
 	}
 
-        //12 Hour Time
-	if($('.time-only-12')[0]) {
-	    $('.time-only-12').datetimepicker({
-		pickDate: false,
-		pick12HourFormat: true
-	    });
-	}
-        
-        $('.datetime-pick input:text').on('click', function(){
-            $(this).closest('.datetime-pick').find('.add-on i').click();
-        });
     })();
 
     /* --------------------------------------------------------

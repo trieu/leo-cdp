@@ -12,8 +12,8 @@ webApp.factory('creative', function($http) {
 		_delete : function(id) {
 			return $http.delete('/creative/api/' + id);
 		},
-		_test : function(begin, end){
-			return $http.get('https://api.adsplay.net/api/adstats?begin='+begin+'&end='+end);
+		_summary : function(begin, end){
+			return $http.get('/creative/api/summary?begin='+begin+'&end='+end);
 		}
 	}
 });
@@ -31,7 +31,6 @@ webApp.controller('creativeListCtrl', function($scope, creative) {
 });
 
 webApp.controller('creativeSummaryCtrl', function($scope, creative) {
-	$scope.items = {};
 
 	$scope.end = new moment().format("YYYY-MM-DD");
 	$scope.begin = new moment().subtract(30, 'days').format("YYYY-MM-DD");
@@ -51,12 +50,13 @@ webApp.controller('creativeSummaryCtrl', function($scope, creative) {
 		$scope.chartTrv = new Array();
 		$scope.chartClick = new Array();
 	}
-	initialize();
 
 	function render(begin, end){
+
 		initialize();
+
 		//chart data
-		creative._test(begin, end)
+		creative._summary(begin, end)
 		.success(function(data){
 
 			for(var i in data){
@@ -83,8 +83,7 @@ webApp.controller('creativeSummaryCtrl', function($scope, creative) {
 		$scope.$watchGroup(['begin', 'end'], 
 		function (newVal){
 			render(newVal[0], newVal[1]);
-        },true);
-	}
+		},true);
+	};
 
 });
-

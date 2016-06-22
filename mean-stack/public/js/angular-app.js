@@ -15,6 +15,12 @@ webApp.config(function($routeProvider, $locationProvider){
 	.when('/creative/summary',{
 		templateUrl: 'app/views/creative/summary.html'
 	})
+	.when('/monitor/inventory/paytv',{
+		templateUrl: 'app/views/monitor/inventory_paytv.html'
+	})
+	.when('/monitor/inventory/fptplay',{
+		templateUrl: 'app/views/monitor/inventory_fptplay.html'
+	})
 	.when('/404',{
 		templateUrl: 'app/views/404.html'
 	})
@@ -138,8 +144,8 @@ webApp.factory('creative', function($http) {
 		_delete : function(id) {
 			return $http.delete('/creative/api/' + id);
 		},
-		_test : function(begin, end){
-			return $http.get('https://api.adsplay.net/api/adstats?begin='+begin+'&end='+end);
+		_summary : function(begin, end){
+			return $http.get('/creative/api/summary?begin='+begin+'&end='+end);
 		}
 	}
 });
@@ -157,7 +163,6 @@ webApp.controller('creativeListCtrl', function($scope, creative) {
 });
 
 webApp.controller('creativeSummaryCtrl', function($scope, creative) {
-	$scope.items = {};
 
 	$scope.end = new moment().format("YYYY-MM-DD");
 	$scope.begin = new moment().subtract(30, 'days').format("YYYY-MM-DD");
@@ -177,12 +182,13 @@ webApp.controller('creativeSummaryCtrl', function($scope, creative) {
 		$scope.chartTrv = new Array();
 		$scope.chartClick = new Array();
 	}
-	initialize();
 
 	function render(begin, end){
+
 		initialize();
+
 		//chart data
-		creative._test(begin, end)
+		creative._summary(begin, end)
 		.success(function(data){
 
 			for(var i in data){
@@ -209,8 +215,70 @@ webApp.controller('creativeSummaryCtrl', function($scope, creative) {
 		$scope.$watchGroup(['begin', 'end'], 
 		function (newVal){
 			render(newVal[0], newVal[1]);
-        },true);
+		},true);
+	};
+
+});
+webApp.factory('monitor', function($http) {
+	return {
+		_inventory_paytv : function(begin, end){
+			return $http.get('/monitor/api/inventory/paytv?begin='+begin+'&end='+end);
+		}
 	}
+});
+
+webApp.controller('monitorInventoryPayTvCtrl', function($scope, monitor) {
+	$scope.items = new Array();
+	$scope.sum = new Array();
+
+	$scope.end = new moment().format("YYYY-MM-DD");
+	$scope.begin = new moment().subtract(30, 'days').format("YYYY-MM-DD");
+
+	$scope.$emit("title-page", "Inventory PayTV Report");
+
+	function render(begin, end){
+
+		var chartData
+		//chart data
+		monitor._inventory_paytv(begin, end)
+		.success(function(data){
+			var items = data.Root.item;
+			var chartTotal = new Array();
+			for(var i in items){
+				
+				for(var j in items[i]){
+
+					var chartData = new Array();
+					if (j == "ListView") {
+						var list = items[i][j];
+						var countView = 0;
+						for (var k in list) {
+							chartData.push([list[k].Category , list[k].ToltalView])
+							countView += parseInt(list[k].ToltalView);
+						}
+					}
+
+				}
+				//insert total chart
+				chartTotal.push([items[i].TypeName, countView]);
+
+				$scope.items.push({TypeName: items[i].TypeName, chartData: chartData});
+			};
+
+			$scope.items.push({TypeName: "Tổng lượt xem", chartData: chartTotal});
+			
+			$scope.sum.push(chartTotal);
+		});
+	}
+
+	render($scope.begin, $scope.end);
+
+	$scope.submit = function(){
+		$scope.$watchGroup(['begin', 'end'], 
+		function (newVal){
+			render(newVal[0], newVal[1]);
+		},true);
+	};
 
 });
 
@@ -255,7 +323,6 @@ webApp.directive('historicalBarChart', function(){
 		restrict: 'E',
 		scope: {
 			ngTitle: '@',
-			ngChartKey : '@',
 			ngChartData : '=ngModel'
 		},
 		template: '<div class="tile">'+
@@ -273,63 +340,113 @@ webApp.directive('historicalBarChart', function(){
 			];
 
 			$scope.options = {
-					chart: {
-						type: 'historicalBarChart',
-						height: 450,
-						margin : {
-							top: 20,
-							right: 20,
-							bottom: 65,
-							left: 50
+				chart: {
+					type: 'historicalBarChart',
+					height: 450,
+					margin : {
+						top: 20,
+						right: 40,
+						bottom: 65,
+						left: 80
+					},
+					x: function(d){return d[0];},
+					y: function(d){return d3.format("8")(d[1]);},
+					showValues: true,
+					valueFormat: function(d){
+						return d3.format(',.1f')(d);
+					},
+					duration: 100,
+					xAxis: {
+						tickFormat: function(d) {
+							return d3.time.format('%x')(new Date(d))
 						},
-						x: function(d){return d[0];},
-						y: function(d){return d[1]/100000;},
-						showValues: true,
-						valueFormat: function(d){
-							return d3.format(',.1f')(d);
-						},
-						duration: 100,
-						xAxis: {
-							tickFormat: function(d) {
-								return d3.time.format('%x')(new Date(d))
-							},
-							showMaxMin: false
-						},
-						yAxis: {
-							tickFormat: function(d){
-								return d3.format(',.1f')(d);
-							}
-						},
-						tooltip: {
-							keyFormatter: function(d) {
-								return d3.time.format('%x')(new Date(d));
-							}
-						},
-						color: function(d, i) { return "rgba(255,255,255,0.5)"; },
-						clipEdge: true,
-						padData: true,
-						showLegend: true
-					}
-				};
+						showMaxMin: false
+					},
+					yAxis: {
+						tickFormat: function(d){
+							return d3.format(',.0f')(d);
+						}
+					},
+					tooltip: {
+						keyFormatter: function(d) {
+							return d3.time.format('%x')(new Date(d));
+						}
+					},
+					color: function(d, i) { return "rgba(255,255,255,0.6)"; },
+					clipEdge: true,
+					padData: true
+				}
+			};
 
-			var run = function(values, key){
-				
-				$scope.data = [
-				{
-					"key" : key,
+			var run = function(values){
+				$scope.data = [{
 					"bar": true,
 					"values" : values
 				}];
 			};
 			
 			//run first data demo
-			run(dataDemo, "Quantity");
+			run(dataDemo);
 
 			$scope.$watch('ngChartData', function (newVal, oldVal) {
 				if (newVal != oldVal) {
-					run(newVal, $scope.ngChartKey);
+					run(newVal);
 					$scope.api.refresh();
 				}
+			}, true);
+
+
+		}
+	}
+});
+webApp.directive('pieChart', function(){
+	return{
+		restrict: 'E',
+		scope: {
+			ngTitle: '@',
+			ngChartData : '=ngModel'
+		},
+		template: '<div class="tile">'+
+					'<h2 class="tile-title">{{ngTitle}}</h2>'+
+					'<div class="p-10">'+
+						'<nvd3 options="options" data="data" api="api" config="{refreshDataOnly: true, deepWatchDataDepth: 0}"></nvd3>'+
+					'</div>'+
+				'</div>',
+		link: function ($scope, element, attributes) {
+			var dataDemo = [
+				["One", 5], ["Two", 2], ["Three", 9],
+				["Four", 7], ["Five", 4], ["Six", 3]
+	        ];
+
+			$scope.options = {
+				chart: {
+					type: 'pieChart',
+					height: 450,
+					x: function(d){return d[0];},
+					y: function(d){return d[1];},
+					showLabels: true,
+					duration: 500,
+					labelThreshold: 0.01,
+					labelType: "percent",
+					legend: {
+						margin: {
+							top: 5,
+							right: 35,
+							bottom: 5,
+							left: 0
+						}
+					}
+				}
+			};
+
+			var run = function(values){
+				$scope.data = values;
+			};
+			
+			//run first data demo
+			$scope.$watch('ngChartData', function (newVal) {
+				run(newVal);
+				$scope.api.refresh();
 			}, true);
 
 
@@ -345,16 +462,16 @@ webApp.directive('datePick', function(){
 			ngDateMax: '@'
 		},
 		require: 'ngModel',
-		template: `<div class='input-icon date-only'>
-                    <input type='text' class="form-control input-sm" ng-model="ngModel" />
-                    <span class="add-on">
-                        <span class="sa-plus"></span>
-                    </span>
-                </div>`
+		template: '<div class="input-icon date-only">'+
+                    '<input type="text" class="form-control input-sm" ng-model="ngModel" />'+
+                    '<span class="add-on">'+
+                        '<span class="sa-plus"></span>'+
+                    '</span>'+
+                '</div>'
 				   ,
 		link: function ($scope, element, attributes) {
 
-			element.find("input").datetimepicker({
+			element.find("input:text").datetimepicker({
 				format: 'YYYY-MM-DD',
 				defaultDate: $scope.ngModel
 			});

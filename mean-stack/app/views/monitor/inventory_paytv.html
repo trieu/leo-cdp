@@ -1,4 +1,4 @@
-<div class="block-area" ng-controller="creativeSummaryCtrl">
+<div class="block-area" ng-controller="monitorInventoryPayTvCtrl">
 
 	<div class="row">
 		<div class="col-md-12">
@@ -57,12 +57,10 @@
 
 	</div>
 
-	<historical-bar-chart ng-title="Daily Play View" ng-model="chartPv"></historical-bar-chart>
-
-	<historical-bar-chart ng-title="Daily impression" ng-model="chartImp"></historical-bar-chart>
-
-	<historical-bar-chart ng-title="Daily completed-view" ng-model="chartTrv"></historical-bar-chart>
-
-	<historical-bar-chart ng-title="Daily click" ng-model="chartClick"></historical-bar-chart>
+	<div class="row">
+		<div class="col-md-6 col-xs-12" ng-repeat="it in items">
+			<pie-chart ng-title="{{it.TypeName}}" ng-model="it.chartData"></pie-chart>
+		</div>
+	</div>
 
 </div>
