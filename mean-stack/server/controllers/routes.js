@@ -1,5 +1,6 @@
 var creative = require('./creative.js');
 var monitor = require('./monitor.js');
+var inventory = require('./inventory.js');
 
 module.exports = function(app) {
 
@@ -16,6 +17,8 @@ module.exports = function(app) {
 
   creative(app);
   monitor(app);
+  inventory(app);
+  
   // app.use((req, res, next) => {
   //   console.log(' ====== DEBUG ====== '); // DEBUG
   //   next();

@@ -1,12 +1,4 @@
-webApp.factory('monitor', function($http) {
-	return {
-		_inventory_paytv : function(begin, end){
-			return $http.get('/monitor/api/inventory/paytv?begin='+begin+'&end='+end);
-		}
-	}
-});
-
-webApp.controller('monitorInventoryPayTvCtrl', function($scope, monitor) {
+webApp.controller('inventoryPayTvCtrl', function($scope, inventory) {
 
 	$scope.end = new moment().format("YYYY-MM-DD");
 	$scope.begin = new moment().subtract(30, 'days').format("YYYY-MM-DD");
@@ -17,7 +9,7 @@ webApp.controller('monitorInventoryPayTvCtrl', function($scope, monitor) {
 
 		var chartData;
 		//chart data
-		monitor._inventory_paytv(begin, end)
+		inventory._paytv(begin, end)
 		.success(function(data){
 			$scope.items = new Array();
 			$scope.totalData = new Array();
@@ -65,7 +57,7 @@ webApp.controller('monitorInventoryPayTvCtrl', function($scope, monitor) {
                     countTotalView += chartTotal[i][1];
 				}
 				$scope.totalData.push({TypeName: "Total View", totalView: countTotalView});
-				
+
 			}
 		});
 	}

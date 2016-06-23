@@ -5,7 +5,7 @@ var creativeModel = require('../models/creative.js');
 
 module.exports = function(app) {
 
-	app.get('/creative/api', function(req, res, next) {
+	app.get('/api/creative', function(req, res, next) {
 
 		var url = site.api_domain + '/api/creative/summary/';
 		
@@ -16,7 +16,7 @@ module.exports = function(app) {
 		})
 	});
 
-	app.get('/creative/api/summary', function(req, res, next) {
+	app.get('/api/creative/summary', function(req, res, next) {
 
 		var begin = req.query.begin;
 		var end = req.query.end;

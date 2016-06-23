@@ -12,10 +12,6 @@ webApp.directive('pieChart', function(){
 					'</div>'+
 				'</div>',
 		link: function ($scope, element, attributes) {
-			var dataDemo = [
-				["One", 5], ["Two", 2], ["Three", 9],
-				["Four", 7], ["Five", 4], ["Six", 3]
-	        ];
 
 			$scope.options = {
 				chart: {
@@ -38,13 +34,16 @@ webApp.directive('pieChart', function(){
 				}
 			};
 
-			var run = function(values){
-				$scope.data = values;
-			};
+			// data demo
+			// $scope.data = [
+			// 	["One", 5], ["Two", 2], ["Three", 9],
+			// 	["Four", 7], ["Five", 4], ["Six", 3]
+			// ];
+
+			$scope.data = [];
 			
-			//run first data demo
 			$scope.$watch('ngChartData', function (newVal) {
-				run(newVal);
+				$scope.data = newVal;
 				$scope.api.refresh();
 			}, true);
 

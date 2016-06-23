@@ -15,11 +15,17 @@ webApp.config(function($routeProvider, $locationProvider){
 	.when('/creative/summary',{
 		templateUrl: 'app/views/creative/summary.html'
 	})
-	.when('/monitor/inventory/paytv',{
-		templateUrl: 'app/views/monitor/inventory_paytv.html'
+	.when('/inventory/paytv',{
+		templateUrl: 'app/views/inventory/paytv.html'
 	})
-	.when('/monitor/inventory/fptplay',{
-		templateUrl: 'app/views/monitor/inventory_fptplay.html'
+	.when('/inventory/fptplay',{
+		templateUrl: 'app/views/fault.html'
+	})
+	.when('/monitor/content',{
+		templateUrl: 'app/views/monitor/content.html'
+	})
+	.when('/fault',{
+		templateUrl: 'app/views/fault.html'
 	})
 	.when('/404',{
 		templateUrl: 'app/views/404.html'
@@ -36,9 +42,61 @@ webApp.directive("titlePage", function($http, $rootScope){
 		restrict: 'A',
 		link: function(scope, element, attrs){
 			scope.$on('title-page', function (event, data) {
-				console.log(data);
+				//console.log(data);
 				element.text(data || 'Ads Play');
 			});
+		}
+	}
+});
+webApp.factory('auth', function($http) {
+	return {
+		_signup : function(data) {
+			return $http.post('/signup', data);
+		},
+		_login : function(data) {
+			return $http.post('/login', data);
+		},
+		_logout : function() {
+			return $http.get('/logout');
+		},
+		_loggedin : function() {
+			return $http.get('/loggedin');
+		}
+	}
+});
+
+webApp.factory('creative', function($http) {
+	return {
+		_list : function() {
+			return $http.get('/api/creative/');
+		},
+		_read : function(id) {
+			return $http.get('/api/creative/' + id);
+		},
+		_update : function(id, data) {
+			return $http.put('/api/creative/' + id, data);
+		},
+		_delete : function(id) {
+			return $http.delete('/api/creative/' + id);
+		},
+		_summary : function(begin, end){
+			return $http.get('/api/creative/summary?begin='+begin+'&end='+end);
+		}
+	}
+});
+
+webApp.factory('inventory', function($http) {
+	return {
+		_paytv : function(begin, end){
+			return $http.get('/api/inventory/paytv?begin='+begin+'&end='+end);
+		}
+	}
+});
+
+webApp.factory('monitor', function($http) {
+	return {
+		_content : function(begin, end){
+			return $http.get('/api/monitor/content?begin='+begin+'&end='+end);
 		}
 	}
 });
@@ -86,24 +144,6 @@ webApp.run(function($rootScope, auth, $cookies, ngProgressLite, $location){
 });
 
 // handle all authentication
-
-webApp.factory('auth', function($http) {
-	return {
-		_signup : function(data) {
-			return $http.post('/signup', data);
-		},
-		_login : function(data) {
-			return $http.post('/login', data);
-		},
-		_logout : function() {
-			return $http.get('/logout');
-		},
-		_loggedin : function() {
-			return $http.get('/loggedin');
-		}
-	}
-});
-
 webApp.controller('loginCtrl', function($scope, auth, $location) {
 	$scope.login = function(){
 		auth._login({username: $scope.username, password: $scope.password})
@@ -130,25 +170,30 @@ webApp.directive('logout', function($rootScope, auth, $location){
 });
 
 
-webApp.factory('creative', function($http) {
-	return {
-		_list : function() {
-			return $http.get('/creative/api/');
-		},
-		_read : function(id) {
-			return $http.get('/creative/api/' + id);
-		},
-		_update : function(id, data) {
-			return $http.put('/creative/api/' + id, data);
-		},
-		_delete : function(id) {
-			return $http.delete('/creative/api/' + id);
-		},
-		_summary : function(begin, end){
-			return $http.get('/creative/api/summary?begin='+begin+'&end='+end);
-		}
+webApp.controller('monitorContentCtrl', function($scope, monitor) {
+	$scope.items = [];
+
+	$scope.end = new moment().format("YYYY-MM-DD");
+	$scope.begin = new moment().subtract(30, 'days').format("YYYY-MM-DD");
+
+	$scope.$emit("title-page", "Most viewed content's categories from FptPlay.net");
+
+	function render(begin, end){
+
+		var chartData;
+		//chart data
+		monitor._content(begin, end)
+		.success(function(data){
+			for (var i in data) {
+				$scope.items.push( [data[i].label, parseInt(data[i].value)] )
+			}
+		});
 	}
+
+	render($scope.begin, $scope.end);
+
 });
+
 
 webApp.controller('creativeListCtrl', function($scope, creative) {
 	$scope.items = {};
@@ -219,15 +264,7 @@ webApp.controller('creativeSummaryCtrl', function($scope, creative) {
 	};
 
 });
-webApp.factory('monitor', function($http) {
-	return {
-		_inventory_paytv : function(begin, end){
-			return $http.get('/monitor/api/inventory/paytv?begin='+begin+'&end='+end);
-		}
-	}
-});
-
-webApp.controller('monitorInventoryPayTvCtrl', function($scope, monitor) {
+webApp.controller('inventoryPayTvCtrl', function($scope, inventory) {
 
 	$scope.end = new moment().format("YYYY-MM-DD");
 	$scope.begin = new moment().subtract(30, 'days').format("YYYY-MM-DD");
@@ -238,7 +275,7 @@ webApp.controller('monitorInventoryPayTvCtrl', function($scope, monitor) {
 
 		var chartData;
 		//chart data
-		monitor._inventory_paytv(begin, end)
+		inventory._paytv(begin, end)
 		.success(function(data){
 			$scope.items = new Array();
 			$scope.totalData = new Array();
@@ -286,7 +323,7 @@ webApp.controller('monitorInventoryPayTvCtrl', function($scope, monitor) {
                     countTotalView += chartTotal[i][1];
 				}
 				$scope.totalData.push({TypeName: "Total View", totalView: countTotalView});
-				
+
 			}
 		});
 	}
@@ -352,12 +389,6 @@ webApp.directive('historicalBarChart', function(){
 					'</div>'+
 				'</div>',
 		link: function ($scope, element, attributes) {
-			var dataDemo = [
-				[ 1288497600000 , 1331875.0], [ 1293771600000 , 1154695.0] ,
-				[ 1298869200000 , 1194025.0], [ 1304136000000 , 1194025.0] ,
-				[ 1309406400000 , 475000.0], [ 1314763200000 , 1244525.0] ,
-				[ 1320033600000 , 1194025.0], [ 1325307600000 , 475000.0]
-			];
 
 			$scope.options = {
 				chart: {
@@ -398,19 +429,27 @@ webApp.directive('historicalBarChart', function(){
 				}
 			};
 
-			var run = function(values){
-				$scope.data = [{
-					"bar": true,
-					"values" : values
-				}];
-			};
-			
-			//run first data demo
-			run(dataDemo);
+			// data demo
+			// $scope.data = [
+			// 	[ 1288497600000 , 1331875.0], [ 1293771600000 , 1154695.0] ,
+			// 	[ 1298869200000 , 1194025.0], [ 1304136000000 , 1194025.0] ,
+			// 	[ 1309406400000 , 475000.0], [ 1314763200000 , 1244525.0] ,
+			// 	[ 1320033600000 , 1194025.0], [ 1325307600000 , 475000.0]
+			// ];
+
+			$scope.data = [{
+				"bar": true,
+				"values" : []
+			}];
 
 			$scope.$watch('ngChartData', function (newVal, oldVal) {
 				if (newVal != oldVal) {
-					run(newVal);
+
+					$scope.data = [{
+						"bar": true,
+						"values" : newVal
+					}];
+
 					$scope.api.refresh();
 				}
 			}, true);
@@ -433,10 +472,6 @@ webApp.directive('pieChart', function(){
 					'</div>'+
 				'</div>',
 		link: function ($scope, element, attributes) {
-			var dataDemo = [
-				["One", 5], ["Two", 2], ["Three", 9],
-				["Four", 7], ["Five", 4], ["Six", 3]
-	        ];
 
 			$scope.options = {
 				chart: {
@@ -459,13 +494,16 @@ webApp.directive('pieChart', function(){
 				}
 			};
 
-			var run = function(values){
-				$scope.data = values;
-			};
+			// data demo
+			// $scope.data = [
+			// 	["One", 5], ["Two", 2], ["Three", 9],
+			// 	["Four", 7], ["Five", 4], ["Six", 3]
+			// ];
+
+			$scope.data = [];
 			
-			//run first data demo
 			$scope.$watch('ngChartData', function (newVal) {
-				run(newVal);
+				$scope.data = newVal;
 				$scope.api.refresh();
 			}, true);
 

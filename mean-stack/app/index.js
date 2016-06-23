@@ -15,11 +15,17 @@ webApp.config(function($routeProvider, $locationProvider){
 	.when('/creative/summary',{
 		templateUrl: 'app/views/creative/summary.html'
 	})
-	.when('/monitor/inventory/paytv',{
-		templateUrl: 'app/views/monitor/inventory_paytv.html'
+	.when('/inventory/paytv',{
+		templateUrl: 'app/views/inventory/paytv.html'
 	})
-	.when('/monitor/inventory/fptplay',{
-		templateUrl: 'app/views/monitor/inventory_fptplay.html'
+	.when('/inventory/fptplay',{
+		templateUrl: 'app/views/fault.html'
+	})
+	.when('/monitor/content',{
+		templateUrl: 'app/views/monitor/content.html'
+	})
+	.when('/fault',{
+		templateUrl: 'app/views/fault.html'
 	})
 	.when('/404',{
 		templateUrl: 'app/views/404.html'
@@ -36,7 +42,7 @@ webApp.directive("titlePage", function($http, $rootScope){
 		restrict: 'A',
 		link: function(scope, element, attrs){
 			scope.$on('title-page', function (event, data) {
-				console.log(data);
+				//console.log(data);
 				element.text(data || 'Ads Play');
 			});
 		}

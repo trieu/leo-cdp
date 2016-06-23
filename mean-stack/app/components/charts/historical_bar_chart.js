@@ -12,12 +12,6 @@ webApp.directive('historicalBarChart', function(){
 					'</div>'+
 				'</div>',
 		link: function ($scope, element, attributes) {
-			var dataDemo = [
-				[ 1288497600000 , 1331875.0], [ 1293771600000 , 1154695.0] ,
-				[ 1298869200000 , 1194025.0], [ 1304136000000 , 1194025.0] ,
-				[ 1309406400000 , 475000.0], [ 1314763200000 , 1244525.0] ,
-				[ 1320033600000 , 1194025.0], [ 1325307600000 , 475000.0]
-			];
 
 			$scope.options = {
 				chart: {
@@ -58,19 +52,27 @@ webApp.directive('historicalBarChart', function(){
 				}
 			};
 
-			var run = function(values){
-				$scope.data = [{
-					"bar": true,
-					"values" : values
-				}];
-			};
-			
-			//run first data demo
-			run(dataDemo);
+			// data demo
+			// $scope.data = [
+			// 	[ 1288497600000 , 1331875.0], [ 1293771600000 , 1154695.0] ,
+			// 	[ 1298869200000 , 1194025.0], [ 1304136000000 , 1194025.0] ,
+			// 	[ 1309406400000 , 475000.0], [ 1314763200000 , 1244525.0] ,
+			// 	[ 1320033600000 , 1194025.0], [ 1325307600000 , 475000.0]
+			// ];
+
+			$scope.data = [{
+				"bar": true,
+				"values" : []
+			}];
 
 			$scope.$watch('ngChartData', function (newVal, oldVal) {
 				if (newVal != oldVal) {
-					run(newVal);
+
+					$scope.data = [{
+						"bar": true,
+						"values" : newVal
+					}];
+
 					$scope.api.refresh();
 				}
 			}, true);

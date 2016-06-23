@@ -42,24 +42,6 @@ webApp.run(function($rootScope, auth, $cookies, ngProgressLite, $location){
 });
 
 // handle all authentication
-
-webApp.factory('auth', function($http) {
-	return {
-		_signup : function(data) {
-			return $http.post('/signup', data);
-		},
-		_login : function(data) {
-			return $http.post('/login', data);
-		},
-		_logout : function() {
-			return $http.get('/logout');
-		},
-		_loggedin : function() {
-			return $http.get('/loggedin');
-		}
-	}
-});
-
 webApp.controller('loginCtrl', function($scope, auth, $location) {
 	$scope.login = function(){
 		auth._login({username: $scope.username, password: $scope.password})

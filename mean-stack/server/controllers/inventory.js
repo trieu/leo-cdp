@@ -4,21 +4,16 @@ var req_utils = require('../helpers/request_utils.js');
 
 module.exports = function(app) {
 
-	app.get('/api/monitor/content', function(req, res, next) {
+	app.get('/api/inventory/paytv', function(req, res, next) {
 
 		var begin = req.query.begin;
 		var end = req.query.end;
 
-		result = [
-			{label:'Thể thao', value : 454233},
-			{label:'Live TV', value : 325545},
-			{label:'Phim lẻ', value : 234534},
-			{label:'Phim bộ', value : 233355},
-			{label:'TV Show', value : 45954}
-		];
+		var url = "http://dev-fbox-onetv.fpt.vn/OneTVWS.ashx?method=ITVad_TotalView&begintime="+begin+"&endtime="+end;
 		
 		Sync(function(){
 			// result from callback
+			var result = req_utils.get.sync(null, url);
 			res.json(result);
 		})
 	});
