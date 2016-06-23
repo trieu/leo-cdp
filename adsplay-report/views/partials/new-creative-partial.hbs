@@ -36,13 +36,13 @@
                         <input type="text" class="form-control" id="ads_des" data-creative-field="desc" placeholder="Enter Ad Description">
                     </td>
                 </tr>
-                <tr>
+                <tr id="row_ads_clickthr" data-paytv="false">
                     <td><strong>Click-through URL</strong></td>
                     <td>
                         <input type="url" class="form-control" id="ads_clickthr" data-creative-field="cliThr" pattern="https?://.+" placeholder="Enter Click-through URL">
                     </td>
                 </tr>
-                <tr id="row_ads_thirdparty_url" data-ad-type="1" >
+                <tr id="row_ads_thirdparty_url" data-ad-type="1" data-paytv="false">
                     <td><strong>Third-party Ad URL</strong></td>
                     <td>
                         <input type="url" class="form-control" id="ads_thirdparty_url"  data-creative-field="vastXml3rd" pattern="https?://.+" placeholder="Enter Third-party Ad URL">
@@ -154,7 +154,7 @@
                                 <label title="CPM (Cost per Mile)">
                                     <input type="radio"  name="prcModel" data-creative-field="prcModel" value="2"> CPM (Cost per Mile)</label>
                             </div>
-                            <div class="radio">
+                            <div class="radio" data-paytv="false">
                                 <label title="CPC (Cost per Click)">
                                     <input type="radio"  name="prcModel" data-creative-field="prcModel" value="3"> CPC (Cost per Click)</label>
                             </div>
@@ -210,23 +210,23 @@
                     <td><strong>Device Platform</strong></td>
                     <td>
                         <div class="panel-body text-left" id="ad_target_device">
-                            <div class="checkbox">
+                            <div class="checkbox" data-paytv="false">
                                 <label><input type="checkbox"  data-creative-field="tgpfs"  value="1" >Web (PC,Laptop)</label>
                             </div>
-                            <div class="checkbox">
+                            <div class="checkbox" data-paytv="false">
                                 <label><input type="checkbox"  data-creative-field="tgpfs"  value="2" >Web (Mobile)</label>
                             </div>
-                            <div class="checkbox">
+                            <div class="checkbox" data-paytv="false">
                                 <label><input type="checkbox"  data-creative-field="tgpfs"  value="3" >Web (iPad)</label>
                             </div>
-                            <div class="checkbox">
+                            <div class="checkbox" data-paytv="false">
                                 <label><input type="checkbox"  data-creative-field="tgpfs"  value="4" >Mobile Native App</label>
                             </div>
-                            <div class="checkbox">
+                            <div class="checkbox" data-paytv="false">
                                 <label><input type="checkbox"  data-creative-field="tgpfs"  value="5" >Smart TV</label>
                             </div>
                             <div class="checkbox">
-                                <label><input type="checkbox"  data-creative-field="tgpfs"  value="6" >IPTV TV</label>
+                                <label><input type="checkbox"  data-creative-field="tgpfs"  value="6" data-paytv="default">IPTV TV</label>
                             </div>
                         </div>
                     </td>
@@ -237,7 +237,7 @@
                     <td>
                         <div class="panel-body text-left" id="target_ad_placements">
                             <div class="panel-group" id="accordion_ad_placements" >
-                                <div class="panel panel-default">
+                                <div class="panel panel-default" data-paytv="false">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
                                             <i class="fa fa-arrow-right" aria-hidden="true"></i>
@@ -295,10 +295,10 @@
                                     <div id="paytv_ad_placements" class="panel-collapse collapse">
                                         <div class="panel-body">
                                             <div class="checkbox">
-                                                <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="6" value="320">PAYTV_TVC_PLACEMENT</label>
+                                                <label><input type="checkbox" data-creative-field="tgpms"  data-device-id="6" value="320" data-paytv="default">PAYTV_TVC_PLACEMENT</label>
                                             </div>
                                             <div>
-                                                <div class="bold">Only play TVC Ads in these categories</<div>
+                                                <div class="bold">Only play TVC Ads in these categories</div>
                                                 <div>
                                                     <select id="ad_target_content_cats" type="select" data-creative-field="tgcats" data-placeholder="PayTV - Show Ads in these categories" style="width:350px!important;" multiple class="chosen-select" >
                                                         {{#each payTVCategories}}
@@ -317,7 +317,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="panel panel-default">
+                                <div class="panel panel-default" data-paytv="false">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
                                             <i class="fa fa-arrow-right" aria-hidden="true"></i>
@@ -332,7 +332,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="panel panel-default">
+                                <div class="panel panel-default" data-paytv="false">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
                                             <i class="fa fa-arrow-right" aria-hidden="true"></i>
@@ -351,6 +351,7 @@
                         </div>
                     </td>
                 </tr>
+
                 <tr>
                     <td><strong>Location</strong></td>
                     <td>
@@ -371,9 +372,7 @@
                     </td>
                 </tr>
 
-
-
-                <tr>
+                <tr data-paytv="false">
                     <td><strong>Audience Gender</strong></td>
                     <td>
                         <div class="panel-body text-left" id="ad_target_gender">
