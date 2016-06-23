@@ -301,6 +301,7 @@ router.get('/:id/edit', function (req, res) {
         data.femaleKeywords = constantUtils.getFemaleKeywords();
         data.maleKeywords = constantUtils.getMaleKeywords();
         data.payTVCategories = constantUtils.getPayTVCategories();
+        data.payTVLocations = constantUtils.getPayTVLocations();
 
         data.crtId = req.params.id || -1;
         data.type = req.query.type || "daily";

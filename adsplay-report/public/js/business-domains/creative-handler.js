@@ -206,7 +206,10 @@
         }
 
         //disable video data fields on other ad type
-        if( $('video').length == 0 ){
+
+        if( $('#accordion_tvc_upload').length > 0 ){
+            $('#row_ads_thirdparty_url, #row_ads_skip, #row_ads_duration, #row_ads_startime').show();
+        } else {
             $('#row_ads_thirdparty_url, #row_ads_skip, #row_ads_duration, #row_ads_startime').hide();
         }
 
