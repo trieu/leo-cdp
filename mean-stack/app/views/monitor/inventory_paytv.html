@@ -17,50 +17,25 @@
 		</form>
 	</div>
 
-	<div class="row">
+	<div class="row" id="paytvTotalView">
 
-		<div class="col-md-3 col-sm-6 col-xs-12">
+		<div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="it in totalData">
 			<div class="tile quick-stats">
 				<div class="data">
-					<h2>{{sumTotalPv.toLocaleString()}}</h2>
-					<small>Total Playview</small>
-				</div>
-			</div>
-		</div>
-
-		<div class="col-md-3 col-sm-6 col-xs-12">
-			<div class="tile quick-stats">
-				<div class="data">
-					<h2>{{sumTotalImp.toLocaleString()}}</h2>
-					<small>Total Impression</small>
-				</div>
-			</div>
-		</div>
-
-		<div class="col-md-3 col-sm-6 col-xs-12">
-			<div class="tile quick-stats">
-				<div class="data">
-					<h2>{{sumTotalTrv.toLocaleString()}}</h2>
-					<small>Total Completed-View</small>
-				</div>
-			</div>
-		</div>
-
-		<div class="col-md-3 col-sm-6 col-xs-12">
-			<div class="tile quick-stats">
-				<div class="data">
-					<h2>{{sumTotalClick.toLocaleString()}}</h2>
-					<small>Total Click</small>
+					<h2>{{it.totalView.toLocaleString()}}</h2>
+					<small>{{it.TypeName}}</small>
 				</div>
 			</div>
 		</div>
 
 	</div>
 
-	<div class="row">
+	<div class="row" id="paytvChart">
+
 		<div class="col-md-6 col-xs-12" ng-repeat="it in items">
 			<pie-chart ng-title="{{it.TypeName}}" ng-model="it.chartData"></pie-chart>
 		</div>
+
 	</div>
 
 </div>

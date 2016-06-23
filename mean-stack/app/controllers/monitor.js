@@ -7,8 +7,6 @@ webApp.factory('monitor', function($http) {
 });
 
 webApp.controller('monitorInventoryPayTvCtrl', function($scope, monitor) {
-	$scope.items = new Array();
-	$scope.sum = new Array();
 
 	$scope.end = new moment().format("YYYY-MM-DD");
 	$scope.begin = new moment().subtract(30, 'days').format("YYYY-MM-DD");
@@ -17,12 +15,17 @@ webApp.controller('monitorInventoryPayTvCtrl', function($scope, monitor) {
 
 	function render(begin, end){
 
-		var chartData
+		var chartData;
 		//chart data
 		monitor._inventory_paytv(begin, end)
 		.success(function(data){
-			var items = data.Root.item;
+			$scope.items = new Array();
+			$scope.totalData = new Array();
+
 			var chartTotal = new Array();
+			var items = data.Root.item;
+			
+			//loop chart (render placement #paytvChart)
 			for(var i in items){
 				
 				for(var j in items[i]){
@@ -32,21 +35,38 @@ webApp.controller('monitorInventoryPayTvCtrl', function($scope, monitor) {
 						var list = items[i][j];
 						var countView = 0;
 						for (var k in list) {
-							chartData.push([list[k].Category , list[k].ToltalView])
+							chartData.push([list[k].Category, list[k].ToltalView])
 							countView += parseInt(list[k].ToltalView);
 						}
 					}
 
 				}
 				//insert total chart
-				chartTotal.push([items[i].TypeName, countView]);
+				chartTotal.push([items[i].TypeName, countView, items[i].TypeID]);
 
 				$scope.items.push({TypeName: items[i].TypeName, chartData: chartData});
 			};
 
 			$scope.items.push({TypeName: "Tổng lượt xem", chartData: chartTotal});
 			
-			$scope.sum.push(chartTotal);
+			//loop total view (render placement #paytvTotalView)
+			if(chartTotal.length > 0){
+				var countTotalView = 0;
+				for(var i in chartTotal){
+					if(chartTotal[i][2] == 1){
+                        $scope.totalData.push({TypeName: "Total View Film", totalView: chartTotal[i][1]});
+                    }
+                    else if(chartTotal[i][2] == 2){
+                        $scope.totalData.push({TypeName: "Total View Children", totalView: chartTotal[i][1]});
+                    }
+                    else if(chartTotal[i][2] == 3){
+                        $scope.totalData.push({TypeName: "Total View Entertainment", totalView: chartTotal[i][1]});
+                    }
+                    countTotalView += chartTotal[i][1];
+				}
+				$scope.totalData.push({TypeName: "Total View", totalView: countTotalView});
+				
+			}
 		});
 	}
 
