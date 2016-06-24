@@ -12,6 +12,21 @@ webApp.config(function($routeProvider, $locationProvider){
 	.when('/creative',{
 		templateUrl: 'app/views/creative/list.html'
 	})
+	.when('/creative/read/:id',{
+		templateUrl: 'app/views/creative/read.html'
+	})
+	.when('/creative/new',{
+		templateUrl: function(params){
+			var url = 'app/views/creative/';
+			if (params.type == "video") {
+				url = url + params.type + '.html';
+			}
+			else{
+				url = url + 'new.html';
+			}
+			return url;
+		}
+	})
 	.when('/creative/summary',{
 		templateUrl: 'app/views/creative/summary.html'
 	})

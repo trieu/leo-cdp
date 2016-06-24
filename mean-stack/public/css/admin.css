@@ -1,0 +1,66 @@
+.font-18{
+	font-size: 18px;
+}
+.list-group-item.active {
+    background: rgba(0,0,0,0.2);
+    border-color: rgba(255,255,255,0.15);
+}
+.table>tbody>tr>td{
+	vertical-align: middle;
+}
+.table>tbody>tr>td:nth-child(odd){
+	text-align: right;
+	font-weight: bold;
+	font-size: 14px;
+}
+.table input,
+.table textarea{
+	min-width: 300px;
+}
+
+.box-radio,.box-checkbox {
+	display: block;
+	cursor: pointer;
+    color: #fff;
+    font-family:Arial, sans-serif;
+    font-size:14px;
+}
+.box-inline{
+	display: inline-block;
+}
+.box-radio span, .box-checkbox span {
+    display:inline-block;
+    width:16px;
+    height:16px;
+    margin:-1px 4px 0 0;
+    vertical-align:middle;
+    cursor:pointer;
+    border: 1px solid rgba(255,255,255,0.5);
+}
+.box-radio span{
+    width:17px;
+    height:17px;	
+	-moz-border-radius: 50% !important;
+	border-radius: 50% !important;
+}
+.box-radio input[type="radio"],
+.box-checkbox input[type="checkbox"]{
+	display:none;
+}
+.box-radio input[type="radio"] + span,
+.box-checkbox input[type="checkbox"] + span {
+     background-color: rgba(0,0,0,0.3);
+}
+
+.box-radio input[type="radio"]:checked + span,
+.box-checkbox input[type="checkbox"]:checked + span{
+     background-color: rgba(255,255,255,0.5);
+}
+
+.box-radio input[type="radio"] + span,
+.box-checkbox input[type="checkbox"]:checked + span {
+  -webkit-transition:background-color 0.4s linear;
+  -o-transition:background-color 0.4s linear;
+  -moz-transition:background-color 0.4s linear;
+  transition:background-color 0.4s linear;
+}
