@@ -147,8 +147,7 @@ exports.getPayTVCategories = function () {
 }
 
 exports.getPayTVLocations = function () {
-    var locs = [];
-    locs = [
+    var locs = [
         {
             "LocID": "4",
             "LocName": "Ha Noi",

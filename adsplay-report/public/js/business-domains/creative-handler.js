@@ -309,6 +309,13 @@
                 $('#video_url').removeAttr('required');
             }
 
+            if(window.paytvs){
+                if( $('#ad_target_content_cats').val() == null ){
+                    modal_alert('Targeting category must be selected!');
+                    return false;
+                }
+            }
+
             //validate all data
             var nodes = $('input:required:invalid');
             if (nodes.length !== 0) {
