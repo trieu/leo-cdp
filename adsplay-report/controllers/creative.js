@@ -340,8 +340,17 @@ router.get('/:id/edit', function (req, res) {
             }
             
             var nameAdType;
+
+            //payTV check
+            var isIpTvAd = data.crt.tgpfs.indexOf(6)>=0;//
+
             if (data.crt.adType == 1) {
-                nameAdType = 'new-creative-video';
+                if(isIpTvAd){
+                    //nameAdType = 'new-creative-video-paytv';
+                    nameAdType = 'new-creative-video';
+                } else {
+                    nameAdType = 'new-creative-video';
+                }
             }
             else if (data.crt.adType == 2) {
                 nameAdType = 'new-creative-display';
