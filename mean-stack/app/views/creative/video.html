@@ -1,10 +1,52 @@
-<div class="block-area">
+<div class="block-area" ng-controller="creativeNewVideoCtrl">
 	<div class="row">
 		<div class="col-md-4 col-sm-12">
-			<h1>video</h1>
+			<h3 class="block-title">Upload Video</h3>
+			<div class="accordion tile">
+                <div class="panel-group block" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <a class="accordion-toggle" data-toggle="collapse" data-target="#collapseOne" >
+                                    File from YouTube
+                                </a>
+                            </h3>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse">
+                            <div class="panel-body">
+                            	<input type="text" id="youtube_link" class="form-control" ng-model="youtube_link" placeholder="Enter YouTube URL">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <a class="accordion-toggle" data-toggle="collapse" data-target="#collapseTwo">
+                                    File from PC
+                                </a>
+                            </h3>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <upload-file ng-model="file"></upload-file>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 		</div>
 		<div class="col-md-8 col-sm-12">
-			<ng-include src="'app/views/creative/form.html'"></ng-include>
+			<ng-include src="'app/views/creative/partial_form.html'"></ng-include>
+
+			<div class="row m-b-25" class="row-button-submit">
+				<div class="col-md-6">
+					<button class="btn btn-block btn-alt" ng-click="submit()">Ok</button>
+				</div>
+				<div class="col-md-6" >
+					<button class="btn btn-block btn-alt">Cancel</button>
+				</div>
+			</div>
 		</div>
+
 	</div>
 </div>

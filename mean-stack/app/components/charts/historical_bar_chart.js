@@ -5,12 +5,14 @@ webApp.directive('historicalBarChart', function(){
 			ngTitle: '@',
 			ngChartData : '=ngModel'
 		},
-		template: '<div class="tile">'+
-					'<h2 class="tile-title">{{ngTitle}}</h2>'+
-					'<div class="p-10">'+
-						'<nvd3 options="options" data="data" api="api" config="{refreshDataOnly: true, deepWatchDataDepth: 0}"></nvd3>'+
-					'</div>'+
-				'</div>',
+		template: '\
+					<div class="tile"> \
+						<h2 class="tile-title">{{ngTitle}}</h2> \
+						<div class="p-10"> \
+							<nvd3 options="options" data="data" api="api" config="{refreshDataOnly: true, deepWatchDataDepth: 0}"></nvd3> \
+						</div> \
+					</div> \
+				',
 		link: function ($scope, element, attributes) {
 
 			$scope.options = {

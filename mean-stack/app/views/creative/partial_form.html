@@ -4,55 +4,67 @@
 		<tr>
 			<td>Name</td>
 			<td>
-				<input type="text" id="ads_name" class="form-control" placeholder="Enter Ad Name">
+				<input type="text" ng-model="items.name" id="ads_name" class="form-control" placeholder="Enter Ad Name">
 			</td>
 		</tr>
 		<tr>
 			<td>Description</td>
 			<td>
-				<input type="text" id="ads_des" class="form-control" placeholder="Enter Ad Description">
+				<input type="text" ng-model="items.desc" id="ads_des" class="form-control" placeholder="Enter Ad Description">
 			</td>
 		</tr>
 		<tr>
 			<td>Click-through URL</td>
 			<td>
-				<input type="text" id="ads_clickthr" class="form-control" placeholder="Enter Click-through URL">
+				<input type="text" ng-model="items.cliThr" id="ads_clickthr" class="form-control" placeholder="Enter Click-through URL">
 			</td>
 		</tr>
 		<tr>
 			<td>Third-party Ad URL</td>
 			<td>
-				<input type="text" id="ads_thirdparty_url" class="form-control" placeholder="Enter Third-party Ad URL">
+				<input type="text" ng-model="items.vastXml3rd" id="ads_thirdparty_url" class="form-control" placeholder="Enter Third-party Ad URL">
+			</td>
+		</tr>
+		<tr>
+			<td>Status</td>
+			<td>
+				<select class="form-control" ng-model="status" id="ads_status">
+					<option value="0">Invalid</option>
+					<option value="1">Pending</option>
+					<option value="2">Running</option>
+					<option value="3">Finished</option>
+					<option value="4">Expired</option>
+				</select>
 			</td>
 		</tr>
 		<tr>
 			<td>Cost for 1 impression / complete-view</td>
 			<td>
-				<input type="number" value="0" min="0" id="ads_basecost" class="form-control" placeholder="Enter Base Cost">
+				<input type="number" ng-model="items.cost" value="0" min="0" id="ads_basecost" class="form-control" placeholder="Enter Base Cost">
 			</td>
 		</tr>
 		<tr>
 			<td>Total Booking (impression / complete-view)</td>
 			<td>
-				<input type="number" value="0" min="0" id="ads_totalbooking" class="form-control" placeholder="Enter Total Booking">
+				<input type="number" ng-model="items.tBk" value="0" min="0" id="ads_totalbooking" class="form-control" placeholder="Enter Total Booking">
 			</td>
 		</tr>
 		<tr>
 			<td>Daily Booking (impression / complete-view)</td>
 			<td>
-				<input type="number" value="0" min="0" id="ads_dailybooking" class="form-control" placeholder="Enter Daily Booking">
+				<input type="number" ng-model="items.dBk" value="0" min="0" id="ads_dailybooking" class="form-control" placeholder="Enter Daily Booking">
 			</td>
 		</tr>
 		<tr>
 			<td>Hourly Booking (impression / complete-view)</td>
 			<td>
-				<input type="number" value="0" min="0" id="ads_dailybooking" class="form-control" placeholder="Enter Hourly Booking">
+				<input type="number" ng-model="items.hBk" value="0" min="0" id="ads_dailybooking" class="form-control" placeholder="Enter Hourly Booking">
 			</td>
 		</tr>
 		<tr>
 			<td>TVC Duration</td>
 			<td>
-				<select class="form-control" id="ads_duration" name="dura">
+				<select class="form-control" ng-model="items.dura" id="ads_duration" name="dura">
 					<option value="00:00:05"> TVC 5 seconds</option>
 					<option value="00:00:15"> TVC 15 seconds</option>
 					<option value="00:00:30"> TVC 30 seconds</option>
@@ -62,7 +74,7 @@
 		<tr>
 			<td>Skip time</td>
 			<td>
-				<select class="form-control" id="ads_skip" name="skip">
+				<select class="form-control" ng-model="items.skip" id="ads_skip" name="skip">
 					<option value="00:00:05">5 seconds</option>
 					<option value="00:00:15">15 seconds</option>
 					<option value="00:00:30">30 seconds</option>
@@ -72,7 +84,7 @@
 		<tr>
 			<td>Start time</td>
 			<td>
-				<select class="form-control" id="ads_startime" name="staTime">
+				<select class="form-control" ng-model="items.staTime" id="ads_startime" name="staTime">
 					<option value="00:00:00">Pre-roll</option>
 					<option value="00:05:00">Mid-roll after 5 minutes</option>
 					<option value="00:10:00">Mid-roll after 10 minutes</option>
@@ -82,40 +94,40 @@
 		<tr>
 			<td>Running Date (format Month/Day/Year)</td>
 			<td>
-				<input type="date" class="form-control" id="ads_running_date" name="runDate" required="" placeholder="Enter Running Date">
+				<input type="date" ng-model="items.runDateL" class="form-control" id="ads_running_date" name="runDate" required="" placeholder="Enter Running Date">
 			</td>
 		</tr>
 		<tr>
 			<td>Expired Date (format Month/Day/Year)</td>
 			<td>
-				<input type="date" class="form-control" id="ads_expired_date" name="expiredDate" required="" placeholder="Enter Expired Date">
+				<input type="date" ng-model="items.expDateL" class="form-control" id="ads_expired_date" name="expiredDate" required="" placeholder="Enter Expired Date">
 			</td>
 		</tr>
 		<tr>
 			<td>Pricing Model</td>
 			<td>
 				<label class="box-radio">
-					<input type="radio" value="1" name="prcModel" />
+					<input type="radio" ng-model="items.prcModel" value="1" name="prcModel" />
 					<span></span>
 					CPV (Cost per Complete-View)
 				</label>
 				<label class="box-radio">
-					<input type="radio" value="2" name="prcModel" />
+					<input type="radio" ng-model="items.prcModel" value="2" name="prcModel" />
 					<span></span>
 					CPM (Cost per Mile)
 				</label>
 				<label class="box-radio">
-					<input type="radio" value="3" name="prcModel" />
+					<input type="radio" ng-model="items.prcModel" value="3" name="prcModel" />
 					<span></span>
 					CPC (Cost per Click)
 				</label>
 				<label class="box-radio">
-					<input type="radio" value="4" name="prcModel" />
+					<input type="radio" ng-model="items.prcModel" value="4" name="prcModel" />
 					<span></span>
 					CPE (Cost per Engagement)
 				</label>
 				<label class="box-radio">
-					<input type="radio" value="5" name="prcModel" />
+					<input type="radio" ng-model="items.prcModel" value="5" name="prcModel" />
 					<span></span>
 					CPD (Cost per Day)
 				</label>
@@ -130,7 +142,7 @@
 		<tr>
 			<td>Ad Weight (higher is better)</td>
 			<td>
-				<select class="form-control" id="ad_score" data-creative-field="score">
+				<select class="form-control" ng-model="items.score" id="ad_score" data-creative-field="score">
 					<option value="10">10%</option>
 					<option value="20">20%</option>
 					<option value="30">30%</option>
@@ -148,32 +160,32 @@
 			<td>Device Platform</td>
 			<td>
 				<label class="box-checkbox">
-					<input type="checkbox" value="1" name="tgpfs" />
+					<input type="checkbox" ng-model="items.tgpfs[]" value="1" name="tgpfs" />
 					<span></span>
 					Web (PC,Laptop)
 				</label>
 				<label class="box-checkbox">
-					<input type="checkbox" value="2" name="tgpfs" />
+					<input type="checkbox" ng-model="items.tgpfs[]" value="2" name="tgpfs" />
 					<span></span>
 					Web (Mobile)
 				</label>
 				<label class="box-checkbox">
-					<input type="checkbox" value="3" name="tgpfs" />
+					<input type="checkbox" ng-model="items.tgpfs[]" value="3" name="tgpfs" />
 					<span></span>
 					Web (iPad)
 				</label>
 				<label class="box-checkbox">
-					<input type="checkbox" value="4" name="tgpfs" />
+					<input type="checkbox" ng-model="items.tgpfs[]" value="4" name="tgpfs" />
 					<span></span>
 					Mobile Native App
 				</label>
 				<label class="box-checkbox">
-					<input type="checkbox" value="5" name="tgpfs" />
+					<input type="checkbox" ng-model="items.tgpfs[]" value="5" name="tgpfs" />
 					<span></span>
 					Smart TV
 				</label>
 				<label class="box-checkbox">
-					<input type="checkbox" value="6" name="tgpfs" />
+					<input type="checkbox" ng-model="items.tgpfs[]" value="6" name="tgpfs" />
 					<span></span>
 					IPTV TV
 				</label>
@@ -182,7 +194,7 @@
 		<tr>
 			<td>Ad Frequency</td>
 			<td>
-				<select class="form-control" id="ad_fqccap" name="fqcCap">
+				<select class="form-control" ng-model="items.fqcCap" id="ad_fqccap" name="fqcCap">
 					<option value="1">1</option>
 					<option value="2">2</option>
 					<option value="3">3</option>

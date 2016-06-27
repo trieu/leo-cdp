@@ -17,18 +17,18 @@ exports.list = function (url, user, callback) {
 				crt.name = (crt.name === 'Default') ? 'Default Creative' : crt.name;
 
 				if (crt.runDate) {
-                    var runDate = moment(crt.runDate, 'MMM D, YYYY hh:mm:ss A');
-                    crt.runDate = runDate.format('YYYY-MM-DD');
-                } else {
-                    crt.runDate = 'N/A';
-                }
-                if (crt.expiredDate) {
-                    var expiredDate = moment(crt.expiredDate, 'MMM D, YYYY hh:mm:ss A');
-                    crt.expiredDate = expiredDate.format('YYYY-MM-DD');
-                } else {
-                    crt.expiredDate = 'N/A';
-                }
-                
+					var runDate = moment(crt.runDate, 'MMM D, YYYY hh:mm:ss A');
+					crt.runDate = runDate.format('YYYY-MM-DD');
+				} else {
+					crt.runDate = 'N/A';
+				}
+				if (crt.expiredDate) {
+					var expiredDate = moment(crt.expiredDate, 'MMM D, YYYY hh:mm:ss A');
+					crt.expiredDate = expiredDate.format('YYYY-MM-DD');
+				} else {
+					crt.expiredDate = 'N/A';
+				}
+
 				crt.active = crt.status == 2;
 				crt.status = constantUtils.getStatus(crt.status);
 				crt.ctr = (crt.ctr * 100).toFixed(2);
@@ -63,6 +63,23 @@ exports.list = function (url, user, callback) {
 			console.error(e);
 		}
 		
-	})
+	});
+
+};
+
+exports.read = function (url, callback) {
+
+	Sync(function(){
+		try{
+			var result = req_utils.get.sync(null, url);
+
+			callback(null, result);
+		}
+
+		catch (e) {
+			console.error(e);
+		}
+		
+	});
 
 };

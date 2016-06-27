@@ -15,6 +15,9 @@ webApp.config(function($routeProvider, $locationProvider){
 	.when('/creative/read/:id',{
 		templateUrl: 'app/views/creative/read.html'
 	})
+	.when('/creative/edit/:id',{
+		templateUrl: 'app/views/creative/edit.html'
+	})
 	.when('/creative/new',{
 		templateUrl: function(params){
 			var url = 'app/views/creative/';

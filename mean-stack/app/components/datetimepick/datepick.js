@@ -7,13 +7,14 @@ webApp.directive('datePick', function(){
 			ngDateMax: '@'
 		},
 		require: 'ngModel',
-		template: '<div class="input-icon date-only">'+
-                    '<input type="text" class="form-control input-sm" ng-model="ngModel" />'+
-                    '<span class="add-on">'+
-                        '<span class="sa-plus"></span>'+
-                    '</span>'+
-                '</div>'
-				   ,
+		template: '\
+					<div class="input-icon date-only"> \
+	                    <input type="text" class="form-control input-sm" ng-model="ngModel" /> \
+	                    <span class="add-on"> \
+	                        <span class="sa-plus"></span> \
+	                    </span> \
+	                </div> \
+				   ',
 		link: function ($scope, element, attributes) {
 
 			element.find("input:text").datetimepicker({

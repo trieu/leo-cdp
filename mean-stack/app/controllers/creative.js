@@ -67,3 +67,36 @@ webApp.controller('creativeSummaryCtrl', function($scope, creative) {
 	};
 
 });
+
+webApp.controller('creativeNewVideoCtrl', function($scope, creative) {
+	$scope.items = {};
+	$scope.file = null;
+	$scope.submit = function(){
+		console.log($scope.items)
+	};
+
+});
+
+webApp.controller('creativeEditCtrl', function($scope, creative, $routeParams) {
+
+	$scope.items = {};
+	console.log($routeParams.id)
+	creative._read($routeParams.id)
+	.success(function(data){
+		for (var i in data){
+
+			if (i == 'runDateL' || i == 'expDateL') {
+				console.log(i)
+				data[i] = moment(data[i]).format('DD-MM-YYYY');
+			}
+			
+		}
+		console.log(data)
+		$scope.items = data;
+	});
+
+	$scope.submit = function(){
+		console.log($scope.items)
+	};
+
+});

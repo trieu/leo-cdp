@@ -15,6 +15,9 @@ webApp.config(function($routeProvider, $locationProvider){
 	.when('/creative/read/:id',{
 		templateUrl: 'app/views/creative/read.html'
 	})
+	.when('/creative/edit/:id',{
+		templateUrl: 'app/views/creative/edit.html'
+	})
 	.when('/creative/new',{
 		templateUrl: function(params){
 			var url = 'app/views/creative/';
@@ -279,6 +282,39 @@ webApp.controller('creativeSummaryCtrl', function($scope, creative) {
 	};
 
 });
+
+webApp.controller('creativeNewVideoCtrl', function($scope, creative) {
+	$scope.items = {};
+	$scope.file = null;
+	$scope.submit = function(){
+		console.log($scope.items)
+	};
+
+});
+
+webApp.controller('creativeEditCtrl', function($scope, creative, $routeParams) {
+
+	$scope.items = {};
+	console.log($routeParams.id)
+	creative._read($routeParams.id)
+	.success(function(data){
+		for (var i in data){
+
+			if (i == 'runDateL' || i == 'expDateL') {
+				console.log(i)
+				data[i] = moment(data[i]).format('DD-MM-YYYY');
+			}
+			
+		}
+		console.log(data)
+		$scope.items = data;
+	});
+
+	$scope.submit = function(){
+		console.log($scope.items)
+	};
+
+});
 webApp.controller('inventoryPayTvCtrl', function($scope, inventory) {
 
 	$scope.end = new moment().format("YYYY-MM-DD");
@@ -397,12 +433,14 @@ webApp.directive('historicalBarChart', function(){
 			ngTitle: '@',
 			ngChartData : '=ngModel'
 		},
-		template: '<div class="tile">'+
-					'<h2 class="tile-title">{{ngTitle}}</h2>'+
-					'<div class="p-10">'+
-						'<nvd3 options="options" data="data" api="api" config="{refreshDataOnly: true, deepWatchDataDepth: 0}"></nvd3>'+
-					'</div>'+
-				'</div>',
+		template: '\
+					<div class="tile"> \
+						<h2 class="tile-title">{{ngTitle}}</h2> \
+						<div class="p-10"> \
+							<nvd3 options="options" data="data" api="api" config="{refreshDataOnly: true, deepWatchDataDepth: 0}"></nvd3> \
+						</div> \
+					</div> \
+				',
 		link: function ($scope, element, attributes) {
 
 			$scope.options = {
@@ -480,12 +518,14 @@ webApp.directive('pieChart', function(){
 			ngTitle: '@',
 			ngChartData : '=ngModel'
 		},
-		template: '<div class="tile">'+
-					'<h2 class="tile-title">{{ngTitle}}</h2>'+
-					'<div class="p-10">'+
-						'<nvd3 options="options" data="data" api="api" config="{refreshDataOnly: true, deepWatchDataDepth: 0}"></nvd3>'+
-					'</div>'+
-				'</div>',
+		template: '\
+					<div class="tile"> \
+						<h2 class="tile-title">{{ngTitle}}</h2> \
+						<div class="p-10"> \
+							<nvd3 options="options" data="data" api="api" config="{refreshDataOnly: true, deepWatchDataDepth: 0}"></nvd3> \
+						</div> \
+					</div> \
+				',
 		link: function ($scope, element, attributes) {
 
 			$scope.options = {
@@ -526,6 +566,30 @@ webApp.directive('pieChart', function(){
 		}
 	}
 });
+// webApp.directive('checkbox', function(){
+// 	return{
+// 		restrict: 'E',
+//         scope: {
+//             name: '=',
+//             ngDateMin: '@',
+//             ngDateMax: '@'
+//         },
+// 		template: '\
+// 					<label class="box-checkbox"> \
+//                     <input type="checkbox" ng-model="items.name" value="1" name="tgpfs" /> \
+//                     <span></span> \
+//                     {{Web (PC,Laptop)}} \
+//                 </label> \
+// 				   ',
+// 		link: function ($scope, element, attributes) {
+//             element.find("input").bind("change", function(changeEvent) {                        
+//                 if (typeof(changeEvent.target.files[0]) === 'object') {
+//                     $scope[attributes.ngModel] = changeEvent.target.files[0];
+//                 };
+//             });
+// 		}
+// 	}
+// });
 webApp.directive('datePick', function(){
 	return{
 		restrict: 'E',
@@ -535,13 +599,14 @@ webApp.directive('datePick', function(){
 			ngDateMax: '@'
 		},
 		require: 'ngModel',
-		template: '<div class="input-icon date-only">'+
-                    '<input type="text" class="form-control input-sm" ng-model="ngModel" />'+
-                    '<span class="add-on">'+
-                        '<span class="sa-plus"></span>'+
-                    '</span>'+
-                '</div>'
-				   ,
+		template: '\
+					<div class="input-icon date-only"> \
+	                    <input type="text" class="form-control input-sm" ng-model="ngModel" /> \
+	                    <span class="add-on"> \
+	                        <span class="sa-plus"></span> \
+	                    </span> \
+	                </div> \
+				   ',
 		link: function ($scope, element, attributes) {
 
 			element.find("input:text").datetimepicker({
@@ -563,6 +628,31 @@ webApp.directive('datePick', function(){
 			});
 
 			
+		}
+	}
+});
+webApp.directive('uploadFile', function(){
+	return{
+		restrict: 'E',
+		template: '\
+					<div class="fileupload fileupload-new" data-provides="fileupload"> \
+                        <span class="btn btn-file btn-sm btn-alt"> \
+                            <span class="fileupload-new">Select file</span> \
+                            <span class="fileupload-exists">Change</span> \
+                            <input type="file" /> \
+                        </span> \
+                        <span class="fileupload-preview"></span> \
+                        <a href="#" class="close close-pic fileupload-exists" data-dismiss="fileupload"> \
+                            <i class="fa fa-times"></i> \
+                        </a> \
+                    </div> \
+				   ',
+		link: function ($scope, element, attributes) {
+            element.find("input").bind("change", function(changeEvent) {                        
+                if (typeof(changeEvent.target.files[0]) === 'object') {
+                    $scope[attributes.ngModel] = changeEvent.target.files[0];
+                };
+            });
 		}
 	}
 });
