@@ -206,11 +206,11 @@
         }
 
         //disable video data fields on other ad type
-
+        var tvc_div_nodes = $('#row_ads_thirdparty_url,#row_ads_skip,#row_ads_duration,#row_ads_startime,#div_fptplay_tvc_ad_placements,#div_paytv_ad_placements,#div_fshare_ad_placements,#div_nhacso_ad_placements');
         if( $('#accordion_tvc_upload').length > 0 ){
-            $('#row_ads_thirdparty_url, #row_ads_skip, #row_ads_duration, #row_ads_startime').show();
+            tvc_div_nodes.show();
         } else {
-            $('#row_ads_thirdparty_url, #row_ads_skip, #row_ads_duration, #row_ads_startime').hide();
+            tvc_div_nodes.hide();
         }
 
         //get iframe video
