@@ -22,6 +22,7 @@ function formatNumber(number) {
 }
 
 function makeLinePlusBarChart(graphPlaceholderId, data) {
+    console.log(data);
     data = data.map(function (series) {
         series.values = series.values.map(function (d) {
             return {x: d[0], y: d[1] }
@@ -32,35 +33,25 @@ function makeLinePlusBarChart(graphPlaceholderId, data) {
     var placeholder = '#' + graphPlaceholderId + ' svg';
     var margin = {top: 30, right: 50, bottom: 40, left: 50};
 
-    chart = nv.models.linePlusBarChart()
-        .margin(margin)
-       // .legendRightAxisHint(' (right axis)')
-        .color(d3.scale.category10().range());
+    var chart = nv.models.linePlusBarChart()
+            .margin(margin)
+        ;
 
-    chart.xAxis.tickFormat(function (d) {
-        return d3.time.format('%d/%m/%Y-%Hh')(new Date(d))
-    }).showMaxMin(false);
-
-    chart.y1Axis.tickFormat(function (d) {
-        return d3.format(',f')(d)
+    chart.xAxis.tickFormat(function(d) {
+        return d3.time.format('%H:00 %d/%m/%Y ')(new Date(d))
     });
-    chart.y2Axis.tickFormat(function (d) {
-        return d3.format(',f')(d)
-    });
-    chart.bars.forceY([0]).padData(false);
 
-    chart.xAxis.tickFormat(function (d) { return d3.time.format('%x')( new Date(d));  }).showMaxMin(false);
+    chart.y1Axis.tickFormat(d3.format(',f'));
+    chart.y2Axis.tickFormat(d3.format(',f'));
+
+    chart.bars.forceY([0]);
 
     d3.select(placeholder)
         .datum(data)
-        .transition().duration(500).call(chart);
-
+        .transition()
+        .duration(0)
+        .call(chart);
     nv.utils.windowResize(chart.update);
-
-    chart.dispatch.on('stateChange', function (e) {
-        nv.log('New State:', JSON.stringify(e));
-    });
-
     return chart;
 }
 

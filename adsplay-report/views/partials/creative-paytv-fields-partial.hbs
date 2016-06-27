@@ -139,6 +139,7 @@
                         </div>
                     </td>
                 </tr>
+
                 </tbody>
             </table>
         </div>
@@ -190,7 +191,7 @@
                             <select id="ad_target_locs" type="select" data-creative-field="tglocs"
                                     data-placeholder="PayTV - Show Ads in these locations"
                                     style="width:350px!important;" multiple class="chosen-select">
-                                {{#each payTVLocations}}
+                                {{#each locationCodes}}
                                     <option value="{{ConChar}}">{{LocName}}</option>
                                 {{/each}}
                             </select>

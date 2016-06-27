@@ -146,8 +146,17 @@ exports.getPayTVCategories = function () {
     return cats;
 }
 
-exports.getPayTVLocations = function () {
+exports.getLocationCodes = function () {
     var locs = [
+        {
+            "LocName": "VN - Mien Nam",
+            "ConChar": "vn-south"
+        },
+        {
+            "LocName": "VN - Mien Bac",
+            "ConChar": "vn-north"
+        },
+
         {
             "LocID": "4",
             "LocName": "Ha Noi",

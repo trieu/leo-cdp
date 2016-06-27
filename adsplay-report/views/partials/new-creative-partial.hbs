@@ -24,32 +24,37 @@
         <div class="table-responsive">
             <table class="table table-bordered table-hover table-striped">
                 <tbody>
+
                 <tr id="row_ads_name" >
                     <td><strong>Name</strong></td>
                     <td>
                         <input type="text" class="form-control" id="ads_name" data-creative-field="name"  required placeholder="Enter Ad Name">
                     </td>
                 </tr>
+
                 <tr id="row_ads_des" >
                     <td><strong>Description</strong></td>
                     <td>
                         <input type="text" class="form-control" id="ads_des" data-creative-field="desc" placeholder="Enter Ad Description">
                     </td>
                 </tr>
+
                 <tr id="row_ads_clickthr" data-paytv="false">
                     <td><strong>Click-through URL</strong></td>
                     <td>
                         <input type="url" class="form-control" id="ads_clickthr" data-creative-field="cliThr" pattern="https?://.+" placeholder="Enter Click-through URL">
                     </td>
                 </tr>
+
                 <tr id="row_ads_thirdparty_url" data-ad-type="1" data-paytv="false">
-                    <td><strong>Third-party Ad URL</strong></td>
+                    <td><strong>URL of third-party tracking</strong></td>
                     <td>
                         <input type="url" class="form-control" id="ads_thirdparty_url"  data-creative-field="vastXml3rd" pattern="https?://.+" placeholder="Enter Third-party Ad URL">
                     </td>
                 </tr>
+
                 <tr id="row_ads_status">
-                    <td><strong>Status</strong></td>
+                    <td><strong>Ad Status</strong></td>
                     <td>
                         <div class="panel-body text-left">
                             <div class="form-group">
@@ -64,88 +69,93 @@
                         </div>
                     </td>
                 </tr>
+
                 <tr>
-                    <td><strong>Cost for 1 impression / complete-view</strong></td>
+                    <td><strong>Base Cost (for 1 Impression or Complete-view)</strong></td>
                     <td>
                         <input type="number" class="form-control" id="ads_basecost" data-creative-field="cost" required min="0"  placeholder="Enter Base Cost" value="0" >
                     </td>
                 </tr>
+
                 <tr>
-                    <td><strong>Total Booking (impression / complete-view) </strong></td>
+                    <td><strong>Total Booking (Impression or Complete-view) </strong></td>
                     <td>
                         <input type="number" class="form-control" id="ads_totalbooking" data-creative-field="tBk" required min="0" placeholder="Enter Total Booking" value="0" >
                     </td>
                 </tr>
+
                 <tr>
-                    <td><strong>Daily Booking (impression / complete-view) </strong></td>
+                    <td><strong>Daily Booking (Impression or Complete-view) </strong></td>
                     <td>
                         <input type="number" class="form-control" id="ads_dailybooking" data-creative-field="dBk" required min="0" placeholder="Enter Daily Booking" value="0" >
                     </td>
                 </tr>
-                <tr>
-                    <td><strong>Hourly Booking (impression / complete-view) </strong></td>
+
+                <tr style="display: none">
+                    <td><strong>Hourly Booking (Impression or Complete-view) </strong></td>
                     <td>
                         <input type="number" class="form-control" id="ads_hourlybooking" data-creative-field="hBk" required min="0" placeholder="Enter Hourly Booking" value="0" >
                     </td>
                 </tr>
+
                 <tr id="row_ads_duration" data-ad-type="1" >
                     <td><strong>TVC Duration</strong></td>
                     <td>
-                        <div class="panel-body text-left">
-                            <div class="form-group">
-                                <select class="form-control" id="ads_duration" data-creative-field="dura"  >
-                                    <option value="00:00:05"> TVC 5 seconds</option>
-                                    <option value="00:00:15"> TVC 15 seconds</option>
-                                    <option value="00:00:30"> TVC 30 seconds</option>
-                                </select>
-                            </div>
-                        </div>
+                        <div>
+                             <select class="form-control" id="ads_duration" data-creative-field="dura"  >
+                                <option value="00:00:05"> TVC 5 seconds</option>
+                                <option value="00:00:15"> TVC 15 seconds</option>
+                                <option value="00:00:30"> TVC 30 seconds</option>
+                             </select>
+                        </div
+
                     </td>
                 </tr>
+
                 <tr id="row_ads_skip" data-ad-type="1" >
                     <td><strong>Skip time</strong></td>
                     <td>
-                        <div class="panel-body text-left">
-                            <div class="form-group">
-                                <select class="form-control" id="ads_skip" data-creative-field="skip"  >
-                                    <option value="00:00:05">5 seconds</option>
-                                    <option value="00:00:15">15 seconds</option>
-                                    <option value="00:00:30">30 seconds</option>
-                                </select>
-                            </div>
+                        <div>
+                            <select class="form-control" id="ads_skip" data-creative-field="skip"  >
+                                <option value="00:00:05">5 seconds</option>
+                                <option value="00:00:15">15 seconds</option>
+                                <option value="00:00:30">30 seconds</option>
+                            </select>
                         </div>
                     </td>
                 </tr>
+
                 <tr id="row_ads_startime" data-ad-type="1" >
                     <td><strong>Start time</strong></td>
                     <td>
-                        <div class="panel-body text-left">
-                            <div class="form-group">
-                                <select class="form-control" id="ads_startime" data-creative-field="staTime"  >
-                                    <option value="00:00:00">Pre-roll</option>
-                                    <option value="00:05:00">Mid-roll after 5 minutes</option>
-                                    <option value="00:10:00">Mid-roll after 10 minutes</option>
-                                </select>
-                            </div>
+                        <div>
+                            <select class="form-control" id="ads_startime" data-creative-field="staTime"  >
+                                <option value="00:00:00">Pre-roll</option>
+                                <option value="00:05:00">Mid-roll after 5 minutes</option>
+                                <option value="00:10:00">Mid-roll after 10 minutes</option>
+                            </select>
                         </div>
                     </td>
                 </tr>
+
                 <tr>
                     <td><strong>Running Date (format Month/Day/Year)</strong></td>
                     <td>
                         <input type="date" class="form-control" id="ads_running_date" data-creative-field="runDate" required placeholder="Enter Running Date">
                     </td>
                 </tr>
+
                 <tr>
                     <td><strong>Expired Date (format Month/Day/Year)</strong></td>
                     <td>
                         <input type="date" class="form-control" id="ads_expired_date"  data-creative-field="expiredDate" required placeholder="Enter Expired Date">
                     </td>
                 </tr>
+
                 <tr>
                     <td><strong>Pricing Model</strong></td>
                     <td>
-                        <div class="panel-body text-left" >
+                        <div class="text-left">
                             <div class="radio">
                                 <label title="CPV (Cost per Complete-View)">
                                     <input type="radio"  name="prcModel" data-creative-field="prcModel" value="1" > CPV (Cost per Complete-View)</label>
@@ -169,12 +179,58 @@
                         </div>
                     </td>
                 </tr>
+
+                <tr>
+                    <td><strong>Ad Frequency </strong></td>
+                    <td>
+                        <div >
+                            <div class="form-group">
+                                <select class="form-control" id="ad_fqccap" data-creative-field="fqcCap">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3" selected >3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>Priority Score<br> (higher is better)</strong></td>
+                    <td>
+                       <div>
+                            <select class="form-control" id="ad_score" data-creative-field="score" >
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                                <option value="40">40</option>
+                                <option value="50">50</option>
+                                <option value="60">60</option>
+                                <option value="70">70</option>
+                                <option value="80">80</option>
+                                <option value="90">90</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
 <hr>
+
 <div class="panel panel-default">
     <div class="panel-heading">
         <h2><i class="fa fa-crosshairs" aria-hidden="true"></i> Targeting Information</h2>
@@ -185,29 +241,22 @@
                 <tbody>
 
                 <tr>
-                    <td><strong>Ad Weight <br> (higher is better)</strong></td>
+                    <td><strong>Location</strong></td>
                     <td>
-                        <div class="panel-body text-left">
-                            <div class="form-group">
-                                <select class="form-control" id="ad_score" data-creative-field="score" >
-                                    <option value="10">10%</option>
-                                    <option value="20">20%</option>
-                                    <option value="30">30%</option>
-                                    <option value="40">40%</option>
-                                    <option value="50">50%</option>
-                                    <option value="60">60%</option>
-                                    <option value="70">70%</option>
-                                    <option value="80">80%</option>
-                                    <option value="90">90%</option>
-                                    <option value="100">100%</option>
-                                </select>
-                            </div>
+                        <div class="text-left">
+                            <select id="ad_target_location" type="select" data-creative-field="tglocs"
+                                    data-placeholder="Enter the location"
+                                    style="width:350px!important;" multiple class="chosen-select">
+                                {{#each locationCodes}}
+                                    <option value="{{ConChar}}">{{LocName}}</option>
+                                {{/each}}
+                            </select>
                         </div>
                     </td>
                 </tr>
 
                 <tr data-ad-type="1" >
-                    <td><strong>Device Platform</strong></td>
+                    <td><strong>Device Type</strong></td>
                     <td>
                         <div class="panel-body text-left" id="ad_target_device">
                             <div class="checkbox" data-paytv="false">
@@ -305,19 +354,15 @@
                                             <div>
                                                 <div class="bold">Only play TVC Ads in these categories</div>
                                                 <div>
-                                                    <select id="ad_target_content_cats" type="select" data-creative-field="tgcats" data-placeholder="PayTV - Show Ads in these categories" style="width:350px!important;" multiple class="chosen-select" >
+                                                    <select id="ad_target_content_cats" type="select" data-creative-field="tgcats"
+                                                            data-placeholder="Enter the category's names"
+                                                            style="width:350px!important;" multiple class="chosen-select">
                                                         {{#each payTVCategories}}
-                                                            <option  value="{{ID}}">{{Category}}</option>
+                                                            <option value="{{ID}}">{{Category}}</option>
                                                         {{/each}}
                                                     </select>
                                                 </div>
-                                                <div>
-                                                    <select id="ad_target_locs" type="select" data-creative-field="tgcats" data-placeholder="PayTV - Show Ads in these locations" style="width:350px!important;" multiple class="chosen-select" >
-                                                        {{#each payTVLocations}}
-                                                            <option  value="{{ID}}">{{Category}}</option>
-                                                        {{/each}}
-                                                    </select>
-                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -357,49 +402,6 @@
 
                             </div>
 
-                        </div>
-                    </td>
-                </tr>
-
-                <tr data-paytv="false" style="display: none">
-                    <td><strong>Location</strong></td>
-                    <td>
-                        <div class="panel-body text-left" id="ad_target_location">
-                            <div class="checkbox">
-                                <label><input type="checkbox" >Everywhere</label>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox"  data-creative-field="tglocs"  value="vn">In Vietnam</label>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox"  data-creative-field="tglocs"  value="vn-south">In Vietnam - (South Area, HCM City)</label>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox"  data-creative-field="tglocs"  value="vn-north">In Vietnam - (North Area, Hanoi )</label>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td><strong>Ad Frequency </strong></td>
-                    <td>
-                        <div class="panel-body text-left">
-                            <div class="form-group">
-                                <select class="form-control" id="ad_fqccap" data-creative-field="fqcCap">
-                                    <option value="0">0</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3" selected >3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                </select>
-                            </div>
                         </div>
                     </td>
                 </tr>

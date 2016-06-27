@@ -301,7 +301,7 @@ router.get('/:id/edit', function (req, res) {
         data.femaleKeywords = constantUtils.getFemaleKeywords();
         data.maleKeywords = constantUtils.getMaleKeywords();
         data.payTVCategories = constantUtils.getPayTVCategories();
-        data.payTVLocations = constantUtils.getPayTVLocations();
+        data.locationCodes = constantUtils.getLocationCodes();
 
         data.crtId = req.params.id || -1;
         data.type = req.query.type || "daily";
@@ -434,6 +434,8 @@ router.get('/new/local-ad-unit/video', function (req, res) {
     data.dashboard_title = "New Creative Video";
     data.femaleKeywords = constantUtils.getFemaleKeywords();
     data.maleKeywords = constantUtils.getMaleKeywords();
+    data.payTVCategories = constantUtils.getPayTVCategories();
+    data.locationCodes = constantUtils.getLocationCodes();
     res.render('ad-report/new-creative-video', data);
 
 });
@@ -442,8 +444,8 @@ router.get('/new/local-ad-unit/video-paytv', function (req, res) {
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "New Creative Video PayTV";
     data.payTVCategories = constantUtils.getPayTVCategories();
-    data.payTVLocations = constantUtils.getPayTVLocations();
-    console.log(data.payTVLocations);
+    data.locationCodes = constantUtils.getLocationCodes();
+    console.log(data.locationCodes);
     res.render('ad-report/new-creative-video-paytv', data);
 });
 
