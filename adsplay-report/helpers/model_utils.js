@@ -26,6 +26,7 @@ exports.baseModel = function(req) {
         data.auth = (ssid > 0);
         data.ssid = ssid;
         data.isAdminGroup = adminIds[ssid] == 1;
+        data.editable =  ssid === 1007 || ssid === 1000 || ssid === 1001;//FIXME
         data.isOperatorGroup = operatorIds[ssid] == 1;
         if(data.isAdminGroup){
             data.isOperatorGroup = true;

@@ -70,25 +70,26 @@ router.get('/list/all', function (req, res) {
                     crt.totalRevenue = "-";
                 }
 
-                if(data.isAdminGroup){
+                var adName = crt.name.toLowerCase();
+                if (data.isAdminGroup) {
                     filteredList.push(crt);
                 }
-                else if(data.ssid === 1002 && crt.name.toLowerCase().indexOf('vivid') >= 0){
+                else if (data.ssid === 1002 && adName.indexOf('vivid') >= 0) {
                     filteredList.push(crt);
                 }
-                else if(data.ssid === 1003 && crt.name.toLowerCase().indexOf('fptplay') >= 0){
+                else if (data.ssid === 1003 && adName.indexOf('fptplay') >= 0) {
                     filteredList.push(crt);
                 }
-                else if(data.ssid === 1004 && crt.name.toLowerCase().indexOf('lava') >= 0){
+                else if (data.ssid === 1004 && adName.indexOf('lava') >= 0) {
                     filteredList.push(crt);
                 }
-                else if(data.ssid === 1005 && crt.name.toLowerCase().indexOf('ambient') >= 0){
+                else if (data.ssid === 1005 && adName.indexOf('ambient') >= 0) {
                     filteredList.push(crt);
                 }
-                else if(data.ssid === 1006 && crt.name.toLowerCase().indexOf('itvad') >= 0){
+                else if (data.ssid === 1006 && adName.indexOf('itvad') >= 0) {
                     filteredList.push(crt);
                 }
-                else if(data.ssid === 1007 && crt.name.toLowerCase().indexOf('paytv') >= 0){
+                else if (data.ssid === 1007 && (adName.indexOf('paytv') >= 0 || adName.indexOf('vivid') >= 0)) {
                     filteredList.push(crt);
                 }
             });
@@ -96,84 +97,6 @@ router.get('/list/all', function (req, res) {
         }
         Creative.allByUser(req.user.id, data, function (err, data) {
             res.render('ad-report/creative-list-all', data)
-        });
-
-    });
-});
-
-router.get('/list', function (req, res) {
-    var data = modelUtils.baseModel(req);
-    data.dashboard_title = "All Advertising Units";
-    data.statuses = constantUtils.statuses;
-    var statuses = [];
-    for (var stt in constantUtils.statuses) {
-        statuses.push({value: stt, label: constantUtils.getStatus(stt)});
-    }
-    data.statuses = statuses;
-
-    var status = req.query.status || -1;
-    var url = data.site.api_domain + '/api/creative/summary?status=' + status;
-
-    data.begin = req.query.begin;
-    data.end = req.query.end;
-    if (!data.begin || !data.end) {
-        var end = moment();
-        var begin = end.clone().subtract(20, 'days');
-
-        data.begin = begin.format("YYYY-MM-DD");
-        data.end = end.format("YYYY-MM-DD");
-    }
-    request(url, function (error, response, body) {
-
-        if (!error && response.statusCode == 200) {
-            var creatives = JSON.parse(body);
-            var filteredList = [];
-            creatives.forEach(function (crt) {
-                crt.name = crt.name || '-';
-                if (crt.name === 'Default') {
-                    crt.name = 'Default Creative';
-                }
-                if (crt.runDate) {
-                    var runDate = moment(crt.runDate, 'MMM D, YYYY hh:mm:ss A');
-                    crt.runDate = runDate.format('YYYY-MM-DD');
-                } else {
-                    crt.runDate = 'N/A';
-                }
-                if (crt.expiredDate) {
-                    var expiredDate = moment(crt.expiredDate, 'MMM D, YYYY hh:mm:ss A');
-                    crt.expiredDate = expiredDate.format('YYYY-MM-DD');
-                } else {
-                    crt.expiredDate = 'N/A';
-                }
-
-                crt.active = crt.status == 2;
-                crt.status = constantUtils.getStatus(crt.status);
-                crt.ctr = (crt.ctr * 100).toFixed(2);
-                crt.tvr = (crt.tvr * 100).toFixed(2);
-                if (crt.totalRevenue == 0) {
-                    crt.totalRevenue = "-";
-                }
-
-                if(data.isAdminGroup){
-                    filteredList.push(crt);
-                }
-                else if(data.ssid === 1002 && crt.name.toLowerCase().indexOf('vivid') >= 0){
-                    filteredList.push(crt);
-                }
-                else if(data.ssid === 1003 && crt.name.toLowerCase().indexOf('fptplay') >= 0){
-                    filteredList.push(crt);
-                }
-                else if(data.ssid === 1004 && crt.name.toLowerCase().indexOf('lava') >= 0){
-                    filteredList.push(crt);
-                }
-                else if(data.ssid === 1005 && crt.name.toLowerCase().indexOf('ambient') >= 0){
-                    filteredList.push(crt);
-                }
-            });
-            data.creatives = filteredList;
-        }
-        Creative.allByUser(req.user.id, data, function (err, data) {
-            res.json(filteredList);
         });
 
     });
@@ -276,14 +199,21 @@ router.get('/:id', function (req, res) {
         Creative.get(req.params.id, data, function (err, data) {
             try {
                 //res.render('ad-report/creative-details', data)
-                if(data.crt && data.crt.adType){
+                if (data.crt && data.crt.adType && data.crt.name) {
+
+                    var editable = data.ssid === 1007 && data.crt.name.toLowerCase().indexOf('paytv') >= 0;
+                    if (data.ssid === 1000 || data.ssid === 1001) {
+                        editable = true;
+                    }
+                    data.editable = editable;
+
                     res.render('ad-report/creative-details-' + data.crt.adType, data)
                 } else {
-                    data.errorMessage = 'Not data for creative id:'+data.crtId;
+                    data.errorMessage = 'Not data for creative id:' + data.crtId;
                     res.render('common/system-error', data)
                 }
             }
-            catch(e){
+            catch (e) {
                 console.error(e);
                 data.errorMessage = JSON.stringify(e);
                 res.render('common/system-error', data)
@@ -296,21 +226,26 @@ router.get('/:id', function (req, res) {
 
 router.get('/:id/edit', function (req, res) {
     var data = modelUtils.baseModel(req);
-    if (data.isAdminGroup) {
-        data.dashboard_title = "Update Creative Details";
-        data.femaleKeywords = constantUtils.getFemaleKeywords();
-        data.maleKeywords = constantUtils.getMaleKeywords();
-        data.payTVCategories = constantUtils.getPayTVCategories();
-        data.locationCodes = constantUtils.getLocationCodes();
 
-        data.crtId = req.params.id || -1;
-        data.type = req.query.type || "daily";
-        data.begin = req.query.begin;
-        data.end = req.query.end;
-        request(data.site.api_domain + '/api/creatives/' + data.crtId, function (error, response, body) {
-            if (!error && response.statusCode == 200) {
-                var crt = JSON.parse(body);
+    data.dashboard_title = "Update Creative Details";
+    data.femaleKeywords = constantUtils.getFemaleKeywords();
+    data.maleKeywords = constantUtils.getMaleKeywords();
+    data.payTVCategories = constantUtils.getPayTVCategories();
+    data.locationCodes = constantUtils.getLocationCodes();
 
+    data.crtId = req.params.id || -1;
+    data.type = req.query.type || "daily";
+    data.begin = req.query.begin;
+    data.end = req.query.end;
+    request(data.site.api_domain + '/api/creatives/' + data.crtId, function (error, response, body) {
+
+        if (!error && response.statusCode == 200) {
+            var crt = JSON.parse(body);
+            var editable = data.ssid === 1007 && crt.name.toLowerCase().indexOf('paytv') >= 0;
+            if (data.ssid === 1000 || data.ssid === 1001) {
+                editable = true;
+            }
+            if (editable) {
                 var createdDate = moment(crt.crtDateL);
                 crt.crtDate = createdDate.format('LLL');
                 var runDate = moment(crt.runDateL);
@@ -337,41 +272,41 @@ router.get('/:id/edit', function (req, res) {
                 for (var k in constantUtils.statuses) {
                     data.stt.push({value: k, text: constantUtils.getStatus(k)});
                 }
+            } else {
+                res.redirect('/403');
+                return;
             }
-            
-            var nameAdType;
+        }
 
-            //payTV check
-            var isIpTvAd = data.crt.tgpfs.indexOf(6)>=0;//
+        var nameAdType;
 
-            if (data.crt.adType == 1) {
-                if(isIpTvAd){
-                    //nameAdType = 'new-creative-video-paytv';
-                    nameAdType = 'new-creative-video';
-                } else {
-                    nameAdType = 'new-creative-video';
-                }
+        //payTV check
+        var isIpTvAd = data.crt.tgpfs.indexOf(6) >= 0;//
+        if (data.crt.adType == 1) {
+            if (isIpTvAd) {
+                //nameAdType = 'new-creative-video-paytv';
+                nameAdType = 'new-creative-video';
+            } else {
+                nameAdType = 'new-creative-video';
             }
-            else if (data.crt.adType == 2) {
-                nameAdType = 'new-creative-display';
-            }
-            else if (data.crt.adType == 3) {
-                nameAdType = 'new-creative-overlay';
-            }
-            else if (data.crt.adType == 4) {
-                nameAdType = 'new-creative-news';
-            }
-            else{
-                nameAdType = 'new-creative';
-            }
-            Creative.get(req.params.id, data, function (err, data) {
-                res.render('ad-report/' + nameAdType, data);
-            });
-
+        }
+        else if (data.crt.adType == 2) {
+            nameAdType = 'new-creative-display';
+        }
+        else if (data.crt.adType == 3) {
+            nameAdType = 'new-creative-overlay';
+        }
+        else if (data.crt.adType == 4) {
+            nameAdType = 'new-creative-news';
+        }
+        else {
+            nameAdType = 'new-creative';
+        }
+        Creative.get(req.params.id, data, function (err, data) {
+            res.render('ad-report/' + nameAdType, data);
         });
-    } else {
-        res.redirect('/403');
-    }
+    });
+
 });
 
 router.post('/:id/update', function (req, res) {
@@ -449,24 +384,24 @@ router.get('/new/local-ad-unit/video-paytv', function (req, res) {
     res.render('ad-report/new-creative-video-paytv', data);
 });
 
-router.post('/save/tvc-ad', function(req, res) {
+router.post('/save/tvc-ad', function (req, res) {
     var data = modelUtils.baseModel(req);
-    var urlSave = data.site.api_domain +'/creative/save/json';
-    
-    if (data.isAdminGroup) {
+    var urlSave = data.site.api_domain + '/creative/save/json';
+
+    if (data.editable) {
         var form = new formidable.IncomingForm();
 
-        form.parse(req, function(err, fields, files) {
-            if(err){
+        form.parse(req, function (err, fields, files) {
+            if (err) {
                 console.error(err);
             }
-            else{
+            else {
                 var rawCrt = fields.creative;
                 var adtype = fields.adtype;
                 var video_url = fields.video_url;
                 var file = files.file;
 
-                if (typeof rawCrt === 'string' && adtype === 'fm_tvc_video' ) {
+                if (typeof rawCrt === 'string' && adtype === 'fm_tvc_video') {
                     var crt = JSON.parse(rawCrt);
                     crt.adType = 1;
 
@@ -475,40 +410,40 @@ router.post('/save/tvc-ad', function(req, res) {
                     var mediaName = hash + '.mp4';
 
                     //upload file
-                    if(typeof(file) !== "undefined" && file !== null){
-                        upload.video(file, function(obj){
-                            
+                    if (typeof(file) !== "undefined" && file !== null) {
+                        upload.video(file, function (obj) {
+
                             var input = obj.url;
                             //output file convert with name = convert-video.mp4
-                            var output = obj.folder+"/convert-video.mp4";
+                            var output = obj.folder + "/convert-video.mp4";
                             var option = {videoCodec: 'libx264', audioCodec: 'libmp3lame', format: 'mp4', bitrate: '360p'};
-        
-                            convert.command(input, output, option, function(){
+
+                            convert.command(input, output, option, function () {
 
                                 // output push on cdn
-                                upload.ftp_video(output, mediaName, function(data){
+                                upload.ftp_video(output, mediaName, function (data) {
                                     //var rs = {url: data.url, filename: data.filename, size: obj.size};
                                     crt.media = mediaName;
                                     saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
                                 });
 
                             });
-                            
+
                         });
                     }
                     //upload video from youtube
-                    else if (typeof(video_url) !== "undefined" && video_url !== null && video_url.indexOf(crt.media) < 0){
+                    else if (typeof(video_url) !== "undefined" && video_url !== null && video_url.indexOf(crt.media) < 0) {
 
-                        upload.youtube(video_url, function(obj){
-                            upload.ftp_video(obj.url, mediaName, function(data){
+                        upload.youtube(video_url, function (obj) {
+                            upload.ftp_video(obj.url, mediaName, function (data) {
                                 //var rs = {url: data.url, filename: data.filename, size: obj.size};
                                 crt.media = mediaName;
                                 saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
                             });
                         });
-                        
+
                     }
-                    else{
+                    else {
                         saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
                     }
 
@@ -523,33 +458,33 @@ router.post('/save/tvc-ad', function(req, res) {
     }
 });
 
-router.post('/save/display-banner', function(req, res) {
+router.post('/save/display-banner', function (req, res) {
     var data = modelUtils.baseModel(req);
-    var urlSave = data.site.api_domain +'/creative/save/json';
+    var urlSave = data.site.api_domain + '/creative/save/json';
 
     if (data.isAdminGroup) {
         var form = new formidable.IncomingForm();
-        form.parse(req, function(err, fields, files) {
-            if(err){
+        form.parse(req, function (err, fields, files) {
+            if (err) {
                 console.error(err);
             }
-            else{
+            else {
                 var rawCrt = fields.creative;
                 var adtype = fields.adtype;
                 var file = files.file;
 
-                if (typeof rawCrt === 'string' && adtype === 'fm_display_banner' ) {
+                if (typeof rawCrt === 'string' && adtype === 'fm_display_banner') {
                     var crt = JSON.parse(rawCrt);
                     crt.adType = 2;
-                    
-                    if(typeof(file) !== "undefined" && file !== null){
-                        upload.unzip(file, function(obj){
+
+                    if (typeof(file) !== "undefined" && file !== null) {
+                        upload.unzip(file, function (obj) {
                             //obj = {url: "local/folder/output.jpg", folder: "name folder"}
                             crt.media = obj.url;
                             saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
                         });
                     }
-                    else{
+                    else {
                         saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
                     }
 
@@ -564,36 +499,36 @@ router.post('/save/display-banner', function(req, res) {
     }
 });
 
-router.post('/save/overlay-banner', function(req, res) {
-    
+router.post('/save/overlay-banner', function (req, res) {
+
     var data = modelUtils.baseModel(req);
-    var urlSave = data.site.api_domain +'/creative/save/json';
+    var urlSave = data.site.api_domain + '/creative/save/json';
 
     if (data.isAdminGroup) {
 
         var form = new formidable.IncomingForm();
 
-        form.parse(req, function(err, fields, files) {
-            if(err){
+        form.parse(req, function (err, fields, files) {
+            if (err) {
                 console.error(err);
             }
-            else{
+            else {
                 var rawCrt = fields.creative;
                 var adtype = fields.adtype;
                 var file = files.file;
 
-                if (typeof rawCrt === 'string' && adtype === 'fm_overlay_banner' ) {
+                if (typeof rawCrt === 'string' && adtype === 'fm_overlay_banner') {
                     var crt = JSON.parse(rawCrt);
                     crt.adType = 3;
 
-                    if(typeof(file) !== "undefined" && file !== null){
-                        upload.image(file, function(obj){
+                    if (typeof(file) !== "undefined" && file !== null) {
+                        upload.image(file, function (obj) {
                             //obj = {url: "local/folder/output.jpg", folder: "name folder", filename: "output.jpg"}
                             crt.media = obj.url;
                             saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
                         });
                     }
-                    else{
+                    else {
                         saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
                     }
 
@@ -609,33 +544,33 @@ router.post('/save/overlay-banner', function(req, res) {
 
 });
 
-router.post('/save/breaking-news', function(req, res) {
+router.post('/save/breaking-news', function (req, res) {
 
     var data = modelUtils.baseModel(req);
-    var urlSave = data.site.api_domain +'/creative/save/json';
+    var urlSave = data.site.api_domain + '/creative/save/json';
 
     if (data.isAdminGroup) {
 
         var form = new formidable.IncomingForm();
 
-        form.parse(req, function(err, fields, files) {
-            if(err){
+        form.parse(req, function (err, fields, files) {
+            if (err) {
                 console.error(err);
             }
-            else{
+            else {
                 var rawCrt = fields.creative;
                 var adtype = fields.adtype;
                 var text = fields.breakingNews;
 
-                if (typeof rawCrt === 'string' && adtype === 'fm_breaking_news' ) {
+                if (typeof rawCrt === 'string' && adtype === 'fm_breaking_news') {
                     var crt = JSON.parse(rawCrt);
                     crt.adType = 4;
 
-                    if(typeof(text) !== "undefined" && text !== null){
+                    if (typeof(text) !== "undefined" && text !== null) {
                         crt.media = text;
                         saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
                     }
-                    else{
+                    else {
                         saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
                     }
 
@@ -651,7 +586,7 @@ router.post('/save/breaking-news', function(req, res) {
 
 });
 
-var saveJson = function(obj, res){
+var saveJson = function (obj, res) {
 
     request.post(obj, function (error, response, body) {
         if (!error && response.statusCode == 200) {

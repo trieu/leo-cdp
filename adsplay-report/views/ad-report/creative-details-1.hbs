@@ -16,7 +16,6 @@
         font-size: 18px;
     }
 
-
     .table {
         table-layout: fixed;
     }
@@ -61,11 +60,22 @@
                     <source src="https://ads-cdn.fptplay.net/static/ads/instream/{{crt.media}}" type="video/mp4">
                 </video>
             </div>
+            <div class="panel-body">
+                {{#if editable }}
+                    <i class="fa fa-pencil-square-o fa-2" aria-hidden="true">
+                        <a style="font-weight: bolder;font-size: 18px"  href="{{buildUrl editUrl}}">
+                            Edit Ad Information
+                        </a>
+                    </i>
+                {{/if}}
+            </div>
         </div>
     </div>
     <div class="col-lg-8 text-center">
         <div class="panel panel-default">
-            <div class="panel-heading"><strong>Summary Report from {{begin}} to {{end}} </strong></div>
+            <div class="panel-heading">
+                <strong>Data from {{begin}} to {{end}} </strong>
+            </div>
             <div class="panel-body">
 
                 <div class="table-responsive">
@@ -163,9 +173,6 @@
                         </tr>
                         </tbody>
                     </table>
-                    {{#if isAdminGroup}}
-                        <a id="ads_cliThr" href="{{buildUrl editUrl}}">Edit Creative</a>
-                    {{/if}}
                 </div>
             </div>
         </div>
@@ -176,15 +183,27 @@
 <div class="row">
     <h2>Report Details</h2>
     <ul class="nav nav-tabs">
-        <li class="active"><a href="#tc-main-graphs">Main Graphs</a></li>
+        <li class="active"><a href="#tc-main-graphs">Ad Data Charts</a></li>
         <li><a href="#tc-daily-details">Daily Details</a></li>
-        <li><a href="#tc-audience">Audience and Platform</a></li>
-        <li><a href="#tc-platform" style="display: none" >Platform</a></li>
         <li><a href="#tc-csv-export">CSV Export</a></li>
     </ul>
 
     <div class="tab-content">
         <div id="tc-main-graphs" class="tab-pane fade in active">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>
+                                <strong>Audience Reach on Ad Placements</strong></h3>
+                        </div>
+                        <div class="panel-body">
+                            <svg id="audience-wrapp" class="report-detail-piechart"></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="row">
                 <div class="col-lg-12">
@@ -277,25 +296,16 @@
 
         <div id="tc-audience" class="tab-pane fade">
 
-            <div class="row">
-                <div class="col-lg-12">
-                    <svg id="audience-wrapp" class="report-detail-piechart"></svg>
-                </div>
-            </div>
-
-
         </div>
-        <div id="tc-platform" class="tab-pane fade" style="display: none">
-
-                <svg id="platform-wrapp" class="report-detail-piechart"></svg>
-
-
-
+        <div id="tc-platform" class="tab-pane fade" style="display: ">
+            <svg id="platform-wrapp" class="report-detail-piechart"></svg>
         </div>
         <div id="tc-csv-export" class="tab-pane fade">
             <div class="container">
                 <h2>CSV Raw Data from {{begin}} to {{end}}</h2>
-                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#csv_raw_data">View Data</button>
+                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#csv_raw_data">View
+                    Data
+                </button>
                 <div id="csv_raw_data" class="collapse out">
                 </div>
             </div>
@@ -326,7 +336,7 @@ var drawLineChart = function (element, data, xLabel, tickValues, yLabel) {
         var width = 600, height = 400;
         var chart = nv.models.lineChart()
                         .interpolate("cardinal")
-                        //.width(width).height(height)
+                    //.width(width).height(height)
                         .useInteractiveGuideline(true)  //We want nice looking tooltips and a guideline!
 
                         .showLegend(true)       //Show the legend, allowing users to turn on/off line series.
@@ -339,8 +349,8 @@ var drawLineChart = function (element, data, xLabel, tickValues, yLabel) {
         }
 
         if (tickValues) {
-            console.log("tickValues "+tickValues.length);
-            var breakValue = Math.round(tickValues.length /10);
+            console.log("tickValues " + tickValues.length);
+            var breakValue = Math.round(tickValues.length / 10);
             var timeArray = [];
             for (var i = 0; i < tickValues.length; i++) {
                 if (i % breakValue == 0) {
@@ -582,7 +592,7 @@ function convertToStackBarData(rawData) {
         var date = obj.t;
         var v1 = obj.imp;
         var uniqueImp = obj.reach;
-        var freq = uniqueImp === 0? 0 : Math.round((v1 / uniqueImp) * 100) / 100;
+        var freq = uniqueImp === 0 ? 0 : Math.round((v1 / uniqueImp) * 100) / 100;
         var click = obj.c;
         var ctr = Math.round(( (click * 100) / v1 ) * 100) / 100;
         var v100 = obj.trv;
@@ -610,7 +620,7 @@ function convertToStackBarData(rawData) {
         arr25.push({key: "View Rate 25%", series: 5, x: date, y: v25 });
         //console.log(rawData);
 
-        var r = {date: formatTime(date), imp: v1, uniqueImp: uniqueImp, freq: freq, click: click, ctr: ctr};
+        var r = {date: formatTime(date), imp: v1, completeView: v100, uniqueImp: uniqueImp, freq: freq, click: click, ctr: ctr};
         r.view100 = p100 + "%";
         r.view75 = p75 + "%";
         r.view50 = p50 + "%";
@@ -642,13 +652,12 @@ function convertToStackBarData(rawData) {
 }
 
 
-
-
 $(document).ready(function () {
     $('.nav-tabs a').click(function (e) {
-        e.preventDefault()
-        $(this).tab('show')
+        e.preventDefault();
+        $(this).tab('show');
     });
+
     $('.nav-tabs a').on('shown.bs.tab', function (event) {
         var x = $(event.target).text();         // active tab
         var y = $(event.relatedTarget).text();  // previous tab
@@ -666,17 +675,21 @@ $(document).ready(function () {
 
         var platforms = {{{json platforms}}};
         if (data.length > 0) {
-            for(var i = 0; i < data.length;i++){
+            for (var i = 0; i < data.length; i++) {
                 var pf = {};
                 pf.label = platforms[data[i].pfId];
                 pf.value = data[i].totalImp;
                 platformPieChartData.push(pf);
             }
             console.log(platformPieChartData);
-            nv.addGraph(function() {
+            nv.addGraph(function () {
                 var chart = nv.models.pieChart()
-                                .x(function(d) { return d.label })
-                                .y(function(d) { return d.value })
+                                .x(function (d) {
+                                    return d.label
+                                })
+                                .y(function (d) {
+                                    return d.value
+                                })
                                 .width(width)
                                 .height(height)
                                 .showLabels(true)     //Display pie labels
@@ -692,7 +705,7 @@ $(document).ready(function () {
                         .call(chart);
                 return chart;
             });
-        }else{
+        } else {
             console.log("Data empty");
         }
     });
@@ -700,43 +713,50 @@ $(document).ready(function () {
     //placements
 
     var placementsPieChartData = [];
-    d3.json("{{site.ssl_api_domain}}/api/creatives/{{crtId}}/placements", function (error, data) {
-//        console.log(JSON.stringify(data));
-        var placements = {{{json placements}}};
-        if (data.length > 0) {
-            for(var i = 0; i < data.length;i++){
-                var pl = {};
-                pl.label = placements[data[i].pmId];
-                pl.value = data[i].totalReach;
-                placementsPieChartData.push(pl);
-            }
-            console.log(placementsPieChartData);
-            nv.addGraph(function() {
-                var chart = nv.models.pieChart()
-                                .x(function(d) { return d.label })
-                                .y(function(d) { return d.value })
-                                .width(width)
-                                .height(height)
-                                .showLabels(true)     //Display pie labels
-                                .labelThreshold(.05)  //Configure the minimum slice size for labels to show up
-                                .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
-                                .donut(true)          //Turn on Donut mode. Makes pie chart look tasty!
-                                .donutRatio(0.35)     //Configure how big you want the donut hole size to be.
-                        ;
 
-                d3.select("#audience-wrapp")
-                        .datum(placementsPieChartData)
-                        .transition().duration(350)
-                        .call(chart);
+    function displayAudienceReachAndDeviceType() {
+        d3.json("{{site.ssl_api_domain}}/api/creatives/{{crtId}}/placements", function (error, data) {
+            var placements = {{{json placements}}};
+            if (data.length > 0) {
+                for (var i = 0; i < data.length; i++) {
+                    var pl = {};
+                    pl.label = placements[data[i].pmId];
+                    pl.value = data[i].totalReach;
+                    placementsPieChartData.push(pl);
+                }
+                //console.log(placementsPieChartData);
+                nv.addGraph(function () {
+                    var chart = nv.models.pieChart()
+                                    .margin({ left: 80})
+                                    .x(function (d) {
+                                        return d.label
+                                    })
+                                    .y(function (d) {
+                                        return d.value
+                                    })
+                                    .showLabels(true)
+                                    .labelThreshold(.05)
+                                    .labelType("percent")
+                                    .donut(true)
+                                    .donutRatio(0.35)
+                                    .showLegend(true)
+                            ;
+
+                    d3.select("#audience-wrapp")
+                            .datum(placementsPieChartData)
+                            .transition().duration(350)
+                            .call(chart);
 //
-                return chart;
-            });
-        }else{
-            console.log("Data empty");
+                    return chart;
+                });
+            } else {
+                console.log("Data empty");
 
-        }
-    });
+            }
+        });
+    }
 
+    setTimeout(displayAudienceReachAndDeviceType, 100);
 
 });
 
@@ -748,7 +768,8 @@ $(document).ready(function () {
         <thead>
         <tr>
             <th>Date</th>
-            <th>Impressions</th>
+            <th>Impression</th>
+            <th>Complete-view</th>
             <!--<th>Unique Impressions</th>-->
             <!--<th>Frequency</th>-->
             <th>Clicks</th>
@@ -765,6 +786,7 @@ $(document).ready(function () {
         <tr>
             <td><i><strong>\{{date}}</strong></i></td>
             <td>\{{imp}}</td>
+            <td>\{{completeView}}</td>
             <!--<td>\{{uniqueImp}}</td>-->
             <!--<td><strong>\{{freq}}</strong></td>-->
             <td>\{{click}}</td>

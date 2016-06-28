@@ -75,6 +75,49 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>
+                    FptPlay Inventory by Device Type, from
+                    <span id='fptplay_begin'></span> to <span id='fptplay_end'></span> </h3>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive inventory">
+
+                    <div id="fptplay_inventory" class="chart-div">
+                        <svg></svg>
+                    </div>
+
+                    <table class="table table-condensed" id="tbl">
+                        <thead>
+                        <tr>
+                            <th>Platform (FPT Play)</th>
+                            <th>PlayView</th>
+                        </tr>
+                        </thead>
+                        <!--<tbody>-->
+                        <!--<tr>-->
+                        <!--<td>Web version</td>-->
+                        <!--<td>1,000,000</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                        <!--<td>Mobile App</td>-->
+                        <!--<td>1,000,000</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                        <!--<td>SmartTV (Sony only)</td>-->
+                        <!--<td>1,000,000</td>-->
+                        <!--</tr>-->
+                        <!--</tbody>-->
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row" style="display: none">
     <div class="panel">
         <div class="panel-heading">
@@ -100,42 +143,6 @@
 </div>
 
 <hr>
-
-<div class="row">
-    <div class="col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Total Inventory & Booking by Platform from 17-03-2016 to 18-03-2016</h3>
-            </div>
-            <div class="panel-body">
-                <div class="table-responsive inventory">
-                    <table class="table table-condensed" id="tbl">
-                        <thead>
-                        <tr>
-                            <th>Platform (FPT Play)</th>
-                            <th>PlayView</th>
-                        </tr>
-                        </thead>
-                        <!--<tbody>-->
-                        <!--<tr>-->
-                            <!--<td>Web version</td>-->
-                            <!--<td>1,000,000</td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td>Mobile App</td>-->
-                            <!--<td>1,000,000</td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td>SmartTV (Sony only)</td>-->
-                            <!--<td>1,000,000</td>-->
-                        <!--</tr>-->
-                        <!--</tbody>-->
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="row" style="display: none">
     <div class="col-lg-12">
@@ -295,7 +302,7 @@
                 $('#cAdsPerPv').html(cAdsPerPv).show();
 
                 $('#dSummaryStats > div').hide();
-                $('.chart-div').hide();
+
                 $('#chartImpVsPv').show();
 
                 $('#dPageviewTotal').show();
@@ -341,13 +348,12 @@
     });
     // $("#to").datepicker('getDate').yyyymmdd()
 
-
-
-
-
     //platforms
     var platformPlayView = [];
-    d3.json("{{site.ssl_api_domain}}/api/platform/stats", function (error, data) {
+    var end = new moment().format("YYYY-MM-DD");
+    var begin = new moment().subtract(15, 'days').format("YYYY-MM-DD");
+    var api = "{{site.ssl_api_domain}}/api/platform/stats?begin="+begin+"&end="+end;
+    d3.json(api, function (error, data) {
 
         var platforms = {{{json platforms}}};
         if (data.length > 0) {
@@ -357,6 +363,31 @@
                 pv.value = data[i].totalPv;
                 platformPlayView.push(pv);
             }
+
+            console.log('platformPlayView');
+            console.log(platformPlayView);
+
+            nv.addGraph(function() {
+                var chart = nv.models.pieChart()
+                                .x(function(d) { return d.label })
+                                .y(function(d) { return d.value })
+                                .showLabels(true)
+                                .labelThreshold(.05)
+                                .labelType("percent")
+                                .donut(true)
+                                .donutRatio(0.35)
+                        ;
+
+                d3.select("#fptplay_inventory svg")
+                        .datum(platformPlayView)
+                        .transition().duration(350)
+                        .call(chart);
+
+                return chart;
+            });
+            $('#fptplay_inventory').show();
+            $('#fptplay_begin').html(begin);
+            $('#fptplay_end').html(end);
 
             var tr;
             for (var i = 0; i < platformPlayView.length; i++) {

@@ -14,6 +14,7 @@ module.exports = function (app) {
     var auth = require('../middlewares/passport-utils.js')(passport);
 
     /* all router */
+    app.use('/creative_json', require('./creative_json'));
     app.use('/creative', auth.isLoggedIn, require('./creative'));
     app.use('/campaign', auth.isLoggedIn, require('./campaign'));
     app.use('/monitor', auth.isLoggedIn, require('./monitor'));

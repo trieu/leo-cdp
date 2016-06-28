@@ -126,7 +126,7 @@
                                 var link = "https://ads-cdn.fptplay.net/static/ads/instream/"+data[k];
                                 $('#video_url').val(link);
 
-                                var iframe = '<video id="video_ads" class="video-js vjs-default-skin vjs-big-play-centered"><source src="'+link+'" type="video/mp4"></video>';
+                                var iframe = '<video id="video_ads" muted autoplay controls class="video-js vjs-default-skin vjs-big-play-centered"><source src="'+link+'" type="video/mp4"></video>';
                                 $('.iframeVideo').html(iframe);
                                 videojs("video_ads", {
                                     "poster": "//adsplay.net/img/logo.png",

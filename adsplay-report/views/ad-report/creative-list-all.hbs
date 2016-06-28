@@ -78,7 +78,7 @@
         Handlebars.registerHelper('formatCurrency', function(value) { return value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"); });
 
         $('#filter-status').change(function () {
-            $.get( "creative/list?status=" + $(this).val(), function( data ) {
+            $.get( "creative_json/list?status=" + $(this).val(), function( data ) {
                 var dataList = {creatives: data};
 
                 if (!data || data.length == 0) {

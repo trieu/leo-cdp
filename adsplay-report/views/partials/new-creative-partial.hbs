@@ -56,16 +56,14 @@
                 <tr id="row_ads_status">
                     <td><strong>Ad Status</strong></td>
                     <td>
-                        <div class="panel-body text-left">
-                            <div class="form-group">
-                                <select class="form-control" id="ads_status" data-creative-field="status"  >
-                                    <option value="0">Invalid</option>
-                                    <option value="1">Pending</option>
-                                    <option value="2">Running</option>
-                                    <option value="3">Finished</option>
-                                    <option value="4">Expired</option>
-                                </select>
-                            </div>
+                        <div>
+                            <select class="form-control" id="ads_status" data-creative-field="status"  >
+                                <option value="0">Invalid</option>
+                                <option value="1">Pending</option>
+                                <option value="2">Running</option>
+                                <option value="3">Finished</option>
+                                <option value="4">Expired</option>
+                            </select>
                         </div>
                     </td>
                 </tr>
@@ -342,10 +340,10 @@
                                             <a data-toggle="collapse" data-parent="#accordion_ad_placements" href="#paytv_ad_placements">PayTV Ad Placements</a>
                                         </h4>
                                     </div>
-                                    <div id="paytv_ad_placements" class="panel-collapse collapse">
+                                    <div id="paytv_ad_placements" class="panel-collapse collapse in">
                                         <div class="panel-body">
                                             <div class="checkbox">
-                                                <label><input type="checkbox" data-creative-field="tgpms"  data-device-id="6" value="320" data-paytv="default">PAYTV_TVC_PLACEMENT</label>
+                                                <label><input type="checkbox" data-creative-field="tgpms"  data-device-id="6" value="320" data-paytv="default">TVC_PAYTV_IPTV_VOD</label>
                                             </div>
                                             <div>
                                                 <div class="bold">Only play TVC Ads in these categories</div>
@@ -476,5 +474,6 @@
             $(selector).chosen(config[selector]);
         }
     }
-    setTimeout(initJqueryChosen,500)
+    setTimeout(initJqueryChosen,500);
+
 </script>

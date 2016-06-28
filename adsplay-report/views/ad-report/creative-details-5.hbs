@@ -39,6 +39,15 @@
                 <iframe style="width:300px;height: 250px; overflow: hidden; color: transparent"  src="{{crt.media}}" ></iframe>
             </div>
         </div>
+        <div class="panel-body">
+            {{#if editable }}
+                <i class="fa fa-pencil-square-o fa-2" aria-hidden="true">
+                    <a style="font-weight: bolder;font-size: 18px"  href="{{buildUrl editUrl}}">
+                        Edit Ad Information
+                    </a>
+                </i>
+            {{/if}}
+        </div>
     </div>
     <div class="col-lg-7 text-center">
         <div class="panel panel-default">
@@ -120,9 +129,6 @@
                         </tr>
                         </tbody>
                     </table>
-                    {{#if isAdminGroup}}
-                        <a id="ads_cliThr" href="{{buildUrl editUrl}}">Edit Creative</a>
-                    {{/if}}
                 </div>
             </div>
         </div>
