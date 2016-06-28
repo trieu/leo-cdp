@@ -298,6 +298,7 @@ webApp.controller('creativeEditCtrl', function($scope, creative, $routeParams) {
 	console.log($routeParams.id)
 	creative._read($routeParams.id)
 	.success(function(data){
+		console.log(data)
 		for (var i in data){
 
 			if (i == 'runDateL' || i == 'expDateL') {
@@ -306,7 +307,7 @@ webApp.controller('creativeEditCtrl', function($scope, creative, $routeParams) {
 			}
 			
 		}
-		console.log(data)
+		console.log(data);
 		$scope.items = data;
 	});
 
@@ -566,30 +567,25 @@ webApp.directive('pieChart', function(){
 		}
 	}
 });
-// webApp.directive('checkbox', function(){
-// 	return{
-// 		restrict: 'E',
-//         scope: {
-//             name: '=',
-//             ngDateMin: '@',
-//             ngDateMax: '@'
-//         },
-// 		template: '\
-// 					<label class="box-checkbox"> \
-//                     <input type="checkbox" ng-model="items.name" value="1" name="tgpfs" /> \
-//                     <span></span> \
-//                     {{Web (PC,Laptop)}} \
-//                 </label> \
-// 				   ',
-// 		link: function ($scope, element, attributes) {
-//             element.find("input").bind("change", function(changeEvent) {                        
-//                 if (typeof(changeEvent.target.files[0]) === 'object') {
-//                     $scope[attributes.ngModel] = changeEvent.target.files[0];
-//                 };
-//             });
-// 		}
-// 	}
-// });
+webApp.directive('checkbox', function(){
+	return{
+		restrict: 'A',
+        scope: {
+            ngModel: '=',
+        },
+		link: function ($scope, element, attributes) {
+            $scope.$watch('ngModel', function (newVal, oldVal) {
+                if (newVal != oldVal) {
+                    element.find('input[type="checkbox"]').each(function(i){
+                        if (newVal[i] == $(this).val()) {
+                            $(this).prop('checked', true);
+                        }
+                    });
+                }
+            }, true);
+		}
+	}
+});
 webApp.directive('datePick', function(){
 	return{
 		restrict: 'E',

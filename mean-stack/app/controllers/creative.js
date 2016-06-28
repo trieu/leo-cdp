@@ -83,6 +83,7 @@ webApp.controller('creativeEditCtrl', function($scope, creative, $routeParams) {
 	console.log($routeParams.id)
 	creative._read($routeParams.id)
 	.success(function(data){
+		console.log(data)
 		for (var i in data){
 
 			if (i == 'runDateL' || i == 'expDateL') {
@@ -91,7 +92,7 @@ webApp.controller('creativeEditCtrl', function($scope, creative, $routeParams) {
 			}
 			
 		}
-		console.log(data)
+		console.log(data);
 		$scope.items = data;
 	});
 
