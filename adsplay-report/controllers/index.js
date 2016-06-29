@@ -15,6 +15,7 @@ module.exports = function (app) {
 
     /* all router */
     app.use('/creative_json', require('./creative_json'));
+    app.use('/placement', auth.isLoggedIn, require('./placement'));
     app.use('/creative', auth.isLoggedIn, require('./creative'));
     app.use('/campaign', auth.isLoggedIn, require('./campaign'));
     app.use('/monitor', auth.isLoggedIn, require('./monitor'));
