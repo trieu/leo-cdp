@@ -17,12 +17,11 @@ webApp.directive('datePick', function(){
 				   ',
 		link: function ($scope, element, attributes) {
 
-			element.find("input:text").datetimepicker({
-				format: 'YYYY-MM-DD',
-				defaultDate: $scope.ngModel
+			element.find("input[type=text]").datetimepicker({
+				format: 'YYYY-MM-DD'
 			});
 
-			element.find("input").on("dp.change", function (e) {
+			element.find("input[type=text]").on("dp.change", function (e) {
 				// //set value of ngModel
 				 $scope.ngModel = $(this).val();
 

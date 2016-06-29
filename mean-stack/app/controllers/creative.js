@@ -71,6 +71,10 @@ webApp.controller('creativeSummaryCtrl', function($scope, creative) {
 webApp.controller('creativeNewVideoCtrl', function($scope, creative) {
 	$scope.items = {};
 	$scope.file = null;
+	var now = new moment().format("YYYY-MM-DD");
+	$scope.items.runDateL = $scope.items.expDateL = now;
+
+	
 	$scope.submit = function(){
 		console.log($scope.items)
 	};
@@ -80,6 +84,10 @@ webApp.controller('creativeNewVideoCtrl', function($scope, creative) {
 webApp.controller('creativeEditCtrl', function($scope, creative, $routeParams) {
 
 	$scope.items = {};
+	
+	var now = new moment().format("YYYY-MM-DD");
+	$scope.items.runDateL = $scope.items.expDateL = now;
+
 	console.log($routeParams.id)
 	creative._read($routeParams.id)
 	.success(function(data){
@@ -88,7 +96,7 @@ webApp.controller('creativeEditCtrl', function($scope, creative, $routeParams) {
 
 			if (i == 'runDateL' || i == 'expDateL') {
 				console.log(i)
-				data[i] = moment(data[i]).format('DD-MM-YYYY');
+				data[i] = moment(data[i]).format('YYYY-MM-DD');
 			}
 			
 		}

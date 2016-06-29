@@ -17,11 +17,9 @@ module.exports = function(app) {
 	});
 
 	app.get('/api/creative/:id', function(req, res, next) {
-		console.log('vao')
 
 		var url = site.api_domain + '/api/creatives/' +  req.params.id;
 		
-		console.log(url)
 		Sync(function(){
 			// result from callback
 			var result = creativeModel.read.sync(null, url);
@@ -30,7 +28,7 @@ module.exports = function(app) {
 		})
 	});
 
-	app.get('/api/creative/summary', function(req, res, next) {
+	app.get('/api/summary/creative', function(req, res, next) {
 
 		var begin = req.query.begin;
 		var end = req.query.end;

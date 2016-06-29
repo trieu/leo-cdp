@@ -98,7 +98,7 @@ webApp.factory('creative', function($http) {
 			return $http.delete('/api/creative/' + id);
 		},
 		_summary : function(begin, end){
-			return $http.get('/api/creative/summary?begin='+begin+'&end='+end);
+			return $http.get('/api/summary/creative?begin='+begin+'&end='+end);
 		}
 	}
 });
@@ -286,6 +286,10 @@ webApp.controller('creativeSummaryCtrl', function($scope, creative) {
 webApp.controller('creativeNewVideoCtrl', function($scope, creative) {
 	$scope.items = {};
 	$scope.file = null;
+	var now = new moment().format("YYYY-MM-DD");
+	$scope.items.runDateL = $scope.items.expDateL = now;
+
+	
 	$scope.submit = function(){
 		console.log($scope.items)
 	};
@@ -295,6 +299,10 @@ webApp.controller('creativeNewVideoCtrl', function($scope, creative) {
 webApp.controller('creativeEditCtrl', function($scope, creative, $routeParams) {
 
 	$scope.items = {};
+	
+	var now = new moment().format("YYYY-MM-DD");
+	$scope.items.runDateL = $scope.items.expDateL = now;
+
 	console.log($routeParams.id)
 	creative._read($routeParams.id)
 	.success(function(data){
@@ -303,7 +311,7 @@ webApp.controller('creativeEditCtrl', function($scope, creative, $routeParams) {
 
 			if (i == 'runDateL' || i == 'expDateL') {
 				console.log(i)
-				data[i] = moment(data[i]).format('DD-MM-YYYY');
+				data[i] = moment(data[i]).format('YYYY-MM-DD');
 			}
 			
 		}
@@ -574,6 +582,7 @@ webApp.directive('checkbox', function(){
             ngModel: '=',
         },
 		link: function ($scope, element, attributes) {
+
             $scope.$watch('ngModel', function (newVal, oldVal) {
                 if (newVal != oldVal) {
                     element.find('input[type="checkbox"]').each(function(i){
@@ -583,6 +592,15 @@ webApp.directive('checkbox', function(){
                     });
                 }
             }, true);
+
+            element.find('input[type="checkbox"]').change(function(){
+                var arrChecked = new Array();
+                element.find('input[type="checkbox"]:checked').each(function(i){
+                    arrChecked.push($(this).val());
+                });
+                $scope.ngModel = arrChecked.slice(0);
+
+            });
 		}
 	}
 });
@@ -605,12 +623,11 @@ webApp.directive('datePick', function(){
 				   ',
 		link: function ($scope, element, attributes) {
 
-			element.find("input:text").datetimepicker({
-				format: 'YYYY-MM-DD',
-				defaultDate: $scope.ngModel
+			element.find("input[type=text]").datetimepicker({
+				format: 'YYYY-MM-DD'
 			});
 
-			element.find("input").on("dp.change", function (e) {
+			element.find("input[type=text]").on("dp.change", function (e) {
 				// //set value of ngModel
 				 $scope.ngModel = $(this).val();
 

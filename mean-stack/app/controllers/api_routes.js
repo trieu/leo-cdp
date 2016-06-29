@@ -30,7 +30,7 @@ webApp.factory('creative', function($http) {
 			return $http.delete('/api/creative/' + id);
 		},
 		_summary : function(begin, end){
-			return $http.get('/api/creative/summary?begin='+begin+'&end='+end);
+			return $http.get('/api/summary/creative?begin='+begin+'&end='+end);
 		}
 	}
 });
