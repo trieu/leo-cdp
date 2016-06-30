@@ -66,7 +66,7 @@ router.get('/list', function (req, res) {
                 crt.status = constantUtils.getStatus(crt.status);
                 crt.ctr = (crt.ctr * 100).toFixed(2);
                 crt.tvr = (crt.tvr * 100).toFixed(2);
-                if (crt.totalRevenue == 0) {
+                if (crt.totalRevenue == 0 || req.user.roles != 'admin') {
                     crt.totalRevenue = "-";
                 }
                 var adName = crt.name.toLowerCase();

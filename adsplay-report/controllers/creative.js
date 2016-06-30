@@ -66,7 +66,7 @@ router.get('/list/all', function (req, res) {
                 crt.status = constantUtils.getStatus(crt.status);
                 crt.ctr = (crt.ctr * 100).toFixed(2);
                 crt.tvr = (crt.tvr * 100).toFixed(2);
-                if (crt.totalRevenue == 0) {
+                if (crt.totalRevenue == 0 || req.user.roles != 'admin') {
                     crt.totalRevenue = "-";
                 }
 
@@ -170,7 +170,7 @@ router.get('/:id', function (req, res) {
                 crt.expDate = expiredDate.format('LL');
             }
             crt.status = constantUtils.getStatus(crt.status);
-            if (crt.totalRevenue == 0) {
+            if (crt.totalRevenue == 0 || req.user.roles != 'admin') {
                 crt.totalRevenue = "-";
             }
             data.crt = crt;

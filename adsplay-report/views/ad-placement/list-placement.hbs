@@ -1,3 +1,15 @@
+<script src="js/validatr.min.js"></script>
+<style type="text/css">
+	#plt_form table td{
+		position: relative;
+	}
+	.validatr-message{
+		padding: 1px 5px !important;
+		font-size: 11px;
+		max-width: 160;
+		z-index: 1;
+	}
+</style>
 <div class="row">
     <div class="col-lg-12">
         <ol class="breadcrumb">
@@ -11,7 +23,7 @@
 <!-- <a href="/placement/new/"><i class="fa fa-fw fa-list"></i> New Placement</a> -->
 
 <p>
-	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-placement">
+	<button type="button" class="btn btn-primary" id="new-placement">
 		<i class="fa fa-fw fa-list"></i> New Placement
 	</button>
 </p>
@@ -32,27 +44,30 @@
 						<th></th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody id="plt_container">
+					{{#each placements}}
 					<tr>
-						<td id="plt_id">1001</td>
-						<td id="plt_name">overlay banner 123</td>
-						<td id="plt_publisher">toshiba</td>
-						<td id="plt_type">banner</td>
-						<td id="plt_width">800</td>
-						<td id="plt_height">140</td>
-						<td id="plt_updated">2016-06-06</td>
+						<td class="plt_id">{{id}}</td>
+						<td class="plt_name">{{name}}</td>
+						<td class="plt_publisher">{{publisher}}</td>
+						<td class="plt_type">{{type}}</td>
+						<td class="plt_width">{{width}}</td>
+						<td class="plt_height">{{height}}</td>
+						<td class="plt_updatedDate">{{updatedDate}}</td>
 						<td width="40px">
-							<button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-placement">
+							<button type="button" id="{{id}}" class="btn btn-primary btn-xs">
 								<i class="fa fa-pencil"></i>
 							</button>
 						</td>
 					</tr>
+					{{/each}}
 				</tbody>
             </table>
 		</div>
 	</div>
 </div>
 
+<!-- modal form popup -->
 <div id="modal-placement" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -61,56 +76,154 @@
         <h4 class="modal-title">Form Placement</h4>
       </div>
       <div class="modal-body">
-        <table class="table table-bordered table-hover table-striped">
-			<tbody>
-				<input type="hidden" class="form-control" name="plt_id">
-				<tr>
-					<td><strong>Name</strong></td>
-					<td>
-						<input type="text" class="form-control" name="plt_name">
-					</td>
-				</tr>
-				<tr>
-					<td><strong>Publisher</strong></td>
-					<td>
-						<input type="text" class="form-control" name="plt_publisher">
-					</td>
-				</tr>
-				<tr>
-					<td><strong>Type</strong></td>
-					<td>
-						<input type="number" class="form-control" name="plt_type">
-					</td>
-				</tr>
-				<tr>
-					<td><strong>Width</strong></td>
-					<td>
-						<input type="number" class="form-control" name="plt_width">
-					</td>
-				</tr>
-				<tr>
-					<td><strong>Height</strong></td>
-					<td>
-						<input type="number" class="form-control" name="plt_height">
-					</td>
-				</tr>
-				<tr>
-					<td><strong>Updated</strong></td>
-					<td>
-						<input type="date" class="form-control" name="plt_updated">
-					</td>
-				</tr>
-			</tbody>
-        </table>
-        <div class="alert alert-danger" id="plt_error">
-        message error
-        </div>
-        <div class="text-right">
-        	<button type="button" class="btn btn-primary" id="plt_submit">
-				OK
-			</button>
-        </div>
+      	<form id="plt_form">
+      		<table class="table table-bordered table-hover table-striped">
+				<tbody>
+					<input type="hidden" class="form-control" name="plt_id">
+					<tr>
+						<td><strong>Name</strong></td>
+						<td>
+							<input type="text" class="form-control" name="plt_name" data-minLength="10" required>
+						</td>
+					</tr>
+					<tr>
+						<td><strong>Publisher</strong></td>
+						<td>
+							<input type="text" class="form-control" name="plt_publisher" required>
+						</td>
+					</tr>
+					<tr>
+						<td><strong>Type</strong></td>
+						<td>
+							<input type="number" class="form-control" name="plt_type" required>
+						</td>
+					</tr>
+					<tr>
+						<td><strong>Width</strong></td>
+						<td>
+							<input type="number" class="form-control" name="plt_width" required>
+						</td>
+					</tr>
+					<tr>
+						<td><strong>Height</strong></td>
+						<td>
+							<input type="number" class="form-control" name="plt_height" required>
+						</td>
+					</tr>
+					<tr>
+						<td><strong>Updated</strong></td>
+						<td>
+							<input type="date" class="form-control" name="plt_updatedDate" required>
+						</td>
+					</tr>
+				</tbody>
+	        </table>
+	        <div class="text-right">
+	        	<button type="submit" class="btn btn-primary" id="plt_submit">
+					OK
+				</button>
+	        </div>
+      	</form>
+        
       </div>
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+	var plt_form = $('#plt_form');
+
+	//using validatr.js
+	plt_form.validatr({
+		location: 'left',
+		//showall: true
+	});
+	//custom valid
+	plt_form.validatr('addTest', {
+		minLength: function (el) {
+			var valid = false;
+			var min = parseInt($(el).attr('data-minLength'));
+			if($(el).val().length >= min){
+				valid = true;
+			}
+			return {
+				valid: valid,
+				message: 'Length >= ' + min
+			};
+		},
+		maxLength: function (el) {
+			var valid = false;
+			var max = parseInt($(el).attr('data-maxLength'));
+			if($(el).val().length <= max){
+				valid = true;
+			}
+			return {
+				valid: valid,
+				message: 'Length <= ' + max
+			};
+		}
+	});
+	//end setup validatr.js
+
+
+	$('#new-placement').click(function(){
+		$('#modal-placement').modal('show');
+		plt_form.find('input').val("");
+		console.log(plt_form.find('input'))
+	});
+
+	plt_form.submit(function(e) {
+		e.preventDefault();
+		//check valid form
+		if (! $.validatr.validateForm(plt_form)) {
+			return false;
+		}
+
+		var data = plt_data(plt_form);
+		console.log(data);
+		$.ajax({
+			url: '/placement/save/',
+			type: "POST",
+			contentType: "application/json",
+			dataType:'json',
+			data: data,
+			beforeSend: function(){
+				$('#wrapper').append('<div class="loader"></div>');
+			},
+			success: function(data){
+				$('.loader').remove();
+				$('#modal-placement').modal('hide');
+
+				$("#plt_container").append('\
+					<tr> \
+						<td class="plt_id">'+data.id+'</td> \
+						<td class="plt_name">'+data.name+'</td> \
+						<td class="plt_publisher">'+data.publisher+'</td> \
+						<td class="plt_type">'+data.type+'</td> \
+						<td class="plt_width">'+data.width+'</td> \
+						<td class="plt_height">'+data.height+'</td> \
+						<td class="plt_updatedDate">'+data.updatedDate+'</td> \
+						<td width="40px"> \
+							<button type="button" id="'+data.id+'" class="btn btn-primary btn-xs"> \
+								<i class="fa fa-pencil"></i> \
+							</button> \
+						</td> \
+					</tr> \
+				')
+			}
+		});
+	});
+
+	function plt_data(form){
+		var data = {};
+			data["id"] = form.find('[name="plt_id"]').val();
+			data["name"] = form.find('[name="plt_name"]').val();
+			data["publisher"] = form.find('[name="plt_publisher"]').val();
+			data["type"] = form.find('[name="plt_type"]').val();
+			data["width"] = form.find('[name="plt_width"]').val();
+			data["height"] = form.find('[name="plt_height"]').val();
+			data["updatedDate"] = form.find('[name="plt_updatedDate"]').val();
+		return JSON.stringify(data);	
+	}
+
+</script>
