@@ -1,4 +1,3 @@
-<script src="js/validatr.min.js"></script>
 <style type="text/css">
 	#plt_form table td{
 		position: relative;
@@ -55,7 +54,7 @@
 						<td class="plt_height">{{height}}</td>
 						<td class="plt_updatedDate">{{updatedDate}}</td>
 						<td width="40px">
-							<button type="button" id="{{id}}" class="btn btn-primary btn-xs">
+							<button type="button" id="{{id}}" class="btn btn-primary btn-xs edit-placement" title="edit">
 								<i class="fa fa-pencil"></i>
 							</button>
 						</td>
@@ -129,101 +128,5 @@
     </div>
   </div>
 </div>
-
-<script type="text/javascript">
-	var plt_form = $('#plt_form');
-
-	//using validatr.js
-	plt_form.validatr({
-		location: 'left',
-		//showall: true
-	});
-	//custom valid
-	plt_form.validatr('addTest', {
-		minLength: function (el) {
-			var valid = false;
-			var min = parseInt($(el).attr('data-minLength'));
-			if($(el).val().length >= min){
-				valid = true;
-			}
-			return {
-				valid: valid,
-				message: 'Length >= ' + min
-			};
-		},
-		maxLength: function (el) {
-			var valid = false;
-			var max = parseInt($(el).attr('data-maxLength'));
-			if($(el).val().length <= max){
-				valid = true;
-			}
-			return {
-				valid: valid,
-				message: 'Length <= ' + max
-			};
-		}
-	});
-	//end setup validatr.js
-
-
-	$('#new-placement').click(function(){
-		$('#modal-placement').modal('show');
-		plt_form.find('input').val("");
-		console.log(plt_form.find('input'))
-	});
-
-	plt_form.submit(function(e) {
-		e.preventDefault();
-		//check valid form
-		if (! $.validatr.validateForm(plt_form)) {
-			return false;
-		}
-
-		var data = plt_data(plt_form);
-		console.log(data);
-		$.ajax({
-			url: '/placement/save/',
-			type: "POST",
-			contentType: "application/json",
-			dataType:'json',
-			data: data,
-			beforeSend: function(){
-				$('#wrapper').append('<div class="loader"></div>');
-			},
-			success: function(data){
-				$('.loader').remove();
-				$('#modal-placement').modal('hide');
-
-				$("#plt_container").append('\
-					<tr> \
-						<td class="plt_id">'+data.id+'</td> \
-						<td class="plt_name">'+data.name+'</td> \
-						<td class="plt_publisher">'+data.publisher+'</td> \
-						<td class="plt_type">'+data.type+'</td> \
-						<td class="plt_width">'+data.width+'</td> \
-						<td class="plt_height">'+data.height+'</td> \
-						<td class="plt_updatedDate">'+data.updatedDate+'</td> \
-						<td width="40px"> \
-							<button type="button" id="'+data.id+'" class="btn btn-primary btn-xs"> \
-								<i class="fa fa-pencil"></i> \
-							</button> \
-						</td> \
-					</tr> \
-				')
-			}
-		});
-	});
-
-	function plt_data(form){
-		var data = {};
-			data["id"] = form.find('[name="plt_id"]').val();
-			data["name"] = form.find('[name="plt_name"]').val();
-			data["publisher"] = form.find('[name="plt_publisher"]').val();
-			data["type"] = form.find('[name="plt_type"]').val();
-			data["width"] = form.find('[name="plt_width"]').val();
-			data["height"] = form.find('[name="plt_height"]').val();
-			data["updatedDate"] = form.find('[name="plt_updatedDate"]').val();
-		return JSON.stringify(data);	
-	}
-
-</script>
+<script src="js/validatr.min.js"></script>
+<script src="js/business-domains/placement-handler.js"></script>
