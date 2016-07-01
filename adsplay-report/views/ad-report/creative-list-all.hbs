@@ -7,23 +7,40 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-12">
-        <div class="container">
-            <div class='col-lg-3'>
-                <div class="form-group">
-                    <div class='input-group' >
-                        <label>Status: </label>
-                        <select class="form-control" id="filter-status" >
-                            <option value="-1">All Ad Units</option>
-                            {{#each statuses}}
-                                <option value="{{value}}">{{label}} Ad Units</option>
-                            {{/each}}
-                        </select>
-                    </div>
-                </div>
-            </div>
-
+    <div class='col-lg-3'>
+        <div class="form-group">
+            <select class="form-control" id="filter-status" >
+                <option value="-1">All Ad Units</option>
+                {{#each statuses}}
+                    <option value="{{value}}">{{label}} Ad Units</option>
+                {{/each}}
+            </select>
         </div>
+    </div>
+    <div class='col-lg-3'>
+        <div class="form-group">
+            <div class='input-group date' id='begin'>
+                <input type='text' class="form-control" autocomplete="off"/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class='col-lg-3'>
+        <div class="form-group">
+            <div class='input-group date' id='end'>
+                <input type='text' class="form-control" autocomplete="off"/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class='col-lg-3'>
+        <p>
+            <input class="btn btn-default" type="button" id="ChangeDate" value="OK">
+        </p>
     </div>
 </div>
 
@@ -77,21 +94,69 @@
 
         Handlebars.registerHelper('formatCurrency', function(value) { return value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"); });
 
+        function list_html (data){
+            var dataList = {creatives: data};
+
+            if (!data || data.length == 0) {
+                $('#tbl-creatives').find('tbody').empty().append('<tr><td colspan="8" style="text-align: center">No record found!</td></tr>');
+            } else {
+                var source = $("#tpl-crt-list").html();
+                var template = Handlebars.compile(source);
+                var htmlTable = template(dataList);
+
+                $('#tbl-creatives').find('tbody').empty().append(htmlTable);
+            }
+        }
+
         $('#filter-status').change(function () {
             $.get( "creative_json/list?status=" + $(this).val(), function( data ) {
-                var dataList = {creatives: data};
+                list_html(data);
+            });
+        });
 
-                if (!data || data.length == 0) {
-                    $('#tbl-creatives').find('tbody').empty().append('<tr><td colspan="7" style="text-align: center">No record found!</td></tr>');
-                } else {
-                    var source = $("#tpl-crt-list").html();
-                    var template = Handlebars.compile(source);
-                    var htmlTable = template(dataList);
+        //select date
+        var end = new moment().format("YYYY-MM-DD");
+        var begin = new moment().subtract(60, 'days').format("YYYY-MM-DD");
 
-                    $('#tbl-creatives').find('tbody').empty().append(htmlTable);
+        var formatTime = function (x) {
+            return new moment(x).format("YYYY-MM-DD");
+        };
+
+        $('#begin').datetimepicker({
+            format: 'YYYY-MM-DD',
+            defaultDate: begin
+        });
+        $('#end').datetimepicker({
+            useCurrent: false, //Important! See issue #1075
+            format: 'YYYY-MM-DD',
+            defaultDate: end
+        });
+        $("#begin").on("dp.change", function (e) {
+            $('#end').data("DateTimePicker").minDate(e.date);
+        });
+        $("#end").on("dp.change", function (e) {
+            $('#begin').data("DateTimePicker").maxDate(e.date);
+        });
+
+        $("#ChangeDate").click(function(){
+            var begin = $('#begin').data("DateTimePicker").date().format('YYYY-MM-DD');
+            var end = $('#end').data("DateTimePicker").date().format('YYYY-MM-DD');
+
+            $.ajax({
+                url: '/creative/list/all?begin='+begin+'&end='+end,
+                type: "GET",
+                contentType: "application/json",
+                dataType:'json',
+                beforeSend: function(){
+                    $('#wrapper').append('<div class="loader"></div>');
+                },
+                success: function(data){
+                    $('.loader').remove();
+                    list_html(data);
                 }
             });
-        })
+        });
+
     });
 </script>
 
