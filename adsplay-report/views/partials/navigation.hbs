@@ -78,7 +78,7 @@
                         <a href="/creative/list/all"><i class="fa fa-fw fa-list"></i> All Advertising Units</a>
                     </li>
 
-
+    {{#if isAdminGroup }}
                     <li class="">
                         <a href="/creative/visualize/metrics"><i class="fa fa-fw fa-line-chart"></i> Summary Report</a>
                     </li>
@@ -89,11 +89,11 @@
                     <li class="">
                         <a href="/monitor/inventory-paytv"><i class="fa fa-fw fa-signal"></i> Inventory PayTV </a>
                     </li>
-
+    {{/if}}
                 </ul>
             </li>
 
-
+            {{#if isAdminGroup }}
             <li>
                 <a href="javascript:;" data-toggle="collapse"
                    data-target="#menuAnalytics"><i class="fa fa-fw fa-line-chart"></i> Analytics<i
@@ -110,7 +110,7 @@
                         <a href="/device/monitor"><i class="fa fa-fw fa-bar-chart-o"></i> Device Analytics</a>
                     </li>
 
-                    {{#if isAdminGroup }}
+
 
                         <li class="" style="display: none">
                             <a href="/content/monitor"><i class="fa fa-fw fa-bar-chart-o"></i> Content Analytics</a>
@@ -119,12 +119,13 @@
                         <li class="" style="display: none">
                             <a href="/monitor/pageview"><i class="fa fa-fw fa-bar-chart-o"></i> Real-time PageView</a>
                         </li>
-                    {{/if}}
+
 
                 </ul>
             </li>
+            {{/if}}
 
-            {{#if isOperatorGroup }}
+            {{#if isAdminGroup }}
                 <li>
                     <a href="javascript:;" data-toggle="collapse"
                        data-target="#menuAdManagement"><i class="fa fa-fw fa-play"></i> Ad Management<i

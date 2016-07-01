@@ -92,7 +92,15 @@
                                 var val = arr[i];
                                 $('#ad_target_content_cats').find('option[value='+val+']').attr('selected','selected');
                             }
-                        } else {
+                        }
+                        else if(k == 'tglocs'){
+                            var arr = data[k];
+                            for(var i=0;i<arr.length;i++){
+                                var val = arr[i];
+                                $('#ad_target_location').find('option[value='+val+']').attr('selected','selected');
+                            }
+                        }
+                        else {
                             $('[data-creative-field="'+k+'"]').each(function( index ) {
                                 var value = $(this).val();
                                 for (var i = 0; i < data[k].length; i++) {
