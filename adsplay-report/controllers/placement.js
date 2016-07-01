@@ -14,6 +14,7 @@ var express = require('express')
 router.get('/list-all', function (req, res, next) {
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "All Placements";
+
     Placement.find({})
     .exec(function(err, doc){
         if (err) { return next(err); }
@@ -26,7 +27,7 @@ router.get('/list-all', function (req, res, next) {
                     id: doc[i].id,
                     name: doc[i].name,
                     publisher: doc[i].publisher,
-                    type: doc[i].type,
+                    type: get_type(doc[i].type),
                     width: doc[i].width,
                     height: doc[i].height,
                     updatedDate : tempDate
@@ -36,7 +37,16 @@ router.get('/list-all', function (req, res, next) {
         }
         res.render('ad-placement/list-placement', data);
     });
-        
+    
+    var get_type = function (id){
+        var type = {1: "video", 2: "Display Banner", 3: "Overlay Banner"};
+        for(var i in type){
+            if (id == i) {
+                return type[i];
+            }
+        }
+        return false;
+    }
 
     
 });
@@ -49,12 +59,12 @@ router.post('/save', function (req, res, next){
             //create new
             var doc = new Placement();
         }
+
         doc.name = req.body.name;
         doc.publisher = req.body.publisher;
         doc.type = req.body.type;
         doc.width = req.body.width;
         doc.height = req.body.height;
-        doc.updatedDate = req.body.updatedDate;
         
         doc.save(function(err) {
             if(!err){

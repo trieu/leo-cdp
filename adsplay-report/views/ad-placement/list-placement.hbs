@@ -8,6 +8,9 @@
 		max-width: 160;
 		z-index: 1;
 	}
+	.row-overlay{
+		display: none;
+	}
 </style>
 <div class="row">
     <div class="col-lg-12">
@@ -38,6 +41,7 @@
 						<th>Width</th>
 						<th>Height</th>
 						<th>Updated Date</th>
+						<th>Action</th>
 						<th></th>
 					</tr>
 				</thead>
@@ -51,6 +55,11 @@
 						<td class="plt_width">{{width}}</td>
 						<td class="plt_height">{{height}}</td>
 						<td class="plt_updatedDate">{{updatedDate}}</td>
+						<td width="60px" class="text-center">
+							<button type="button" id="{{id}}" class="btn btn-primary btn-xs action-btn" title="action">
+								<i class="fa fa-file-code-o"></i>
+							</button>
+						</td>
 						<td width="40px">
 							<button type="button" id="{{id}}" class="btn btn-primary btn-xs edit-placement" title="edit">
 								<i class="fa fa-pencil"></i>
@@ -92,30 +101,29 @@
 					<tr>
 						<td><strong>Type</strong></td>
 						<td>
-							<input type="number" class="form-control" name="plt_type" required>
+							<select class="form-control" name="plt_type">
+				                <option value="1">Video</option>
+				                <option value="2">Display Banner</option>
+				                <option value="3">Overlay Banner</option>
+				            </select>
 						</td>
 					</tr>
-					<tr>
+					<tr class="row-overlay">
 						<td><strong>Width</strong></td>
 						<td>
-							<input type="number" class="form-control" name="plt_width" required>
+							<input type="number" class="form-control" name="plt_width">
 						</td>
 					</tr>
-					<tr>
+					<tr class="row-overlay">
 						<td><strong>Height</strong></td>
 						<td>
-							<input type="number" class="form-control" name="plt_height" required>
-						</td>
-					</tr>
-					<tr>
-						<td><strong>Updated</strong></td>
-						<td>
-							<input type="date" class="form-control" name="plt_updatedDate" required>
+							<input type="number" class="form-control" name="plt_height">
 						</td>
 					</tr>
 				</tbody>
 	        </table>
 	        <div class="text-right">
+	        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 	        	<button type="submit" class="btn btn-primary" id="plt_submit">
 					OK
 				</button>
@@ -126,5 +134,29 @@
     </div>
   </div>
 </div>
+
+<div id="action-placement" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Form Placement</h4>
+      </div>
+      <div class="modal-body">
+      	<p>
+      		<textarea placeholder="enter code" class="form-control">
+      		</textarea>
+      	</p>
+		<div class="text-right">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			<button type="submit" class="btn btn-primary" id="plt_submit">
+				OK
+			</button>
+		</div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="js/validatr.min.js"></script>
 <script src="js/business-domains/placement-handler.js"></script>
