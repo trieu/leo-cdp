@@ -13,6 +13,8 @@ var flash = require('connect-flash')
 
 var siteConfigs = require('./configs/site.js');
 var dbConfig = require('./configs/database');
+var mongoose = require('mongoose');
+mongoose.connect(dbConfig.url);
 
 //console.log(siteConfigs);
 //console.log(dbConfig.url);

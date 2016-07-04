@@ -1,12 +1,12 @@
 /**
  * Created by trieu on 6/29/16.
  */
-
+var dbConfig = require('../configs/database');
 var mongoose = require('mongoose');
 var autoIncrement = require('mongoose-auto-increment');
 
 //setup connect autoIncrement
-var connection = mongoose.createConnection('mongodb://127.0.0.1:27017/adsplay');
+var connection = mongoose.createConnection(dbConfig.url);
 autoIncrement.initialize(connection);
 
 var placementSchema = new mongoose.Schema({
