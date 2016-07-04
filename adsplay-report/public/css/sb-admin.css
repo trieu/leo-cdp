@@ -222,6 +222,12 @@ ul.alert-dropdown {
 .panel-yellow a:hover {
     color: #df8a13;
 }
+
+.td-status{text-align: center; vertical-align: middle;}
+.td-status i{font-size: 24px;}
+.color-green{color: #5cb85c;}
+.color-orange{color: #eea236;}
+.color-red{color: #d9534f;}
 /*loader*/
 .loader{
     z-index: 9999;

@@ -76,6 +76,9 @@ $(window).load(function() {
 			var getValue = row.find('.'+attr).text();
 			if(attr == "plt_type"){
 				getValue = get_type_key(getValue);
+				if (getValue == 3) {
+					$('.row-overlay').show();
+				}
 			}
 			$(this).val(getValue);
 		});

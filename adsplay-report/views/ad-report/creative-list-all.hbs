@@ -69,7 +69,7 @@
                     <tr {{#if active }} class="active" {{/if}} >
                         <td>{{id}}</td>
                         <td><a href="/creative/{{id}}">{{name}}</a></td>
-                        <td>{{status}}</td>
+                        <td class="td-status">{{status}}</td>
                         <td>{{formatCurrency imp}}</td>
                         <td style="display: none" >{{formatCurrency trv}}</td>
 
@@ -156,6 +156,25 @@
                 }
             });
         });
+
+        $('.td-status').each(function(){
+            var txt = $(this).text();
+            if(txt == 'Running'){
+                $(this).html('<i class="fa fa-spinner color-orange fa-spin" title="Running"></i>');
+            }
+            else if(txt == 'Finished'){
+                $(this).html('<i class="fa fa-check-square color-green" title="Finished"></i>');
+            }
+            else if(txt == 'Pending'){
+                $(this).html('<i class="fa fa-refresh fa-spin" title="Pending"></i>');
+            }
+            else if(txt == 'Invalid'){
+                $(this).html('<i class="fa fa-exclamation-triangle color-red" title="Invalid"></i>');
+            }
+            else if(txt == 'Expired'){
+                $(this).html('<i class="fa fa-minus-circle color-red" title="Expired"></i>');
+            }
+        })
 
     });
 </script>
