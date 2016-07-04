@@ -14,39 +14,59 @@ var express = require('express')
 router.get('/list-all', function (req, res, next) {
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "All Placements";
+
     Placement.find({})
     .exec(function(err, doc){
         if (err) { return next(err); }
         if (doc.length > 0) {
-            data.placements = doc;
+            data.placements = [];
+            for (var i in doc) {
+                var tempDate = moment(doc[i].updatedDate).format('YYYY-MM-DD');
+
+                data.placements.push({
+                    id: doc[i].id,
+                    name: doc[i].name,
+                    publisher: doc[i].publisher,
+                    type: get_type(doc[i].type),
+                    width: doc[i].width,
+                    height: doc[i].height,
+                    updatedDate : tempDate
+                })
+            }
+
         }
         res.render('ad-placement/list-placement', data);
     });
-        
+    
+    var get_type = function (id){
+        var type = {1: "video", 2: "Display Banner", 3: "Overlay Banner"};
+        for(var i in type){
+            if (id == i) {
+                return type[i];
+            }
+        }
+        return false;
+    }
 
     
 });
 
 router.post('/save', function (req, res, next){
-    console.log("_________________")
-    console.log(req.body)
     Placement.findOne({ id: req.body.id }, function(err, doc) {
-        console.log("dddd")
         if (err) { return next(err); }
 
         if (!doc) {
-            console.log("new")
+            //create new
             var doc = new Placement();
         }
+
         doc.name = req.body.name;
         doc.publisher = req.body.publisher;
         doc.type = req.body.type;
         doc.width = req.body.width;
         doc.height = req.body.height;
-        doc.updatedDate = req.body.updatedDate;
         
         doc.save(function(err) {
-            console.log("save")
             if(!err){
                 res.json(doc);
             }
@@ -56,11 +76,6 @@ router.post('/save', function (req, res, next){
         });
          
     });
-});
-router.get('/new', function (req, res) {
-    var data = modelUtils.baseModel(req);
-    data.dashboard_title = "New Ad Placement";
-    res.render('ad-placement/new-placement', data)
 });
 
 module.exports = router;

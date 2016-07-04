@@ -10,7 +10,7 @@ var connection = mongoose.createConnection('mongodb://127.0.0.1:27017/adsplay');
 autoIncrement.initialize(connection);
 
 var placementSchema = new mongoose.Schema({
-	id: { type: Number, required: true },
+    id: { type: Number, required: true, index: true },
     name: { type: String, default: '' },
     publisher: { type: String, default: '' },
     type: { type: Number, default: 0 },

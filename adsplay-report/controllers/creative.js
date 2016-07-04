@@ -28,16 +28,15 @@ router.get('/list/all', function (req, res) {
         statuses.push({value: stt, label: constantUtils.getStatus(stt)});
     }
     data.statuses = statuses;
+
     data.begin = req.query.begin;
     data.end = req.query.end;
     if (!data.begin || !data.end) {
-        var end = moment();
-        var begin = end.clone().subtract(20, 'days');
-
-        data.begin = begin.format("YYYY-MM-DD");
-        data.end = end.format("YYYY-MM-DD");
+        data.begin = new moment().format("YYYY-MM-DD");
+        data.end = new moment().subtract(60, 'days').format("YYYY-MM-DD");
     }
-    request(data.site.api_domain + '/api/creative/summary/', function (error, response, body) {
+
+    request(data.site.api_domain + '/api/creative/summary?begin='+data.begin+'&end='+data.end, function (error, response, body) {
 
         if (!error && response.statusCode == 200) {
             var creatives = JSON.parse(body);
@@ -94,9 +93,16 @@ router.get('/list/all', function (req, res) {
                 }
             });
             data.creatives = filteredList;
+
         }
         Creative.allByUser(req.user.id, data, function (err, data) {
-            res.render('ad-report/creative-list-all', data)
+            //if request ajax
+            if (req.xhr || req.headers.accept.indexOf('json') > -1) {
+                res.json(data.creatives);
+            }
+            else{
+                res.render('ad-report/creative-list-all', data)
+            }
         });
 
     });
