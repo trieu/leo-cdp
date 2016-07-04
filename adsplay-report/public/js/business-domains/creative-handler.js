@@ -93,6 +93,13 @@
                                 $('#ad_target_content_cats').find('option[value='+val+']').attr('selected','selected');
                             }
                         }
+                        else if(k == 'tgkws'){
+                            var arr = data[k];
+                            for(var i=0;i<arr.length;i++){
+                                var val = arr[i];
+                                $('#ad_target_content_keywords').find('option[value='+val+']').attr('selected','selected');
+                            }
+                        }
                         else if(k == 'tglocs'){
                             var arr = data[k];
                             for(var i=0;i<arr.length;i++){

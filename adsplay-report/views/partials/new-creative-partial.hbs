@@ -329,6 +329,19 @@
                                             <div class="checkbox">
                                                 <label><input type="checkbox"  data-creative-field="tgpms"  data-device-id="1" value="401"> OVERLAY_FPT_PLAY_WEB</label>
                                             </div>
+
+                                            <div>
+                                                <div class="bold">FptPlay Categories</div>
+                                                <div>
+                                                    <select id="ad_target_content_keywords" type="select" data-creative-field="tgkws"
+                                                            data-placeholder="Enter the category's names"
+                                                            style="width:350px!important;" multiple class="chosen-select">
+                                                        {{#each fptplayCategories}}
+                                                            <option value="{{this}}">{{this}}</option>
+                                                        {{/each}}
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -346,7 +359,7 @@
                                                 <label><input type="checkbox" data-creative-field="tgpms"  data-device-id="6" value="320" data-paytv="default">TVC_PAYTV_IPTV_VOD</label>
                                             </div>
                                             <div>
-                                                <div class="bold">Only play TVC Ads in these categories</div>
+                                                <div class="bold">PayTV Categories</div>
                                                 <div>
                                                     <select id="ad_target_content_cats" type="select" data-creative-field="tgcats"
                                                             data-placeholder="Enter the category's names"
@@ -356,7 +369,6 @@
                                                         {{/each}}
                                                     </select>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -400,7 +412,7 @@
                     </td>
                 </tr>
 
-                <tr data-paytv="false" style="display: none">
+                <tr data-paytv="false" style="">
                     <td><strong>Audience Gender</strong></td>
                     <td>
                         <div class="panel-body text-left" id="ad_target_gender">
