@@ -89,6 +89,9 @@ $(window).load(function() {
 		if ($(this).val() == 3) {
 			$('.row-overlay').show();
 		}
+		else{
+			$('.row-overlay').hide();
+		}
 	});
 
 	plt_form.submit(function(e) {
