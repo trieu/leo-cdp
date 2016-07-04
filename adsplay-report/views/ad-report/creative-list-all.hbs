@@ -61,6 +61,7 @@
                     <th style="display: none"><a href="javascript:" title="Complete-View rate">CVR</a></th>
                     <th>Booking Time</th>
                     <th>Revenue</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -78,6 +79,7 @@
                         <td style="display: none" >{{tvr}}%</td>
                         <td>{{runDate}} &#10145; {{expiredDate}}</td>
                         <td>{{formatCurrency totalRevenue}}</td>
+                        <td class="td-action"><i class="fa fa-toggle-on color-green"></i></td>
                     </tr>
                 {{/each}}
 
@@ -160,21 +162,32 @@
         $('.td-status').each(function(){
             var txt = $(this).text();
             if(txt == 'Running'){
-                $(this).html('<i class="fa fa-spinner color-orange fa-spin" title="Running"></i>');
+                $(this).html('<i class="fa fa-line-chart color-blue" title="Running"></i>');
             }
             else if(txt == 'Finished'){
                 $(this).html('<i class="fa fa-check-square color-green" title="Finished"></i>');
             }
             else if(txt == 'Pending'){
-                $(this).html('<i class="fa fa-refresh fa-spin" title="Pending"></i>');
+                $(this).html('<i class="fa fa-pause" title="Pending"></i>');
             }
             else if(txt == 'Invalid'){
                 $(this).html('<i class="fa fa-exclamation-triangle color-red" title="Invalid"></i>');
             }
             else if(txt == 'Expired'){
-                $(this).html('<i class="fa fa-minus-circle color-red" title="Expired"></i>');
+                $(this).html('<i class="fa fa-check-square color-orange" title="Expired"></i>');
             }
         })
+
+        $('.td-action i').click(function(){
+            if ($(this).is('.fa-toggle-on')) {
+                $(this).removeClass('fa-toggle-on');
+                $(this).addClass('fa-toggle-off');
+            }
+            else{
+                $(this).removeClass('fa-toggle-off');
+                $(this).addClass('fa-toggle-on');
+            }
+        });
 
     });
 </script>
