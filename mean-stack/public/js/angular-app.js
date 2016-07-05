@@ -167,6 +167,7 @@ webApp.controller('loginCtrl', function($scope, auth, $location) {
 		auth._login({username: $scope.username, password: $scope.password})
 		.success(function(data){
 			$scope.checkauth(data);
+			console.clear();
 		}).error(function(){alert('Tài khoản hoặc mật khẩu không đúng')});
 	};
 
@@ -219,7 +220,7 @@ webApp.controller('creativeListCtrl', function($scope, creative) {
 	creative._list()
 	.success(function(data){
 		$scope.$emit("title-page", "Creative List");
-
+		
 		$scope.items = data;
 	});
 
