@@ -137,8 +137,8 @@
         });
 
         $(document).on("click", ".td-action i", function(){
-            var id = $(this).closest('tr').find('.td-id');
-                id = parseInt(id.text());
+            var row = $(this).closest('tr');
+            var id = parseInt(row.find('.td-id').text());
             var btnAction = $(this);  
 
             if (btnAction.is('.fa-toggle-on')) {
@@ -148,6 +148,7 @@
                     }
                     btnAction.removeClass('fa-toggle-on');
                     btnAction.addClass('fa-toggle-off');
+                    row.find('.td-status').html('<i class="fa fa-pause" title="Pending"></i>');
                 });
             }
             else{
@@ -157,6 +158,8 @@
                     }
                     btnAction.removeClass('fa-toggle-off');
                     btnAction.addClass('fa-toggle-on');
+                    row.find('.td-status').html('<i class="fa fa-line-chart color-blue" title="Running"></i>');
+                    
                 });
             }
         });
@@ -173,7 +176,7 @@
         }
         function icon_status(){
             $('.td-status').each(function(){
-                var txt = $(this).text();
+                var txt = $(this).attr('data-status');
                 if(txt == 'Running'){
                     $(this).html('<i class="fa fa-line-chart color-blue" title="Running"></i>');
                 }
