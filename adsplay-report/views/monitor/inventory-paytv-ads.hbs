@@ -1,0 +1,185 @@
+<style>
+    .pieChartWrap h3{
+        text-align: center;
+    }
+    .pieChartWrap svg {
+        height: 400px;
+    }
+</style>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">
+            Summary Report Ads in 30 days
+        </h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class='col-lg-3'>
+        <div class="form-group">
+            <div class='input-group date' id='dtpBegin'>
+                <input type='text' class="form-control" autocomplete="off"/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class='col-lg-3'>
+        <div class="form-group">
+            <div class='input-group date' id='dtpEnd'>
+                <input type='text' class="form-control" autocomplete="off"/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class='col-lg-3'>
+        <p>
+            <input class="btn btn-default" type="button" id='btnTime' value="OK">
+        </p>
+    </div>
+</div>
+
+<div class="row" id="totalViewGroup">
+
+</div>
+
+<div class="row" id="pieChartPayTv">
+
+</div>
+
+<script type="text/javascript">
+
+    $(function () {
+        var end = new moment().format("YYYY-MM-DD");
+        var begin = new moment().subtract(30, 'days').format("YYYY-MM-DD");
+
+        var formatTime = function (x) {
+            return new moment(x).format("YYYY-MM-DD");
+        };
+
+        $('#dtpBegin').datetimepicker({
+            format: 'YYYY-MM-DD',
+            defaultDate: begin
+        });
+        $('#dtpEnd').datetimepicker({
+            useCurrent: false, //Important! See issue #1075
+            format: 'YYYY-MM-DD',
+            defaultDate: end
+        });
+        $("#dtpBegin").on("dp.change", function (e) {
+            $('#dtpEnd').data("DateTimePicker").minDate(e.date);
+        });
+        $("#dtpEnd").on("dp.change", function (e) {
+            $('#dtpBegin').data("DateTimePicker").maxDate(e.date);
+        });
+
+
+        $('#btnTime').click(function() {
+            var begin = $('#dtpBegin').data("DateTimePicker").date().format('YYYY-MM-DD');
+            var end = $('#dtpEnd').data("DateTimePicker").date().format('YYYY-MM-DD');
+            renderChart(begin, end);
+        });
+
+        renderChart(begin, end);
+    
+        function renderChart(begin, end){
+           var jqxhr = $.getJSON("/monitor/inventory-paytv-ads/api/"+begin+"/"+end);
+            jqxhr.done(function(json) {
+
+                $("#totalViewGroup").html("");
+                $("#pieChartPayTv").html("");
+                var color = ["green","primary","yellow"];
+                
+                var totalChart = [];
+                var data = json.Root.item;
+
+                for(var i in data){
+
+                    //append div chart
+                    var placement = '#pieChart' +i+ ' svg';
+                    $('#pieChartPayTv').append('<div id="pieChart'+i+'" class="pieChartWrap col-md-6 col-xs-12"><h3>'+data[i].TypeName+'</h3><svg></svg></div>');
+
+                    
+                    //handle data
+                    var totalView = 0;
+
+                    var chartData = [];
+                    var list = data[i].ListView;
+                    for(var j in list){
+                        chartData.push(list[j]);
+                        totalView += parseInt(list[j].ToltalView);
+                    }
+
+                    totalChart.push({TypeID : data[i].TypeID, Category : data[i].TypeName, ToltalView : totalView});
+                    //create pieChart
+                    pieChart(chartData, placement);
+
+                    //number show total view
+                    var viewText;
+                    if(data[i].TypeID == 1){
+                        viewText = "Total View Film";
+                    }
+                    else if(data[i].TypeID == 2){
+                        viewText = "Total View Children";
+                    }
+                    else if(data[i].TypeID == 3){
+                        viewText = "Total View Entertainment";
+                    }
+
+                    renderNumberBox(color[i], totalView, viewText);
+                }
+
+                //show totalChart
+                $('#pieChartPayTv').append('<div class="pieChartWrap col-md-6 col-xs-12" id="totalChart"><h3>Tổng lượt xem</h3><svg></svg></div>');
+                pieChart(totalChart, "#totalChart svg");
+
+                var totalNumber = 0;
+                for (var i in totalChart) {
+                    totalNumber += parseInt(totalChart[i].ToltalView);
+                }
+                renderNumberBox("red", totalNumber, "Total View");
+            }); 
+        }
+        
+        function renderNumberBox(color, totalView, viewText){
+            $("#totalViewGroup").append('<div class="col-lg-3 col-md-6 col-xs-12">'+
+                                    '<div class="panel panel-'+color+'">'+
+                                        '<div class="panel-heading">'+
+                                            '<div class="text-right">'+
+                                                '<div class="huge">'+formatNumber(totalView)+'</div>'+
+                                                '<div class="total-view-text">'+viewText+'</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>');
+        }
+
+        function pieChart(data, placement){
+            
+            nv.addGraph(function() {
+              var chart = nv.models.pieChart()
+                    .x(function(d) { return d.Category })
+                    .y(function(d) { return d.ToltalView })
+                    .showLabels(false)
+                    .showLegend(true)
+                    .showLabels(true)
+                    .labelThreshold(.03)
+                    .labelType("percent");
+
+                d3.select(placement)
+                    .datum(data)
+                    .transition().duration(1200)
+                    .call(chart);
+
+                return chart;
+            });
+        }
+
+        
+    });
+
+</script>
