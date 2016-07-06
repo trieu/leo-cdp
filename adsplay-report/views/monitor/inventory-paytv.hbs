@@ -87,8 +87,12 @@
         renderChart(begin, end);
     
         function renderChart(begin, end){
-           var jqxhr = $.getJSON("/monitor/inventory-paytv/api/"+begin+"/"+end);
+           $('#wrapper').append('<div class="loader"></div>');
+
+            var jqxhr = $.getJSON("/monitor/inventory-paytv/api/"+begin+"/"+end);
             jqxhr.done(function(json) {
+
+                $('.loader').remove();
 
                 $("#totalViewGroup").html("");
                 $("#pieChartPayTv").html("");
@@ -111,10 +115,10 @@
                     var list = data[i].ListView;
                     for(var j in list){
                         chartData.push(list[j]);
-                        totalView += parseInt(list[j].ToltalView);
+                        totalView += parseInt(list[j].TotalView);
                     }
 
-                    totalChart.push({TypeID : data[i].TypeID, Category : data[i].TypeName, ToltalView : totalView});
+                    totalChart.push({TypeID : data[i].TypeID, Category : data[i].TypeName, TotalView : totalView});
                     //create pieChart
                     pieChart(chartData, placement);
 
@@ -139,7 +143,7 @@
 
                 var totalNumber = 0;
                 for (var i in totalChart) {
-                    totalNumber += parseInt(totalChart[i].ToltalView);
+                    totalNumber += parseInt(totalChart[i].TotalView);
                 }
                 renderNumberBox("red", totalNumber, "Total View");
             }); 
@@ -163,7 +167,7 @@
             nv.addGraph(function() {
               var chart = nv.models.pieChart()
                     .x(function(d) { return d.Category })
-                    .y(function(d) { return d.ToltalView })
+                    .y(function(d) { return d.TotalView })
                     .showLabels(false)
                     .showLegend(true)
                     .showLabels(true)

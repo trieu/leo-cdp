@@ -87,8 +87,12 @@
         renderChart(begin, end);
     
         function renderChart(begin, end){
-           var jqxhr = $.getJSON("/monitor/inventory-paytv-ads/api/"+begin+"/"+end);
+            $('#wrapper').append('<div class="loader"></div>');
+
+            var jqxhr = $.getJSON("/monitor/inventory-paytv-ads/api/"+begin+"/"+end);
             jqxhr.done(function(json) {
+
+                $('.loader').remove();
 
                 $("#totalViewGroup").html("");
                 $("#pieChartPayTv").html("");
@@ -111,23 +115,24 @@
                     var list = data[i].ListView;
                     for(var j in list){
                         chartData.push(list[j]);
-                        totalView += parseInt(list[j].ToltalView);
+                        totalView += parseInt(list[j].TotalView);
                     }
 
-                    totalChart.push({TypeID : data[i].TypeID, Category : data[i].TypeName, ToltalView : totalView});
+                    console.log(chartData)
+                    totalChart.push({TypeID : data[i].TypeID, Category : data[i].TypeName, TotalView : totalView});
                     //create pieChart
                     pieChart(chartData, placement);
 
                     //number show total view
                     var viewText;
                     if(data[i].TypeID == 1){
-                        viewText = "Total View Film";
+                        viewText = "Impression Film";
                     }
                     else if(data[i].TypeID == 2){
-                        viewText = "Total View Children";
+                        viewText = "Impression Children";
                     }
                     else if(data[i].TypeID == 3){
-                        viewText = "Total View Entertainment";
+                        viewText = "Impression Entertainment";
                     }
 
                     renderNumberBox(color[i], totalView, viewText);
@@ -139,9 +144,9 @@
 
                 var totalNumber = 0;
                 for (var i in totalChart) {
-                    totalNumber += parseInt(totalChart[i].ToltalView);
+                    totalNumber += parseInt(totalChart[i].TotalView);
                 }
-                renderNumberBox("red", totalNumber, "Total View");
+                renderNumberBox("red", totalNumber, "Total Impression");
             }); 
         }
         
@@ -163,7 +168,7 @@
             nv.addGraph(function() {
               var chart = nv.models.pieChart()
                     .x(function(d) { return d.Category })
-                    .y(function(d) { return d.ToltalView })
+                    .y(function(d) { return d.TotalView })
                     .showLabels(false)
                     .showLegend(true)
                     .showLabels(true)
