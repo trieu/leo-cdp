@@ -41,6 +41,25 @@ router.get('/inventory-paytv/api/:begin/:end', function(req, res){
     });
 });
 
+//paytv-ads
+router.get('/inventory-paytv-ads', function (req, res) {
+    var data = modelUtils.baseModel(req);
+    data.dashboard_title = "Ad Inventory-PayTV";
+    data.platforms = constantUtils.platforms
+    res.render('monitor/inventory-paytv-ads', data)
+});
+
+router.get('/inventory-paytv-ads/api/:begin/:end', function(req, res){
+    var begin = req.params.begin;
+    var end = req.params.end;
+    request("http://dev-fbox-onetv.fpt.vn/OneTVWS.ashx?method=ITVad_TotalViewAds&begintime="+begin+"&endtime="+end,
+        function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                res.json(JSON.parse(body));
+            }
+    });
+});
+
 router.get('/pageview', function (req, res) {
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "Pageview Analytics";
