@@ -90,154 +90,192 @@ exports.getMaleKeywords = function () {
 exports.getPayTVCategories = function () {
     var cats;
     cats = [
-        {
-            "ID": "2",
-            "Category": "Phim truyện - Hành Động"
-        },
-        {
-            "ID": "6",
-            "Category": "Phim truyện - KINH DỊ"
-        },
-        {
-            "ID": "11",
-            "Category": "Phim truyện - HOẠT HÌNH"
-        },
-        {
-            "ID": "13",
-            "Category": "Phim truyện - TÂM LÝ"
-        },
-        {
-            "ID": "14",
-            "Category": "Phim truyện - PHIM BỘ HOA NGỮ"
-        },
-        {
-            "ID": "15",
-            "Category": "Phim truyện - HÀI"
-        },
-        {
-            "ID": "16",
-            "Category": "Phim truyện - TÀI LIỆU"
-        },
-        {
-            "ID": "20",
-            "Category": "Phim truyện - PHIM BỘ HÀN QUỐC"
-        },
-        {
-            "ID": "23",
-            "Category": "Phim truyện - PHIM BỘ VIỆT NAM"
-        },
-        {
-            "ID": "24",
-            "Category": "Phim truyện - TÌNH CẢM"
-        },
-        {
-            "ID": "25",
-            "Category": "Phim truyện - PHIM BỘ ÂU MỸ"
-        },
-        {
-            "ID": "28",
-            "Category": "Phim truyện - PHIM GIA ĐÌNH"
-        },
-        {
-            "ID": "33",
-            "Category": "Phim truyện - PHIM BỘ KHÁC"
-        },
-        {
-            "ID": "161",
-            "Category": "Thiếu nhi - Phim"
-        },
-        {
-            "ID": "162",
-            "Category": "Thiếu nhi - Ca nhạc"
-        },
-        {
-            "ID": "405",
-            "Category": "Thiếu nhi - Tiếng Anh Cho Bé"
-        },
-        {
-            "ID": "406",
-            "Category": "Thiếu nhi - Kể Chuyện Bé Nghe"
-        },
-        {
-            "ID": "407",
-            "Category": "Thiếu nhi - Bé Học Điều Hay"
-        },
-        {
-            ID: "181",
-            Category: "Giải trí - Nhạc Việt Nam"
-          
-        },
-        {
-            ID: "182",
-            Category: "Giải trí - Nhạc quốc tế"
-      
-        },
-        {
-            ID: "261",
-            Category: "Giải trí - Đề xuất"
-    
-        },
-        {
-            ID: "262",
-            Category: "Giải trí - Cải lương"
-        
-        },
-        {
-            ID: "263",
-            Category: "Giải trí - Đờn Ca Tài Tử"
-        
-        },
-        {
-            ID: "266",
-            Category: "Giải trí - Kịch Nói"
-       
-        },
-        {
-            ID: "267",
-            Category: "Giải trí - Quan Họ"
-        
-        },
-        {
-            ID: "268",
-            Category: "Giải trí - Chèo"
-            
-        },
-        {
-            ID: "269",
-            Category: "Giải trí - SK Khác"
-        
-        },
-        {
-            ID: "301",
-            Category: "Giải trí - Danh Hài"
-        
-        },
-        {
-            ID: "121",
-            Category: "Giải trí - Truyền hình thực tế"
-        
-        },
-        {
-            ID: "122",
-            Category: "Giải trí - Trò chơi truyền hình"
-        
-        },
-        {
-            ID: "123",
-            Category: "Giải trí - Đàm luận"
-        
-        },
-        {
-            ID: "124",
-            Category: "Giải trí - Giải thưởng"
-       
-        },
-        {
-            ID: "125",
-            Category: "Giải trí - LiveShow"
-        
-        }
-    ];
+            {
+                TypeID: "1",
+                TypeName: "Phim truyện",
+                ListView: [
+                {
+                    ID: "2",
+                    Category: "Hành Động"
+                   
+                },
+                {
+                    ID: "6",
+                    Category: "KINH DỊ"
+                   
+                },
+                {
+                    ID: "11",
+                    Category: "HOẠT HÌNH"
+                    
+                },
+                {
+                    ID: "13",
+                    Category: "TÂM LÝ"
+                    
+                },
+                {
+                    ID: "14",
+                    Category: "PHIM BỘ HOA NGỮ"
+                   
+                },
+                {
+                    ID: "15",
+                    Category: "HÀI"
+                    
+                },
+                {
+                    ID: "16",
+                    Category: "TÀI LIỆU"
+                    
+                },
+                {
+                    ID: "20",
+                    Category: "PHIM BỘ HÀN QUỐC"
+                  
+                },
+                {
+                    ID: "23",
+                    Category: "PHIM BỘ VIỆT NAM"
+                    
+                },
+                {
+                    ID: "24",
+                    Category: "TÌNH CẢM"
+                    
+                },
+                {
+                    ID: "25",
+                    Category: "PHIM BỘ ÂU MỸ"
+                    
+                },
+                {
+                    ID: "28",
+                    Category: "PHIM GIA ĐÌNH"
+                    
+                },
+                {
+                    ID: "33",
+                    Category: "PHIM BỘ KHÁC"
+                 
+                }]
+            },
+            {
+                TypeID: "2",
+                TypeName: "Thiếu nhi",
+                ListView: [
+                {
+                    ID: "161",
+                    Category: "Phim"
+                
+                },
+                {
+                    ID: "162",
+                    Category: "Ca nhạc"
+                    
+                },
+                {
+                    ID: "405",
+                    Category: "Tiếng Anh Cho Bé"
+                 
+                },
+                {
+                    ID: "406",
+                    Category: "Kể Chuyện Bé Nghe"
+                    
+                },
+                {
+                    ID: "407",
+                    Category: "Bé Học Điều Hay"
+                    
+                }]
+            },
+            {
+                TypeID: "3",
+                TypeName: "Giải trí",
+                ListView: [
+                {
+                    ID: "181",
+                    Category: "Nhạc Việt Nam"
+                    
+                },
+                {
+                    ID: "182",
+                    Category: "Nhạc quốc tế"
+                    
+                },
+                {
+                    ID: "261",
+                    Category: "Đề xuất"
+                  
+                },
+                {
+                    ID: "262",
+                    Category: "Cải lương"
+                    
+                },
+                {
+                    ID: "263",
+                    Category: "Đờn Ca Tài Tử"
+                    
+                },
+                {
+                    ID: "266",
+                    Category: "Kịch Nói"
+                    
+                },
+                {
+                    ID: "267",
+                    Category: "Quan Họ"
+                    
+                },
+                {
+                    ID: "268",
+                    Category: "Chèo"
+                    
+                },
+                {
+                    ID: "269",
+                    Category: "SK Khác"
+                    
+                },
+                {
+                    ID: "301",
+                    Category: "Danh Hài"
+                
+                },
+                {
+                    ID: "120",
+                    Category: "TV Show"
+                   
+                },
+                {
+                    ID: "121",
+                    Category: "Truyền hình thực tế"
+                  
+                },
+                {
+                    ID: "122",
+                    Category: "Trò chơi truyền hình"
+                   
+                },
+                {
+                    ID: "123",
+                    Category: "Đàm luận"
+                    
+                },
+                {
+                    ID: "124",
+                    Category: "Giải thưởng"
+                  
+                },
+                {
+                    ID: "125",
+                    Category: "LiveShow"
+                    
+                }]
+            }
+        ];
     
     return cats;
 }
