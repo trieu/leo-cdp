@@ -149,6 +149,10 @@ exports.getPayTVCategories = function () {
 exports.getLocationCodes = function () {
     var locs = [
         {
+            "LocName": "Vietnam",
+            "ConChar": "vn"
+        },
+        {
             "LocName": "VN - Mien Nam",
             "ConChar": "vn-south"
         },

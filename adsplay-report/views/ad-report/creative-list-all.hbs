@@ -67,7 +67,7 @@
                 <tbody>
 
                 {{#each creatives}}
-                    <tr {{#if active }} class="active" {{/if}} >
+                    <tr {{#if active }} class="active" {{/if}} data-creative-status="{{status}}" >
                         <td>{{id}}</td>
                         <td><a href="/creative/{{id}}">{{name}}</a></td>
                         <td class="td-status">{{status}}</td>
@@ -97,6 +97,7 @@
         Handlebars.registerHelper('formatCurrency', function(value) { return value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"); });
 
         function list_html (data){
+
             var dataList = {creatives: data};
 
             if (!data || data.length == 0) {

@@ -192,7 +192,6 @@
 
     jQuery(document).ready(function(){
 
-        
         /*check url*/
         var url_current = window.location.href;
         for (var i = 0; i < adtypeArr.length; i++) {

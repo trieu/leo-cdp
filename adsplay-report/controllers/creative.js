@@ -14,8 +14,9 @@ var express = require('express')
     , moment = require('moment')
     , commonConfigs = require('../configs/common')
     , fs = require('fs.extra')
-    , upload = require('../helpers/upload_utils.js')
-    , convert = require('../helpers/convert_utils.js');
+    , upload = require('../helpers/upload_utils')
+    , ArrayUtils = require('../helpers/array_utils')
+    , convert = require('../helpers/convert_utils');
 var formidable = require('formidable');
 
 router.get('/list/all', function (req, res) {
@@ -234,8 +235,7 @@ router.get('/:id/edit', function (req, res) {
     var data = modelUtils.baseModel(req);
 
     data.dashboard_title = "Update Creative Details";
-    data.femaleKeywords = constantUtils.getFemaleKeywords();
-    data.maleKeywords = constantUtils.getMaleKeywords();
+    data.fptplayCategories = ArrayUtils.concatUnique(constantUtils.getFemaleKeywords().concat(constantUtils.getMaleKeywords()));
     data.payTVCategories = constantUtils.getPayTVCategories();
     data.locationCodes = constantUtils.getLocationCodes();
 
@@ -373,8 +373,7 @@ router.get('/new/local-ad-unit/overlay', function (req, res) {
 router.get('/new/local-ad-unit/video', function (req, res) {
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "New Creative Video";
-    data.femaleKeywords = constantUtils.getFemaleKeywords();
-    data.maleKeywords = constantUtils.getMaleKeywords();
+    data.fptplayCategories = ArrayUtils.concatUnique(constantUtils.getFemaleKeywords().concat(constantUtils.getMaleKeywords()));
     data.payTVCategories = constantUtils.getPayTVCategories();
     data.locationCodes = constantUtils.getLocationCodes();
     res.render('ad-report/new-creative-video', data);
