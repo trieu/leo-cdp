@@ -242,7 +242,7 @@ router.get('/:id/edit', function (req, res) {
 
 router.post('/:id/update', function (req, res) {
     var data = modelUtils.baseModel(req);
-    if (data.isAdminGroup) {
+    if (data.editable) {
         var crtId = req.params.id || -1;
         if(!stringUtils.isEmpty(req.body)){
             request.patch(data.site.api_domain + '/api/creatives/' + crtId).form(JSON.stringify(req.body));
@@ -389,7 +389,7 @@ router.post('/save/display-banner', function (req, res) {
     var data = modelUtils.baseModel(req);
     var urlSave = data.site.api_domain + '/creative/save/json';
 
-    if (data.isAdminGroup) {
+    if (data.editable) {
         var form = new formidable.IncomingForm();
         form.parse(req, function (err, fields, files) {
             if (err) {
@@ -431,7 +431,7 @@ router.post('/save/overlay-banner', function (req, res) {
     var data = modelUtils.baseModel(req);
     var urlSave = data.site.api_domain + '/creative/save/json';
 
-    if (data.isAdminGroup) {
+    if (data.editable) {
 
         var form = new formidable.IncomingForm();
 
@@ -476,7 +476,7 @@ router.post('/save/breaking-news', function (req, res) {
     var data = modelUtils.baseModel(req);
     var urlSave = data.site.api_domain + '/creative/save/json';
 
-    if (data.isAdminGroup) {
+    if (data.editable) {
 
         var form = new formidable.IncomingForm();
 

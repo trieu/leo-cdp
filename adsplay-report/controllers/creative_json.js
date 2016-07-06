@@ -88,7 +88,7 @@ router.get('/list', function (req, res) {
                 else if (data.ssid === 1006 && adName.indexOf('itvad') >= 0) {
                     filteredList.push(crt);
                 }
-                else if (data.ssid === 1007 && (adName.indexOf('paytv') >= 0 || adName.indexOf('vivid') >= 0)) {
+                else if (data.ssid === 1007 && (adName.indexOf('paytv') >= 0 )) {
                     filteredList.push(crt);
                 }
             });
