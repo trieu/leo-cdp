@@ -145,8 +145,8 @@
         $(document).on("click", ".td-action i", function(){
             var row = $(this).closest('tr');
             var id = parseInt(row.find('.td-id').text());
-            var btnAction = $(this);  
-
+            var btnAction = $(this);
+            
             if (btnAction.is('.fa-toggle-on')) {
                 update_fields(id, {status: '1'}, function(result){
                     if(result.message == 'error'){
@@ -204,10 +204,10 @@
         function render_action(){
             $('.td-status').each(function(){
                 if($(this).attr("data-status") == "Running"){
-                    $(this).closest('tr').find('.td-action').html('<i class="fa fa-toggle-on color-green"></i>');
+                    $(this).closest('tr').find('.td-action').html('<i class="fa fa-toggle-on color-green"  title="Turn On/Off Ads"></i>');
                 }
                 else if($(this).attr("data-status") == "Pending"){
-                    $(this).closest('tr').find('.td-action').html('<i class="fa fa-toggle-off color-green"></i>');
+                    $(this).closest('tr').find('.td-action').html('<i class="fa fa-toggle-off color-green"  title="Turn On/Off Ads"></i>');
                 }
             });
         }
