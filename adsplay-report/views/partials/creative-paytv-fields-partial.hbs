@@ -126,15 +126,32 @@
                                     <option value="0">0</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
-                                    <option value="3" selected >3</option>
+                                    <option value="3">3</option>
                                     <option value="4">4</option>
-                                    <option value="5">5</option>
+                                    <option value="5" selected>5</option>
                                     <option value="6">6</option>
                                     <option value="7">7</option>
                                     <option value="8">8</option>
                                     <option value="9">9</option>
                                     <option value="10">10</option>
                                 </select>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr id="row-profile">
+                    <td><strong>Profile</strong></td>
+                    <td>
+                        <div class="panel-body text-left">
+                            <div class="checkbox">
+                                <label><input type="checkbox" id="profile-all"> ALL</label>
+                            </div>    
+                            <div class="checkbox">
+                                <label><input type="checkbox"  name="profile" value="adsl"> ADSL</label>
+                            </div>    
+                            <div class="checkbox">
+                                <label><input type="checkbox"  name="profile" value="vdsl"> VDSL</label>
                             </div>
                         </div>
                     </td>
@@ -248,19 +265,20 @@
 <script src="js/business-domains/creative-handler.js?v=31052016"></script>
 <script>var api_domain = "{{site.ssl_api_domain}}";</script>
 
-<script src="js/chosen.jquery.js"></script>
 <script type="text/javascript">
-    function initJqueryChosen() {
-        var config = {
-            '.chosen-select': {},
-            '.chosen-select-deselect': {allow_single_deselect: true},
-            '.chosen-select-no-single': {disable_search_threshold: 10},
-            '.chosen-select-no-results': {no_results_text: 'Oops, nothing found!'},
-            '.chosen-select-width': {width: "95%"}
-        }
-        for (var selector in config) {
-            $(selector).chosen(config[selector]);
-        }
-    }
-    setTimeout(initJqueryChosen, 500)
+
+    var profile;
+
+    $("#profile-all").click(function () {
+        var checkboxes = $(this).closest('#row-profile').find(':checkbox');
+        checkboxes.prop('checked', $(this).prop("checked"));
+    });
+
+    $('#row-profile').find(':checkbox').change(function() {
+        profile = $('input[name="profile"]:checked').map(function(){
+          return $(this).val();
+        }).get();
+        console.log(profile);
+    });
+
 </script>
