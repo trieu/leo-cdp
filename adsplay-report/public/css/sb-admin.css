@@ -271,3 +271,5 @@ ul.alert-dropdown {
 .break-news{
     background-color: yellow;
 }
+
+#th-action, .td-action{display: none;}

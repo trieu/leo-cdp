@@ -680,7 +680,7 @@ exports.getLocationCodes = function () {
 exports.getAreaCodes = function () {
     var locsArea = [
         {
-            AreaName: "Vùng đồng bằng sông Hồng và duyên hải Đông Bắc",
+            AreaName: "Vùng 1 Hà Nội",
             ListArea: [
             {
                 "LocID": "4",
@@ -889,7 +889,7 @@ exports.getAreaCodes = function () {
         },
          {
             AreaId: "5",
-            AreaName: "Vùng Đông Nam Bộ",
+            AreaName: "Vùng 5 Hồ Chí Minh",
             ListArea: [
             {
                 "LocID": "8",
