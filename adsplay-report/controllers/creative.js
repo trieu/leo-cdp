@@ -163,6 +163,7 @@ router.get('/:id/edit', function (req, res) {
     data.fptplayCategories = ArrayUtils.concatUnique(constantUtils.getFemaleKeywords().concat(constantUtils.getMaleKeywords()));
     data.payTVCategories = constantUtils.getPayTVCategories();
     data.locationCodes = constantUtils.getLocationCodes();
+    data.areaCodes = constantUtils.getAreaCodes();
 
     data.crtId = req.params.id || -1;
     data.type = req.query.type || "daily";

@@ -101,6 +101,7 @@
                                 var val = arr[i];
                                 $('#ad_target_content_cats').find('option[value='+val+']').attr('selected','selected');
                             }
+                            $('#ad_target_content_cats').multipleSelect('setSelects', arr);
                         }
                         else if(k == 'tgkws'){
                             var arr = data[k];
@@ -108,6 +109,8 @@
                                 var val = arr[i];
                                 $('#ad_target_content_keywords').find('option[value='+val+']').attr('selected','selected');
                             }
+
+                            $('#ad_target_content_keywords').multipleSelect('setSelects', arr);
                         }
                         else if(k == 'tglocs'){
                             var arr = data[k];
@@ -115,6 +118,8 @@
                                 var val = arr[i];
                                 $('#ad_target_location').find('option[value='+val+']').attr('selected','selected');
                             }
+
+                            $('#ad_target_location').multipleSelect('setSelects', arr);
                         }
                         else {
                             $('[data-creative-field="'+k+'"]').each(function( index ) {
@@ -212,20 +217,6 @@
             var checkboxes = $(this).closest('#row-profile').find(':checkbox');
             checkboxes.prop('checked', $(this).prop("checked"));
         });
-
-        function initJqueryChosen(){
-            var config = {
-                '.chosen-select'           : {},
-                '.chosen-select-deselect'  : {allow_single_deselect:true},
-                '.chosen-select-no-single' : {disable_search_threshold:10},
-                '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
-                '.chosen-select-width'     : {width:"95%"}
-            }
-            for (var selector in config) {
-                $(selector).chosen(config[selector]);
-            }
-        }
-        setTimeout(initJqueryChosen,500);
 
         /*check url*/
         var url_current = window.location.href;

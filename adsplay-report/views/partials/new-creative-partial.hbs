@@ -10,9 +10,6 @@
         background-position: right top;
         background-repeat: no-repeat;
     }
-    #ad_target_content_cats_chosen {
-        width: 300px!important;
-    }
 </style>
 
 
@@ -242,11 +239,14 @@
                     <td><strong>Location</strong></td>
                     <td>
                         <div class="text-left">
-                            <select id="ad_target_location" type="select" data-creative-field="tglocs"
-                                    data-placeholder="Enter the location"
-                                    style="width:350px!important;" multiple class="chosen-select">
-                                {{#each locationCodes}}
-                                    <option value="{{ConChar}}">{{LocName}}</option>
+                            <select class="select-multi" id="ad_target_location" type="select" data-creative-field="tglocs"
+                                    data-placeholder="PayTV - Show Ads in these locations" multiple="multiple">
+                                {{#each areaCodes}}
+                                    <optgroup label="{{AreaName}}">
+                                        {{#each ListArea}}
+                                            <option value="{{ConChar}}">{{LocName}}</option>
+                                        {{/each}}
+                                    </optgroup>
                                 {{/each}}
                             </select>
                         </div>
@@ -333,13 +333,13 @@
                                             <div>
                                                 <div class="bold">FptPlay Categories</div>
                                                 <div>
-                                                    <select id="ad_target_content_keywords" type="select" data-creative-field="tgkws"
-                                                            data-placeholder="Enter the category's names"
-                                                            style="width:350px!important;" multiple class="chosen-select">
+                                                    <select class="select-multi" id="ad_target_content_keywords" type="select" data-creative-field="tgkws"
+                                                            data-placeholder="Enter the category's names" multiple="multiple">
                                                         {{#each fptplayCategories}}
                                                             <option value="{{this}}">{{this}}</option>
                                                         {{/each}}
                                                     </select>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -361,11 +361,15 @@
                                             <div>
                                                 <div class="bold">PayTV Categories</div>
                                                 <div>
-                                                    <select id="ad_target_content_cats" type="select" data-creative-field="tgcats"
-                                                            data-placeholder="Enter the category's names"
-                                                            style="width:350px!important;" multiple class="chosen-select">
+                                                    <select class="select-multi" id="ad_target_content_cats" type="select" data-creative-field="tgcats"
+                                                    data-placeholder="PayTV - Show Ads in these categories" multiple="multiple">
+
                                                         {{#each payTVCategories}}
-                                                            <option value="{{ID}}">{{Category}}</option>
+                                                            <optgroup label="{{TypeName}}">
+                                                                {{#each ListView}}
+                                                                    <option value="{{ID}}">{{Category}}</option>
+                                                                {{/each}}
+                                                            </optgroup>
                                                         {{/each}}
                                                     </select>
                                                 </div>
@@ -471,6 +475,5 @@
 
 <link rel="stylesheet" type="text/css" href="css/multiple-select.css">
 <script src="js/multiple-select.js"></script>
-<script src="js/chosen.jquery.js" ></script>
 <script src="js/business-domains/creative-handler.js?v=31052016"></script>
 <script>var api_domain = "{{site.ssl_api_domain}}";</script>
