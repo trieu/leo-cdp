@@ -62,7 +62,16 @@
             }
             else if(type === 'select' ){
                 if(typeof value === 'object'){
-                    data[fieldName] = value;
+                    if(fieldName == 'tgcats'){
+                        var tgcatsArr = [];
+                        for(var i in value){
+                            tgcatsArr.push(parseInt(value[i]));
+                        }
+                        data[fieldName] = tgcatsArr;
+                    }
+                    else{
+                        data[fieldName] = value;
+                    }
                 }
             }
             else {
