@@ -691,7 +691,7 @@ exports.getAreaCodes = function () {
         },
          {
             AreaId: "2",
-            AreaName: "Vùng trung du và miền núi phía Bắc",
+            AreaName: "Vùng 2 trung du và miền núi phía Bắc",
             ListArea: [
             {
                 "LocID": "20",
@@ -768,7 +768,7 @@ exports.getAreaCodes = function () {
         },
          {
             AreaId: "3",
-            AreaName: "Vùng Bắc Trung Bộ",
+            AreaName: "Vùng 3 Bắc Trung Bộ",
             ListArea: [
             {
                 "LocID": "30",
@@ -824,7 +824,7 @@ exports.getAreaCodes = function () {
         },
          {
             AreaId: "4",
-            AreaName: "Vùng Duyên hải Nam Trung Bộ",
+            AreaName: "Vùng 4 Duyên hải Nam Trung Bộ",
             ListArea: [
             {
                 "LocID": "52",
@@ -899,7 +899,7 @@ exports.getAreaCodes = function () {
         },
          {
             AreaId: "6",
-            AreaName: "Vùng Đông Nam Bộ",
+            AreaName: "Vùng 6 Đông Nam Bộ",
             ListArea: [
             {
                 "LocID": "61",
@@ -944,7 +944,7 @@ exports.getAreaCodes = function () {
         },
          {
             AreaId: "7",
-            AreaName: "Vùng Đồng bằng sông Cửu Long",
+            AreaName: "Vùng 7 Đồng bằng sông Cửu Long",
             ListArea: [
             {
                 "LocID": "67",
