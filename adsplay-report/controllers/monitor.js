@@ -33,7 +33,7 @@ router.get('/inventory-paytv', function (req, res) {
 router.get('/inventory-paytv/api/:begin/:end', function(req, res){
     var begin = req.params.begin;
     var end = req.params.end;
-    request("http://dev-fbox-onetv.fpt.vn/OneTVWS.ashx?method=ITVad_TotalView&begintime="+begin+"&endtime="+end,
+    request("http://fbox-onetv.fpt.vn/OneTVWS.ashx?method=ITVad_TotalView&begintime="+begin+"&endtime="+end,
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 res.json(JSON.parse(body));
@@ -52,7 +52,7 @@ router.get('/inventory-paytv-ads', function (req, res) {
 router.get('/inventory-paytv-ads/api/:begin/:end', function(req, res){
     var begin = req.params.begin;
     var end = req.params.end;
-    request("http://dev-fbox-onetv.fpt.vn/OneTVWS.ashx?method=ITVad_TotalViewAds&begintime="+begin+"&endtime="+end,
+    request("http://fbox-onetv.fpt.vn/OneTVWS.ashx?method=ITVad_TotalViewAds&begintime="+begin+"&endtime="+end,
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 res.json(JSON.parse(body));
