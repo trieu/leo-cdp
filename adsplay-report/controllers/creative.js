@@ -288,6 +288,9 @@ router.get('/new/local-ad-unit/overlay', function (req, res) {
     data.femaleKeywords = constantUtils.getFemaleKeywords();
     data.maleKeywords = constantUtils.getMaleKeywords();
 
+    data.payTVCategories = constantUtils.getPayTVCategories();
+    data.locationCodes = constantUtils.getLocationCodes();
+
     res.render('ad-report/new-creative-overlay', data)
 
 });
