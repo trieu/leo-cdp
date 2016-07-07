@@ -283,3 +283,5 @@ ul.alert-dropdown {
 }
 
 #th-action, .td-action{display: none;}
+
+#action_btn{font-size: 24px; vertical-align: middle; cursor: pointer;}

@@ -559,24 +559,24 @@ exports.getLocationCodes = function () {
             "ConChar": "HB",
             "Area": "2"
         },
-        {
-            "LocID": "219",
-            "LocName": "Ha Giang",
-            "ConChar": "",
-            "Area": ""
-        },
+        // {
+        //     "LocID": "219",
+        //     "LocName": "Ha Giang",
+        //     "ConChar": "",
+        //     "Area": ""
+        // },
         {
             "LocID": "230",
             "LocName": "Dien Bien",
             "ConChar": "DB",
             "Area": "2"
         },
-        {
-            "LocID": "231",
-            "LocName": "Lai Chau",
-            "ConChar": "",
-            "Area": ""
-        },
+        // {
+        //     "LocID": "231",
+        //     "LocName": "Lai Chau",
+        //     "ConChar": "",
+        //     "Area": ""
+        // },
         {
             "LocID": "240",
             "LocName": "Bac Giang",
@@ -631,12 +631,12 @@ exports.getLocationCodes = function () {
             "ConChar": "DL",
             "Area": "4"
         },
-        {
-            "LocID": "501",
-            "LocName": "Dac Nong",
-            "ConChar": "",
-            "Area": ""
-        },
+        // {
+        //     "LocID": "501",
+        //     "LocName": "Dac Nong",
+        //     "ConChar": "",
+        //     "Area": ""
+        // },
         {
             "LocID": "510",
             "LocName": "Quang Nam",
@@ -1017,30 +1017,31 @@ exports.getAreaCodes = function () {
             AreaId: "",
             AreaName: "Vùng mới",
             ListArea: [
-            {
-                "LocID": "219",
-                "LocName": "Ha Giang",
-                "ConChar": ""
-            },
+            // {
+            //     "LocID": "219",
+            //     "LocName": "Ha Giang",
+            //     "ConChar": ""
+            // },
             
-            {
-                "LocID": "231",
-                "LocName": "Lai Chau",
-                "ConChar": ""
-            },
+            // {
+            //     "LocID": "231",
+            //     "LocName": "Lai Chau",
+            //     "ConChar": ""
+            // },
             
             {
                 "LocID": "281",
                 "LocName": "Bac Can",
                 "ConChar": "BC"
-            },
+            }
             
             
-            {
-                "LocID": "501",
-                "LocName": "Dac Nong",
-                "ConChar": ""
-            }]
+            // {
+            //     "LocID": "501",
+            //     "LocName": "Dac Nong",
+            //     "ConChar": ""
+            // }
+            ]
         }];
     return locsArea;
 }
