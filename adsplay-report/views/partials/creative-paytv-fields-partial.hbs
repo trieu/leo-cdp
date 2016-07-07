@@ -13,6 +13,12 @@
     #ad_target_content_cats_chosen {
         width: 300px !important;
     }
+    .select-multi{
+        text-align: left;
+    }
+    .ms-drop ul > li.multiple{
+        width: 33.3333%;
+    }
 </style>
 
 
@@ -140,6 +146,19 @@
                     </td>
                 </tr>
 
+                <tr id="row_ads_startime" data-ad-type="1" >
+                    <td><strong>Start time</strong></td>
+                    <td>
+                        <div>
+                            <select class="form-control" id="ads_startime" data-creative-field="staTime"  >
+                                <option value="00:00:00">Pre-roll</option>
+                                <option value="00:05:00">Mid-roll after 5 minutes</option>
+                                <option value="00:10:00">Mid-roll after 10 minutes</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+
                 <tr id="row-profile">
                     <td><strong>Profile</strong></td>
                     <td>
@@ -148,10 +167,10 @@
                                 <label><input type="checkbox" id="profile-all"> ALL</label>
                             </div>    
                             <div class="checkbox">
-                                <label><input type="checkbox"  name="profile" value="adsl"> ADSL</label>
+                                <label><input type="checkbox"  name="profile" data-creative-field="profile" value="adsl"> ADSL</label>
                             </div>    
                             <div class="checkbox">
-                                <label><input type="checkbox"  name="profile" value="vdsl"> VDSL</label>
+                                <label><input type="checkbox"  name="profile" data-creative-field="profile" value="vdsl"> VDSL</label>
                             </div>
                         </div>
                     </td>
@@ -168,7 +187,7 @@
         <h2><i class="fa fa-crosshairs" aria-hidden="true"></i> Targeting Information</h2>
     </div>
     <div class="panel-body">
-        <div class="table-responsive">
+        <div>
             <table class="table table-bordered table-hover table-striped" style="height: 300px">
                 <tbody>
 
@@ -188,13 +207,17 @@
 
                 <tr>
                     <td><strong>Targeting Category</strong></td>
-                    <td>
+                    <td width="70%">
                         <div>
-                            <select id="ad_target_content_cats" type="select" data-creative-field="tgcats"
-                                    data-placeholder="PayTV - Show Ads in these categories"
-                                    style="width:350px!important;" multiple class="chosen-select">
+                            <select class="select-multi" id="ad_target_content_cats" type="select" data-creative-field="tgcats"
+                                    data-placeholder="PayTV - Show Ads in these categories" multiple="multiple">
+
                                 {{#each payTVCategories}}
-                                    <option value="{{ID}}">{{Category}}</option>
+                                    <optgroup label="{{TypeName}}">
+                                        {{#each ListView}}
+                                            <option value="{{ID}}">{{Category}}</option>
+                                        {{/each}}
+                                    </optgroup>
                                 {{/each}}
                             </select>
                         </div>
@@ -205,18 +228,19 @@
                     <td><strong>Targeting Location</strong></td>
                     <td>
                         <div>
-                            <select id="ad_target_locs" type="select" data-creative-field="tglocs"
-                                    data-placeholder="PayTV - Show Ads in these locations"
-                                    style="width:350px!important;" multiple class="chosen-select">
-                                {{#each locationCodes}}
-                                    <option value="{{ConChar}}">{{LocName}}</option>
+                            <select class="select-multi" id="ad_target_locs" type="select" data-creative-field="tglocs"
+                                    data-placeholder="PayTV - Show Ads in these locations" multiple="multiple">
+                                {{#each areaCodes}}
+                                    <optgroup label="{{AreaName}}">
+                                        {{#each ListArea}}
+                                            <option value="{{ConChar}}">{{LocName}}</option>
+                                        {{/each}}
+                                    </optgroup>
                                 {{/each}}
                             </select>
                         </div>
                     </td>
                 </tr>
-
-
 
                 </tbody>
             </table>
@@ -262,23 +286,10 @@
     <!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<link rel="stylesheet" type="text/css" href="css/multiple-select.css">
+<script src="js/multiple-select.js"></script>
+<script src="js/chosen.jquery.js" ></script>
 <script src="js/business-domains/creative-handler.js?v=31052016"></script>
 <script>var api_domain = "{{site.ssl_api_domain}}";</script>
 
-<script type="text/javascript">
 
-    var profile;
-
-    $("#profile-all").click(function () {
-        var checkboxes = $(this).closest('#row-profile').find(':checkbox');
-        checkboxes.prop('checked', $(this).prop("checked"));
-    });
-
-    $('#row-profile').find(':checkbox').change(function() {
-        profile = $('input[name="profile"]:checked').map(function(){
-          return $(this).val();
-        }).get();
-        console.log(profile);
-    });
-
-</script>

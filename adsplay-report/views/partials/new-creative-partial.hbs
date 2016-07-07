@@ -469,23 +469,8 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<link rel="stylesheet" type="text/css" href="css/multiple-select.css">
+<script src="js/multiple-select.js"></script>
+<script src="js/chosen.jquery.js" ></script>
 <script src="js/business-domains/creative-handler.js?v=31052016"></script>
 <script>var api_domain = "{{site.ssl_api_domain}}";</script>
-
-<script src="js/chosen.jquery.js" ></script>
-<script type="text/javascript">
-    function initJqueryChosen(){
-        var config = {
-            '.chosen-select'           : {},
-            '.chosen-select-deselect'  : {allow_single_deselect:true},
-            '.chosen-select-no-single' : {disable_search_threshold:10},
-            '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
-            '.chosen-select-width'     : {width:"95%"}
-        }
-        for (var selector in config) {
-            $(selector).chosen(config[selector]);
-        }
-    }
-    setTimeout(initJqueryChosen,500);
-
-</script>

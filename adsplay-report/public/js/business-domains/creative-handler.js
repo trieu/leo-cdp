@@ -192,6 +192,32 @@
 
     jQuery(document).ready(function(){
 
+        $(".select-multi").multipleSelect({
+            filter: true,
+            multiple: true,
+            width: '100%',
+            multipleWidth: '100%'
+        });
+    
+        $("#profile-all").click(function () {
+            var checkboxes = $(this).closest('#row-profile').find(':checkbox');
+            checkboxes.prop('checked', $(this).prop("checked"));
+        });
+
+        function initJqueryChosen(){
+            var config = {
+                '.chosen-select'           : {},
+                '.chosen-select-deselect'  : {allow_single_deselect:true},
+                '.chosen-select-no-single' : {disable_search_threshold:10},
+                '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
+                '.chosen-select-width'     : {width:"95%"}
+            }
+            for (var selector in config) {
+                $(selector).chosen(config[selector]);
+            }
+        }
+        setTimeout(initJqueryChosen,500);
+
         /*check url*/
         var url_current = window.location.href;
         for (var i = 0; i < adtypeArr.length; i++) {
@@ -369,6 +395,7 @@
                     }
                 }
                 
+                //console.log(postData)
 
                 $.ajax({
                     url: 'creative/save/tvc-ad',

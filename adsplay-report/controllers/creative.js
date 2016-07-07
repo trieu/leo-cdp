@@ -306,8 +306,8 @@ router.get('/new/local-ad-unit/video-paytv', function (req, res) {
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "New Creative Video PayTV";
     data.payTVCategories = constantUtils.getPayTVCategories();
-    data.locationCodes = constantUtils.getLocationCodes();
-    console.log(data.locationCodes);
+    data.areaCodes = constantUtils.getAreaCodes();
+    //console.log(data.areaCodes);
     res.render('ad-report/new-creative-video-paytv', data);
 });
 
