@@ -281,6 +281,9 @@ ul.alert-dropdown {
 .ms-drop ul > li.multiple{
     width: 33.3333%;
 }
+.ms-drop input[type="checkbox"]{
+    margin: 0 5px 0 0;
+}
 
 #th-action, .td-action{display: none;}
 

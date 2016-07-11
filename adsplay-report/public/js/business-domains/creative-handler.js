@@ -188,6 +188,7 @@
                         }
                     }
                 }
+            
             }
         });
     }
@@ -204,14 +205,25 @@
         }
     }
 
-    jQuery(document).ready(function(){
+    function isPayTv(){
+        var temp = false;
+        if(window.location.href.indexOf('paytv') >= 0){
+            temp = true;
+        }
 
-        $(".select-multi").multipleSelect({
-            filter: true,
-            multiple: true,
-            width: '100%',
-            multipleWidth: '100%'
-        });
+        if ($('#isPayTv').length > 0) {
+            temp = true;
+        }
+        
+        if(temp){
+            $("#ad_target_location .optLocation").remove();
+        }
+        else{
+            $("#ad_target_location .optArea").remove();
+        }
+    }
+
+    jQuery(document).ready(function(){
     
         $("#profile-all").click(function () {
             var checkboxes = $(this).closest('#row-profile').find(':checkbox');
@@ -244,6 +256,15 @@
         } else {
             $('#row_ads_status').hide();
         }
+
+        isPayTv();
+        $(".select-multi").multipleSelect({
+            filter: true,
+            multiple: true,
+            width: '100%',
+            multipleWidth: '100%',
+            selectAllText: 'Việt Nam'
+        });
 
         //disable video data fields on other ad type
         var tvc_div_nodes = $('#row_ads_thirdparty_url,#row_ads_skip,#row_ads_duration,#row_ads_startime,#div_fptplay_tvc_ad_placements,#div_paytv_ad_placements,#div_fshare_ad_placements,#div_nhacso_ad_placements');

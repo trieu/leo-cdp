@@ -241,8 +241,11 @@
                         <div class="text-left">
                             <select class="select-multi" id="ad_target_location" type="select" data-creative-field="tglocs"
                                     data-placeholder="Show Ads in these locations" multiple="multiple">
-                                {{#each areaCodes}}
-                                    <optgroup label="{{AreaName}}">
+                                {{#each locationCodes.Location}}
+                                    <option value="{{ConChar}}" class="optLocation">{{LocName}}</option>
+                                {{/each}}
+                                {{#each locationCodes.Area}}
+                                    <optgroup label="{{AreaName}}" class="optArea">
                                         {{#each ListArea}}
                                             <option value="{{ConChar}}">{{LocName}}</option>
                                         {{/each}}
@@ -438,6 +441,9 @@
     </div>
 </div>
 
+{{#if isPaytv}}
+    <input type="hidden" id="isPayTv" value="{{isPaytv}}">
+{{/if}}
 <hr>
 
 <div class="panel">

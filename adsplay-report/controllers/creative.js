@@ -163,7 +163,6 @@ router.get('/:id/edit', function (req, res) {
     data.fptplayCategories = ArrayUtils.concatUnique(constantUtils.getFemaleKeywords().concat(constantUtils.getMaleKeywords()));
     data.payTVCategories = constantUtils.getPayTVCategories();
     data.locationCodes = constantUtils.getLocationCodes();
-    data.areaCodes = constantUtils.getAreaCodes();
 
     data.crtId = req.params.id || -1;
     data.type = req.query.type || "daily";
@@ -173,6 +172,13 @@ router.get('/:id/edit', function (req, res) {
 
         if (!error && response.statusCode == 200) {
             var crt = JSON.parse(body);
+            
+            for(var i in crt.tgpms){
+                if (crt.tgpms[i] == 320) {
+                    data.isPaytv = true;
+                }
+            }
+
             var editable = data.ssid === 1007 && crt.name.toLowerCase().indexOf('paytv') >= 0;
             if (data.ssid === 1000 || data.ssid === 1001) {
                 editable = true;
@@ -290,9 +296,7 @@ router.get('/new/local-ad-unit/overlay', function (req, res) {
     data.maleKeywords = constantUtils.getMaleKeywords();
 
     data.payTVCategories = constantUtils.getPayTVCategories();
-    data.fptplayCategories = ArrayUtils.concatUnique(constantUtils.getFemaleKeywords().concat(constantUtils.getMaleKeywords()));
     data.locationCodes = constantUtils.getLocationCodes();
-    data.areaCodes = constantUtils.getAreaCodes();
 
     res.render('ad-report/new-creative-overlay', data)
 
@@ -303,7 +307,7 @@ router.get('/new/local-ad-unit/video', function (req, res) {
     data.dashboard_title = "New Creative Video";
     data.fptplayCategories = ArrayUtils.concatUnique(constantUtils.getFemaleKeywords().concat(constantUtils.getMaleKeywords()));
     data.payTVCategories = constantUtils.getPayTVCategories();
-    data.areaCodes = constantUtils.getAreaCodes();
+    data.locationCodes = constantUtils.getLocationCodes();
     res.render('ad-report/new-creative-video', data);
 
 });
@@ -312,7 +316,8 @@ router.get('/new/local-ad-unit/video-paytv', function (req, res) {
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "New Creative Video PayTV";
     data.payTVCategories = constantUtils.getPayTVCategories();
-    data.areaCodes = constantUtils.getAreaCodes();
+    var loc = constantUtils.getLocationCodes();
+    data.locationCodes = loc.Area;
     //console.log(data.areaCodes);
     res.render('ad-report/new-creative-video-paytv', data);
 });
