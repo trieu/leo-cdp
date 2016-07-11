@@ -290,7 +290,9 @@ router.get('/new/local-ad-unit/overlay', function (req, res) {
     data.maleKeywords = constantUtils.getMaleKeywords();
 
     data.payTVCategories = constantUtils.getPayTVCategories();
+    data.fptplayCategories = ArrayUtils.concatUnique(constantUtils.getFemaleKeywords().concat(constantUtils.getMaleKeywords()));
     data.locationCodes = constantUtils.getLocationCodes();
+    data.areaCodes = constantUtils.getAreaCodes();
 
     res.render('ad-report/new-creative-overlay', data)
 
@@ -301,7 +303,7 @@ router.get('/new/local-ad-unit/video', function (req, res) {
     data.dashboard_title = "New Creative Video";
     data.fptplayCategories = ArrayUtils.concatUnique(constantUtils.getFemaleKeywords().concat(constantUtils.getMaleKeywords()));
     data.payTVCategories = constantUtils.getPayTVCategories();
-    data.locationCodes = constantUtils.getLocationCodes();
+    data.areaCodes = constantUtils.getAreaCodes();
     res.render('ad-report/new-creative-video', data);
 
 });
