@@ -11,6 +11,7 @@
 **/target/
 **/.gradle/
 adsplay-report/public/ads/
+adsplay-report/public/ads/*
 
 **.zip
 **.class
