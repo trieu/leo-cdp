@@ -258,12 +258,20 @@
         }
 
         isPayTv();
-        $(".select-multi").multipleSelect({
+
+        $("#ad_target_location, #ad_target_locs").multipleSelect({
             filter: true,
             multiple: true,
             width: '100%',
             multipleWidth: '100%',
             selectAllText: 'Việt Nam'
+        });
+        $("#ad_target_content_keywords, #ad_target_content_cats").multipleSelect({
+            filter: true,
+            multiple: true,
+            width: '100%',
+            multipleWidth: '100%',
+            selectAllText: 'Chọn tất cả'
         });
 
         //disable video data fields on other ad type

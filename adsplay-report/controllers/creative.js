@@ -292,6 +292,7 @@ router.get('/new/local-ad-unit/news', function (req, res) {
 router.get('/new/local-ad-unit/overlay', function (req, res) {
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "New Creative Overlay Banner";
+    data.fptplayCategories = ArrayUtils.concatUnique(constantUtils.getFemaleKeywords().concat(constantUtils.getMaleKeywords()));
     data.femaleKeywords = constantUtils.getFemaleKeywords();
     data.maleKeywords = constantUtils.getMaleKeywords();
 
