@@ -271,3 +271,20 @@ ul.alert-dropdown {
 .break-news{
     background-color: yellow;
 }
+
+#ad_target_content_cats_chosen {
+    width: 300px !important;
+}
+.select-multi{
+    text-align: left;
+}
+.ms-drop ul > li.multiple{
+    width: 33.3333%;
+}
+.ms-drop input[type="checkbox"]{
+    margin: 0 5px 0 0;
+}
+
+#th-action, .td-action{display: none;}
+
+#action_btn{font-size: 24px; vertical-align: middle; cursor: pointer;}

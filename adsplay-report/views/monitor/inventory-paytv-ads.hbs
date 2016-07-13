@@ -10,7 +10,7 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
-            Summary Report in 30 days
+            Summary Report Ads in 30 days
         </h1>
     </div>
 </div>
@@ -87,9 +87,9 @@
         renderChart(begin, end);
     
         function renderChart(begin, end){
-           $('#wrapper').append('<div class="loader"></div>');
+            $('#wrapper').append('<div class="loader"></div>');
 
-            var jqxhr = $.getJSON("/monitor/inventory-paytv/api/"+begin+"/"+end);
+            var jqxhr = $.getJSON("/monitor/inventory-paytv-ads/api/"+begin+"/"+end);
             jqxhr.done(function(json) {
 
                 $('.loader').remove();
@@ -118,6 +118,7 @@
                         totalView += parseInt(list[j].TotalView);
                     }
 
+                    console.log(chartData)
                     totalChart.push({TypeID : data[i].TypeID, Category : data[i].TypeName, TotalView : totalView});
                     //create pieChart
                     pieChart(chartData, placement);
@@ -125,13 +126,13 @@
                     //number show total view
                     var viewText;
                     if(data[i].TypeID == 1){
-                        viewText = "Total View Film";
+                        viewText = "Impression Film";
                     }
                     else if(data[i].TypeID == 2){
-                        viewText = "Total View Children";
+                        viewText = "Impression Children";
                     }
                     else if(data[i].TypeID == 3){
-                        viewText = "Total View Entertainment";
+                        viewText = "Impression Entertainment";
                     }
 
                     renderNumberBox(color[i], totalView, viewText);
@@ -145,7 +146,7 @@
                 for (var i in totalChart) {
                     totalNumber += parseInt(totalChart[i].TotalView);
                 }
-                renderNumberBox("red", totalNumber, "Total View");
+                renderNumberBox("red", totalNumber, "Total Impression");
             }); 
         }
         

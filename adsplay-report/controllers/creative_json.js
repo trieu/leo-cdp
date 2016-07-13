@@ -20,6 +20,8 @@ var formidable = require('formidable');
 
 router.get('/list', function (req, res) {
     var data = modelUtils.baseModel(req);
+
+    data.dashboard_title = "All Advertising Units";
     data.statuses = constantUtils.statuses;
     var statuses = [];
     for (var stt in constantUtils.statuses) {
@@ -27,19 +29,14 @@ router.get('/list', function (req, res) {
     }
     data.statuses = statuses;
 
-    var status = req.query.status || -1;
-    var url = data.site.api_domain + '/api/creative/summary/?status=' + status;
-
     data.begin = req.query.begin;
     data.end = req.query.end;
     if (!data.begin || !data.end) {
-        var end = moment();
-        var begin = end.clone().subtract(20, 'days');
-
-        data.begin = begin.format("YYYY-MM-DD");
-        data.end = end.format("YYYY-MM-DD");
+        data.begin = new moment().format("YYYY-MM-DD");
+        data.end = new moment().subtract(60, 'days').format("YYYY-MM-DD");
     }
-    request(url, function (error, response, body) {
+
+    request(data.site.api_domain + '/api/creative/summary?begin='+data.begin+'&end='+data.end, function (error, response, body) {
 
         if (!error && response.statusCode == 200) {
             var creatives = JSON.parse(body);
@@ -49,6 +46,9 @@ router.get('/list', function (req, res) {
                 if (crt.name === 'Default') {
                     crt.name = 'Default Creative';
                 }
+                // crt.runDate = crt.runDate || 'Jul 1, 2015 12:00:00 AM';
+                // crt.expiredDate = crt.expiredDate || 'Jul 21, 2015 12:00:00 AM';
+
                 if (crt.runDate) {
                     var runDate = moment(crt.runDate, 'MMM D, YYYY hh:mm:ss A');
                     crt.runDate = runDate.format('YYYY-MM-DD');
@@ -61,7 +61,6 @@ router.get('/list', function (req, res) {
                 } else {
                     crt.expiredDate = 'N/A';
                 }
-
                 crt.active = crt.status == 2;
                 crt.status = constantUtils.getStatus(crt.status);
                 crt.ctr = (crt.ctr * 100).toFixed(2);
@@ -69,8 +68,8 @@ router.get('/list', function (req, res) {
                 if (crt.totalRevenue == 0 || req.user.roles != 'admin') {
                     crt.totalRevenue = "-";
                 }
-                var adName = crt.name.toLowerCase();
 
+                var adName = crt.name.toLowerCase();
                 if (data.isAdminGroup) {
                     filteredList.push(crt);
                 }
@@ -89,16 +88,16 @@ router.get('/list', function (req, res) {
                 else if (data.ssid === 1006 && adName.indexOf('itvad') >= 0) {
                     filteredList.push(crt);
                 }
-                else if (data.ssid === 1007 && (adName.indexOf('paytv') >= 0 || adName.indexOf('vivid') >= 0)) {
+                else if (data.ssid === 1007 && (adName.indexOf('paytv') >= 0 )) {
                     filteredList.push(crt);
                 }
             });
-
             res.json(filteredList);
 
         } else {
             res.json([]);
         }
+
     });
 });
 

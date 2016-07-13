@@ -6,7 +6,11 @@
     </div>
 </div>
 
-<a href="/booking/new/"><i class="fa fa-fw fa-list"></i> New Booking</a>
+<p>
+    <button type="button" class="btn btn-primary" id="new-booking">
+        <i class="fa fa-fw fa-list"></i> New Booking
+    </button>
+</p>
 
 <div class="row">
     <div class="col-lg-12">
@@ -40,10 +44,54 @@
     </div>
 </div>
 
+<!-- modal form popup -->
+<div id="modal-booking" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Form Placement</h4>
+      </div>
+      <div class="modal-body">
+        <form id="book_form">
+            <table class="table table-bordered table-hover table-striped">
+                <tbody>
+                    <input type="hidden" class="form-control" name="book_id">
+                    <tr>
+                        <td><strong>Name</strong></td>
+                        <td>
+                            <input type="text" class="form-control" name="book_name" data-minLength="10" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total Impression</strong></td>
+                        <td>
+                            <input type="number" class="form-control" name="book_width">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-right">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="book_submit">
+                    OK
+                </button>
+            </div>
+        </form>
+        
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
     $(function () {
         $(document).tooltip();
+
+        $('#new-booking').click(function(){
+            $('#modal-booking').modal('show');
+        });
     });
+
 </script>
 

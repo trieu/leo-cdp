@@ -6,6 +6,12 @@
     </div>
 </div>
 
+<p>
+    <a href="creative/new/local-ad-unit" class="btn btn-primary" id="new-creative">
+        <i class="fa fa-fw fa-list"></i> New creative
+    </a>
+</p>
+
 <div class="row">
     <div class='col-lg-3'>
         <div class="form-group">
@@ -60,29 +66,11 @@
                     <th><a href="javascript:" title="Click-through rate">CTR</a></th>
                     <th style="display: none"><a href="javascript:" title="Complete-View rate">CVR</a></th>
                     <th>Booking Time</th>
-                    <th>Revenue</th>
-                    <th>Action</th>
+                    <th>Total Estimated Revenue</th>
+                    <th id="th-action">Action</th>
                 </tr>
                 </thead>
                 <tbody>
-
-                {{#each creatives}}
-                    <tr {{#if active }} class="active" {{/if}} >
-                        <td>{{id}}</td>
-                        <td><a href="/creative/{{id}}">{{name}}</a></td>
-                        <td class="td-status">{{status}}</td>
-                        <td>{{formatCurrency imp}}</td>
-                        <td style="display: none" >{{formatCurrency trv}}</td>
-
-                        <td>{{formatCurrency c}}</td>
-                        <td>{{ctr}}%</td>
-                        <td style="display: none" >{{tvr}}%</td>
-                        <td>{{runDate}} &#10145; {{expiredDate}}</td>
-                        <td>{{formatCurrency totalRevenue}}</td>
-                        <td class="td-action"><i class="fa fa-toggle-on color-green"></i></td>
-                    </tr>
-                {{/each}}
-
                 </tbody>
             </table>
         </div>
@@ -96,29 +84,10 @@
 
         Handlebars.registerHelper('formatCurrency', function(value) { return value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"); });
 
-        function list_html (data){
-            var dataList = {creatives: data};
-
-            if (!data || data.length == 0) {
-                $('#tbl-creatives').find('tbody').empty().append('<tr><td colspan="8" style="text-align: center">No record found!</td></tr>');
-            } else {
-                var source = $("#tpl-crt-list").html();
-                var template = Handlebars.compile(source);
-                var htmlTable = template(dataList);
-
-                $('#tbl-creatives').find('tbody').empty().append(htmlTable);
-            }
-        }
-
-        $('#filter-status').change(function () {
-            $.get( "creative_json/list?status=" + $(this).val(), function( data ) {
-                list_html(data);
-            });
-        });
-
         //select date
-        var end = new moment().format("YYYY-MM-DD");
-        var begin = new moment().subtract(60, 'days').format("YYYY-MM-DD");
+        var end = new moment().add(1, 'days').format("YYYY-MM-DD");
+        var begin = moment(end).subtract(45, 'days').format("YYYY-MM-DD");
+        render_list(begin, end);
 
         var formatTime = function (x) {
             return new moment(x).format("YYYY-MM-DD");
@@ -140,12 +109,126 @@
             $('#begin').data("DateTimePicker").maxDate(e.date);
         });
 
-        $("#ChangeDate").click(function(){
+        $('#filter-status').change(function () {
+            if($(this).val() == -1){
+                $('#tbl-creatives tbody tr').show();
+            }
+            else if($(this).val() == 0){
+                $('.td-status').closest('tr').hide();
+                $('[data-status="Invalid"]').closest('tr').show();
+            }
+            else if($(this).val() == 1){
+                $('.td-status').closest('tr').hide();
+                $('[data-status="Pending"]').closest('tr').show();
+            }
+            else if($(this).val() == 2){
+                $('.td-status').closest('tr').hide();
+                $('[data-status="Running"]').closest('tr').show();
+            }
+            else if($(this).val() == 3){
+                $('.td-status').closest('tr').hide();
+                $('[data-status="Finished"]').closest('tr').show();
+            }
+            else if($(this).val() == 4){
+                $('.td-status').closest('tr').hide();
+                $('[data-status="Expired"]').closest('tr').show();
+            }
+        });
+
+        $(document).on("click", "#ChangeDate", function(){
             var begin = $('#begin').data("DateTimePicker").date().format('YYYY-MM-DD');
             var end = $('#end').data("DateTimePicker").date().format('YYYY-MM-DD');
 
+            render_list(begin, end);
+        });
+
+        $(document).on("click", ".td-action i", function(){
+            var row = $(this).closest('tr');
+            var id = parseInt(row.find('.td-id').text());
+            var btnAction = $(this);
+            
+            if (btnAction.is('.fa-toggle-on')) {
+                update_fields(id, {status: '1'}, function(result){
+                    if(result.message == 'error'){
+                        return alert("error !!!")
+                    }
+                    btnAction.removeClass('fa-toggle-on');
+                    btnAction.addClass('fa-toggle-off');
+                    row.find('.td-status').html('<i class="fa fa-pause" title="Pending"></i>');
+                });
+            }
+            else{
+                update_fields(id, {status: '2'}, function(result){
+                    if(result.message == 'error'){
+                        return alert("error !!!")
+                    }
+                    btnAction.removeClass('fa-toggle-off');
+                    btnAction.addClass('fa-toggle-on');
+                    row.find('.td-status').html('<i class="fa fa-line-chart color-blue" title="Running"></i>');
+                    
+                });
+            }
+        });
+
+        function update_fields(id, obj, callback){
             $.ajax({
-                url: '/creative/list/all?begin='+begin+'&end='+end,
+                url: '/creative/'+id+'/update',
+                type: "POST",
+                contentType: "application/json",
+                dataType:'json',
+                data: JSON.stringify(obj),
+                success: callback
+            });
+        }
+        function icon_status(){
+            $('.td-status').each(function(){
+                var txt = $(this).attr('data-status');
+                if(txt == 'Running'){
+                    $(this).html('<i class="fa fa-line-chart color-blue" title="Running"></i>');
+                }
+                else if(txt == 'Finished'){
+                    $(this).html('<i class="fa fa-check-square color-green" title="Finished"></i>');
+                }
+                else if(txt == 'Pending'){
+                    $(this).html('<i class="fa fa-pause" title="Pending"></i>');
+                }
+                else if(txt == 'Invalid'){
+                    $(this).html('<i class="fa fa-exclamation-triangle color-red" title="Invalid"></i>');
+                }
+                else if(txt == 'Expired'){
+                    $(this).html('<i class="fa fa-check-square color-orange" title="Expired"></i>');
+                }
+            });
+        }
+
+        function render_action(){
+            $('.td-status').each(function(){
+                if($(this).attr("data-status") == "Running"){
+                    $(this).closest('tr').find('.td-action').html('<i class="fa fa-toggle-on color-green"  title="Turn On/Off Ads"></i>');
+                }
+                else if($(this).attr("data-status") == "Pending"){
+                    $(this).closest('tr').find('.td-action').html('<i class="fa fa-toggle-off color-green"  title="Turn On/Off Ads"></i>');
+                }
+            });
+        }
+
+        function list_html (data){
+            var dataList = {creatives: data};
+
+            if (!data || data.length == 0) {
+                $('#tbl-creatives').find('tbody').empty().append('<tr><td colspan="8" style="text-align: center">No record found!</td></tr>');
+            } else {
+                var source = $("#tpl-crt-list").html();
+                var template = Handlebars.compile(source);
+                var htmlTable = template(dataList);
+
+                $('#tbl-creatives').find('tbody').empty().append(htmlTable);
+            }
+        }
+
+        function render_list(begin, end){
+            $.ajax({
+                url: '/creative_json/list?begin='+begin+'&end='+end,
                 type: "GET",
                 contentType: "application/json",
                 dataType:'json',
@@ -155,39 +238,11 @@
                 success: function(data){
                     $('.loader').remove();
                     list_html(data);
+                    icon_status();
+                    render_action();
                 }
             });
-        });
-
-        $('.td-status').each(function(){
-            var txt = $(this).text();
-            if(txt == 'Running'){
-                $(this).html('<i class="fa fa-line-chart color-blue" title="Running"></i>');
-            }
-            else if(txt == 'Finished'){
-                $(this).html('<i class="fa fa-check-square color-green" title="Finished"></i>');
-            }
-            else if(txt == 'Pending'){
-                $(this).html('<i class="fa fa-pause" title="Pending"></i>');
-            }
-            else if(txt == 'Invalid'){
-                $(this).html('<i class="fa fa-exclamation-triangle color-red" title="Invalid"></i>');
-            }
-            else if(txt == 'Expired'){
-                $(this).html('<i class="fa fa-check-square color-orange" title="Expired"></i>');
-            }
-        })
-
-        $('.td-action i').click(function(){
-            if ($(this).is('.fa-toggle-on')) {
-                $(this).removeClass('fa-toggle-on');
-                $(this).addClass('fa-toggle-off');
-            }
-            else{
-                $(this).removeClass('fa-toggle-off');
-                $(this).addClass('fa-toggle-on');
-            }
-        });
+        }
 
     });
 </script>
@@ -195,9 +250,9 @@
 <script id="tpl-crt-list" type="text/x-handlebars">
     \{{#each creatives}}
         <tr \{{#if active }} class="active" \{{/if}} >
-            <td>\{{id}}</td>
+            <td class="td-id">\{{id}}</td>
             <td><a href="/creative/\{{id}}">\{{name}}</a></td>
-            <td>\{{status}}</td>
+            <td class="td-status" data-status="\{{status}}">\{{status}}</td>
             <td>\{{formatCurrency imp}}</td>
             <td style="display: none" >\{{formatCurrency trv}}</td>
 
@@ -206,6 +261,7 @@
             <td style="display: none" >\{{tvr}}%</td>
             <td>\{{runDate}} &#10145; \{{expiredDate}}</td>
             <td>\{{formatCurrency totalRevenue}}</td>
+            <td class="td-action"></td>
         </tr>
     \{{/each}}
 </script>

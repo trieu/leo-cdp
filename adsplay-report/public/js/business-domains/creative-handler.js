@@ -62,7 +62,16 @@
             }
             else if(type === 'select' ){
                 if(typeof value === 'object'){
-                    data[fieldName] = value;
+                    if(fieldName == 'tgcats'){
+                        var tgcatsArr = [];
+                        for(var i in value){
+                            tgcatsArr.push(parseInt(value[i]));
+                        }
+                        data[fieldName] = tgcatsArr;
+                    }
+                    else{
+                        data[fieldName] = value;
+                    }
                 }
             }
             else {
@@ -92,6 +101,7 @@
                                 var val = arr[i];
                                 $('#ad_target_content_cats').find('option[value='+val+']').attr('selected','selected');
                             }
+                            $('#ad_target_content_cats').multipleSelect('setSelects', arr);
                         }
                         else if(k == 'tgkws'){
                             var arr = data[k];
@@ -99,6 +109,8 @@
                                 var val = arr[i];
                                 $('#ad_target_content_keywords').find('option[value='+val+']').attr('selected','selected');
                             }
+
+                            $('#ad_target_content_keywords').multipleSelect('setSelects', arr);
                         }
                         else if(k == 'tglocs'){
                             var arr = data[k];
@@ -106,6 +118,8 @@
                                 var val = arr[i];
                                 $('#ad_target_location').find('option[value='+val+']').attr('selected','selected');
                             }
+
+                            $('#ad_target_location').multipleSelect('setSelects', arr);
                         }
                         else {
                             $('[data-creative-field="'+k+'"]').each(function( index ) {
@@ -174,6 +188,7 @@
                         }
                     }
                 }
+            
             }
         });
     }
@@ -190,9 +205,31 @@
         }
     }
 
-    jQuery(document).ready(function(){
+    function isPayTv(){
+        var temp = false;
+        if(window.location.href.indexOf('paytv') >= 0){
+            temp = true;
+        }
 
+        if ($('#isPayTv').length > 0) {
+            temp = true;
+        }
         
+        if(temp){
+            $("#ad_target_location .optLocation").remove();
+        }
+        else{
+            $("#ad_target_location .optArea").remove();
+        }
+    }
+
+    jQuery(document).ready(function(){
+    
+        $("#profile-all").click(function () {
+            var checkboxes = $(this).closest('#row-profile').find(':checkbox');
+            checkboxes.prop('checked', $(this).prop("checked"));
+        });
+
         /*check url*/
         var url_current = window.location.href;
         for (var i = 0; i < adtypeArr.length; i++) {
@@ -219,6 +256,23 @@
         } else {
             $('#row_ads_status').hide();
         }
+
+        isPayTv();
+
+        $("#ad_target_location, #ad_target_locs").multipleSelect({
+            filter: true,
+            multiple: true,
+            width: '100%',
+            multipleWidth: '100%',
+            selectAllText: 'Việt Nam'
+        });
+        $("#ad_target_content_keywords, #ad_target_content_cats").multipleSelect({
+            filter: true,
+            multiple: true,
+            width: '100%',
+            multipleWidth: '100%',
+            selectAllText: 'Chọn tất cả'
+        });
 
         //disable video data fields on other ad type
         var tvc_div_nodes = $('#row_ads_thirdparty_url,#row_ads_skip,#row_ads_duration,#row_ads_startime,#div_fptplay_tvc_ad_placements,#div_paytv_ad_placements,#div_fshare_ad_placements,#div_nhacso_ad_placements');
@@ -370,6 +424,7 @@
                     }
                 }
                 
+                //console.log(postData)
 
                 $.ajax({
                     url: 'creative/save/tvc-ad',

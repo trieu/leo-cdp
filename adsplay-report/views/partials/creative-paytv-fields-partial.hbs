@@ -10,9 +10,7 @@
         background-position: right top;
         background-repeat: no-repeat;
     }
-    #ad_target_content_cats_chosen {
-        width: 300px !important;
-    }
+    
 </style>
 
 
@@ -126,15 +124,59 @@
                                     <option value="0">0</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
-                                    <option value="3" selected >3</option>
+                                    <option value="3">3</option>
                                     <option value="4">4</option>
-                                    <option value="5">5</option>
+                                    <option value="5" selected>5</option>
                                     <option value="6">6</option>
                                     <option value="7">7</option>
                                     <option value="8">8</option>
                                     <option value="9">9</option>
                                     <option value="10">10</option>
                                 </select>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr id="row_ads_startime" data-ad-type="1" >
+                    <td><strong>Start time</strong></td>
+                    <td>
+                        <div>
+                            <select class="form-control" id="ads_startime" data-creative-field="staTime"  >
+                                <option value="00:00:00">Pre-roll</option>
+                                <option value="00:05:00">Mid-roll after 5 minutes</option>
+                                <option value="00:10:00">Mid-roll after 10 minutes</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr id="row_ads_skip" data-ad-type="1" >
+                    <td><strong>Skip time</strong></td>
+                    <td>
+                        <div>
+                            <select class="form-control" id="ads_skip" data-creative-field="skip"  >
+                                <option value="00:00:00" selected>0 seconds</option>
+                                <option value="00:00:05">5 seconds</option>
+                                <option value="00:00:15">15 seconds</option>
+                                <option value="00:00:30">30 seconds</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr id="row-profile">
+                    <td><strong>Profile</strong></td>
+                    <td>
+                        <div class="panel-body text-left">
+                            <div class="checkbox">
+                                <label><input type="checkbox" id="profile-all"> ALL</label>
+                            </div>    
+                            <div class="checkbox">
+                                <label><input type="checkbox"  name="profile" data-creative-field="profile" value="adsl"> ADSL</label>
+                            </div>    
+                            <div class="checkbox">
+                                <label><input type="checkbox"  name="profile" data-creative-field="profile" value="vdsl"> VDSL</label>
                             </div>
                         </div>
                     </td>
@@ -151,7 +193,7 @@
         <h2><i class="fa fa-crosshairs" aria-hidden="true"></i> Targeting Information</h2>
     </div>
     <div class="panel-body">
-        <div class="table-responsive">
+        <div>
             <table class="table table-bordered table-hover table-striped" style="height: 300px">
                 <tbody>
 
@@ -171,13 +213,17 @@
 
                 <tr>
                     <td><strong>Targeting Category</strong></td>
-                    <td>
+                    <td width="70%">
                         <div>
-                            <select id="ad_target_content_cats" type="select" data-creative-field="tgcats"
-                                    data-placeholder="PayTV - Show Ads in these categories"
-                                    style="width:350px!important;" multiple class="chosen-select">
+                            <select class="select-multi" id="ad_target_content_cats" type="select" data-creative-field="tgcats"
+                                    data-placeholder="PayTV - Show Ads in these categories" multiple="multiple">
+
                                 {{#each payTVCategories}}
-                                    <option value="{{ID}}">{{Category}}</option>
+                                    <optgroup label="{{TypeName}}">
+                                        {{#each ListView}}
+                                            <option value="{{ID}}">{{Category}}</option>
+                                        {{/each}}
+                                    </optgroup>
                                 {{/each}}
                             </select>
                         </div>
@@ -188,18 +234,19 @@
                     <td><strong>Targeting Location</strong></td>
                     <td>
                         <div>
-                            <select id="ad_target_locs" type="select" data-creative-field="tglocs"
-                                    data-placeholder="PayTV - Show Ads in these locations"
-                                    style="width:350px!important;" multiple class="chosen-select">
+                            <select class="select-multi" id="ad_target_locs" type="select" data-creative-field="tglocs"
+                                    data-placeholder="PayTV - Show Ads in these locations" multiple="multiple">
                                 {{#each locationCodes}}
-                                    <option value="{{ConChar}}">{{LocName}}</option>
+                                    <optgroup label="{{AreaName}}">
+                                        {{#each ListArea}}
+                                            <option value="{{ConChar}}">{{LocName}}</option>
+                                        {{/each}}
+                                    </optgroup>
                                 {{/each}}
                             </select>
                         </div>
                     </td>
                 </tr>
-
-
 
                 </tbody>
             </table>
@@ -245,22 +292,9 @@
     <!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<link rel="stylesheet" type="text/css" href="css/multiple-select.css">
+<script src="js/multiple-select.js"></script>
 <script src="js/business-domains/creative-handler.js?v=31052016"></script>
 <script>var api_domain = "{{site.ssl_api_domain}}";</script>
 
-<script src="js/chosen.jquery.js"></script>
-<script type="text/javascript">
-    function initJqueryChosen() {
-        var config = {
-            '.chosen-select': {},
-            '.chosen-select-deselect': {allow_single_deselect: true},
-            '.chosen-select-no-single': {disable_search_threshold: 10},
-            '.chosen-select-no-results': {no_results_text: 'Oops, nothing found!'},
-            '.chosen-select-width': {width: "95%"}
-        }
-        for (var selector in config) {
-            $(selector).chosen(config[selector]);
-        }
-    }
-    setTimeout(initJqueryChosen, 500)
-</script>
+

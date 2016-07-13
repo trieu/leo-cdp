@@ -16,6 +16,13 @@ router.get('/geolocation', function (req, res) {
     res.render('monitor/geo-heatmap', data)
 });
 
+router.get('/inventory-report', function (req, res) {
+    var data = modelUtils.baseModel(req);
+    data.dashboard_title = "Inventory Report";
+    data.platforms = constantUtils.platforms
+    res.render('monitor/inventory-report', data)
+});
+
 router.get('/inventory', function (req, res) {
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "Ad Inventory";
@@ -33,7 +40,26 @@ router.get('/inventory-paytv', function (req, res) {
 router.get('/inventory-paytv/api/:begin/:end', function(req, res){
     var begin = req.params.begin;
     var end = req.params.end;
-    request("http://dev-fbox-onetv.fpt.vn/OneTVWS.ashx?method=ITVad_TotalView&begintime="+begin+"&endtime="+end,
+    request("http://fbox-onetv.fpt.vn/OneTVWS.ashx?method=ITVad_TotalView&begintime="+begin+"&endtime="+end,
+        function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                res.json(JSON.parse(body));
+            }
+    });
+});
+
+//paytv-ads
+router.get('/inventory-paytv-ads', function (req, res) {
+    var data = modelUtils.baseModel(req);
+    data.dashboard_title = "Ad Inventory-PayTV";
+    data.platforms = constantUtils.platforms
+    res.render('monitor/inventory-paytv-ads', data)
+});
+
+router.get('/inventory-paytv-ads/api/:begin/:end', function(req, res){
+    var begin = req.params.begin;
+    var end = req.params.end;
+    request("http://fbox-onetv.fpt.vn/OneTVWS.ashx?method=ITVad_TotalViewAds&begintime="+begin+"&endtime="+end,
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 res.json(JSON.parse(body));
