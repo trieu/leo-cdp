@@ -1,0 +1,222 @@
+<div class="row">
+	<div class="col-md-6">
+		<div class="form-group">
+            <div class="input-group date" id="begin">
+                <input type='text' class="form-control" autocomplete="off"/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+	</div>
+	<div class="col-md-6">
+		<div class="form-group">
+            <div class="input-group date" id="end">
+                <input type='text' class="form-control" autocomplete="off"/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-4 col-xs-12">
+	    <div class="panel panel-success">
+	        <div class="panel-heading">
+	            <div class="text-right">
+	                <div class="huge">45,295,601</div>
+	                <div class="total-view-text">Play View</div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+    <div class="col-md-4 col-xs-12">
+	    <div class="panel panel-info">
+	        <div class="panel-heading">
+	            <div class="text-right">
+	                <div class="huge">45,295,601</div>
+	                <div class="total-view-text">Impression</div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<div class="col-md-4 col-xs-12">
+	    <div class="panel panel-warning">
+	        <div class="panel-heading">
+	            <div class="text-right">
+	                <div class="huge">45,295,601</div>
+	                <div class="total-view-text">Complete View</div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</div>
+
+<div class="row">
+
+  <div class="col-md-12">
+  	
+  	<!-- Nav tabs -->
+	  <ul class="nav nav-tabs" role="tablist">
+	    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
+	    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
+	    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
+	    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+	  </ul>
+
+	  <!-- Tab panes -->
+	  <div class="tab-content">
+	    <div role="tabpanel" class="tab-pane active" id="home">...</div>
+	    <div role="tabpanel" class="tab-pane" id="profile">...</div>
+	    <div role="tabpanel" class="tab-pane" id="messages">...</div>
+	    <div role="tabpanel" class="tab-pane" id="settings">...</div>
+	  </div>
+
+  </div>
+
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<table id="table-details" class="table table-hover table-striped">
+			<tbody></tbody>
+		</table>
+	</div>
+</div>
+<link rel="stylesheet" type="text/css" href="css/jquery.dataTables.min.css">
+<script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+	var data = [{"reach":32,"t":1466269200000,"crtId":1032,"flId":0,"cpnId":0,"advId":0,"imp":67,"trv":26,"c":0},{"reach":31477,"t":1466355600000,"crtId":1032,"flId":0,"cpnId":0,"advId":0,"imp":90313,"trv":41379,"c":1158},{"reach":31053,"t":1466442000000,"crtId":1032,"flId":0,"cpnId":0,"advId":0,"imp":89084,"trv":41067,"c":964},{"reach":22946,"t":1466528400000,"crtId":1032,"flId":0,"cpnId":0,"advId":0,"imp":54696,"trv":23955,"c":899},{"reach":3267,"t":1466614800000,"crtId":1032,"flId":0,"cpnId":0,"advId":0,"imp":3606,"trv":1793,"c":37},{"reach":2533,"t":1466701200000,"crtId":1032,"flId":0,"cpnId":0,"advId":0,"imp":2806,"trv":1366,"c":16},{"reach":3189,"t":1466787600000,"crtId":1032,"flId":0,"cpnId":0,"advId":0,"imp":3578,"trv":1708,"c":55},{"reach":0,"t":1466874000000,"crtId":0,"flId":0,"cpnId":0,"advId":0,"imp":0,"trv":0,"c":0},{"reach":0,"t":1466960400000,"crtId":0,"flId":0,"cpnId":0,"advId":0,"imp":0,"trv":0,"c":0}];
+$(document).ready(function(){
+	function render(){
+		var obj_date = filter_date();
+
+		var obj_fields = filter_fields();
+
+		var obj_join = $.extend(obj_date, obj_fields);
+
+		$.ajax({
+            url: '',
+            type: "GET",
+            contentType: "application/json",
+            dataType:'json',
+            data: JSON.stringify(obj_join),
+            success: function(data){
+            	render_char(data);
+            	table_data(data);
+            }
+        });
+	}
+
+	function filter_date(){
+
+		return {begin: begin, end: end};
+	}
+
+	function filter_fields(){
+		
+		return {playview: playview, placement: placement, completeview: completeview};
+	}
+
+	function render_chart(data){
+    
+		// var height = 400;
+		// var testdata = [
+		// 	{key: "One", y: 5, color: "#5F5"},
+		// 	{key: "Two", y: 2},
+		// 	{key: "Three", y: 9},
+		// 	{key: "Four", y: 7},
+		// 	{key: "Five", y: 4},
+		// 	{key: "Six", y: 3},
+		// 	{key: "Seven", y: 0.5}
+		// ];
+		// var pie_data = [];
+		// for (var i in data) {
+		// 	pie_data.push({key: })
+		// }
+
+		pie_chart(data);
+
+		line_chart(data);
+
+		stacked_chart(data);
+
+	}
+
+	function pie_chart(data){
+
+	    nv.addGraph(function() {
+	        var chart = nv.models.pieChart()
+	            .x(function(d) { return d.key })
+	            .y(function(d) { return d.y })
+	            .width(width)
+	            .height(height)
+	            .showTooltipPercent(true);
+
+	        d3.select("#piechart")
+	            .datum(testdata)
+	            .transition().duration(1200)
+	            .attr('width', width)
+	            .attr('height', height)
+	            .call(chart);
+
+	        // update chart data values randomly
+	        setInterval(function() {
+	            testdata[0].y = Math.floor(Math.random() * 10);
+	            testdata[1].y = Math.floor(Math.random() * 10);
+	            chart.update();
+	        }, 4000);
+
+	        return chart;
+	    });
+	}
+
+	function line_chart(data){
+
+	}
+
+	function stacked_chart(data){
+
+	}
+
+	function table_data(data){
+		$table = $('#table-details');
+		var tr = '<tr> \
+				<td>1466355600000</td> \
+				<td>1466355600000</td> \
+				<td>1466355600000</td> \
+				<td>1466355600000</td> \
+				<td>1466355600000</td> \
+				<td>1466355600000</td> \
+				<td>1466355600000</td> \
+				</tr>'
+		for (var i in data) {
+			var tr = '<tr> \
+			<td>'+data[i].t+'</td> \
+			<td>'+data[i].imp+'</td> \
+			<td>'+data[i].imp+'</td> \
+			<td>'+data[i].trv+'</td> \
+			<td>'+data[i].c+'</td> \
+			<td>'+data[i].trv+'</td> \
+			<td>'+data[i].c+'</td> \
+			</tr>'
+			$table.find('tbody').append(tr)
+		}
+		$('#table-details').DataTable({
+			columns: [
+	            { title: "Date" },
+	            { title: "Impression" },
+	            { title: "Play-View" },
+	            { title: "Complete-View" },
+	            { title: "Unique Impression" },
+	            { title: "Clicks" },
+	            { title: "CTR" }
+	        ]
+		});
+	}
+
+	table_data(data);	
+});
+	
+</script>

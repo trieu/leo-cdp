@@ -16,6 +16,13 @@ router.get('/geolocation', function (req, res) {
     res.render('monitor/geo-heatmap', data)
 });
 
+router.get('/inventory-report', function (req, res) {
+    var data = modelUtils.baseModel(req);
+    data.dashboard_title = "Inventory Report";
+    data.platforms = constantUtils.platforms
+    res.render('monitor/inventory-report', data)
+});
+
 router.get('/inventory', function (req, res) {
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "Ad Inventory";
