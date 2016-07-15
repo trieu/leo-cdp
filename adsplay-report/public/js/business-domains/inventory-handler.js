@@ -151,15 +151,13 @@ $(document).ready(function(){
 
 		nv.addGraph(function() {
 	        chart = nv.models.lineChart()
-	            .options({
-	                duration: 300,
-	                useInteractiveGuideline: true
-	            })
-	        ;
+	            .useInteractiveGuideline(true)
+                .transitionDuration(350)
+                .showLegend(true);
+
 	        chart.xAxis
 	            .axisLabel("Time (s)")
-	            .tickFormat(function(d) { return d3.time.format('%x')(new Date(d)) })
-	            .staggerLabels(true);
+	            .tickFormat(function(d) { return d3.time.format('%x')(new Date(d)) });
 
 	        chart.yAxis
 	            .axisLabel('Voltage (v)')
@@ -214,7 +212,7 @@ $(document).ready(function(){
 		
 		for (var i in data) {
 			var tr = '<tr> \
-			<td>'+data[i].t+'</td> \
+			<td>'+moment(data[i].t).format("YYYY-MM-DD")+'</td> \
 			<td>'+data[i].playview+'</td> \
 			<td>'+data[i].imp+'</td> \
 			<td>'+data[i].completeview+'</td> \
@@ -244,7 +242,7 @@ $(document).ready(function(){
 		for(var i in arr_sum){
 
 			var color = (i <= 4) ? colorArr[i] : colorArr[Math.floor(Math.random() * colorArr.length)];
-			
+
 			var count = 0;
 			for(var j in arr_data){
 				count += arr_data[j][arr_sum[i].sum];
