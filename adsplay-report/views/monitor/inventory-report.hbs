@@ -118,9 +118,8 @@
 <div class="panel panel-default">
 	<div class="panel-heading">Details</div>
 	<div class="panel-body">
-		<table id="table-details" class="table table-hover table-striped">
-			<tbody></tbody>
-		</table>
+		<div id="table-wrap">
+		</div>
 	</div>
 </div>
 
@@ -177,24 +176,19 @@ $(document).ready(function(){
     });
 
     $('#filter-btn').click(function(){
-    	var obj_date = filter_date();
+    	render();
+    });
+
+	render();
+
+	function render(){
+		var obj_date = filter_date();
 
 		var obj_fields = filter_fields();
 
 		var obj_join = $.extend(obj_date, obj_fields);
 
 		console.log(obj_join)
-    });
-
-	render();
-
-	function render(){
-		// var obj_date = filter_date();
-
-		// var obj_fields = filter_fields();
-
-		// var obj_join = $.extend(obj_date, obj_fields);
-
 		// $.ajax({
 		// 	url: '',
 		// 	type: "GET",
@@ -342,7 +336,10 @@ $(document).ready(function(){
 	}
 
 	function table_data(data){
-		$table = $('#table-details');
+		var table = $('<table id="table-details" class="table table-hover table-striped"><tbody></tbody></table>');
+		$('#table-wrap').empty();
+		$('#table-wrap').append(table);
+		
 		for (var i in data) {
 			var tr = '<tr> \
 			<td>'+data[i].t+'</td> \
@@ -353,7 +350,7 @@ $(document).ready(function(){
 			<td>'+data[i].c+'</td> \
 			<td>'+data[i].ctr+'</td> \
 			</tr>'
-			$table.find('tbody').append(tr)
+			table.find('tbody').append(tr)
 		}
 		$('#table-details').DataTable({
 			columns: [
