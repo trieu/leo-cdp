@@ -1,5 +1,4 @@
-
-<div class="panel panel-default">
+<div class="panel panel-default" id="filter-wrap">
 	<div class="panel-heading">Filter Query</div>
 	<div class="panel-body">
 		<div class="col-md-4 col-xs-12">
@@ -22,9 +21,46 @@
 	            </div>
 	        </div>
 		</div>
+		<div class="clearfix"></div>
+		<div class="col-md-3 col-sm-6 col-xs-12">
+			<select type="select" class="select-multi" id="input_platforms" data-placeholder="platforms" multiple="multiple">
+				{{#each platforms}}
+					<option value="{{@key}}">{{this}}</option>
+				{{/each}}
+			</select>
+		</div>
 
-		<div class="col-md-12 text-left">
-			<button type="button" class="btn btn-default">OK</button>
+		<div class="col-md-3 col-sm-6 col-xs-12">
+			<select type="select" class="select-multi" id="input_placements" data-placeholder="placements" multiple="multiple">
+				{{#each placements}}
+					<option value="{{@key}}">{{this}}</option>
+				{{/each}}
+			</select>
+		</div>
+
+		<div class="col-md-3 col-sm-6 col-xs-12">
+			<select type="select" class="select-multi" id="input_location" data-placeholder="location" multiple="multiple">
+				{{#each locationCodes.Area}}
+					<optgroup label="{{AreaName}}">
+						{{#each ListArea}}
+							<option value="{{ConChar}}">{{LocName}}</option>
+						{{/each}}
+					</optgroup>
+				{{/each}}
+			</select>
+
+		</div>
+
+		<div class="col-md-3 col-sm-6 col-xs-12">
+			<select type="select" class="select-multi" id="input_startTime" data-placeholder="start time" >
+				<option value="00:00:00">Pre-roll</option>
+				<option value="00:05:00">Mid-roll after 5 minutes</option>
+				<option value="00:10:00">Mid-roll after 10 minutes</option>
+			</select>
+		</div>
+
+		<div class="col-md-12 text-left" style="margin-top: 10px">
+			<button type="button" class="btn btn-default" id="filter-btn">OK</button>
 		</div>
 	</div>
 </div>
@@ -88,15 +124,16 @@
 	</div>
 </div>
 
-<link rel="stylesheet" type="text/css" href="css/jquery.dataTables.min.css">
 <style type="text/css">
 	#piechart,#linechart,#stackedchart{
 		display: block;
 		height: 400px;
 		width: 100%;
 	}
-
 </style>
+<link rel="stylesheet" type="text/css" href="css/multiple-select.css">
+<script src="js/multiple-select.js"></script>
+<link rel="stylesheet" type="text/css" href="css/jquery.dataTables.min.css">
 <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
 	var data = [
@@ -115,10 +152,6 @@ $(document).ready(function(){
 	var end = new moment().format("YYYY-MM-DD");
     var begin = new moment().subtract(30, 'days').format("YYYY-MM-DD");
 
-    var formatTime = function (x) {
-        return new moment(x).format("YYYY-MM-DD");
-    };
-
     $('#begin').datetimepicker({
         format: 'YYYY-MM-DD',
         defaultDate: begin
@@ -133,6 +166,24 @@ $(document).ready(function(){
     });
     $("#end").on("dp.change", function (e) {
         $('#begin').data("DateTimePicker").maxDate(e.date);
+    });
+
+    $(".select-multi").multipleSelect({
+            filter: true,
+            multiple: true,
+            width: '100%',
+            multipleWidth: '100%',
+            selectAllText: 'Chọn tất cả'
+    });
+
+    $('#filter-btn').click(function(){
+    	var obj_date = filter_date();
+
+		var obj_fields = filter_fields();
+
+		var obj_join = $.extend(obj_date, obj_fields);
+
+		console.log(obj_join)
     });
 
 	render();
@@ -162,13 +213,17 @@ $(document).ready(function(){
 	}
 
 	function filter_date(){
-
+		var begin = $('#begin').data("DateTimePicker").date().format('YYYY-MM-DD');
+		var end = $('#end').data("DateTimePicker").date().format('YYYY-MM-DD');
 		return {begin: begin, end: end};
 	}
 
 	function filter_fields(){
-		
-		return {playview: playview, placement: placement, completeview: completeview};
+		var platforms = $('#input_platforms').val();
+		var placements = $('#input_placements').val();
+		var startTime = $('#input_startTime').val();
+		var location = $('#input_location').val();
+		return {platforms: platforms, placements: placements, startTime: startTime, location: location};
 	}
 
 	function render_chart(data){
@@ -266,7 +321,7 @@ $(document).ready(function(){
 		    .x(function(d) { return d.x })
 		    .y(function(d) { return d.y })
 		    .margin({top: 30, right: 20, bottom: 50, left: 175})
-		    // .showValues(true)
+		    .showValues(true)
 		    .tooltips(true)
 		    .transitionDuration(350)
 		    .showControls(true);
@@ -291,10 +346,10 @@ $(document).ready(function(){
 		for (var i in data) {
 			var tr = '<tr> \
 			<td>'+data[i].t+'</td> \
-			<td>'+data[i].reach+'</td> \
-			<td>'+data[i].imp+'</td> \
 			<td>'+data[i].playview+'</td> \
+			<td>'+data[i].imp+'</td> \
 			<td>'+data[i].completeview+'</td> \
+			<td>'+data[i].reach+'</td> \
 			<td>'+data[i].c+'</td> \
 			<td>'+data[i].ctr+'</td> \
 			</tr>'
@@ -303,8 +358,8 @@ $(document).ready(function(){
 		$('#table-details').DataTable({
 			columns: [
 	            { title: "Date" },
-	            { title: "Impression" },
 	            { title: "Play-View" },
+	            { title: "Impression" },
 	            { title: "Complete-View" },
 	            { title: "Unique Impression" },
 	            { title: "Clicks" },

@@ -281,6 +281,16 @@ ul.alert-dropdown {
 .ms-drop ul > li.multiple{
     width: 33.3333%;
 }
+#filter-wrap .ms-drop ul > li.multiple{
+    width: 100%;
+}
+#filter-wrap .ms-choice{
+    height: 34px;
+}
+#filter-wrap .ms-choice > span,
+#filter-wrap .ms-choice > div{
+    top: 3px;
+}
 .ms-drop input[type="checkbox"]{
     margin: 0 5px 0 0;
 }

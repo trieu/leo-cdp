@@ -19,21 +19,24 @@ router.get('/geolocation', function (req, res) {
 router.get('/inventory-report', function (req, res) {
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "Inventory Report";
-    data.platforms = constantUtils.platforms
+    data.placements = constantUtils.placements;
+    data.platforms = constantUtils.platforms;
+    data.locationCodes = constantUtils.getLocationCodes();
+
     res.render('monitor/inventory-report', data)
 });
 
 router.get('/inventory', function (req, res) {
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "Ad Inventory";
-    data.platforms = constantUtils.platforms
+    data.platforms = constantUtils.platforms;
     res.render('monitor/inventory', data)
 });
 //paytv
 router.get('/inventory-paytv', function (req, res) {
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "Ad Inventory-PayTV";
-    data.platforms = constantUtils.platforms
+    data.platforms = constantUtils.platforms;
     res.render('monitor/inventory-paytv', data)
 });
 
