@@ -14,6 +14,7 @@ adsplay-report/public/ads/
 adsplay-report/public/ads/*
 
 **.zip
+**~
 **.class
 **.classpath
 **.log
