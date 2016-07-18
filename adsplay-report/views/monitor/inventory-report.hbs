@@ -30,7 +30,7 @@
 			</select>
 		</div>
 
-		<div class="col-md-3 col-sm-6 col-xs-12">
+		<div class="col-md-3 col-sm-6 col-xs-12" style="display: none">
 			<select type="select" class="select-multi" id="input_placements" data-placeholder="placements" multiple="multiple">
 				{{#each placements}}
 					<option value="{{@key}}">{{this}}</option>
@@ -38,7 +38,7 @@
 			</select>
 		</div>
 
-		<div class="col-md-3 col-sm-6 col-xs-12">
+		<div class="col-md-3 col-sm-6 col-xs-12" style="display: none">
 			<select type="select" class="select-multi" id="input_location" data-placeholder="location" multiple="multiple">
 				{{#each locationCodes.Area}}
 					<optgroup label="{{AreaName}}">
@@ -51,7 +51,7 @@
 
 		</div>
 
-		<div class="col-md-3 col-sm-6 col-xs-12">
+		<div class="col-md-3 col-sm-6 col-xs-12" style="display: none">
 			<select type="select" class="select-multi" id="input_startTime" data-placeholder="start time" >
 				<option value="00:00:00">Pre-roll</option>
 				<option value="00:05:00">Mid-roll after 5 minutes</option>
@@ -69,19 +69,19 @@
 <div class="row" id="sum-panel">
 </div>
 
-<div class="row">
+<div class="row" >
 
   <div class="col-md-12">
 
 	<div id="piechart"><svg></svg></div>
-	<div id="linechart"><svg></svg></div>
-	<div id="stackedchart"><svg></svg></div>
+	<div id="linechart" style="display: none" ><svg></svg></div>
+	<div id="stackedchart" style="display: none" ><svg></svg></div>
 
   </div>
 
 </div>
 
-<div class="panel panel-default">
+<div class="panel panel-default" style="display: none">
 	<div class="panel-heading">Details</div>
 	<div class="panel-body">
 		<div id="table-wrap">

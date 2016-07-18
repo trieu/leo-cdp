@@ -53,17 +53,21 @@ $(document).ready(function(){
 		var obj_join = $.extend(obj_date, obj_fields);
 
 		console.log(obj_join)
-		// $.ajax({
-		// 	url: '',
-		// 	type: "GET",
-		// 	contentType: "application/json",
-		// 	dataType:'json',
-		// 	data: JSON.stringify(obj_join),
-		// 	success: function(data){
-		// 		render_char(data);
-		// 		table_data(data);
-		// 	}
-		// });
+
+        var url = 'http://api.adsplay.net/api/platform/summary/stats/?begin=2016-06-17&end=2016-07-17&pmId=101&pmId=102&pmId=201&pmId=202&pmId=301&pmId=302';
+		$.ajax({
+			url: url,
+			type: "GET",
+			contentType: "application/json",
+			dataType:'json',
+			data: JSON.stringify(obj_join),
+			success: function(data){
+                console.log(data);
+
+				//render_char(data);
+				//table_data(data);
+			}
+		});
 
 		render_chart(data);
 		table_data(data);
@@ -86,11 +90,12 @@ $(document).ready(function(){
 
 	function render_chart(data){
 
+        //TODO
 		sum_panel("#sum-panel",data, 
 			[
-				{key: 'Play-View', sum: 'playview'},
-				{key: 'Impression', sum: 'imp'},
-				{key: 'Complete-View', sum: 'completeview'}
+				{key: 'Play-View', sum: 'playview'}
+				//{key: 'Impression', sum: 'imp'},
+				//{key: 'Complete-View', sum: 'completeview'}
 			]
 		);
 
