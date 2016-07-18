@@ -20,10 +20,44 @@ router.get('/inventory-report', function (req, res) {
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "Inventory Report";
     data.placements = constantUtils.placements;
-    data.platforms = constantUtils.platforms;
+    data.platforms = constantUtils.platforms_default;
     data.locationCodes = constantUtils.getLocationCodes();
 
-    res.render('monitor/inventory-report', data)
+    res.render('monitor/inventory-report', data);
+});
+
+router.post('/inventory-report/api', function (req, res){
+    var data = modelUtils.baseModel(req);
+
+    var url = 'http://api.adsplay.net/api/platform/summary/stats/';
+    var body = req.body;
+    var date_query = '?begin='+req.body.begin+'&end='+req.body.end;
+
+    if (body.platforms != null) {
+        data.placements = constantUtils.placements_default;
+        var platformsArr = [];
+        for (var i in body.platforms) {
+            var number = parseInt(body.platforms[i]);
+
+            for (var j in data.placements){
+                if(number == j){
+                    platformsArr.push(data.placements[j]);
+                }
+            }
+            
+        }
+        var merged = [].concat.apply([], platformsArr);
+        var platforms_query = '&pmId=' + merged.join('&pmId=');
+    }
+    
+    // console.log(url + date_query + platforms_query);
+    request(url + date_query + platforms_query,
+        function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                res.json(JSON.parse(body));
+            }
+        }    
+    )
 });
 
 router.get('/inventory', function (req, res) {

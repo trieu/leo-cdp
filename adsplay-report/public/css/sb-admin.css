@@ -300,7 +300,7 @@ ul.alert-dropdown {
 #action_btn{font-size: 24px; vertical-align: middle; cursor: pointer;}
 
 /* data table */
-#table-details_filter input{
+.dataTables_filter input{
     border: 1px solid #ddd;
 }
 table.dataTable thead th{

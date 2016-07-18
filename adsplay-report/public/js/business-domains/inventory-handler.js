@@ -54,23 +54,32 @@ $(document).ready(function(){
 
 		console.log(obj_join)
 
-        var url = 'http://api.adsplay.net/api/platform/summary/stats/?begin=2016-06-17&end=2016-07-17&pmId=101&pmId=102&pmId=201&pmId=202&pmId=301&pmId=302';
-		$.ajax({
-			url: url,
-			type: "GET",
+        $.ajax({
+			url: '/monitor/inventory-report/api',
+			type: "POST",
 			contentType: "application/json",
-			dataType:'json',
+			dataType: 'json',
 			data: JSON.stringify(obj_join),
-			success: function(data){
-                console.log(data);
+			success: function(result){
+                var pie_data = [];
+                console.log(result)
+				for(var i in result){
+					pie_data.push({key: check_device(result[i].pfId), sum: result[i].totalPv});
+				}
+				pie_chart(pie_data);
 
-				//render_char(data);
-				//table_data(data);
+				table_data('#table-wrap', result, 
+					[	
+						{ key: "Device" , field: "pfId"},
+						{ key: "Play-View" , field: "totalPv"}
+					]
+				);
+				// render_chart(data);
+				// table_data(data);
 			}
 		});
 
 		render_chart(data);
-		table_data(data);
 
 	}
 
@@ -90,31 +99,6 @@ $(document).ready(function(){
 
 	function render_chart(data){
 
-        //TODO
-		sum_panel("#sum-panel",data, 
-			[
-				{key: 'Play-View', sum: 'playview'}
-				//{key: 'Impression', sum: 'imp'},
-				//{key: 'Complete-View', sum: 'completeview'}
-			]
-		);
-
-		var pie_data = sum_fields(data, 
-			[
-				{key: 'Play-View', sum: 'playview'},
-				{key: 'Impression', sum: 'imp'},
-				{key: 'Complete-View', sum: 'completeview'}
-			]
-		);
-
-		var line_data = arr_by_field(data, 
-			[
-				{key: 'Play-View', field: 'playview'},
-				{key: 'Impression', field: 'imp'},
-				{key: 'Complete-View', field: 'completeview'}
-			]
-		);
-
 		var line_data = stacked = arr_by_field(data, 
 			[
 				{key: 'Play-View', field: 'playview'},
@@ -123,11 +107,9 @@ $(document).ready(function(){
 			]
 		);
 
-		pie_chart(pie_data);
+		// line_chart(line_data);
 
-		line_chart(line_data);
-
-		stacked_chart(stacked);
+		// stacked_chart(stacked);
 
 	}
 
@@ -210,33 +192,33 @@ $(document).ready(function(){
 		});
 	}
 
-	function table_data(data){
-		var table = $('<table id="table-details" class="table table-hover table-striped"><tbody></tbody></table>');
-		$('#table-wrap').empty();
-		$('#table-wrap').append(table);
+	function table_data(placementID, data, data_col){
+		var table = $('<table class="table-details" class="table table-hover table-striped"><tbody></tbody></table>');
+		$(placementID).empty();
+		$(placementID).append(table);
 		
-		for (var i in data) {
-			var tr = '<tr> \
-			<td>'+moment(data[i].t).format("YYYY-MM-DD")+'</td> \
-			<td>'+data[i].playview+'</td> \
-			<td>'+data[i].imp+'</td> \
-			<td>'+data[i].completeview+'</td> \
-			<td>'+data[i].reach+'</td> \
-			<td>'+data[i].c+'</td> \
-			<td>'+data[i].ctr+'</td> \
-			</tr>'
-			table.find('tbody').append(tr)
+		for (var k in data){
+
+			var title = [];
+			var td = "";
+			for (var i in data_col) {
+				if(data_col[i].field == 'pfId'){
+					data[k][data_col[i].field] = check_device(data[k][data_col[i].field]);
+				}
+				else{
+					data[k][data_col[i].field] = formatNumber(data[k][data_col[i].field]);
+				}
+
+				td += '<td>'+data[k][data_col[i].field]+'</td>';
+				title.push({title: data_col[i].key});
+			}
+			var tr = '<tr>'+td+'</tr>';
+			table.find('tbody').append(tr);
 		}
-		$('#table-details').DataTable({
-			columns: [
-	            { title: "Date" },
-	            { title: "Play-View" },
-	            { title: "Impression" },
-	            { title: "Complete-View" },
-	            { title: "Unique Impression" },
-	            { title: "Clicks" },
-	            { title: "CTR" }
-	        ]
+
+		
+		$('.table-details').DataTable({
+			columns: title
 		});
 	}
 
@@ -292,6 +274,27 @@ $(document).ready(function(){
 			result.push({key: arr_group[i].key, values: group});
 		}
 		return result;
+	}
+
+	function check_device(id){
+		if(id == 1){
+			return 'Web';
+		}
+		else if(id == 2){
+			return 'Mobile Web';
+		}
+		else if(id == 3){
+			return 'Tablet';
+		}
+		else if(id == 4){
+			return 'Mobile App';
+		}
+		else if(id == 5){
+			return 'SmartTV';
+		}
+		else{
+			return 'All Device';
+		}
 	}
 
 });

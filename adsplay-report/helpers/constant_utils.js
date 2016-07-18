@@ -20,6 +20,13 @@ var userNames = {1000: 'Admin', 1001: 'Manager', 1002: 'Customer', 1003: 'epl_fp
 var sites = {'www.fshare.vn': 'FShare', 'fptplay-live': 'FptPlay-LiveEvent' };
 var platforms = {1: 'PC Web', 2: 'Mobile Web', 3: 'Tablet', 4: 'Mobile App', 5: 'SmartTV', 6: 'IPTV'};
 
+var platforms_default = {1: 'PC Web', 4: 'Mobile App', 5: 'SmartTV'};
+var placements_default = {
+    1: [100, 101, 102, 103, 120, 121],
+    4: [301, 302, 333, 307, 308],
+    5: [201, 202]
+};
+
 exports.getStatus = function (id) {
     return statuses[id];
 };
@@ -102,3 +109,6 @@ exports.statuses = statuses;
 exports.placements = placements;
 exports.sites = sites;
 exports.platforms = platforms;
+
+exports.placements_default = placements_default;
+exports.platforms_default = platforms_default;
