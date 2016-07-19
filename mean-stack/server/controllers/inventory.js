@@ -9,7 +9,7 @@ module.exports = function(app) {
 		var begin = req.query.begin;
 		var end = req.query.end;
 
-		var url = "http://dev-fbox-onetv.fpt.vn/OneTVWS.ashx?method=ITVad_TotalView&begintime="+begin+"&endtime="+end;
+		var url = "http://fbox-onetv.fpt.vn/OneTVWS.ashx?method=ITVad_TotalView&begintime="+begin+"&endtime="+end;
 		
 		Sync(function(){
 			// result from callback

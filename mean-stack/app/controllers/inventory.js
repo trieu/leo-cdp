@@ -27,8 +27,8 @@ webApp.controller('inventoryPayTvCtrl', function($scope, inventory) {
 						var list = items[i][j];
 						var countView = 0;
 						for (var k in list) {
-							chartData.push([list[k].Category, list[k].ToltalView])
-							countView += parseInt(list[k].ToltalView);
+							chartData.push([list[k].Category, list[k].TotalView])
+							countView += parseInt(list[k].TotalView);
 						}
 					}
 
