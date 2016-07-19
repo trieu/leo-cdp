@@ -61,8 +61,16 @@ $(document).ready(function(){
 			dataType: 'json',
 			data: JSON.stringify(obj_join),
 			success: function(result){
+				sum_panel("#sum-panel", result, 
+					[
+						{key: 'Play-View', sum: 'totalPv'}
+						//{key: 'Impression', sum: 'imp'},
+						//{key: 'Complete-View', sum: 'completeview'}
+					]
+				);
+
                 var pie_data = [];
-                console.log(result)
+                
 				for(var i in result){
 					pie_data.push({key: check_device(result[i].pfId), sum: result[i].totalPv});
 				}
@@ -240,7 +248,7 @@ $(document).ready(function(){
 				    <div class="panel '+color+'"> \
 				        <div class="panel-heading"> \
 				            <div class="text-right"> \
-				                <div class="huge" id="sum-playview">'+count+'</div> \
+				                <div class="huge" id="sum-playview">'+formatNumber(count)+'</div> \
 				                <div class="total-view-text">'+arr_sum[i].key+'</div> \
 				            </div> \
 				        </div> \
