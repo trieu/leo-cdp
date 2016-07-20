@@ -1,4 +1,8 @@
 $(window).load(function() {
+    setTimeout(function(){
+        $("#crt_pf_details > table").DataTable();
+    }, 1000);
+
     function action_btn(){
         if($('#ads_status').attr("data-status") == "Running"){
                 $('#ads_status').parent().append('<i id="action_btn" class="fa fa-toggle-on color-green" title="Turn On/Off Ads"></i>');

@@ -26,12 +26,8 @@
         text-overflow: ellipsis;
 
     }
-
-    svg.report-detail-piechart {
-        display: block;
-        float: left;
-        height: 350px;
-        width: 350px;
+    #audience-wrapp{
+        min-height: 350px;
     }
 </style>
 
@@ -201,7 +197,11 @@
                                 <strong>Audience Reach on Ad Placements</strong></h3>
                         </div>
                         <div class="panel-body">
-                            <svg id="audience-wrapp" class="report-detail-piechart"></svg>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12">
+                                    <svg id="audience-wrapp" class="report-detail-piechart"></svg>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -299,9 +299,9 @@
         <div id="tc-audience" class="tab-pane fade">
 
         </div>
-        <div id="tc-platform" class="tab-pane fade" style="display: ">
+        <!-- <div id="tc-platform" class="tab-pane fade">
             <svg id="platform-wrapp" class="report-detail-piechart"></svg>
-        </div>
+        </div> -->
         <div id="tc-csv-export" class="tab-pane fade">
             <div class="container">
                 <h2>CSV Raw Data from {{begin}} to {{end}}</h2>
@@ -316,6 +316,8 @@
 
 </div>
 
+<link rel="stylesheet" type="text/css" href="css/jquery.dataTables.min.css">
+<script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
 <script src="js/business-domains/action-handler.js"></script>
 
 <script>
@@ -669,9 +671,6 @@ $(document).ready(function () {
         $(".prev span").text(y);
     });
 
-
-    var height = 10;
-    var width = 10;
     //platforms
     var platformPieChartData = [];
     d3.json("{{site.ssl_api_domain}}/api/creatives/{{crtId}}/platforms", function (error, data) {
@@ -694,8 +693,6 @@ $(document).ready(function () {
                                 .y(function (d) {
                                     return d.value
                                 })
-                                .width(width)
-                                .height(height)
                                 .showLabels(true)     //Display pie labels
                                 .labelThreshold(.05)  //Configure the minimum slice size for labels to show up
                                 .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"

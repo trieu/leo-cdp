@@ -306,3 +306,7 @@ ul.alert-dropdown {
 table.dataTable thead th{
     padding: 10px !important;
 }
+
+#crt_pf_details .dataTables_wrapper{
+    margin-top: 10px;
+}
