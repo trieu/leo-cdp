@@ -26,7 +26,7 @@
         text-overflow: ellipsis;
 
     }
-    #audience-wrapp{
+    .report-detail-piechart{
         min-height: 350px;
     }
 </style>
@@ -198,6 +198,9 @@
                         </div>
                         <div class="panel-body">
                             <div class="row">
+                                <div class="col-md-6 col-sm-12">
+                                    <svg id="platforms-chart" class="report-detail-piechart"></svg>
+                                </div>
                                 <div class="col-md-6 col-sm-12">
                                     <svg id="audience-wrapp" class="report-detail-piechart"></svg>
                                 </div>
@@ -678,78 +681,32 @@ $(document).ready(function () {
 
         var platforms = {{{json platforms}}};
         if (data.length > 0) {
-            for (var i = 0; i < data.length; i++) {
-                var pf = {};
-                pf.label = platforms[data[i].pfId];
-                pf.value = data[i].totalImp;
-                platformPieChartData.push(pf);
-            }
-            console.log(platformPieChartData);
-            nv.addGraph(function () {
-                var chart = nv.models.pieChart()
-                                .x(function (d) {
-                                    return d.label
-                                })
-                                .y(function (d) {
-                                    return d.value
-                                })
-                                .showLabels(true)     //Display pie labels
-                                .labelThreshold(.05)  //Configure the minimum slice size for labels to show up
-                                .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
-                                .donut(true)          //Turn on Donut mode. Makes pie chart look tasty!
-                                .donutRatio(0.35)     //Configure how big you want the donut hole size to be.
-                        ;
 
-                d3.select("#platform-wrapp")
-                        .datum(platformPieChartData)
-                        .transition().duration(350)
-                        .call(chart);
-                return chart;
-            });
+            for (var i = 0; i < data.length; i++) {
+                platformPieChartData.push({label: platforms[data[i].pfId], value: data[i].totalImp});
+            }
+                
+            var placementID = "#platform-wrapp";
+            pieChart(placementID, platformPieChartData);
         } else {
             console.log("Data empty");
         }
     });
 
     //placements
-
-    var placementsPieChartData = [];
-
     function displayAudienceReachAndDeviceType() {
+        var placementsPieChartData = [];
+
         d3.json("{{site.ssl_api_domain}}/api/creatives/{{crtId}}/placements", function (error, data) {
             var placements = {{{json placements}}};
             if (data.length > 0) {
                 for (var i = 0; i < data.length; i++) {
-                    var pl = {};
-                    pl.label = placements[data[i].pmId];
-                    pl.value = data[i].totalReach;
-                    placementsPieChartData.push(pl);
+                    placementsPieChartData.push({label: placements[data[i].pmId], value: data[i].totalReach});
                 }
-                //console.log(placementsPieChartData);
-                nv.addGraph(function () {
-                    var chart = nv.models.pieChart()
-                                    .margin({ left: 80})
-                                    .x(function (d) {
-                                        return d.label
-                                    })
-                                    .y(function (d) {
-                                        return d.value
-                                    })
-                                    .showLabels(true)
-                                    .labelThreshold(.05)
-                                    .labelType("percent")
-                                    .donut(true)
-                                    .donutRatio(0.35)
-                                    .showLegend(true)
-                            ;
+                
+                var placementID = "#audience-wrapp";
+                pieChart(placementID, placementsPieChartData);
 
-                    d3.select("#audience-wrapp")
-                            .datum(placementsPieChartData)
-                            .transition().duration(350)
-                            .call(chart);
-//
-                    return chart;
-                });
             } else {
                 console.log("Data empty");
 
@@ -757,7 +714,91 @@ $(document).ready(function () {
         });
     }
 
+    function displayPlatforms() {
+        var platformsData = [];
+
+        d3.json("{{site.ssl_api_domain}}/api/creatives/{{crtId}}/placements", function (error, data) {
+            var placements = {{{json placements}}};
+            if (data.length > 0) {
+                var pc = mobile = smarttv = other = 0;
+
+                for (var i = 0; i < data.length; i++) {
+                    if(isDevice(data[i].pmId) == 'PC'){
+                        pc += data[i].totalReach;
+                    }
+                    else if(isDevice(data[i].pmId) == 'Mobile App'){
+                        mobile += data[i].totalReach;
+                    }
+                    else if(isDevice(data[i].pmId) == 'SmartTV'){
+                        smarttv += data[i].totalReach;
+                    }
+                    else {
+                        other += data[i].totalReach;
+                    }
+                    
+                }
+
+                platformsData.push({label: "PC", value: pc});
+                platformsData.push({label: "Mobile App", value: mobile});
+                platformsData.push({label: "SmartTV", value: smarttv});
+                if(other > 0){
+                    platformsData.push({label: "Other Device", value: other});
+                }
+                
+                var placementID = "#platforms-chart";
+                pieChart(placementID, platformsData);
+
+            } else {
+                console.log("Data empty");
+
+            }
+        });
+    }
+
+    function pieChart(placementID, data){
+        
+        nv.addGraph(function () {
+            var chart = nv.models.pieChart()
+                        .x(function (d) {
+                            return d.label
+                        })
+                        .y(function (d) {
+                            return d.value
+                        })
+                        .showLabels(true)     //Display pie labels
+                        .labelThreshold(.05)  //Configure the minimum slice size for labels to show up
+                        .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
+                        .donut(true)          //Turn on Donut mode. Makes pie chart look tasty!
+                        .donutRatio(0.35)     //Configure how big you want the donut hole size to be.
+                    ;
+
+        d3.select(placementID)
+                    .datum(data)
+                    .transition().duration(350)
+                    .call(chart);
+            return chart;
+        });
+
+    }
+
+    function isDevice(id){
+        if(id >= 100 && id <= 199){
+            return 'PC';
+        }
+        else if(id >= 300 && id <= 399){
+            return 'Mobile App';
+        }
+        else if(id >= 200 && id <= 299){
+            return 'SmartTV';
+        }
+        else{
+            return 'Other Device';
+        }
+    }
+
     setTimeout(displayAudienceReachAndDeviceType, 100);
+    setTimeout(displayPlatforms, 100);
+
 
 });
 

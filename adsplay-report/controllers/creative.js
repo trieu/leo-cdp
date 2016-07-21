@@ -127,6 +127,8 @@ router.get('/:id', function (req, res) {
             data.platforms = constantUtils.platforms;
             //get placements data
             data.placements = constantUtils.placements;
+
+            data.placements_default = constantUtils.placements_default;
         }
         Creative.get(req.params.id, data, function (err, data) {
             try {

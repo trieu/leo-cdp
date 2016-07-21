@@ -1,3 +1,8 @@
+<style type="text/css">
+    .donut_chart svg{
+        min-height: 350px;
+    }
+</style>
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -47,22 +52,33 @@
                     </div>
                 </div>
             </div>
-            <div id='chart_donut_pv' class='col-lg-6'>
-                <h3 class="text-center">PlayView</h3>
-                <svg style="width: 100%; height: 300px"></svg>
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <h3 class="text-center">PlayView</h3>
+                    <div id='chart_donut_pv' class="donut_chart">
+                        <svg></svg>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <h3 class="text-center">Impression</h3>
+                    <div id='chart_donut_impression' class="donut_chart">
+                        <svg></svg>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <h3 class="text-center">Completed-View</h3>
+                    <div id='chart_donut_trv' class="donut_chart">
+                        <svg></svg>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <h3 class="text-center">Click</h3>
+                    <div id='chart_donut_click' class="donut_chart">
+                        <svg></svg>
+                    </div>
+                </div>
             </div>
-            <div id='chart_donut_impression' class='col-lg-6'>
-                <h3 class="text-center">Impression</h3>
-                <svg style="width: 100%; height: 300px"></svg>
-            </div>
-            <div id='chart_donut_trv' class='col-lg-6'>
-                <h3 class="text-center">Completed-View</h3>
-                <svg style="width: 100%; height: 300px"></svg>
-            </div>
-            <div id='chart_donut_click' class='col-lg-6'>
-                <h3 class="text-center">Click</h3>
-                <svg style="width: 100%; height: 300px"></svg>
-            </div>
+            
         </div>
     </div>
 </div>
@@ -79,24 +95,26 @@
         if (data && data.length > 0) {
             nv.addGraph(function () {
                 var chart = nv.models.pieChart()
-                                .x(function (d) {
-                                    return d.label
-                                })
-                                .y(function (d) {
-                                    return d.value
-                                })
-                                .showLabels(true)
-                                .labelThreshold(.04)  //Configure the minimum slice size for labels to show up
-                                .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
-                                .donut(true)          //Turn on Donut mode. Makes pie chart look tasty!
-                                .donutRatio(0.35)     //Configure how big you want the donut hole size to be.
+                            .x(function (d) {
+                                return d.label
+                            })
+                            .y(function (d) {
+                                return d.value
+                            })
+                            .showLabels(true)     //Display pie labels
+                            .labelThreshold(.05)  //Configure the minimum slice size for labels to show up
+                            .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
+                            .donut(true)          //Turn on Donut mode. Makes pie chart look tasty!
+                            .donutRatio(0.35)     //Configure how big you want the donut hole size to be.
                         ;
-                d3.select(element)
+
+            d3.select(element)
                         .datum(data)
                         .transition().duration(350)
                         .call(chart);
                 return chart;
             });
+
         }
     };
 
