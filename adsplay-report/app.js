@@ -38,7 +38,9 @@ app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal']);
 //app.use(morgan('dev'));       // log every request to the console
 
 //config view engine
-var hbsConfigs = {extname: 'hbs', defaultLayout: 'admin.hbs'};
+//admin.hbs or admin-compress.hbs
+var layout = 'admin-compress.hbs';
+var hbsConfigs = {extname: 'hbs', defaultLayout: layout};
 app.engine('hbs', expressHbs(hbsConfigs));
 app.set('view engine', 'hbs');
 //TODO enable cache for production only

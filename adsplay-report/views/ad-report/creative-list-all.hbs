@@ -80,7 +80,6 @@
 
 <script>
     $(function () {
-        $(document).tooltip();
 
         Handlebars.registerHelper('formatCurrency', function(value) { return value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"); });
 
@@ -240,6 +239,7 @@
                     list_html(data);
                     icon_status();
                     render_action();
+                    $('[title]').tooltip();
                 }
             });
         }

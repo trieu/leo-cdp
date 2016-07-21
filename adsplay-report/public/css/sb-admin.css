@@ -365,3 +365,16 @@ span.impress-text {
 .nv-point-paths {
     padding-left: 5px;
 }
+
+/* Ad playback */
+.vjs-ad-playing.vjs-ad-playing .vjs-progress-control {
+  pointer-events: none;
+}
+.vjs-ad-playing.vjs-ad-playing .vjs-play-progress {
+  background-color: #ffe400;
+}
+
+/* Ad loading */
+.vjs-ad-playing.vjs-ad-loading .vjs-loading-spinner {
+  display: block;
+}
