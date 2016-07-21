@@ -61,11 +61,13 @@ $(document).ready(function(){
 			dataType: 'json',
 			data: JSON.stringify(obj_join),
 			success: function(result){
+				console.log(result)
 				sum_panel("#sum-panel", result, 
 					[
-						{key: 'Play-View', sum: 'totalPv'}
-						//{key: 'Impression', sum: 'imp'},
-						//{key: 'Complete-View', sum: 'completeview'}
+						{key: 'Play-View', sum: 'totalPv'},
+						{key: 'Impression', sum: 'imp'},
+						{key: 'Complete-View', sum: 'completeview'},
+						{key: 'Reach', sum: 'reach'}
 					]
 				);
 
@@ -241,10 +243,14 @@ $(document).ready(function(){
 			var count = 0;
 			for(var j in arr_data){
 				count += arr_data[j][arr_sum[i].sum];
+				console.log(count)
+			}
+			if (isNaN(count)){
+				count = 0;
 			}
 			result.push({key: arr_sum[i].key, sum: count});
 
-			var panel = $('<div class="col-md-4 col-xs-12"> \
+			var panel = $('<div class="col-md-3 col-sm-6 col-xs-12"> \
 				    <div class="panel '+color+'"> \
 				        <div class="panel-heading"> \
 				            <div class="text-right"> \

@@ -310,3 +310,58 @@ table.dataTable thead th{
 #crt_pf_details .dataTables_wrapper{
     margin-top: 10px;
 }
+
+/*details*/
+span[datatype=real-time] {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+span.impress-text {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.table {
+    table-layout: fixed;
+}
+
+.table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+}
+.report-detail-piechart{
+    min-height: 350px;
+}
+/*monitor folder css*/
+
+#piechart,#linechart,#stackedchart{
+    display: block;
+    height: 400px;
+    width: 100%;
+}
+.pieChartWrap h3{
+        text-align: center;
+    }
+    .pieChartWrap svg {
+        height: 400px;
+    }
+.chart-div svg {
+    height: 420px;
+    background-color: #D8D8D8 !important;
+}
+.leaflet-container {
+    background: rgba(0,0,0,.8) !important;
+}
+#cAdsPerPv {
+    font-weight: bolder;
+}
+.donut_chart svg{
+    min-height: 350px;
+}
+
+.nv-point-paths {
+    padding-left: 5px;
+}
