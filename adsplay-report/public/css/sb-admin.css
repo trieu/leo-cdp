@@ -304,11 +304,24 @@ ul.alert-dropdown {
     border: 1px solid #ddd;
 }
 table.dataTable thead th{
-    padding: 10px !important;
+    padding: 10px 15px !important;
 }
 
 #crt_pf_details .dataTables_wrapper{
     margin-top: 10px;
+}
+
+#table-creative-list{
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+}
+#table-creative-list table{
+    table-layout: auto;
+}
+#table-creative-list table th{
+    vertical-align: middle;
+    white-space: normal !important;
 }
 
 /*details*/
@@ -366,6 +379,7 @@ span.impress-text {
     padding-left: 5px;
 }
 
+.video-js{width: 100%;}
 /* Ad playback */
 .vjs-ad-playing.vjs-ad-playing .vjs-progress-control {
   pointer-events: none;

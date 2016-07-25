@@ -52,21 +52,21 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover table-striped" id="tbl-creatives">
+        <div class="table-responsive" id="table-creative-list">
+            <table class="table table-hover table-striped" id="tbl-creatives">
                 <thead>
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
                     <th>Status</th>
-                    <th>Total Impression</th>
-                    <th style="display: none">Total Complete-View</th>
+                    <th><span title="Total Impression">Impression</span></th>
+                    <th style="display: none">Complete-View</th>
 
-                    <th>Total Click</th>
+                    <th><span title="Total Click">Click</span></th>
                     <th><a href="javascript:" title="Click-through rate">CTR</a></th>
                     <th style="display: none"><a href="javascript:" title="Complete-View rate">CVR</a></th>
                     <th>Booking Time</th>
-                    <th>Total Estimated Revenue</th>
+                    <th><span title="Total Estimated Revenue" style="display: block">Estimated Revenue</span></th>
                     <th id="th-action">Action</th>
                 </tr>
                 </thead>
@@ -238,6 +238,7 @@
                     $('.loader').remove();
                     list_html(data);
                     icon_status();
+                    $("#tbl-creatives").DataTable();
                     render_action();
                     $('[title]').tooltip();
                 }
@@ -245,6 +246,7 @@
         }
 
     });
+
 </script>
 
 <script id="tpl-crt-list" type="text/x-handlebars">
@@ -252,7 +254,7 @@
         <tr \{{#if active }} class="active" \{{/if}} >
             <td class="td-id">\{{id}}</td>
             <td><a href="/creative/\{{id}}">\{{name}}</a></td>
-            <td class="td-status" data-status="\{{status}}">\{{status}}</td>
+            <td class="td-status" data-status="\{{status}}" data-order="\{{status}}"  data-search="\{{status}}">\{{status}}</td>
             <td>\{{formatCurrency imp}}</td>
             <td style="display: none" >\{{formatCurrency trv}}</td>
 
@@ -260,7 +262,7 @@
             <td>\{{ctr}}%</td>
             <td style="display: none" >\{{tvr}}%</td>
             <td>\{{runDate}} &#10145; \{{expiredDate}}</td>
-            <td>\{{formatCurrency totalRevenue}}</td>
+            <td class="td-revenue">\{{formatCurrency totalRevenue}}</td>
             <td class="td-action"></td>
         </tr>
     \{{/each}}

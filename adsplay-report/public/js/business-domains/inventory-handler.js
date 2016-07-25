@@ -65,9 +65,9 @@ $(document).ready(function(){
 				sum_panel("#sum-panel", result, 
 					[
 						{key: 'Play-View', sum: 'totalPv'},
-						{key: 'Impression', sum: 'imp'},
-						{key: 'Complete-View', sum: 'completeview'},
-						{key: 'Reach', sum: 'reach'}
+						{key: 'Impression', sum: 'totalImp'},
+						// {key: 'Complete-View', sum: 'completeview'},
+						// {key: 'Reach', sum: 'reach'}
 					]
 				);
 
@@ -250,7 +250,7 @@ $(document).ready(function(){
 			}
 			result.push({key: arr_sum[i].key, sum: count});
 
-			var panel = $('<div class="col-md-3 col-sm-6 col-xs-12"> \
+			var panel = $('<div> \
 				    <div class="panel '+color+'"> \
 				        <div class="panel-heading"> \
 				            <div class="text-right"> \
