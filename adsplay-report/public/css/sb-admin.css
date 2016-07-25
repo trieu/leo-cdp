@@ -303,8 +303,8 @@ ul.alert-dropdown {
 .dataTables_filter input{
     border: 1px solid #ddd;
 }
-table.dataTable thead th{
-    padding: 10px 15px !important;
+table.dataTable thead th, table.dataTable thead td{
+    padding: 10px 15px 10px 10px !important;
 }
 
 #crt_pf_details .dataTables_wrapper{
