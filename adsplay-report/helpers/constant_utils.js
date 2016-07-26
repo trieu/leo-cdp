@@ -36,7 +36,9 @@ exports.getAdType = function (id) {
 };
 
 exports.getUserName = function (id) {
-    return userNames[id];
+    if(userNames[id])
+        return userNames[id];
+    return 'Guest';
 };
 
 exports.getPlacement = function (id) {

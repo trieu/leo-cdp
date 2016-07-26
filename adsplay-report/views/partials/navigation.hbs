@@ -138,9 +138,13 @@
                        data-target="#menuAnalytics"><i class="fa fa-fw fa-line-chart"></i> Analytics<i
                             class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="menuAnalytics" class="collapse in" aria-expanded="true" style="">
+
+                        {{#if isSuperAdminGroup }}
                         <li class="">
                             <a href="/"><i class="fa fa-fw fa-line-chart"></i> Ad Metrics</a>
                         </li>
+                        {{/if}}
+
                         <li class="">
                             <a href="/monitor/user"><i class="fa fa-fw fa-bar-chart-o"></i> Audience Report</a>
                         </li>

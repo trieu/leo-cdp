@@ -1,13 +1,10 @@
 var LocalStrategy = require('passport-local').Strategy;
 
-var dataDemo = require('../configs/passport-config');
+var passportConfig = require('../configs/passport-config');
 
 //bcrypt = require('bcryptjs'); //thư viện mã hóa
 module.exports = function(passport) {
-	/*SETUP PASSPORT
-	  Session nếu xác thực thành công thì cookie sẽ được thiết lập trong trình duyệt.
-	  Mỗi yêu cầu tiếp theo sẽ không chứa các thông tin, mà là cookie duy nhất xác định phiên.
-	*/
+
 	passport.serializeUser(function(user, done) {
 		done(null, user.id);
 	});
@@ -17,9 +14,9 @@ module.exports = function(passport) {
 			done(err, data_return(user));
 		});
 		*/
-		for (var i in dataDemo) {
-			if(dataDemo[i]._id == id){
-				done(null, data_return(dataDemo[i]));
+		for (var i in passportConfig) {
+			if(passportConfig[i]._id == id){
+				done(null, data_return(passportConfig[i]));
 			}
 		}
 	});
@@ -31,7 +28,7 @@ module.exports = function(passport) {
 	},
 	function(req, username, password, done) {
 		//check username return object
-		var obj = getObjects(dataDemo,'', username);
+		var obj = getObjects(passportConfig,'', username);
 
 		if (typeof obj[0] !== 'undefined' && obj[0] !== null ) {
 
@@ -94,7 +91,6 @@ module.exports = function(passport) {
 					req.logIn(user, function(err) {
 						if (err) { return next(err); }
 						res.redirect('/creative/list/all');
-						/*res.json({ success: user });*/
 					});
 				}
 			})(req, res, next);
@@ -111,6 +107,5 @@ module.exports = function(passport) {
 			req.logout();
 			res.redirect('/login');
 		}
-
 	}
 }

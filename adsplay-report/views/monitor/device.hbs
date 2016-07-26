@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
-            Most popular devices
+            Most popular devices in real-time
             <small></small>
         </h1>
     </div>
@@ -35,10 +35,10 @@
 
 <script type="application/javascript">
 
-    var filterDate = moment().subtract(1, 'days').format('YYYY-MM-DD');
+    var filterDate = moment().subtract(0, 'days').format('YYYY-MM-DD');
 
      d3.json("{{buildUrl '/monitor/summary/chartPiePlatform'}}?filterDate=" + filterDate, function (error, data) {
-        var labels = {'1': 'PC', '2': 'Mobile Web', '3': 'Tablet', '4': 'Mobile Native App'};
+        var labels = {'1': 'PC', '2': 'Mobile Web', '3': 'Tablet', '4': 'Mobile Native App','5':'SmartTV'};
         nv.addGraph(function () {
             var chart = nv.models.pieChart()
                             .x(function (d) {
