@@ -224,6 +224,7 @@
     }
 
     jQuery(document).ready(function(){
+        $('[title]').tooltip();
     
         $("#profile-all").click(function () {
             var checkboxes = $(this).closest('#row-profile').find(':checkbox');

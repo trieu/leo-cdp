@@ -392,3 +392,11 @@ span.impress-text {
 .vjs-ad-playing.vjs-ad-loading .vjs-loading-spinner {
   display: block;
 }
+
+/*tooltip*/
+.tooltip-inner {
+    max-width: 400px;
+    line-height: 12px;
+    padding: 5px;
+    white-space: normal;
+}

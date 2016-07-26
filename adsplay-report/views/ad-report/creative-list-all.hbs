@@ -238,7 +238,10 @@
                     $('.loader').remove();
                     list_html(data);
                     icon_status();
-                    $("#tbl-creatives").DataTable();
+                    $("#tbl-creatives").DataTable({
+                        "pageLength": 25,
+                        "order": [[0,'desc']]
+                    });
                     render_action();
                     $('[title]').tooltip();
                 }
