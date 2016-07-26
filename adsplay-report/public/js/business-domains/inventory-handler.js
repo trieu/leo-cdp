@@ -31,12 +31,14 @@ $(document).ready(function(){
         $('#begin').data("DateTimePicker").maxDate(e.date);
     });
 
-    $(".select-multi").multipleSelect({
+    $("#input_platforms").multipleSelect({
             filter: true,
             multiple: true,
             width: '100%',
             multipleWidth: '100%',
-            selectAllText: 'Chọn tất cả'
+            selectAllDelimiter: ['', ''],
+            selectAllText: 'Select all',
+        	allSelected: 'All selected platforms'
     });
 
     $('#filter-btn').click(function(){
