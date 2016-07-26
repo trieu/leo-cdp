@@ -22,8 +22,8 @@ var platforms = {1: 'PC Web', 2: 'Mobile Web', 3: 'Tablet', 4: 'Mobile App', 5: 
 
 var platforms_default = {1: 'PC Web', 4: 'Mobile App', 5: 'SmartTV'};
 var placements_default = {
-    1: [100, 101, 102, 103, 120, 121],
-    4: [301, 302, 333, 307, 308],
+    1: [101, 102],
+    4: [301, 302, 303, 304, 305, 306, 308, 308, 333],
     5: [201, 202]
 };
 

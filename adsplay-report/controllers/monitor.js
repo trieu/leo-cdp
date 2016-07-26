@@ -51,7 +51,9 @@ router.post('/inventory-report/api', function (req, res){
     }
     
     // console.log(url + date_query + platforms_query);
-    request(url + date_query + platforms_query,
+    var queryUrl = url + date_query + platforms_query;
+    console.log('inventory-report '+queryUrl);
+    request(queryUrl,
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 res.json(JSON.parse(body));
