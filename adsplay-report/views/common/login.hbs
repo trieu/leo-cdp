@@ -1,7 +1,7 @@
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-        <div class="span12 col-lg-4">
-            <form class="form-horizontal" action='/user/login' method="POST" enctype="application/x-www-form-urlencoded">
+        <div class="col-lg-12">
+            <form id="loginForm" action='/user/login' method="POST" enctype="application/x-www-form-urlencoded">
                 <fieldset>
                     <div id="legend">
                         <legend class="">Login</legend>
@@ -24,11 +24,21 @@
                         <input type="password" class="form-control" placeholder="Password" name="password">
                     </div>
 
+                    <p>
+                        <div class="g-recaptcha" data-sitekey="6LfW_iUTAAAAAEinX_Pe_RVqZryKrDI5D1Jy237-"  data-callback="correctCaptcha"></div>
+                    </p>
+
                     <div class="form-group">
-                        <input type="submit" class="btn btn-info" value=" OK ">
+                        <input type="submit" class="btn btn-info" value=" OK " id="submitLogin" disabled>
                     </div>
                 </fieldset>
             </form>
         </div>
     </div>
 </div>
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<script>
+var correctCaptcha = function(response) {
+    $('#submitLogin').removeAttr('disabled');
+};
+</script>
