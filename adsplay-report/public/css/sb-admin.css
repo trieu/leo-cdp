@@ -231,6 +231,15 @@ ul.alert-dropdown {
 .color-orange{color: #eea236;}
 .color-red{color: #d9534f;}
 .color-blue{color: #337ab7;}
+
+/*tooltip*/
+.tooltip-inner {
+    max-width: 400px;
+    line-height: 12px;
+    padding: 5px;
+    white-space: normal;
+}
+
 /*loader*/
 .loader{
     z-index: 9999;
@@ -391,12 +400,4 @@ span.impress-text {
 /* Ad loading */
 .vjs-ad-playing.vjs-ad-loading .vjs-loading-spinner {
   display: block;
-}
-
-/*tooltip*/
-.tooltip-inner {
-    max-width: 400px;
-    line-height: 12px;
-    padding: 5px;
-    white-space: normal;
 }
