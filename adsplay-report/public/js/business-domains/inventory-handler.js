@@ -1,16 +1,41 @@
 $(document).ready(function(){
 
 	var data = [
-	{"t":1466269200000, "reach": 1,"imp":67,"playview":26,"completeview":22,"c":0,"ctr":3,"audience":10000, "platformsId": 1},
-	{"t":1466355600000,"reach": 3,"imp":913,"playview":779,"completeview":400,"c":358,"ctr":2,"audience":10000, "platformsId": 4},
-	{"t":1466442000000,"reach": 1,"imp":884,"playview":607,"completeview":600,"c":464,"ctr":3,"audience":10000, "platformsId": 2},
-	{"t":1466528400000,"reach": 2,"imp":996,"playview":855,"completeview":700,"c":599,"ctr":4,"audience":5000, "platformsId": 3},
-	{"t":1466614800000,"reach": 1,"imp":706,"playview":693,"completeview":500,"c":37,"ctr":5,"audience":15000, "platformsId": 1},
-	{"t":1466701200000,"reach": 3,"imp":606,"playview":566,"completeview":500,"c":16,"ctr":1,"audience":14000, "platformsId": 2},
-	{"t":1466787600000,"reach": 3,"imp":878,"playview":608,"completeview":400,"c":55,"ctr":2,"audience":13000, "platformsId": 3},
-	{"t":1466874000000,"reach": 2,"imp":540,"playview":400,"completeview":352,"c":10,"ctr":3,"audience":20000, "platformsId": 5},
-	{"t":1466960400000,"reach": 1,"imp":230,"playview":200,"completeview":122,"c":20,"ctr":4,"audience":10000, "platformsId": 6}
-];
+		{"t":1466269200000, "reach": 1,"imp":67,"playview":26,"completeview":22,"c":0,"ctr":3,"audience":10000, "platformsId": 1},
+		{"t":1466355600000,"reach": 3,"imp":913,"playview":779,"completeview":400,"c":358,"ctr":2,"audience":10000, "platformsId": 4},
+		{"t":1466442000000,"reach": 1,"imp":884,"playview":607,"completeview":600,"c":464,"ctr":3,"audience":10000, "platformsId": 2},
+		{"t":1466528400000,"reach": 2,"imp":996,"playview":855,"completeview":700,"c":599,"ctr":4,"audience":5000, "platformsId": 3},
+		{"t":1466614800000,"reach": 1,"imp":706,"playview":693,"completeview":500,"c":37,"ctr":5,"audience":15000, "platformsId": 1},
+		{"t":1466701200000,"reach": 3,"imp":606,"playview":566,"completeview":500,"c":16,"ctr":1,"audience":14000, "platformsId": 2},
+		{"t":1466787600000,"reach": 3,"imp":878,"playview":608,"completeview":400,"c":55,"ctr":2,"audience":13000, "platformsId": 3},
+		{"t":1466874000000,"reach": 2,"imp":540,"playview":400,"completeview":352,"c":10,"ctr":3,"audience":20000, "platformsId": 5},
+		{"t":1466960400000,"reach": 1,"imp":230,"playview":200,"completeview":122,"c":20,"ctr":4,"audience":10000, "platformsId": 6}
+	];
+
+	var placements_default = {
+	    1: [101, 102],
+	    4: [301, 302, 303, 304, 305, 306, 308, 308, 333],
+	    5: [201, 202]
+	};
+
+	//TODO
+	var publishers_platform_placement = {
+	    1 : {
+	        1: [101, 102],
+	        4: [301, 302, 303, 304, 305, 306, 308, 308, 333],
+	        5: [201, 202]
+	    },
+	    2 : {
+	        1: [103]
+	    },
+	    3 : {
+	        1: [120,121]
+	    },
+	    4 : {
+	        6 : [320]
+	    }
+	};
+
 
 	var end = new moment().format("YYYY-MM-DD");
     var begin = new moment().subtract(30, 'days').format("YYYY-MM-DD");
@@ -41,6 +66,16 @@ $(document).ready(function(){
         	allSelected: 'All selected platforms'
     });
 
+    $("#input_publishers").multipleSelect({
+            filter: true,
+            multiple: true,
+            width: '100%',
+            multipleWidth: '100%',
+            selectAllDelimiter: ['', ''],
+            selectAllText: 'Select all',
+        	allSelected: 'All selected publishers'
+    });
+
     $('#filter-btn').click(function(){
     	render();
     });
@@ -52,18 +87,13 @@ $(document).ready(function(){
 
 		var obj_fields = filter_fields();
 
-		var obj_join = $.extend(obj_date, obj_fields);
+		var obj_join = obj_date + obj_fields;
 
-		console.log(obj_join)
-
-        $.ajax({
-			url: '/monitor/inventory-report/api',
-			type: "POST",
-			contentType: "application/json",
-			dataType: 'json',
-			data: JSON.stringify(obj_join),
+		$.ajax({
+			url: '/monitor/inventory-report/api?'+obj_join,
+			type: "GET",
 			success: function(result){
-				console.log(result)
+				//console.log(result)
 				sum_panel("#sum-panel", result, 
 					[
 						{key: 'Play-View', sum: 'totalPv'},
@@ -73,10 +103,11 @@ $(document).ready(function(){
 					]
 				);
 
-                var pie_data = [];
-                
+				var pie_data = [];
+
 				for(var i in result){
-					pie_data.push({key: check_device(result[i].pfId), sum: result[i].totalPv});
+					var pf = check_device(result[i].pfId);
+					pie_data.push({key: pf.device, sum: result[i].totalPv, color: pf.color});
 				}
 				pie_chart(pie_data);
 
@@ -98,15 +129,21 @@ $(document).ready(function(){
 	function filter_date(){
 		var begin = $('#begin').data("DateTimePicker").date().format('YYYY-MM-DD');
 		var end = $('#end').data("DateTimePicker").date().format('YYYY-MM-DD');
-		return {begin: begin, end: end};
+		var str_date = 'begin='+begin+'&end='+end;
+		return str_date;
 	}
 
 	function filter_fields(){
 		var platforms = $('#input_platforms').val();
-		var placements = $('#input_placements').val();
-		var startTime = $('#input_startTime').val();
-		var location = $('#input_location').val();
-		return {platforms: platforms, placements: placements, startTime: startTime, location: location};
+		var platforms_convert = convert_serialize(platforms, placements_default, "pmId");
+
+		var publishers = $('#input_publishers').val();
+		var publishers_convert = convert_serialize(publishers, publishers_platform_placement, "pmId");
+
+		// var placements = $('#input_placements').val();
+		// var startTime = $('#input_startTime').val();
+		// var location = $('#input_location').val();
+		return platforms_convert + publishers_convert;
 	}
 
 	function render_chart(data){
@@ -126,11 +163,14 @@ $(document).ready(function(){
 	}
 
 	function pie_chart(data){
-
+		
 	    nv.addGraph(function() {
 			var chart = nv.models.pieChart()
 			.x(function(d) { return d.key })
 			.y(function(d) { return d.sum })
+			.color(function(d,i){ 
+			    return (d.data && d.data.color) || colors[i % colors.length]
+			})
 			.showLabels(false)
 			.showLegend(true)
 			.showLabels(true)
@@ -215,7 +255,8 @@ $(document).ready(function(){
 			var td = "";
 			for (var i in data_col) {
 				if(data_col[i].field == 'pfId'){
-					data[k][data_col[i].field] = check_device(data[k][data_col[i].field]);
+					var pf = check_device(data[k][data_col[i].field]);
+					data[k][data_col[i].field] = pf.device;
 				}
 				else{
 					data[k][data_col[i].field] = formatNumber(data[k][data_col[i].field]);
@@ -245,7 +286,6 @@ $(document).ready(function(){
 			var count = 0;
 			for(var j in arr_data){
 				count += arr_data[j][arr_sum[i].sum];
-				console.log(count)
 			}
 			if (isNaN(count)){
 				count = 0;
@@ -292,24 +332,51 @@ $(document).ready(function(){
 		return result;
 	}
 
+	function convert_serialize(arr, arr_relation, key){
+		if ((typeof(arr) !== 'undefined') && (arr !== null)) {
+			var key_str = '&'+key+'=';
+			var arr_temp = [];
+			for (var i in arr) {
+				var number = parseInt(arr[i]);
+
+				for (var j in arr_relation){
+					if(number == j){
+						if(typeof arr_relation[j] === 'object'){
+							for (var k in arr_relation[j]){
+								arr_temp.push(arr_relation[j][k]);
+							}
+						}
+						else{
+							arr_temp.push(arr_relation[j]);
+						}
+					}
+				}
+
+			}
+			var merged = [].concat.apply([], arr_temp);
+			return key_str + merged.join(key_str);
+		}
+		return '';
+	}
+
 	function check_device(id){
 		if(id == 1){
-			return 'Web';
+			return {device: 'Web', color: '#27ae60'};
 		}
 		else if(id == 2){
-			return 'Mobile Web';
+			return {device: 'Mobile Web', color: '#8e44ad'};
 		}
 		else if(id == 3){
-			return 'Tablet';
+			return {device: 'Tablet', color: '#f1c40f'};
 		}
 		else if(id == 4){
-			return 'Mobile App';
+			return {device: 'Mobile App', color: '#2980b9'};
 		}
 		else if(id == 5){
-			return 'SmartTV';
+			return {device: 'SmartTV', color: '#f39c12'};
 		}
 		else{
-			return 'All Device';
+			return {device: 'All Device', color: '#d62728'};
 		}
 	}
 

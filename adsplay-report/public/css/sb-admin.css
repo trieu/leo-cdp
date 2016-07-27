@@ -286,6 +286,7 @@ ul.alert-dropdown {
 }
 .select-multi{
     text-align: left;
+    margin-bottom: 15px;
 }
 .ms-drop ul > li.multiple{
     width: 33.3333%;

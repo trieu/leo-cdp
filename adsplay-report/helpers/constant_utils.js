@@ -33,7 +33,7 @@ var publishers = {
 }
 
 //TODO
-var publisher_platform_placement = {
+var publishers_platform_placement = {
     1 : {
         1: [101, 102],
         4: [301, 302, 303, 304, 305, 306, 308, 308, 333],
@@ -137,3 +137,6 @@ exports.platforms = platforms;
 
 exports.placements_default = placements_default;
 exports.platforms_default = platforms_default;
+
+exports.publishers = publishers;
+exports.publishers_platform_placement = publishers_platform_placement;
