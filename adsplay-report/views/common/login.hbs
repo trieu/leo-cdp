@@ -17,28 +17,49 @@
 
                     <div class="form-group">
                         <label>Username</label>
-                        <input type="text" class="form-control" placeholder="Username" name="username">
+                        <input type="text" class="form-control" placeholder="Username" name="username" id="username">
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        <input type="password" class="form-control" placeholder="Password" name="password">
+                        <input type="password" class="form-control" placeholder="Password" name="password" id="password">
                     </div>
 
-                    <p>
+                    <!-- <p>
+                        <input type="hidden" name="captcha" id="captcha">
                         <div class="g-recaptcha" data-sitekey="6LfW_iUTAAAAAEinX_Pe_RVqZryKrDI5D1Jy237-"  data-callback="correctCaptcha"></div>
-                    </p>
+                    </p> -->
 
                     <div class="form-group">
-                        <input type="submit" class="btn btn-info" value=" OK " id="submitLogin" disabled>
+                        <input type="submit" class="btn btn-info" value=" OK " id="submitLogin">
                     </div>
                 </fieldset>
             </form>
         </div>
     </div>
 </div>
-<script src='https://www.google.com/recaptcha/api.js'></script>
+<!-- <script src='https://www.google.com/recaptcha/api.js'></script>
 <script>
-var correctCaptcha = function(response) {
-    $('#submitLogin').removeAttr('disabled');
-};
-</script>
+    var recaptcha = null;
+    var correctCaptcha = function(response) {
+        recaptcha = response;
+        $('#submitLogin').removeAttr('disabled');
+    };
+    $("#loginForm").submit(function(e) {
+        e.preventDefault();
+        var url = $(this).attr('action');
+        var username = $('#username').val();
+        var password = $('#password').val();
+        var data = {"username": username, "password": password, "g-recaptcha-response": recaptcha}
+        console.log(data)
+        $.ajax({
+            url: url,
+            type: "POST",
+            contentType: "application/json",
+            dataType: 'json',
+            data: data,
+            success: function(result){
+                console.log(result);
+            }
+        });
+    });
+</script> -->
