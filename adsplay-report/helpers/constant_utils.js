@@ -27,6 +27,29 @@ var placements_default = {
     5: [201, 202]
 };
 
+//TODO
+var publishers = {
+    1 : 'FptPlay', 2 : 'Nhacso', 3: 'Fshare', 4: 'PayTV'
+}
+
+//TODO
+var publisher_platform_placement = {
+    1 : {
+        1: [101, 102],
+        4: [301, 302, 303, 304, 305, 306, 308, 308, 333],
+        5: [201, 202]
+    },
+    2 : {
+        1: [103]
+    },
+    3 : {
+        1: [120,121]
+    },
+    4 : {
+        6 : [320]
+    }
+};
+
 exports.getStatus = function (id) {
     return statuses[id];
 };
