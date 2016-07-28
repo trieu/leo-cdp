@@ -22,6 +22,15 @@
 	        </div>
 		</div>
 		<div class="clearfix"></div>
+		
+		<div class="col-md-3 col-sm-6 col-xs-12">
+			<select type="select" class="select-multi" id="input_publishers" data-placeholder="publishers" multiple="multiple">
+				{{#each publishers}}
+					<option value="{{@key}}" selected>{{this}}</option>
+				{{/each}}
+			</select>
+		</div>
+
 		<div class="col-md-3 col-sm-6 col-xs-12">
 			<select type="select" class="select-multi" id="input_platforms" data-placeholder="platforms" multiple="multiple">
 				{{#each platforms}}
@@ -30,13 +39,6 @@
 			</select>
 		</div>
 
-		<div class="col-md-3 col-sm-6 col-xs-12">
-			<select type="select" class="select-multi" id="input_publishers" data-placeholder="publishers" multiple="multiple">
-				{{#each publishers}}
-					<option value="{{@key}}" selected>{{this}}</option>
-				{{/each}}
-			</select>
-		</div>
 
 		<div class="col-md-3 col-sm-6 col-xs-12" style="display: none">
 			<select type="select" class="select-multi" id="input_placements" data-placeholder="placements" multiple="multiple">

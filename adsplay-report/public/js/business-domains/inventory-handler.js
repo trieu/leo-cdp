@@ -56,25 +56,70 @@ $(document).ready(function(){
         $('#begin').data("DateTimePicker").maxDate(e.date);
     });
 
+    $("#input_publishers").multipleSelect({
+        filter: true,
+        multiple: true,
+        width: '100%',
+        multipleWidth: '100%',
+        selectAllDelimiter: ['', ''],
+        selectAllText: 'Select all',
+    	allSelected: 'All selected publishers',
+		onClick: function(view) {
+			if(view.value == 1 && view.checked == false){
+				$("#input_platforms").multipleSelect('uncheckAll');
+			}
+			else{
+				$("#input_platforms").multipleSelect('checkAll');
+			}
+		},
+		onUncheckAll: function(view){
+			$("#input_platforms").multipleSelect('uncheckAll');
+		},
+		onCheckAll: function(view){
+			$("#input_platforms").multipleSelect('checkAll');
+		}
+	});
+
     $("#input_platforms").multipleSelect({
-            filter: true,
-            multiple: true,
-            width: '100%',
-            multipleWidth: '100%',
-            selectAllDelimiter: ['', ''],
-            selectAllText: 'Select all',
-        	allSelected: 'All selected platforms'
+        filter: true,
+        multiple: true,
+        width: '100%',
+        multipleWidth: '100%',
+        selectAllDelimiter: ['', ''],
+        selectAllText: 'Select all',
+    	allSelected: 'All selected platforms',
+    	onClick: function(view) {
+			if(view.checked == false){
+				var data = $('#input_publishers').multipleSelect('getSelects');
+				for(var i in data){
+					if(parseInt(data[i]) == 1){
+						data.splice(i, 1);
+					}
+				}
+				$("#input_publishers").multipleSelect('setSelects', data);
+			}
+		},
+		onUncheckAll: function(view){
+			var data = $('#input_publishers').multipleSelect('getSelects');
+			for(var i in data){
+				if(parseInt(data[i]) == 1){
+					data.splice(i, 1);
+				}
+			}
+			$("#input_publishers").multipleSelect('setSelects', data);
+		},
+		onCheckAll: function(view){
+			var data = $('#input_publishers').multipleSelect('getSelects');
+			var temp = false;
+			for(var i in data){
+				if(i == 0 && parseInt(data[i]) != 1){
+					data.splice(0, 0, "1");
+				}
+			}
+			$("#input_publishers").multipleSelect('setSelects', data);
+		}
     });
 
-    $("#input_publishers").multipleSelect({
-            filter: true,
-            multiple: true,
-            width: '100%',
-            multipleWidth: '100%',
-            selectAllDelimiter: ['', ''],
-            selectAllText: 'Select all',
-        	allSelected: 'All selected publishers'
-    });
 
     $('#filter-btn').click(function(){
     	render();
