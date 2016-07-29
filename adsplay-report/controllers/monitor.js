@@ -19,11 +19,8 @@ router.get('/geolocation', function (req, res) {
 router.get('/inventory-report', function (req, res) {
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "Inventory Report";
-    data.placements = constantUtils.placements;
-    data.platforms = constantUtils.platforms_default;
-    data.placements_default = constantUtils.placements_default;
+    data.platforms = constantUtils.platforms;
     data.publishers = constantUtils.publishers;
-    data.publishers_platform_placement = constantUtils.publishers_platform_placement;
     data.locationCodes = constantUtils.getLocationCodes();
 
     res.render('monitor/inventory-report', data);

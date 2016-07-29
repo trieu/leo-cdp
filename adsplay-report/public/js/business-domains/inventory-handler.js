@@ -12,27 +12,31 @@ $(document).ready(function(){
 		{"t":1466960400000,"reach": 1,"imp":230,"playview":200,"completeview":122,"c":20,"ctr":4,"audience":10000, "platformsId": 6}
 	];
 
-	var placements_default = {
-	    1: [101, 102],
-	    4: [301, 302, 303, 304, 305, 306, 308, 308, 333],
-	    5: [201, 202]
-	};
-
 	//TODO
-	var publishers_platform_placement = {
+	var publishers_relations = {
 	    1 : {
 	        1: [101, 102],
 	        4: [301, 302, 303, 304, 305, 306, 308, 308, 333],
-	        5: [201, 202]
+	        5: [201, 202],
+	        6: []
 	    },
 	    2 : {
-	        1: [103]
+	        1: [103],
+	        4: [330],
+	        5: [230],
+	        6: []
 	    },
 	    3 : {
-	        1: [120,121]
+	        1: [120,121],
+	        4: [321],
+	        5: [220],
+	        6: []
 	    },
 	    4 : {
-	        6 : [320]
+	    	1: [],
+	    	4: [],
+	    	5: [],
+	        6: [320]
 	    }
 	};
 
@@ -63,21 +67,7 @@ $(document).ready(function(){
         multipleWidth: '100%',
         selectAllDelimiter: ['', ''],
         selectAllText: 'Select all',
-    	allSelected: 'All selected publishers',
-		onClick: function(view) {
-			if(view.value == 1 && view.checked == false){
-				$("#input_platforms").multipleSelect('uncheckAll');
-			}
-			else{
-				$("#input_platforms").multipleSelect('checkAll');
-			}
-		},
-		onUncheckAll: function(view){
-			$("#input_platforms").multipleSelect('uncheckAll');
-		},
-		onCheckAll: function(view){
-			$("#input_platforms").multipleSelect('checkAll');
-		}
+    	allSelected: 'All selected publishers'
 	});
 
     $("#input_platforms").multipleSelect({
@@ -87,37 +77,7 @@ $(document).ready(function(){
         multipleWidth: '100%',
         selectAllDelimiter: ['', ''],
         selectAllText: 'Select all',
-    	allSelected: 'All selected platforms',
-    	onClick: function(view) {
-			if(view.checked == false){
-				var data = $('#input_publishers').multipleSelect('getSelects');
-				for(var i in data){
-					if(parseInt(data[i]) == 1){
-						data.splice(i, 1);
-					}
-				}
-				$("#input_publishers").multipleSelect('setSelects', data);
-			}
-		},
-		onUncheckAll: function(view){
-			var data = $('#input_publishers').multipleSelect('getSelects');
-			for(var i in data){
-				if(parseInt(data[i]) == 1){
-					data.splice(i, 1);
-				}
-			}
-			$("#input_publishers").multipleSelect('setSelects', data);
-		},
-		onCheckAll: function(view){
-			var data = $('#input_publishers').multipleSelect('getSelects');
-			var temp = false;
-			for(var i in data){
-				if(i == 0 && parseInt(data[i]) != 1){
-					data.splice(0, 0, "1");
-				}
-			}
-			$("#input_publishers").multipleSelect('setSelects', data);
-		}
+    	allSelected: 'All selected platforms'
     });
 
 
@@ -180,15 +140,12 @@ $(document).ready(function(){
 
 	function filter_fields(){
 		var platforms = $('#input_platforms').val();
-		var platforms_convert = convert_serialize(platforms, placements_default, "pmId");
-
 		var publishers = $('#input_publishers').val();
-		var publishers_convert = convert_serialize(publishers, publishers_platform_placement, "pmId");
-
+		var arrId = getPlacementsId(platforms, publishers, publishers_relations);
 		// var placements = $('#input_placements').val();
 		// var startTime = $('#input_startTime').val();
 		// var location = $('#input_location').val();
-		return platforms_convert + publishers_convert;
+		return convert_serialize(arrId, "pmId");
 	}
 
 	function render_chart(data){
@@ -377,31 +334,39 @@ $(document).ready(function(){
 		return result;
 	}
 
-	function convert_serialize(arr, arr_relation, key){
-		if ((typeof(arr) !== 'undefined') && (arr !== null)) {
-			var key_str = '&'+key+'=';
-			var arr_temp = [];
-			for (var i in arr) {
-				var number = parseInt(arr[i]);
+	function getPlacementsId(platforms, publishers, publishers_relations){
+		var arrId = [];
 
-				for (var j in arr_relation){
-					if(number == j){
-						if(typeof arr_relation[j] === 'object'){
-							for (var k in arr_relation[j]){
-								arr_temp.push(arr_relation[j][k]);
+		for(var i in publishers){
+			for (var j in publishers_relations) {
+				if(publishers[i] == j){
+					var temp = publishers_relations[j];
+					for(var k in temp){
+						for(var l in platforms){
+							if(platforms[l] == k){
+								arrId.push(temp[k]);
 							}
 						}
-						else{
-							arr_temp.push(arr_relation[j]);
-						}
+						
 					}
+					
 				}
+			}	
+		}
+		return arrId;
+		
+	}
 
-			}
-			var merged = [].concat.apply([], arr_temp);
+	function convert_serialize(arr, key){
+		if (arr === undefined || arr.length == 0) {
+			return '';
+		}
+		else {
+			var key_str = '&'+key+'=';
+			var merged = [].concat.apply([], arr);
 			return key_str + merged.join(key_str);
 		}
-		return '';
+		
 	}
 
 	function check_device(id){
@@ -421,7 +386,7 @@ $(document).ready(function(){
 			return {device: 'SmartTV', color: '#f39c12'};
 		}
 		else{
-			return {device: 'All Device', color: '#d62728'};
+			return {device: 'Other Device', color: '#d62728'};
 		}
 	}
 
