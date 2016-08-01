@@ -11,7 +11,7 @@ gulp.task('js-min', function() {
 });
 
 gulp.task('css-min', function() {
-	return gulp.src(['public/css/*.css','!public/js/css-min.css'])
+	return gulp.src(['public/css/*.css','!public/css/css-min.css'])
 			.pipe(concat('css-min.css'))
 			.pipe(cleanCss())
 			.pipe(gulp.dest('public/css'));

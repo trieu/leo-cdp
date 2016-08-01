@@ -8,7 +8,9 @@ module.exports = function (app) {
     //secret
     var svgCaptcha = require('svg-captcha');
     var checkCaptcha = function(req, res, next){
-        if(req.session.captcha == req.body.captcha || req.session.captcha.toLowerCase() == req.body.captcha.toLowerCase()){
+        var captcha = req.body.captcha.toLowerCase();
+        var sscaptcha = req.session.captcha.toLowerCase();
+        if(sscaptcha == captcha){
             next();
         }
         else{
