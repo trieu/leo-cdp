@@ -253,6 +253,11 @@ ul.alert-dropdown {
     background-repeat: no-repeat;
     background-position: center;
 }
+/*login*/
+#login-captcha{
+    height: 50px;
+    margin-bottom: 15px;
+}
 /*BreakingNews*/
 #BreakingNews_Text {
     resize: vertical;

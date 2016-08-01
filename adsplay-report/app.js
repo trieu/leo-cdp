@@ -8,7 +8,7 @@ var morgan = require('morgan');             // log requests to the console (expr
 var bodyParser = require('body-parser');    // pull information from HTML POST (express4)
 var cookieParser = require('cookie-parser');// pull information from HTML cookies (express4)
 var expressSession = require('express-session');
-var flash = require('connect-flash')
+var flash = require('connect-flash');
 //var multer = require('multer');
 
 var siteConfigs = require('./configs/site.js');

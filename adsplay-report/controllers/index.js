@@ -5,9 +5,19 @@ var modelUtils = require('../helpers/model_utils');
 var fs = require('fs');
 
 module.exports = function (app) {
-
+    //secret
+    var svgCaptcha = require('svg-captcha');
+    var checkCaptcha = function(req, res, next){
+        if(req.session.captcha == req.body.captcha || req.session.captcha.toLowerCase() == req.body.captcha.toLowerCase()){
+            next();
+        }
+        else{
+            console.log("Recaptcha verify failed !");
+            res.redirect('/login');
+        }
+    };
+    //passport
     var passport = require('passport');
-//passport
     app.use(passport.initialize());
     app.use(passport.session());
 
@@ -50,9 +60,12 @@ module.exports = function (app) {
     });
 
     app.route('/login').get(function (req, res) {
+        var text = svgCaptcha.randomText();
+        req.session.captcha = text;
         var data = modelUtils.baseModel(req);
         data.dashboard_title = "User";
         data.loginMessage = req.flash('loginMessage');
+        data.captcha = svgCaptcha(text);
         res.render('common/login', data);
     })
 
@@ -61,7 +74,7 @@ module.exports = function (app) {
         res.end('PONG');
     })
 
-    app.route('/user/login').post(auth.login_local);
+    app.route('/user/login').post(checkCaptcha, auth.login_local);
 
     app.route('/user/logout').get(auth.logout);
 
