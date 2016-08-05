@@ -247,8 +247,15 @@ $(document).ready(function(){
 	}
 
 	function table_data(placementID, data, data_col){
-		var table = $('<table class="table-details" class="table table-hover table-striped"><tbody></tbody></table>');
 		$(placementID).empty();
+
+		if (jQuery.isEmptyObject(data)) {
+			$(placementID).append('<h4>No Data</h4>');
+			return false;
+		}
+
+		var table = $('<table class="table-details" class="table table-hover table-striped"><tbody></tbody></table>');
+		
 		$(placementID).append(table);
 		
 		for (var k in data){
@@ -265,12 +272,13 @@ $(document).ready(function(){
 				}
 
 				td += '<td>'+data[k][data_col[i].field]+'</td>';
+
 				title.push({title: data_col[i].key});
+
 			}
 			var tr = '<tr>'+td+'</tr>';
 			table.find('tbody').append(tr);
 		}
-
 		
 		$('.table-details').DataTable({
 			columns: title
