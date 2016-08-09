@@ -345,6 +345,7 @@ router.post('/save/tvc-ad', function (req, res) {
                 if (typeof rawCrt === 'string' && adtype === 'fm_tvc_video') {
                     var crt = JSON.parse(rawCrt);
                     crt.adType = 1;
+                    crt.idUser = req.user.id;
 
                     var seedStr = stringUtils.removeUnicodeSpace(crt.name) + (new Date()).getTime();
                     var hash = crypto.createHash('md5').update(seedStr).digest('hex');
@@ -417,6 +418,7 @@ router.post('/save/display-banner', function (req, res) {
                 if (typeof rawCrt === 'string' && adtype === 'fm_display_banner') {
                     var crt = JSON.parse(rawCrt);
                     crt.adType = 2;
+                    crt.idUser = req.user.id;
 
                     if (typeof(file) !== "undefined" && file !== null) {
                         upload.unzip(file, function (obj) {
@@ -461,6 +463,7 @@ router.post('/save/overlay-banner', function (req, res) {
                 if (typeof rawCrt === 'string' && adtype === 'fm_overlay_banner') {
                     var crt = JSON.parse(rawCrt);
                     crt.adType = 3;
+                    crt.idUser = req.user.id;
 
                     if (typeof(file) !== "undefined" && file !== null) {
                         upload.image(file, function (obj) {
@@ -506,6 +509,7 @@ router.post('/save/breaking-news', function (req, res) {
                 if (typeof rawCrt === 'string' && adtype === 'fm_breaking_news') {
                     var crt = JSON.parse(rawCrt);
                     crt.adType = 4;
+                    crt.idUser = req.user.id;
 
                     if (typeof(text) !== "undefined" && text !== null) {
                         crt.media = text;

@@ -95,14 +95,6 @@ module.exports = function(passport) {
 				}
 			})(req, res, next);
 		},
-		isLoggedIn: function(req, res, next){
-			if (req.isAuthenticated()){
-				return next();
-			}
-			else{
-				res.redirect('/login');
-			}
-		},
 		logout: function(req, res){
 			req.logout();
 			res.redirect('/login');

@@ -18,8 +18,7 @@ exports.baseModel = function(req) {
     };
     data.dashboard_title = "Real-time Dashboard";
     if(req){
-        var log = req.user ? JSON.stringify(req.user)+ "\n Request:     "+req.originalUrl+"\n Time:        "+new Date().toJSON() : "not logged";
-        console.log(log);
+        //console.log(req.user);
         var ssid = -1;
         if( typeof req.user != 'undefined' || req.user != null ){
             ssid = parseInt(req.user.id);
