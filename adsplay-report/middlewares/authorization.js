@@ -4,36 +4,34 @@ var express = require('express'),
     app = express();
 
 var config_default = {
+		// enable roles 
 		access: [
-			//if method array is empty => method using all
-			{routes: '/creative/*', roles: ['admin', 'operator']},
-			{routes: '/placement/*', roles: ['admin', 'operator']},
-			{routes: '/campaign/*', roles: ['admin', 'operator']},
+			{routes: '/creative/*', roles: ['*']}, //all roles and all method
+			{routes: '/placement/*', roles: ['admin', 'operator']}, //roles admin and operator
+			{routes: '/campaign/*', roles: ['admin', 'operator'], method: ['get', 'post']}, //with method get and post
 			{routes: '/monitor/*', roles: ['admin', 'operator']},
 			{routes: '/content/*', roles: ['admin', 'operator']},
 			{routes: '/user-profile/*', roles: ['admin', 'operator']},
 			{routes: '/booking/*', roles: ['admin', 'operator']},
 		],
-		denied: [
-			//disable roles operator in routes: /creative/list/all with method get
-			{routes: '/creative/list/all', roles: ['operator'], method: ['get']},
-		]
+		// disable roles
+		// denied: [
+		// 	{routes: '/creative/list/all', roles: ['operator'], method: ['get']}, //disable operator only routes /creative/list/all
+		// ]
 	};
 
-var check_roles = function(temp, arr){
-	if(!_.isEmpty(arr)){
-		for(var i in arr){
-			var roles = arr[i].roles;
-			if(!_.isEmpty(roles)){
-				for(var j in roles){
-					if(temp == roles[j]){
-						return true;
-					}
+var check_roles = function(arr){
+	return function(req, res, next){
+		res.locals.roles = false;
+		if(!_.isEmpty(arr)){
+			for(var i in arr){
+				if(arr[i] == req.user.roles || arr[i] == '*'){
+					res.locals.roles = true;
 				}
 			}
 		}
+		return next();
 	}
-	return false;
 };
 
 var check_routes = function(arr, handle){
@@ -43,7 +41,7 @@ var check_routes = function(arr, handle){
 			for (var j in temp.method) {
 				var method = temp.method[j].toLowerCase();
 				if(method == 'get' || method == 'post' || method == 'put' || method == 'delete'){
-					router[method](temp.routes, handle);
+					router[method](temp.routes, check_roles(temp.roles), handle);
 				}
 				else{
 					console.log('method error config: '+ method);
@@ -51,13 +49,13 @@ var check_routes = function(arr, handle){
 			}
 		}
 		else{
-			router.all(arr[i].routes, handle);
+			router.all(arr[i].routes, check_roles(temp.roles), handle);
 		}
 	}
 };
 
 var denied = function(req, res, next){
-	if(check_roles(req.user.roles, config_default.denied)){
+	if(res.locals.roles){
 		res.redirect('/permission');
 	}
 	else{
@@ -66,7 +64,7 @@ var denied = function(req, res, next){
 };
 
 var access = function(req, res, next){
-	if(check_roles(req.user.roles, config_default.access)){
+	if(res.locals.roles){
 		next();
 	}
 	else{
@@ -92,16 +90,13 @@ function check_auth(req, res, next){
 	}
 }
 
-function HasRole() {
-	if (!_.isEmpty(config_default.denied)) {
-		check_routes(config_default.denied, denied);
-	}
-
-	if(!_.isEmpty(config_default.access)){
-		check_routes(config_default.access, access);
-	}
+if (!_.isEmpty(config_default.denied)) {
+	check_routes(config_default.denied, denied);
 }
-HasRole();
+
+if(!_.isEmpty(config_default.access)){
+	check_routes(config_default.access, access);
+}
 
 module.exports = {
 	privilege: check_auth,
