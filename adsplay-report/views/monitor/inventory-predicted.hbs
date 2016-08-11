@@ -1,0 +1,138 @@
+<style type="text/css">
+	#predictedchart svg{
+		height: 600px;
+	}
+	 .dashed {
+            stroke-dasharray: 5,5;
+    }
+</style>
+<div class="panel panel-default" id="filter-wrap">
+	<div class="panel-heading">Predicted Inventory</div>
+	<div class="panel-body">
+	<div id="predictedchart"></div>
+	</div>
+</div>
+<script>
+
+    $.ajax({
+            url: 'monitor/inventory-predicted/api',
+            type: "GET",
+            dataType: 'json',
+            success: function(data){ 
+                render_chart(data, 1);
+                render_chart(data, 4);
+                render_chart(data, 5);
+            }
+        });
+
+    function render_chart(data, id){
+        var chart;
+
+        nv.addGraph(function() {
+            chart = nv.models.lineChart();
+
+            // chart sub-models (ie. xAxis, yAxis, etc) when accessed directly, return themselves, not the parent chart, so need to chain separately
+            chart.xAxis
+                .axisLabel("Times")
+                .tickFormat(function(x) {
+                    // var s = new moment(x).format("YYYY-MM-DD");
+                    var s = new moment(x).format("h.a - D/M/YYYY");
+                    // console.log(s);
+                    return s;
+                });
+
+            chart.yAxis
+                .axisLabel('Views')
+                .tickFormat(function(d) {
+                    if (d == null) {
+                        return 'N/A';
+                    }
+                    return d3.format(',.0d')(d);
+                });
+
+            data = buildData(data,id);
+
+            d3.select('#predictedchart').append('svg')
+                .datum(data)
+                .call(chart);
+
+            nv.utils.windowResize(chart.update);
+
+            return chart;
+        });
+
+    }
+
+    function buildData(data,id) {
+
+        var sincur =[];
+        var sinpred = [];
+       
+        var CurrentDate = new Date();
+        var parseTimeNow = Date.parse(CurrentDate);
+        var prevDay = parseTimeNow - 259200000;//3 day ago
+        var tmp_time, tmp_view;
+   
+        for(var key in data) {
+
+            var TimePred = new Date(data[key].time);
+            var TimeCurPred = Date.parse(TimePred);
+
+            //current
+            if(data[key].pfId == id && (TimeCurPred <= parseTimeNow)) {
+                if(TimeCurPred>=prevDay) {
+                    for(var i = 0 ; i< data[key].pred_views.length; i++){
+                        for(var i = 0 ; i< data[key].pred_views.length; i++) {
+
+                            tmp_time = Date.parse(data[key].pred_views[i].time) - 18000000;
+                            tmp_view = parseInt(data[key].pred_views[i].pred);
+
+                            sincur.push(
+                                {
+                                    x: Date.parse(data[key].pred_views[i].time) - 18000000, 
+                                    y: parseInt(data[key].pred_views[i].pred)
+                                }
+                            );
+                       
+                        }
+                   
+                    }
+                }
+                
+                     
+            }
+                    
+            //Predict
+            if(data[key].pfId == id && TimeCurPred > parseTimeNow) {
+                for(var j = 0 ; j< data[key].pred_views.length; j++) {
+
+                    if(j == 0) {
+                        sinpred.push({x: tmp_time, y: tmp_view});
+                    }
+                    sinpred.push(
+                        {
+                            x:Date.parse(data[key].pred_views[j].time) -18000000, 
+                            y:parseInt(data[key].pred_views[j].pred)
+                        }
+                    );
+                 }
+                 
+            }
+        }
+      
+        return [
+            {
+                values: sincur,
+                key: "View Cur",
+                color: "#ff7f0e"
+            },
+            {
+                values: sinpred,
+                key: "View Pred",
+                color: "#2ca02c",
+                classed: 'dashed'
+            }
+        ];
+    }
+             
+</script>

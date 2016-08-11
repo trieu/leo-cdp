@@ -16,6 +16,27 @@ router.get('/geolocation', function (req, res) {
     res.render('monitor/geo-heatmap', data)
 });
 
+router.get('/inventory-predicted', function (req, res) {
+    var data = modelUtils.baseModel(req);
+    data.dashboard_title = "Predicted Inventory";
+
+    res.render('monitor/inventory-predicted', data);
+});
+
+router.get('/inventory-predicted/api', function (req, res){
+    var inventory_data = require('../models/inventory');
+    var pred = inventory_data.predicted;
+    
+    pred.find({}, function(err, doc){
+        if(err){
+            console.log(err);
+        }else{
+            res.json(doc);
+        }
+    });
+
+});
+
 router.get('/inventory-report', function (req, res) {
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "Inventory Report";
