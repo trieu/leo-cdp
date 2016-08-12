@@ -1,37 +1,40 @@
 <style type="text/css">
-	#predictedchart svg{
-		height: 600px;
+	svg{
+		min-height: 400px;
 	}
 	 .dashed {
             stroke-dasharray: 5,5;
     }
 </style>
-<div class="panel panel-default" id="filter-wrap">
-	<div class="panel-heading">Predicted Inventory</div>
-	<div class="panel-body">
-	<div id="predictedchart"></div>
-	</div>
+<div class="panel panel-default" id="predicted1">
+</div>
+<div class="panel panel-default" id="predicted4">
+</div>
+<div class="panel panel-default" id="predicted5">
 </div>
 <script>
 
     $.ajax({
-            url: 'monitor/inventory-predicted/api',
-            type: "GET",
-            dataType: 'json',
-            success: function(data){ 
-                render_chart(data, 1);
-                render_chart(data, 4);
-                render_chart(data, 5);
-            }
-        });
+        url: 'monitor/inventory-predicted/api',
+        type: "GET",
+        dataType: 'json',
+        success: function(data){ 
+            render_chart("#predicted1", "PC Web", data, 1);
+            render_chart("#predicted4", "Mobile App", data, 4);
+            render_chart("#predicted5", "Smart TV", data, 5);
+        }
+    });
 
-    function render_chart(data, id){
+    function render_chart(placement, title, data, id){
         var chart;
+        var heading = $('<div class="panel-heading"></div>');
+        var body = $('<div class="panel-body"><svg></svg></div>');
+        $(placement).append(heading).append(body);
+        heading.text(title);
 
         nv.addGraph(function() {
             chart = nv.models.lineChart();
 
-            // chart sub-models (ie. xAxis, yAxis, etc) when accessed directly, return themselves, not the parent chart, so need to chain separately
             chart.xAxis
                 .axisLabel("Times")
                 .tickFormat(function(x) {
@@ -50,9 +53,9 @@
                     return d3.format(',.0d')(d);
                 });
 
-            data = buildData(data,id);
+            data = buildData(data, id);
 
-            d3.select('#predictedchart').append('svg')
+            d3.select(placement+ ' svg')
                 .datum(data)
                 .call(chart);
 
@@ -63,7 +66,7 @@
 
     }
 
-    function buildData(data,id) {
+     function buildData(data, id) {
 
         var sincur =[];
         var sinpred = [];
@@ -71,44 +74,42 @@
         var CurrentDate = new Date();
         var parseTimeNow = Date.parse(CurrentDate);
         var prevDay = parseTimeNow - 259200000;//3 day ago
-        var tmp_time, tmp_view;
-   
+        var tmp_time = prevDay, tmp_views;
+
         for(var key in data) {
+            if(data[key].pfId !== id) continue
 
             var TimePred = new Date(data[key].time);
             var TimeCurPred = Date.parse(TimePred);
 
             //current
-            if(data[key].pfId == id && (TimeCurPred <= parseTimeNow)) {
+            if(TimeCurPred <= parseTimeNow) {
                 if(TimeCurPred>=prevDay) {
                     for(var i = 0 ; i< data[key].pred_views.length; i++){
                         for(var i = 0 ; i< data[key].pred_views.length; i++) {
-
-                            tmp_time = Date.parse(data[key].pred_views[i].time) - 18000000;
-                            tmp_view = parseInt(data[key].pred_views[i].pred);
-
-                            sincur.push(
-                                {
-                                    x: Date.parse(data[key].pred_views[i].time) - 18000000, 
-                                    y: parseInt(data[key].pred_views[i].pred)
-                                }
-                            );
-                       
+                            time = Date.parse(data[key].pred_views[i].time) - 18000000;
+                            views = parseInt(data[key].pred_views[i].pred);
+                            sincur.push({ x: time, y: views});
+                            if(time > tmp_time) {
+                                tmp_time = time;
+                                tmp_views = views;
+                            }
                         }
-                   
                     }
                 }
-                
-                     
             }
-                    
-            //Predict
-            if(data[key].pfId == id && TimeCurPred > parseTimeNow) {
-                for(var j = 0 ; j< data[key].pred_views.length; j++) {
+        }
+        // Link current data and predict data
+        sinpred.push({x: tmp_time, y: tmp_views});
+        for(var key in data) {
+            if(data[key].pfId !== id) continue
 
-                    if(j == 0) {
-                        sinpred.push({x: tmp_time, y: tmp_view});
-                    }
+            var TimePred = new Date(data[key].time);
+            var TimeCurPred = Date.parse(TimePred);
+
+            //Predict
+            if(TimeCurPred > parseTimeNow) {
+                for(var j = 0 ; j< data[key].pred_views.length; j++) {
                     sinpred.push(
                         {
                             x:Date.parse(data[key].pred_views[j].time) -18000000, 
@@ -119,20 +120,26 @@
                  
             }
         }
+        
       
         return [
             {
+                // area: true,
                 values: sincur,
-                key: "View Cur",
-                color: "#ff7f0e"
+                key: "PlayViews",
+                color: "#ff7f0e",
+                strokeWidth: 6
+                
             },
             {
                 values: sinpred,
-                key: "View Pred",
+                key: "Forecasted PlayViews",
                 color: "#2ca02c",
-                classed: 'dashed'
+                  strokeWidth: 4,
+                  classed: 'dashed'
+
+                // area: true
             }
         ];
-    }
-             
+    }     
 </script>
