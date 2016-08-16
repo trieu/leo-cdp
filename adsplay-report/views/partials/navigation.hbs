@@ -102,13 +102,13 @@
                 </ul>
             </li>
 
-
+            {{#if editable }}
             <li class="active">
                 <a href="javascript:;" data-toggle="collapse"
                    data-target="#menuAdReport"><i class="fa fa-fw fa-list"></i> Reports <i
                         class="fa fa-fw fa-caret-down"></i></a>
                 <ul id="menuAdReport" class="collapse in" aria-expanded="true" style="">
-                    {{#if editable }}
+
                         <li class="">
                             <a href="/creative/visualize/metrics"><i class="fa fa-fw fa-line-chart"></i> Ad Summary KPI</a>
                         </li>
@@ -119,12 +119,12 @@
                         <li class="">
                             <a href="/monitor/inventory-paytv"><i class="fa fa-fw fa-signal"></i> PayTV Inventory </a>
                         </li>
-                    {{/if}}
+
                         <li>
                             <a href="/monitor/inventory-report"><i class="fa fa-fw fa-signal"></i> FptPlay Inventory </a>
                         </li>
                         <li>
-                            <a href="/monitor/inventory-predicted"><i class="fa fa-fw fa-signal"></i> Predicted Inventory </a>
+                            <a href="/monitor/inventory-predicted"><i class="fa fa-fw fa-signal"></i> Forecast Ad Inventory </a>
                         </li>
                         <!-- <li class="">
                             <a href="/monitor/inventory-paytv-ads"><i class="fa fa-fw fa-signal"></i> PayTV Ads VOD
@@ -132,6 +132,7 @@
                         </li> -->
                 </ul>
             </li>
+            {{/if}}
 
 
             {{#if isAdminGroup }}

@@ -65,22 +65,31 @@ router.get('/list', function (req, res) {
                 crt.status = constantUtils.getStatus(crt.status);
                 crt.ctr = (crt.ctr * 100).toFixed(2);
                 crt.tvr = (crt.tvr * 100).toFixed(2);
+                if (crt.totalRevenue == 0 || req.user.roles != 'admin') {
+                    crt.totalRevenue = "-";
+                }
 
-                var idUser = crt.idUser || 0;
-                crt.totalRevenue = (crt.totalRevenue == 0) ? "-" : crt.totalRevenue;
-
-                var username = req.user.username.toLowerCase();
-                var nameshort = (username == 'customer' || username == 'epl_fptplay') ? 'fptplay' : username.split("_")[0];
                 var adName = crt.name.toLowerCase();
-
-                if (req.user.roles == 'admin') {
+                if (data.isAdminGroup) {
                     filteredList.push(crt);
                 }
-                else if(req.user.roles == 'operator'){
-                    //check adname relation username or userid of creative
-                    if(adName.indexOf(nameshort) >= 0 || req.user.id == idUser){
-                        filteredList.push(crt);
-                    }
+                else if (data.ssid === 1002 && adName.indexOf('vivid') >= 0) {
+                    filteredList.push(crt);
+                }
+                else if (data.ssid === 1003 && adName.indexOf('fptplay') >= 0) {
+                    filteredList.push(crt);
+                }
+                else if (data.ssid === 1004 && adName.indexOf('lava') >= 0) {
+                    filteredList.push(crt);
+                }
+                else if (data.ssid === 1005 && adName.indexOf('ambient') >= 0) {
+                    filteredList.push(crt);
+                }
+                else if (data.ssid === 1006 && adName.indexOf('itvad') >= 0) {
+                    filteredList.push(crt);
+                }
+                else if (data.ssid === 1007 && (adName.indexOf('paytv') >= 0 )) {
+                    filteredList.push(crt);
                 }
             });
             res.json(filteredList);

@@ -6,12 +6,27 @@
             stroke-dasharray: 5,5;
     }
 </style>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">
+            Forecasting Ad Inventory
+        </h1>
+        <div class="alert alert-info" role="alert">
+            The number of playview in next 24 hours
+        </div>
+    </div>
+</div>
+
 <div class="panel panel-default" id="predicted1">
 </div>
+
 <div class="panel panel-default" id="predicted4">
 </div>
+
 <div class="panel panel-default" id="predicted5">
 </div>
+
 <script>
 
     $.ajax({
@@ -126,14 +141,14 @@
             {
                 // area: true,
                 values: sincur,
-                key: "PlayViews",
+                key: "Reporting View",
                 color: "#ff7f0e",
                 strokeWidth: 6
                 
             },
             {
                 values: sinpred,
-                key: "Forecasted PlayViews",
+                key: "Forecasting View",
                 color: "#2ca02c",
                   strokeWidth: 4,
                   classed: 'dashed'
