@@ -1,62 +1,71 @@
+(function(){
+/* Menu Toggle */
+    $('body').on('click touchstart', '#menu-toggle', function(e){
+        e.preventDefault();
+        $('html').toggleClass('menu-active');
+        $('#sidebar').toggleClass('toggled');
+        //$('#content').toggleClass('m-0');
+    });
+})();        
 /* --------------------------------------------------------
 Calendar
 -----------------------------------------------------------*/
-    (function(){
-       
-        //Sidebar
-        setTimeout(function(){
-            if ($('#sidebar-calendar')[0]) {
-                var date = new Date();
-                var d = date.getDate();
-                var m = date.getMonth();
-                var y = date.getFullYear();
-                $('#sidebar-calendar').fullCalendar({
-                    editable: false,
-                    events: [],
-                    header: {
-                        left: 'title'
-                    }
-                });
-            }
-        }, 1000);
-        
-
-        //Content widget
-        if ($('#calendar-widget')[0]) {
-            $('#calendar-widget').fullCalendar({
+(function(){
+   
+    //Sidebar
+    setTimeout(function(){
+        if ($('#sidebar-calendar')[0]) {
+            var date = new Date();
+            var d = date.getDate();
+            var m = date.getMonth();
+            var y = date.getFullYear();
+            $('#sidebar-calendar').fullCalendar({
+                editable: false,
+                events: [],
                 header: {
-                    left: 'title',
-                    right: 'prev, next',
-                    //right: 'month,basicWeek,basicDay'
-                },
-                editable: true,
-                events: [
-                    {
-                        title: 'All Day Event',
-                        start: new Date(y, m, 1)
-                    },
-                    {
-                        title: 'Long Event',
-                        start: new Date(y, m, d-5),
-                        end: new Date(y, m, d-2)
-                    },
-                    {
-                        title: 'Repeat Event',
-                        start: new Date(y, m, 3),
-                        allDay: false
-                    },
-                    {
-                        title: 'Repeat Event',
-                        start: new Date(y, m, 4),
-                        allDay: false
-                    }
-                ]
+                    left: 'title'
+                }
             });
         }
+    }, 1000);
+    
 
-    })();
+    //Content widget
+    if ($('#calendar-widget')[0]) {
+        $('#calendar-widget').fullCalendar({
+            header: {
+                left: 'title',
+                right: 'prev, next',
+                //right: 'month,basicWeek,basicDay'
+            },
+            editable: true,
+            events: [
+                {
+                    title: 'All Day Event',
+                    start: new Date(y, m, 1)
+                },
+                {
+                    title: 'Long Event',
+                    start: new Date(y, m, d-5),
+                    end: new Date(y, m, d-2)
+                },
+                {
+                    title: 'Repeat Event',
+                    start: new Date(y, m, 3),
+                    allDay: false
+                },
+                {
+                    title: 'Repeat Event',
+                    start: new Date(y, m, 4),
+                    allDay: false
+                }
+            ]
+        });
+    }
 
-    /* --------------------------------------------------------
+})();
+
+/* --------------------------------------------------------
 Date Time Widget
 -----------------------------------------------------------*/
 (function(){

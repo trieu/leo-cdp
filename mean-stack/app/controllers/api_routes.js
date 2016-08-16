@@ -15,6 +15,40 @@ webApp.factory('auth', function($http) {
 	}
 });
 
+webApp.factory('contactCRM', function($http) {
+	return {
+		_list : function() {
+			return $http.get('/api/contact/');
+		},
+		_read : function(id) {
+			return $http.get('/api/contact/' + id);
+		},
+		_update : function(id, data) {
+			return $http.put('/api/contact/' + id, data);
+		},
+		_delete : function(id) {
+			return $http.delete('/api/contact/' + id);
+		}
+	}
+});
+
+webApp.factory('dealCRM', function($http) {
+	return {
+		_list : function() {
+			return $http.get('/api/deal/');
+		},
+		_read : function(id) {
+			return $http.get('/api/deal/' + id);
+		},
+		_update : function(id, data) {
+			return $http.put('/api/deal/' + id, data);
+		},
+		_delete : function(id) {
+			return $http.delete('/api/deal/' + id);
+		}
+	}
+});
+
 webApp.factory('creative', function($http) {
 	return {
 		_list : function() {
