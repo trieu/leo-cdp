@@ -3,23 +3,6 @@ var express = require('express'),
     router = express.Router(),
     app = express();
 
-var config_default = {
-		// enable roles 
-		access: [
-			{routes: '/creative/*', roles: ['*']}, //all roles and all method
-			{routes: '/placement/*', roles: ['admin', 'operator']}, //roles admin and operator
-			{routes: '/campaign/*', roles: ['admin', 'operator'], method: ['get', 'post']}, //with method get and post
-			{routes: '/monitor/*', roles: ['admin', 'operator']},
-			{routes: '/content/*', roles: ['admin', 'operator']},
-			{routes: '/user-profile/*', roles: ['admin', 'operator']},
-			{routes: '/booking/*', roles: ['admin', 'operator']},
-		],
-		// disable roles
-		denied: [
-			{routes: '/creative/new/*', roles: ['operator','client']},
-		]
-	};
-
 var check_roles = function(arr){
 	return function(req, res, next){
 		res.locals.roles = false;
@@ -90,15 +73,18 @@ function check_auth(req, res, next){
 	}
 }
 
-if (!_.isEmpty(config_default.denied)) {
-	check_routes(config_default.denied, denied);
-}
+module.exports = function(config) {
 
-if(!_.isEmpty(config_default.access)){
-	check_routes(config_default.access, access);
-}
+	if (!_.isEmpty(config.denied)) {
+		check_routes(config.denied, denied);
+	}
 
-module.exports = {
-	privilege: check_auth,
-	router: router
+	if(!_.isEmpty(config.access)){
+		check_routes(config.access, access);
+	}
+
+	return {
+		privilege: check_auth,
+		router: router
+	}
 };
