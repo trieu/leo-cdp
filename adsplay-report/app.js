@@ -26,10 +26,12 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 //app.use(multer({ dest: './uploads/'}));
 app.use(cookieParser());
 app.use(expressSession({
-	secret: 'mySecretKey',
+	secret: 'adsplay123',
 	resave: false,
 	saveUninitialized: true,
-	path: "/*"
+	cookie :{ 
+		path: '/', httpOnly: true, maxAge: 24*60*60*1000
+	}
 }));
 app.use(flash());
 

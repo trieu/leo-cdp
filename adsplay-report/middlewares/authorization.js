@@ -15,9 +15,9 @@ var config_default = {
 			{routes: '/booking/*', roles: ['admin', 'operator']},
 		],
 		// disable roles
-		// denied: [
-		// 	{routes: '/creative/list/all', roles: ['operator'], method: ['get']}, //disable operator only routes /creative/list/all
-		// ]
+		denied: [
+			{routes: '/creative/new/*', roles: ['operator','client']},
+		]
 	};
 
 var check_roles = function(arr){
