@@ -2,15 +2,15 @@
  * Created by trieu on 8/16/16.
  */
 var config_authorization = {
-    // enable roles
+    // enable roles 
     access: [
         {routes: '/creative/*', roles: ['*']}, //all roles and all method
         {routes: '/placement/*', roles: ['admin', 'operator']}, //roles admin and operator
-        {routes: '/campaign/*', roles: ['admin', 'operator'], method: ['get', 'post']}, //with method get and post
-        {routes: '/monitor/*', roles: ['admin', 'operator']},
-        {routes: '/content/*', roles: ['admin', 'operator']},
-        {routes: '/user-profile/*', roles: ['admin', 'operator']},
-        {routes: '/booking/*', roles: ['admin', 'operator']},
+        {routes: '/campaign/*', roles: ['*'], method: ['get', 'post']}, //with method get and post
+        {routes: '/monitor/*', roles: ['*']},
+        {routes: '/content/*', roles: ['*']},
+        {routes: '/user-profile/*', roles: ['*']},
+        {routes: '/booking/*', roles: ['*']},
     ],
     // disable roles
     denied: [
@@ -18,6 +18,4 @@ var config_authorization = {
     ]
 };
 
-module.exports = {
-    authorization : config_authorization
-};
+module.exports = config_authorization;

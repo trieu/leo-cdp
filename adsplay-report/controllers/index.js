@@ -2,7 +2,6 @@
  * Created by trieu on 5/27/15.
  */
 var modelUtils = require('../helpers/model_utils');
-var commonConfigs = require('../configs/common.js');
 var authorizationConfig = require('../configs/authorization-config');
 var fs = require('fs');
 
@@ -28,7 +27,7 @@ module.exports = function (app) {
     var passport_auth = require('../middlewares/passport-utils.js')(passport);
 
     //Authorization
-    var auth = require('../middlewares/authorization.js')(authorizationConfig.authorization);
+    var auth = require('../middlewares/authorization.js')(authorizationConfig);
     app.use(auth.privilege, auth.router);
 
     /* all router */
