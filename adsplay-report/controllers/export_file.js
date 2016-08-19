@@ -13,10 +13,10 @@ router.get('/excel/statistics', function(req, res, next){
 		var data = JSON.parse(body);
 		var data_rename = [];
 		var d = new Date();
-		var path = 'public/export/excel-'+d.getTime();
+		var path = 'public/export/excel-'+ moment().format('YYYY-MM-DD-hh-mm-ss');
 
 		for (var i in data) {
-			var date = moment(data[i]['period']).format('MMM D, YYYY hh:mm:ss A');
+			var date = moment(data[i]['period']).format('YYYY-MM-DD');
 			data_rename.push({
 				period: date,
 				Total_Play_View: data[i]['totalPv'],
