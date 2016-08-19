@@ -40,6 +40,7 @@ module.exports = function (app) {
     app.use('/content', require('./content'));
     app.use('/user-profile', require('./user-profile'));
     app.use('/booking', require('./booking'));
+    app.use('/export', require('./export_file'));
 
 
     app.route('/').get(function (req, res) {

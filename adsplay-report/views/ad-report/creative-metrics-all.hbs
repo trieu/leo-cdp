@@ -2,6 +2,9 @@
     <div class="col-lg-12">
         <h1 class="page-header">
             Summary Report in 30 days
+            <a href="/export/excel/statistics?begin={{begin}}&end={{end}}" target="_blank" class="btn btn-success pull-right" id="export_excel">
+                <i class="fa fa-file-text-o" aria-hidden="true"></i> Export Excel
+            </a>
         </h1>
     </div>
 </div>
@@ -276,6 +279,9 @@
             getCreativeStats(beginDate, endDate, updateCharts);
             $('.beginDate').text(beginDate);
             $('.endDate').text(endDate);
+
+            $('#export_excel').attr('href','/export/excel/statistics?begin='+beginDate+'&end='+endDate);
         });
+
     });
 </script>

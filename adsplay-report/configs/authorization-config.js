@@ -11,6 +11,7 @@ var config_authorization = {
         {routes: '/content/*', roles: ['*']},
         {routes: '/user-profile/*', roles: ['*']},
         {routes: '/booking/*', roles: ['*']},
+        {routes: '/export/*', roles: ['*']},
     ],
     // disable roles
     denied: [

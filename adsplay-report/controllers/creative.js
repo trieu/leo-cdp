@@ -274,8 +274,12 @@ router.get('/new/local-ad-unit', function (req, res) {
 router.get('/new/local-ad-unit/display', function (req, res) {
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "New Creative Display Banner";
+    data.fptplayCategories = ArrayUtils.concatUnique(constantUtils.getFemaleKeywords().concat(constantUtils.getMaleKeywords()));
     data.femaleKeywords = constantUtils.getFemaleKeywords();
     data.maleKeywords = constantUtils.getMaleKeywords();
+
+    data.payTVCategories = constantUtils.getPayTVCategories();
+    data.locationCodes = constantUtils.getLocationCodes();
 
     res.render('ad-report/new-creative-display', data)
 
@@ -357,7 +361,7 @@ router.post('/save/tvc-ad', function (req, res) {
 
                             var input = obj.url;
                             //output file convert with name = convert-video.mp4
-                            var output = obj.folder + "/convert-video.mp4";
+                            var output = obj.folder + "convert-video.mp4";
                             var option = {videoCodec: 'libx264', audioCodec: 'libmp3lame', format: 'mp4', bitrate: '360p'};
 
                             convert.command(input, output, option, function () {

@@ -50,6 +50,11 @@ app.set('view engine', 'hbs');
 
 
 //++++++++create folder
+var exportFolder = __dirname + '/public/export/';
+if(!fs.existsSync(exportFolder)){
+	fs.mkdirSync(exportFolder);
+}
+
 var folder = ['overlay','display','video'];
 var adsFolder = __dirname + '/public/ads/';
 if (!fs.existsSync(adsFolder)) {
