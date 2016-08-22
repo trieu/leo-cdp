@@ -1,5 +1,5 @@
 var express = require('express')
-    , router = express.Router();
+    ,router = express.Router();
 var exportToExcel = require('export-to-excel');
 var request = require('request');
 var modelUtils = require('../helpers/model_utils');
@@ -12,7 +12,6 @@ router.get('/excel/statistics', function(req, res, next){
 	request(url, function (error, response, body) {
 		var data = JSON.parse(body);
 		var data_rename = [];
-		var d = new Date();
 		var path = 'public/export/excel-'+ moment().format('YYYY-MM-DD-hh-mm-ss');
 
 		for (var i in data) {
@@ -33,19 +32,19 @@ router.get('/excel/statistics', function(req, res, next){
 					title: [
 						{
 							"fieldName": "period",
-							"displayName": "Period"
+							"displayName": "Date"
 						},
 						{
 							"fieldName": "Total_Play_View",
-							"displayName": "Total Play View"
+							"displayName": "Total PlayView"
 						},
 						{
 							"fieldName": "Total_Impression",
-							"displayName": "Total Play View"
+							"displayName": "Total Impression"
 						},
 						{
 							"fieldName": "Total_Completed_View",
-							"displayName": "Total Completed View"
+							"displayName": "Total Completed-View"
 						},
 						{
 							"fieldName": "Total_Click",
