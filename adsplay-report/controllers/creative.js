@@ -418,18 +418,32 @@ router.post('/save/display-banner', function (req, res) {
                 var rawCrt = fields.creative;
                 var adtype = fields.adtype;
                 var file = files.file;
-
+                
+                res.status(200);
                 if (typeof rawCrt === 'string' && adtype === 'fm_display_banner') {
                     var crt = JSON.parse(rawCrt);
                     crt.adType = 2;
                     crt.idUser = req.user.id;
 
                     if (typeof(file) !== "undefined" && file !== null) {
-                        upload.unzip(file, function (obj) {
-                            //obj = {url: "local/folder/output.jpg", folder: "name folder"}
-                            crt.media = obj.url;
-                            saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
-                        });
+                        var name_lower = file.name.toLowerCase();
+                        console.log(name_lower);
+                        if(name_lower.indexOf(".zip") >= 0){
+                            upload.unzip(file, function (obj) {
+                                //obj = {url: "local/folder/output.jpg", folder: "name folder"}
+                                crt.media = obj.url;
+                                saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
+                            });
+                        }
+                        else{
+                            console.log('vao')
+                            upload.image(file, function (obj) {
+                                crt.media = obj.url;
+                                console.log(obj)
+                                saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
+                            });
+                        }
+
                     }
                     else {
                         saveJson({url: urlSave, form: JSON.stringify(crt)}, res);

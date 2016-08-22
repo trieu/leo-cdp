@@ -27,7 +27,7 @@
         $('body *[data-creative-field]').each(function(){
             var fieldName = $(this).attr('data-creative-field');
             var type = $(this).attr('type');
-            console.log('fieldName: '+ fieldName + ' type: ' + type + ' val: ' + $(this).val());
+            //console.log('fieldName: '+ fieldName + ' type: ' + type + ' val: ' + $(this).val());
 
             var value = $(this).val() ? $(this).val() : '';
             if(numFields[fieldName] === 1){
@@ -223,6 +223,33 @@
         }
     }
 
+    function checkSizeImg(){
+        var size = $("#ads-size").val();
+        if(typeof (size) == "undefined" || size == null || size == ""){
+            modal_alert('Ads-Size must be selected !');
+            return false;
+        }
+
+        if ($('#file')[0].files[0].name.match(/\.(jpg|jpeg|png|gif)$/)){
+            var sizeads = JSON.parse(size);
+            var img = new Image();
+            img.src = window.URL.createObjectURL($('#file')[0].files[0]);
+            img.onload = function() {
+                var width = img.naturalWidth,
+                    height = img.naturalHeight;
+                if(sizeads.w == width && sizeads.h == height){
+                    console.log(sizeads.w, sizeads.h);
+                    return {w: width, h: height}
+                }
+                else{
+                    modal_alert('Incorrect size: '+width+' x '+height);
+                    return false;
+                }
+            }
+        }
+
+    }
+
     jQuery(document).ready(function(){
         $('[title]').tooltip();
         $("#profile-all").click(function () {
@@ -237,9 +264,9 @@
             if(checkAdType > 0){
                 adtype = adtypeArr[i].adtype;
             } 
-            // if(url_current.indexOf('video') < 0){
-            //     $('[data-ad-type="1"]').hide();
-            // }
+            if(url_current.indexOf('video') >= 0){
+                $(".banner-hidden").show();
+            }
         }
 
         //check url edit
@@ -273,6 +300,12 @@
             multipleWidth: '100%',
             selectAllText: 'Chọn tất cả'
         });
+        $("#ads-size").multipleSelect({
+            filter: true,
+            single: true,
+            width: '100%'
+        });
+        $('#ads-size').multipleSelect('uncheckAll');
 
         //disable video data fields on other ad type
         var tvc_div_nodes = $('#row_ads_thirdparty_url,#row_ads_skip,#row_ads_duration,#row_ads_startime,#div_fptplay_tvc_ad_placements,#div_paytv_ad_placements,#div_fshare_ad_placements,#div_nhacso_ad_placements');
@@ -326,7 +359,7 @@
 
         $('#ads_action_ok').click(function(){
             var data = collectCreativeData();
-            console.log(data);
+            // console.log(data);
 
             var id_edit = url_edit_id(url_current);
             if(id_edit != false){
@@ -432,7 +465,7 @@
                     data: postData,
                     contentType: false,
                     processData:false,
-                    timeout: 60000, //60s
+                    timeout: 120000, //120s
                     beforeSend: function(){
                         $('#wrapper').append('<div class="loader"></div>');
                     },
@@ -452,21 +485,27 @@
             }
             else if(adtype == "fm_display_banner"){
                 if(media == null){
-                    if (!$('#file')[0].files[0].name.match(/\.(zip)$/)){
-                        return alert('Incorrect file .zip');
+                    if (!$('#file')[0].files[0].name.match(/\.(zip|jpg|jpeg|png|gif)$/)){
+                        return alert('Incorrect file upload');
                     }
                 }
+                var getSizeImg = checkSizeImg();
+                if(typeof (getSizeImg) != "undefined"){
+                    data.w = getSizeImg.w;
+                    data.h = getSizeImg.h;
+                }
+
                 var postData = new FormData();
                 postData.append('file', $('#file')[0].files[0]);
                 postData.append('creative', JSON.stringify(data));
                 postData.append('adtype', adtype);
+                
                 $.ajax({
                     url: 'creative/save/display-banner',
                     type: "POST",
                     data: postData,
                     contentType: false,
                     processData:false,
-                    timeout: 60000, //60s
                     beforeSend: function(){
                         $('#wrapper').append('<div class="loader"></div>');
                     },
@@ -481,6 +520,13 @@
                         return alert('Incorrect file .jpg , .jpeg, .png, .gif');
                     }
                 }
+
+                var getSizeImg = checkSizeImg();
+                if(typeof (getSizeImg) != "undefined"){
+                    data.w = getSizeImg.w;
+                    data.h = getSizeImg.h;
+                }
+
                 var postData = new FormData();
                 postData.append('file', $('#file')[0].files[0]);
                 postData.append('creative', JSON.stringify(data));

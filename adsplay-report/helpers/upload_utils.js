@@ -135,7 +135,7 @@ Upload.prototype.image = function(file, callback){
 
 Upload.prototype.unzip = function(file, callback){
 
-	var dir = storage('overlay');
+	var dir = storage('display');
     var dirSplit = dir.split("/"); 
     var output = dir + 'index.html';
     var url = output.split("public/");
