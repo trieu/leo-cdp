@@ -188,7 +188,13 @@
                         }
                     }
                 }
-            
+
+                if(adtype == "fm_display_banner" || adtype == "fm_overlay_banner"){
+                    $(".banner-hidden").hide();
+                }
+                if(adtype == "fm_tvc_video"){
+                    $(".video-hidden").hide();
+                }
             }
         });
     }
@@ -267,6 +273,9 @@
             if(url_current.indexOf('video') >= 0){
                 $(".banner-hidden").show();
                 $(".video-hidden").hide();
+            }
+            if(url_current.indexOf('display') >= 0 || url_current.indexOf('overlay') >= 0){
+                $(".banner-hidden").hide();
             }
         }
 

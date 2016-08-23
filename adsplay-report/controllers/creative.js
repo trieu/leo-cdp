@@ -221,7 +221,11 @@ router.get('/:id/edit', function (req, res) {
         var nameAdType;
 
         //payTV check
-        var isIpTvAd = data.crt.tgpfs.indexOf(6) >= 0;//
+
+        var isIpTvAd = false;
+        if(typeof (data.crt.tgpfs) != 'undefined'){
+            isIpTvAd = data.crt.tgpfs.indexOf(6) >= 0;
+        }
         if (data.crt.adType == 1) {
             if (isIpTvAd) {
                 //nameAdType = 'new-creative-video-paytv';
@@ -231,9 +235,11 @@ router.get('/:id/edit', function (req, res) {
             }
         }
         else if (data.crt.adType == 2) {
+            data.adsSize = constantUtils.size_display;
             nameAdType = 'new-creative-display';
         }
         else if (data.crt.adType == 3) {
+            data.adsSize = constantUtils.size_overlay;
             nameAdType = 'new-creative-overlay';
         }
         else if (data.crt.adType == 4) {
