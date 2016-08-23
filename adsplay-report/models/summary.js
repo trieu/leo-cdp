@@ -7,7 +7,7 @@ var moment = require('moment');
 
 var redisClientUtils = require('../helpers/redis_client_utils');
 var client = redisClientUtils.getRedisClientAdServer();
-var twoWeek = 168 * 2;
+var goBackHours = 168 * 1;//one week
 var threeDays = 72;
 
 function getData(timeStr) {
@@ -52,7 +52,7 @@ function processDataHourly(timeStr, done, collector, cb) {
 }
 
 function getSummaryImpressionAndPlayView(cb) {
-    var currHour = (new Date()).getHours() + twoWeek;
+    var currHour = (new Date()).getHours() + goBackHours;
     var impDataList = [];
     var pvDataList = [];
 
@@ -170,7 +170,7 @@ function getSummaryImpressionAndClick(cb) {
 }
 
 function getSummaryImpressionVsCompleteView(cb) {
-    var currHour = (new Date()).getHours() + twoWeek ;
+    var currHour = (new Date()).getHours() + goBackHours ;
     var impDataList = [];
     var view100DataList = [];
 
