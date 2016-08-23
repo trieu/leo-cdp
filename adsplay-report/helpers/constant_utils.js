@@ -22,6 +22,80 @@ var platforms = {1: 'PC Web', 2: 'Mobile Web', 3: 'Tablet', 4: 'Mobile App', 5: 
 
 var publishers = { 1: "FptPlay", 2: "Nhacso", 3: "Fshare", 4: "PayTV" };
 
+var size_overlay = [
+    {
+        "name": "Banner",
+        "size": {"w": 468, "h": 60}
+    },
+    {
+        "name": "Leaderboard",
+        "size": {"w": 728, "h": 90}
+    }
+];
+
+var size_display = [
+    {
+        "name": "Banner",
+        "size": {"w": 468, "h": 60}
+    },
+    {
+        "name": "Leaderboard",
+        "size": {"w": 728, "h": 90}
+    },
+    {
+        "name": "Square",
+        "size": {"w": 250, "h": 250}
+    },
+    {
+        "name": "Small square",
+        "size": {"w": 200, "h": 200}
+    },
+    {
+        "name": "Inline rectangle",
+        "size": {"w": 300, "h": 250}
+    },
+    {
+        "name": "Skyscraper",
+        "size": {"w": 120, "h": 600}
+    },
+    {
+        "name": "Half-page",
+        "size": {"w": 300, "h": 600}
+    },
+    {
+        "name": "Large leaderboard",
+        "size": {"w": 970, "h": 90}
+    },
+    {
+        "name": "Large mobile banner",
+        "size": {"w": 320, "h": 100}
+    },
+    {
+        "name": "Billboard",
+        "size": {"w": 970, "h": 250}
+    },
+    {
+        "name": "Portrait",
+        "size": {"w": 300, "h": 1050}
+    },
+    {
+        "name": "Panorama",
+        "size": {"w": 980, "h": 120}
+    },
+    {
+        "name": "Top banner",
+        "size": {"w": 930, "h": 180}
+    },
+    {
+        "name": "Triple widescreen",
+        "size": {"w": 250, "h": 360}
+    },
+    {
+        "name": "Netboard",
+        "size": {"w": 580, "h": 400}
+    }
+];
+
 exports.getStatus = function (id) {
     return statuses[id];
 };
@@ -107,3 +181,5 @@ exports.placements = placements;
 exports.sites = sites;
 exports.platforms = platforms;
 exports.publishers = publishers;
+exports.size_overlay = size_overlay;
+exports.size_display = size_display;

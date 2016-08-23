@@ -281,6 +281,7 @@ router.get('/new/local-ad-unit/display', function (req, res) {
     data.payTVCategories = constantUtils.getPayTVCategories();
     data.locationCodes = constantUtils.getLocationCodes();
 
+    data.adsSize = constantUtils.size_display;
     res.render('ad-report/new-creative-display', data)
 
 });
@@ -304,6 +305,7 @@ router.get('/new/local-ad-unit/overlay', function (req, res) {
 
     data.payTVCategories = constantUtils.getPayTVCategories();
     data.locationCodes = constantUtils.getLocationCodes();
+    data.adsSize = constantUtils.size_overlay;
 
     res.render('ad-report/new-creative-overlay', data)
 
