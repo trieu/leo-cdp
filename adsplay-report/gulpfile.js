@@ -4,7 +4,7 @@ var concat = require('gulp-concat');
 var cleanCss = require('gulp-clean-css');
 
 gulp.task('js-min', function() {
-	return gulp.src(['public/js/*.js','!public/js/jquery.js','!public/js/moment.min.js','!public/js/js-min.js'])
+	return gulp.src(['public/js/*.js','!public/js/jquery.js','!public/js/jquery-ui.min.js','!public/js/moment.min.js','!public/js/js-min.js'])
 			.pipe(concat('js-min.js'))
 			.pipe(uglify({mangle: false}))
 			.pipe(gulp.dest('public/js'))

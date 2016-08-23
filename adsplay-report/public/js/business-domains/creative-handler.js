@@ -266,6 +266,7 @@
             } 
             if(url_current.indexOf('video') >= 0){
                 $(".banner-hidden").show();
+                $(".video-hidden").hide();
             }
         }
 
