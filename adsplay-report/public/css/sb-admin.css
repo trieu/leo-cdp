@@ -350,6 +350,10 @@ ul.alert-dropdown {
     max-width: 200px !important;
     overflow: hidden !important;
 }
+.td-max-400{
+    width: 400px !important;
+    overflow: hidden !important;
+}
 .dataTables_filter input{
     border: 1px solid #ddd;
 }
@@ -361,15 +365,19 @@ table.dataTable thead th, table.dataTable thead td{
     margin-top: 10px;
 }
 
-#table-creative-list{
+#table-creative-list,
+#event-list{
     padding: 15px;
     border: 1px solid #eee;
     border-radius: 4px;
+    text-align: left;
 }
-#table-creative-list table{
+#table-creative-list table,
+#event-list table{
     table-layout: auto;
 }
-#table-creative-list table th{
+#table-creative-list table th,
+#event-list table th{
     vertical-align: middle;
     white-space: normal !important;
 }
