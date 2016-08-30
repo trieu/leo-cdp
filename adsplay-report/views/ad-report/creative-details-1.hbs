@@ -63,10 +63,6 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><strong>Click Through URL</strong></td>
-                            <td><a id="ads_cliThr" href="{{crt.cliThr}}">{{crt.cliThr}}</a></td>
-                        </tr>
-                        <tr>
                             <td><strong>Total Booking</strong></td>
                             <td><span id="ads_totalBooking" class="impress-text">{{formatCurrency crt.tBk}}</span></td>
                         </tr>
@@ -77,10 +73,6 @@
                         <tr>
                             <td><strong>Hourly Booking</strong></td>
                             <td><span id="ads_hourlyBooking" class="impress-text">{{formatCurrency crt.hBk}}</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Discount</strong></td>
-                            <td><span id="ads_discount" class="impress-text">{{formatCurrency crt.discount}}</span></td>
                         </tr>
                         <tr style="display: none">
                             <td><strong>Ad materials</strong></td>
@@ -155,6 +147,22 @@
 
     <div class="tab-content">
         <div id="tc-main-graphs" class="tab-pane fade in active">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>
+                                <strong>Ad Delivery Progress</strong></h3>
+                        </div>
+                        <div class="panel-body">
+                            <div id="booking_progress" class="graph" style='height:60px;'>
+                                <svg></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="row">
                 <div class="col-lg-12">
@@ -312,7 +320,6 @@ var drawLineChart = function (element, data, xLabel, tickValues, yLabel) {
                         .interpolate("cardinal")
                     //.width(width).height(height)
                         .useInteractiveGuideline(true)  //We want nice looking tooltips and a guideline!
-
                         .showLegend(true)       //Show the legend, allowing users to turn on/off line series.
                         .showYAxis(true)        //Show the y-axis
                         .showXAxis(true)        //Show the x-axis
@@ -403,7 +410,6 @@ var loadLineChartWithData = function () {
         var reachData = buildReachData(data);
         var timeArray = buildTimeArray(data);
 
-
         drawLineChart('#chart_imp_and_view svg', impAndTrvData, null, timeArray, 'View');
         drawLineChart('#chart_click svg', clickData, null, timeArray, 'Click');
         drawLineChart('#chart_reach svg', reachData, null, timeArray, 'Audience Reach');
@@ -480,6 +486,9 @@ var loadSummaryData = function () {
             $('#trueViewRate').text((crtStats.tvr * 100).toFixed(2));
             $('#reach').text(formatNumber(crtStats.reach));
 
+            var bkNum = Math.floor( {{crt.tBk}} / 1000);
+            var reportedNum = Math.floor(crtStats.imp / 1000);
+            bulletChart('#booking_progress svg', bkNum , reportedNum);
 
             if (totalImpPrev > 0) {
                 $('#totalImpDelta').text(formatNumber(crtStats.imp - totalImpPrev)).show();
@@ -601,9 +610,7 @@ function convertToStackBarData(rawData) {
         r.view25 = p25 + "%";
         crtStatsModel.adsStatsData.push(r);
 
-
         var tmpArr = [formatTime(date), v1, uniqueImp, freq, click, p25, p50, p75, p100, ctr];
-
 
         csvText += (tmpArr.join(",") + "\n<br>" );
     }
@@ -625,6 +632,20 @@ function convertToStackBarData(rawData) {
     return arr;
 }
 
+function bulletChart(placementID,bookingNum, reportNum){
+    var data = {
+        "title":"Ad Delivery Progress",		//Label the bullet chart
+        "subtitle":"(CPM)",		//sub-label for bullet chart
+        "ranges":[0,reportNum,bookingNum],	 //Minimum, mean and maximum values.
+        "measures":[reportNum],		 //Value representing current measurement (the thick blue line in the example)
+        "markers":[reportNum]			 //Place a marker on the chart (the white triangle marker)
+    };
+    nv.addGraph(function() {
+        var chart = nv.models.bulletChart();
+        d3.select(placementID).datum(data).transition().duration(1000).call(chart);
+        return chart;
+    });
+}
 
 $(document).ready(function () {
     $('.nav-tabs a').click(function (e) {
@@ -721,7 +742,6 @@ $(document).ready(function () {
     }
 
     function pieChart(placementID, data){
-        
         nv.addGraph(function () {
             var chart = nv.models.pieChart()
                         .x(function (d) {
@@ -743,7 +763,6 @@ $(document).ready(function () {
                     .call(chart);
             return chart;
         });
-
     }
 
     function isDevice(id){

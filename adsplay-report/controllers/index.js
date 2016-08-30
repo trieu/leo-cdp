@@ -10,6 +10,10 @@ module.exports = function (app) {
     var svgCaptcha = require('svg-captcha');
     var checkCaptcha = function(req, res, next){
         var captcha = req.body.captcha.toLowerCase();
+        if( ! req.session.captcha){
+            console.log("Recaptcha is NULL !");
+            res.redirect('/login');
+        }
         var sscaptcha = req.session.captcha.toLowerCase();
         if(sscaptcha == captcha){
             next();
