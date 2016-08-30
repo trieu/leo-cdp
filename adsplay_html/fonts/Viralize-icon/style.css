@@ -1,0 +1,157 @@
+@font-face {
+	font-family: 'icomoon';
+	src:url('fonts/icomoon.eot?-qtwpe9');
+	src:url('fonts/icomoon.eot?#iefix-qtwpe9') format('embedded-opentype'),
+		url('fonts/icomoon.woff?-qtwpe9') format('woff'),
+		url('fonts/icomoon.ttf?-qtwpe9') format('truetype'),
+		url('fonts/icomoon.svg?-qtwpe9#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-calendar:before {
+	content: "\e61f";
+}
+
+.icon-categories:before {
+	content: "\e60d";
+}
+
+.icon-search:before {
+	content: "\e61b";
+}
+
+.icon-arrow-up:before {
+	content: "\e61c";
+}
+
+.icon-arrow-down:before {
+	content: "\e61d";
+}
+
+.icon-arrow-back:before {
+	content: "\e600";
+}
+
+.icon-arrow-forward:before {
+	content: "\e601";
+}
+
+.icon-money:before {
+	content: "\e602";
+}
+
+.icon-analytics:before {
+	content: "\e603";
+}
+
+.icon-customization:before {
+	content: "\e604";
+}
+
+.icon-gallery:before {
+	content: "\e605";
+}
+
+.icon-network:before {
+	content: "\e606";
+}
+
+.icon-target:before {
+	content: "\e607";
+}
+
+.icon-brand:before {
+	content: "\e608";
+}
+
+.icon-reach:before {
+	content: "\e609";
+}
+
+.icon-share:before {
+	content: "\e60a";
+}
+
+.icon-control:before {
+	content: "\e60b";
+}
+
+.icon-dashboard:before {
+	content: "\e60c";
+}
+
+.icon-revenue:before {
+	content: "\e61e";
+}
+
+.icon-distribute:before {
+	content: "\e60e";
+}
+
+.icon-monetize:before {
+	content: "\e60f";
+}
+
+.icon-user:before {
+	content: "\e610";
+}
+
+.icon-author:before {
+	content: "\e611";
+}
+
+.icon-time:before {
+	content: "\e612";
+}
+
+.icon-facebook:before {
+	content: "\e613";
+}
+
+.icon-twitter:before {
+	content: "\e614";
+}
+
+.icon-youtube:before {
+	content: "\e615";
+}
+
+.icon-pinterest:before {
+	content: "\e616";
+}
+
+.icon-instagram:before {
+	content: "\e617";
+}
+
+.icon-linkedin:before {
+	content: "\e618";
+}
+
+.icon-google:before {
+	content: "\e619";
+}
+
+.icon-rss:before {
+	content: "\e61a";
+}
+
+.icon-file-excel:before {
+	content: "\eadd";
+}
+
