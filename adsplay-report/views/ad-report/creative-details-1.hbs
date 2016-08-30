@@ -2,11 +2,9 @@
     <div class="col-lg-12">
         <ol class="breadcrumb">
             <li><a href="creative/list/all">All Advertising Units</a></li>
-            <li class="active">Ad Details</li>
+            <li class="active">Ad Report</li>
         </ol>
-        <h1 class="page-header">
-            <span>{{crt.name}}</span>
-        </h1>
+
     </div>
 </div>
 
@@ -37,13 +35,20 @@
     <div class="col-lg-8 text-center">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <strong>Data from {{begin}} to {{end}} </strong>
+                <strong>{{crt.name}}</strong>
             </div>
             <div class="panel-body">
 
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover table-striped">
                         <tbody>
+                        <tr>
+                            <td colspan="2">
+                                <div id="booking_progress"  style='height:55px;'>
+                                    <svg></svg>
+                                </div>
+                            </td>
+                        </tr>
                         <tr>
                             <td><strong>Created date</strong></td>
                             <td><span id="ads_date_started">{{crt.crtDate}}</span></td>
@@ -138,7 +143,7 @@
 
 
 <div class="row">
-    <h2>Report Details</h2>
+    <h2>Report from {{begin}} to {{end}}</h2>
     <ul class="nav nav-tabs">
         <li class="active"><a href="#tc-main-graphs">Ad Data Charts</a></li>
         <li><a href="#tc-daily-details">Daily Report</a></li>
@@ -147,22 +152,6 @@
 
     <div class="tab-content">
         <div id="tc-main-graphs" class="tab-pane fade in active">
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>
-                                <strong>Ad Delivery Progress</strong></h3>
-                        </div>
-                        <div class="panel-body">
-                            <div id="booking_progress" class="graph" style='height:60px;'>
-                                <svg></svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <div class="row">
                 <div class="col-lg-12">
@@ -634,7 +623,7 @@ function convertToStackBarData(rawData) {
 
 function bulletChart(placementID,bookingNum, reportNum){
     var data = {
-        "title":"Ad Delivery Progress",		//Label the bullet chart
+        "title":"Delivery Progress",		//Label the bullet chart
         "subtitle":"(CPM)",		//sub-label for bullet chart
         "ranges":[0,reportNum,bookingNum],	 //Minimum, mean and maximum values.
         "measures":[reportNum],		 //Value representing current measurement (the thick blue line in the example)
