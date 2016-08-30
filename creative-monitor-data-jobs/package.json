@@ -1,0 +1,26 @@
+{
+  "name": "creative-monitor-data-jobs",
+  "version": "0.0.1",
+  "private": "true",
+  "author": "@tantrieuf31",
+  "description": "Creative Monitor Data Jobs Project",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mc2ads/rfx/tree/master/rfx-report"
+  },
+  "keywords": [
+    "Monitor"
+  ],
+  "dependencies": {
+    "moment": "*",
+    "mongoose": "~3.8.8",
+    "mongoose-auto-increment": "^5.0.1",
+    "node-schedule": "^1.1.1",
+    "request": "~2.48.0",
+    "underscore": "~1.5.1"
+  },
+  "engine": {
+    "node": ">=0.8"
+  }
+}
