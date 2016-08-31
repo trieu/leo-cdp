@@ -6,6 +6,7 @@ var _ = require('underscore');
 var request = require('request');
 var schedule = require('node-schedule');
 
+var nodemon = require('nodemon');
 
 //____  create data  with { id = id creative , begin <= "running booking" < end } 
 
@@ -108,11 +109,12 @@ Sync(function(){
 	try {
 		//create 
         io_create.sync(null, items);
+        //set schedule
         io_schedule.sync(null);
+
     }
     catch (e) {
         console.error(e); // something went wrong 
     }
 
 });
-
