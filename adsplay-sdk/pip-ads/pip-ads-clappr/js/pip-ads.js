@@ -11,14 +11,14 @@
 
         $.pipAds.defaultOptions = {
       
-          classVideoAds: 'video-ads',
-          classBannerAds: 'banner-ads',
           classTitleAds: 'title-ads',
-	        ContentTitle: null,
-	        idVideoAds: 'my-video-ads',
-          linkBanner: null,
+          ContentTitle: null,
+          classVideoAds: 'video-ads',
+          idVideoAds: 'my-video-ads',
 	        link: null,
 	        type: null,
+          classBannerAds: 'banner-ads',
+          linkBanner: null,
 	        timeShow: 3000,
 	        timeHide: 10
 	        
@@ -100,9 +100,8 @@
 
           $( "#video-content" ).css({ "width":"29%", "height":"29%", "top":"9.05%", "left":"auto", "right":"0.5%" });
           $( "#video-content video" ).prop( { "muted" : true } );
-           $( "#video-content" ).css({ "pointer-events": "none" });
-          // $( "#video-content video" ).prop( { "chromeless" : true } );
-          // $( "#video-content video" ).prop( { "controls" : false } );
+          $( "#video-content" ).css({ "pointer-events": "none" });
+       
 
           /*video ads*/
           $( '.' + base.options.classVideoAds ).animate({
@@ -110,7 +109,7 @@
           });
 
           
-          $( '.' + base.options.classVideoAds ).css({ "pointer-events": "none" });
+          // $( '.' + base.options.classVideoAds ).css({ "pointer-events": "none" });
           $( '.' + base.options.classVideoAds ).css({ "position":"absolute", "z-index": "1000", "width": "69%", "height": "69%", "overflow": "hidden", "top": "9.05%", "left": "0.5%" });
           $( '.' + base.options.classVideoAds + ' ' + '#' + base.options.idVideoAds ).css({ "width": "100%", "height": "100%" });
           
@@ -120,14 +119,14 @@
           videojs( base.options.idVideoAds ).play();
 
           /*Banner*/
-          $( '.' + base.options.classBannerAds ).css({ "position":"absolute", "z-index": "100000", "width": "29%", "height": "40%",  "overflow": "hidden", "bottom": "14%", "right": "0.5%" });
-          $( '.' + base.options.classBannerAds + 'img' ).css({ "width": "100%", "height": "auto",  "overflow": "hidden" });
+          $( '.' + base.options.classBannerAds ).css({ "position":"absolute", "z-index": "100000", "width": "29%", "height": "40%",  "overflow": "hidden", "bottom": "20%", "right": "0.5%" });
+          
           $( '.' + base.options.classBannerAds ).animate({
              width: 'show'
           });
 
           /*Title*/
-          $( '.' + base.options.classTitleAds ).css({ "position":"absolute", "z-index": "10", "width": "100%", "height": "20%",  "overflow": "hidden", "top": "-2%", "left": "0%", "color":"white", "display": "inline" });
+          $( '.' + base.options.classTitleAds ).css({ "position":"absolute", "z-index": "1000000", "max-width": "100%", "height": "20%",  "overflow": "hidden", "top": "-2%", "left": "0%", "color":"white", "display": "inline" });
           $( '.' + base.options.classTitleAds ).animate({
              width: 'show'
           });

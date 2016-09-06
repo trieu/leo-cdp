@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Demo Infeed TVC</title>
+    <!-- AdsPlay HTML5 Video Ads CSS-->
+    <link href="http://itvad.vn/assets/css/videojs.ads.css" rel="stylesheet" type="text/css" />
+    <link href="http://itvad.vn/assets/css/videojs.css" rel="stylesheet" type="text/css" />
+    <link href="http://itvad.vn/assets/css/video-js.css" rel="stylesheet" type="text/css" />
+    <link href="http://itvad.vn/assets/css/style.css" rel="stylesheet" type="text/css" />
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+     <style type="text/css">
+         .example-video-container-in-feed{
+
+             position: absolute;
+             z-index: 10;
+             top: 37.6%;
+             left: 31.9%;
+             height: 22.7%;
+             width: 35.58%;
+             overflow: hidden;
+         }
+     </style>
+
+</head>
+<body class="main">
+<div class="test"> <!--//style="max-width: 100%;height: 100%;"-->
+    <div class="imgbg"> 
+        <img  src="imgpsh_fullsize.png">
+        <img id="end" src="imgpsh_fullsizeend.png" style="display: none">
+    </div>
+    <div class="example-video-container-in-feed">
+        <video id="my-video" class="video-js vjs-default-skin"  autoplay preload="auto" data-setup='{}' style="display:none"  >
+            <source src="http://ads.fptplay.net.vn/static/ads/instream/default-ads.mp4" type='video/mp4' />
+        </video>
+    </div>
+</div>
+<!--<!-- AdsPlay HTML5 Video Ads JS-->
+<script src="http://itvad.vn/assets/js/advjs.js"></script>
+<script src="http://itvad.vn/assets/js/adsplay.player.src.js"></script>
+<script>
+
+    var adUrls = [];
+    adUrls.push('https://d1.adsplay.net/delivery/zone/1001?placement=666');
+
+    var videoAdUrl = adUrls[Math.floor(Math.random()*adUrls.length)];
+    var contentNode = document.getElementById('my-video');
+    var contentHolderTag = contentNode.parentNode;
+    AdsPlayer.playVastCode(videoAdUrl, contentHolderTag
+        , function (vastUrl) {
+            console.log('before ' + vastUrl);
+            contentNode.setAttribute('style', 'display:none');
+        }
+        , function (vastUrl) {
+            console.log('after ' + vastUrl);
+            contentNode.setAttribute('style', 'display:none');  
+
+            setTimeout( function(){
+                $(".imgbg img").hide();
+                $(".imgbg #end").show();
+            }, 100);
+        });
+                
+</script>
+</body>
+</html>
+
