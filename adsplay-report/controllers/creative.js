@@ -24,6 +24,7 @@ router.get('/list/all', function (req, res) {
 
     data.dashboard_title = "All Advertising Units";
     data.statuses = constantUtils.statuses;
+    data.adTypes = constantUtils.adTypes;
     var statuses = [];
     for (var stt in constantUtils.statuses) {
         statuses.push({value: stt, label: constantUtils.getStatus(stt)});

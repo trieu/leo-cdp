@@ -15,6 +15,7 @@
 {{/if}}
 
 <div class="row">
+
     <div class='col-lg-3'>
         <div class="form-group">
             <select class="form-control" id="filter-status" >
@@ -25,6 +26,18 @@
             </select>
         </div>
     </div>
+
+<!--     <div class='col-lg-3'>
+        <div class="form-group">
+            <select class="form-control" id="filter-adTypes" >
+                <option value="-1">All Ad Types</option>
+                {{#each adTypes}}
+                    <option value="{{key}}">{{this}} Ad Units</option>
+                {{/each}}
+            </select>
+        </div>
+    </div>
+ -->
     <div class='col-lg-3'>
         <div class="form-group">
             <div class='input-group date' id='begin'>

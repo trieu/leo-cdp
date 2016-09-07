@@ -2,6 +2,17 @@ $(window).load(function() {
 	var plt_form = $('#plt_form');
 
 	var type = {1: "video", 2: "Display Banner", 3: "Overlay Banner"};
+
+	function select_render(){
+		setTimeout(function(){
+			$('#ads-size-display,#ads-size-overlay').multipleSelect({
+				single: true,
+		        filter: true,
+		        width: '100%'
+		    });
+		},200)
+	}
+
 	function get_type(id){
 		for(var i in type){
 			if (id == i) {
@@ -53,11 +64,12 @@ $(window).load(function() {
 
 	$('#modal-placement').on('hide.bs.modal', function (e) {
 		$("#plt_container .editing").removeClass("editing");
-		$('.row-overlay').hide();
+		$('.row-size-display').hide();
 	});
 
 	$('#new-placement').click(function(){
 		$('#modal-placement').modal('show');
+		select_render();
 		plt_form.find('input').val("");
 	});
 
@@ -69,6 +81,7 @@ $(window).load(function() {
 	$(document).on('click','.edit-placement', function(){
 		var row = $(this).closest('tr');
 		$('#modal-placement').modal('show');
+		select_render();
 		row.addClass('editing');
 
 		plt_form.find('input, select').each(function(i) {
@@ -76,8 +89,8 @@ $(window).load(function() {
 			var getValue = row.find('.'+attr).text();
 			if(attr == "plt_type"){
 				getValue = get_type_key(getValue);
-				if (getValue == 3) {
-					$('.row-overlay').show();
+				if (getValue == 2) {
+					$('.row-size-display').show();
 				}
 			}
 			$(this).val(getValue);
@@ -86,11 +99,11 @@ $(window).load(function() {
 	});
 
 	$('[name="plt_type"]').change(function(){
-		if ($(this).val() == 3) {
-			$('.row-overlay').show();
+		if ($(this).val() == 2) {
+			$('.row-size-display').show();
 		}
 		else{
-			$('.row-overlay').hide();
+			$('.row-size-display').hide();
 		}
 	});
 
@@ -103,6 +116,7 @@ $(window).load(function() {
 
 		var data = plt_data(plt_form);
 
+		console.log(data);
 		$.ajax({
 			url: '/placement/save/',
 			type: "POST",
@@ -137,8 +151,10 @@ $(window).load(function() {
 			data.name = form.find('[name="plt_name"]').val();
 			data.publisher = form.find('[name="plt_publisher"]').val();
 			data.type = form.find('[name="plt_type"]').val();
-			data.width = form.find('[name="plt_width"]').val();
-			data.height = form.find('[name="plt_height"]').val();
+
+			var select_display = JSON.parse($('#ads-size-display').val());
+			data.width = select_display.w || 0;
+			data.height = select_display.h || 0;
 		return data;	
 	}
 
@@ -151,7 +167,7 @@ $(window).load(function() {
 						<td class="plt_type">'+get_type(data.type)+'</td> \
 						<td class="plt_width">'+data.width+'</td> \
 						<td class="plt_height">'+data.height+'</td> \
-						<td class="plt_updatedDate">'+data.updatedDate+'</td> \
+						<td class="plt_updatedDate">'+ moment(data.updatedDate).format("YYYY-MM-DD")+'</td> \
 						<td width="60px" class="text-center"> \
 							<button type="button" id="'+data.id+'" class="btn btn-primary btn-xs action-btn" title="action"> \
 								<i class="fa fa-file-code-o"></i> \

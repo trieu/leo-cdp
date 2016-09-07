@@ -108,17 +108,15 @@
 				            </select>
 						</td>
 					</tr>
-					<tr class="row-overlay">
-						<td><strong>Width</strong></td>
-						<td>
-							<input type="number" class="form-control" name="plt_width">
-						</td>
-					</tr>
-					<tr class="row-overlay">
-						<td><strong>Height</strong></td>
-						<td>
-							<input type="number" class="form-control" name="plt_height">
-						</td>
+					<tr class="row-size-display">
+						<td><strong>Ads Size</strong></td>
+	                    <td>
+	                        <select id="ads-size-display" class="select-multi" data-placeholder="Choose ads size">
+	                            {{#each size_display}}
+	                                <option value='{"w":"{{size.w}}","h":"{{size.h}}"}'>{{name}}: {{size.w}} x {{size.h}}</option>
+	                            {{/each}}
+	                        </select>
+	                    </td>
 					</tr>
 				</tbody>
 	        </table>

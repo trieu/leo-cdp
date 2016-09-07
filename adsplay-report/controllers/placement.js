@@ -14,6 +14,7 @@ var express = require('express')
 router.get('/list-all', function (req, res, next) {
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "All Placements";
+    data.size_display = constantUtils.size_display;
 
     Placement.find({})
     .exec(function(err, doc){
