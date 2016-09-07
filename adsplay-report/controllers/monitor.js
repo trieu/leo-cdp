@@ -23,14 +23,14 @@ router.get('/inventory-predicted', function (req, res) {
     res.render('monitor/inventory-predicted', data);
 });
 
-router.get('/inventory-predicted/api', function (req, res){
+router.get('/inventory-predicted/api', function (req, res) {
     var inventory_data = require('../models/inventory');
     var pred = inventory_data.predicted;
-    
-    pred.find({}, function(err, doc){
-        if(err){
+
+    pred.find({}, function (err, doc) {
+        if (err) {
             console.log(err);
-        }else{
+        } else {
             res.json(doc);
         }
     });
@@ -47,7 +47,7 @@ router.get('/inventory-report', function (req, res) {
     res.render('monitor/inventory-report', data);
 });
 
-router.get('/inventory-report/api', function (req, res){
+router.get('/inventory-report/api', function (req, res) {
     var data = modelUtils.baseModel(req);
 
     var originalUrl = req.originalUrl.split("?");
@@ -61,7 +61,7 @@ router.get('/inventory-report/api', function (req, res){
             if (!error && response.statusCode == 200) {
                 res.json(JSON.parse(body));
             }
-        }    
+        }
     )
 });
 
@@ -79,16 +79,16 @@ router.get('/inventory-paytv', function (req, res) {
     res.render('monitor/inventory-paytv', data)
 });
 
-router.get('/inventory-paytv/api/:begin/:end', function(req, res){
+router.get('/inventory-paytv/api/:begin/:end', function (req, res) {
     var begin = req.params.begin;
     var end = req.params.end;
     var data = modelUtils.baseModel(req);
-    request(data.site.api_paytv+"/itvads?method=ITVad_TotalView&begintime="+begin+"&endtime="+end,
+    request(data.site.api_paytv + "/itvads?method=ITVad_TotalView&begintime=" + begin + "&endtime=" + end,
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 res.json(JSON.parse(body));
             }
-    });
+        });
 });
 
 //paytv-ads
@@ -99,15 +99,19 @@ router.get('/inventory-paytv-ads', function (req, res) {
     res.render('monitor/inventory-paytv-ads', data)
 });
 
-router.get('/inventory-paytv-ads/api/:begin/:end', function(req, res){
+router.get('/inventory-paytv-ads/api/:begin/:end', function (req, res) {
     var begin = req.params.begin;
     var end = req.params.end;
-    request(data.site.api_paytv+"/itvads?method=ITVad_TotalView&begintime="+begin+"&endtime="+end,
+    request(data.site.api_paytv + "/itvads?method=ITVad_TotalView&begintime=" + begin + "&endtime=" + end,
         function (error, response, body) {
+            //console.log(error);console.log(body);
             if (!error && response.statusCode == 200) {
                 res.json(JSON.parse(body));
+            } else {
+                res.json(JSON.parse(error));
             }
-    });
+        });
+
 });
 
 router.get('/pageview', function (req, res) {
@@ -127,11 +131,11 @@ router.get('/live-tv-ad-manager', function (req, res) {
 });
 
 router.get('/live-tv-ad-manager/on', function (req, res) {
-    res.json({ok:1});
+    res.json({ok: 1});
 });
 
 router.get('/live-tv-ad-manager/off', function (req, res) {
-    res.json({ok:1});
+    res.json({ok: 1});
 });
 
 router.get('/user', function (req, res) {
@@ -158,19 +162,19 @@ router.get('/summary/:graphId', function (req, res) {
     }
     var filterDate = req.query.filterDate != null ? req.query.filterDate : '2015-07-30';
 
-    if(req.params.graphId === 'chartImpVsPv'){
+    if (req.params.graphId === 'chartImpVsPv') {
         Summary.getSummaryImpressionAndPageView(cb)
     }
-    else if(req.params.graphId === 'chartImpVsView100'){
+    else if (req.params.graphId === 'chartImpVsView100') {
         Summary.getSummaryImpressionVsCompleteView(cb)
     }
-    else if(req.params.graphId === 'chartImpVsClick'){
+    else if (req.params.graphId === 'chartImpVsClick') {
         Summary.getSummaryImpressionAndClick(cb)
     }
-    else if(req.params.graphId === 'chartPieOS'){
+    else if (req.params.graphId === 'chartPieOS') {
         Summary.processPieChartData('os-', filterDate, cb)
     }
-    else if(req.params.graphId === 'chartPiePlatform'){
+    else if (req.params.graphId === 'chartPiePlatform') {
         Summary.processPieChartData('pf-', filterDate, cb)
     }
     else {
