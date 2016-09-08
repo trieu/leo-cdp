@@ -105,7 +105,7 @@
         base.cssContent = function() {
 
           $( '#' + base.options.idVideoContent ).css({ "position": "absolute", "z-index": "4", "width": "100%", "height": "100%", "overflow": "hidden"  });
-          $( '#' + base.options.idVideoContent ).css({ "max-width": "100%", "height": "100%", "overflow": "hidden" });
+          $( '#' + base.options.idVideoContent + ' ' + 'video').css({ "width": "100%", "height": "auto", "overflow": "hidden" });
           $( 'body' ).css({ "max-width": "81%", "height": "auto", "margin": "25px auto", "background-color": "black", "overflow": "hidden"});
           $( '#' + base.options.idWrapp ).css({ "position": "relative", "width": "100%", "height": "100%", "padding-bottom": "56.25%" });
 

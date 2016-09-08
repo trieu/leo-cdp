@@ -2,16 +2,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+
   <meta charset="utf-8" />
   <title>Video.js VAST Example</title>
-  <!-- AdsPlay HTML5 Video Ads CSS-->
  
-  <link href="css/style.css" rel="stylesheet" type="text/css">
   <link href="http://vjs.zencdn.net/5.10.2/video-js.min.css" rel="stylesheet">
-  <link href="css/popup-fplay.css" rel="stylesheet" type="text/css">
-  <!-- lightbox-ads -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
   <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
   <script src="http://vjs.zencdn.net/5.10.2/video.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-youtube/2.0.8/Youtube.min.js"></script>
@@ -20,9 +16,9 @@
 
 </head>
 <body class="main">
-  <div class="videoWraper">
+  <div id="videoWraper">
  
-    <div class="video-content">
+    <div id="video-content">
        <video id="my-video-content" class="video-js vjs-default-skin" autoplay controls preload="auto" >
       <source src="http://ads.fptplay.net.vn/static/videos/demo-sport-2.mp4" type='video/mp4' />
       </video>
@@ -35,18 +31,20 @@
 
   <script>
     
-    $(" .videoWraper ").pipAds(
+    $(" #videoWraper ").pipAds(
       {
-      
-        classVideoAds: 'video-ads',
-        idVideoAds: 'my-video-ads',
-        classBannerAds: 'my-banner-ads',
-        linkBanner: 'images/image.jpg',
-        link: "https://www.youtube.com/watch?v=9Pp7nDmb5K4?controls=0",
-        timeShow: 5000,
-        timeHide: 10,
-        ContentTitle: ' Demo Pip Ads'
-
+        idWrapp: 'videoWraper', 
+        idVideoContent: 'video-content', /* phai co */
+        mutedContent: "true", /* true or false */
+        classTitle: 'titlePage', /* co hoac khong */
+        ContentTitle: ' Demo Pip Ads', /* co hoac khong */
+        classVideoAds: 'video-ads', /* co hoac khong */
+        idVideoAds: 'my-video-ads', /* co hoac khong */
+        link: "https://ads-cdn.fptplay.net/static/ads/instream/ba72341a558b1246c65bbdcd15837c1d.mp4", /* phai co link youtube or mp4*/
+        classBannerAds: 'my-banner-ads', /* co hoac khong */
+        linkBannerAds: 'images/samsung.jpg', /* co hoac khong */
+        timeShow: 3000, /* Phai co Time show Ads 3s */
+        timeHide: 10  /* Phai co Time hide Ads 10s */
       }
     );
 
