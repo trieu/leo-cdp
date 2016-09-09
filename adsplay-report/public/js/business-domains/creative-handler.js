@@ -51,7 +51,10 @@
                     a.push(value);
                 }
             }
-            else if(type === 'date' ){
+            else if(type === 'date'){
+                data[fieldName] = $(this)[0].value;
+            }
+            else if(type === 'datetime-local'){
                 data[fieldName] = $(this)[0].value;
             }
             else if(type === 'radio' ){
@@ -83,6 +86,7 @@
         } else {
             data['is3rdAd'] = true;
         }
+        console.log(data)
         return data;
     }
     window.collectCreativeData = collectCreativeData;
@@ -135,7 +139,7 @@
                     else{
                         if (k == 'runDateL' || k == 'expDateL') {
                             var nameTime = (k == 'runDateL') ? 'runDate' : 'expiredDate';
-                            var time = moment(data[k]).format('YYYY-MM-DD');
+                            var time = moment(data[k]).format('YYYY-MM-DDTHH:mm');
                             $('[data-creative-field="'+nameTime+'"]').val(time);
                         }
                         else if(k == 'prcModel'){
@@ -346,14 +350,9 @@
             }
         };
         //end get iframe video
-
-        document.getElementById("ads_running_date").valueAsDate = new Date();
-        document.getElementById("ads_expired_date").valueAsDate = moment().add(1, 'days').toDate();
-
-        $('#ads_running_date,#ads_expired_date').keydown(function(e) {
-            e.preventDefault();
-        });
-
+        $("#ads_running_date").val(moment().format('YYYY-MM-DDTHH:mm'));
+        $("#ads_expired_date").val(moment().add(1, 'days').format('YYYY-MM-DDTHH:mm'));
+        
         var ad_target_device_handler = function(){
             var v = $(this).val() ;
             var checked = $(this).is(':checked');
@@ -405,8 +404,7 @@
                 modal_alert('Pricing Model must be selected !');
                 return false;
             }
-
-            if(document.getElementById("ads_running_date").valueAsDate.getTime() >= document.getElementById("ads_expired_date").valueAsDate.getTime()){
+            if(new Date(data.runDate).getTime() >= new Date(data.expiredDate).getTime()){
                 modal_alert('Running date must be before Expire Date!');
                 return false;
             }
@@ -475,7 +473,7 @@
                     data: postData,
                     contentType: false,
                     processData:false,
-                    timeout: 120000, //120s
+                    timeout: 60000, //60s
                     beforeSend: function(){
                         $('#wrapper').append('<div class="loader"></div>');
                     },
@@ -490,6 +488,11 @@
                         else {
                             alert(data);
                         }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        if(textStatus==="timeout") {
+                            window.location = 'https://monitor.adsplay.net/creative/list/all';
+                        } 
                     }
                 });
             }

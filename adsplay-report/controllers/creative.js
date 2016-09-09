@@ -92,15 +92,15 @@ router.get('/:id', function (req, res) {
 
             if (crt.crtDateL && crt.crtDateL > 0) {
                 var createdDate = moment(crt.crtDateL);
-                crt.crtDate = createdDate.format('LL');
+                crt.crtDate = createdDate.format('YYYY/MM/DD, hh:mm a');
             }
             if (crt.runDateL && crt.runDateL > 0) {
                 var runDate = moment(crt.runDateL);
-                crt.runDate = runDate.format('LL');
+                crt.runDate = runDate.format('YYYY/MM/DD, hh:mm a');
             }
             if (crt.expDateL && crt.expDateL > 0) {
                 var expiredDate = moment(crt.expDateL);
-                crt.expDate = expiredDate.format('LL');
+                crt.expDate = expiredDate.format('YYYY/MM/DD, hh:mm a');
             }
             crt.status = constantUtils.getStatus(crt.status);
             if (crt.totalRevenue == 0 || req.user.roles != 'admin') {
@@ -359,7 +359,10 @@ router.post('/save/tvc-ad', function (req, res) {
                     var crt = JSON.parse(rawCrt);
                     crt.adType = 1;
                     crt.idUser = req.user.id;
+                    crt.runDate = moment(crt.runDate).format('YYYY-MM-DD-HH-mm');
+                    crt.expiredDate = moment(crt.expiredDate).format('YYYY-MM-DD-HH-mm');
 
+                    console.log(crt);
                     var seedStr = stringUtils.removeUnicodeSpace(crt.name) + (new Date()).getTime();
                     var hash = crypto.createHash('md5').update(seedStr).digest('hex');
                     var mediaName = hash + '.mp4';
@@ -433,6 +436,8 @@ router.post('/save/display-banner', function (req, res) {
                     var crt = JSON.parse(rawCrt);
                     crt.adType = 2;
                     crt.idUser = req.user.id;
+                    crt.runDate = moment(crt.runDate).format('YYYY-MM-DD-HH-mm');
+                    crt.expiredDate = moment(crt.expiredDate).format('YYYY-MM-DD-HH-mm');
 
                     if (typeof(file) !== "undefined" && file !== null) {
                         var name_lower = file.name.toLowerCase();
@@ -491,6 +496,8 @@ router.post('/save/overlay-banner', function (req, res) {
                     var crt = JSON.parse(rawCrt);
                     crt.adType = 3;
                     crt.idUser = req.user.id;
+                    crt.runDate = moment(crt.runDate).format('YYYY-MM-DD-HH-mm');
+                    crt.expiredDate = moment(crt.expiredDate).format('YYYY-MM-DD-HH-mm');
 
                     if (typeof(file) !== "undefined" && file !== null) {
                         upload.image(file, function (obj) {
@@ -537,6 +544,8 @@ router.post('/save/breaking-news', function (req, res) {
                     var crt = JSON.parse(rawCrt);
                     crt.adType = 4;
                     crt.idUser = req.user.id;
+                    crt.runDate = moment(crt.runDate).format('YYYY-MM-DD-HH-mm');
+                    crt.expiredDate = moment(crt.expiredDate).format('YYYY-MM-DD-HH-mm');
 
                     if (typeof(text) !== "undefined" && text !== null) {
                         crt.media = text;
