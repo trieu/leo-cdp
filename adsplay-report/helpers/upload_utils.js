@@ -1,4 +1,6 @@
 var fs = require('fs.extra');
+var JSFtp = require("jsftp");
+var site = require("../configs/site.js");
 
 var stringUtils = require('./string_utils');
 //const ftpBaseFolderPath = '/static/videos/';
@@ -7,7 +9,7 @@ const ftpBaseFolderPath = '/static/ads/instream/';
 var Upload = function () {};
 
 var storage = function(output){
-	var d = new Date();
+    var d = new Date();
     var dir = __dirname + '/../public/ads/' + output + '/' + d.getTime() + '/';
     //create folder
     if (!fs.existsSync(dir)){
@@ -17,7 +19,7 @@ var storage = function(output){
 };
 
 Upload.prototype.rename = function(str){
-	remove_unicode_space(str);
+    remove_unicode_space(str);
 };
 
 Upload.prototype.folder = function(output){
@@ -27,7 +29,7 @@ Upload.prototype.folder = function(output){
 
 Upload.prototype.youtube = function (link, callback) {
 
-	var youtubedl = require('youtube-dl');
+    var youtubedl = require('youtube-dl');
     
     //request input link and input path
     var dir = storage('video');
@@ -73,15 +75,13 @@ Upload.prototype.video = function(file, callback){
 
 Upload.prototype.ftp_video = function(localFile, mediaName, callback){
 
-	var JSFtp = require("jsftp");
-
+    var ftp_video = site.ftp_video;
     var ftp = new JSFtp({
-        host: "118.69.184.35",
-        port: 21, 
-        user: "adsplay", 
-        pass: "adsplay@321#" 
+        host: ftp_video.host,
+        port: ftp_video.port, 
+        user: ftp_video.user, 
+        pass: ftp_video.pass
     });
-
 
     var quitFptConnection = function(){
         ftp.raw.quit(function(err, data) {
@@ -118,7 +118,7 @@ Upload.prototype.ftp_video = function(localFile, mediaName, callback){
 
 Upload.prototype.image = function(file, callback){
 
-	var dir = storage('overlay');
+    var dir = storage('overlay');
     var dirSplit = dir.split("/"); 
     var output = dir + file.name;
     var url = output.split("public/");
@@ -135,7 +135,7 @@ Upload.prototype.image = function(file, callback){
 
 Upload.prototype.unzip = function(file, callback){
 
-	var dir = storage('display');
+    var dir = storage('display');
     var dirSplit = dir.split("/"); 
     var output = dir + 'index.html';
     var url = output.split("public/");
