@@ -17,16 +17,16 @@
                 <tr id="row_ads_des" >
                     <td><strong>Description</strong></td>
                     <td>
-                        <input type="text" class="form-control" id="ads_des" data-creative-field="desc" placeholder="Enter Ad Description">
+                        <textarea class="form-control" rows="3" id="ads_des" data-creative-field="desc" placeholder="Enter Ad Description"></textarea>
                     </td>
                 </tr>
 
-                <tr id="row_ads_des" class="video-hidden">
+                <tr id="row_ads_size" class="video-hidden">
                     <td><strong>Ads Size</strong></td>
                     <td>
-                        <select id="ads-size" class="select-multi" data-placeholder="Choose ads size">
+                        <select id="ads-size" class="select-multi" data-placeholder="Choose file image"  disabled="disabled">
                             {{#each adsSize}}
-                                <option value='{"w":"{{size.w}}","h":"{{size.h}}"}'>{{name}}: {{size.w}} x {{size.h}}</option>
+                                <option value='{{size.w}}x{{size.h}}'>{{name}}: {{size.w}} x {{size.h}}</option>
                             {{/each}}
                         </select>
                     </td>

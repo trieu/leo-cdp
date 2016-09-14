@@ -96,7 +96,14 @@
             dataType: "json",
             url: url,
             success: function(data){
-
+                //set select
+                var sizeObj = data.w+"x"+data.h;
+                console.log(sizeObj)
+                $("#ads-size").multipleSelect("setSelects", [sizeObj]);
+                if ($("#ads-size").val() == null) {
+                    $("#row_ads_size").hide();
+                }
+                
                 for(var k in data){
                     if($.isArray(data[k])){
                         if(k == 'tgcats'){
@@ -176,7 +183,7 @@
                                 adtype = "fm_overlay_banner";
                                 media = data[k];
 
-                                $('#iframeImg').html('<img style="width: 100%" src="'+media+'" width="100%" class="img-thumbnail">');
+                                $('#iframeImg').html('<img style="width: 100%" src="'+media+'" width="100%" id="imgChild" class="img-thumbnail">');
                             }
                             else if(data['adType'] == 4){
                                 adtype = "fm_breaking_news";
@@ -233,38 +240,43 @@
         }
     }
 
-    function checkSizeImg(){
-        var size = $("#ads-size").val();
-        if(typeof (size) == "undefined" || size == null || size == ""){
-            modal_alert('Ads-Size must be selected !');
-            return false;
-        }
-
-        if ($('#file')[0].files[0].name.match(/\.(jpg|jpeg|png|gif)$/)){
-            var sizeads = JSON.parse(size);
-            var img = new Image();
-            img.src = window.URL.createObjectURL($('#file')[0].files[0]);
-            img.onload = function() {
-                var width = img.naturalWidth,
-                    height = img.naturalHeight;
-                if(sizeads.w == width && sizeads.h == height){
-                    console.log(sizeads.w, sizeads.h);
-                    return {w: width, h: height}
-                }
-                else{
-                    modal_alert('Incorrect size: '+width+' x '+height);
-                    return false;
-                }
-            }
-        }
-
-    }
-
     jQuery(document).ready(function(){
         $('[title]').tooltip();
         $("#profile-all").click(function () {
             var checkboxes = $(this).closest('#row-profile').find(':checkbox');
             checkboxes.prop('checked', $(this).prop("checked"));
+        });
+
+        //event select file image
+        $('#file').change(function(){
+            $('#ads-size').multipleSelect('uncheckAll');
+            if($('#file').val() != ""){
+                if ($('#file')[0].files[0].name.match(/\.(jpg|jpeg|png|gif)$/)){
+                    $("#row_ads_size").show();
+                    var img = new Image();
+                    img.src = window.URL.createObjectURL($(this)[0].files[0]);
+                    img.onload = function() {
+                        var width = img.naturalWidth.toString(),
+                            height = img.naturalHeight.toString();
+                        var sizeObj = width+"x"+height;
+
+                        $("#ads-size").multipleSelect("setSelects", [sizeObj]);
+                        if($("#ads-size").val() == null){
+                            $("#file").val("");
+                            $("#row_ads_size").hide();
+                            modal_alert('File incorrect field Ads-Size !');
+                            return false;
+                        }
+                        
+                    }
+                }
+                else{
+                    $("#row_ads_size").hide();
+                }
+            }
+            else{
+                $("#row_ads_size").hide();
+            }
         });
 
         /*check url*/
@@ -374,6 +386,11 @@
             if(id_edit != false){
                 data['id'] = id_edit;
                 data['media'] = media;
+                var img = document.getElementById("imgChild");
+                if (img != null) {
+                    data['w'] = img.naturalWidth;
+                    data['h'] = img.naturalHeight;
+                }
             }
 
             if(data.name.length < 10){
@@ -502,12 +519,14 @@
                         return alert('Incorrect file upload');
                     }
                 }
-                var getSizeImg = checkSizeImg();
-                if(typeof (getSizeImg) != "undefined"){
-                    data.w = getSizeImg.w;
-                    data.h = getSizeImg.h;
-                }
 
+                var getsize = $("#ads-size").val();
+                if(typeof (getsize) != "undefined" && getsize != null && getsize != ""){
+                    var ads_size = getsize.split("x");
+                    data.w = ads_size.w;
+                    data.h = ads_size.h;
+                }
+                
                 var postData = new FormData();
                 postData.append('file', $('#file')[0].files[0]);
                 postData.append('creative', JSON.stringify(data));
@@ -534,12 +553,13 @@
                     }
                 }
 
-                var getSizeImg = checkSizeImg();
-                if(typeof (getSizeImg) != "undefined"){
-                    data.w = getSizeImg.w;
-                    data.h = getSizeImg.h;
+                var getsize = $("#ads-size").val();
+                if(typeof (getsize) != "undefined" && getsize != null && getsize != ""){
+                    var ads_size = getsize.split("x");
+                    data.w = ads_size.w;
+                    data.h = ads_size.h;
                 }
-
+                
                 var postData = new FormData();
                 postData.append('file', $('#file')[0].files[0]);
                 postData.append('creative', JSON.stringify(data));
@@ -558,6 +578,7 @@
                         window.location = 'https://monitor.adsplay.net/creative/'+data;
                     }
                 });
+                
             }
             else if(adtype == "fm_breaking_news"){
 
