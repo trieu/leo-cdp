@@ -1,0 +1,51 @@
+<!doctype html>
+
+<head>
+    <meta charset="UTF-8">
+    <link href="http://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet">
+
+    <!-- If you'd like to support IE8 -->
+    <script src="http://vjs.zencdn.net/ie8/1.1.1/videojs-ie8.min.js"></script>
+
+
+    <!-- AdsPlay HTML5 Video Ads -->
+    <link href="http://localhost:63342/adsplay-website/js/adsplay-video-sdk/src/videojs.ads.css" rel="stylesheet" type="text/css">
+
+    <link href="http://vjs.zencdn.net/4.12/video-js.css" >
+</head>
+
+<body>
+
+<div>
+    <video id="my-video" class="video-js" autoplay controls preload="auto" width="700" height="400"
+           poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
+        <source src="http://www.sample-videos.com/video/mp4/480/big_buck_bunny_480p_1mb.mp4"/>
+        <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to a web browser that
+            <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+        </p>
+    </video>
+</div>
+
+<script src="http://vjs.zencdn.net/5.4.4/video.js"></script>
+
+<!-- AdsPlay HTML5 Video Ads -->
+<script src="http://localhost:63342/adsplay-website/js/adsplay-video-sdk/dist/advjs.js"></script>
+<script src="http://localhost:63342/adsplay-website/js/adsplay-video-sdk/src/adsplay.player.src.js"></script>
+<script>
+    //var videoAdUrl = 'http://adserver.adtech.de/?advideo/3.0/1686.1/5835889/0//cc=2;vidAS=pre_roll;vidRT=VAST;vidRTV=2.0.1;cors=yes';
+    var videoAdUrl = 'http://d2.adsplay.net/delivery/zone/1001?placement=333';
+    var contentNode = document.getElementById('my-video');
+    var contentHolderTag = contentNode.parentNode;
+    AdsPlayer.playVastCode(videoAdUrl, contentHolderTag
+            , function (vastUrl) {
+                console.log('before ' + vastUrl);
+                contentNode.setAttribute('style', 'display:none');
+            }
+            , function (vastUrl) {
+                console.log('after ' + vastUrl);
+                contentNode.setAttribute('style', 'display:');
+            });
+</script>
+
+</body>

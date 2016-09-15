@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+
+<ins class="adsplay-placement" id="aplpm-121" ></ins>
+<ins class="adsplay-placement" id="aplpm-122" ></ins>
+
+
+
+<script>
+   function getAdsDomNode(width, height, srcUrl){
+       var iframe = document.createElement('iframe');
+       iframe.setAttribute('frameborder','0');
+       iframe.setAttribute('marginwidth','0');
+       iframe.setAttribute('vspace','0');
+       iframe.setAttribute('hspace','0');
+       iframe.setAttribute('allowtransparency','true');
+       iframe.setAttribute('scrolling','no');
+       iframe.setAttribute('allowfullscreen','true');
+       iframe.setAttribute('style','left:0;position:absolute;top:0;');
+
+       iframe.setAttribute('allowfullscreen','true');
+       iframe.setAttribute('width', width)
+       iframe.setAttribute('height',height)
+       iframe.setAttribute('src',srcUrl);
+
+       var ins = document.createElement('ins');
+       ins.style.display = 'inline-table';
+       ins.style.border = 'none';
+       ins.style.margin = '0px';
+       ins.style.padding = '0';
+       ins.style.position = 'relative';
+       ins.style['background-color'] = 'transparent';
+       ins.style.width = width + 'px';
+       ins.appendChild(iframe);
+       return ins;
+   }
+
+   function getAds(zoneId){
+       //request server
+       var clickTag = "http://c2life.com.vn/";
+       var adUrl = 'https://adsplay.net/ads/interactive-banner/169/300x250/300x250.html';
+       var adid = 10;
+       var beacon = 'abc';
+       var srcUrl = adUrl + '#adid='+adid+'&beacon='+beacon+'&clicktag='+clickTag;
+       var width = 300;
+       var height = 250;
+       document.getElementById(zoneId).appendChild(getAdsDomNode(width,height,srcUrl));
+   }
+
+    var nodes = document.getElementsByClassName('adsplay-placement');
+    for(var i=0; i < nodes.length; i++){
+        console.log(i);
+        var id = nodes[i].getAttribute('id');
+        getAds(id);
+    }
+
+</script>
+
+
+</body>
+</html>

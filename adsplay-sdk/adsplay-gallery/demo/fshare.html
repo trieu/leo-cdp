@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Fshare - Video Instream Demo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <style>
+        body.fshare {
+            background-image: url("http://demo.adsplay.net/demo/fshare-bg.png");
+            background-repeat: no-repeat;
+            height: 980px;
+        }
+
+        .button {
+            background-color: yellow;
+            text-decoration: none;
+            font: 28px bolder;
+            color: red;
+            padding: 2px 6px 2px 6px;
+            border-top: 1px solid #CCCCCC;
+            border-right: 1px solid #333333;
+            border-bottom: 1px solid #333333;
+            border-left: 1px solid #CCCCCC;
+        }
+
+        .modal-video-ads {
+            width: 1000px !important;
+        }
+    </style>
+
+
+    <!-- HTML5 Video Ads -->
+    <link href="http://static.adsplay.net/js/sdk/html5.video.ads.player.css" rel="stylesheet" type="text/css">
+
+    <script src="//vjs.zencdn.net/4.7.1/video.js"></script>
+    <script src="//adsplay.net/demo/lib/videojs-contrib-ads/videojs.ads.js"></script>
+    <script src="//adsplay.net/demo/lib/vast-client.js"></script>
+    <script src="//adsplay.net/demo/videojs.vast.js"></script>
+
+    <script src="http://localhost:63342/adsplay-website/js/adsplay.src.js"></script>
+    <script src="http://localhost:63342/adsplay-website/js/adsplay.player.src.js"></script>
+
+</head>
+<body class="fshare">
+
+
+<div id="bVideoAdModal" style='opacity:.3; position: absolute; width: 304px; height: 84px; left: 181px; top: 280px; cursor: pointer;  '>
+    <a class="popup-with-zoom-anim" href="javascript:showPopupVideoAds()">
+        <button  style="width: 304px; height: 84px;" type="button" class="button" data-toggle="modal"
+                data-target="#videoAdModal"></button>
+    </a>
+</div>
+
+
+<div style="position: absolute; width: 600px; height: 260px; left: 510px; top: 360px; ">
+    <div class='articleContent'>
+        <iframe frameborder="0" height="260" width="600" scrolling="no"
+                src="http://nhacso.net/embed/video/XFhRU0VdaA=="></iframe>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="videoAdModal" role="dialog">
+    <div class="modal-dialog modal-video-ads">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="ym-detail-two-cen">
+                <div class='videoAdZoneContent' itemprop='articleBody'>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var setHtml5VideoAdPlayer = function (contentTag, vastUrl, width, height, callback) {
+        if (!contentTag) return;
+        //cache it
+        var contentHolderTag = contentTag.parentNode;
+        var contentHtml = contentHolderTag.innerHTML;
+        var AdVideoTagId = '_AdVideoTag' + new Date().getTime();
+
+        var vTag = document.createElement('video');
+        vTag.setAttribute('class', 'video-js vjs-default-skin vjs-big-play-centered');
+        vTag.setAttribute('width', width);
+        vTag.setAttribute('height', height);
+        vTag.setAttribute('autoplay', 'true');
+        vTag.setAttribute('preload', 'auto');
+        vTag.setAttribute('data-setup', '{}');
+        vTag.setAttribute('id', AdVideoTagId);
+        vTag.innerHTML = '<source src="http://ads.fptplay.net.vn/static/ads/instream/default-ads.mp4" type="video/mp4" />';
+
+        var imgTracking = new Image();
+        imgTracking.src = AdsPlay.getTrackingUrl();
+        imgTracking.style.width = "0px";
+        imgTracking.style.height = "0px"
+        imgTracking.style.display = "none";
+        vTag.appendChild(imgTracking);
+
+        //remove to avoid auto load
+        contentTag.remove();
+
+        //append Video Ad tag
+        contentHolderTag.appendChild(vTag);
+
+        var vjsPlayer = videojs(AdVideoTagId);
+        vjsPlayer.ads();
+        vjsPlayer.vast({ url: vastUrl });
+
+        window._EndAdVideoPlayed = function () {
+            document.getElementById(AdVideoTagId).remove();
+            if (callback instanceof Function) {
+                callback.apply({});
+            } else {
+                contentHolderTag.innerHTML = contentHtml;
+            }
+        };
+    };
+
+    var videoAdUrl = 'http://d2.adsplay.net/delivery/zone/1001?placement=102';
+    var contentTag = document.getElementsByClassName('articleContent')[0];
+
+    setHtml5VideoAdPlayer(contentTag, videoAdUrl, '100%', '260px', false);
+
+    var showPopupVideoAds = function () {
+        var videoAdUrl = 'http://report.adsplay.net/delivery/zone/1001?placement=100';
+        var contentTag = document.getElementsByClassName('videoAdZoneContent')[0];
+
+        setHtml5VideoAdPlayer(contentTag, videoAdUrl, '100%', '620px', function () {
+            $('#videoAdModal').modal('hide')
+        });
+
+        var timerCount = 30;
+        var timer = setInterval(function(){
+            $('#bVideoAdModal').css('opacity','1!important').find('button').html(timerCount+'s');
+            timerCount--;
+            if(timerCount<=0){
+                location.reload(true);
+            }
+        },1000);
+    }
+</script>
+
+</body>
+</html>

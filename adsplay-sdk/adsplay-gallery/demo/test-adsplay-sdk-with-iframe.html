@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>YouTube Video Player with HTML5 Video Ads</title>
+
+
+    <!--
+    <link href="http://static.adsplay.net/js/sdk/html5.video.display-ad-test.player.css" rel="stylesheet" type="text/css">
+    -->
+
+    <link href="http://localhost:63342/adsplay-website/js/adsplay-video-sdk/src/videojs.ads.css" rel="stylesheet" type="text/css">
+
+
+</head>
+<body>
+
+
+<div class="ym-detail-two-cen" style="width: 800px;">
+    <div class='articleContent' itemprop='articleBody'>
+        <p>
+            <iframe frameborder="0" height="450" scrolling="no"
+                    src="https://www.youtube.com/embed/bEiqmpPLYjo?autoplay=1&rel=0" width="800"></iframe>
+        </p>
+    </div>
+</div>
+
+<script src="http://localhost:63342/adsplay-website/js/adsplay-video-sdk/dist/advjs.js"></script>
+<script src="http://localhost:63342/adsplay-website/js/adsplay-video-sdk/src/adsplay.player.src.js"></script>
+<script>
+    //var videoAdUrl = 'http://adserver.adtech.de/?advideo/3.0/1686.1/5835889/0//cc=2;vidAS=pre_roll;vidRT=VAST;vidRTV=2.0.1;cors=yes';
+    var videoAdUrl = 'http://d2.adsplay.net/delivery/zone/1001?placement=333';
+    var contentNode = document.getElementsByClassName('articleContent')[0];
+    var contentHolderTag = contentNode.parentNode;
+    AdsPlayer.playVastCode(videoAdUrl , contentHolderTag
+            , function(vastUrl){
+                console.log('before ' + vastUrl);
+                contentNode.remove();
+            }
+            , function (vastUrl) {
+                console.log('after ' + vastUrl);
+            });
+</script>
+
+
+</body>
+</html>

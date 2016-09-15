@@ -1,0 +1,50 @@
+<html>
+	
+	<head>
+		
+		<title>SJC Banner Test</title>
+		
+		<meta name="ad.size" content="height=160,width=600">
+		
+		<style>
+			html, body {background-color: white;}
+			p {color: black;}
+		</style>
+		
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		
+		<script>
+			var clickTag = "http://www.sanjac.edu/program/business/?utm_source=online&utm_medium=display_campaign=BAdegree";
+			
+			function resizeWindow() {
+				$('p').css({ 'width':'100%', 'text-align':'center' });
+				var h1 = $('h1').height();
+				var h = h1/2;
+				var WinHeight = $(window).height();
+				var w = WinHeight/2;
+				var m = w - h;
+				var WinWidth=$(window).width();
+				$('p').css("margin-top",m + "px");
+				$("p").text("Size="+WinWidth+"x"+WinHeight);
+			}
+
+			$(document).ready(function () {
+				resizeWindow();
+			});
+
+			$(window).resize(function () {
+				resizeWindow();
+			}); 
+		</script>
+
+	</head>
+
+	<body>
+	
+		<a href="javascript:window.open(window.clickTag)">
+			<img src="SJC-019C_160x600_Carolyn_v3.gif" />
+		</a>
+	
+	</body>
+
+</html>

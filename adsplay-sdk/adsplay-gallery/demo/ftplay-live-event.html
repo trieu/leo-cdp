@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Fpt-Play Embed</title>
+    <style>
+        body {margin:0;padding:0;overflow: hidden;}
+        #player-wrapper {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <script type="text/javascript" src="http://video.fptplay.net/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="http://video.fptplay.net/js/ads.js"></script>
+    <script type="text/javascript" src="http://video.fptplay.net/flash/swfobject.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="http://video.fptplay.net/js/plugins/player.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="http://video.fptplay.net/js/plugins/bitrate.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="http://video.fptplay.net/js/plugins/vast-client.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="http://video.fptplay.net/js/plugins/vast.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        window.onload = function () {
+            if( window.canRunAds === undefined ){
+                $("#player-wrapper").html('<p style="color: #000;text-align: center;font-size: 20px;padding-top: 25%;">Bạn vui lòng tắt các chương trình chặn quảng cáo để tiếp tục xem video</p>');
+            } else{
+                $("#player-wrapper").width($(window).width());
+                $("#player-wrapper").height($(window).height());
+                $(window).resize(function(){
+                    $("#player-wrapper").width($(window).width());
+                    $("#player-wrapper").height($(window).height());
+                });
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="player-wrapper"></div>
+<script type="text/javascript">
+
+    var isMobile = {
+        Android: function() {
+            return navigator.userAgent.match(/Android/i);
+        },
+        BlackBerry: function() {
+            return navigator.userAgent.match(/BlackBerry/i);
+        },
+        iOS: function() {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        },
+        Opera: function() {
+            return navigator.userAgent.match(/Opera Mini/i);
+        },
+        Windows: function() {
+            return navigator.userAgent.match(/IEMobile/i) || navigator.userAgent.match(/WPDesktop/i);
+        },
+        any: function() {
+            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+        },
+        Player: function() {
+
+        }
+    };
+</script>
+<script type="text/javascript">
+    $.ajax({
+        type: 'POST',
+        url: '/embed/getlink',
+        data: 'id=' + 'lol-event' + '&partner=' + 'gamethu',
+        dataType: 'html',
+        success: function(result) {
+            var live_url = result + "?&token=c338VydmVyX3RpbWU9MTQwMjYxNzIyNCZoYXNoX3ZhbHVlPTg0ZTQ3YzVlNmY0ZDhiMTkzODIyMTY3M2ZkYTFmZjIyJnZhbGlkX21pbnV0ZXM9MTQ0MA&did=b506c4927d519929";
+
+            var auto = 1;
+
+            var player = new Clappr.Player({
+                baseUrl: "http://video.fptplay.net/js/plugins",
+                /*ads_url: {
+                 video: 'http://report.adsplay.net/delivery/zone/fshare-15s.xml?t=' + new Date().getTime()
+                 },*/
+                source: live_url,
+                parentId: '#player-wrapper',
+                mediacontrol: {seekbar: "#f36f21", buttons: "#f36f21"},
+                plugins: {
+                    core: [Vast,Bitrate],
+                },
+                gaAccount: 'UA-40773879-1',
+                gaTrackerName: 'FPTPlayInstance',
+                width: '100%', height: "100%",
+                hideMediaControl: true,
+                watermark: "http://video.fptplay.net/js/plugins/logo_grey.png", position: 'top-right',
+                autoPlay: auto
+            });
+        }
+    });
+</script>
+</body>
+</html>

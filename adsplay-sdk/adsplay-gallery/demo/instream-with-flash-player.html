@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <base href="http://localhost:63342/adsplay-website/" >
+    <title>Instream with jwplayer</title>
+    <script type='text/javascript' src='http://media.adnetwork.vn/js/jwplayer.js'></script>
+</head>
+<body>
+
+<div id="mediaplayer-abd"></div>
+
+<script type="text/javascript">
+    jwplayer('mediaplayer-abd').setup({
+        'flashplayer': 'http://cdn.ambientplatform.vn/flash/jwplayer/player.swf',
+        'file': 'http://st02.freesocialmusic.com/mp4/2015/06/18/1430055571/14346190335_2882.mp4',
+        'width': '500',
+        'height': '380',
+        'autoStart': 'true',
+        'plugins': 'http://cdn.ambientplatform.vn/flash/jwplayer/ova-jw.swf',
+        'config': 'http://l.adsplay.net/delivery/zone/nhacso.xml?placement=104',
+        'controlbar': {
+            'position': 'bottom'
+        }
+    });
+</script>
+
+</body>
+</html>

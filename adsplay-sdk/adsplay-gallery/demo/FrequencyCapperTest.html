@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="http://localhost:63342/adsplay-website/demo/lib/FrequencyCapper.js"></script>
+</head>
+<body>
+<script>
+
+    window.localStorage.clear();
+
+    var fc = new FrequencyCapper();
+
+    for(var i = 0; i < 3; i++)
+        fc.recordImpression('ad_1');
+
+    for(var i = 0; i < 11; i++)
+        fc.recordImpression('ad_2');
+
+    for(var i = 0; i < 6; i++)
+        fc.recordImpression('ad_3');
+
+    var uncapped = fc.getUncapped(
+            [
+                {
+                    "id": "ad_1",
+                    "cap": 4
+                },
+                {
+                    "id": "ad_2",
+                    "cap": 10
+                },
+                {
+                    "id": "ad_3",
+                    "cap": 7
+                }
+            ], 2);
+
+    document.body.innerHTML = uncapped;
+
+</script>
+</body>
+</html>

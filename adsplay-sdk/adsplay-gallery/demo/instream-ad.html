@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>AdsPLAY - Instream Video Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- for AdsPlay -->
+    <meta name="apl:name" content="Du lịch Vietnam"/>
+    <meta name="apl:category" content="du lịch, vietnam"/>
+
+
+    <link href="//vjs.zencdn.net/4.7.1/video-js.css" rel="stylesheet">
+    <link href="//adsplay.net/demo/lib/videojs-contrib-ads/videojs.ads.css" rel="stylesheet" type="text/css">
+    <link href="//adsplay.net/demo/videojs.vast.css" rel="stylesheet" type="text/css">
+
+    <!--[if lt IE 9]>
+    <script src="//adsplay.net/demo/lib/es5.js"></script><![endif]-->
+
+    <script src="//vjs.zencdn.net/4.7.1/video.js"></script>
+    <script src="//adsplay.net/demo/lib/videojs-contrib-ads/videojs.ads.js"></script>
+    <script src="//adsplay.net/demo/lib/vast-client.js"></script>
+    <script src="//adsplay.net/demo/videojs.vast.js"></script>
+
+    <style>
+        #vjs-image-overlay-holder {
+            position: absolute;
+            top: 10px;
+            left: 130px;
+            text-align: center;
+        }
+        #vjs-image-overlay-holder img {
+            margin: auto;
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+<body>
+
+
+<video id="player-wrapper" class="video-js vjs-default-skin vjs-big-play-centered"
+       autoplay
+       controls preload="auto"
+       poster="https://pbs.twimg.com/profile_images/2291986800/4542789859_10dcdd506f.jpg"
+       data-setup='{}'
+       width='800'
+       height='600'>
+    <source src="//adsplay.net/demo/videos/demo-sport.mp4" type='video/mp4'>
+    <p>HTML5 Video Playback Not Supported</p>
+</video>
+
+<script src="//adsplay.net/js/adsplay.js"></script>
+<script>
+    var adURL = AdsPlay.getVastUrl(1001, 333);
+
+    var vid2 = videojs('player-wrapper');
+    vid2.muted(true);
+    vid2.ads();
+    vid2.vast({ url: adURL });
+
+</script>
+
+</body>
+
+</html>
+
+
