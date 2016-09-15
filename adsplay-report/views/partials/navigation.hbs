@@ -78,6 +78,16 @@
                     <li class="">
                         <a href="/creative/list/all"><i class="fa fa-fw fa-list"></i> All Ad Units</a>
                     </li>
+
+                    {{#if isSuperAdminGroup }}
+                        <li class="">
+                            <a href="/placement/list-all"><i class="fa fa-fw fa-list"></i> Ad Placements</a>
+                        </li>
+                        <li class="">
+                            <a href="/event/"><i class="fa fa-fw fa-list"></i> Sponsored Events</a>
+                        </li>
+                    {{/if}}
+
                     {{#if editable }}
                         <li class="">
                             <a href="/creative/new/local-ad-unit"><i class="fa fa-fw fa-play"></i> New Ad Unit</a>
