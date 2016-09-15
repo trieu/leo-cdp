@@ -75,7 +75,22 @@ $(window).load(function() {
 
 	$(document).on('click','.action-btn', function(){
 		$('#action-placement').modal('show');
-		console.log('call modal action');
+		var row = $(this).closest('tr');
+		var id = row.find('.plt_id').text();
+		var code = '<ins class="adsplay-placement" id="aplpm-'+id+'" ></ins><script src="https://adsplay.net/js/adsplay-display-ad.min.js"></script>'
+		$("#plt_code").val(code);
+	});
+
+	$(document).on('click','#plt_copy', function(){
+		 //Before we copy, we are going to select the text.
+		    var text = document.getElementById('plt_code');
+		    var selection = window.getSelection();
+		    var range = document.createRange();
+		    range.selectNodeContents(text);
+		    selection.removeAllRanges();
+		    selection.addRange(range);
+		    //add to clipboard.
+		    document.execCommand('copy');
 	});
 
 	$(document).on('click','.edit-placement', function(){
@@ -143,7 +158,6 @@ $(window).load(function() {
 			}
 		});
 	});
-
 
 	function plt_data(form){
 		var data = {};

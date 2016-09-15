@@ -138,18 +138,16 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Form Placement</h4>
+        <h4 class="modal-title">Ads Code</h4>
       </div>
       <div class="modal-body">
       	<p>
-      		<textarea placeholder="enter code" class="form-control">
+      		<textarea onclick="this.focus();this.select()" readonly="readonly" placeholder="enter code" class="form-control" id="plt_code" rows="5">
       		</textarea>
       	</p>
 		<div class="text-right">
 			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			<button type="submit" class="btn btn-primary" id="plt_submit">
-				OK
-			</button>
+			<button type="submit" class="btn btn-primary" id="plt_copy">Copy</button>
 		</div>
       </div>
     </div>
