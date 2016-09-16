@@ -132,6 +132,7 @@ ul.alert-dropdown {
         top: 51px;
         left: 200px;
         width: 200px;
+        max-height: 100%;
         margin-left: -200px;
         border: none;
         border-radius: 0;
@@ -247,12 +248,6 @@ ul.alert-dropdown {
 .color-blue{color: #337ab7;}
 
 /*datetimepicker*/
-.bootstrap-datetimepicker-widget table td{
-    text-align: center !important;
-    height: 54px;
-    line-height: 54px;
-    width: 54px;
-}
 .table-align-middle td{
     vertical-align: middle !important;
 }

@@ -75,4 +75,11 @@
     format: 'LT'
   });
 
+  $("#begin_date").on("dp.change", function (e) {
+      $('#end_date').data("DateTimePicker").minDate(e.date);
+  });
+  $("#end_date").on("dp.change", function (e) {
+      $('#begin_date').data("DateTimePicker").maxDate(e.date);
+  });
+
 </script>

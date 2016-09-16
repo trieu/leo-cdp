@@ -24,14 +24,34 @@ var convert_data = function(doc){
 router.get('/', function (req, res, next) {
 	var data = modelUtils.baseModel(req);
 	data.statuses = constantUtils.statuses;
-	console.log(data.statuses[1])
     data.dashboard_title = "Event list";
     res.render('event/list', data);
 });
 
+//find by id
+router.get('/find/:id', function (req, res, next) {
+	var data = modelUtils.baseModel(req);
+	data.statuses = constantUtils.statuses;
+    data.dashboard_title = "Event Details";
+    
+	Event.findOne({id: req.params.id}, function(err, doc){
+		if(err){
+			return console.error(err);
+		}
+		if(doc == null){
+			res.render('event/list', data);
+		}
+		else{
+			
+			data.event = convert_data([doc])[0];
+			res.render('event/detail', data);
+		}
+		
+	})
+});
 //select all
 router.get('/find', function (req, res, next) {
-	var begin = req.query.begin || moment().add(1, 'days').format("YYYY-MM-DD");
+	var begin = req.query.begin || moment().subtract(30, 'days').format("YYYY-MM-DD");
 	var end = req.query.end || moment.add(30, 'days').format("YYYY-MM-DD");
 
 	Event.find({begin: {$gte: begin}, end: {$lte: end}}, function(err, doc){
@@ -41,16 +61,6 @@ router.get('/find', function (req, res, next) {
 		res.json(convert_data(doc));
 	})
 });
-//find by id
-router.get('/find/:id', function (req, res, next) {
-	Event.findOne({id: req.params.id}, function(err, doc){
-		if(err){
-			return console.error(err);
-		}
-		res.json(convert_data(doc));
-	})
-});
-
 
 //create
 router.get('/create', function (req, res, next) {
@@ -73,7 +83,7 @@ router.post('/create', function (req, res, next) {
 		if(err){
 			return console.error(err);
 		}
-		res.json(obj);
+		res.redirect('/event');
 	});
 });
 
@@ -95,13 +105,18 @@ router.get('/edit/:id', function (req, res, next) {
 		res.render('event/edit', data);
 	})
 });
+
 router.post('/edit/:id', function (req, res, next) {
+	hourly_demo = [{view: 3101},{view: 2000}];
+
 	var items = {};
 	items.name = req.body.name;
 	items.begin = req.body.begin_date +" "+ req.body.begin_time;
 	items.end = req.body.end_date +" "+ req.body.end_time;
 	items.status = req.body.status;
-	console.log(items.begin)
+	items.hourly = hourly_demo;
+	items.view = sumView(items.hourly);
+
 	Event.findOneAndUpdate({id: req.params.id}, items, function(err, doc){
 
 		if(err){
@@ -110,6 +125,16 @@ router.post('/edit/:id', function (req, res, next) {
 		res.redirect('/event');
 	});
 });
+
+var sumView = function(hourly){
+	var count = 0;
+	if(typeof (hourly) != 'undefined' && hourly != null){
+		for(var i in hourly){
+			count += hourly[i].view;
+		}
+	}
+	return count;
+}
 
 //delete
 // router.post('/delete/:id', function (req, res, next) {

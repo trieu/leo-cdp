@@ -68,7 +68,7 @@
 
         //select date
         var end = new moment().add(30, 'days').format("YYYY-MM-DD");
-        var begin = moment().add(1, 'days').format("YYYY-MM-DD");
+        var begin = moment().subtract(30, 'days').format("YYYY-MM-DD");
         render_list(begin, end);
 
         var formatTime = function (x) {
@@ -142,7 +142,7 @@
 		                    <th>View</th> \
 		                    <th>Status</th> \
 		                    <th>Booking Time</th> \
-		                    <th id="th-action">Action</th> \
+		                    <th>Editor</th> \
 		                </tr> \
                     </thead> \
                     <tbody> \
@@ -199,12 +199,12 @@
     \{{#each event}}
         <tr >
             <td>\{{id}}</td>
-            <td><a href="/event/edit/\{{id}}">\{{name}}</a></td>
+            <td><a href="/event/find/\{{id}}">\{{name}}</a></td>
             <td>\{{view}}</td>
             <td data-status="\{{status}}" data-order="\{{status}}"  data-search="\{{status}}">\{{status}}</td>
             <td class="td-max-400">\{{begin}} &#10145; \{{end}}</td>
-            <td class="td-action">
-            	
+            <td>
+            	<a href="/event/edit/\{{id}}"><i class="fa fa-pencil"></i></a>
             </td>
         </tr>
     \{{/each}}
