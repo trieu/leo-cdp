@@ -32,7 +32,7 @@ router.get('/', function (req, res, next) {
 router.get('/find/:id', function (req, res, next) {
 	var data = modelUtils.baseModel(req);
 	data.statuses = constantUtils.statuses;
-    data.dashboard_title = "Event Details";
+
     
 	Event.findOne({id: req.params.id}, function(err, doc){
 		if(err){

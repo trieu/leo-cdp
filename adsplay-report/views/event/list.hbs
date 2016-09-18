@@ -1,15 +1,15 @@
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">
-            List Event
-        </h1>
+        <h3 class="page-header">
+            Ad Live Event Management
+        </h3>
     </div>
 </div>
 
 {{#if editable }}
 <p>
     <a href="/event/create" class="btn btn-primary" id="new-creative">
-        <i class="fa fa-industry"></i> New Event
+        <i class="fa fa-industry"></i> New Ad Live Event
     </a>
 </p>
 {{/if}}
@@ -141,8 +141,8 @@
 		                    <th>Name</th> \
 		                    <th>View</th> \
 		                    <th>Status</th> \
-		                    <th>Booking Time</th> \
-		                    <th>Editor</th> \
+		                    <th>Scheduled Time</th> \
+		                    <th>Actions</th> \
 		                </tr> \
                     </thead> \
                     <tbody> \
@@ -204,7 +204,7 @@
             <td data-status="\{{status}}" data-order="\{{status}}"  data-search="\{{status}}">\{{status}}</td>
             <td class="td-max-400">\{{begin}} &#10145; \{{end}}</td>
             <td>
-            	<a href="/event/edit/\{{id}}"><i class="fa fa-pencil"></i></a>
+            	<a title="Edit" href="/event/edit/\{{id}}"><i class="fa fa-pencil"></i></a>
             </td>
         </tr>
     \{{/each}}

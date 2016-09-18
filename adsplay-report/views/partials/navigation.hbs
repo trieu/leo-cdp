@@ -1,3 +1,11 @@
+<style type="text/css" >
+    #main-navbar
+    {
+        overflow-y: scroll !important;
+        max-height: 100px !important;
+    }
+</style>
+
 <!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -66,7 +74,7 @@
     </ul>
 
     <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-    <div class="collapse navbar-collapse navbar-ex1-collapse">
+    <div id="main-navbar" class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav side-nav">
 
             <li>
@@ -84,7 +92,7 @@
                             <a href="/placement/list-all"><i class="fa fa-fw fa-list"></i> Ad Placements</a>
                         </li>
                         <li class="">
-                            <a href="/event/"><i class="fa fa-fw fa-list"></i> Sponsored Events</a>
+                            <a href="/event/"><i class="fa fa-fw fa-list"></i> Ad Live Events</a>
                         </li>
                     {{/if}}
 
@@ -102,13 +110,9 @@
                         </li>
                     {{/if}}
 
-                    <li style="display: none" class="">
-                        <a href="/placement/list-all"><i class="fa fa-fw fa-list"></i> All Ad Placements</a>
-                    </li>
                     <li style="display: none" class="" style="display: ">
                         <a href="/booking/list/all"><i class="fa fa-fw fa-list"></i> All Ad Bookings</a>
                     </li>
-
                 </ul>
             </li>
 
@@ -119,27 +123,23 @@
                         class="fa fa-fw fa-caret-down"></i></a>
                 <ul id="menuAdReport" class="collapse in" aria-expanded="true" style="">
 
-                        <li class="">
-                            <a href="/creative/visualize/metrics"><i class="fa fa-fw fa-line-chart"></i> Ad Summary KPI</a>
-                        </li>
+                    <li class="">
+                        <a href="/creative/visualize/metrics"><i class="fa fa-fw fa-line-chart"></i> Ad Summary KPI</a>
+                    </li>
 
-                        <li style="display: none" class="" >
-                            <a href="/monitor/inventory"><i class="fa fa-fw fa-signal"></i> Inventory FptPlay </a>
-                        </li>
-                        <li class="">
-                            <a href="/monitor/inventory-paytv"><i class="fa fa-fw fa-signal"></i> PayTV Inventory </a>
-                        </li>
+                    <li style="display: none" class="" >
+                        <a href="/monitor/inventory"><i class="fa fa-fw fa-signal"></i> Inventory FptPlay </a>
+                    </li>
+                    <li class="">
+                        <a href="/monitor/inventory-paytv"><i class="fa fa-fw fa-signal"></i> PayTV Inventory </a>
+                    </li>
 
-                        <li>
-                            <a href="/monitor/inventory-report"><i class="fa fa-fw fa-signal"></i> FptPlay Inventory </a>
-                        </li>
-                        <li>
-                            <a href="/monitor/inventory-predicted"><i class="fa fa-fw fa-signal"></i> Forecast Inventory </a>
-                        </li>
-                        <!-- <li class="">
-                            <a href="/monitor/inventory-paytv-ads"><i class="fa fa-fw fa-signal"></i> PayTV Ads VOD
-                            </a>
-                        </li> -->
+                    <li>
+                        <a href="/monitor/inventory-report"><i class="fa fa-fw fa-signal"></i> FptPlay Inventory </a>
+                    </li>
+                    <li>
+                        <a href="/monitor/inventory-predicted"><i class="fa fa-fw fa-signal"></i> Forecast Inventory </a>
+                    </li>
                 </ul>
             </li>
             {{/if}}
@@ -162,18 +162,6 @@
                             <a href="/monitor/user"><i class="fa fa-fw fa-bar-chart-o"></i> Audience Report</a>
                         </li>
 
-                        <li class="">
-                            <a href="/device/monitor"><i class="fa fa-fw fa-bar-chart-o"></i> Device Analytics</a>
-                        </li>
-
-
-                        <li class="" style="display: none">
-                            <a href="/content/monitor"><i class="fa fa-fw fa-bar-chart-o"></i> Content Analytics</a>
-                        </li>
-
-                        <li class="" style="display: none">
-                            <a href="/monitor/pageview"><i class="fa fa-fw fa-bar-chart-o"></i> Real-time PageView</a>
-                        </li>
                     </ul>
                 </li>
             {{/if}}
