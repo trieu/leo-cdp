@@ -181,6 +181,8 @@
                                 <strong>Hourly Report: Impression and Completed-View Data in last 24 hours</strong></h3>
                         </div>
                         <div class="panel-body">
+                            <div class="export_form" id="Impression-CompletedView" data-export='{"url": "export/excel/Impression-CompletedView", "begin": "{{begin}}", "end": "{{end}}", "id": {{crtId}} }'></div>
+
                             <div id="chart_hourly_imp_and_view" class="graph" style='height:250px;'>
                                 <svg></svg>
                             </div>
@@ -409,7 +411,7 @@ var chartHourly;
 // Maintain an Instance of the SVG selection with its data
 var chartDataHourly;
 
-var drawHourlyStatsData = function () {
+var drawHourlyStatsData = function (previousDay, currentDay) {
     d3.json("{{site.ssl_api_domain}}/api/creative/stats/{{crtId}}?type=hourly&begin=" + previousDay + "&end=" + currentDay, function (error, data) {
         data.sort(function (a, b) {
             return a.t - b.t;
@@ -500,13 +502,13 @@ var loadSummaryData = function () {
 
 
 loadSummaryData();
-drawHourlyStatsData();
+drawHourlyStatsData(previousDay, currentDay);
 loadLineChartWithData();
 
 if ('{{crt.status}}' === 'Running') {
     setInterval(function () {
         loadSummaryData();
-        drawHourlyStatsData();
+        drawHourlyStatsData(previousDay, currentDay);
         // loadLineChartWithData();
     }, 10001);
 }
@@ -804,3 +806,4 @@ $(document).ready(function () {
         </tbody>
     </table>
 </script>
+<script type="text/javascript" src="js/business-domains/export_script.js"></script>

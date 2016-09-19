@@ -27,11 +27,10 @@ router.get('/excel/statistics', function(req, res, next){
 			});
 		}
 
-		console.log(data_rename)
 		//console.log(data_rename)
 		var exportFile = exportToExcel.exportXLSX({
 				filename: path,
-				sheetname: 'catagory_name',
+				sheetname: 'catagory_statistics',
 					title: [
 						{
 							"fieldName": "period",
@@ -65,6 +64,61 @@ router.get('/excel/statistics', function(req, res, next){
 			}
 		});
 
+	});
+});
+
+router.get('/excel/Impression-CompletedView', function(req, res, next){
+	var data = modelUtils.baseModel(req);
+	var begin = moment(req.query.begin).format("YYYY-MM-DD-HH");
+	var end = moment(req.query.end).format("YYYY-MM-DD-HH");
+	var url = data.site.api_domain + '/api/creative/stats/'+req.query.id+'?type=hourly&begin='+begin+'&end='+end;
+	
+	request(url, function (error, response, body) {
+		var data = JSON.parse(body);
+		var data_rename = [];
+		var path = 'public/export/excel-'+ moment().format('YYYY-MM-DD-hh-mm-ss');
+
+		for (var i in data) {
+			var date = moment(data[i]['t']).format('YYYY-MM-DD HH:mm');
+			data_rename.push({
+				t: date,
+				imp: data[i]['imp'],
+				trv: data[i]['trv'],
+				c: data[i]['c']
+			});
+		}
+
+		var exportFile = exportToExcel.exportXLSX({
+				filename: path,
+				sheetname: 'Impression_CompletedView',
+				title: [
+					{
+						"fieldName": "t",
+						"displayName": "Time"
+					},
+					{
+						"fieldName": "imp",
+						"displayName": "Impressions"
+					},
+					{
+						"fieldName": "trv",
+						"displayName": "Completed View"
+					},
+					{
+						"fieldName": "c",
+						"displayName": "Clicks"
+					}
+				],
+				data: data_rename
+			});
+
+		res.download(exportFile, function(err){
+			if (err) {
+				console.log(err);
+			} else {
+				console.log('Success ! Send download ' + exportFile);
+			}
+		});
 	});
 });
 
@@ -123,7 +177,7 @@ router.get('/excel/creative/stats', function(req, res, next){
 
 		var exportFile = exportToExcel.exportXLSX({
 				filename: path,
-				sheetname: 'catagory_name',
+				sheetname: 'catagory_stats',
 				title: [
 					{
 						"fieldName": "date",

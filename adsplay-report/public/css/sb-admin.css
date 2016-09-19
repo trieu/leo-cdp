@@ -482,3 +482,12 @@ span.impress-text {
 .row-size-display{
     display: none;
 }
+
+/*Export*/
+.export_form{
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+}
+.export_form .form-group{
+    margin-right: 10px;
+}

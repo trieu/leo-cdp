@@ -7,10 +7,10 @@ $(window).load(function() {
 		setTimeout(function(){
 			$('#ads-size-display,#ads-size-overlay').multipleSelect({
 				single: true,
-		        filter: true,
-		        width: '100%'
-		    });
-		},200)
+				filter: true,
+				width: '100%'
+			});
+		},200);
 	}
 
 	function get_type(id){
@@ -29,6 +29,8 @@ $(window).load(function() {
 		}
 		return false;
 	}
+
+	$("#table-placement").DataTable({"pageLength": 25});
 
 	//using validatr.js
 	plt_form.validatr({
@@ -102,14 +104,32 @@ $(window).load(function() {
 		plt_form.find('input, select').each(function(i) {
 			var attr = $(this).attr('name');
 			var getValue = row.find('.'+attr).text();
+
 			if(attr == "plt_type"){
 				getValue = get_type_key(getValue);
 				if (getValue == 2) {
 					$('.row-size-display').show();
 				}
+				$(this).val(getValue);
 			}
-			$(this).val(getValue);
+			else if(attr == "plt_size"){
+				var get_w = row.find('.plt_width').text();
+				var get_h = row.find('.plt_height').text();
+				var get_size = get_w+"x"+get_h;
+				setTimeout(function(){
+					$("#ads-size-display").multipleSelect("setSelects", [get_size]);
+				},200);
+			}
+			else{
+				$(this).val(getValue);
+			}
+
 		});
+
+		// plt_form.find('select').each(function(i) {
+		// 	var attr = $(this).attr('name');
+		// 	var getValue = row.find('.'+attr).text();
+		// });
 
 	});
 
@@ -131,7 +151,6 @@ $(window).load(function() {
 
 		var data = plt_data(plt_form);
 
-		console.log(data);
 		$.ajax({
 			url: '/placement/save/',
 			type: "POST",
@@ -166,9 +185,10 @@ $(window).load(function() {
 			data.publisher = form.find('[name="plt_publisher"]').val();
 			data.type = form.find('[name="plt_type"]').val();
 
-			var select_display = JSON.parse($('#ads-size-display').val());
-			data.width = select_display.w || 0;
-			data.height = select_display.h || 0;
+			var select_display = $('#ads-size-display').val();
+			var size = select_display.split('x');
+			data.width = size[0] || 0;
+			data.height = size[1] || 0;
 		return data;	
 	}
 
@@ -182,12 +202,10 @@ $(window).load(function() {
 						<td class="plt_width">'+data.width+'</td> \
 						<td class="plt_height">'+data.height+'</td> \
 						<td class="plt_updatedDate">'+ moment(data.updatedDate).format("YYYY-MM-DD")+'</td> \
-						<td width="60px" class="text-center"> \
+						<td width="60px"> \
 							<button type="button" id="'+data.id+'" class="btn btn-primary btn-xs action-btn" title="action"> \
 								<i class="fa fa-file-code-o"></i> \
 							</button> \
-						</td> \
-						<td width="40px"> \
 							<button type="button" id="'+data.id+'" class="btn btn-primary btn-xs edit-placement"> \
 								<i class="fa fa-pencil"></i> \
 							</button> \
