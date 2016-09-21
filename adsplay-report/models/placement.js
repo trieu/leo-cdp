@@ -10,8 +10,7 @@ var connection = mongoose.createConnection(dbConfig.url);
 autoIncrement.initialize(connection);
 
 var placementSchema = new mongoose.Schema({
-    _id: {type: Number},
-    id: { type: Number, required: true, index: true },
+    _id: {type: Number, required: true, index: true},
     name: { type: String, default: '' },
     enabled: {type: Boolean, default: true },
     publisher: { type: String, default: '' },

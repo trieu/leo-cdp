@@ -6,6 +6,7 @@
             {id: 2, adtype: 'fm_display_banner', name: 'display'},
             {id: 3, adtype: 'fm_overlay_banner', name: 'overlay'},
             {id: 4, adtype: 'fm_breaking_news', name: 'news'},
+            {id: 6, adtype: 'fm_display_banner', name: 'display'}
         ];
     var adtype,media = null;
 
@@ -179,11 +180,15 @@
                                 media = data[k];
                                 $('#iframeHtml').html('<iframe src="'+media+'" width="100%" height="300" frameBorder="0"></iframe>');
                             }
-                            else if(data['adType'] == 3){
+                            else if(data['adType'] == 3 ){
                                 adtype = "fm_overlay_banner";
                                 media = data[k];
-
-                                $('#iframeImg').html('<img style="width: 100%" src="'+media+'" width="100%" id="imgChild" class="img-thumbnail">');
+                                $('#iframeImg').html('<img style="width: 100%" src="https://st50.adsplay.net/'+media+'" width="100%" id="imgChild" class="img-thumbnail">');
+                            }
+                            else if(data['adType'] == 6 ){
+                                adtype = "fm_overlay_banner";
+                                media = data[k];
+                                $('#iframeImg').html('<img style="width: 100%" src="https://st50.adsplay.net/'+media+'" width="100%" id="imgChild" class="img-thumbnail">');
                             }
                             else if(data['adType'] == 4){
                                 adtype = "fm_breaking_news";

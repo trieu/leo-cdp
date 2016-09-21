@@ -6,8 +6,11 @@ module.exports = {
     base_domain : 'https://monitor.adsplay.net'
     , api_domain :  'http://api.adsplay.net'
     , ssl_api_domain :  'https://api.adsplay.net'
+    , static_domain: 'https://st50.adsplay.net'
+    , ads_cdn_domain: 'https://ads-cdn.fptplay.net/static/ads/instream'
+
     , api_paytv: 'https://fbox-partners.fpt.vn'
-    //  , api_paytv: 'http://fbox-onetv.fpt.vn/OneTVWS.ashx'
+
     , ftp_video: {
     	host: "118.69.184.35",
         port: 21, 
