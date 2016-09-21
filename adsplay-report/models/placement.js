@@ -10,13 +10,20 @@ var connection = mongoose.createConnection(dbConfig.url);
 autoIncrement.initialize(connection);
 
 var placementSchema = new mongoose.Schema({
+    _id: {type: Number},
     id: { type: Number, required: true, index: true },
     name: { type: String, default: '' },
     publisher: { type: String, default: '' },
     type: { type: Number, default: 0 },
     width: { type: Number, default: 0 },
     height: { type: Number, default: 0 },
-    updatedDate : {type: Date, default: Date.now }
+    updatedDate : {type: Date, default: Date.now },
+    adCode3rd: { type: String, default: '' },
+    weight3rd: { type: Number, default: 0 }
+});
+
+placementSchema.virtual('id').get(function() {
+    return this._id;
 });
 
 placementSchema.plugin(autoIncrement.plugin, {
