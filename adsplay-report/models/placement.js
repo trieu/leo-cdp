@@ -13,13 +13,16 @@ var placementSchema = new mongoose.Schema({
     _id: {type: Number},
     id: { type: Number, required: true, index: true },
     name: { type: String, default: '' },
+    enabled: {type: Boolean, default: true },
     publisher: { type: String, default: '' },
     type: { type: Number, default: 0 },
     width: { type: Number, default: 0 },
     height: { type: Number, default: 0 },
     updatedDate : {type: Date, default: Date.now },
     adCode3rd: { type: String, default: '' },
-    weight3rd: { type: Number, default: 0 }
+    weight3rd: { type: Number, default: 0 },
+    checkBaseDomain: {type: Boolean, default: false },
+    baseDomain: { type: String, default: '' }
 });
 
 placementSchema.virtual('id').get(function() {
