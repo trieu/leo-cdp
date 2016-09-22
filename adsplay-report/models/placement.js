@@ -3,6 +3,7 @@
  */
 var dbConfig = require('../configs/database');
 var mongoose = require('mongoose');
+var publisher = require('./publisher')
 var autoIncrement = require('mongoose-auto-increment');
 
 //setup connect autoIncrement
@@ -12,8 +13,8 @@ autoIncrement.initialize(connection);
 var placementSchema = new mongoose.Schema({
     _id: {type: Number, required: true, index: true},
     name: { type: String, default: '' },
+    publisher  : {type : Number, ref : 'publishers'},
     enabled: {type: Boolean, default: true },
-    publisher: { type: String, default: '' },
     type: { type: Number, default: 0 },
     width: { type: Number, default: 0 },
     height: { type: Number, default: 0 },
@@ -24,14 +25,9 @@ var placementSchema = new mongoose.Schema({
     baseDomain: { type: String, default: '' }
 });
 
-placementSchema.virtual('id').get(function() {
-    return this._id;
-});
-
 placementSchema.plugin(autoIncrement.plugin, {
     model: 'placements',
-    field: 'id',
+    field: '_id',
     startAt: 1000
 });
-
 module.exports =  mongoose.model('placements', placementSchema);

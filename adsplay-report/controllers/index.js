@@ -38,6 +38,7 @@ module.exports = function (app) {
     app.use('/creative_json', require('./creative_json'));
     app.use('/creative', require('./creative'));
     app.use('/placement', require('./placement'));
+    app.use('/publisher', require('./publisher'));
     app.use('/campaign', require('./campaign'));
     app.use('/monitor', require('./monitor'));
     app.use('/device', require('./device'));

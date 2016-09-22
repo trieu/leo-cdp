@@ -2,6 +2,8 @@ var fs = require('fs.extra');
 var JSFtp = require("jsftp");
 var site = require("../configs/site.js");
 
+var youtubedl = require('youtube-dl');
+
 var stringUtils = require('./string_utils');
 //const ftpBaseFolderPath = '/static/videos/';
 const ftpBaseFolderPath = '/static/ads/instream/';
@@ -28,8 +30,6 @@ Upload.prototype.folder = function(output){
 
 
 Upload.prototype.youtube = function (link, callback) {
-
-    var youtubedl = require('youtube-dl');
     
     //request input link and input path
     var dir = storage('video');

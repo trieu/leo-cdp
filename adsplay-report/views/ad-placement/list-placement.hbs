@@ -45,12 +45,12 @@
 				<tbody id="plt_container">
 					{{#each placements}}
 					<tr>
-						<td class="plt_id">{{id}}</td>
+						<td class="plt_id">{{_id}}</td>
 						<td class="plt_name">{{name}}</td>
 						<td class="plt_publisher">{{publisher}}</td>
 						<td class="plt_type">{{type}}</td>
-						<td class="plt_width">{{width}}</td>
-						<td class="plt_height">{{height}}</td>
+						<td class="plt_w">{{width}}</td>
+						<td class="plt_h">{{height}}</td>
 						<td class="plt_updatedDate">{{updatedDate}}</td>
 						<td width="60px">
 							<button type="button" id="{{id}}" class="btn btn-primary btn-xs action-btn" title="action">
@@ -80,23 +80,25 @@
       	<form id="plt_form">
       		<table class="table table-bordered table-hover table-striped">
 				<tbody>
-					<input type="hidden" class="form-control" name="plt_id">
+					<input type="hidden" class="form-control" name="id">
 					<tr>
 						<td><strong>Name</strong></td>
 						<td>
-							<input type="text" class="form-control" name="plt_name" data-minLength="10" required>
+							<input type="text" class="form-control" name="name" data-minlength="10" required>
 						</td>
 					</tr>
 					<tr>
 						<td><strong>Publisher</strong></td>
 						<td>
-							<input type="text" class="form-control" name="plt_publisher" required>
+							<select id="ads-publisher" class="form-control" name="publisher" required>
+				                <option value="-1">No</option>
+				            </select>
 						</td>
 					</tr>
 					<tr>
 						<td><strong>Type</strong></td>
 						<td>
-							<select class="form-control" name="plt_type">
+							<select id="ads-type" class="form-control" name="type" required>
 				                <option value="1">Video</option>
 				                <option value="2">Display Banner</option>
 				                <option value="3">Overlay Banner</option>
@@ -106,12 +108,58 @@
 					<tr class="row-size-display">
 						<td><strong>Ads Size</strong></td>
 	                    <td>
-	                        <select id="ads-size-display" name="plt_size" class="select-multi" data-placeholder="Choose ads size">
+	                        <select id="ads-size-display" name="size" class="select-multi" data-placeholder="Choose ads size">
 	                            {{#each size_display}}
 	                                <option value='{{size.w}}x{{size.h}}'>{{name}}: {{size.w}} x {{size.h}}</option>
 	                            {{/each}}
 	                        </select>
 	                    </td>
+					</tr>
+					<tr class="row-adcode">
+						<td><strong>adCode</strong></td>
+						<td>
+							<textarea name="adCode3rd" class="form-control" rows="3"></textarea>
+						</td>
+					</tr>
+					
+					<tr class="row-weight">
+						<td><strong>Weight</strong></td>
+						<td>
+							<select class="form-control" name="weight3rd">
+								<option value="0">0</option>
+								<option value="10">10</option>
+								<option value="20">20</option>
+								<option value="30">30</option>
+								<option value="40">40</option>
+								<option value="50">50</option>
+								<option value="60">60</option>
+								<option value="70">70</option>
+								<option value="80">80</option>
+								<option value="90">90</option>
+								<option value="100">100</option>
+							</select>
+						</td>
+					</tr>
+					<tr class="row-domain">
+						<td><strong>Base Domain</strong></td>
+						<td>
+							<input type="text" class="form-control" name="baseDomain">
+							<div class="checkbox">
+								<label>
+									<input type="checkbox" name="checkBaseDomain" value="1"> active
+								</label>
+							</div>
+						</td>
+					</tr>
+					<tr class="row-enabled">
+						<td><strong>Running Placement</strong></td>
+						<td>
+							<div class="checkbox">
+								<label>
+									<input type="checkbox" name="enabled" value="1" checked> (default enabled)
+								</label>
+							</div>
+						</td>
 					</tr>
 				</tbody>
 	        </table>
@@ -149,5 +197,4 @@
   </div>
 </div>
 
-<script src="js/validatr.min.js"></script>
 <script src="js/business-domains/placement-handler.js"></script>

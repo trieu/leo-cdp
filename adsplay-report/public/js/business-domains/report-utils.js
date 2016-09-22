@@ -89,3 +89,30 @@ function getDateFromValue(){
 function getDateToValue(){
     return $('#to').val();
 }
+
+(function($){
+    $.fn.getFormData = function(){
+        var data = {};
+        this.each(function(i) {
+            var ele = $('[name="'+this+'"]');
+            if(ele.is('select')){
+                data[ele.attr('name')] = ele.val() || [];
+            }
+            else if(ele.is(':checkbox')){
+                var checkboxName = ele.attr('name');
+                data[ele.attr('name')] = [];
+                $("input[name*='" + checkboxName + "']").each(function () {
+                    if (ele.is(":checked")) {
+                        data[ele.attr('name')].push(ele.val());
+                    }
+                });
+            }
+            else{
+                data[ele.attr('name')] = ele.val();
+            }
+        });
+
+        console.log(data);
+        return data;
+    }
+})(jQuery);

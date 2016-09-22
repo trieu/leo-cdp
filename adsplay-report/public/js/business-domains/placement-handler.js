@@ -3,6 +3,21 @@ $(window).load(function() {
 
 	var type = {1: "video", 2: "Display Banner", 3: "Overlay Banner"};
 
+	setTimeout(function(){
+		$.ajax({
+			url: '/publisher/getAll',
+			type: "GET",
+			contentType: "application/json",
+			dataType:'json',
+			success: function(result){
+				$("#ads-publisher").empty();
+				$.each(result, function (i, item) {
+					$("#ads-publisher").append('<option value="'+item._id+'">'+item.name+'</option>');
+				});
+			}
+		});
+	},200);
+
 	function select_render(){
 		setTimeout(function(){
 			$('#ads-size-display,#ads-size-overlay').multipleSelect({
@@ -39,26 +54,26 @@ $(window).load(function() {
 	});
 	//custom valid
 	plt_form.validatr('addTest', {
-		minLength: function (el) {
+		minlength: function (el) {
 			var valid = false;
-			var min = parseInt($(el).attr('data-minLength'));
+			var min = parseInt($(el).attr('data-minlength'));
 			if($(el).val().length >= min){
 				valid = true;
 			}
 			return {
 				valid: valid,
-				message: 'Length >= ' + min
+				message: 'Text length >= ' + min
 			};
 		},
-		maxLength: function (el) {
+		maxlength: function (el) {
 			var valid = false;
-			var max = parseInt($(el).attr('data-maxLength'));
+			var max = parseInt($(el).attr('data-maxlength'));
 			if($(el).val().length <= max){
 				valid = true;
 			}
 			return {
 				valid: valid,
-				message: 'Length <= ' + max
+				message: 'Text length <= ' + max
 			};
 		}
 	});
@@ -71,8 +86,10 @@ $(window).load(function() {
 
 	$('#new-placement').click(function(){
 		$('#modal-placement').modal('show');
+		//empty form
+		plt_form.find('input[type="text"], textarea, select').val("");
+
 		select_render();
-		plt_form.find('input').val("");
 	});
 
 	$(document).on('click','.action-btn', function(){
@@ -85,55 +102,41 @@ $(window).load(function() {
 
 	$(document).on('click','#plt_copy', function(){
 		 //Before we copy, we are going to select the text.
-		    var text = document.getElementById('plt_code');
-		    var selection = window.getSelection();
-		    var range = document.createRange();
-		    range.selectNodeContents(text);
-		    selection.removeAllRanges();
-		    selection.addRange(range);
-		    //add to clipboard.
-		    document.execCommand('copy');
+		var text = document.getElementById('plt_code');
+		var selection = window.getSelection();
+		var range = document.createRange();
+		range.selectNodeContents(text);
+		selection.removeAllRanges();
+		selection.addRange(range);
+		//add to clipboard.
+		document.execCommand('copy');
 	});
 
 	$(document).on('click','.edit-placement', function(){
+
 		var row = $(this).closest('tr');
+		var id = row.find('.plt_id').text();
 		$('#modal-placement').modal('show');
-		select_render();
 		row.addClass('editing');
 
-		plt_form.find('input, select').each(function(i) {
-			var attr = $(this).attr('name');
-			var getValue = row.find('.'+attr).text();
+		$.ajax({
+			url: '/placement/find/'+id,
+			type: "GET",
+			contentType: "application/json",
+			dataType:'json',
+			beforeSend: function(){
+				$('#modal-placement .modal-content').append('<div class="loader"></div>');
+			},
+			success: function(result){
+				$('.loader').remove();
 
-			if(attr == "plt_type"){
-				getValue = get_type_key(getValue);
-				if (getValue == 2) {
-					$('.row-size-display').show();
-				}
-				$(this).val(getValue);
+				plt_edit_render(result);
 			}
-			else if(attr == "plt_size"){
-				var get_w = row.find('.plt_width').text();
-				var get_h = row.find('.plt_height').text();
-				var get_size = get_w+"x"+get_h;
-				setTimeout(function(){
-					$("#ads-size-display").multipleSelect("setSelects", [get_size]);
-				},200);
-			}
-			else{
-				$(this).val(getValue);
-			}
-
 		});
-
-		// plt_form.find('select').each(function(i) {
-		// 	var attr = $(this).attr('name');
-		// 	var getValue = row.find('.'+attr).text();
-		// });
 
 	});
 
-	$('[name="plt_type"]').change(function(){
+	$('#ads-type').change(function(){
 		if ($(this).val() == 2) {
 			$('.row-size-display').show();
 		}
@@ -149,14 +152,18 @@ $(window).load(function() {
 			return false;
 		}
 
-		var data = plt_data(plt_form);
+		//Array attribute name of input , select , textarea , radio, checkbox
+		var nameInput = ['id','name','publisher','type','size','adCode3rd',
+							'weight3rd','baseDomain','checkBaseDomain','enabled'];
+		var data = $(nameInput).getFormData();
+		var filter = plt_filter_data(data);
 
 		$.ajax({
-			url: '/placement/save/',
+			url: '/placement/save',
 			type: "POST",
 			contentType: "application/json",
 			dataType:'json',
-			data: JSON.stringify(data),
+			data: JSON.stringify(filter),
 			beforeSend: function(){
 				$('#wrapper').append('<div class="loader"></div>');
 			},
@@ -178,29 +185,69 @@ $(window).load(function() {
 		});
 	});
 
-	function plt_data(form){
-		var data = {};
-			data.id = form.find('[name="plt_id"]').val();
-			data.name = form.find('[name="plt_name"]').val();
-			data.publisher = form.find('[name="plt_publisher"]').val();
-			data.type = form.find('[name="plt_type"]').val();
+	function plt_edit_render(result) {
+		for(var i in result){
+			var _this = $('[name="'+i+'"]');
 
-			var select_display = $('#ads-size-display').val();
-			var size = select_display.split('x');
-			data.width = size[0] || 0;
-			data.height = size[1] || 0;
-		return data;	
+			if(i == '_id'){
+				$('[name="id"]').val(result[i]);
+			}
+			else if(i == "enabled" || i == "checkBaseDomain"){
+				if (result[i]) {
+					_this.attr('checked','checked');
+				}
+				else{
+					_this.removeAttr('checked');
+				}
+			}
+			else if(i == "type"){
+				if (result[i] == 2) {
+					$('.row-size-display').show();
+					_this.val(result[i]);
+					select_render();
+				}
+			}
+			else{
+				_this.val(result[i]);
+			}
+			
+		}
+
+		var get_w = result['width'];
+		var get_h = result['height'];
+		var get_size = get_w+"x"+get_h;
+		setTimeout(function(){
+			$("#ads-size-display").multipleSelect("setSelects", [get_size]);
+		},200);
+	}
+
+	function plt_filter_data(data){
+		var result = {};
+		for(var i in data){
+			if(i == 'checkBaseDomain' || i == 'enabled'){
+				result[i] = data[i][0];
+			}
+			else if(i == 'size'){
+				var size = (data[i].length > 0) ? data[i].split('x') : [0,0];
+				result['width'] = size[0];
+				result['height'] = size[1];
+			}
+			else{
+				result[i] = data[i];
+			}
+		}
+		return result;	
 	}
 
 	function plt_print(data){
 		var html = '\
 					<tr> \
-						<td class="plt_id">'+data.id+'</td> \
+						<td class="plt_id">'+data._id+'</td> \
 						<td class="plt_name">'+data.name+'</td> \
 						<td class="plt_publisher">'+data.publisher+'</td> \
 						<td class="plt_type">'+get_type(data.type)+'</td> \
-						<td class="plt_width">'+data.width+'</td> \
-						<td class="plt_height">'+data.height+'</td> \
+						<td class="plt_w">'+data.width+'</td> \
+						<td class="plt_h">'+data.height+'</td> \
 						<td class="plt_updatedDate">'+ moment(data.updatedDate).format("YYYY-MM-DD")+'</td> \
 						<td width="60px"> \
 							<button type="button" id="'+data.id+'" class="btn btn-primary btn-xs action-btn" title="action"> \
