@@ -34,7 +34,7 @@
 					<tr>
 						<th>ID</th>
 						<th>Name</th>
-						<th>Updated Date</th>
+						<th>Domain</th>
 						<th>Action</th>
 					</tr>
 				</thead>
@@ -43,7 +43,7 @@
 					<tr>
 						<td class="pub_id">{{_id}}</td>
 						<td class="pub_name">{{name}}</td>
-						<td class="pub_updatedDate">{{updatedDate}}</td>
+						<td class="pub_domain">{{domain}}</td>
 						<td width="60px">
 							<button type="button" id="{{id}}" class="btn btn-primary btn-xs edit-publisher" title="edit">
 								<i class="fa fa-pencil"></i>
@@ -74,6 +74,12 @@
 						<td><strong>Name</strong></td>
 						<td>
 							<input type="text" class="form-control" name="name" data-minlength="6" required>
+						</td>
+					</tr>
+					<tr>
+						<td><strong>Domain</strong></td>
+						<td>
+							<input type="url" class="form-control" name="domain">
 						</td>
 					</tr>
 				</tbody>

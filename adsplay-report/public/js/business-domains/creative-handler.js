@@ -10,6 +10,10 @@
         ];
     var adtype,media = null;
 
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
     function logError(e) {
         if (window.console) {
             window.console.error(e);
@@ -165,15 +169,14 @@
                                 media = data[k];
 
                                 var link = "https://ads-cdn.fptplay.net/static/ads/instream/"+data[k];
-                                $('#video_url').val(link);
 
-                                var iframe = '<video id="video_ads" muted autoplay controls class="video-js vjs-default-skin vjs-big-play-centered"><source src="'+link+'" type="video/mp4"></video>';
-                                $('.iframeVideo').html(iframe);
-                                videojs("video_ads", {
-                                    "poster": "//adsplay.net/img/logo.png",
-                                    "width": '100%', "height": 300,
-                                    "controls": true, "autoplay": true,
-                                });
+                                // var iframe = '<video id="video_ads" muted autoplay controls class="video-js vjs-default-skin vjs-big-play-centered"><source src="'+link+'" type="video/mp4"></video>';
+                                // $('.iframeVideo').html(iframe);
+                                // videojs("video_ads", {
+                                //     "poster": "//adsplay.net/img/logo.png",
+                                //     "width": '100%', "height": 300,
+                                //     "controls": true, "autoplay": true,
+                                // });
                             }
                             else if(data['adType'] == 2){
                                 adtype = "fm_display_banner";
@@ -253,6 +256,8 @@
         });
 
         //event select file image
+        //FIXME
+        /*
         $('#file').change(function(){
             $('#ads-size').multipleSelect('uncheckAll');
             if($('#file').val() != ""){
@@ -283,6 +288,7 @@
                 $("#row_ads_size").hide();
             }
         });
+        */
 
         /*check url*/
         var url_current = window.location.href;
@@ -466,10 +472,12 @@
                 var video_file = $('#video_file')[0];
 
                 if(ytb_url.length == 0 && video_file.files.length == 0){
-                    return alert("Please check input file ");
+                    if (media == null) {
+                        return alert("Please check input file ");
+                    }
                 }
-                else{
-                    var postData = new FormData();
+
+                var postData = new FormData();
                     postData.append('creative', JSON.stringify(data));
                     postData.append('adtype', adtype);
 
@@ -485,36 +493,45 @@
                     else{
                         postData.append('video_url', ytb_url);
                     }
-                }
-                
-                //console.log(postData)
 
-                $.ajax({
+                //console.log(data)
+                var promise = $.ajax({
                     url: 'creative/save/tvc-ad',
                     type: "POST",
                     data: postData,
                     contentType: false,
                     processData:false,
-                    timeout: 60000, //60s
+                    timeout: 60000,
                     beforeSend: function(){
-                        $('#wrapper').append('<div class="loader"></div>');
+                        var loader = $('<div class="loader"></div>');
+                        var progress_wrap = $('<div class="progress"></div>');
+                        var progress = $('<div class="progress-bar progress-bar-success progress-bar-striped" style="width:0%"></div> </div>');
+                        
+                        $('#wrapper').append(loader);
+                        loader.append(progress_wrap);
+                        progress_wrap.append(progress)
+                        var number = 0;
+                        var countUp = setInterval(function(){
+                            var temp = getRandomInt(1, 10);
+                            number += temp;
+                            progress.width(number+'%');
+                            progress.text(number);
+                            if (number > 90){
+                                return clearInterval(countUp);
+                            }
+                            
+                        }, 1000);
                     },
                     success: function(data){
-                        var adId = parseInt(data);
-                        if(adId>0){
-                            window.location = 'https://monitor.adsplay.net/creative/'+adId;
-                        }
-                        else if(adId == -100){
-                            alert('No Authorization');
-                        }
-                        else {
-                            alert(data);
-                        }
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        if(textStatus==="timeout") {
-                            window.location = 'https://monitor.adsplay.net/creative/list/all';
-                        } 
+                        $(".loader").remove();
+                        window.location = location.protocol+'//'+location.host+'/creative/'+data;
+                    }
+                });
+
+                promise.fail(function(jqXHR, textStatus) {
+                    if(textStatus==="timeout") {
+                        $(".loader").remove();
+                        window.location = location.protocol+'//'+location.host+'/creative/list/all';
                     }
                 });
             }
@@ -547,7 +564,7 @@
                         $('#wrapper').append('<div class="loader"></div>');
                     },
                     success: function(data){
-                        window.location = 'https://monitor.adsplay.net/creative/'+data;
+                        window.location = location.protocol+'//'+location.host+'/creative/'+data;
                     }
                 });
             }
@@ -580,7 +597,7 @@
                         $('#wrapper').append('<div class="loader"></div>');
                     },
                     success: function(data){
-                        window.location = 'https://monitor.adsplay.net/creative/'+data;
+                        window.location = location.protocol+'//'+location.host+'/creative/'+data;
                     }
                 });
                 

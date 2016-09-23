@@ -13,7 +13,6 @@ var express = require('express')
 router.get('/list-all', function (req, res, next) {
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "All Publishers";
-    data.size_display = constantUtils.size_display;
 
     publisher.find({})
     .exec(function(err, doc){
@@ -21,12 +20,11 @@ router.get('/list-all', function (req, res, next) {
         if (doc.length > 0) {
             data.publishers = [];
             for (var i in doc) {
-                var tempDate = moment(doc[i].updatedDate).format('YYYY-MM-DD');
 
                 data.publishers.push({
                     _id: doc[i]._id,
                     name: doc[i].name,
-                    updatedDate : tempDate
+                    domain : doc[i].domain
                 })
             }
 
@@ -64,6 +62,7 @@ router.post('/save', function (req, res, next){
         }
 
         doc.name = req.body.name;
+        doc.domain = req.body.domain;
 
         doc.save(function(err) {
             if(!err){

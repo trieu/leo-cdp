@@ -273,6 +273,11 @@ ul.alert-dropdown {
     background-repeat: no-repeat;
     background-position: center;
 }
+
+.progress{
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 0;
+}
 /*login*/
 #login-captcha{
     height: 50px;
@@ -491,3 +496,4 @@ span.impress-text {
 .export_form .form-group{
     margin-right: 10px;
 }
+

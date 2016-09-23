@@ -12,7 +12,7 @@ autoIncrement.initialize(connection);
 var publisherSchema = new mongoose.Schema({
     _id: {type: Number, required: true, index: true},
     name: { type: String, default: '' },
-    baseDomain: { type: String, default: '' }
+    domain: { type: String, default: '' }
 });
 
 publisherSchema.plugin(autoIncrement.plugin, {

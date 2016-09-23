@@ -362,46 +362,35 @@ router.post('/save/tvc-ad', function (req, res) {
                     crt.runDate = moment(crt.runDate).format('YYYY-MM-DD-HH-mm');
                     crt.expiredDate = moment(crt.expiredDate).format('YYYY-MM-DD-HH-mm');
 
-                    console.log(crt);
                     var seedStr = stringUtils.removeUnicodeSpace(crt.name) + (new Date()).getTime();
                     var hash = crypto.createHash('md5').update(seedStr).digest('hex');
                     var mediaName = hash + '.mp4';
 
                     //upload file
                     if (typeof(file) !== "undefined" && file !== null) {
+
                         upload.video(file, function (obj) {
-
-                            var input = obj.url;
-                            //output file convert with name = convert-video.mp4
-                            var output = obj.folder + "convert-video.mp4";
-                            var option = {videoCodec: 'libx264', audioCodec: 'libmp3lame', format: 'mp4', bitrate: '360p'};
-
-                            convert.command(input, output, option, function () {
-
-                                // output push on cdn
-                                upload.ftp_video(output, mediaName, function (data) {
-                                    //var rs = {url: data.url, filename: data.filename, size: obj.size};
-                                    crt.media = mediaName;
-                                    saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
-                                });
-
-                            });
-
-                        });
-                    }
-                    //upload video from youtube
-                    else if (typeof(video_url) !== "undefined" && video_url !== null && video_url.indexOf(crt.media) < 0) {
-
-                        upload.youtube(video_url, function (obj) {
-                            upload.ftp_video(obj.url, mediaName, function (data) {
-                                //var rs = {url: data.url, filename: data.filename, size: obj.size};
+                            //convert and upload cdn
+                            convert_video(obj, mediaName, function(mediaName){
                                 crt.media = mediaName;
                                 saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
                             });
                         });
-
+                    }
+                    //upload video from youtube
+                    else if (typeof(video_url) !== "undefined" && video_url !== null && video_url != "") {
+                        
+                        upload.youtube(video_url, function (obj) {
+                            
+                            //convert and upload cdn
+                            convert_video(obj, mediaName, function(mediaName){
+                                crt.media = mediaName;
+                                saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
+                            });
+                        });
                     }
                     else {
+                        
                         saveJson({url: urlSave, form: JSON.stringify(crt)}, res);
                     }
 
@@ -566,6 +555,22 @@ router.post('/save/breaking-news', function (req, res) {
     }
 
 });
+
+var convert_video = function(obj, mediaName, callback){
+    var input = obj.url;
+    //output file convert with name = convert-video.mp4
+    var output = obj.folder + "convert-video.mp4";
+    var option = {videoCodec: 'libx264', audioCodec: 'libmp3lame', format: 'mp4', bitrate: '360p'};
+
+    convert.command(input, output, option, function () {
+
+        // output push on cdn
+        upload.ftp_video(output, mediaName, function (data) {
+            callback(mediaName);
+        });
+
+    });
+}
 
 var saveJson = function (obj, res) {
 

@@ -78,7 +78,7 @@ $(window).load(function() {
 		}
 
 		//Array attribute name of input , select , textarea , radio, checkbox
-		var nameInput = ['id','name'];
+		var nameInput = ['id','name','domain'];
 		var data = $(nameInput).getFormData();
 
 		$.ajax({
@@ -127,9 +127,9 @@ $(window).load(function() {
 					<tr> \
 						<td class="pub_id">'+data._id+'</td> \
 						<td class="pub_name">'+data.name+'</td> \
-						<td class="pub_updatedDate">'+ moment(data.updatedDate).format("YYYY-MM-DD")+'</td> \
+						<td class="pub_domain">'+ data.domain +'</td> \
 						<td width="60px"> \
-							<button type="button" id="'+data.id+'" class="btn btn-primary btn-xs edit-publisher"> \
+							<button type="button" id="'+data._id+'" class="btn btn-primary btn-xs edit-publisher"> \
 								<i class="fa fa-pencil"></i> \
 							</button> \
 						</td> \
