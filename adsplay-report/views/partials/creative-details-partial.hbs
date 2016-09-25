@@ -288,7 +288,7 @@ var loadLineChartWithData = function () {
         drawLineChart('#chart_click svg', clickData, null, timeArray, 'Click');
         drawLineChart('#chart_reach svg', reachData, null, timeArray, 'Audience Reach');
         drawStackMultiBarChart('#chartPercentComplete svg', data);
-        
+
     });
 };
 
@@ -492,7 +492,7 @@ function convertToStackBarData(rawData) {
 
     //console.log(csvText);
     var source = $("#tpl_crt_pf_report").html();
-    var template = Handlebars.compile(source);    
+    var template = Handlebars.compile(source);
     var htmlTable = template(crtStatsModel);
     //console.log(crtStatsModel);
 
@@ -674,5 +674,5 @@ $(window).load(function() {
         $('.break-news').show();
         videojs("video_ads");
     }
-});    
+});
 </script>

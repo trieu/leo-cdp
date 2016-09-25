@@ -3,8 +3,10 @@
 
     var adtypeArr = [
             {id: 1, adtype: 'fm_tvc_video', name: 'video'},
+            {id: 2, adtype: 'fm_display_banner', name: 'display'},
             {id: 3, adtype: 'fm_overlay_banner', name: 'overlay'},
-            {id: 4, adtype: 'fm_breaking_news', name: 'news'}
+            {id: 4, adtype: 'fm_breaking_news', name: 'news'},
+            {id: 6, adtype: 'fm_display_banner', name: 'display'}
         ];
     var adtype,media = null;
 
@@ -99,6 +101,14 @@
             dataType: "json",
             url: url,
             success: function(data){
+                //set select
+                var sizeObj = data.w+"x"+data.h;
+                console.log(sizeObj)
+                $("#ads-size").multipleSelect("setSelects", [sizeObj]);
+                if ($("#ads-size").val() == null) {
+                    $("#row_ads_size").hide();
+                }
+                
                 for(var k in data){
                     if($.isArray(data[k])){
                         if(k == 'tgcats'){
@@ -153,29 +163,16 @@
                         }
                         else if(k == 'media'){
 
-                            if (data['adType'] == 1) {
-                                //set adtype, media
-                                adtype = "fm_tvc_video";
-                                media = data[k];
-
-                                var link = "https://ads-cdn.fptplay.net/static/ads/instream/"+data[k];
-                            }
-                            else if(data['adType'] == 2){
+                            if(data['adType'] == 2){
                                 adtype = "fm_display_banner";
                                 media = data[k];
                                 $('#iframeHtml').html('<iframe src="'+media+'" width="100%" height="300" frameBorder="0"></iframe>');
                             }
-                            else if(data['adType'] == 3 ){
+
+                            else if(data['adType'] == 6 ){
                                 adtype = "fm_overlay_banner";
                                 media = data[k];
-                                $('#iframeImg').html('<img style="width: 100%" src="https://st50.adsplay.net/'+media+'" width="100%" id="imgChild" class="img-thumbnail">');
-                            }
-                            else if(data['adType'] == 4){
-                                adtype = "fm_breaking_news";
-                                media = data[k];
-                                $('.break-news').show();
-                                $('#news-marquee').html(media);
-                                $('#BreakingNews_Text').val(media);
+                                $('#iframeImg').html('<img style="width: 100%" src="https://monitor.adsplay.net/'+media+'" width="100%" id="imgChild" class="img-thumbnail">');
                             }
                         }
                         else{
@@ -206,23 +203,6 @@
         }
     }
 
-    function isPayTv(){
-        var temp = false;
-        if(window.location.href.indexOf('paytv') >= 0){
-            temp = true;
-        }
-
-        if ($('#isPayTv').length > 0) {
-            temp = true;
-        }
-        
-        if(temp){
-            $("#ad_target_location .optLocation").remove();
-        }
-        else{
-            $("#ad_target_location .optArea").remove();
-        }
-    }
 
     jQuery(document).ready(function(){
         $('[title]').tooltip();
@@ -230,6 +210,40 @@
             var checkboxes = $(this).closest('#row-profile').find(':checkbox');
             checkboxes.prop('checked', $(this).prop("checked"));
         });
+
+        //event select file image
+
+        $('#file').change(function(){
+            $('#ads-size').multipleSelect('uncheckAll');
+            if($('#file').val() != ""){
+                if ($('#file')[0].files[0].name.match(/\.(jpg|jpeg|png|gif)$/)){
+                    $("#row_ads_size").show();
+                    var img = new Image();
+                    img.src = window.URL.createObjectURL($(this)[0].files[0]);
+                    img.onload = function() {
+                        var width = img.naturalWidth.toString(),
+                            height = img.naturalHeight.toString();
+                        var sizeObj = width+"x"+height;
+
+                        $("#ads-size").multipleSelect("setSelects", [sizeObj]);
+                        if($("#ads-size").val() == null){
+                            $("#file").val("");
+                            $("#row_ads_size").hide();
+                            modal_alert('File incorrect field Ads-Size !');
+                            return false;
+                        }
+                        
+                    }
+                }
+                else{
+                    $("#row_ads_size").hide();
+                }
+            }
+            else{
+                $("#row_ads_size").hide();
+            }
+        });
+
 
         /*check url*/
         var url_current = window.location.href;
@@ -262,7 +276,6 @@
             $('#row_ads_status').hide();
         }
 
-        isPayTv();
 
         $("#ad_target_location, #ad_target_locs").multipleSelect({
             filter: true,
@@ -271,6 +284,7 @@
             multipleWidth: '100%',
             selectAllText: 'Việt Nam'
         });
+
         $("#ad_target_content_keywords, #ad_target_content_cats").multipleSelect({
             filter: true,
             multiple: true,
@@ -278,6 +292,7 @@
             multipleWidth: '100%',
             selectAllText: 'Chọn tất cả'
         });
+
         $("#ads-size").multipleSelect({
             filter: true,
             single: true,
@@ -285,34 +300,6 @@
         });
         $('#ads-size').multipleSelect('uncheckAll');
 
-        //disable video data fields on other ad type
-        var tvc_div_nodes = $('#row_ads_thirdparty_url,#row_ads_skip,#row_ads_duration,#row_ads_startime,#div_fptplay_tvc_ad_placements,#div_paytv_ad_placements,#div_fshare_ad_placements,#div_nhacso_ad_placements');
-        if( $('#accordion_tvc_upload').length > 0 ){
-            tvc_div_nodes.show();
-        } else {
-            tvc_div_nodes.hide();
-        }
-
-        //get iframe video
-        $("#video_url").keyup(function() {
-            var value = $(this).val();
-            if(typeof(value) !== 'undefined'&& value.indexOf("youtu") != -1){
-                var code = youtube(value);
-                var iframe = '<iframe id="video1" src="https://www.youtube.com/embed/'+code+'?autoplay=true" frameborder="0" allowtransparency="true" allowfullscreen></iframe>';
-                $('.iframeVideo').html(iframe);
-            }
-
-        });
-        var youtube = function(url) {
-            var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-            var match = url.match(regExp);
-
-            if (match && match[2].length == 11) {
-                return match[2];
-            } else {
-                return 'error';
-            }
-        };
         //end get iframe video
         $("#ads_running_date").val(moment().format('YYYY-MM-DDTHH:mm'));
         $("#ads_expired_date").val(moment().add(1, 'days').format('YYYY-MM-DDTHH:mm'));
@@ -408,78 +395,11 @@
 
             //return;
 
-            if (adtype == "fm_tvc_video") {
-                var ytb_url = $('#video_url').val();
-                var video_file = $('#video_file')[0];
 
-                if(ytb_url.length == 0 && video_file.files.length == 0){
-                    if (media == null) {
-                        return alert("Please check input file ");
-                    }
-                }
-
-                var postData = new FormData();
-                    postData.append('creative', JSON.stringify(data));
-                    postData.append('adtype', adtype);
-
-                    if (video_file.files.length != 0) {
-                        var fSize = video_file.files[0].size;
-                        if(fSize > 20971520){
-                            return alert("Please check file size ");
-                        }
-                        else{
-                            postData.append('file', video_file.files[0]);
-                        }
-                    }
-                    else{
-                        postData.append('video_url', ytb_url);
-                    }
-
-                //console.log(data)
-                var promise = $.ajax({
-                    url: 'creative/save/tvc-ad',
-                    type: "POST",
-                    data: postData,
-                    contentType: false,
-                    processData:false,
-                    timeout: 60000,
-                    beforeSend: function(){
-                        var loader = $('<div class="loader"></div>');
-                        var progress_wrap = $('<div class="progress"></div>');
-                        var progress = $('<div class="progress-bar progress-bar-success progress-bar-striped" style="width:0%"></div> </div>');
-                        
-                        $('#wrapper').append(loader);
-                        loader.append(progress_wrap);
-                        progress_wrap.append(progress)
-                        var number = 0;
-                        var countUp = setInterval(function(){
-                            var temp = getRandomInt(1, 10);
-                            number += temp;
-                            progress.width(number+'%');
-                            progress.text(number);
-                            if (number > 90){
-                                return clearInterval(countUp);
-                            }
-                            
-                        }, 1000);
-                    },
-                    success: function(data){
-                        $(".loader").remove();
-                        window.location = location.protocol+'//'+location.host+'/creative/'+data;
-                    }
-                });
-
-                promise.fail(function(jqXHR, textStatus) {
-                    if(textStatus==="timeout") {
-                        $(".loader").remove();
-                        window.location = location.protocol+'//'+location.host+'/creative/list/all';
-                    }
-                });
-            }
-            else if(adtype == "fm_overlay_banner"){
+            if(adtype == "fm_display_banner"){
                 if(media == null){
-                    if (!$('#file')[0].files[0].name.match(/\.(jpg|jpeg|png|gif)$/)){
-                        return alert('Incorrect file .jpg , .jpeg, .png, .gif');
+                    if (!$('#file')[0].files[0].name.match(/\.(zip|jpg|jpeg|png|gif)$/)){
+                        return alert('Incorrect file upload');
                     }
                 }
 
@@ -494,9 +414,9 @@
                 postData.append('file', $('#file')[0].files[0]);
                 postData.append('creative', JSON.stringify(data));
                 postData.append('adtype', adtype);
-
+                
                 $.ajax({
-                    url: 'creative/save/overlay-banner',
+                    url: 'creative/save/display-banner',
                     type: "POST",
                     data: postData,
                     contentType: false,
@@ -506,28 +426,6 @@
                     },
                     success: function(data){
                         window.location = location.protocol+'//'+location.host+'/creative/'+data;
-                    }
-                });
-                
-            }
-            else if(adtype == "fm_breaking_news"){
-
-                var postData = new FormData();
-                postData.append('breakingNews', $('#BreakingNews_Text').val());
-                postData.append('creative', JSON.stringify(data));
-                postData.append('adtype', adtype);
-
-                $.ajax({
-                    url: 'creative/save/breaking-news',
-                    type: "POST",
-                    data: postData,
-                    contentType: false,
-                    processData:false,
-                    beforeSend: function(){
-                        $('#wrapper').append('<div class="loader"></div>');
-                    },
-                    success: function(data){
-                        window.location = 'https://monitor.adsplay.net/creative/'+data;
                     }
                 });
             }

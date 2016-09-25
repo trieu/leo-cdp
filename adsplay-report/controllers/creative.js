@@ -228,16 +228,11 @@ router.get('/:id/edit', function (req, res) {
             isIpTvAd = data.crt.tgpfs.indexOf(6) >= 0;
         }
         if (data.crt.adType === 1) {
-            if (isIpTvAd) {
-                //nameAdType = 'new-creative-video-paytv';
-                nameAdType = 'new-creative-video';
-            } else {
-                nameAdType = 'new-creative-video';
-            }
+            nameAdType = 'new-creative-video';
         }
-        else if (data.crt.adType === 2 || data.crt.adType === 6) {
+        else if (data.crt.adType === 6) {
             data.adsSize = constantUtils.size_display;
-            nameAdType = 'new-creative-display';
+            nameAdType = 'creative-editor-display';
         }
         else if (data.crt.adType === 3) {
             data.adsSize = constantUtils.size_overlay;
@@ -284,13 +279,9 @@ router.get('/new/local-ad-unit/display', function (req, res) {
     data.fptplayCategories = ArrayUtils.concatUnique(constantUtils.getFemaleKeywords().concat(constantUtils.getMaleKeywords()));
     data.femaleKeywords = constantUtils.getFemaleKeywords();
     data.maleKeywords = constantUtils.getMaleKeywords();
-
-    data.payTVCategories = constantUtils.getPayTVCategories();
     data.locationCodes = constantUtils.getLocationCodes();
-
     data.adsSize = constantUtils.size_display;
-    res.render('ad-report/new-creative-display', data)
-
+    res.render('ad-report/creative-editor-display', data)
 });
 
 router.get('/new/local-ad-unit/news', function (req, res) {

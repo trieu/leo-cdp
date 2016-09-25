@@ -28,49 +28,62 @@
 </div>
 
 <div id="fm_chooser" class="row">
-    <div class="col-lg-8 text-center">
+    <div class="col-lg-3 "></div>
+    <div class="col-lg-6 text-center">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h4>Select the Ad Format</h4>
+                <h4>Select an Ad Unit Format <i class="fa fa-question-circle fa-3" aria-hidden="true"></i></h4>
             </div>
             <div class="panel-body text-left">
                 <div class="radio ads_format" id="ad_format">
-                    <label><input checked type="radio" name="ads_format" value="/creative/new/local-ad-unit/video">
-                        <strong>TVC Video Ad</strong>
-
+                    <label>
+                        <input checked type="radio" name="ads_format" value="/creative/new/local-ad-unit/video">
+                        <strong>TVC Video Ad</strong> -
+                        <a target="_blank" href="http://itvad.net/index.php/welcome/demofptplay">Preview</a>
                     </label>
                 </div>
 
                 <div class="radio ads_format">
                     <label><input type="radio" name="ads_format" value="/creative/new/local-ad-unit/overlay">
-                        <strong>Overlay Banner Ad</strong>
-
+                        <strong>Overlay Banner Ad</strong> -
+                        <a target="_blank" href="http://itvad.net/index.php/welcome/demonhacso">Preview</a>
                     </label>
                 </div>
 
                 <div class="radio ads_format">
                     <label><input type="radio" name="ads_format" value="/creative/new/local-ad-unit/display">
-                        <strong>Display Banner</strong>
-                        <img class="thumbnail" src="http://www.bannersnack.com/images/home/opt/icon_02.png">
+                        <strong>Display Banner</strong> -
+                        <a target="_blank" href="javascript:">Preview</a>
                     </label>
                 </div>
 
-                <div class="radio ads_format" style="display: none">
-                    <label><input type="radio" name="ads_format" value="/creative/new/local-ad-unit/news">Breaking News
-                        <img class="thumbnail" src="http://itvad.net//assets/images/Advertise/breaking_news.jpg">
+                <div class="radio ads_format">
+                    <label>
+                        <input type="radio" name="ads_format" value="/creative/new/local-ad-unit/news">
+                        <strong>Breaking News</strong> -
+                        <a target="_blank" href="http://itvad.net/index.php/welcome/breakingnews">Preview</a>
                     </label>
                 </div>
-                <div>
-                    <input type="button" class="form-control" id="ads_format_ok" value="OK">
+                <div class="text-center">
+                    <p>
+                        <a id="ads_format_ok" href="javascript:void(0)" class="btn btn-primary" style="width: 100px;">
+                            <i class="fa fa-fw fa-play"></i> OK
+                        </a>
+                        <a id="ads_format_cancel" href="javascript:void(0)" class="btn btn-default"
+                           style="width: 100px;">
+                            <i class="fa fa-fw fa-stop"></i> Cancel
+                        </a>
+                    </p>
                 </div>
             </div>
         </div>
-
     </div>
+    <div class="col-lg-3"></div>
 </div>
 
 <div id="alert-ok" class="alert alert-success" style="display: none">
     <strong id="alert-ok-msg">Success! Redirecting to All Ad Unit ...</strong>
+
     <div style="text-align: center">
         <img src="http://www.certiw.com/wp-content/themes/certiw/assets/images/ajax-load.gif">
     </div>
@@ -79,7 +92,11 @@
 
 <script>
     $('#ads_format_ok').click(function () {
-        window.location.href = $('input[name=ads_format]:checked').val()
+        window.location.href = $('input[name=ads_format]:checked').val();
     });
+    $('#ads_format_cancel').click(function () {
+        window.location.href = '/creative/list/all';
+    });
+
 
 </script>
