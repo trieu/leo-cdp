@@ -44,7 +44,7 @@
                 </tr>
 
                 <tr id="row_ads_thirdparty_url" data-ad-type="1" data-paytv="false">
-                    <td><strong>URL of third-party tracking</strong></td>
+                    <td><strong>Third-party tracking URL</strong></td>
                     <td>
                         <input type="url" class="form-control" id="ads_thirdparty_url" data-creative-field="vastXml3rd"
                                pattern="https?://.+" placeholder="Enter Third-party Ad URL">
@@ -118,16 +118,15 @@
                     <td><strong>Pricing Model</strong></td>
                     <td>
                         <div class="text-left">
-
-                            <div class="radio">
-                                <label title="CPM (Cost per Mile)">
-                                    <input type="radio" name="prcModel" data-creative-field="prcModel" value="2"> CPM
-                                    (Cost per Mile)</label>
-                            </div>
                             <div class="radio">
                                 <label title="CPC (Cost per Click)">
                                     <input type="radio" name="prcModel" data-creative-field="prcModel" value="3"> CPC
                                     (Cost per Click)</label>
+                            </div>
+                            <div class="radio">
+                                <label title="CPM (Cost per Mile)">
+                                    <input type="radio" name="prcModel" data-creative-field="prcModel" value="2"> CPM
+                                    (Cost per Mile)</label>
                             </div>
                             <div class="radio">
                                 <label title="CPD (Cost per Day)">
@@ -225,19 +224,8 @@
                     <td>
                         <div class="panel-body text-left" id="ad_target_device">
                             <div class="checkbox" data-paytv="false">
-                                <label><input type="checkbox" data-creative-field="tgpfs" value="1">Web
+                                <label><input type="checkbox" checked disabled data-creative-field="tgpfs" value="1">Web
                                     (PC,Laptop)</label>
-                            </div>
-                            <div class="checkbox banner-hidden" data-paytv="false">
-                                <label><input type="checkbox" data-creative-field="tgpfs" value="4">Mobile Native App
-                                    (Android,iOS)</label>
-                            </div>
-                            <div class="checkbox banner-hidden" data-paytv="false">
-                                <label><input type="checkbox" data-creative-field="tgpfs" value="5">Smart TV</label>
-                            </div>
-                            <div class="checkbox banner-hidden">
-                                <label><input type="checkbox" data-creative-field="tgpfs" value="6"
-                                              data-paytv="default">IPTV</label>
                             </div>
                         </div>
                     </td>
@@ -264,31 +252,17 @@
                                                     <label><input type="checkbox" data-creative-field="tgpms" data-device-id="1" value="1002"> DISPLAY_300x250_FPT_PLAY
                                                     </label>
                                                 </div>
-                                                <div class="bold">FptPlay Categories</div>
-                                                <div>
-                                                    <select class="select-multi" id="ad_target_content_keywords"
-                                                            type="select" data-creative-field="tgkws"
-                                                            data-placeholder="Enter the category's names"
-                                                            multiple="multiple">
-                                                        {{#each fptplayCategories}}
-                                                            <option value="{{this}}">{{this}}</option>
-                                                        {{/each}}
-                                                    </select>
-
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-
                             </div>
 
                         </div>
                     </td>
                 </tr>
 
-                <tr data-paytv="false" style="display: none">
+                <tr data-paytv="false" >
                     <td><strong>Audience Gender</strong></td>
                     <td>
                         <div class="panel-body text-left" id="ad_target_gender">
