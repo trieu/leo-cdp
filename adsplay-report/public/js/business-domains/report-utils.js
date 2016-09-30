@@ -21,6 +21,16 @@ function formatNumber(number) {
     return x1 + x2;
 }
 
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function scrollTopPage(){
+    $('html, body').animate({
+        scrollTop: 0
+    }, 800);
+}
+
 function makeLinePlusBarChart(graphPlaceholderId, data) {
     console.log(data);
     data = data.map(function (series) {
@@ -82,6 +92,22 @@ function initJqueryDatePicker(){
     });
 }
 
+function modal_alert(str){
+    $('#modal-alert .alert-body').text(str);
+    $('#modal-alert').modal('show');
+}
+
+function checkLinkYoutube(url) {
+    var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    var match = url.match(regExp);
+
+    if (match && match[2].length == 11) {
+        return match[2];
+    } else {
+        return 'error';
+    }
+};
+
 function getDateFromValue(){
     return $('#from').val();
 }
@@ -90,29 +116,81 @@ function getDateToValue(){
     return $('#to').val();
 }
 
-(function($){
-    $.fn.getFormData = function(){
-        var data = {};
-        this.each(function(i) {
-            var ele = $('[name="'+this+'"]');
-            if(ele.is('select')){
-                data[ele.attr('name')] = ele.val() || [];
-            }
-            else if(ele.is(':checkbox')){
-                var checkboxName = ele.attr('name');
-                data[ele.attr('name')] = [];
-                $("input[name*='" + checkboxName + "']").each(function () {
-                    if (ele.is(":checked")) {
-                        data[ele.attr('name')].push(ele.val());
-                    }
-                });
+//using all form with attribute name
+function getFormData(ele) {
+    var form = ele.serializeArray();
+    var data = {};
+    for(var i in form){
+
+        if(data.hasOwnProperty(form[i].name)){
+            
+            if(Object.prototype.toString.call( data[form[i].name] ) === '[object Array]'){
+                data[form[i].name].push(form[i].value);
             }
             else{
-                data[ele.attr('name')] = ele.val();
+                var temp = data[form[i].name];
+                data[form[i].name] = [];
+                data[form[i].name].push(temp);
+                data[form[i].name].push(form[i].value);
             }
-        });
-
-        console.log(data);
-        return data;
+        }
+        else{
+            data[form[i].name] = form[i].value
+        }
     }
-})(jQuery);
+    console.log(data)
+    return data; //object
+}
+
+//using all form with attribute name
+function setFormData(ele, data) {
+
+    for(var i in data){
+        ele.find('[name]').each(function(key){
+            var type = $(this).attr('type');
+            var value = $(this).val();
+            if(i == $(this).attr('name')){
+                if(type === 'checkbox') {
+                    for(var j in data[i]){
+                        if(value == data[i][j]){
+                            $(this).attr('checked', true);
+                        }
+                    }
+                }
+                else if(type === 'date'){
+                    var date_format = moment(data[i]).format('YYYY-MM-DD');
+                    $(this).val(date_format);
+                }
+                else if(type === 'datetime-local'){
+                    var date_format = moment(data[i]).format('YYYY-MM-DDTHH:mm');
+                    $(this).val(date_format);
+                }
+                else if(type === 'radio' ){
+                    if(value == data[i]){
+                        $(this).attr('checked', true);
+                    }
+                }
+                else if(type === 'select' ){
+                    //select multiple
+                    if(Object.prototype.toString.call(data[i]) === '[object Array]'){
+                        for(var j in data[i]){
+                            $(this).find('option').each(function() {
+                                if($(this).val() == data[i][j]){
+                                    $(this).prop("selected", true);
+                                }
+                            });
+                        }
+                    }
+                    else{//select one
+                        $(this).prop("selected", true);
+                    }
+                }
+                else {
+                    $(this).val(data[i]);
+                }
+            }
+
+        })
+    }
+
+}

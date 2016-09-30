@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-lg-12">
         <ol class="breadcrumb">
-            <li><a href="creative/list/all">Ad Unit Management</a></li>
+            <li><a href="creative/list">Ad Unit Management</a></li>
             <li class="active">Ad Details</li>
         </ol>
         <h1 class="page-header">
@@ -197,246 +197,32 @@
 </div>
 
 <script src="js/business-domains/action-handler.js"></script>
-
+<script src="js/business-domains/creative-detail-page.js"></script>
 <script>
-
-//format time for Chart
-var formatTime = function (x) {
-    return new moment(x).format("YYYY-MM-DD");
-};
+var adType = {{crt.adType}};
 
 var filterDate = new moment().format("YYYY-MM-DD");
 var now = moment();
 var currentDay = now.format("YYYY-MM-DD-HH");
 var previousDay = now.subtract(1, 'days').format("YYYY-MM-DD-HH");
 
-var drawLineChart = function (element, data, xLabel, tickValues, yLabel) {
-    nv.addGraph(function () {
-        var width = parseInt(d3.select(d3.select(element).node().parentNode).style("width"), 10);
+var totalBooking = parseInt({{crt.tBk}});
 
-        var chart = nv.models.lineChart()
-                        .interpolate("cardinal")
-                        .width(width * 0.99)
-                        .useInteractiveGuideline(true)  //We want nice looking tooltips and a guideline!
-//                            .transitionDuration(350)  //how fast do you want the lines to transition?
-                        .showLegend(true)       //Show the legend, allowing users to turn on/off line series.
-                        .showYAxis(true)        //Show the y-axis
-                        .showXAxis(true)        //Show the x-axis
-                ;
-        var x = chart.xAxis;
-        if (xLabel) {
-            x.axisLabel(xLabel);
-        }
+var urlSummary = "{{site.ssl_api_domain}}/api/creative/summary/{{crtId}}";
+var urlLineChart = "{{site.ssl_api_domain}}/api/creative/stats/{{crtId}}?type={{type}}&begin={{begin}}&end={{end}}";
+var urlDrawHourly = "{{site.ssl_api_domain}}/api/creative/stats/{{crtId}}?type=hourly&begin=" + previousDay + "&end=" + currentDay;
 
-        if (tickValues) {
-            x.tickValues(tickValues);
-        }
+loadSummaryData(urlSummary);
+drawHourlyStatsData(urlDrawHourly, previousDay, currentDay);
+loadLineChartWithData(urlLineChart);
 
-        x.tickFormat(formatTime);
-
-        var y = chart.yAxis;
-        if (yLabel) {
-            y.axisLabel(yLabel);
-        }
-        y.tickFormat(d3.format(',r'));
-
-        d3.select(element).datum(data).call(chart);
-
-        //Update the chart when window resizes.
-        nv.utils.windowResize(chart.update);
-        return chart;
-    });
-};
-
-var buildImpressionAndClickData = function (data) {
-    var impressions = [];
-    var clicks = [];
-    data.forEach(function (d) {
-        impressions.push({x: d.t, y: d.imp});
-        clicks.push({x: d.t, y: d.c});
-    });
-    return [
-        {key: "Impression", color: '#ff7f0e', values: impressions}
-        ,
-        {key: "Click", color: '#2ca02c', values: clicks}
-    ];
-};
-
-var buildReachData = function (data) {
-    var reachs = [];
-    data.forEach(function (d) {
-        reachs.push({x: d.t, y: d.reach});
-    });
-    return [
-        {key: "Reach", color: '#D64889', values: reachs}
-    ];
-};
-
-var buildTimeArray = function (data) {
-    var timeArray = [];
-    data.forEach(function (d) {
-        timeArray.push(d.t);
-    });
-    return timeArray;
-};
-
-var loadLineChartWithData = function () {
-    d3.json("{{site.ssl_api_domain}}/api/creative/stats/{{crtId}}?type={{type}}&begin={{begin}}&end={{end}}", function (error, data) {
-        data.sort(function (a, b) {
-            return a.t - b.t;
-        });
-        var impAndClickData = buildImpressionAndClickData(data);
-        var reachData = buildReachData(data);
-        var timeArray = buildTimeArray(data);
-
-        drawLineChart('#chart_imp_and_click svg', impAndClickData, null, timeArray, 'Count');
-        drawLineChart('#chart_reach svg', reachData, null, timeArray, 'Audience Reach');
-        makeDailyData(data);
-    });
-};
-
-
-// Maintian an instance of the chart
-var chartHourly;
-// Maintain an Instance of the SVG selection with its data
-var chartDataHourly;
-
-var drawHourlyStatsData = function () {
-    d3.json("{{site.ssl_api_domain}}/api/creative/stats/{{crtId}}?type=hourly&begin=" + previousDay + "&end=" + currentDay, function (error, data) {
-        data.sort(function (a, b) {
-            return a.t - b.t;
-        });
-        var impAndClickData = buildImpressionAndClickData(data);
-
-
-        var updateXandY = function (chart, data) {
-            var timeArray = [];
-            for (var i = 0; i < data.length; i++) {
-                if (i % 3 == 0) {
-                    timeArray.push(data[i].t);
-                }
-            }
-            var x = chart.xAxis;
-            x.tickValues(timeArray);
-            x.tickFormat(function (d) {
-                return new moment(d).format("HH:mm");
-            });
-            var y = chartHourly.yAxis;
-            y.axisLabel('View');
-            y.tickFormat(d3.format(',r'));
-        };
-
-        if (chartDataHourly == null) {
-            nv.addGraph(function () {
-                var width = parseInt(d3.select(d3.select('#chart_hourly_imp_and_click svg').node().parentNode).style("width"), 10);
-                chartHourly = nv.models.lineChart()
-                        .interpolate("cardinal")
-                        .width(width * 0.99).useInteractiveGuideline(true).showLegend(true).showYAxis(true).showXAxis(true)
-                ;
-                updateXandY(chartHourly, data);
-
-                chartDataHourly = d3.select('#chart_hourly_imp_and_click svg').datum(impAndClickData);
-                chartDataHourly.transition().duration(500).call(chartHourly);
-
-                nv.utils.windowResize(chartHourly.update);
-                return chartHourly;
-            });
-        } else {
-            // Update the SVG with the new data and call chart
-            updateXandY(chartHourly, data);
-            chartDataHourly.datum(impAndClickData).transition().duration(500).call(chartHourly);
-            nv.utils.windowResize(chartHourly.update);
-        }
-
-    })
-};
-
-var totalImpPrev = 0, totalTrvPrev = 0, totalClickPrev = 0, totalReachPrev = 0;
-var loadSummaryData = function () {
-    d3.json("{{site.ssl_api_domain}}/api/creative/summary/{{crtId}}", function (error, data) {
-        if (data.length > 0) {
-            var crtStats = data[0];
-            $('#totalImp').text(formatNumber(crtStats.imp));
-            $('#totalTrv').text(formatNumber(crtStats.trv));
-            $('#totalClick').text(formatNumber(crtStats.c));
-            $('#ctr').text((crtStats.ctr * 100).toFixed(2));
-            $('#reach').text(formatNumber(crtStats.reach));
-
-            if (totalImpPrev > 0) {
-                $('#totalImpDelta').text(formatNumber(crtStats.imp - totalImpPrev)).show();
-            }
-            if (totalClickPrev > 0) {
-                $('#totalClickDelta').text(formatNumber(crtStats.c - totalClickPrev)).show();
-            }
-            if (totalReachPrev > 0) {
-                $('#totalReachDelta').text(formatNumber(crtStats.reach - totalReachPrev)).show();
-            }
-            if (totalTrvPrev > 0) {
-                $('#totalTrvDelta').text(formatNumber(crtStats.trv - totalTrvPrev)).show();
-                $('span[datatype="real-time"]').animate({backgroundColor: "#40FF00"}, 'slow').animate({backgroundColor: "#CEF6CE"}, 'slow');
-            }
-
-            totalImpPrev = crtStats.imp;
-            totalTrvPrev = crtStats.trv;
-            totalClickPrev = crtStats.c;
-            totalReachPrev = crtStats.reach;
-        }
-    });
-};
-
-
-loadSummaryData();
-drawHourlyStatsData();
-loadLineChartWithData();
-
-setInterval(function () {
-    loadSummaryData();
-    drawHourlyStatsData();
-}, 10001);
-
-//Generate some nice data.
-function makeDailyData(rawData) {
-    var arr1 = [];
-    var crtStatsModel = { adsStatsData: [] };
-
-    for (var i in rawData) {
-        var obj = rawData[i];
-
-        var date = obj.t;
-        var v1 = obj.imp;
-        var click = obj.c;
-        if (v1 <= 0) {
-            continue;
-        }
-        var ctr = Math.round(( (click * 100) / v1 ) * 100) / 100;
-
-        //raw data
-        arr1.push({key: "Impression", series: 0, x: date, y: v1});
-
-        var r = {date: formatTime(date), imp: v1, click: click, ctr: ctr};
-        crtStatsModel.adsStatsData.push(r);
-    }
-
-    //console.log(csvText);
-    var source = $("#tpl_crt_pf_report").html();
-    var template = Handlebars.compile(source);
-    var htmlTable = template(crtStatsModel);
-
-    $('#crt_pf_details').append(htmlTable);
+if ('{{crt.status}}' === 'Running') {
+    setInterval(function () {
+        loadSummaryData(urlSummary);
+        drawHourlyStatsData(urlDrawHourly, previousDay, currentDay);
+        // loadLineChartWithData();
+    }, 10001);
 }
-
-$(document).ready(function () {
-    $('.nav-tabs a').click(function (e) {
-        e.preventDefault()
-        $(this).tab('show')
-    });
-    $('.nav-tabs a').on('shown.bs.tab', function (event) {
-        var x = $(event.target).text();         // active tab
-        var y = $(event.relatedTarget).text();  // previous tab
-        $(".act span").text(x);
-        $(".prev span").text(y);
-    });
-});
 </script>
 
 <script id="tpl_crt_pf_report" type="text/x-handlebars">

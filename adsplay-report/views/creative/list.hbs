@@ -1,0 +1,292 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h3 class="page-header">
+            Ad Unit Management
+        </h3>
+    </div>
+</div>
+
+{{#if editable }}
+<p>
+    <a href="creative/new" class="btn btn-primary" id="new-creative">
+        <i class="fa fa-fw fa-play"></i> New Ad Unit
+    </a>
+</p>
+{{/if}}
+
+<div class="row">
+
+    <div class='col-lg-3'>
+        <div class="form-group">
+            <select class="form-control" id="filter-status" >
+                <option value="-1">All Ad Units</option>
+                {{#each statuses}}
+                    <option value="{{value}}">{{label}} Ad Units</option>
+                {{/each}}
+            </select>
+        </div>
+    </div>
+
+<!--     <div class='col-lg-3'>
+        <div class="form-group">
+            <select class="form-control" id="filter-adTypes" >
+                <option value="-1">All Ad Types</option>
+                {{#each adTypes}}
+                    <option value="{{key}}">{{this}} Ad Units</option>
+                {{/each}}
+            </select>
+        </div>
+    </div>
+ -->
+    <div class='col-lg-3'>
+        <div class="form-group">
+            <div class='input-group date' id='begin'>
+                <input type='text' class="form-control" autocomplete="off"/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class='col-lg-3'>
+        <div class="form-group">
+            <div class='input-group date' id='end'>
+                <input type='text' class="form-control" autocomplete="off"/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class='col-lg-3'>
+        <p>
+            <a href="javascript:" class="btn btn-primary" id="ChangeDate">
+                <i class="fa fa-fw fa-check"></i> OK
+            </a>
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="table-responsive" id="table-creative-list">
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+
+        Handlebars.registerHelper('formatCurrency', function(value) { return value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"); });
+
+        //select date
+        var end = new moment().add(1, 'days').format("YYYY-MM-DD");
+        var begin = moment(end).subtract(45, 'days').format("YYYY-MM-DD");
+        render_list(begin, end);
+
+        var formatTime = function (x) {
+            return new moment(x).format("YYYY-MM-DD");
+        };
+
+        $('#begin').datetimepicker({
+            format: 'YYYY-MM-DD',
+            defaultDate: begin
+        });
+        $('#end').datetimepicker({
+            useCurrent: false, //Important! See issue #1075
+            format: 'YYYY-MM-DD',
+            defaultDate: end
+        });
+        $("#begin").on("dp.change", function (e) {
+            $('#end').data("DateTimePicker").minDate(e.date);
+        });
+        $("#end").on("dp.change", function (e) {
+            $('#begin').data("DateTimePicker").maxDate(e.date);
+        });
+
+        $('#filter-status').change(function () {
+            if($(this).val() == -1){
+                $('#tbl-creatives tbody tr').show();
+            }
+            else if($(this).val() == 0){
+                $('.td-status').closest('tr').hide();
+                $('[data-status="Invalid"]').closest('tr').show();
+            }
+            else if($(this).val() == 1){
+                $('.td-status').closest('tr').hide();
+                $('[data-status="Pending"]').closest('tr').show();
+            }
+            else if($(this).val() == 2){
+                $('.td-status').closest('tr').hide();
+                $('[data-status="Running"]').closest('tr').show();
+            }
+            else if($(this).val() == 3){
+                $('.td-status').closest('tr').hide();
+                $('[data-status="Finished"]').closest('tr').show();
+            }
+            else if($(this).val() == 4){
+                $('.td-status').closest('tr').hide();
+                $('[data-status="Expired"]').closest('tr').show();
+            }
+        });
+
+        $(document).on("click", "#ChangeDate", function(){
+            var begin = $('#begin').data("DateTimePicker").date().format('YYYY-MM-DD');
+            var end = $('#end').data("DateTimePicker").date().format('YYYY-MM-DD');
+
+            render_list(begin, end);
+        });
+
+        $(document).on("click", ".td-action i", function(){
+            var row = $(this).closest('tr');
+            var id = parseInt(row.find('.td-id').text());
+            var btnAction = $(this);
+            
+            if (btnAction.is('.fa-toggle-on')) {
+                update_fields(id, {status: '1'}, function(result){
+                    if(result.message == 'error'){
+                        return alert("error !!!")
+                    }
+                    btnAction.removeClass('fa-toggle-on');
+                    btnAction.addClass('fa-toggle-off');
+                    row.find('.td-status').html('<i class="fa fa-pause" title="Pending"></i>');
+                });
+            }
+            else{
+                update_fields(id, {status: '2'}, function(result){
+                    if(result.message == 'error'){
+                        return alert("error !!!")
+                    }
+                    btnAction.removeClass('fa-toggle-off');
+                    btnAction.addClass('fa-toggle-on');
+                    row.find('.td-status').html('<i class="fa fa-line-chart color-blue" title="Running"></i>');
+                    
+                });
+            }
+        });
+
+        function update_fields(id, obj, callback){
+            $.ajax({
+                url: '/creative/'+id+'/update',
+                type: "POST",
+                contentType: "application/json",
+                dataType:'json',
+                data: JSON.stringify(obj),
+                success: callback
+            });
+        }
+        function icon_status(){
+            $('.td-status').each(function(){
+                var txt = $(this).attr('data-status');
+                if(txt == 'Running'){
+                    $(this).html('<i class="fa fa-line-chart color-blue" title="Running"></i>');
+                }
+                else if(txt == 'Finished'){
+                    $(this).html('<i class="fa fa-check-square color-green" title="Finished"></i>');
+                }
+                else if(txt == 'Pending'){
+                    $(this).html('<i class="fa fa-pause" title="Pending"></i>');
+                }
+                else if(txt == 'Invalid'){
+                    $(this).html('<i class="fa fa-exclamation-triangle color-red" title="Invalid"></i>');
+                }
+                else if(txt == 'Expired'){
+                    $(this).html('<i class="fa fa-check-square color-orange" title="Expired"></i>');
+                }
+            });
+        }
+
+        function render_action(){
+            $('.td-status').each(function(){
+                if($(this).attr("data-status") == "Running"){
+                    $(this).closest('tr').find('.td-action').html('<i class="fa fa-toggle-on color-green"  title="Turn On/Off Ads"></i>');
+                }
+                else if($(this).attr("data-status") == "Pending"){
+                    $(this).closest('tr').find('.td-action').html('<i class="fa fa-toggle-off color-green"  title="Turn On/Off Ads"></i>');
+                }
+            });
+        }
+
+        function list_html (data){
+            var dataList = {creatives: data};
+
+            var table = '\
+                <table class="table table-hover table-striped" id="tbl-creatives"> \
+                <thead> \
+                <tr> \
+                    <th>ID</th> \
+                    <th>Name</th> \
+                    <th>Status</th> \
+                    <th><span title="Total Impression">Impression</span></th> \
+                    <th style="display: none">Complete-View</th> \
+                    <th><span title="Total Click">Click</span></th> \
+                    <th><a href="javascript:" title="Click-through rate">CTR</a></th> \
+                    <th style="display: none"><a href="javascript:" title="Complete-View rate">CVR</a></th> \
+                    <th>Booking Time</th> \
+                    <th><span title="Total Estimated Revenue" style="display: block">Revenue</span></th> \
+                    <th id="th-action">Action</th> \
+                </tr> \
+                    </thead> \
+                    <tbody> \
+                    </tbody> \
+                </table> \
+            ';
+            $("#table-creative-list").empty();
+            $("#table-creative-list").append(table)
+            
+            if (!data || data.length == 0) {
+                $('#tbl-creatives').find('tbody').empty().append('<tr><td colspan="8" style="text-align: center">No record found!</td></tr>');
+            } else {
+                var source = $("#tpl-crt-list").html();
+                var template = Handlebars.compile(source);
+                var htmlTable = template(dataList);
+
+                $('#tbl-creatives').find('tbody').empty().append(htmlTable);
+            }
+        }
+
+        function render_list(begin, end){
+            $.ajax({
+                url: '/creative/api/list?begin='+begin+'&end='+end,
+                type: "GET",
+                contentType: "application/json",
+                dataType:'json',
+                beforeSend: function(){
+                    $('#wrapper').append('<div class="loader"></div>');
+                },
+                success: function(data){
+                    $('.loader').remove();
+                    list_html(data);
+                    icon_status();
+                    $("#tbl-creatives").DataTable({
+                        "pageLength": 25,
+                        "order": [[0,'desc']]
+                    });
+                    render_action();
+                    $('[title]').tooltip();
+                }
+            });
+        }
+
+    });
+
+</script>
+
+<script id="tpl-crt-list" type="text/x-handlebars">
+    \{{#each creatives}}
+        <tr \{{#if active }} class="active" \{{/if}} >
+            <td class="td-id">\{{id}}</td>
+            <td class="td-max-200"><a href="/creative/\{{id}}">\{{name}}</a></td>
+            <td class="td-status" data-status="\{{status}}" data-order="\{{status}}"  data-search="\{{status}}">\{{status}}</td>
+            <td>\{{formatCurrency imp}}</td>
+            <td style="display: none" >\{{formatCurrency trv}}</td>
+
+            <td>\{{formatCurrency c}}</td>
+            <td>\{{ctr}}%</td>
+            <td style="display: none" >\{{tvr}}%</td>
+            <td>\{{runDate}} &#10145; \{{expiredDate}}</td>
+            <td class="td-revenue">\{{formatCurrency totalRevenue}}</td>
+            <td class="td-action"></td>
+        </tr>
+    \{{/each}}
+</script>

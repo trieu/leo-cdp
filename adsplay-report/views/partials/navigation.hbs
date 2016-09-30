@@ -17,7 +17,7 @@
             <span class="icon-bar"></span>
         </button>
 
-        <a class="navbar-brand" href="{{buildUrl '/creative/list/all'}}">
+        <a class="navbar-brand" href="{{buildUrl '/creative/list'}}">
             <img style="height: 38px;padding-bottom: 3px" src="css/images/logo_analytics.gif"/></a>
     </div>
     <!-- Top Menu Items -->
@@ -84,7 +84,7 @@
                 <ul id="menuAdManagement" class="collapse in" aria-expanded="true" style="">
 
                     <li class="">
-                        <a href="/creative/list/all" title="Ad Unit Management" ><i class="fa fa-fw fa-list"></i> Ad Units</a>
+                        <a href="/creative/list" title="Ad Unit Management" ><i class="fa fa-fw fa-list"></i> Ad Units</a>
                     </li>
 
                     {{#if isSuperAdminGroup }}
@@ -98,10 +98,10 @@
 
                     {{#if editable }}
                         <li class="">
-                            <a href="/creative/new/local-ad-unit"><i class="fa fa-fw fa-play"></i> New Ad Unit</a>
+                            <a href="/creative/new"><i class="fa fa-fw fa-play"></i> New Ad Unit</a>
                         </li>
                         <li class="">
-                            <a href="/creative/new/local-ad-unit/video-paytv"><i class="fa fa-fw fa-play"></i> New PayTV Ad Unit</a>
+                            <a href="/creative/new/video-paytv"><i class="fa fa-fw fa-play"></i> New PayTV Ad Unit</a>
                         </li>
 
                         <li style="display: none">

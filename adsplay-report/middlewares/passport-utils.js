@@ -90,7 +90,7 @@ module.exports = function(passport) {
 				else{
 					req.logIn(user, function(err) {
 						if (err) { return next(err); }
-						res.redirect('/creative/list/all');
+						res.redirect('/creative/new');
 					});
 				}
 			})(req, res, next);

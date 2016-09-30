@@ -1,0 +1,363 @@
+<div class="row">
+    <div class="col-lg-12">
+        <ol class="breadcrumb">
+            <li><a href="creative/list">Ad Unit Management</a></li>
+            <li class="active">Ad Report</li>
+        </ol>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-4 text-center">
+        <div class="panel">
+            <div class="panel-body">
+                <video id="video_ads" class="video-js vjs-default-skin vjs-big-play-centered" autoplay muted controls
+                       loop preload="auto"
+                       poster="//adsplay.net/img/logo.png"
+                       data-setup=''
+                       width='100%'
+                       height='300'>
+                    <source src="{{site.ads_cdn_domain}}/{{crt.media}}" type="video/mp4">
+                </video>
+            </div>
+            <div class="panel-body">
+                {{#if editable }}
+                    <i class="fa fa-pencil-square-o fa-2" aria-hidden="true">
+                        <a style="font-weight: bolder;font-size: 18px"  href="{{buildUrl editUrl}}">
+                            Edit Ad Information
+                        </a>
+                    </i>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-8 text-center">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong>{{crt.name}}</strong>
+            </div>
+            <div class="panel-body">
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-striped">
+                        <tbody>
+                        <tr>
+                            <td colspan="2">
+                                <div id="booking_progress"  style='height:55px;'>
+                                    <svg></svg>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Created date</strong></td>
+                            <td><span id="ads_date_started">{{crt.crtDate}}</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Run date</strong></td>
+                            <td><span id="ads_date_run">{{crt.runDate}}</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Expired date</strong></td>
+                            <td><span id="ads_date_expired">{{crt.expDate}}</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Status</strong></td>
+                            <td>
+                                <span id="ads_status" data-status="{{crt.status}}">{{crt.status}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total Booking</strong></td>
+                            <td><span id="ads_totalBooking" class="impress-text">{{formatCurrency crt.tBk}}</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Daily Booking</strong></td>
+                            <td><span id="ads_dailyBooking" class="impress-text">{{formatCurrency crt.dBk}}</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hourly Booking</strong></td>
+                            <td><span id="ads_hourlyBooking" class="impress-text">{{formatCurrency crt.hBk}}</span></td>
+                        </tr>
+                        <tr style="display: none">
+                            <td><strong>Ad materials</strong></td>
+                            <td><span id="ads_materials">Video</span></td>
+                        </tr>
+                        <tr style="display: none">
+                            <td><strong>Duration</strong></td>
+                            <td><span id="ads_duration">15 seconds</span></td>
+                        </tr>
+                        <tr style="display: none">
+                            <td><strong>Size</strong></td>
+                            <td><span id="ads_size">2 MB</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Click-through Rate (CTR)</strong></td>
+                            <td><span datatype="real-time" id="ctr">0</span> %</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Completed-View Rate (CVR)</strong></td>
+                            <td><span datatype="real-time" id="trueViewRate">0</span> %</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total Impression</strong></td>
+                            <td>
+                                <span datatype="real-time" id="totalImp">0</span>
+                                <span datatype="real-time" id="totalImpDelta" style="display: none"
+                                      class="glyphicon glyphicon-export">0</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total Completed View</strong></td>
+                            <td><span datatype="real-time" id="totalTrv">0</span>
+                                <span datatype="real-time" id="totalTrvDelta" style="display: none"
+                                      class="glyphicon glyphicon-export">0</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total Click</strong></td>
+                            <td><span datatype="real-time" id="totalClick">0</span>
+                                <span datatype="real-time" id="totalClickDelta" style="display: none"
+                                      class="glyphicon glyphicon-export">0</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Audience Reach</strong></td>
+                            <td><span datatype="real-time" id="reach">0</span>
+                                <span datatype="real-time" id="totalReachDelta" style="display: none"
+                                      class="glyphicon glyphicon-export">0</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total Estimated Revenue</strong></td>
+                            <td><span id="ads_totalRevenue"
+                                      class="impress-text">{{formatCurrency crt.totalRevenue}}</span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <h2>Report from {{begin}} to {{end}}</h2>
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#tc-main-graphs">Ad Data Charts</a></li>
+        <li><a href="#tc-daily-details">Daily Report</a></li>
+        <li><a href="#tc-excel-export">Excel Export</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="tc-main-graphs" class="tab-pane fade in active">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>
+                                <strong>Audience Reach on Ad Placements</strong></h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12">
+                                    <svg id="platforms-chart" class="report-detail-piechart"></svg>
+                                </div>
+                                <div class="col-md-6 col-sm-12">
+                                    <svg id="audience-wrapp" class="report-detail-piechart"></svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>
+                                <strong>Hourly Report: Impression and Completed-View Data in last 24 hours</strong></h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="export_form" id="Impression-CompletedView" data-export='{"url": "export/excel/Impression-CompletedView", "begin": "{{begin}}", "end": "{{end}}", "id": {{crtId}} }'></div>
+
+                            <div id="chart_hourly_imp_and_view" class="graph" style='height:250px;'>
+                                <svg></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>
+                                <strong>Daily Report: Impression and Completed-View Data from {{begin}}
+                                    to {{end}} </strong></h3>
+                        </div>
+                        <div class="panel-body">
+                            <div id="chart_imp_and_view" class="graph" style='height:250px;'>
+                                <svg></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i><strong>Daily Report: Click
+                                Data
+                                from {{begin}}
+                                to {{end}} </strong></h3>
+                        </div>
+                        <div class="panel-body">
+                            <div id="chart_click" class="graph" style='height:210px;'>
+                                <svg></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>
+                                <strong>Daily Report: Audience Reach Data from {{begin}} to {{end}} </strong></h3>
+                        </div>
+                        <div class="panel-body">
+                            <div id="chart_reach" class="graph" style='height:210px;'>
+                                <svg></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>
+                                <strong>Daily Report: Video % Played Rate from {{begin}} to {{end}} </strong></h3>
+                        </div>
+                        <div class="panel-body">
+                            <div id="chartPercentComplete" class="graph" style='height:210px;'>
+                                <svg></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="tc-daily-details" class="tab-pane fade">
+            <div class="table-responsive" id="crt_pf_details">
+            </div>
+        </div>
+
+        <div id="tc-audience" class="tab-pane fade">
+
+        </div>
+        <!-- <div id="tc-platform" class="tab-pane fade">
+            <svg id="platform-wrapp" class="report-detail-piechart"></svg>
+        </div> -->
+        <div id="tc-excel-export" class="tab-pane fade">
+            <br>
+            <div class="col-md-12" style="height: 100px">
+                <a href="/export/excel/creative/stats?id={{crtId}}&type={{type}}&begin={{begin}}&end={{end}}" id="excel_export" target="_blank" class="btn btn-info btn-lg">Download</a>
+            </div>
+            <br><br><br>
+        </div>
+    </div>
+
+</div>
+
+<script src="js/business-domains/action-handler.js"></script>
+<script src="js/business-domains/creative-detail-page.js"></script>
+<script>
+//preview TVC Instream Video Ads auto
+var player = videojs('video_ads').ready(function() {
+    this.play();
+});
+
+var adType = {{crt.adType}};
+
+var filterDate = new moment().format("YYYY-MM-DD");
+var now = moment();
+var currentDay = now.format("YYYY-MM-DD-HH");
+var previousDay = now.subtract(1, 'days').format("YYYY-MM-DD-HH");
+
+var totalBooking = parseInt({{crt.tBk}});
+
+var urlSummary = "{{site.ssl_api_domain}}/api/creative/summary/{{crtId}}";
+var urlLineChart = "{{site.ssl_api_domain}}/api/creative/stats/{{crtId}}?type={{type}}&begin={{begin}}&end={{end}}";
+var urlDrawHourly = "{{site.ssl_api_domain}}/api/creative/stats/{{crtId}}?type=hourly&begin=" + previousDay + "&end=" + currentDay;
+
+loadSummaryData(urlSummary);
+drawHourlyStatsData(urlDrawHourly, previousDay, currentDay);
+loadLineChartWithData(urlLineChart);
+
+if ('{{crt.status}}' === 'Running') {
+    setInterval(function () {
+        loadSummaryData(urlSummary);
+        drawHourlyStatsData(urlDrawHourly, previousDay, currentDay);
+        // loadLineChartWithData();
+    }, 10001);
+}
+
+var typePlatforms = {{{json platforms}}};
+var typePlacements = {{{json placements}}};
+
+var urlPlatforms = "{{site.ssl_api_domain}}/api/creatives/{{crtId}}/platforms";
+var urlPlacements = "{{site.ssl_api_domain}}/api/creatives/{{crtId}}/placements"
+
+setTimeout(renderPlatform(urlPlatforms, typePlatforms), 100);
+setTimeout(displayAudienceReachAndDeviceType(urlPlacements, typePlacements), 100);
+setTimeout(displayPlatforms(urlPlacements), 100);
+
+</script>
+
+<script id="tpl_crt_pf_report" type="text/x-handlebars">
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Impression</th>
+            <th>Complete-View</th>
+            <th>Unique Impression</th>
+            <!--<th>Frequency</th>-->
+            <th>Clicks</th>
+            <th>CTR</th>
+            <th>(%)Complete-View</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        \{{#each adsStatsData}}
+        <tr>
+            <td><i><strong>\{{date}}</strong></i></td>
+            <td>\{{imp}}</td>
+            <td>\{{completeView}}</td>
+            <td>\{{uniqueImp}}</td>
+            <!--<td><strong>\{{freq}}</strong></td>-->
+            <td>\{{click}}</td>
+            <td><strong>\{{ctr}}</strong></td>
+            <td>\{{view100}}</td>
+        </tr>
+        \{{/each}}
+
+        </tbody>
+    </table>
+</script>
+<script type="text/javascript" src="js/business-domains/export_script.js"></script>

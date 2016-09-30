@@ -35,8 +35,8 @@ module.exports = function (app) {
     app.use(auth.privilege, auth.router);
 
     /* all router */
-    app.use('/creative_json', require('./creative_json'));
     app.use('/creative', require('./creative'));
+    app.use('/creative-old', require('./creative_old'));
     app.use('/placement', require('./placement'));
     app.use('/publisher', require('./publisher'));
     app.use('/campaign', require('./campaign'));

@@ -22,6 +22,8 @@ exports.baseModel = function(req) {
         var ssid = -1;
         if( typeof req.user != 'undefined' || req.user != null ){
             ssid = parseInt(req.user.id);
+            data.userName = req.user.username;
+            data.roles = req.user.roles;
         }
 
         data.auth = (ssid > 0);
@@ -30,7 +32,6 @@ exports.baseModel = function(req) {
         data.isAdminGroup = adminIds[ssid] == 1;
         data.editable = operatorIds[ssid] == 1;
         data.isOperatorGroup = operatorIds[ssid] == 1;
-        data.userName = constant_utils.getUserName(ssid);
 
     } else {
         data.auth = false;
