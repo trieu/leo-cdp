@@ -30,7 +30,7 @@ $(window).load(function() {
 
 	//using plugin select
 	setTimeout(function(){
-		var eleSelect = "#ads_target_location,#fptplay_placements,#paytv_placements,#fshare_placements,#nhacso_placements,#fptplay_categories,#paytv_categories, #ads-size";
+		var eleSelect = "#ads_target_location,#paytv_placements,#fshare_placements,#nhacso_placements,#fptplay_categories,#paytv_categories";
 		$(eleSelect)
 		.multipleSelect({
 			filter: true,
@@ -40,6 +40,38 @@ $(window).load(function() {
 			selectAllText: 'Select All',
 			selectAllDelimiter: ['', ''],
 		});
+
+		$('#ads-size').multipleSelect({
+			filter: true,
+			single: true,
+			width: '100%',
+			onClose: function(view) {
+				console.log(view)
+			}
+		});
+
+		$('#fptplay_placements')
+		.multipleSelect({
+			filter: true,
+			multiple: true,
+			width: '100%',
+			multipleWidth: '100%',
+			selectAllText: 'Select All',
+			selectAllDelimiter: ['', ''],
+			onOpen: function(){
+				var size = $('#ads-size').multipleSelect('getSelects')[0];
+				var sizeArr = size.split('x');
+				// var promise = getDataJson('/placement/api?width='+sizeArr[0]+'&height='+sizeArr[1], 'GET');
+				// promise.success(function (data) {
+				// 	console.log(data);
+				// 	$('#fptplay_placements').empty();
+				// 	$('#fptplay_placements').append('<option value='+data._id+'>'+data.name+'</option>');
+				// 	$('#fptplay_placements').multipleSelect('refresh');
+				// });
+			}
+		});
+
+		
 	},200);
 
 });
@@ -127,6 +159,14 @@ function errorCss(parent, placement_error, status){
 		$('#frame_upload_body').append('<div class="alert alert-danger" role="alert">please put something here</div>');
 		scrollTopPage();
 	}
+}
+
+function getDataJson(url, method){
+	return $.ajax({
+		url: url,
+		type: method,
+		dataType: 'json'
+	});
 }
 
 function buildData(_this, media){

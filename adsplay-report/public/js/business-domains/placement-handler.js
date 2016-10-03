@@ -155,7 +155,7 @@ $(window).load(function() {
 		//Array attribute name of input , select , textarea , radio, checkbox
 		var nameInput = ['id','name','publisher','type','size','adCode3rd',
 							'weight3rd','baseDomain','checkBaseDomain','enabled'];
-		var data = $(nameInput).getFormData();
+		var data = getFormData(plt_form);
 		var filter = plt_filter_data(data);
 
 		$.ajax({

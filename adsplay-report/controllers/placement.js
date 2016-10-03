@@ -94,4 +94,16 @@ router.post('/save', function (req, res, next){
     });
 });
 
+router.get('/api', function (req, res, next) {
+    var width = req.query.width;
+    var height = req.query.height;
+    Placement.findOne({ width: width, height: height }).populate({
+        path: 'publisher'//,match: { name: 'req.params.publisherName' }
+    })
+    .exec(function(err, doc){
+        if (err) { return next(err); }
+        res.json(doc);
+    });
+})
+
 module.exports = router;

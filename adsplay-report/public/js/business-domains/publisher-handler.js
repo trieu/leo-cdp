@@ -79,7 +79,7 @@ $(window).load(function() {
 
 		//Array attribute name of input , select , textarea , radio, checkbox
 		var nameInput = ['id','name','domain'];
-		var data = $(nameInput).getFormData();
+		var data = getFormData(pub_form);
 
 		$.ajax({
 			url: '/publisher/save',
