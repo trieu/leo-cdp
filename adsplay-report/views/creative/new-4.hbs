@@ -19,7 +19,7 @@
             </div>
             <div class="panel-body" id="frame_upload_body">
                 <div class="video-container-breakingnews" >
-                    <div class="breaking-news"><marquee id="news-marquee"></marquee></div>
+                    <div class="breaking-news"><marquee id="news-marquee">{{crt.media}}</marquee></div>
                     <video id="my-video" class="video-js vjs-default-skin vjs-big-play-centered" autoplay muted controls
                            loop preload="auto"
                            poster="//adsplay.net/img/logo.png"
@@ -31,7 +31,7 @@
                     </video>
                 </div>
                 <textarea style="margin-top: 10px;" id="BreakingNews_Text" class="form-control"
-                          placeholder="Enter the ad message here"></textarea><br/>
+                          placeholder="Enter the ad message here">{{crt.media}}</textarea><br/>
             </div>
         </div>
 

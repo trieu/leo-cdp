@@ -15,7 +15,7 @@
         <div class="panel">
             <div class="panel-body">
                 <div class="video-container-breakingnews" >
-                    <div class="breaking-news"><marquee id="news-marquee"></marquee></div>
+                    <div class="breaking-news"><marquee id="news-marquee">{{crt.media}}</marquee></div>
                     <video id="my-video" class="video-js vjs-default-skin vjs-big-play-centered" autoplay muted controls
                            loop preload="auto"
                            poster="//adsplay.net/img/logo.png"
@@ -26,8 +26,6 @@
                         <source src="https://ads-cdn.fptplay.net/static/videos/demo-sport-2.mp4" type='video/mp4' />
                     </video>
                 </div>
-                <textarea style="margin-top: 10px;" id="BreakingNews_Text" class="form-control"
-                          placeholder="Enter the ad message here">{{crt.media}}</textarea><br/>
             </div>
             <div class="panel-body">
                 {{#if editable }}

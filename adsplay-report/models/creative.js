@@ -335,8 +335,8 @@ var save_display_image = save_overlay = function(urlSave, crt, media, file, res)
 };
 
 var save_break_news = function(urlSave, crt, media, file, res){
-    if(media.indexOf(crt.media) == -1){
-        crt.media = media
+    if(!_.isUndefined(media) && !_.isEmpty(media) && _.isString(media)){
+        crt.media = media;
     }
     dataUtils.request_send_data(urlSave, crt, res);
 };
