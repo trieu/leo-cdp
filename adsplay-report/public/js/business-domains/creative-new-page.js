@@ -44,9 +44,10 @@ $(window).load(function() {
 		$('#ads-size').multipleSelect({
 			filter: true,
 			single: true,
+			multiple: false,
 			width: '100%',
 			onClose: function(view) {
-				console.log(view)
+				getPlacementWithSize();
 			}
 		});
 
@@ -57,24 +58,41 @@ $(window).load(function() {
 			width: '100%',
 			multipleWidth: '100%',
 			selectAllText: 'Select All',
-			selectAllDelimiter: ['', ''],
-			onOpen: function(){
-				var size = $('#ads-size').multipleSelect('getSelects')[0];
-				var sizeArr = size.split('x');
-				// var promise = getDataJson('/placement/api?width='+sizeArr[0]+'&height='+sizeArr[1], 'GET');
-				// promise.success(function (data) {
-				// 	console.log(data);
-				// 	$('#fptplay_placements').empty();
-				// 	$('#fptplay_placements').append('<option value='+data._id+'>'+data.name+'</option>');
-				// 	$('#fptplay_placements').multipleSelect('refresh');
-				// });
-			}
+			selectAllDelimiter: ['', '']
 		});
 
-		
+		//get first placement
+		getPlacementWithSize();
+
+		//set default
+
 	},200);
 
 });
+
+function getPlacementWithSize(){
+	setTimeout(function(){
+		// ajax placement api query with width & height
+		var size = $('#ads-size').multipleSelect('getSelects')[0];
+		var sizeArr = size.split('x');
+		var promise = getDataJson('/placement/api?width='+sizeArr[0]+'&height='+sizeArr[1], 'GET');
+		$('#fptplay_placements').empty();
+		promise.success(function (data) {
+			if(data != null){
+				for(var i in data){
+					$('#fptplay_placements').append('<option value='+data[i]._id+'>'+data[i].name+'</option>');
+				}
+			}
+			$('#fptplay_placements').multipleSelect('refresh');
+		});
+	},200);
+}
+
+function getSizeAds(){
+	var size = $('#ads-size').multipleSelect('getSelects')[0];
+	var sizeArr = size.split('x');
+	return {w: parseInt(sizeArr[0]), h: parseInt(sizeArr[1])};
+}
 
 function checkFormValidator(_this){
 	var result = false;
@@ -181,25 +199,43 @@ function buildData(_this, media){
 	// convert fields is array
 	var arrayFields = ['tgpfs', 'tgpms', 'tgcats', 'tggds', 'tglocs'];
 	for(var i in arrayFields){
-		
-		if(typeof (data[arrayFields[i]]) !== "object"){
-			var fields = data[arrayFields[i]];
+		console.log(arrayFields[i], typeof (data[arrayFields[i]]))
+		var fields = data[arrayFields[i]];
 
 			if(typeof (fields) == "undefined" || fields == null || fields == ''){
+				console.log(arrayFields[i])
 				data[arrayFields[i]] = [];
 			}
 			else{
-				var temp = parseInt(fields);
-				if(arrayFields[i] == 'tglocs'){
-					temp = fields;
+				
+				if(typeof (data[arrayFields[i]]) == "object"){
+					var tempArr = [];
+					for(var j in data[arrayFields[i]]){
+						var temp = parseInt(data[arrayFields[i]][j]);
+
+						if(arrayFields[i] == 'tglocs'){
+							temp = data[arrayFields[i]][j];
+						}
+
+						tempArr.push(temp);
+					}
+					console.log(tempArr)
+					data[arrayFields[i]] = tempArr;
 				}
-				data[arrayFields[i]] = [];
-				data[arrayFields[i]].push(temp);
+				else{
+					var temp = parseInt(fields);
+
+					if(arrayFields[i] == 'tglocs'){
+						temp = fields;
+					}
+
+					data[arrayFields[i]] = [];
+					data[arrayFields[i]].push(temp);
+				}
 			}
-		}
 	}
 	// convert fields is number
-	var numFields = ['cost', 'tBk', 'dBk', 'hBk', 'score', 'prcModel', 'fqcCap', 'status', 'w', 'h'];
+	var numFields = ['cost', 'tBk', 'dBk', 'hBk', 'score', 'prcModel', 'fqcCap', 'status'];
 	for(var i in numFields){
 		if (isNaN(data[numFields[i]]) || data[numFields[i]] == null || data[numFields[i]] == '') {
 			data[numFields[i]] = 0;
@@ -208,7 +244,19 @@ function buildData(_this, media){
 			data[numFields[i]] = parseInt(data[numFields[i]]);
 		}
 	}
-	console.log(data);
+
+	// size ads
+	if($('#ads-size').length != 0){
+		var size = getSizeAds();
+		data.w = size['w'];
+		data.h = size['h'];
+	}
+	else{
+		data.w = 0;
+		data.h = 0;
+	}
+
+	// form data
     var fData = new FormData();
     fData.append('creative', JSON.stringify(data));
     fData.append('media', media);

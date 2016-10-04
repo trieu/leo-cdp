@@ -97,13 +97,33 @@ router.post('/save', function (req, res, next){
 router.get('/api', function (req, res, next) {
     var width = req.query.width;
     var height = req.query.height;
-    Placement.findOne({ width: width, height: height }).populate({
-        path: 'publisher'//,match: { name: 'req.params.publisherName' }
-    })
-    .exec(function(err, doc){
-        if (err) { return next(err); }
-        res.json(doc);
-    });
+    var publisherName = req.query.publisherName;
+
+    if(typeof (publisherName) != 'undefined' && publisherName != ''){
+        //ex: placement/api?publisherName=
+        Placement.find().populate({
+            path: 'publisher',match: { name: publisherName }
+        })
+        .exec(function(err, doc){
+            if (err) { return next(err); }
+            res.json(doc);
+        });
+    }
+    else if(typeof (width) != 'undefined' && typeof (height) != 'undefined'){
+        //ex: placement/api?width=468&height=60
+        Placement.find({ width: width, height: height }).populate({
+            path: 'publisher'
+        })
+        .exec(function(err, doc){
+            if (err) { return next(err); }
+            res.json(doc);
+        });
+    }
+    else{
+        //return empty
+        res.json([]);
+    }
+    
 })
 
 module.exports = router;
