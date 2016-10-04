@@ -4,8 +4,8 @@
 
 module.exports = {
     base_domain : 'https://monitor.adsplay.net'
-    , api_domain :  'http://apidev.adsplay.net'
-    , ssl_api_domain :  'https://apidev.adsplay.net'
+    , api_domain :  'http://api.adsplay.net'
+    , ssl_api_domain :  'https://api.adsplay.net'
     , static_domain: 'https://monitor.adsplay.net'
     , ads_cdn_domain: 'https://ads-cdn.fptplay.net/static/ads/instream'
 
