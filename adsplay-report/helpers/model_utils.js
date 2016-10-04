@@ -2,7 +2,6 @@
  * Created by trieu on 5/27/15.
  */
 
-var siteConfigs = require('../configs/site');
 var constant_utils = require('./constant_utils');
 
 var adminIds = {1000: 1, 1001: 1};

@@ -6,6 +6,23 @@ var authorizationConfig = require('../configs/authorization-config');
 var fs = require('fs');
 
 module.exports = function (app) {
+    //secret
+    var svgCaptcha = require('svg-captcha');
+    var checkCaptcha = function(req, res, next){
+        var captcha = req.body.captcha.toLowerCase();
+        if( ! req.session.captcha){
+            console.log("Recaptcha is NULL !");
+            res.redirect('/login');
+        }
+        var sscaptcha = req.session.captcha.toLowerCase();
+        if(sscaptcha == captcha){
+            next();
+        }
+        else{
+            console.log("Recaptcha verify failed !");
+            res.redirect('/login');
+        }
+    };
 
     //passport
     var passport = require('passport');
@@ -61,9 +78,12 @@ module.exports = function (app) {
     });
 
     app.route('/login').get(function (req, res) {
+        var text = svgCaptcha.randomText();
+        req.session.captcha = text;
         var data = modelUtils.baseModel(req);
         data.dashboard_title = "User";
         data.loginMessage = req.flash('loginMessage');
+        data.captcha = svgCaptcha(text);
         res.render('common/login', data);
     })
 
@@ -72,7 +92,7 @@ module.exports = function (app) {
         res.end('PONG');
     })
 
-    app.route('/user/login').post(passport_auth.login_local);
+    app.route('/user/login').post(checkCaptcha, passport_auth.login_local);
 
     app.route('/user/logout').get(passport_auth.logout);
 

@@ -40,18 +40,24 @@ Upload.prototype.youtube = function (link, callback) {
     // Will be called when the download starts. 
     video.on('info', function(info) {
         
-        console.log('Download started size: ' + info.size);
-        console.log('Filename: ' + info._filename);
+        try{
+            console.log('Download started size: ' + info.size);
+            console.log('Filename: ' + info._filename);
 
-        var filename = stringUtils.removeUnicodeSpace(info._filename); //loại bỏ có dấu và khoảng trắng
-        output = dir + filename; //cấu hình lại output
-        
-        video.pipe(fs.createWriteStream(output));
-        
-        video.on('end', function(){
-            var obj = {filename: info._filename, url: output, size: info.size};
-            callback(obj);
-        });
+            var filename = stringUtils.removeUnicodeSpace(info._filename); //loại bỏ có dấu và khoảng trắng
+            output = dir + filename; //cấu hình lại output
+            
+            video.pipe(fs.createWriteStream(output));
+            
+            video.on('end', function(){
+                var obj = {filename: info._filename, url: output, size: info.size};
+                callback(obj);
+            });
+        }
+
+        catch (e) {
+            console.error(e);
+        }
     });
 
 };
@@ -83,10 +89,10 @@ Upload.prototype.ftp_video = function(localFile, mediaName, callback){
         pass: ftp_video.pass
     });
 
-    var quitFptConnection = function(){
+    var quitFtpConnection = function(){
         ftp.raw.quit(function(err, data) {
             if (err) return console.error(err);
-            console.log("Bye!");
+            console.log("upload CDN Success !");
         });
     };
 
@@ -108,7 +114,7 @@ Upload.prototype.ftp_video = function(localFile, mediaName, callback){
                             console.log("Upload Success !");
                             callback({url: filePath, filename: mediaName});
                         }
-                        quitFptConnection();
+                        quitFtpConnection();
                     });
                 });
             }

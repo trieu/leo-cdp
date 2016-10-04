@@ -14,6 +14,9 @@ $(window).load(function() {
 		}
 	});
 
+	//set default Running Date
+	$('#ads_running_date').val(moment().format('YYYY-MM-DDTHH:mm'));
+
 	//event input keyup youtube
 	$("#video_url").keyup(function() {
 		var value = $(this).val();
@@ -71,21 +74,23 @@ $(window).load(function() {
 });
 
 function getPlacementWithSize(){
-	setTimeout(function(){
-		// ajax placement api query with width & height
-		var size = $('#ads-size').multipleSelect('getSelects')[0];
-		var sizeArr = size.split('x');
-		var promise = getDataJson('/placement/api?width='+sizeArr[0]+'&height='+sizeArr[1], 'GET');
-		$('#fptplay_placements').empty();
-		promise.success(function (data) {
-			if(data != null){
-				for(var i in data){
-					$('#fptplay_placements').append('<option value='+data[i]._id+'>'+data[i].name+'</option>');
+	if($('#ads-size').length != 0){
+		setTimeout(function(){
+			// ajax placement api query with width & height
+			var size = $('#ads-size').multipleSelect('getSelects')[0];
+			var sizeArr = size.split('x');
+			var promise = getDataJson('/placement/api?width='+sizeArr[0]+'&height='+sizeArr[1], 'GET');
+			$('#fptplay_placements').empty();
+			promise.success(function (data) {
+				if(data != null){
+					for(var i in data){
+						$('#fptplay_placements').append('<option value='+data[i]._id+'>'+data[i].name+'</option>');
+					}
 				}
-			}
-			$('#fptplay_placements').multipleSelect('refresh');
-		});
-	},200);
+				$('#fptplay_placements').multipleSelect('refresh');
+			});
+		},200);
+	}
 }
 
 function getSizeAds(){

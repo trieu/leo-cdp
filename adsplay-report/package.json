@@ -10,8 +10,9 @@
     "url": "https://github.com/mc2ads/rfx/tree/master/rfx-report"
   },
   "scripts": {
-    "prestart": "gulp default",
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "preproduct": "gulp default",
+    "product": "nodemon app-product.js"
   },
   "keywords": [
     "reactive marketing"

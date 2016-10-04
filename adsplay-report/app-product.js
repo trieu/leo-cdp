@@ -11,7 +11,7 @@ var expressSession = require('express-session');
 var flash = require('connect-flash');
 //var multer = require('multer');
 
-global.siteConfigs = require('./configs/site.js');
+global.siteConfigs = require('./configs/site-product.js');
 var dbConfig = require('./configs/database');
 var mongoose = require('mongoose');
 mongoose.connect(dbConfig.url);
@@ -38,8 +38,8 @@ app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal']);
 //app.use(morgan('dev'));       // log every request to the console
 
 //config view engine
-//admin.hbs or admin-compress.hbs
-var layout = 'admin.hbs';
+//admin.hbs or admin-product.hbs
+var layout = 'admin-product.hbs';
 var hbsConfigs = {extname: 'hbs', defaultLayout: layout};
 app.engine('hbs', expressHbs(hbsConfigs));
 app.set('view engine', 'hbs');
@@ -73,4 +73,4 @@ else{
 //TODO
 app.listen(8181);
 //passport and router
-require('./controllers/index.js')(app);
+require('./controllers/index-product.js')(app);

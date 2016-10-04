@@ -24,13 +24,15 @@
                         <input type="password" class="form-control" placeholder="Enter password" name="password" id="password">
                     </div>
 
+                    {{#if captcha }}
                     <div class="form-group">
                         <div id="login-captcha">
                             {{{captcha}}}
                         </div>
                         <input type="text" class="form-control" placeholder="Enter captcha" name="captcha" id="captcha" autocomplete="off">
                     </div>
-
+                    {{/if}}
+                    
                     <div class="form-group">
                         <input type="submit" class="btn btn-info" value=" OK " id="submitLogin">
                     </div>

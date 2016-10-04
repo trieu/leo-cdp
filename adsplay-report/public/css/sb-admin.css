@@ -579,3 +579,15 @@ span.impress-text {
     left: 0;
     opacity: 1;
 }
+.alert {
+    padding: 5px 10px;
+    margin: 5px 0;
+}
+.label-important{
+    color: #D24D57;
+}
+.label-important:after{
+    content: "*";
+    display: inline-block;
+    margin-left: 5px;
+}

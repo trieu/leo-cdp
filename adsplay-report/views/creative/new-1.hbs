@@ -84,7 +84,7 @@
                 <input type="hidden" name="adType"></input>
                 <input type="hidden" name="media" id="media"></input>
                 <div class="form-group">
-                    <label>Name</label>
+                    <label class="label-important">Name</label>
                     <input type="text" class="form-control" name="name" placeholder="Enter Ad Name" required data-validate-length-range="10">
                 </div>
                 <div class="form-group">
@@ -116,7 +116,7 @@
                     <input type="number" class="form-control" name="cost" placeholder="Enter Base Cost" value="0" data-validate-minmax="0" required>
                 </div>
                 <div class="form-group">
-                    <label title="Impression or Complete-view">Total Booking</label>
+                    <label class="label-important" title="Impression or Complete-view">Total Booking</label>
                     <input type="number" class="form-control" name="tBk" placeholder="Enter Total Booking" value="0" data-validate-minmax="0" required>
                 </div>
                 <div class="form-group">
@@ -157,15 +157,15 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Running Date (format Month/Day/Year)</label>
+                    <label class="label-important">Running Date (format Month/Day/Year)</label>
                     <input type="datetime-local" class="form-control" id="ads_running_date" name="runDate" placeholder="Enter Running Date" required>
                 </div>
                 <div class="form-group">
-                    <label>Expired Date (format Month/Day/Year)</label>
+                    <label class="label-important">Expired Date (format Month/Day/Year)</label>
                     <input type="datetime-local" class="form-control" id="ads_expired_date" name="expDate" placeholder="Enter Expired Date" required>
                 </div>
                 <div class="form-group">
-                    <label>Pricing Model</label>
+                    <label class="label-important">Pricing Model</label>
                     <div class="radio">
                     <label>
                         <input type="radio" name="prcModel" value="1">  CPV (Cost per Complete-View)
@@ -232,7 +232,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Device Type</label>
+                    <label class="label-important">Device Type</label>
                     <div class="checkbox">
                     <label>
                         <input type="checkbox" name="tgpfs"  value="1"> Web (PC,Laptop)
@@ -255,7 +255,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label>Ad Placement</label>
+                    <label class="label-important">Ad Placement</label>
 
                     <div class="form-group-inline">
                         <label>FptPlay Ad Placements</label>
@@ -306,14 +306,6 @@
                         <label>FShare Ad Placements</label>
                         <select type="select" class="select-multi" id="fshare_placements" name="tgpms" data-placeholder="Select Placements" multiple="multiple">
                             <option value="120">FSHARE_TVC_PLACEMENT</option>
-                            </select>
-
-                    </div>
-
-                    <div class="form-group-inline">
-                        <label>NhacSo Ad Placements</label>
-                        <select type="select" class="select-multi" id="nhacso_placements" name="tgpms" data-placeholder="Select Placements" multiple="multiple">
-                            <option value="103">NHACSO_TVC_PLACEMENT</option>
                             </select>
 
                     </div>

@@ -48,7 +48,7 @@
                 <input type="hidden" name="adType"></input>
                 <input type="hidden" name="media" id="media"></input>
                 <div class="form-group">
-                    <label>Name</label>
+                    <label class="label-important">Name</label>
                     <input type="text" class="form-control" name="name" placeholder="Enter Ad Name" required data-validate-length-range="10">
                 </div>
                 <div class="form-group">
@@ -56,9 +56,9 @@
                     <textarea class="form-control" rows="3" name="desc" placeholder="Enter Ad Description"></textarea>
                 </div>
                 <div class="form-group">
-                    <label>Ads Size</label>
+                    <label class="label-important">Ads Size</label>
                     <select id="ads-size" class="select-multi" data-placeholder="Choose size image" required>
-                        <option> Choose size image </option>
+                        <option value='0x0'> Choose size image </option>
                         {{#each adsSize}}
                             <option value='{{size.w}}x{{size.h}}'>{{name}}: {{size.w}} x {{size.h}}</option>
                         {{/each}}
@@ -85,30 +85,13 @@
                     <input type="number" class="form-control" name="cost" placeholder="Enter Base Cost" value="0" data-validate-minmax="0" required>
                 </div>
                 <div class="form-group">
-                    <label title="Impression or Complete-view">Total Booking</label>
+                    <label class="label-important" title="Impression or Complete-view">Total Booking</label>
                     <input type="number" class="form-control" name="tBk" placeholder="Enter Total Booking" value="0" data-validate-minmax="0" required>
                 </div>
                 <div class="form-group">
                     <label title="Impression or Complete-view">Daily Booking</label>
                     <input type="number" class="form-control" name="dBk" placeholder="Enter Ad Name" value="0" data-validate-minmax="0" required>
                 </div>
-                <div class="form-group">
-                    <label>Duration</label>
-                    <select class="form-control" id="ads_duration" name="dura">
-                        <option value="00:00:05"> TVC 5 seconds</option>
-                        <option value="00:00:15"> TVC 15 seconds</option>
-                        <option value="00:00:30"> TVC 30 seconds</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Skip time</label>
-                    <select class="form-control" id="ads_skip" name="skip">
-                        <option value="00:00:05">5 seconds</option>
-                        <option value="00:00:15">15 seconds</option>
-                        <option value="00:00:30">30 seconds</option>
-                    </select>
-                </div>
-                
             </div>
         </div>
         
@@ -118,23 +101,15 @@
             </div>
             <div class="panel-body">
                 <div class="form-group">
-                    <label>Start time</label>
-                    <select class="form-control" id="ads_startime" name="staTime"  >
-                        <option value="00:00:00">Pre-roll</option>
-                        <option value="00:05:00">Mid-roll after 5 minutes</option>
-                        <option value="00:10:00">Mid-roll after 10 minutes</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Running Date (format Month/Day/Year)</label>
+                    <label class="label-important">Running Date (format Month/Day/Year)</label>
                     <input type="datetime-local" class="form-control" id="ads_running_date" name="runDate" placeholder="Enter Running Date" required>
                 </div>
                 <div class="form-group">
-                    <label>Expired Date (format Month/Day/Year)</label>
+                    <label class="label-important">Expired Date (format Month/Day/Year)</label>
                     <input type="datetime-local" class="form-control" id="ads_expired_date" name="expDate" placeholder="Enter Expired Date" required>
                 </div>
                 <div class="form-group">
-                    <label>Pricing Model</label>
+                    <label class="label-important">Pricing Model</label>
                     <div class="radio">
                     <label>
                         <input type="radio" name="prcModel" value="2">  CPM (Cost per Mile)
@@ -196,15 +171,15 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Device Type</label>
+                    <label class="label-important">Device Type</label>
                     <div class="checkbox">
                     <label>
-                        <input type="checkbox" name="tgpfs"  value="1"> Web (PC,Laptop)
+                        <input type="checkbox" name="tgpfs"  value="1" disabled checked> Web (PC,Laptop)
                     </label>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label>Ad Placement</label>
+                    <label class="label-important">Ad Placement</label>
 
                     <div class="form-group-inline">
                         <label>FptPlay Ad Placements</label>
@@ -264,7 +239,7 @@ $('#form_creative').submit(function(e){
     var url = '/creative/save/6'; //number is adType
     var media = $('#img_file')[0].files[0] || $("#media").val();
     var data = buildData($(this), media); //formdata
-    //sendForm(url,data,60000); //send ajax (url, data, timeout)
+    sendForm(url,data,60000); //send ajax (url, data, timeout)
 })
 
 {{#if crt}}

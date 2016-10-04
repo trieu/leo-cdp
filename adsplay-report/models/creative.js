@@ -12,7 +12,6 @@ var constantUtils = require('../helpers/constant_utils');
 var stringUtils = require('../helpers/string_utils');
 var upload = require('../helpers/upload_utils');
 var convert = require('../helpers/convert_utils');
-var siteConfigs = require('../configs/site');
 var request = require('request');
 var crypto = require('crypto');
 var _ = require('underscore');
@@ -105,10 +104,12 @@ exports.detail = function (url, data, callback) {
                 var expiredDate = moment(crt.expDateL);
                 crt.expDate = expiredDate.format('YYYY-MM-DD, hh:mm a');
             }
-            crt.status = constantUtils.getStatus(crt.status);
             if (crt.totalRevenue == 0 || data.roles != 'admin') {
                 crt.totalRevenue = "-";
             }
+            crt.status = constantUtils.getStatus(crt.status);
+            crt.nameType = constantUtils.getAdType(crt.adType);
+
             data.crt = crt;
             data.crtId = crt.id;
     		data.type = "daily";
