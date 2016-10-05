@@ -9,7 +9,6 @@ var bodyParser = require('body-parser');    // pull information from HTML POST (
 var cookieParser = require('cookie-parser');// pull information from HTML cookies (express4)
 var expressSession = require('express-session');
 var flash = require('connect-flash');
-//var multer = require('multer');
 
 global.siteConfigs = require('./configs/site.js');
 var dbConfig = require('./configs/database');
@@ -21,7 +20,7 @@ app.use(require('express-promise')());
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-//app.use(multer({ dest: './uploads/'}));
+
 app.use(cookieParser());
 app.use(expressSession({
 	secret: 'adsplay123',
@@ -32,10 +31,8 @@ app.use(expressSession({
 	}
 }));
 app.use(flash());
-
 app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal']);
-
-//app.use(morgan('dev'));       // log every request to the console
+app.use(morgan('dev'));  // log every request to the console
 
 //config view engine
 //admin.hbs or admin-compress.hbs

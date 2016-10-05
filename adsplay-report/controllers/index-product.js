@@ -6,7 +6,8 @@ var authorizationConfig = require('../configs/authorization-config');
 var fs = require('fs');
 
 module.exports = function (app) {
-    //secret
+
+    // ----------- captcha
     var svgCaptcha = require('svg-captcha');
     var checkCaptcha = function(req, res, next){
         var captcha = req.body.captcha.toLowerCase();
@@ -23,6 +24,7 @@ module.exports = function (app) {
             res.redirect('/login');
         }
     };
+    // ----------- captcha
 
     //passport
     var passport = require('passport');
@@ -78,11 +80,14 @@ module.exports = function (app) {
     });
 
     app.route('/login').get(function (req, res) {
-        var text = svgCaptcha.randomText();
-        req.session.captcha = text;
+
         var data = modelUtils.baseModel(req);
         data.dashboard_title = "User";
         data.loginMessage = req.flash('loginMessage');
+
+        // enable captcha in session
+        var text = svgCaptcha.randomText();
+        req.session.captcha = text;
         data.captcha = svgCaptcha(text);
         res.render('common/login', data);
     })

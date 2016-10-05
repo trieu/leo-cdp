@@ -4,12 +4,11 @@ var app = express();
 var expressHbs = require('express-handlebars');
 var favicon = require('serve-favicon');
 
-var morgan = require('morgan');             // log requests to the console (express4)
 var bodyParser = require('body-parser');    // pull information from HTML POST (express4)
 var cookieParser = require('cookie-parser');// pull information from HTML cookies (express4)
 var expressSession = require('express-session');
 var flash = require('connect-flash');
-//var multer = require('multer');
+
 
 global.siteConfigs = require('./configs/site-product.js');
 var dbConfig = require('./configs/database');
@@ -31,11 +30,10 @@ app.use(expressSession({
 		path: '/', httpOnly: true, maxAge: 24*60*60*1000
 	}
 }));
-app.use(flash());
 
+app.use(flash());
 app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal']);
 
-//app.use(morgan('dev'));       // log every request to the console
 
 //config view engine
 //admin.hbs or admin-product.hbs
@@ -43,8 +41,7 @@ var layout = 'admin-product.hbs';
 var hbsConfigs = {extname: 'hbs', defaultLayout: layout};
 app.engine('hbs', expressHbs(hbsConfigs));
 app.set('view engine', 'hbs');
-//TODO enable cache for production only
-//app.enable('view cache');
+app.enable('view cache');// enable cache for production only
 
 
 //++++++++create folder
