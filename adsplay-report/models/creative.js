@@ -223,6 +223,9 @@ exports.save = function (option, res, callback) {
     if (crt.adType == 4) {
         save_break_news(option.url, crt, media, file, res);
     }
+    if (crt.adType == 5) {
+        save_display_html(option.url, crt, media, file, res);
+    }
     if (crt.adType == 6) {
         save_display_image(option.url, crt, media, file, res);
     }
@@ -316,24 +319,10 @@ var save_tvc = function(urlSave, crt, media, file, res){
         
     }
     else{
-        console.log('3 only data');
+        console.log('only data');
         dataUtils.request_send_data(urlSave, crt, res);
     }
 }
-
-var save_display_image = save_overlay = function(urlSave, crt, media, file, res){
-    if(!_.isEmpty(file)){
-        console.log('1 upload file');
-        upload.image(file, function (obj) {
-            crt.media = obj.url;
-            dataUtils.request_send_data(urlSave, crt, res);
-        });
-    }
-    else{
-        console.log('3 only data');
-        dataUtils.request_send_data(urlSave, crt, res);
-    }
-};
 
 var save_break_news = function(urlSave, crt, media, file, res){
     if(!_.isUndefined(media) && !_.isEmpty(media) && _.isString(media)){
@@ -341,6 +330,35 @@ var save_break_news = function(urlSave, crt, media, file, res){
     }
     dataUtils.request_send_data(urlSave, crt, res);
 };
+
+var save_display_image = save_overlay = function(urlSave, crt, media, file, res){
+    if(!_.isEmpty(file)){
+        console.log('upload file');
+        upload.image(file, function (obj) {
+            crt.media = obj.url;
+            dataUtils.request_send_data(urlSave, crt, res);
+        });
+    }
+    else{
+        console.log('only data');
+        dataUtils.request_send_data(urlSave, crt, res);
+    }
+};
+
+var save_display_html = function(urlSave, crt, media, file, res){
+    if(!_.isEmpty(file)){
+        console.log('upload file');
+        upload.unzip(file, function (obj){
+            crt.media = obj.url;
+            dataUtils.request_send_data(urlSave, crt, res);
+        });
+    }
+    else{
+        console.log('only data');
+        dataUtils.request_send_data(urlSave, crt, res);
+    }
+};
+
 
 
 

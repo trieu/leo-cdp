@@ -153,16 +153,35 @@ function checkVideo(){
 }
 
 function checkImage(){
-	if (checkValueEmpty($('#media')) && checkValueEmpty($('#img_file'))) {
+	if (checkValueEmpty($('#media')) && checkValueEmpty($('#zip_file'))) {
 		modal_alert('please ! check file image.');
 		errorCss($('#frame_upload'), $('#frame_upload_body .alert'), false);
 		return false;
 	}
 	else{
-		if(!checkValueEmpty($('#img_file'))){
-			if (!$('#img_file')[0].files[0].name.match(/\.(jpg|jpeg|png|gif)$/)){
+		if(!checkValueEmpty($('#zip_file'))){
+			if (!$('#zip_file')[0].files[0].name.match(/\.(jpg|jpeg|png|gif)$/)){
 				errorCss($('#frame_upload'), $('#frame_upload_body .alert'), false);
 				modal_alert('file image error !');
+				scrollTopPage();
+				return false;
+			}
+		}
+		return true;
+	}
+}
+
+function checkZipFile(){
+	if (checkValueEmpty($('#media')) && checkValueEmpty($('#zip_file'))) {
+		modal_alert('please ! check file.');
+		errorCss($('#frame_upload'), $('#frame_upload_body .alert'), false);
+		return false;
+	}
+	else{
+		if(!checkValueEmpty($('#zip_file'))){
+			if (!$('#zip_file')[0].files[0].name.match(/\.(zip)$/)){
+				errorCss($('#frame_upload'), $('#frame_upload_body .alert'), false);
+				modal_alert('zip file error !');
 				scrollTopPage();
 				return false;
 			}
@@ -204,11 +223,9 @@ function buildData(_this, media){
 	// convert fields is array
 	var arrayFields = ['tgpfs', 'tgpms', 'tgcats', 'tggds', 'tglocs'];
 	for(var i in arrayFields){
-		console.log(arrayFields[i], typeof (data[arrayFields[i]]))
 		var fields = data[arrayFields[i]];
 
 			if(typeof (fields) == "undefined" || fields == null || fields == ''){
-				console.log(arrayFields[i])
 				data[arrayFields[i]] = [];
 			}
 			else{
@@ -224,7 +241,6 @@ function buildData(_this, media){
 
 						tempArr.push(temp);
 					}
-					console.log(tempArr)
 					data[arrayFields[i]] = tempArr;
 				}
 				else{
@@ -261,6 +277,8 @@ function buildData(_this, media){
 		data.h = 0;
 	}
 
+	console.log('---send data---');
+	console.log(data);
 	// form data
     var fData = new FormData();
     fData.append('creative', JSON.stringify(data));

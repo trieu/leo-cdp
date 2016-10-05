@@ -472,6 +472,11 @@ span.impress-text {
 }
 
 /*new creative*/
+.iframeHtml{
+    min-height: 250px;
+    border: 0;
+    overflow: hidden;
+}
 .iframeVideo{
     position: relative;
     background-image: url('http://engineering.adsplay.net/wp-content/uploads/2015/08/cropped-logo.png');
