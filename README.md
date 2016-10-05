@@ -3,9 +3,8 @@
 * Tools for Ad Unit Management
 
 ## Usage
-`npm start`
-*
-`npm run product` 
+* npm start
+* npm run product
 
 ## Change Log
 * 1.5 npm start is dev code
