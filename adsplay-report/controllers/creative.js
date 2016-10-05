@@ -25,9 +25,16 @@ router.get('/api/list', function (req, res) {
 	var url = data.site.api_domain + '/api/creative/summary?begin='+data.begin+'&end='+data.end;
 
 	Sync(function(){
-		// result from callback
-		var result = creativeModel.list.sync(null, url, data);
-		res.json(result);
+		try{
+			// result from callback
+			var result = creativeModel.list.sync(null, url, data);
+			//console.log(result);
+			res.json(result);
+		}
+
+		catch (e) {
+			console.error(e);
+		}
 	})
 });
 

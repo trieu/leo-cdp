@@ -4,8 +4,9 @@
 var fs = require('fs');
 
 var statuses = {0: 'Invalid', 1: 'Pending', 2: 'Running', 3: 'Finished', 4: 'Expired'};
-var adTypes = {0: 'Invalid', 1: 'Instream video', 2: 'Expandable overlay banner',
-    3: 'Overlay banner', 4: 'Break news banner', 5: 'Html5 display ad', 6: 'Image display ad'};
+var adTypes = {0: 'Invalid', 1: 'Instream Video', 2: 'Expandable Overlay Banner', 3: 'Overlay Banner',
+ 4: 'Break News Banner', 5: 'Html5 Display AD', 6: 'Image Display AD', 7: 'Video Inpage AD',
+ 8: 'Sponsored Story AD', 9: 'Bidding AD', 10: "Streaming Video AD", 11: 'Master Head AD', 12: 'Infeed AD'};
 
 var placements = {
     0: 'Demo',

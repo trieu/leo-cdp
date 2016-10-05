@@ -21,7 +21,6 @@ exports.list = function (url, data, callback) {
 	Sync(function(){
 		try{
 			var result = dataUtils.request.sync(null, url);
-		      console.log(result)
             var filteredList = [];
             result.forEach(function (crt) {
                 crt.name = crt.name || '-';
@@ -209,24 +208,25 @@ exports.save = function (option, res, callback) {
     crt.runDate = moment(crt.runDate).format('YYYY-MM-DD-HH-mm');
     crt.expiredDate = moment(crt.expDate).format('YYYY-MM-DD-HH-mm');
     
+    //remove field
     delete crt["expDate"];
     if(crt.id == ""){
         delete crt["id"];
     }
 
-    if (crt.adType == 1) {
+    if (crt.adType == 1 || crt.adType == 11) {
         save_tvc(option.url, crt, media, file, res);
     }
-    if (crt.adType == 3) {
+    else if (crt.adType == 3) {
         save_overlay(option.url, crt, media, file, res);
     }
-    if (crt.adType == 4) {
+    else if (crt.adType == 4) {
         save_break_news(option.url, crt, media, file, res);
     }
-    if (crt.adType == 5) {
+    else if (crt.adType == 5) {
         save_display_html(option.url, crt, media, file, res);
     }
-    if (crt.adType == 6) {
+    else if (crt.adType == 6) {
         save_display_image(option.url, crt, media, file, res);
     }
 
