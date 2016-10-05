@@ -76,6 +76,10 @@ $(window).load(function() {
 function getPlacementWithSize(){
 	if($('#ads-size').length != 0){
 		setTimeout(function(){
+			//set edit placements
+			if($('#fptplay_placements').length != 0){
+				$('#fptplay_placements').multipleSelect('setSelects', creative.tgpms)
+			}
 			// ajax placement api query with width & height
 			var size = $('#ads-size').multipleSelect('getSelects')[0];
 			var sizeArr = size.split('x');
@@ -153,14 +157,14 @@ function checkVideo(){
 }
 
 function checkImage(){
-	if (checkValueEmpty($('#media')) && checkValueEmpty($('#zip_file'))) {
+	if (checkValueEmpty($('#media')) && checkValueEmpty($('#img_file'))) {
 		modal_alert('please ! check file image.');
 		errorCss($('#frame_upload'), $('#frame_upload_body .alert'), false);
 		return false;
 	}
 	else{
-		if(!checkValueEmpty($('#zip_file'))){
-			if (!$('#zip_file')[0].files[0].name.match(/\.(jpg|jpeg|png|gif)$/)){
+		if(!checkValueEmpty($('#img_file'))){
+			if (!$('#img_file')[0].files[0].name.match(/\.(jpg|jpeg|png|gif)$/)){
 				errorCss($('#frame_upload'), $('#frame_upload_body .alert'), false);
 				modal_alert('file image error !');
 				scrollTopPage();
