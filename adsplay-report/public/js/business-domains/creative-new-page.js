@@ -78,7 +78,11 @@ function getPlacementWithSize(){
 		setTimeout(function(){
 			//set edit placements
 			if($('#fptplay_placements').length != 0){
-				$('#fptplay_placements').multipleSelect('setSelects', creative.tgpms)
+                if(window.creative){
+                    //FIXME
+                    $('#fptplay_placements').multipleSelect('setSelects', window.creative.tgpms);
+                }
+
 			}
 			// ajax placement api query with width & height
 			var size = $('#ads-size').multipleSelect('getSelects')[0];
