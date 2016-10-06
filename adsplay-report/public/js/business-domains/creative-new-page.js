@@ -77,12 +77,10 @@ function getPlacementWithSize(){
 	if($('#ads-size').length != 0){
 		setTimeout(function(){
 			//set edit placements
-			if($('#fptplay_placements').length != 0){
-                if(window.creative){
-                    //FIXME
-                    $('#fptplay_placements').multipleSelect('setSelects', window.creative.tgpms);
-                }
-
+			if(typeof (creativeData) != 'undefined' && $('#fptplay_placements').length != 0){
+                //FIXME
+                //console.log( creativeData.tgpms)
+				$('#fptplay_placements').multipleSelect('setSelects', creativeData.tgpms);
 			}
 			// ajax placement api query with width & height
 			var size = $('#ads-size').multipleSelect('getSelects')[0];
