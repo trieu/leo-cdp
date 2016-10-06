@@ -32,8 +32,7 @@ $(window).load(function() {
 	});
 
 	//using plugin select
-	setTimeout(function(){
-		var eleSelect = "#ads_target_location,#paytv_placements,#fshare_placements,#nhacso_placements,#fptplay_categories,#paytv_categories";
+	var eleSelect = "#ads_target_location,#paytv_placements,#fshare_placements,#nhacso_placements,#fptplay_categories,#paytv_categories";
 		$(eleSelect)
 		.multipleSelect({
 			filter: true,
@@ -69,33 +68,30 @@ $(window).load(function() {
 
 		//set default
 
-	},200);
-
 });
 
 function getPlacementWithSize(){
 	if($('#ads-size').length != 0){
-		setTimeout(function(){
+		
+		// ajax placement api query with width & height
+		var size = $('#ads-size').multipleSelect('getSelects')[0];
+		var sizeArr = size.split('x');
+		var promise = getDataJson('/placement/api?width='+sizeArr[0]+'&height='+sizeArr[1], 'GET');
+		$('#fptplay_placements').empty();
+		promise.success(function (data) {
+			if(data != null){
+				for(var i in data){
+					$('#fptplay_placements').append('<option value='+data[i]._id+'>'+data[i].name+'</option>');
+				}
+			}
+			$('#fptplay_placements').multipleSelect('refresh');
+
 			//set edit placements
 			if(typeof (creativeData) != 'undefined' && $('#fptplay_placements').length != 0){
-                //FIXME
-                //console.log( creativeData.tgpms)
+				//FIXME
 				$('#fptplay_placements').multipleSelect('setSelects', creativeData.tgpms);
 			}
-			// ajax placement api query with width & height
-			var size = $('#ads-size').multipleSelect('getSelects')[0];
-			var sizeArr = size.split('x');
-			var promise = getDataJson('/placement/api?width='+sizeArr[0]+'&height='+sizeArr[1], 'GET');
-			$('#fptplay_placements').empty();
-			promise.success(function (data) {
-				if(data != null){
-					for(var i in data){
-						$('#fptplay_placements').append('<option value='+data[i]._id+'>'+data[i].name+'</option>');
-					}
-				}
-				$('#fptplay_placements').multipleSelect('refresh');
-			});
-		},200);
+		});
 	}
 }
 

@@ -472,6 +472,10 @@ span.impress-text {
 }
 
 /*new creative*/
+.iframeWrap{
+    max-width: 100%;
+    overflow: hidden;
+}
 .iframeHtml{
     min-height: 250px;
     border: 0;
