@@ -66,7 +66,8 @@ $(window).load(function() {
 		//get first placement
 		getPlacementWithSize();
 
-		//set default
+		//set copy creative
+		copyCreative();
 
 });
 
@@ -330,4 +331,17 @@ function sendForm(url, data, timeout){
 			window.location = location.protocol+'//'+location.host+'/creative/list/all';
 		}
 	});
+}
+
+function copyCreative(){
+	var URL = window.location.href;
+	if(URL.indexOf('?copy=true') != -1){
+		//set value empty
+		$('[name="id"]').val("");
+		var name = $('[name="name"]').val();
+		var datename = moment().format('MMMM Do YYYY, HH:mm');
+		$('[name="name"]').val(name+" - copied at "+ datename);
+
+		$('h3:first>span').text("Copy New Creative");
+	}
 }

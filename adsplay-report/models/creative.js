@@ -332,7 +332,15 @@ var save_break_news = function(urlSave, crt, media, file, res){
 };
 
 var save_display_image = save_overlay = function(urlSave, crt, media, file, res){
+
     if(!_.isEmpty(file)){
+        //rename image file
+        var nameStr = file.name.split('.');
+        var type = nameStr[nameStr.length-1];
+        var seedStr = stringUtils.removeUnicodeSpace(file.name) + (new Date()).getTime();
+        var hash = crypto.createHash('md5').update(seedStr).digest('hex');
+        file.rename = hash +'.'+ type;
+
         console.log('upload file');
         upload.image(file, function (obj) {
             crt.media = obj.url;

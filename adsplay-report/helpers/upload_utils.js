@@ -126,7 +126,7 @@ Upload.prototype.image = function(file, callback){
 
     var dir = storage('overlay');
     var dirSplit = dir.split("/"); 
-    var output = dir + file.name;
+    var output = dir + file.rename || file.name;
     var url = output.split("public/");
 
     fs.copy(file.path, output, function(err) {  

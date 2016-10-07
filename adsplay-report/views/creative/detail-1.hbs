@@ -22,11 +22,12 @@
             </div>
             <div class="panel-body">
                 {{#if editable }}
-                    <i class="fa fa-pencil-square-o fa-2" aria-hidden="true">
-                        <a style="font-weight: bolder;font-size: 18px"  href="{{buildUrl editUrl}}">
-                            Edit Ad Information
-                        </a>
-                    </i>
+                    <a href="{{buildUrl editUrl}}" class="btn btn-primary btn-lg">
+                        <i class="fa fa-pencil-square-o fa-2" aria-hidden="true"></i> Edit Ad
+                    </a>
+                    <a href="{{buildUrl editUrl}}?copy=true" class="btn btn-default btn-lg">
+                        <i class="fa fa-files-o" aria-hidden="true"></i> Copy Ad
+                    </a>
                 {{/if}}
             </div>
         </div>
