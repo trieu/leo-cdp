@@ -32,35 +32,11 @@ $(window).load(function() {
 	});
 
 	//using plugin select
-	var eleSelect = "#ads_target_location,#paytv_placements,#fshare_placements,#nhacso_placements,#fptplay_categories,#paytv_categories";
-		$(eleSelect)
-		.multipleSelect({
-			filter: true,
-			multiple: true,
-			width: '100%',
-			multipleWidth: '100%',
-			selectAllText: 'Select All',
-			selectAllDelimiter: ['', ''],
-		});
+	var eleSelect = "#ads_target_location,#paytv_placements,#fshare_placements,#nhacso_placements,#fptplay_categories,#paytv_categories,#fptplay_placements";
+		$(eleSelect).chosen({width: "100%", no_results_text: "Oops, nothing found!"});
 
-		$('#ads-size').multipleSelect({
-			filter: true,
-			single: true,
-			multiple: false,
-			width: '100%',
-			onClose: function(view) {
-				getPlacementWithSize();
-			}
-		});
-
-		$('#fptplay_placements')
-		.multipleSelect({
-			filter: true,
-			multiple: true,
-			width: '100%',
-			multipleWidth: '100%',
-			selectAllText: 'Select All',
-			selectAllDelimiter: ['', '']
+		$('#ads-size').chosen({width: "100%", no_results_text: "Oops, nothing found!"}).change(function(){
+			getPlacementWithSize();
 		});
 
 		//get first placement
@@ -75,7 +51,7 @@ function getPlacementWithSize(){
 	if($('#ads-size').length != 0){
 		
 		// ajax placement api query with width & height
-		var size = $('#ads-size').multipleSelect('getSelects')[0];
+		var size = $('#ads-size').val();
 		var sizeArr = size.split('x');
 		var promise = getDataJson('/placement/api?width='+sizeArr[0]+'&height='+sizeArr[1], 'GET');
 		$('#fptplay_placements').empty();
@@ -84,20 +60,20 @@ function getPlacementWithSize(){
 				for(var i in data){
 					$('#fptplay_placements').append('<option value='+data[i]._id+'>'+data[i].name+'</option>');
 				}
+				$('#fptplay_placements').trigger('chosen:updated');
 			}
-			$('#fptplay_placements').multipleSelect('refresh');
 
 			//set edit placements
 			if(typeof (creativeData) != 'undefined' && $('#fptplay_placements').length != 0){
 				//FIXME
-				$('#fptplay_placements').multipleSelect('setSelects', creativeData.tgpms);
+				$('#fptplay_placements').val(creativeData.tgpms).trigger('chosen:updated');
 			}
 		});
 	}
 }
 
 function getSizeAds(){
-	var size = $('#ads-size').multipleSelect('getSelects')[0];
+	var size = $('#ads-size').val();
 	var sizeArr = size.split('x');
 	return {w: parseInt(sizeArr[0]), h: parseInt(sizeArr[1])};
 }

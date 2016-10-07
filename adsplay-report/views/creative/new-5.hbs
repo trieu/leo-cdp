@@ -58,7 +58,6 @@
                 <div class="form-group">
                     <label class="label-important">Ads Size</label>
                     <select id="ads-size" class="select-multi" data-placeholder="Choose size image" required>
-                        <option value='0x0'> Choose size image </option>
                         {{#each adsSize}}
                             <option value='{{size.w}}x{{size.h}}'>{{name}}: {{size.w}} x {{size.h}}</option>
                         {{/each}}
@@ -188,7 +187,6 @@
                     <div class="form-group-inline">
                         <label>FptPlay Ad Placements</label>
                         <select type="select" class="select-multi" id="fptplay_placements" name="tgpms" data-placeholder="Select Placements" multiple="multiple" required>
-                            <option value="401">OVERLAY_WEB</option>
                         </select>
 
                         <label>FptPlay Categories</label>

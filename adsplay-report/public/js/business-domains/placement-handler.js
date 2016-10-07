@@ -16,7 +16,7 @@ $(window).load(function() {
 				});
 			}
 		});
-	},200);
+	},100);
 
 	function select_render(){
 		setTimeout(function(){
@@ -131,6 +131,8 @@ $(window).load(function() {
 				$('.loader').remove();
 
 				plt_edit_render(result);
+
+				$('#ads-publisher').val(result.publisher._id);
 			}
 		});
 
