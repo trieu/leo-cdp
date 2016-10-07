@@ -94,6 +94,10 @@ var size_display = [
     {
         "name": "Netboard",
         "size": {"w": 580, "h": 400}
+    },
+    {
+        "name": "StartTalk-Home",
+        "size": {"w": 380, "h": 313}
     }
 ];
 
