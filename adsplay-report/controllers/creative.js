@@ -115,6 +115,7 @@ router.get('/edit/:id', function (req, res) {
 
 			//page paytv edit
 			if (result.crt && result.crt.adType && result.crt.name && result.crt.tgpfs == 6){
+				data.locationCodes = constantUtils.getLocationCodes().Area;
 				res.render('creative/new-video-paytv', result);
 			}
 			else if (result.crt && result.crt.adType && result.crt.name) {

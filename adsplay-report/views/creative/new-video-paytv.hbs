@@ -123,7 +123,7 @@
                     <label>Duration</label>
                     <select class="form-control" id="ads_duration" name="dura">
                         <option value="00:00:05"> TVC 5 seconds</option>
-                        <option value="00:00:15"> TVC 15 seconds</option>
+                        <option value="00:00:15" selected> TVC 15 seconds</option>
                         <option value="00:00:30"> TVC 30 seconds</option>
                     </select>
                 </div>
@@ -132,7 +132,7 @@
                     <select class="form-control" id="ads_skip" name="skip">
                         <option value="00:00:00">0 seconds</option>
                         <option value="00:00:05">5 seconds</option>
-                        <option value="00:00:15">15 seconds</option>
+                        <option value="00:00:15" selected>15 seconds</option>
                         <option value="00:00:30">30 seconds</option>
                     </select>
                 </div>
@@ -259,9 +259,17 @@
                     <label>Targeting Location</label>
                     <select type="select" class="select-multi" id="ads_target_location" name="tglocs" data-placeholder="Show Ads in these locations" multiple="multiple">
                         {{#each locationCodes}}
-                            <option value="{{ConChar}}" class="optLocation">{{LocName}}</option>
+                            <optgroup label="{{AreaName}}">
+                                {{#each ListArea}}
+                                    <option value="{{ConChar}}" class="optLocation">{{LocName}}</option>
+                                {{/each}}
+                            </optgroup>
                         {{/each}}
                     </select>
+
+                    <label>
+                        <input type="checkbox" id="checkAllLocs">All Location</input>
+                    </label>
                 </div>
             </div>
         </div>
