@@ -191,6 +191,20 @@ router.post('/save/:adType', function (req, res) {
 	});
 });
 
+//--- update
+router.post('/:id/update', function (req, res) {
+    var data = modelUtils.baseModel(req);
+    var id = req.params.id || -1;
+    var url = data.site.api_domain + '/api/creatives/' + id;
+
+    if (data.editable) {
+    	var body = req.body;
+        creativeModel.update(url, body, res);
+    } else {
+        res.json({message: 'error'});
+    }
+});
+
 // <-<-<-<-< end crud
 
 

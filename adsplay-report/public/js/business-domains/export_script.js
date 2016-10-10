@@ -1,3 +1,4 @@
+//convert datetime YYYY-MM-DD-HH
 function dateTimeValid(a, b){
 	var time_begin = new Date($('#ads_date_run').text()).getTime();
 	var time_end = new Date($('#ads_date_expired').text()).getTime();
@@ -15,15 +16,22 @@ function dateTimeValid(a, b){
 	return {begin: temp_begin, end: temp_end};
 	
 }
+
+//onclick call drawHourlyStatsData
 function drawHourlyStatsChange(){
 	var getDateTime = dateTimeValid($("#export_begin").val(),$("#export_end").val());
-	
-	drawHourlyStatsData(getDateTime.begin, getDateTime.end);
+	var url = urlDrawHourly;
+	drawHourlyStatsData(url, getDateTime.begin, getDateTime.end);
 }
+
 $(window).load(function() {
 
+	// export data form url with begin & end & id 
+	// data-export='{"url": "export/excel/Impression-CompletedView", "begin": "{{begin}}", "end": "{{end}}", "id": {{crtId}} }'
+
 	var _this = $('.export_form');
-	var data = JSON.parse(_this.attr('data-export'));
+	var data = JSON.parse(_this.attr('data-export')); //get config
+
 	
 	//set default date
 	var begin = moment(data.begin).format('YYYY-MM-DD');
@@ -54,6 +62,7 @@ $(window).load(function() {
 	}
 	exportRender(begin, end);
 
+	//event click export
 	$(document).on("click", "#export_btn", function(){
 
 		var getDateTime = dateTimeValid($("#export_begin").val(),$("#export_end").val());

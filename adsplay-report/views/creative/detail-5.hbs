@@ -213,7 +213,7 @@ var totalBooking = parseInt({{crt.tBk}});
 
 var urlSummary = "{{site.ssl_api_domain}}/api/creative/summary/{{crtId}}";
 var urlLineChart = "{{site.ssl_api_domain}}/api/creative/stats/{{crtId}}?type={{type}}&begin={{begin}}&end={{end}}";
-var urlDrawHourly = "{{site.ssl_api_domain}}/api/creative/stats/{{crtId}}?type=hourly&begin=" + previousDay + "&end=" + currentDay;
+var urlDrawHourly = "{{site.ssl_api_domain}}/api/creative/stats/{{crtId}}?type=hourly";
 
 loadSummaryData(urlSummary);
 drawHourlyStatsData(urlDrawHourly, previousDay, currentDay);

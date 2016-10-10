@@ -113,17 +113,19 @@ exports.detail = function (url, data, callback) {
             data.crtId = crt.id;
     		data.type = "daily";
 
-            var end = moment();
-			if (crt.expDateL > 0) {
-				var expMoment = moment(crt.expDateL);
-				if (end.isAfter(expMoment)) {
-					end = expMoment.add(1, 'days');
-				}
-			}
-			var begin = moment(crt.runDateL).subtract(1, 'days');
+            if (!data.begin || !data.end) {
+                var end = moment();
+                if (crt.expDateL > 0) {
+                    var expMoment = moment(crt.expDateL);
+                    if (end.isAfter(expMoment)) {
+                        end = expMoment.add(1, 'days');
+                    }
+                }
+                var begin = moment(crt.runDateL).subtract(1, 'days');
 
-			data.begin = begin.format("YYYY-MM-DD") || moment().subtract(1, 'days').format("YYYY-MM-DD");
-			data.end = end.format("YYYY-MM-DD") || moment().format("YYYY-MM-DD");
+                data.begin = begin.format("YYYY-MM-DD");
+                data.end = end.format("YYYY-MM-DD");
+            }
 
 			data.editUrl = '/creative/edit/' + crt.id; //link edit
 			data.platforms = constantUtils.platforms; // get platform data
@@ -232,6 +234,16 @@ exports.save = function (option, res, callback) {
 
 };
 
+exports.update = function (url, body, res, callback) {
+    
+    if(!stringUtils.isEmpty(body)){
+        request.patch(url).form(JSON.stringify(body));
+        res.json({message: 'success'});
+    }
+    else{
+        res.json({message: 'Error !!! request data'});
+    }
+};
 
 exports.metrics = function (url, data, callback) {
 

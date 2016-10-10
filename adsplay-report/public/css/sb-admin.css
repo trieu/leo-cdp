@@ -380,7 +380,9 @@ ul.alert-dropdown {
 table.dataTable thead th, table.dataTable thead td{
     padding: 10px 15px 10px 10px !important;
 }
-
+table.dataTable td{
+    overflow: hidden;
+}
 #crt_pf_details .dataTables_wrapper{
     margin-top: 10px;
 }
@@ -483,7 +485,7 @@ span.impress-text {
 }
 .iframeVideo{
     position: relative;
-    background-image: url('http://engineering.adsplay.net/wp-content/uploads/2015/08/cropped-logo.png');
+    background-image: url('../img/adsplay.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;

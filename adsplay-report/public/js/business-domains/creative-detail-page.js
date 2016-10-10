@@ -169,8 +169,8 @@ var drawHourlyStatsData = function (url, previousDay, currentDay) {
     var chartHourly;
     // Maintain an Instance of the SVG selection with its data
     var chartDataHourly;
-
-    d3.json(url, function (error, data) {
+    var _url = url + "&begin=" + previousDay + "&end=" + currentDay;
+    d3.json(_url, function (error, data) {
         data.sort(function (a, b) {
             return a.t - b.t;
         });
