@@ -41,7 +41,8 @@ var layout = 'admin-product.hbs';
 var hbsConfigs = {extname: 'hbs', defaultLayout: layout};
 app.engine('hbs', expressHbs(hbsConfigs));
 app.set('view engine', 'hbs');
-app.enable('view cache');// enable cache for production only
+
+//app.enable('view cache');// enable cache for production only
 
 
 //++++++++create folder

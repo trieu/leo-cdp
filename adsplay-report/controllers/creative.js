@@ -74,7 +74,7 @@ router.get('/new', function (req, res) {
 router.get('/new/:typeId', function (req, res) {
 	var data = modelUtils.baseModel(req);
 
-	data.dashboard_title = "New creative " + constantUtils.getAdType(req.params.typeId);
+	data.dashboard_title = "New Ad Unit: " + constantUtils.getAdType(req.params.typeId);
 	data.fptplayCategories = ArrayUtils.concatUnique(constantUtils.getFemaleKeywords().concat(constantUtils.getMaleKeywords()));
 	data.locationCodes = constantUtils.getLocationCodes().Location;
 	data.adsSize = constantUtils.size_display;
@@ -84,7 +84,7 @@ router.get('/new/:typeId', function (req, res) {
 
 	console.log(constantUtils.getAdType(req.params.typeId));
 	if(req.params.typeId == "video-paytv"){
-		data.dashboard_title = "New creative video payTV";
+		data.dashboard_title = "New Video Ad Unit - PayTV";
 		data.locationCodes = constantUtils.getLocationCodes().Area;
 		res.render('creative/new-video-paytv', data);
 	}
@@ -92,7 +92,7 @@ router.get('/new/:typeId', function (req, res) {
 		res.render(page, data);
 	}
 	else{
-		data.dashboard_title = "New Creative";
+		data.dashboard_title = "New Ad Unit";
 		res.render('creative/new', data);
 	}
 });
@@ -102,7 +102,7 @@ router.get('/new/:typeId', function (req, res) {
 router.get('/edit/:id', function (req, res) {
 	var data = modelUtils.baseModel(req);
 	var url = data.site.api_domain + '/api/creatives/' + req.params.id;
-	data.dashboard_title = "Edit Creative";
+	data.dashboard_title = "Edit Ad Unit";
 	data.fptplayCategories = ArrayUtils.concatUnique(constantUtils.getFemaleKeywords().concat(constantUtils.getMaleKeywords()));
 	data.locationCodes = constantUtils.getLocationCodes().Location;
 	data.adsSize = constantUtils.size_display;

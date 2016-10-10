@@ -11,7 +11,7 @@ var express = require('express')
     , modelUtils = require('../helpers/model_utils');
 
 router.get('/details', function (req, res) {
-    //https://monitor.adsplay.net/user-profile/details
+    // {{base_domain}}/user-profile/details
     //console.log(req.query)
    // console.log(req.cookies)
    // console.log(req.ip)
