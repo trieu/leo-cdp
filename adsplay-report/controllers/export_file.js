@@ -13,6 +13,9 @@ router.get('/excel/statistics', function(req, res, next){
 
 	request(url, function (error, response, body) {
 		var data = JSON.parse(body);
+		if (data.length == 0) {
+			res.send('No data');
+		}
 		var data_rename = [];
 		var path = 'public/export/excel-'+ moment().format('YYYY-MM-DD-hh-mm-ss');
 
@@ -75,6 +78,9 @@ router.get('/excel/Impression-CompletedView', function(req, res, next){
 	
 	request(url, function (error, response, body) {
 		var data = JSON.parse(body);
+		if (data.length == 0) {
+			res.send('No data');
+		}
 		var data_rename = [];
 		var path = 'public/export/excel-'+ moment().format('YYYY-MM-DD-hh-mm-ss');
 
@@ -130,7 +136,6 @@ router.get('/excel/creative/stats', function(req, res, next){
 
 	request(url, function (error, response, body) {
 		var rawData = JSON.parse(body);
-		console.log(rawData)
 		if (rawData.length == 0) {
 			res.send('No data');
 		}

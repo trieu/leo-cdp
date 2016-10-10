@@ -3,15 +3,15 @@ function dateTimeValid(a, b){
 	var time_begin = new Date($('#ads_date_run').text()).getTime();
 	var time_end = new Date($('#ads_date_expired').text()).getTime();
 
-	var int_begin = new Date(a).getTime();
-	var int_end = new Date(b).getTime();
+	var int_begin = moment(a).valueOf();
+	var int_end = moment(b).valueOf();
 
 	var formatDatetime = function(val){
 		return moment(val).format('YYYY-MM-DD-HH');
 	};
 
-	var temp_begin = (int_begin < time_begin) ? formatDatetime(time_begin) : formatDatetime(int_begin);
-	var temp_end = (int_end > time_end) ? formatDatetime(time_end) : formatDatetime(int_end);
+	var temp_begin = (time_begin <= int_begin) ? formatDatetime(int_begin) : formatDatetime(time_begin);
+	var temp_end = (time_end >= int_end) ? formatDatetime(int_end) : formatDatetime(time_end);
 
 	return {begin: temp_begin, end: temp_end};
 	
