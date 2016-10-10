@@ -1,0 +1,211 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h3 class="page-header">
+            Ad Live Event Management
+        </h3>
+    </div>
+</div>
+
+{{#if editable }}
+<p>
+    <a href="/event/create" class="btn btn-primary" id="new-creative">
+        <i class="fa fa-industry"></i> New Ad Live Event
+    </a>
+</p>
+{{/if}}
+
+<div class="row">
+	<div class='col-lg-3'>
+        <div class="form-group">
+            <select class="form-control" id="filter-status" >
+            	<option value="" selected="selected">All</option>
+                {{#each statuses}}
+                    <option value="{{this}}">{{this}}</option>
+                {{/each}}
+            </select>
+        </div>
+    </div>
+    <div class='col-lg-3'>
+        <div class="form-group">
+            <div class='input-group date' id='begin'>
+                <input type='text' class="form-control" autocomplete="off"/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class='col-lg-3'>
+        <div class="form-group">
+            <div class='input-group date' id='end'>
+                <input type='text' class="form-control" autocomplete="off"/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class='col-lg-3'>
+        <p>
+            <a href="javascript:" class="btn btn-primary" id="ChangeDate">
+                <i class="fa fa-fw fa-check"></i> OK
+            </a>
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="table-responsive" id="event-list">
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+
+        Handlebars.registerHelper('formatCurrency', function(value) { return value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"); });
+
+        //select date
+        var end = new moment().add(30, 'days').format("YYYY-MM-DD");
+        var begin = moment().subtract(30, 'days').format("YYYY-MM-DD");
+        render_list(begin, end);
+
+        var formatTime = function (x) {
+            return new moment(x).format("YYYY-MM-DD");
+        };
+
+        $('#begin').datetimepicker({
+            format: 'YYYY-MM-DD',
+            defaultDate: begin
+        });
+        $('#end').datetimepicker({
+            useCurrent: false, //Important! See issue #1075
+            format: 'YYYY-MM-DD',
+            defaultDate: end
+        });
+        $("#begin").on("dp.change", function (e) {
+            $('#end').data("DateTimePicker").minDate(e.date);
+        });
+        $("#end").on("dp.change", function (e) {
+            $('#begin').data("DateTimePicker").maxDate(e.date);
+        });
+
+        $(document).on("click", "#ChangeDate", function(){
+            var begin = $('#begin').data("DateTimePicker").date().format('YYYY-MM-DD');
+            var end = $('#end').data("DateTimePicker").date().format('YYYY-MM-DD');
+
+            render_list(begin, end);
+        });
+
+        function icon_status(){
+            $('.td-status').each(function(){
+                var txt = $(this).attr('data-status');
+                if(txt == 'Running'){
+                    $(this).html('<i class="fa fa-line-chart color-blue" title="Running"></i>');
+                }
+                else if(txt == 'Finished'){
+                    $(this).html('<i class="fa fa-check-square color-green" title="Finished"></i>');
+                }
+                else if(txt == 'Pending'){
+                    $(this).html('<i class="fa fa-pause" title="Pending"></i>');
+                }
+                else if(txt == 'Invalid'){
+                    $(this).html('<i class="fa fa-exclamation-triangle color-red" title="Invalid"></i>');
+                }
+                else if(txt == 'Expired'){
+                    $(this).html('<i class="fa fa-check-square color-orange" title="Expired"></i>');
+                }
+            });
+        }
+
+        function render_action(){
+            $('.td-status').each(function(){
+                if($(this).attr("data-status") == "Running"){
+                    $(this).closest('tr').find('.td-action').html('<i class="fa fa-toggle-on color-green"  title="Turn On/Off Ads"></i>');
+                }
+                else if($(this).attr("data-status") == "Pending"){
+                    $(this).closest('tr').find('.td-action').html('<i class="fa fa-toggle-off color-green"  title="Turn On/Off Ads"></i>');
+                }
+            });
+        }
+
+        function list_html (data){
+            var dataList = {event: data};
+
+            var table = '\
+                <table class="table table-hover table-striped" id="tbl-event"> \
+                	<thead> \
+		                <tr> \
+		                    <th>ID</th> \
+		                    <th>Name</th> \
+		                    <th>View</th> \
+		                    <th>Status</th> \
+		                    <th>Scheduled Time</th> \
+		                    <th>Actions</th> \
+		                </tr> \
+                    </thead> \
+                    <tbody> \
+                    </tbody> \
+                </table> \
+            ';
+            $("#event-list").empty();
+            $("#event-list").append(table)
+            
+            if (!data || data.length == 0) {
+                $('#tbl-event').find('tbody').empty().append('<tr><td colspan="8" style="text-align: center">No record found!</td></tr>');
+            } else {
+                var source = $("#tpl-crt-list").html();
+                var template = Handlebars.compile(source);
+                var htmlTable = template(dataList);
+
+                $('#tbl-event').find('tbody').empty().append(htmlTable);
+            }
+        }
+
+        function render_list(begin, end){
+            $.ajax({
+                url: '/event/find?begin='+begin+'&end='+end,
+                type: "GET",
+                contentType: "application/json",
+                dataType:'json',
+                beforeSend: function(){
+                    $('#wrapper').append('<div class="loader"></div>');
+                },
+                success: function(data){
+                    $('.loader').remove();
+                    list_html(data);
+                    icon_status();
+                    var table = $("#tbl-event").DataTable({
+                        "pageLength": 25,
+                        "order": [[0,'desc']]
+                    });
+
+                    $("#filter-status").change(function(){
+			        	table.search($(this).val()).draw();
+			        });
+
+                    render_action();
+                    $('[title]').tooltip();
+                }
+            });
+        }
+
+    });
+
+</script>
+
+<script id="tpl-crt-list" type="text/x-handlebars">
+    \{{#each event}}
+        <tr >
+            <td>\{{id}}</td>
+            <td><a href="/event/find/\{{id}}">\{{name}}</a></td>
+            <td>\{{view}}</td>
+            <td data-status="\{{status}}" data-order="\{{status}}"  data-search="\{{status}}">\{{status}}</td>
+            <td class="td-max-400">\{{begin}} &#10145; \{{end}}</td>
+            <td>
+            	<a title="Edit" href="/event/edit/\{{id}}"><i class="fa fa-pencil"></i></a>
+            </td>
+        </tr>
+    \{{/each}}
+</script>

@@ -1,0 +1,360 @@
+{
+    "Location": [
+        {
+            "LocName": "VN - Mien Nam",
+            "ConChar": "vn-south"
+        },
+        {
+            "LocName": "VN - Mien Bac",
+            "ConChar": "vn-north"
+        }
+    ],
+    "Area": [
+        {
+            "AreaId": "1",
+            "AreaName": "Vùng 1 Hà Nội",
+            "ListArea": [
+                {
+                    "LocID": "4",
+                    "LocName": "Ha Noi",
+                    "ConChar": "HN"
+                }]
+        },
+        {
+            "AreaId": "2",
+            "AreaName": "Vùng 2 trung du và miền núi phía Bắc",
+            "ListArea": [
+                {
+                    "LocID": "20",
+                    "LocName": "Lao Cai",
+                    "ConChar": "LC"
+
+                },
+                {
+                    "LocID": "22",
+                    "LocName": "Son La",
+                    "ConChar": "SL"
+
+                },
+                {
+                    "LocID": "25",
+                    "LocName": "Lang Son",
+                    "ConChar": "LS"
+                },
+                {
+                    "LocID": "26",
+                    "LocName": "Cao Bang",
+                    "ConChar": "CB"
+                },
+                {
+                    "LocID": "27",
+                    "LocName": "Tuyen Quang",
+                    "ConChar": "TQ"
+                },
+                {
+                    "LocID": "29",
+                    "LocName": "Yen Bai",
+                    "ConChar": "YB"
+                },
+                {
+                    "LocID": "33",
+                    "LocName": "Quang Ninh",
+                    "ConChar": "QN"
+                },
+                {
+                    "LocID": "210",
+                    "LocName": "Phu Tho",
+                    "ConChar": "PT"
+                },
+                {
+                    "LocID": "211",
+                    "LocName": "Vinh Phuc",
+                    "ConChar": "VP"
+                },
+                {
+                    "LocID": "218",
+                    "LocName": "Hoa Binh",
+                    "ConChar": "HB"
+                },
+                {
+                    "LocID": "230",
+                    "LocName": "Dien Bien",
+                    "ConChar": "DB"
+                },
+                {
+                    "LocID": "240",
+                    "LocName": "Bac Giang",
+                    "ConChar": "BG"
+                },
+                {
+                    "LocID": "241",
+                    "LocName": "Bac Ninh",
+                    "ConChar": "BN"
+                },
+                {
+                    "LocID": "280",
+                    "LocName": "Thai Nguyen",
+                    "ConChar": "TN"
+                }]
+        },
+        {
+            "AreaId": "3",
+            "AreaName": "Vùng 3 Bắc Trung Bộ",
+            "ListArea": [
+                {
+                    "LocID": "30",
+                    "LocName": "Ninh Binh",
+                    "ConChar": "NB"
+                },
+                {
+                    "LocID": "31",
+                    "LocName": "Hai Phong",
+                    "ConChar": "HP"
+                },
+
+                {
+                    "LocID": "36",
+                    "LocName": "Thai Binh",
+                    "ConChar": "TB"
+                },
+                {
+                    "LocID": "37",
+                    "LocName": "Thanh Hoa",
+                    "ConChar": "TH"
+                },
+                {
+                    "LocID": "38",
+                    "LocName": "Nghe An",
+                    "ConChar": "NA"
+                },
+                {
+                    "LocID": "39",
+                    "LocName": "Ha Tinh",
+                    "ConChar": "HT"
+                },
+                {
+                    "LocID": "320",
+                    "LocName": "Hai Duong",
+                    "ConChar": "HD"
+                },
+                {
+                    "LocID": "321",
+                    "LocName": "Hung Yen",
+                    "ConChar": "HY"
+                },
+                {
+                    "LocID": "350",
+                    "LocName": "Nam Dinh",
+                    "ConChar": "ND"
+                },
+                {
+                    "LocID": "351",
+                    "LocName": "Ha Nam",
+                    "ConChar": "HM"
+                }]
+        },
+        {
+            "AreaId": "4",
+            "AreaName": "Vùng 4 Duyên hải Nam Trung Bộ",
+            "ListArea": [
+                {
+                    "LocID": "52",
+                    "LocName": "Quang Binh",
+                    "ConChar": "QB"
+                },
+                {
+                    "LocID": "53",
+                    "LocName": "Quang Tri",
+                    "ConChar": "QT"
+                },
+                {
+                    "LocID": "54",
+                    "LocName": "Hue",
+                    "ConChar": "HU"
+                },
+                {
+                    "LocID": "55",
+                    "LocName": "Quang Ngai",
+                    "ConChar": "QI"
+                },
+                {
+                    "LocID": "56",
+                    "LocName": "Binh Dinh",
+                    "ConChar": "BI"
+                },
+                {
+                    "LocID": "57",
+                    "LocName": "Phu Yen",
+                    "ConChar": "PY"
+                },
+                {
+                    "LocID": "58",
+                    "LocName": "Nha Trang",
+                    "ConChar": "NT"
+                },
+                {
+                    "LocID": "59",
+                    "LocName": "Gia Lai",
+                    "ConChar": "GL"
+                },
+                {
+                    "LocID": "60",
+                    "LocName": "Kom Tum",
+                    "ConChar": "KT"
+                },
+                {
+                    "LocID": "510",
+                    "LocName": "Quang Nam",
+                    "ConChar": "QA"
+                },
+                {
+                    "LocID": "511",
+                    "LocName": "Da Nang",
+                    "ConChar": "DA"
+                },
+                {
+                    "LocID": "500",
+                    "LocName": "Dac Lac",
+                    "ConChar": "DL"
+                }]
+        },
+        {
+            "AreaId": "5",
+            "AreaName": "Vùng 5 Hồ Chí Minh",
+            "ListArea": [
+                {
+                    "LocID": "8",
+                    "LocName": "Ho Chi Minh",
+                    "ConChar": "SG"
+                }]
+        },
+        {
+            "AreaId": "6",
+            "AreaName": "Vùng 6 Đông Nam Bộ",
+            "ListArea": [
+                {
+                    "LocID": "61",
+                    "LocName": "Dong Nai",
+                    "ConChar": "DN"
+                },
+                {
+                    "LocID": "62",
+                    "LocName": "Binh Thuan",
+                    "ConChar": "BT"
+                },
+                {
+                    "LocID": "63",
+                    "LocName": "Lam Dong",
+                    "ConChar": "LD"
+                },
+                {
+                    "LocID": "64",
+                    "LocName": "Ba Ria Vung Tau",
+                    "ConChar": "VT"
+                },
+                {
+                    "LocID": "65",
+                    "LocName": "Binh Duong",
+                    "ConChar": "BD"
+                },
+                {
+                    "LocID": "66",
+                    "LocName": "Tay Ninh",
+                    "ConChar": "TI"
+                },
+                {
+                    "LocID": "651",
+                    "LocName": "Binh Phuoc",
+                    "ConChar": "BP"
+                },
+                {
+                    "LocID": "68",
+                    "LocName": "Ninh Thuan",
+                    "ConChar": "NN"
+                }]
+        },
+        {
+            "AreaId": "7",
+            "AreaName": "Vùng 7 Đồng bằng sông Cửu Long",
+            "ListArea": [
+                {
+                    "LocID": "67",
+                    "LocName": "Dong Thap",
+                    "ConChar": "DT"
+                }
+                ,
+                {
+                    "LocID": "70",
+                    "LocName": "Vinh Long",
+                    "ConChar": "VL"
+                },
+                {
+                    "LocID": "71",
+                    "LocName": "Can Tho",
+                    "ConChar": "CT"
+                },
+                {
+                    "LocID": "72",
+                    "LocName": "Long An",
+                    "ConChar": "LA"
+                },
+                {
+                    "LocID": "73",
+                    "LocName": "Tien Giang",
+                    "ConChar": "TG"
+                },
+                {
+                    "LocID": "74",
+                    "LocName": "Tra Vinh",
+                    "ConChar": "TV"
+                },
+                {
+                    "LocID": "75",
+                    "LocName": "Ben Tre",
+                    "ConChar": "BE"
+                },
+                {
+                    "LocID": "76",
+                    "LocName": "An Giang",
+                    "ConChar": "AG"
+                },
+                {
+                    "LocID": "77",
+                    "LocName": "Kien Giang",
+                    "ConChar": "KG"
+                },
+                {
+                    "LocID": "79",
+                    "LocName": "Soc Trang",
+                    "ConChar": "ST"
+                },
+                {
+                    "LocID": "711",
+                    "LocName": "Hau Giang",
+                    "ConChar": "HG"
+                },
+                {
+                    "LocID": "780",
+                    "LocName": "Ca Mau",
+                    "ConChar": "CM"
+                },
+                {
+                    "LocID": "781",
+                    "LocName": "Bac Lieu",
+                    "ConChar": "BL"
+                }]
+        },
+        {
+            "AreaId": "8",
+            "AreaName": "Vùng mới",
+            "ListArea": [
+                {
+                    "LocID": "281",
+                    "LocName": "Bac Can",
+                    "ConChar": "BC"
+                }
+                
+            ]
+        }
+    ]
+}

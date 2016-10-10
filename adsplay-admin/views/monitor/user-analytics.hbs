@@ -1,0 +1,218 @@
+<div class="row">
+    <ul class="nav nav-pills">
+        <li role="presentation" >
+            <a href="/device/monitor"><i class="fa fa-fw fa-bar-chart-o"></i> Device Analytics</a>
+        </li>
+        <li role="presentation" >
+            <a href="/content/monitor"><i class="fa fa-fw fa-bar-chart-o"></i> Content Analytics</a>
+        </li>
+        <li role="presentation" >
+            <a href="/monitor/pageview"><i class="fa fa-fw fa-bar-chart-o"></i> Real-time PageView</a>
+        </li>
+        <li role="presentation" >
+            <a href="/monitor/geolocation"><i class="fa fa-fw fa-bar-chart-o"></i> Real-time GeoLocation</a>
+        </li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i><strong>Daily Active User</strong>
+                    from {{begin}} to {{end}} </h3>
+            </div>
+            <div class="panel-body">
+                <div id="chart_user_count_from_pv" class="graph" style='height:210px;'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i><strong>Daily Audience Reach for Advertising</strong> from {{begin}} to {{end}}</h3>
+            </div>
+            <div class="panel-body">
+                <div id="chart_user_count_from_imp_view_click" class="graph" style='height:210px;'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> <strong>Total Unique User by Ad
+                    Placement</strong></h3>
+            </div>
+            <div class="panel-body">
+                <div class='col-lg-12'>
+                    <div class='col-lg-6'>
+                        <div class='input-group date' id='dtpBegin'>
+                            <input type='text' class="form-control" autocomplete="off"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                        </div>
+                    </div>
+                    <div class='col-lg-2'>
+                        <input type="button" class="form-control" value=" OK " onclick="updateUserByAdPlacement()">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <h3 class="text-center">PlayView</h3>
+                    <div id='chart_donut_pv' class="donut_chart">
+                        <svg></svg>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <h3 class="text-center">Impression</h3>
+                    <div id='chart_donut_impression' class="donut_chart">
+                        <svg></svg>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <h3 class="text-center">Completed-View</h3>
+                    <div id='chart_donut_trv' class="donut_chart">
+                        <svg></svg>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <h3 class="text-center">Click</h3>
+                    <div id='chart_donut_click' class="donut_chart">
+                        <svg></svg>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+</div>
+<script>
+    //format time for Morris Chart
+    var formatTime = function (x) {
+        return new moment(x).format("YYYY-MM-DD");
+    };
+
+    var drawPieChart = function(element, data)
+    {
+        console.log(data);
+        if (data && data.length > 0) {
+            nv.addGraph(function () {
+                var chart = nv.models.pieChart()
+                            .x(function (d) {
+                                return d.label
+                            })
+                            .y(function (d) {
+                                return d.value
+                            })
+                            .showLabels(true)     //Display pie labels
+                            .labelThreshold(.05)  //Configure the minimum slice size for labels to show up
+                            .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
+                            .donut(true)          //Turn on Donut mode. Makes pie chart look tasty!
+                            .donutRatio(0.35)     //Configure how big you want the donut hole size to be.
+                        ;
+
+            d3.select(element)
+                        .datum(data)
+                        .transition().duration(350)
+                        .call(chart);
+                return chart;
+            });
+
+        }
+    };
+
+    d3.json("{{site.ssl_api_domain}}/api/count/user?begin={{begin}}&end={{end}}", function (error, data) {
+        data.forEach(function (countObj) {
+            countObj.period = formatTime(countObj.t);
+        });
+        Morris.Bar({
+            element: 'chart_user_count_from_imp_view_click',
+            data: data,
+            xkey: 'period',
+            ykeys: ['imp', 'trv', 'c'],
+            labels: ['User from Impression', 'User from Completed View', 'User from Click'],
+            hideHover: 'auto',
+            resize: true,
+            dateFormat: formatTime
+        });
+        Morris.Area({
+            element: 'chart_user_count_from_pv',
+            data: data,
+            xkey: 't',
+            ykeys: ['pv'],
+            labels: ['User from Playview'],
+            pointSize: 1,
+            goalStrokeWidth: 1,
+            fillOpacity: 0.3,
+            hideHover: 'auto',
+            resize: true,
+            dateFormat: formatTime
+        });
+    });
+
+
+    function loadDataAndDrawUserByAdPlacementGraph(dateStr) {
+        d3.json("{{site.ssl_api_domain}}/api/count/user?filter=placement&end=" + dateStr, function (error, data) {
+            var placements = {{{json placements}}};
+            console.log(placements);
+            console.log(data);
+
+            var playviews = [];
+            for (var prop in data.pv) {
+                if (data.pv[prop] > 0) {
+                    var label = placements[prop] ? placements[prop] : prop;
+                    playviews.push({label: label, value: data.pv[prop]});
+                }
+            }
+
+
+            drawPieChart("#chart_donut_pv svg", playviews);
+
+            var impressions = [];
+            for (var prop in data.i) {
+                if (data.i[prop] > 0) {
+                    var label = placements[prop] ? placements[prop] : prop;
+                    impressions.push({label: label, value: data.i[prop]});
+                }
+            }
+            drawPieChart("#chart_donut_impression svg", impressions);
+
+            var trvs = [];
+            for (var prop in data.trv) {
+                if (data.trv[prop] > 0) {
+                    var label = placements[prop] ? placements[prop] : prop;
+                    trvs.push({label: label, value: data.trv[prop]});
+                }
+            }
+            drawPieChart("#chart_donut_trv svg", trvs);
+
+            var clicks = [];
+            for (var prop in data.c) {
+                if (data.c[prop] > 0) {
+                    var label = placements[prop] ? placements[prop] : prop;
+                    clicks.push({label: label, value: data.c[prop]});
+                }
+            }
+            drawPieChart("#chart_donut_click svg", clicks);
+        });
+    }
+
+
+    var defaultDateStr = moment().subtract(1, 'days').format('YYYY-MM-DD');
+    loadDataAndDrawUserByAdPlacementGraph(defaultDateStr);
+    $('#dtpBegin').datetimepicker({format: 'YYYY-MM-DD', defaultDate: defaultDateStr});
+
+    function updateUserByAdPlacement() {
+        var beginDate = $('#dtpBegin').data("DateTimePicker").date().format('YYYY-MM-DD');
+        loadDataAndDrawUserByAdPlacementGraph(beginDate);
+    }
+</script>
