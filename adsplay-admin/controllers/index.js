@@ -33,8 +33,7 @@ module.exports = function (app) {
 
     app.route('/').get(function (req, res) {
         var data = modelUtils.baseModel(req);
-        data.graphName = req.query.graphName != null ? req.query.graphName : 'ImpressionVsClick';
-        res.render('monitor/summary', data);
+        res.render('monitor/home', data);
     });
 
     app.route('/display-banner/*').get(function (req, res) {

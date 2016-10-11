@@ -101,8 +101,8 @@ var size_display = [
     }
     ,
     {
-        "name": "Responsive leaderboard H133",
-        "size": {"w": 0, "h": 133}
+        "name": "Responsive size",
+        "size": {"w": 0, "h": 0}
     }
 ];
 
