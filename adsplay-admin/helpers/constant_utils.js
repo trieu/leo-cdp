@@ -99,6 +99,11 @@ var size_display = [
         "name": "StartTalk-Home",
         "size": {"w": 380, "h": 313}
     }
+    ,
+    {
+        "name": "Responsive leaderboard H133",
+        "size": {"w": 0, "h": 133}
+    }
 ];
 
 exports.getStatus = function (id) {
