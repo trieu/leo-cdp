@@ -14,9 +14,6 @@ $(window).load(function() {
 		}
 	});
 
-	//set default Running Date
-	$('#ads_running_date').val(moment().format('YYYY-MM-DDTHH:mm'));
-
 	//set location
 	if(typeof (creativeData) != 'undefined' && $('#ads_target_location').length != 0){
 		//FIXME
@@ -65,26 +62,12 @@ $(window).load(function() {
 		}
 	});
 
-	//using plugin select
-	var eleSelect = "#ads_target_location,#paytv_placements,#fshare_placements,#nhacso_placements,#fptplay_categories,#paytv_categories,#fptplay_placements";
-		$(eleSelect).chosen({width: "100%", no_results_text: "Oops, nothing found!"});
-
-		$('#ads-size').chosen({width: "100%", no_results_text: "Oops, nothing found!"}).change(function(){
-			getPlacementWithSize();
-		});
-
-		//get first placement
-		getPlacementWithSize();
-
-		//set copy creative
-		copyCreative();
-
 	//using affix boostrap
 	$("#frame_upload").affix({offset: {top: $(".navbar").outerHeight(true)} });
 	$('#frame_upload').on('affixed.bs.affix', function(){
 		var w = $("#frame_upload").parent().width();
 		$("#frame_upload").css({top: '80px', width: w});
-    });
+	});
 
 	$(window).resize(function() {
 		if (!isMobile() && $(this).width() > 845) {
@@ -95,8 +78,33 @@ $(window).load(function() {
 			$("#frame_upload").css({position: "static", width: "100%"});
 		}
 	});
+
+	//using plugin select
+	var eleSelect = "#ads_target_location,#paytv_placements,#fshare_placements,#nhacso_placements,#fptplay_categories,#paytv_categories,#fptplay_placements";
+	$(eleSelect).chosen({width: "100%", no_results_text: "Oops, nothing found!"});
+
+	$('#ads-size').chosen({width: "100%", no_results_text: "Oops, nothing found!"}).change(function(){
+		getPlacementWithSize();
+	});
+
+	//get first placement
+	getPlacementWithSize();
+
+	//set copy creative
+	copyCreative();
+
+	//set default new creative
+	setDefautNewCreative();
     
 });
+
+function setDefautNewCreative(){
+	//if creativeDate = undefined => new ads
+	if(typeof (creativeData) == 'undefined'){
+		//set default Running Date
+		$('#ads_running_date').val(moment().format('YYYY-MM-DDTHH:mm'));
+	}
+}
 
 function isMobile(){
 	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
