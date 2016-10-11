@@ -10,6 +10,12 @@ var express = require('express')
     , Summary = require('../models/summary')
     , moment = require('moment');
 
+router.get('/', function (req, res) {
+    var data = modelUtils.baseModel(req);
+    data.graphName = req.query.graphName != null ? req.query.graphName : 'ImpressionVsClick';
+    res.render('monitor/summary', data);
+});
+
 router.get('/geolocation', function (req, res) {
     var data = modelUtils.baseModel(req);
     data.dashboard_title = "Geo-Location";
