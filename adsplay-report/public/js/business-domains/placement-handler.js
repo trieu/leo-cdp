@@ -79,17 +79,10 @@ $(window).load(function() {
 	});
 	//end setup validatr.js
 
+	//event modal
 	$('#modal-placement').on('hide.bs.modal', function (e) {
 		$("#plt_container .editing").removeClass("editing");
 		$('.row-size-display').hide();
-	});
-
-	$('#new-placement').click(function(){
-		$('#modal-placement').modal('show');
-		//empty form
-		plt_form.find('input[type="text"], textarea, select').val("");
-
-		select_render();
 	});
 
 	$(document).on('click','.action-btn', function(){
@@ -112,6 +105,16 @@ $(window).load(function() {
 		document.execCommand('copy');
 	});
 
+	// CREATE
+	$('#new-placement').click(function(){
+		$('#modal-placement').modal('show');
+		//empty form
+		plt_form.find('input, textarea, select').val("");
+
+		select_render();
+	});
+
+	// EDIT
 	$(document).on('click','.edit-placement', function(){
 
 		var row = $(this).closest('tr');
