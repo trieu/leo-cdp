@@ -419,6 +419,10 @@ ul.alert-dropdown {
 #action_btn{font-size: 24px; vertical-align: middle; cursor: pointer;}
 
 /* data table */
+.td-max-60{
+    width: 60px !important;
+    overflow: hidden !important;
+}
 .td-max-200{
     max-width: 200px !important;
     overflow: hidden !important;
