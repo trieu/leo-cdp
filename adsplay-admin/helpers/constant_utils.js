@@ -193,3 +193,4 @@ exports.platforms = platforms;
 exports.publishers = publishers;
 exports.size_overlay = size_overlay;
 exports.size_display = size_display;
+exports.adTypes = adTypes;

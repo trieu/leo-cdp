@@ -28,7 +28,7 @@ router.get('/api/list', function (req, res) {
 		try{
 			// result from callback
 			var result = creativeModel.list.sync(null, url, data);
-			//console.log(result);
+			console.log(result);
 			res.json(result);
 		}
 
@@ -56,7 +56,8 @@ router.get('/list', function (req, res) {
         statuses.push({value: stt, label: constantUtils.getStatus(stt)});
     }
     data.statuses = statuses;
-
+    console.log("_______________")
+    console.log(data.adTypes)
     res.render('creative/list', data);
 
 });
