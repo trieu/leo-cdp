@@ -16,29 +16,29 @@
 
 <div class="row">
 
-    <div class='col-lg-3'>
+    <div class='col-md-2 col-sm-6 col-xs-12'>
         <div class="form-group">
             <select class="form-control" id="filter-status" >
                 <option value="-1">All Ad Units</option>
                 {{#each statuses}}
-                    <option value="{{value}}">{{label}} Ad Units</option>
+                    <option value="{{value}}">{{label}}</option>
                 {{/each}}
             </select>
         </div>
     </div>
 
-<!--     <div class='col-lg-3'>
+    <div class='col-md-2 col-sm-6 col-xs-12'>
         <div class="form-group">
             <select class="form-control" id="filter-adTypes" >
                 <option value="-1">All Ad Types</option>
                 {{#each adTypes}}
-                    <option value="{{key}}">{{this}} Ad Units</option>
+                    <option value="{{@key}}">{{this}}</option>
                 {{/each}}
             </select>
         </div>
     </div>
- -->
-    <div class='col-lg-3'>
+
+    <div class='col-md-3 col-sm-4 col-xs-12'>
         <div class="form-group">
             <div class='input-group date' id='begin'>
                 <input type='text' class="form-control" autocomplete="off"/>
@@ -48,7 +48,7 @@
             </div>
         </div>
     </div>
-    <div class='col-lg-3'>
+    <div class='col-md-3 col-sm-4 col-xs-12'>
         <div class="form-group">
             <div class='input-group date' id='end'>
                 <input type='text' class="form-control" autocomplete="off"/>
@@ -58,7 +58,7 @@
             </div>
         </div>
     </div>
-    <div class='col-lg-3'>
+    <div class='col-md-2 col-sm-2 col-xs-12'>
         <p>
             <a href="javascript:" class="btn btn-primary" id="ChangeDate">
                 <i class="fa fa-fw fa-check"></i> OK
@@ -128,6 +128,24 @@
                 $('.td-status').closest('tr').hide();
                 $('[data-status="Expired"]').closest('tr').show();
             }
+        });
+
+        $('#filter-adTypes').change(function () {
+            var value = $(this).val();
+            if(value == -1){
+                $('#tbl-creatives tbody tr').show();
+            }
+            else{
+                $('.td-adType').each(function(){
+                    if($(this).text() == value){
+                        $(this).closest('tr').show();
+                    }
+                    else{
+                        $(this).closest('tr').hide();
+                    }
+                });
+            }
+            
         });
 
         $(document).on("click", "#ChangeDate", function(){
@@ -215,13 +233,14 @@
                 <thead> \
                 <tr> \
                     <th>ID</th> \
+                    <th class="hide">Ad Type</th> \
                     <th>Name</th> \
                     <th>Status</th> \
                     <th><span title="Total Impression">Impression</span></th> \
                     <th style="display: none">Complete-View</th> \
                     <th><span title="Total Click">Click</span></th> \
                     <th><a href="javascript:" title="Click-through rate">CTR</a></th> \
-                    <th style="display: none"><a href="javascript:" title="Complete-View rate">CVR</a></th> \
+                    <th class="hide"><a href="javascript:" title="Complete-View rate">CVR</a></th> \
                     <th>Booking Time</th> \
                     <th><span title="Total Estimated Revenue" style="display: block">Revenue</span></th> \
                     <th id="th-action">Action</th> \
@@ -276,14 +295,15 @@
     \{{#each creatives}}
         <tr \{{#if active }} class="active" \{{/if}} >
             <td class="td-id">\{{id}}</td>
+            <td class="td-adType hide" data-order="\{{adType}}">\{{adType}}</td>
             <td class="td-max-200"><a href="/creative/\{{id}}">\{{name}}</a></td>
             <td class="td-status" data-status="\{{status}}" data-order="\{{status}}"  data-search="\{{status}}">\{{status}}</td>
             <td>\{{formatCurrency imp}}</td>
-            <td style="display: none" >\{{formatCurrency trv}}</td>
+            <td class="hide" >\{{formatCurrency trv}}</td>
 
             <td>\{{formatCurrency c}}</td>
             <td>\{{ctr}}%</td>
-            <td style="display: none" >\{{tvr}}%</td>
+            <td class="hide" >\{{tvr}}%</td>
             <td>\{{runDate}} &#10145; \{{expiredDate}}</td>
             <td class="td-revenue">\{{formatCurrency totalRevenue}}</td>
             <td class="td-action"></td>
