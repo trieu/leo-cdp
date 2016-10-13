@@ -27,7 +27,7 @@ app.use(expressSession({
 	resave: false,
 	saveUninitialized: true,
 	cookie :{ 
-		path: '/', httpOnly: true, maxAge: 24*60*60*1000
+		path: '/', httpOnly: true, maxAge: 48*60*60*1000
 	}
 }));
 app.use(flash());

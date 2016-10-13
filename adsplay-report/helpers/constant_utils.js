@@ -36,6 +36,16 @@ var size_overlay = [
 
 var size_display = [
     {
+        "name": "StartTalk-Home",
+        "size": {"w": 380, "h": 313}
+    }
+    ,
+    {
+        "name": "Responsive size",
+        "size": {"w": 0, "h": 0}
+    }
+    ,
+    {
         "name": "Banner",
         "size": {"w": 468, "h": 60}
     },
@@ -94,15 +104,6 @@ var size_display = [
     {
         "name": "Netboard",
         "size": {"w": 580, "h": 400}
-    },
-    {
-        "name": "StartTalk-Home",
-        "size": {"w": 380, "h": 313}
-    }
-    ,
-    {
-        "name": "Responsive size",
-        "size": {"w": 0, "h": 0}
     }
 ];
 

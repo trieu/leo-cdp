@@ -33,7 +33,11 @@ module.exports = function (app) {
 
     app.route('/').get(function (req, res) {
         var data = modelUtils.baseModel(req);
-        res.render('monitor/home', data);
+	if(data.isAdminGroup){
+		res.render('monitor/home', data);
+	} else {
+		res.render('creative/list', data);
+	}
     });
 
     app.route('/display-banner/*').get(function (req, res) {

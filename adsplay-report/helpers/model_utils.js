@@ -5,7 +5,7 @@
 var constant_utils = require('./constant_utils');
 
 var adminIds = {1000: 1, 1001: 1};
-var operatorIds = {1000: 1, 1001: 1, 1007: 1, 1003: 1, 1006: 1};
+var operatorIds = {1000: 1, 1001: 1, 1007: 1, 1003: 1, 1006: 1, 1008 : 1};
 
 exports.baseModel = function(req) {
     var data = {};
