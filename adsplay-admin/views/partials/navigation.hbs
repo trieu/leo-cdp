@@ -87,7 +87,7 @@
                         </li>
                     {{/if}}
 
-                    {{#if editable }}
+                    {{#if isAdminGroup }}
                         <li class="">
                             <a href="/creative/new"><i class="fa fa-fw fa-play"></i> New Ad Unit</a>
                         </li>
@@ -107,7 +107,7 @@
                 </ul>
             </li>
 
-            {{#if editable }}
+            {{#if isAdminGroup }}
             <li >
                 <a href="javascript:;" data-toggle="collapse"
                    data-target="#menuAdReport"><i class="fa fa-fw fa-list"></i> Reports <i

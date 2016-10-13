@@ -15,7 +15,7 @@ var config_authorization = {
     ],
     // disable roles
     denied: [
-        {routes: '/creative/new/*', roles: ['operator','client']},
+        {routes: '/creative/new/*', roles: ['client']},
     ]
 };
 

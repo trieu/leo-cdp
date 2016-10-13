@@ -3,10 +3,10 @@
  */
 
 module.exports = {
-    base_domain : 'https://monitor.adsplay.net'
+      base_domain : 'https://admin.adsplay.net'
     , api_domain :  'http://api.adsplay.net'
     , ssl_api_domain :  'https://api.adsplay.net'
-    , static_domain: 'https://monitor.adsplay.net'
+    , static_domain: 'https://st88.adsplay.net'
     , ads_cdn_domain: 'https://ads-cdn.fptplay.net/static/ads/instream'
 
     , api_paytv: 'https://fbox-partners.fpt.vn'
