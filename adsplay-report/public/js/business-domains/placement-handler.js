@@ -89,7 +89,7 @@ $(window).load(function() {
 		$('#action-placement').modal('show');
 		var row = $(this).closest('tr');
 		var id = row.find('.plt_id').text();
-		var code = '<ins class="adsplay-placement" id="aplpm-'+id+'" ></ins><script src="https://st.adsplay.net/js/adsplay-display-ad.min.js"></script>'
+		var code = '<ins class="adsplay-placement" data-aplpm="'+id+'" ></ins><script src="https://st.adsplay.net/js/adsplay-display-ad.min.js"></script>'
 		$("#plt_code").val(code);
 	});
 
