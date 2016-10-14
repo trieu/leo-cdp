@@ -28,7 +28,7 @@ router.get('/api/list', function (req, res) {
 		try{
 			// result from callback
 			var result = creativeModel.list.sync(null, url, data);
-			console.log(result);
+			//console.log(result);
 			res.json(result);
 		}
 

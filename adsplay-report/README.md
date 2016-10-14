@@ -3,6 +3,22 @@ AdsPlay - adsplay-report
 
 monitoring, reporting, automatically reacts to critical values of metrics
 
+## Usage
+`With node`
+
+1. `npm run product` 
+
+2. `npm start` //dev
+
+3. `npm run compress` //compress js vs css
+
+`With PM2`
+
+1. `sudo pm2 start npm --name "adsplay-admin" -- run product`
+
+2. `sudo pm2 start npm --name "adsplay-admin" -- start` //dev
+
+
 Refer Links for the Graph Data Visualization:
 ====================
 https://jsfiddle.net/kaLt5aqr/

@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo pm2 restart app-product.js --name "adsplay-admin"
+sudo pm2 restart npm --name "adsplay-admin" -- run product
