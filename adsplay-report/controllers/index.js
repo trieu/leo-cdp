@@ -54,6 +54,11 @@ module.exports = function (app) {
         });
     });
 
+    app.route('/register').get(function (req, res, next) {
+        var data = modelUtils.baseModel(req);
+        data.dashboard_title = "Create your Adsplay Account";
+        res.render('user/register', data);
+    });
 
     //______________ passport
     var passport = require('passport');

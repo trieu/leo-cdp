@@ -58,7 +58,21 @@ body {
     margin-top: 50px;
     background-color: #fff;
 }
-
+img{max-width: 100%}
+.img-wrap{
+    position: relative;
+}
+.img-128x128{
+    width: 128px;
+    height: 128px;
+}
+.img-256x256{
+    width: 256px;
+    height: 256px;
+}
+#wrapper {
+    padding-left: 0;
+}
 #wrapper {
     padding-left: 0;
 }
