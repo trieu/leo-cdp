@@ -492,9 +492,8 @@ span.impress-text {
 
 .table td {
     white-space: nowrap;
-    overflow: visible;
+    overflow: hidden;
     text-overflow: ellipsis;
-
 }
 .report-detail-piechart{
     min-height: 350px;
