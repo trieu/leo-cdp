@@ -289,6 +289,10 @@ exports.metrics = function (url, data, callback) {
 
 
 // ------------- function extend
+function youtubeValid(url) {
+  var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+  return (url.match(p)) ? RegExp.$1 : false;
+}
 
 var convert_video = function(obj, crtName, callback){
 
@@ -323,7 +327,7 @@ var save_tvc = function(urlSave, crt, media, file, res){
             });
         });
     }
-    else if(crt.media != '' && media.indexOf(crt.media) == -1){
+    else if(media != '' && youtubeValid(media)){
         console.log('2 upload youtube');
         upload.youtube(media, function (obj) {
             //convert and upload cdn
