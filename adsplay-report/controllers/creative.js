@@ -56,7 +56,7 @@ router.get('/list', function (req, res) {
         statuses.push({value: stt, label: constantUtils.getStatus(stt)});
     }
     data.statuses = statuses;
-
+    
     res.render('creative/list', data);
 
 });

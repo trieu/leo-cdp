@@ -18,10 +18,10 @@
             </div>
             <div class="panel-body">
                 {{#if editable }}
-                    <a href="{{buildUrl editUrl}}" class="btn btn-primary btn-lg">
+                    <a href="{{buildUrl editUrl}}" class="btn btn-primary">
                         <i class="fa fa-pencil-square-o fa-2" aria-hidden="true"></i> Edit Ad
                     </a>
-                    <a href="{{buildUrl editUrl}}?copy=true" class="btn btn-default btn-lg">
+                    <a href="{{buildUrl editUrl}}?copy=true" class="btn btn-default">
                         <i class="fa fa-files-o" aria-hidden="true"></i> Copy Ad
                     </a>
                 {{/if}}
@@ -50,7 +50,7 @@
                         </tr>
                         <tr>
                             <td><strong>Status</strong></td>
-                            <td><span id="ads_status">{{crt.status}}</span></td>
+                            <td><span id="ads_status" data-status="{{crt.status}}">{{crt.status}}</span></td>
                         </tr>
                         <tr>
                             <td><strong>Click Through URL</strong></td>
@@ -213,7 +213,7 @@ loadLineChartWithData(urlLineChart);
 if ('{{crt.status}}' === 'Running') {
     setInterval(function () {
         loadSummaryData(urlSummary);
-        drawHourlyStatsData(urlDrawHourly, previousDay, currentDay);
+        //drawHourlyStatsData(urlDrawHourly, previousDay, currentDay);
         // loadLineChartWithData();
     }, 10001);
 }

@@ -10,6 +10,10 @@ $(document).ready(function () {
         var y = $(event.relatedTarget).text();  // previous tab
         $(".act span").text(x);
         $(".prev span").text(y);
+
+        if ($(this).attr('href') == "#tc-main-graphs") {
+            drawHourlyStatsData(urlDrawHourly, previousDay, currentDay);
+        }
     });
 
 });
@@ -256,8 +260,9 @@ var loadLineChartWithData = function (url) {
     });
 };
 
+
+var totalImpPrev = 0, totalTrvPrev = 0, totalClickPrev = 0, totalReachPrev = 0;
 var loadSummaryData = function (url) {
-    var totalImpPrev = 0, totalTrvPrev = 0, totalClickPrev = 0, totalReachPrev = 0;
 
     d3.json(url, function (error, data) {
         if (data.length > 0) {

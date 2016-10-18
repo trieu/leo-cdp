@@ -2,8 +2,11 @@
 <html lang="en">
 
 <head>
-    {{>head}}
-
+    {{#if NODE_ENV }}
+        {{>head-product}}
+    {{else}}
+        {{>head}}
+    {{/if}}
 </head>
 
 <body>

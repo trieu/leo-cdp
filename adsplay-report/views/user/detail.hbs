@@ -1,0 +1,48 @@
+<div class="row">
+    <div class="col-lg-12">
+        <ol class="breadcrumb">
+            <li><a href="/user/">User Management</a></li>
+            <li class="active">User Detail</li>
+        </ol>
+        <h3 class="page-header">
+            {{user.username}} Info
+        </h3>
+    </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6 col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+      	<div class="table-responsive">
+            <table class="table table-bordered table-hover table-striped">
+                <tbody>
+                <tr>
+                    <td><strong>UserName</strong></td>
+                    <td><span id="user_name">{{user.username}}</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Email</strong></td>
+                    <td><span id="user_email">{{user.email}}</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Role</strong></td>
+                    <td><span id="user_roles">{{user.roles}}</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Gender</strong></td>
+                    <td><span id="user_gender">{{user.gender}}</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Status</strong></td>
+                    <td>
+                        <span data-status="{{user.status}}">{{user.status}}</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

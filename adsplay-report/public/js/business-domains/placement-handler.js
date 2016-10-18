@@ -79,24 +79,17 @@ $(window).load(function() {
 	});
 	//end setup validatr.js
 
+	//event modal
 	$('#modal-placement').on('hide.bs.modal', function (e) {
 		$("#plt_container .editing").removeClass("editing");
 		$('.row-size-display').hide();
-	});
-
-	$('#new-placement').click(function(){
-		$('#modal-placement').modal('show');
-		//empty form
-		plt_form.find('input[type="text"], textarea, select').val("");
-
-		select_render();
 	});
 
 	$(document).on('click','.action-btn', function(){
 		$('#action-placement').modal('show');
 		var row = $(this).closest('tr');
 		var id = row.find('.plt_id').text();
-		var code = '<ins class="adsplay-placement" id="aplpm-'+id+'" ></ins><script src="https://st.adsplay.net/js/adsplay-display-ad.min.js"></script>'
+		var code = '<ins class="adsplay-placement" data-aplpm="'+id+'" ></ins><script src="https://st.adsplay.net/js/adsplay-display-ad.min.js"></script>'
 		$("#plt_code").val(code);
 	});
 
@@ -112,6 +105,16 @@ $(window).load(function() {
 		document.execCommand('copy');
 	});
 
+	// CREATE
+	$('#new-placement').click(function(){
+		$('#modal-placement').modal('show');
+		//empty form
+		plt_form.find('input, textarea, select').val("");
+
+		select_render();
+	});
+
+	// EDIT
 	$(document).on('click','.edit-placement', function(){
 
 		var row = $(this).closest('tr');

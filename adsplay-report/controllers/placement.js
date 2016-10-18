@@ -9,6 +9,7 @@ var express = require('express')
     , constantUtils = require('../helpers/constant_utils')
     , Summary = require('../models/summary')
     , Placement = require('../models/placement')
+    , Publisher = require('../models/publisher')
     , moment = require('moment');
 
 router.get('/list-all', function (req, res, next) {
@@ -83,7 +84,25 @@ router.post('/save', function (req, res, next){
 
         doc.save(function(err) {
             if(!err){
-                res.json(doc);
+                Publisher.findOne({_id: doc.publisher})
+                .exec(function(err, pub){
+                    if (err) { return next(err); }
+
+                    var result = {};
+                    result._id = doc._id;
+                    result.name = doc.name;
+                    result.publisher = pub.name;
+                    result.type = doc.type;
+                    result.width = doc.width;
+                    result.height = doc.height;
+                    result.enabled = doc.enabled;
+                    result.adCode3rd = doc.adCode3rd;
+                    result.weight3rd = doc.weight3rd;
+                    result.baseDomain = doc.baseDomain;
+                    result.checkBaseDomain = doc.checkBaseDomain;
+
+                    res.json(result);
+                });
             }
             else {
                 console.log(err)
