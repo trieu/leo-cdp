@@ -10,11 +10,27 @@ var cookieParser = require('cookie-parser');// pull information from HTML cookie
 var expressSession = require('express-session');
 var flash = require('connect-flash');
 
-global.siteConfigs = require('./configs/site.js');
-var dbConfig = require('./configs/database');
-var mongoose = require('mongoose');
-mongoose.connect(dbConfig.url);
 
+//______________ config enviroment common ______________
+global.NODE_ENV = process.env.NODE_ENV || 'product'; //enviroment
+console.log('Enviroment: ' + NODE_ENV)
+var commonConfigs = require('./configs/common.js')(NODE_ENV);
+global.SALT = commonConfigs.SALT;
+global.siteConfigs = commonConfigs.siteConfigs;
+global.authorizationConfigs = commonConfigs.authorizationConfigs;
+//______________ config enviroment common ______________
+
+
+
+//______________ config mongoose ______________
+var dbConfigs = commonConfigs.dbConfigs;
+var mongoose = require('mongoose');
+mongoose.connect(dbConfigs.url);
+//______________ config mongoose ______________
+
+
+
+//______________ config express ______________
 app.use(favicon(__dirname + '/public/css/images/favicon.ico'));
 app.use(require('express-promise')());
 app.use(express.static(__dirname + '/public'));
@@ -23,11 +39,11 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 
 app.use(cookieParser());
 app.use(expressSession({
-	secret: 'adsplay123',
+	secret: SALT,
 	resave: false,
 	saveUninitialized: true,
 	cookie :{ 
-		path: '/', httpOnly: true, maxAge: 48*60*60*1000
+		path: '/', httpOnly: true, maxAge: commonConfigs.session
 	}
 }));
 app.use(flash());
@@ -35,16 +51,19 @@ app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal']);
 app.use(morgan('dev'));  // log every request to the console
 
 //config view engine
-//admin.hbs or admin-compress.hbs
-var layout = 'admin.hbs';
-var hbsConfigs = {extname: 'hbs', defaultLayout: layout};
+var hbsConfigs = {extname: 'hbs', defaultLayout: 'admin'};
 app.engine('hbs', expressHbs(hbsConfigs));
 app.set('view engine', 'hbs');
-//TODO enable cache for production only
-//app.enable('view cache');
+if(NODE_ENV == 'product'){
+	//TODO enable cache for production only
+	app.enable('view cache');
+}
+
+//______________ config express ______________
 
 
-//++++++++create folder
+
+//______________ create folder ______________
 var exportFolder = __dirname + '/public/export/';
 if(!fs.existsSync(exportFolder)){
 	fs.mkdirSync(exportFolder);
@@ -65,7 +84,9 @@ else{
 		}
 	}
 }
-//++++++++end create folder
+//______________ end create folder
+
+
 
 //TODO
 app.listen(8181);

@@ -1,0 +1,97 @@
+<div class="row">
+    <div class="col-sm-12">
+        <ol class="breadcrumb">
+            <li><a href="creative/list">All Advertising Units</a></li>
+            <li class="active">Ad Unit Information Editor</li>
+        </ol>
+        <h3 class="text-center">
+            <span>{{dashboard_title}}</span>
+        </h3>
+    </div>
+</div>
+
+<div class="row">
+<div class="col-sm-4 col-xs-12">
+
+    <div class="panel panel-default" id="avatar_upload">
+        <div class="panel-heading">
+            <h4><i class="fa fa-picture-o" aria-hidden="true"></i> Avatar</h4>
+        </div>
+        <div class="panel-body" id="frame_upload_body">
+            <div class="img-wrap text-center">
+                <img src="/img/user.png" class="img-rounded img-128x128">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- form -->
+<form id="form_user" method="POST" action="/register" novalidate>
+
+<div class="col-sm-8 col-xs-12">
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4><i class="fa fa-info-circle" aria-hidden="true"></i> User Information</h4>
+    </div>
+    <div class="panel-body">
+
+        <div class="form-group">
+            <label class="label-important">User Name</label>
+            <input type="text" class="form-control" name="username" placeholder="Enter Ad Name" required
+                   data-validate-length-range="6">
+        </div>
+
+        <div class="form-group">
+            <label class="label-important">Email</label>
+            <input type="email" class="form-control" name="email" placeholder="Enter Ad Name" required>
+        </div>
+
+        <div class="form-group">
+            <label class="label-important">Password</label>
+            <input type="password" class="form-control" name="password" placeholder="Enter Ad Name" required>
+        </div>
+
+        <div class="form-group">
+            <label class="label-important">Repeat Password</label>
+            <input type="password" class="form-control" placeholder="Enter Ad Name" data-validate-linked="password" required>
+        </div>
+
+        <div class="form-group">
+            <label class="label-important">Gender</label>
+
+            <div class="radio">
+                <label>
+                    <input type="radio" name="gender" value="1"> Male
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="gender" value="0"> Female
+                </label>
+            </div>
+        </div>
+
+    </div>
+</div>
+{{#if registerMessage }}
+    <div class="alert alert-danger" role="alert">
+        <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+        <span class="label label-danger">{{registerMessage}}</span>
+    </div>
+{{/if}}
+<div class="row text-center margin-b-80">
+    <div class="col-sm-6 col-xs-12">
+        <button type="submit" class="btn btn-success btn-lg btn-block">OK</button>
+    </div>
+    <div class="col-sm-6 col-xs-12">
+        <a href="creative/new" class="btn btn-default btn-lg btn-block">Cancel</a>
+    </div>
+</div>
+</div>
+
+</form>
+
+</div>

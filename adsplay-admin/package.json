@@ -10,9 +10,9 @@
     "url": "https://github.com/mc2ads/rfx/tree/master/rfx-report"
   },
   "scripts": {
-    "start": "nodemon app.js",
-    "preproduct": "gulp default",
-    "product": "nodemon app-product.js"
+    "start": "set NODE_ENV=dev && export NODE_ENV=dev && node app.js",
+    "product": "set NODE_ENV=product && export NODE_ENV=product && node app.js",
+    "compress": "gulp default"
   },
   "keywords": [
     "reactive marketing"
@@ -22,6 +22,7 @@
     "compression": "*",
     "connect-flash": "^0.1.1",
     "cookie-parser": "~1.3.3",
+    "crypto-js": "^3.1.7",
     "debug": "~2.0.0",
     "export-to-excel": "^0.1.11",
     "express": "~4.12.4",
