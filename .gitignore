@@ -10,7 +10,8 @@
 **/lda_model/
 **/target/
 **/.gradle/
-
+**/public/ads/
+**/public/export
 
 adsplay-report/public/ads/
 adsplay-report/public/ads/*

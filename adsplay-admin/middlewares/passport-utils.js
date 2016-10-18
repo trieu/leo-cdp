@@ -37,7 +37,7 @@ module.exports = function(passport) {
 				User.findOne({ 'username' :  username }, function(err, user) {
 					if (err){ return done(err); }
 					else{
-						console.log(password, user.password)
+						//console.log(password, user.password)
 						if(user && user.validPassword(password, user.password)){
 							return done(null, data_show(user));// all is well, return successful user
 						}
