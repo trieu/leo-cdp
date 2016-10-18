@@ -9,6 +9,8 @@ module.exports = function(env) {
 	var authorizationConfigs = require('./authorization-config');
 
 	return {
+		SALT: 'adsplay$123*&^mvc@#!',
+		session: 48*60*60*1000, //2 day
 		siteConfigs: siteConfigs,
 		dbConfigs: dbConfigs,
 		authorizationConfigs: authorizationConfigs

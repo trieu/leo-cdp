@@ -54,17 +54,21 @@ module.exports = function (app) {
         });
     });
 
-    app.route('/register').get(function (req, res, next) {
-        var data = modelUtils.baseModel(req);
-        data.dashboard_title = "Create your Adsplay Account";
-        res.render('user/register', data);
-    });
-
+    
     //______________ passport
     var passport = require('passport');
     app.use(passport.initialize());
     app.use(passport.session());
     var passport_auth = require('../middlewares/passport-utils.js')(passport);
+
+
+    //______________ register
+    app.route('/register').get(function (req, res, next) {
+        var data = modelUtils.baseModel(req);
+        data.dashboard_title = "Create your Adsplay Account";
+        res.render('user/register', data);
+    });
+    app.route('/register').post(passport_auth.register);
 
 
     //______________ Authorization
@@ -84,6 +88,7 @@ module.exports = function (app) {
     app.use('/booking', require('./booking'));
     app.use('/export', require('./export_file'));
     app.use('/event', require('./event'));
+    app.use('/user', require('./user'));
 
     app.route('/').get(function (req, res) {
         var data = modelUtils.baseModel(req);

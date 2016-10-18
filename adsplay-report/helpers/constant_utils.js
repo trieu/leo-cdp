@@ -4,7 +4,7 @@
 var fs = require('fs');
 
 var statuses = {0: 'Invalid', 1: 'Pending', 2: 'Running', 3: 'Finished', 4: 'Expired'};
-var adTypes = {0: 'Invalid', 1: 'Instream TVC', 2: 'Expandable Overlay Banner', 3: 'In-video Overlay Banner',
+var adTypes = {1: 'Instream TVC', 2: 'Expandable Overlay Banner', 3: 'In-video Overlay Banner',
  4: 'In-video Break News Text', 5: 'HTML5 Display AD', 6: 'Display Image Banner', 7: 'In-page TVC Video',
  8: 'Sponsored Video Content', 9: 'Bidding Ad Code', 10: "Streaming Video AD", 11: 'Master Head TVC Mobile ', 12: 'Infeed TVC Mobile' };
 

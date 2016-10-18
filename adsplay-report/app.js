@@ -15,6 +15,7 @@ var flash = require('connect-flash');
 global.NODE_ENV = process.env.NODE_ENV || 'product'; //enviroment
 console.log('Enviroment: ' + NODE_ENV)
 var commonConfigs = require('./configs/common.js')(NODE_ENV);
+global.SALT = commonConfigs.SALT;
 global.siteConfigs = commonConfigs.siteConfigs;
 global.authorizationConfigs = commonConfigs.authorizationConfigs;
 //______________ config enviroment common ______________
@@ -38,11 +39,11 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 
 app.use(cookieParser());
 app.use(expressSession({
-	secret: 'adsplay123',
+	secret: SALT,
 	resave: false,
 	saveUninitialized: true,
 	cookie :{ 
-		path: '/', httpOnly: true, maxAge: 48*60*60*1000
+		path: '/', httpOnly: true, maxAge: commonConfigs.session
 	}
 }));
 app.use(flash());

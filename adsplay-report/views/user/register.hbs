@@ -28,7 +28,7 @@
 
 
 <!-- form -->
-<form id="form_user" novalidate>
+<form id="form_user" method="POST" action="/register" novalidate>
 
 <div class="col-sm-8 col-xs-12">
 
@@ -76,7 +76,12 @@
 
     </div>
 </div>
-
+{{#if registerMessage }}
+    <div class="alert alert-danger" role="alert">
+        <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+        <span class="label label-danger">{{registerMessage}}</span>
+    </div>
+{{/if}}
 <div class="row text-center margin-b-80">
     <div class="col-sm-6 col-xs-12">
         <button type="submit" class="btn btn-success btn-lg btn-block">OK</button>

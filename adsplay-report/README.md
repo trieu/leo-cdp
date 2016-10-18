@@ -33,7 +33,7 @@ Core Contributors:
 
 Core Contributors:
 ====================
-	allgame789@gmail.com
+	dungpna@fpt.com.vn
 
 USE : upload helper
 var upload = require('../helpers/upload_utils.js');

@@ -1,6 +1,7 @@
 /**
  * Created by trieu on 6/29/16.
  */
+var CryptoJS = require("crypto-js");
 var dbConfig = require('../configs/database');
 var mongoose = require('mongoose');
 var autoIncrement = require('mongoose-auto-increment');
@@ -16,8 +17,8 @@ var userSchema = new mongoose.Schema({
     password: {type: String, required: true},
     roles: {type: String, default: 'user'},
     status: {type: Number, default: 0}, //status = {0: "disable", 1: "enable", 2: "banner"}
-    createdDate: {type: Date, default: Date.now},
-    updatedDate: {type: Date, default: Date.now},
+    created_at: {type: Date, default: Date.now},
+    updated_at: {type: Date, default: Date.now},
     gender: {type: Number, default: 1},
     avatar: {type: String, default: ''}
 });
@@ -27,5 +28,20 @@ userSchema.plugin(autoIncrement.plugin, {
     field: '_id',
     startAt: 1000
 });
+
+// generating a hash
+userSchema.methods.generateHash = function(password) {
+	// Encrypt 
+	return CryptoJS.AES.encrypt(password, SALT);
+};
+
+// checking if password is valid
+userSchema.methods.validPassword = function(password, passwordHash) {
+	// Decrypt 
+	var bytes  = CryptoJS.AES.decrypt(passwordHash.toString(), SALT);
+	var plaintext = bytes.toString(CryptoJS.enc.Utf8);
+    console.log(plaintext)
+	return (password == plaintext);
+};
 
 module.exports =  mongoose.model('users', userSchema);
