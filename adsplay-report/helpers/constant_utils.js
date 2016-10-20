@@ -14,7 +14,8 @@ var placements = {
     201: 'Live TV for SmartTV', 202: 'VOD for SmartTV',
     301: 'Live TV for Mobile App', 302: 'VOD for Mobile App', 333: 'Demo', 307: 'Android-Box LiveTV', 308: 'Android-Box VOD',
     320: 'PayTV-VOD',
-    401: 'FptPlay-Overlay', 411: 'Masterhead Mobile',412: 'Infeed Mobile'
+    401: 'FptPlay-Overlay', 411: 'Masterhead Mobile',412: 'Infeed Mobile',
+    446: 'LiveStream Auto'
 };
 var userNames = {1000: 'Admin', 1001: 'Manager', 1002: 'Customer', 1003: 'epl_fptplay',
     1004: 'Lava', 1005: 'Ambient', 1006: 'iTVad_Sale', 1007: 'PayTV_Admin'};
