@@ -5,8 +5,17 @@ $(window).load(function() {
 		.on('change', 'select.required', validator.checkField)
 		.on('keypress', 'input[required][pattern]', validator.keypress);
 
-	$form.on('change','[name="tgpfs"],[name="prcModel"]', function(){
-		if ( checkedIsEmpty( $(this) ) ){
+	$form.on('change','[name="tgpfs"]', function(){
+		if ( checkedIsEmpty( $('[name="tgpfs"]') ) ){
+			validator.mark($(this),'must be checked');
+		}
+		else{
+			validator.unmark($(this));
+		}
+	});
+
+	$form.on('change','[name="prcModel"]', function(){
+		if ( checkedIsEmpty( $('[name="prcModel"]') ) ){
 			validator.mark($(this),'must be checked');
 		}
 		else{
@@ -370,7 +379,7 @@ function sendForm(url, data, timeout){
 		console.log("@@report:  " + textStatus);
 		if( textStatus == "timeout" || textStatus == "error") {
 			$(".loader").remove();
-			window.location = location.protocol+'//'+location.host+'/creative/list/all';
+			window.location = location.protocol+'//'+location.host+'/creative/list';
 		}
 	});
 }
