@@ -57,6 +57,7 @@
     "sync": "^0.2.5",
     "underscore": "~1.5.1",
     "xml2js": "*",
+    "xmlbuilder": "^8.2.2",
     "youtube-dl": "^1.11.1"
   },
   "engine": {

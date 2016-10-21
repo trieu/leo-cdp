@@ -9,7 +9,7 @@ var creativeModel = require('../models/creative.js');
 var ArrayUtils = require('../helpers/array_utils');
 var moment = require('moment');
 var formidable = require('formidable');
-
+var Vast = require('../models/vast.js');
 // >->->->-> api
 
 //--- list json

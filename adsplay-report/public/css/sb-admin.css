@@ -672,3 +672,20 @@ span.impress-text {
     display: inline-block;
     margin-left: 5px;
 }
+#modal-vast-btn,
+.btn-plus {
+    font-size: 17px;
+    line-height: 14px;
+    font-weight: bold;
+    padding: 0 5px;
+    vertical-align: middle;
+}
+#vast_form input{
+    margin-bottom: 6px;
+}
+.form-group-inner{
+    margin-bottom: 6px;
+}
+.form-group-inner input,.form-group-inner select,.form-group-inner textarea{
+    margin-bottom: -1px !important;
+}
