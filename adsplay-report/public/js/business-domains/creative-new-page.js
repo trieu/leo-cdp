@@ -214,13 +214,14 @@ function checkImage(){
 	}
 	else{
 		if(!checkValueEmpty($('#img_file'))){
-			if (!$('#img_file')[0].files[0].name.match(/\.(jpg|jpeg|png|gif)$/)){
+			if (!$('#img_file')[0].files[0].name.match(/\.(jpg|jpeg|png|gif)$/) || $('#img_file')[0].files[0].size >= 1500000){
 				errorCss($('#frame_upload'), $('#frame_upload_body .alert'), false);
-				modal_alert('file image error !');
+				modal_alert('Incorrect image file !!! Check type and size image');
 				scrollTopPage();
 				return false;
 			}
 		}
+		errorCss($('#frame_upload'), $('#frame_upload_body .alert'), true);
 		return true;
 	}
 }
