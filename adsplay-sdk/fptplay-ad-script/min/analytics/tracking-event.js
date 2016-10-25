@@ -1,0 +1,4 @@
+/*
+ * tracking-event.js for AdsPlay Real-time Marketing Analytics - version 1.0 - date:20/12/2015
+ */
+(function(){if("string"===typeof window.__aplEvent){var a="referrer="+encodeURIComponent(document.referrer?document.referrer:""),a=a+("&url="+encodeURIComponent(document.location.href)),a=a+("&host="+encodeURIComponent(document.location.host)),a=a+("&t="+(new Date).getTime()),a=a+("&event="+encodeURIComponent(window.__aplEvent)),b=document.createElement("iframe");b.width=0;b.height=0;b.setAttribute("style","width:0px!important;height:0px!important;display:none!important");b.src=location.protocol+ "//adsplay.net/tracking/event.html#"+a;a=document.getElementsByTagName("body");0<a.length&&a[0].appendChild(b)}})();
