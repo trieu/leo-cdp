@@ -1,0 +1,15 @@
+{
+  "name": "empty-project-express",
+  "email": "kimthiendung@gmail.com",
+  "version": "0.0.1",
+  "description": "A package project express",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.12.2",
+    "fluent-ffmpeg": "^2.1.0",
+    "fs.extra": "^1.3.2",
+    "jsftp": "^1.5.4",
+    "kue": "^0.11.4",
+    "youtube-dl": "^1.11.1"
+  }
+}
