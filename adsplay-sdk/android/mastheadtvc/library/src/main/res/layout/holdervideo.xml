@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#212121"
+    android:weightSum="1">
+
+
+    <com.yqritc.scalablevideoview.ScalableVideoView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/holder"
+
+        android:layout_weight="0.10" />
+
+    <TextView
+        android:text="Demo Masthead Ads"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txttitle"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:paddingTop="20sp"
+        android:textColor="@android:color/white" />
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="93dp"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:layout_weight="0.29">
+
+
+
+        <TextView
+            android:text="TExperience the Video Masthead with your own content and customizations. To try it out, enter title, description, button text.........."
+            android:layout_width="wrap_content"
+            android:layout_height="99dp"
+            android:id="@+id/txtdescription"
+            android:width="190sp"
+            android:textSize="14sp"
+            android:layout_marginRight="0sp"
+            android:paddingRight="10sp"
+            android:layout_weight="0.89"
+            android:textColor="@android:color/white"
+            />
+
+        <Button
+            android:text="Click"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnClose"
+            android:layout_marginTop="20sp"
+
+            android:textSize="15sp"
+
+            android:background="@drawable/button_bg_stroke"
+            android:textColor="@android:color/white"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+
+</LinearLayout>
