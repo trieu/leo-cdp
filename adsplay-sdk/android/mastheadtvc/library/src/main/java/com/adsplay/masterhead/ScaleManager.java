@@ -20,8 +20,6 @@ public class ScaleManager {
             case NONE:
                 return getNoScale(PivotPoint.CENTER);
 
-
-
             default:
                 return null;
         }

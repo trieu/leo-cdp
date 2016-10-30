@@ -8,22 +8,23 @@ import android.media.MediaPlayer;
 import android.os.StrictMode;
 import android.support.v4.app.ActivityCompat;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import java.io.IOException;
 
 /**
  * Created by anhvt on 26/10/2016.
  */
 
-public class HolderVideo extends RelativeLayout {
+public class AdsPlayHolderVideo extends RelativeLayout implements AdsPlayReady {
 
     private ScalableVideoView holder;
     private Button btnClose;
-    private TextView txttitle, txtdescription;
-    private MasterheadAdData adData;
+    private TextView txttitle;
+    //private TextView txtdescription;
+
 
     // Storage Permissions
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -32,7 +33,7 @@ public class HolderVideo extends RelativeLayout {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
-    public HolderVideo(Context context) {
+    public AdsPlayHolderVideo(Context context) {
         super(context);
         init();
 
@@ -59,12 +60,12 @@ public class HolderVideo extends RelativeLayout {
         }
     }
 
-    public HolderVideo(Context context, AttributeSet attrs) {
+    public AdsPlayHolderVideo(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public HolderVideo(Context context, AttributeSet attrs, int defStyle) {
+    public AdsPlayHolderVideo(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init();
     }
@@ -72,11 +73,17 @@ public class HolderVideo extends RelativeLayout {
     public ScalableVideoView getHolder() {
         return this.holder;
     }
+
+    boolean valumeEnabled = false;
+
     private void init() {
         inflate(getContext(), R.layout.holdervideo, this);
 
         this.holder = (ScalableVideoView) findViewById(R.id.holder);
+       // this.holder.setVisibility(AdsPlayHolderVideo.GONE);
         this.txttitle = (TextView) findViewById(R.id.txttitle);
+
+
 
 
         //this.btnClose = (Button) findViewById(R.id.btnClose);
@@ -90,44 +97,71 @@ public class HolderVideo extends RelativeLayout {
 //                HolderVideo.this.setVisibility(view.GONE);
 //            }
 //        });
-        
+
     }
 
     public void playAd(String filepath){
         try {
             final ScalableVideoView holder = this.getHolder();
-            holder.setDataSource(filepath);
-            holder.prepare(new MediaPlayer.OnPreparedListener() {
+
+            String file = "file://"+filepath;
+            Log.i("AdsPlay","-------> playAd file: "+file);
+            holder.setDataSource(file);
+            holder.setVolume(0, 2);
+
+
+            holder.prepareAsync(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
+                    Log.i("AdsPlay","Ad Duration: "+mp.getDuration());
                     holder.start();
-                    holder.setVolume(0, 2);
-                    holder.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+                    getHolder().setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                         @Override
                         public void onCompletion(MediaPlayer mp) {
                             mp.stop();
                             mp.release();
-                            HolderVideo.this.setVisibility(HolderVideo.GONE);
+                            //AdsPlayHolderVideo.this.setVisibility(AdsPlayHolderVideo.GONE);
                         }
                     });
+
                 }
             });
-        } catch (IOException ioe) {
+
+            holder.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    synchronized(this) {
+                        if( ! valumeEnabled ){
+                            valumeEnabled = true;
+                            holder.setVolume(0, 2);
+                        } else {
+                            valumeEnabled = false;
+                            holder.setVolume(0, 0);
+                        }
+                    }
+                }
+            });
+
+        } catch (Exception ioe) {
             //ignore
+            Log.i("AdsPlay",ioe.getMessage());
         }
     }
 
-    public void start(MasterheadAdData data){
-        this.adData = data;
-        String media = data.getMedia();
+    public static void checkSystem(Activity activity){
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        new DownloadFileFromUrl(this).execute(media);
-
-
+        AdsPlayHolderVideo.verifyStoragePermissions(activity);
     }
 
-    public MasterheadAdData getAdData() {
-        return adData;
+    public void start(){
+        MasterheadAdData adData = new MasterheadAdData("https://ads-cdn.fptplay.net/static/ads/demo/toshiba-truehome-360p.mp4","");
+        new DownloadFileFromUrl(this).execute(adData.getMedia());
+    }
+
+    @Override
+    public void onMediaReady(String media) {
+        playAd(media);
     }
 }

@@ -9,7 +9,7 @@
 
         android:background="@android:color/white"/>
 
-    <com.adsplay.masterhead.HolderVideo
+    <com.adsplay.masterhead.AdsPlayHolderVideo
         android:id="@+id/video_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
