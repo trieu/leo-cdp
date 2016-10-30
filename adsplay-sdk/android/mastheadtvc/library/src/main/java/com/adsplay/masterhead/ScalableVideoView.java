@@ -1,4 +1,4 @@
-package com.yqritc.scalablevideoview;
+package com.adsplay.masterhead;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;

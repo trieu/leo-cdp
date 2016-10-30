@@ -1,4 +1,4 @@
-package com.yqritc.scalablevideoview;
+package com.adsplay.masterhead;
 
 import android.graphics.Matrix;
 
