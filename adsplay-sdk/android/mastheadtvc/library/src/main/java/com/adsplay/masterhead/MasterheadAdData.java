@@ -7,10 +7,26 @@ package com.adsplay.masterhead;
 public class MasterheadAdData {
     String media;
     String title;
+    long adId;
 
-    public MasterheadAdData(String media, String title) {
+    public MasterheadAdData(long adId, String media, String title) {
+        this.adId = adId;
         this.media = media;
         this.title = title;
+    }
+
+    public MasterheadAdData(long adId,String media) {
+        this.adId = adId;
+        this.media = media;
+        this.title = "";
+    }
+
+    public long getAdId() {
+        return adId;
+    }
+
+    public void setAdId(long adId) {
+        this.adId = adId;
     }
 
     public String getMedia() {
@@ -27,5 +43,10 @@ public class MasterheadAdData {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @Override
+    public String toString() {
+        return "adId: "+adId + " media: "+media;
     }
 }

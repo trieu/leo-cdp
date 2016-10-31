@@ -8,11 +8,6 @@ import com.adsplay.masterhead.AdsPlayHolderVideo;
 
 public class MainActivity extends AppCompatActivity {
 
-    private AdsPlayHolderVideo mVideoView;
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -20,10 +15,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        AdsPlayHolderVideo.checkSystem(this);
-        mVideoView = (AdsPlayHolderVideo) findViewById(R.id.video_view);
+        AdsPlayHolderVideo.checkSystemPermissions(this);
+        AdsPlayHolderVideo mVideoView = (AdsPlayHolderVideo) findViewById(R.id.masterhead_view);
         mVideoView.start();
-
 
     }
 

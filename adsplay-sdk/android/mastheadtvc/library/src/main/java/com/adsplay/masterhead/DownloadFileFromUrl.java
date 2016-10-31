@@ -21,9 +21,9 @@ import java.util.concurrent.TimeUnit;
  * Created by trieu on 10/30/16.
  */
 
-public class DownloadFileFromUrl extends AsyncTask<String, String, String> {
+public class DownloadFileFromUrl extends AsyncTask<Integer, String, MasterheadAdData> {
 
-    final static int CACHE_MINUTE = 10;
+    final static int CACHE_MINUTE = 12*60;//12 hours
     //AdsPlayHolderVideo adsPlayHolderVideo;
     String downloadedFilePath = null;
     AdsPlayReady adsPlayReady;
@@ -67,16 +67,15 @@ public class DownloadFileFromUrl extends AsyncTask<String, String, String> {
      * Downloading file in background thread
      */
     @Override
-    protected String doInBackground(String... f_url) {
-        if(f_url.length==0){
+    protected MasterheadAdData doInBackground(Integer... placementIds) {
+        if(placementIds.length==0){
             return null;
         }
 
-        int count;
-
+        String mediaPath = "https://ads-cdn.fptplay.net/static/ads/demo/toshiba-truehome-360p.mp4";
 
         String root = Environment.getExternalStorageDirectory().toString()+"/";
-        downloadedFilePath = root + md5(f_url[0]) + ".mp4";
+        downloadedFilePath = root + md5(mediaPath) + ".mp4";
         File file = new File (downloadedFilePath);
         if(file.isFile()){
             Date lastModified = new Date(file.lastModified());
@@ -84,7 +83,8 @@ public class DownloadFileFromUrl extends AsyncTask<String, String, String> {
             long minutes = TimeUnit.MILLISECONDS.toMinutes(diff);
             if(minutes<CACHE_MINUTE){
                 //downloadedFilePath = filepath;
-                return downloadedFilePath;
+                MasterheadAdData adData = new MasterheadAdData(123, downloadedFilePath, "TOSHIBA True Home - Tổ ấm trọn niềm vui");
+                return adData;
             }
         }
 
@@ -96,7 +96,7 @@ public class DownloadFileFromUrl extends AsyncTask<String, String, String> {
             Log.i("AdsPlay","File: "+downloadedFilePath);
 
 
-            URL url = new URL(f_url[0]);
+            URL url = new URL(mediaPath);
             Log.i("AdsPlay","url: "+url);
 
             URLConnection conection = url.openConnection();
@@ -105,14 +105,15 @@ public class DownloadFileFromUrl extends AsyncTask<String, String, String> {
             int lenghtOfFile = conection.getContentLength();
             Log.i("AdsPlay","lenghtOfFile: "+lenghtOfFile);
 
-            // input stream to read file - with 8k buffer
-            input = new BufferedInputStream(url.openStream(), 300000);
+            // input stream to read file - with 200k buffer
+            input = new BufferedInputStream(url.openStream(), 200000);
 
             output = new FileOutputStream(downloadedFilePath);
 
             byte data[] = new byte[1024];
 
             long total = 0;
+            int count;
             while ((count = input.read(data)) != -1) {
                 total += count;
 
@@ -138,8 +139,8 @@ public class DownloadFileFromUrl extends AsyncTask<String, String, String> {
                 } catch (IOException e) {}
             }
         }
-
-        return downloadedFilePath;
+        MasterheadAdData adData = new MasterheadAdData(123, downloadedFilePath, "TOSHIBA True Home - Tổ ấm trọn niềm vui");
+        return adData;
     }
 
 
@@ -147,16 +148,13 @@ public class DownloadFileFromUrl extends AsyncTask<String, String, String> {
      * After completing background task
      **/
     @Override
-    protected void onPostExecute(String filepath) {
-
-
-
+    protected void onPostExecute(MasterheadAdData adData) {
         //Log.i("AdsPlay","onPostExecute downloadedFilePath: "+downloadedFilePath);
 
-        Log.i("AdsPlay","--> onPostExecute filepath: "+filepath);
-        if(filepath != null){
+        Log.i("AdsPlay","--> onPostExecute : "+adData);
+        if(adData != null){
             //this.adsPlayHolderVideo.playAd(filepath);
-            this.adsPlayReady.onMediaReady(filepath);
+            this.adsPlayReady.onMediaReady(adData);
         }
 
     }

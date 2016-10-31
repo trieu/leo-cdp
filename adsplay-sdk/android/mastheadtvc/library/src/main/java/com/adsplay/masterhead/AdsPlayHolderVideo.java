@@ -10,7 +10,7 @@ import android.support.v4.app.ActivityCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,10 +20,11 @@ import android.widget.TextView;
 
 public class AdsPlayHolderVideo extends RelativeLayout implements AdsPlayReady {
 
-    private ScalableVideoView holder;
-    private Button btnClose;
+    private LinearLayout adHolder;
+    private ScalableVideoView videoView;
     private TextView txttitle;
-    //private TextView txtdescription;
+    //private TextView txtdescription
+    //private Button btnClose;;
 
 
     // Storage Permissions
@@ -70,8 +71,8 @@ public class AdsPlayHolderVideo extends RelativeLayout implements AdsPlayReady {
         init();
     }
 
-    public ScalableVideoView getHolder() {
-        return this.holder;
+    public ScalableVideoView getVideoView() {
+        return this.videoView;
     }
 
     boolean valumeEnabled = false;
@@ -79,89 +80,82 @@ public class AdsPlayHolderVideo extends RelativeLayout implements AdsPlayReady {
     private void init() {
         inflate(getContext(), R.layout.holdervideo, this);
 
-        this.holder = (ScalableVideoView) findViewById(R.id.holder);
-       // this.holder.setVisibility(AdsPlayHolderVideo.GONE);
-        this.txttitle = (TextView) findViewById(R.id.txttitle);
+        this.videoView = (ScalableVideoView) findViewById(R.id.masterheadVideoView);
+        this.txttitle = (TextView) findViewById(R.id.masterheadTitle);
+        this.adHolder = (LinearLayout)findViewById(R.id.masterheadHolder);
 
-
-
-
-        //this.btnClose = (Button) findViewById(R.id.btnClose);
-        //this.txtdescription = (TextView) findViewById(R.id.txtdescription);
-
-//        this.btnClose.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                holder.mMediaPlayer.stop();
-//                holder.mMediaPlayer.release();
-//                HolderVideo.this.setVisibility(view.GONE);
-//            }
-//        });
-
+        this.videoView.setVisibility(AdsPlayHolderVideo.GONE);
+        this.txttitle.setVisibility(AdsPlayHolderVideo.GONE);
     }
 
-    public void playAd(String filepath){
+    public void playAd(MasterheadAdData adData){
         try {
-            final ScalableVideoView holder = this.getHolder();
+            Log.i("AdsPlay","--------------------------------------------------------------------");
+            String file = "file://"+adData.getMedia();
+            String adTitle = adData.getTitle();
 
-            String file = "file://"+filepath;
             Log.i("AdsPlay","-------> playAd file: "+file);
-            holder.setDataSource(file);
-            holder.setVolume(0, 2);
+            this.videoView.setVisibility(AdsPlayHolderVideo.VISIBLE);
+            this.txttitle.setVisibility(AdsPlayHolderVideo.VISIBLE);
 
+            this.videoView.setDataSource(file);
+            this.videoView.setVolume(0, 2);
+            this.txttitle.setText(adTitle);
 
-            holder.prepareAsync(new MediaPlayer.OnPreparedListener() {
+            this.videoView.prepareAsync(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
                     Log.i("AdsPlay","Ad Duration: "+mp.getDuration());
-                    holder.start();
+                    AdsPlayHolderVideo.this.videoView.start();
 
-                    getHolder().setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+                    getVideoView().setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                         @Override
                         public void onCompletion(MediaPlayer mp) {
                             mp.stop();
                             mp.release();
-                            //AdsPlayHolderVideo.this.setVisibility(AdsPlayHolderVideo.GONE);
+
+                            AdsPlayHolderVideo.this.videoView.setVisibility(AdsPlayHolderVideo.GONE);
+                            AdsPlayHolderVideo.this.txttitle.setVisibility(AdsPlayHolderVideo.GONE);
+                            AdsPlayHolderVideo.this.adHolder.setVisibility(AdsPlayHolderVideo.GONE);
                         }
                     });
 
                 }
             });
 
-            holder.setOnClickListener(new OnClickListener() {
+            this.videoView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     synchronized(this) {
                         if( ! valumeEnabled ){
                             valumeEnabled = true;
-                            holder.setVolume(0, 2);
+                            AdsPlayHolderVideo.this.videoView.setVolume(0, 2);
                         } else {
                             valumeEnabled = false;
-                            holder.setVolume(0, 0);
+                            AdsPlayHolderVideo.this.videoView.setVolume(0, 0);
                         }
                     }
                 }
             });
 
         } catch (Exception ioe) {
-            //ignore
             Log.i("AdsPlay",ioe.getMessage());
         }
     }
 
-    public static void checkSystem(Activity activity){
+    public static void checkSystemPermissions(Activity activity){
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         AdsPlayHolderVideo.verifyStoragePermissions(activity);
     }
 
     public void start(){
-        MasterheadAdData adData = new MasterheadAdData("https://ads-cdn.fptplay.net/static/ads/demo/toshiba-truehome-360p.mp4","");
-        new DownloadFileFromUrl(this).execute(adData.getMedia());
+        new DownloadFileFromUrl(this).execute(331);
     }
 
     @Override
-    public void onMediaReady(String media) {
-        playAd(media);
+    public void onMediaReady(MasterheadAdData adData) {
+        playAd(adData);
     }
 }

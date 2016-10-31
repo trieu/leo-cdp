@@ -5,5 +5,5 @@ package com.adsplay.masterhead;
  */
 
 public interface AdsPlayReady {
-    public void onMediaReady(String media);
+    public void onMediaReady(MasterheadAdData adData);
 }

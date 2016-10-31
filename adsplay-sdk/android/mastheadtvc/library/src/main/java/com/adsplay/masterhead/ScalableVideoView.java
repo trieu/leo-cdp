@@ -149,7 +149,7 @@ public class ScalableVideoView extends TextureView implements TextureView.Surfac
     }
 
     public void setDataSource(@NonNull Context context, @NonNull Uri uri,
-            @Nullable Map<String, String> headers) throws IOException {
+                              @Nullable Map<String, String> headers) throws IOException {
         initializeMediaPlayer();
         mMediaPlayer.setDataSource(context, uri, headers);
     }
@@ -228,11 +228,20 @@ public class ScalableVideoView extends TextureView implements TextureView.Surfac
     }
 
     public boolean isPlaying() {
-        return mMediaPlayer.isPlaying();
+        try {
+            return mMediaPlayer.isPlaying();
+        } catch (Exception e) {
+
+        }
+        return false;
     }
 
     public void pause() {
-        mMediaPlayer.pause();
+        try {
+            mMediaPlayer.pause();
+        } catch (IllegalStateException e) {
+
+        }
     }
 
     public void seekTo(int msec) {
@@ -244,24 +253,45 @@ public class ScalableVideoView extends TextureView implements TextureView.Surfac
     }
 
     public void setVolume(float leftVolume, float rightVolume) {
-        mMediaPlayer.setVolume(leftVolume, rightVolume);
+        try {
+            mMediaPlayer.setVolume(leftVolume, rightVolume);
+        } catch (Exception e) {
+
+        }
     }
 
     public void start() {
-        mMediaPlayer.start();
+        try {
+            mMediaPlayer.start();
+        } catch (IllegalStateException e) {
+
+        }
     }
 
     public void stop() {
-        mMediaPlayer.stop();
+        try {
+            mMediaPlayer.stop();
+        } catch (IllegalStateException e) {
+
+        }
+
     }
 
     public void reset() {
-        mMediaPlayer.reset();
+        try {
+            mMediaPlayer.reset();
+        } catch (Exception e) {
+
+        }
     }
 
     public void release() {
-        reset();
-        mMediaPlayer.release();
-        mMediaPlayer = null;
+        try {
+            reset();
+            mMediaPlayer.release();
+            mMediaPlayer = null;
+        } catch (Exception e) {
+
+        }
     }
 }
