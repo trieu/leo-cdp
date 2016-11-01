@@ -53,7 +53,6 @@ module.exports = function (app) {
             }
         });
     });
-
     
     //______________ passport
     var passport = require('passport');
@@ -61,7 +60,7 @@ module.exports = function (app) {
     app.use(passport.session());
     var passport_auth = require('../middlewares/passport-utils.js')(passport);
 
-
+    app.use('/vast', require('./vast'));
     //______________ register
     app.route('/register').get(function (req, res, next) {
         var data = modelUtils.baseModel(req);
@@ -126,5 +125,11 @@ module.exports = function (app) {
     app.route('/user/login').post(checkCaptcha, passport_auth.login_local);
 
     app.route('/user/logout').get(passport_auth.logout);
+
+    app.route('/*').get(function (req, res) {
+        var data = modelUtils.baseModel(req);
+        data.dashboard_title = "PAGE NOT FOUND";
+        res.render('common/404', data);
+    });
 
 };
