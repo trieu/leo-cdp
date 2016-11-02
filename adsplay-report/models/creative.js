@@ -199,43 +199,48 @@ exports.edit = function (url, data, callback) {
 
 exports.save = function (option, res, callback) {
 
-    var crt = JSON.parse(option.fields.creative); //creative data
-    var media = option.fields.media; //media string
-    var file = option.files.media; //media file
+    try{
+        var crt = JSON.parse(option.fields.creative); //creative data
+        var media = option.fields.media; //media string
+        var file = option.files.media; //media file
 
-    crt.adType = parseInt(option.adType);
-    //crt.idUser = parseInt(option.user.id);
+        crt.adType = parseInt(option.adType);
+        //crt.idUser = parseInt(option.user.id);
 
-    crt.crtDateL = new Date().getTime();
-    crt.runDateL = new Date(crt.runDate).getTime();
-    crt.expDateL = new Date(crt.expDate).getTime();
+        crt.crtDateL = new Date().getTime();
+        crt.runDateL = new Date(crt.runDate).getTime();
+        crt.expDateL = new Date(crt.expDate).getTime();
 
-    crt.createdDate = moment().format('YYYY-MM-DD-HH-mm');
-    crt.runDate = moment(crt.runDate).format('YYYY-MM-DD-HH-mm');
-    crt.expiredDate = moment(crt.expDate).format('YYYY-MM-DD-HH-mm');
+        crt.createdDate = moment().format('YYYY-MM-DD-HH-mm');
+        crt.runDate = moment(crt.runDate).format('YYYY-MM-DD-HH-mm');
+        crt.expiredDate = moment(crt.expDate).format('YYYY-MM-DD-HH-mm');
+        
+        //remove field
+        delete crt["expDate"];
+        if(crt.id == ""){
+            delete crt["id"];
+        }
+
+        if (crt.adType == 1 || crt.adType == 11) {
+            save_tvc(option.url, crt, media, file, res);
+        }
+        else if (crt.adType == 3) {
+            save_overlay(option.url, crt, media, file, res);
+        }
+        else if (crt.adType == 4) {
+            save_break_news(option.url, crt, media, file, res);
+        }
+        else if (crt.adType == 5) {
+            save_display_html(option.url, crt, media, file, res);
+        }
+        else if (crt.adType == 6) {
+            save_display_image(option.url, crt, media, file, res);
+        }
+    }
+    catch (e) {
+        console.error(e);
+    }
     
-    //remove field
-    delete crt["expDate"];
-    if(crt.id == ""){
-        delete crt["id"];
-    }
-
-    if (crt.adType == 1 || crt.adType == 11) {
-        save_tvc(option.url, crt, media, file, res);
-    }
-    else if (crt.adType == 3) {
-        save_overlay(option.url, crt, media, file, res);
-    }
-    else if (crt.adType == 4) {
-        save_break_news(option.url, crt, media, file, res);
-    }
-    else if (crt.adType == 5) {
-        save_display_html(option.url, crt, media, file, res);
-    }
-    else if (crt.adType == 6) {
-        save_display_image(option.url, crt, media, file, res);
-    }
-
 };
 
 exports.update = function (url, body, res, callback) {

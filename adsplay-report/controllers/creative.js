@@ -162,34 +162,40 @@ router.get('/:id', function (req, res) {
 
 //--- save
 router.post('/save/:adType', function (req, res) {
-	var data = modelUtils.baseModel(req);
-	var url = data.site.api_domain + '/creative/save/json';
 
-	var form = new formidable.IncomingForm();
-	form.parse(req, function (err, fields, files) {
-		if (err) {
-			console.error(err);
-		}
-		else {
-			// console.log(files);
-			// console.log(fields);
-			// permission isAdminGroup {1000: 1, 1001: 1};
-			// permission editable {1000: 1, 1001: 1, 1007: 1, 1003: 1, 1006: 1};
-			if(data.editable){
-				var option = {
-					url: url,
-					user: req.user,
-					adType: req.params.adType,
-					fields: fields,
-					files: files,
+	try{
+		var data = modelUtils.baseModel(req);
+		var url = data.site.api_domain + '/creative/save/json';
+
+		var form = new formidable.IncomingForm();
+		form.parse(req, function (err, fields, files) {
+			if (err) {
+				console.error(err);
+			}
+			else {
+				// console.log(files);
+				// console.log(fields);
+				// permission isAdminGroup {1000: 1, 1001: 1};
+				// permission editable {1000: 1, 1001: 1, 1007: 1, 1003: 1, 1006: 1};
+				if(data.editable){
+					var option = {
+						url: url,
+						user: req.user,
+						adType: req.params.adType,
+						fields: fields,
+						files: files,
+					}
+					creativeModel.save(option, res);
 				}
-				creativeModel.save(option, res);
+				else{
+					res.render('common/permission');
+				}
 			}
-			else{
-				res.render('common/permission');
-			}
-		}
-	});
+		});
+	}
+	catch (e) {
+        console.error(e);
+    }
 });
 
 //--- update

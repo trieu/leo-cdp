@@ -23,29 +23,6 @@ $(window).load(function() {
 		}
 	});
 
-	//set location
-	if(typeof (creativeData) != 'undefined' && $('#ads_target_location').length != 0){
-		//FIXME
-		var locs = creativeData.tglocs;
-		if (typeof (locs) != 'undefined' && locs.length > 0) {
-			for(var i in locs){
-				$('#ads_target_location option').each(function(){
-					if($(this).val() == locs[i]){
-						$(this).prop('selected', true);
-					}
-				});
-			}
-		}
-		else if($("#checkAllLocs").length != 0){
-			$("#checkAllLocs").attr('checked', true);
-			$('#ads_target_location option').prop('selected', true);
-		}
-	}
-	else if($("#checkAllLocs").length != 0){
-		$("#checkAllLocs").attr('checked', true);
-		$('#ads_target_location option').prop('selected', true);
-	}
-
 	//event check all
 	$('#checkAllLocs').change(function(){
 		if($(this).is(':checked')){
@@ -102,17 +79,46 @@ $(window).load(function() {
 	//set copy creative
 	copyCreative();
 
-	//set default new creative
-	setDefautNewCreative();
+	//set default fields creative
+	setFieldsCreative();
     
 });
 
-function setDefautNewCreative(){
-	//if creativeDate = undefined => new ads
-	if(typeof (creativeData) == 'undefined'){
+function setFieldsCreative(){
+
+	//set location
+	if(typeof (creativeData) != 'undefined'){
+		//FIXME
+		if($('#ads_target_location').length != 0){
+			var locs = creativeData.tglocs;
+			if (typeof (locs) != 'undefined' && locs.length > 0) {
+				for(var i in locs){
+					$('#ads_target_location option').each(function(){
+						if($(this).val() == locs[i]){
+							$(this).prop('selected', true);
+						}
+					});
+				}
+			}
+			else if($("#checkAllLocs").length != 0){
+				$("#checkAllLocs").attr('checked', true);
+				$('#ads_target_location option').prop('selected', true);
+			}
+		}
+		
+	}
+	else{
+		if($("#checkAllLocs").length != 0){
+			$("#checkAllLocs").attr('checked', true);
+			$('#ads_target_location option').prop('selected', true);
+		}
+		
 		//set default Running Date
 		$('#ads_running_date').val(moment().format('YYYY-MM-DDTHH:mm'));
+		//set hide status new
+		$('#crt-status').hide();
 	}
+
 }
 
 function isMobile(){
