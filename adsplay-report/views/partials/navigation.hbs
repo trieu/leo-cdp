@@ -160,7 +160,14 @@
 
             {{#if isSuperAdminGroup }}
                 <li>
-                    <a href="/user"><i class="fa fa-users" aria-hidden="true"></i> Users Management</a>  
+                    <a href="javascript:;" data-toggle="collapse"
+                       data-target="#menuUsers"><i class="fa fa-users" aria-hidden="true"></i> Users Management<i
+                            class="fa fa-fw fa-caret-down"></i></a>
+                    <ul id="menuUsers" class="collapse" aria-expanded="false">
+                        <li class="">
+                            <a href="/user"><i class="fa fa-user" aria-hidden="true"></i> Users Tool</a>
+                        </li>
+                    </ul>
                 </li>
             {{/if}}
 
