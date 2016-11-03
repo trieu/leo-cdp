@@ -9,7 +9,7 @@
     android:weightSum="1">
 
 
-    <com.adsplay.masterhead.ScalableVideoView
+    <net.adsplay.masterhead.ScalableVideoView
         android:layout_width="match_parent"
         android:layout_height="158dp"
         android:id="@+id/masterheadVideoView"
