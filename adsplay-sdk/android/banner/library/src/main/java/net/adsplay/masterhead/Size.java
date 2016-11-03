@@ -1,4 +1,4 @@
-package com.adsplay.masterhead;
+package net.adsplay.masterhead;
 
 /**
  * Created by yqritc on 2015/06/12.

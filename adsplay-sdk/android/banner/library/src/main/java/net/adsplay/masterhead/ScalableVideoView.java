@@ -1,4 +1,4 @@
-package com.adsplay.masterhead;
+package net.adsplay.masterhead;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;

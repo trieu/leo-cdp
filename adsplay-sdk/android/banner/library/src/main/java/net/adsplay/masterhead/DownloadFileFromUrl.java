@@ -1,4 +1,4 @@
-package com.adsplay.masterhead;
+package net.adsplay.masterhead;
 
 import android.os.AsyncTask;
 import android.os.Environment;
