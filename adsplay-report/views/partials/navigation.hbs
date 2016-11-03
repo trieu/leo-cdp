@@ -142,7 +142,7 @@
                     <a href="javascript:;" data-toggle="collapse"
                        data-target="#menuAnalytics"><i class="fa fa-fw fa-line-chart"></i> Analytics<i
                             class="fa fa-fw fa-caret-down"></i></a>
-                    <ul id="menuAnalytics" class="collapse in" aria-expanded="true" style="">
+                    <ul id="menuAnalytics" class="collapse" aria-expanded="false">
 
                         {{#if isSuperAdminGroup }}
                         <li class="">
@@ -155,6 +155,12 @@
                         </li>
 
                     </ul>
+                </li>
+            {{/if}}
+
+            {{#if isSuperAdminGroup }}
+                <li>
+                    <a href="/user"><i class="fa fa-users" aria-hidden="true"></i> Users Management</a>  
                 </li>
             {{/if}}
 
