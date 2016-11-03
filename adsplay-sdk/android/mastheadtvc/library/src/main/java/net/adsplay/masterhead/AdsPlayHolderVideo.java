@@ -141,6 +141,7 @@ public class AdsPlayHolderVideo extends RelativeLayout implements AdsPlayReady {
 
         } catch (Exception ioe) {
             Log.i("AdsPlay",ioe.getMessage());
+            Log.i("AdsPlay",ioe.toString());
         }
     }
 

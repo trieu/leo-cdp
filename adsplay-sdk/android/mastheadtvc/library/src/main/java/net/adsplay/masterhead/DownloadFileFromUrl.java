@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 public class DownloadFileFromUrl extends AsyncTask<Integer, String, MasterheadAdData> {
 
     final static int CACHE_MINUTE = 12*60;//12 hours
+    //final static int CACHE_MINUTE = 0;// no cache
     //AdsPlayHolderVideo adsPlayHolderVideo;
     String downloadedFilePath = null;
     AdsPlayReady adsPlayReady;
