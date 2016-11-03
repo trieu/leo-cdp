@@ -27,8 +27,34 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+var confirmDeleteCrt = function(self){
+    var url = $(self).attr('href');
+    var adsName = 'ads "' + $('.panel-heading>strong').text() + '"' || 'this'; 
+    var message = 'Are you sure you want to delete ' + adsName + '?';
+    modal_alert(message);
+    $('#modal-alert-ok').show();
 
+    $('#modal-alert-ok').click(function(){
+        $('#wrapper').append('<div class="loader"></div>');
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function(data){
+                $('.loader').remove();
+                if(data.message == "success"){
+                    alert('success');
+                    //window.location = location.protocol+'//'+location.host+'/creative/list';
+                }
+            },
+            error: function(){
+                $('.loader').remove();
+                alert('error delete!!!');
+            }
+        });
+    });
 
+    return false;
+}
 
 
 //->->->->-> build DATA

@@ -212,6 +212,20 @@ router.post('/:id/update', function (req, res) {
     }
 });
 
+//--- delete
+router.get('/delete/:id', function (req, res) {
+    var data = modelUtils.baseModel(req);
+    var id = req.params.id || -1;
+
+    console.log("Super admin is " + data.isSuperAdminGroup);
+    if (data.isSuperAdminGroup) {
+    	//FIXME
+    	res.json({message: 'success'});
+    } else {
+        res.json({message: 'error'});
+    }
+});
+
 // <-<-<-<-< end crud
 
 
