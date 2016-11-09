@@ -21,48 +21,64 @@
                 {{/each}}
             </select>
           </div>
-          <div class="form-group">
-            <label>Begin date</label>
-            <div class="row">
-              <div class="col-md-6 col-sm-12">
-                <div class='input-group date' id='begin_date'>
-                  <input type='text' class="form-control" name="begin_date" placeholder="Enter date"/>
-                  <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                  </span>
-                </div>
-              </div>
-              <div class="col-md-6 col-sm-12">
-                <div class='input-group date' id='begin_time'>
-                  <input type='text' class="form-control" name="begin_time" placeholder="Enter time"/>
-                  <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-time"></span>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          <div class="form-group">
-            <label>End date</label>
-            <div class="row">
-              <div class="col-md-6 col-sm-12">
-                <div class='input-group date' id='end_date'>
-                  <input type='text' class="form-control" name="end_date" placeholder="Enter date" />
-                  <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                  </span>
+          <div id="schedules">
+
+            <a href="#" class="btn-plus" id="schedules-plus"><span class="schedules-label">Schedule</span><i class="fa fa-plus-square" aria-hidden="true"></i></a>
+          
+
+          <div class="form-group-wrap">
+              <div class="form-group">
+                <label>Begin date</label>
+                <div class="row">
+                  <div class="col-md-6 col-sm-12">
+                    <div class='input-group date' id='begin_date'>
+                      <input type='text' class="form-control" name="begin_date" placeholder="Enter date"/>
+                      <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-sm-12">
+                    <div class='input-group date' id='begin_time'>
+                      <input type='text' class="form-control" name="begin_time" placeholder="Enter time"/>
+                      <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-time"></span>
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="col-md-6 col-sm-12">
-                <div class='input-group date' id='end_time'>
-                  <input type='text' class="form-control" name="end_time" placeholder="Enter time" />
-                  <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-time"></span>
-                  </span>
+
+              <div class="form-group">
+                <label>End date</label>
+                <div class="row">
+                  <div class="col-md-6 col-sm-12">
+                    <div class='input-group date' id='end_date'>
+                      <input type='text' class="form-control" name="end_date" placeholder="Enter date" />
+                      <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-sm-12">
+                    <div class='input-group date' id='end_time'>
+                      <input type='text' class="form-control" name="end_time" placeholder="Enter time" />
+                      <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-time"></span>
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
+
+              <div class="form-group">
+                <label>Booking</label>
+                <input type='number' class="form-control" name="booking" placeholder="Enter booking">
+              </div>
+
             </div>
+
           </div>
 
           <button type="submit" class="btn btn-default">Submit</button>

@@ -15,5 +15,11 @@ $(function() {
 
   $("#ads_select").chosen({width: "100%", no_results_text: "Oops, nothing found!"});
   $('#ads_select').val('').trigger('chosen:updated');
+
+  $(document).on('click','#schedules-plus', function(e){
+    e.preventDefault();
+    var copy = $('.form-group-wrap:first').clone();
+    $('#schedules').append(copy);
+  });
   
 });
