@@ -15,8 +15,6 @@ public class AdLogDataUtil {
     static OkHttpClient client = new OkHttpClient();
 
     public static void log(String url){
-
-
         try {
             Request request = new Request.Builder()
                     .url(url)
@@ -28,6 +26,5 @@ public class AdLogDataUtil {
         } catch (Exception e){
             Log.i("AdsPlay",e.toString());
         }
-
     }
 }

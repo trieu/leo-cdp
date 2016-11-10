@@ -13,4 +13,8 @@ public class Constants {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
+
+
+    //final static int CACHE_TIME = 12*60;//12 hours
+    public final static int CACHE_TIME = 0;// no cache
 }

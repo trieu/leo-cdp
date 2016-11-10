@@ -1,11 +1,8 @@
 package net.adsplay.common;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
-
-import net.adsplay.holder.AdsPlayHolderVideo;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -15,8 +12,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -24,17 +19,16 @@ import java.util.concurrent.TimeUnit;
  * Created by trieu on 10/30/16.
  */
 
-public class DownloadFileFromUrl extends AsyncTask<Integer, String, AdData> {
+public class AsyncVideoAdLoadTask extends AsyncTask<Integer, String, AdData> {
 
-    //final static int CACHE_MINUTE = 12*60;//12 hours
-    final static int CACHE_MINUTE = 0;// no cache
-    AdsPlayHolderVideo adsPlayHolderVideo;
+
+//    AdsPlayHolderVideo adsPlayHolderVideo;
     String downloadedFilePath = null;
     AdsPlayReady adsPlayReady;
-    Activity activity;
+//    Activity activity;
 
-    public DownloadFileFromUrl(AdsPlayReady adsPlayReady) {
-        this.adsPlayHolderVideo = adsPlayHolderVideo;
+    public AsyncVideoAdLoadTask(AdsPlayReady adsPlayReady) {
+//        this.adsPlayHolderVideo = adsPlayHolderVideo;
         this.adsPlayReady = adsPlayReady;
     }
 
@@ -47,24 +41,6 @@ public class DownloadFileFromUrl extends AsyncTask<Integer, String, AdData> {
         Log.i("AdsPlay","Starting Download");
     }
 
-    public String md5(String s) {
-        try {
-            // Create MD5 Hash
-            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
-            digest.update(s.getBytes());
-            byte messageDigest[] = digest.digest();
-
-            // Create Hex String
-            StringBuffer hexString = new StringBuffer();
-            for (int i=0; i<messageDigest.length; i++)
-                hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
-            return hexString.toString();
-
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
 
 
     /**
@@ -78,24 +54,20 @@ public class DownloadFileFromUrl extends AsyncTask<Integer, String, AdData> {
 
         int placementId = placementIds[0];
 
-
-        //AdData adData = AdDataLoader.get(placementId);
         AdData adData = AdDataLoader.get(placementId);
-        if(placementId == 332){
-            return adData;
-        }
 
         String remoteMediaPath = adData.getMedia();
 
+
         String root = Environment.getExternalStorageDirectory().toString();
-        downloadedFilePath = root +"/" + md5(remoteMediaPath)+".gif";
+        downloadedFilePath = root +"/" + CommonUtil.md5(remoteMediaPath)+".gif";
 
         File localFile = new File (downloadedFilePath);
         if(localFile.isFile()){
             Date lastModified = new Date(localFile.lastModified());
             long diff = new Date().getTime() - lastModified.getTime();//as given
             long minutes = TimeUnit.MILLISECONDS.toMinutes(diff);
-            if(minutes<CACHE_MINUTE){
+            if(minutes < Constants.CACHE_TIME){
                 //downloadedFilePath = filepath;
                 adData.setMedia(downloadedFilePath);
                 return adData;
@@ -131,10 +103,10 @@ public class DownloadFileFromUrl extends AsyncTask<Integer, String, AdData> {
 
             byte data[] = new byte[1024];
 
-            long total = 0;
+//            long total = 0;
             int count;
             while ((count = input.read(data)) != -1) {
-                total += count;
+                //total += count;
 
                 // writing data to file
                 output.write(data, 0, count);

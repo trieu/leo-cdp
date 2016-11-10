@@ -16,7 +16,7 @@ import android.widget.TextView;
 import net.adsplay.common.AdData;
 import net.adsplay.common.AdsPlayReady;
 import net.adsplay.common.Constants;
-import net.adsplay.common.DownloadFileFromUrl;
+import net.adsplay.common.AsyncVideoAdLoadTask;
 
 /**
  * Created by trieu on 10/30/16.
@@ -144,7 +144,7 @@ public class AdsPlayHolderVideo extends RelativeLayout implements AdsPlayReady {
     @Override
     public void start(Activity activity){
         this.activity = activity;
-        new DownloadFileFromUrl(this).execute(331);
+        new AsyncVideoAdLoadTask(this).execute(331);
     }
 
     @Override

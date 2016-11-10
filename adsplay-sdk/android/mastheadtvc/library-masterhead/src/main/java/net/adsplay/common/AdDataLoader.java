@@ -7,8 +7,12 @@ package net.adsplay.common;
 public class AdDataLoader {
 
     public static AdData get(int placementId){
-        //String media = "https://ads-cdn.fptplay.net/static/ads/demo/toshiba-truehome-360p.mp4";
-        String media = "https://img.bluehost.com/300x50/bh_300x50_03.gif";
+        String media;
+        if(placementId == 331){
+            media = "https://ads-cdn.fptplay.net/static/ads/demo/toshiba-truehome-360p.mp4";
+        } else {
+            media = "https://adsplay.net/ads/banner/300x50-banner-size.jpg";
+        }
 
         AdData adData = new AdData(123
                 , media
