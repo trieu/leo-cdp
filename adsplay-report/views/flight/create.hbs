@@ -12,9 +12,9 @@
         Create flight
       </div>
       <div class="panel-body">
-        <form action="/event/create" method="post">
+        <form action="/flight/create" method="post" id="flight-form">
           <div class="form-group">
-            <label>Select Ads</label>
+            <label class="label-important">Select Ads</label>
             <select type="select" class="select-multi" id="ads_select" name="id" data-placeholder="please select a Ads">
                 {{#each ads}}
                 <option value="{{id}}">{{name}}</option>
@@ -32,16 +32,16 @@
                 <label>Begin date</label>
                 <div class="row">
                   <div class="col-md-6 col-sm-12">
-                    <div class='input-group date' id='begin_date'>
-                      <input type='text' class="form-control" name="begin_date" placeholder="Enter date"/>
+                    <div class='input-group date begin_date'>
+                      <input type='text' class="form-control" name="begin_date" placeholder="Enter date" required/>
                       <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                       </span>
                     </div>
                   </div>
                   <div class="col-md-6 col-sm-12">
-                    <div class='input-group date' id='begin_time'>
-                      <input type='text' class="form-control" name="begin_time" placeholder="Enter time"/>
+                    <div class='input-group date begin_time'>
+                      <input type='text' class="form-control" name="begin_time" placeholder="Enter time" required/>
                       <span class="input-group-addon">
                         <span class="glyphicon glyphicon-time"></span>
                       </span>
@@ -54,16 +54,16 @@
                 <label>End date</label>
                 <div class="row">
                   <div class="col-md-6 col-sm-12">
-                    <div class='input-group date' id='end_date'>
-                      <input type='text' class="form-control" name="end_date" placeholder="Enter date" />
+                    <div class='input-group date end_date'>
+                      <input type='text' class="form-control" name="end_date" placeholder="Enter date" required/>
                       <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                       </span>
                     </div>
                   </div>
                   <div class="col-md-6 col-sm-12">
-                    <div class='input-group date' id='end_time'>
-                      <input type='text' class="form-control" name="end_time" placeholder="Enter time" />
+                    <div class='input-group date end_time'>
+                      <input type='text' class="form-control" name="end_time" placeholder="Enter time" required/>
                       <span class="input-group-addon">
                         <span class="glyphicon glyphicon-time"></span>
                       </span>
@@ -74,7 +74,7 @@
 
               <div class="form-group">
                 <label>Booking</label>
-                <input type='number' class="form-control" name="booking" placeholder="Enter booking">
+                <input type='number' class="form-control" name="booking" placeholder="Enter booking" required>
               </div>
 
             </div>
@@ -87,4 +87,5 @@
     </div>
   </div>
 </div>
+{{>popup-partial}}
 <script src="js/business-domains/flight-handle.js"></script>

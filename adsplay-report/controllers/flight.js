@@ -106,62 +106,42 @@ router.post('/create', function (req, res, next) {
 	});
 });
 
-//update
-router.get('/edit/:id', function (req, res, next) {
-	var data = modelUtils.baseModel(req);
+// update
+// router.get('/edit/:id', function (req, res, next) {
+// 	var data = modelUtils.baseModel(req);
 
-    data.dashboard_title = "Edit flight";
-    data.statuses = constantUtils.statuses;
+//     data.dashboard_title = "Edit flight";
+//     data.statuses = constantUtils.statuses;
 
-	flight.findOne({id: req.params.id}, function(err, doc){
-		if(err){
-			return console.error(err);
-		}
-		
-		data.flight = doc;
-		data.begin_time = moment(doc.begin).format('LT');
-		data.end_time = moment(doc.end).format('LT');
-		res.render('flight/edit', data);
-	})
-});
-
-router.post('/edit/:id', function (req, res, next) {
-	hourly_demo = [{view: 3101},{view: 2000}];
-
-	var items = {};
-	items.name = req.body.name;
-	items.begin = req.body.begin_date +" "+ req.body.begin_time;
-	items.end = req.body.end_date +" "+ req.body.end_time;
-	items.status = req.body.status;
-	items.hourly = hourly_demo;
-	items.view = sumView(items.hourly);
-
-	flight.findOneAndUpdate({id: req.params.id}, items, function(err, doc){
-
-		if(err){
-			return console.error(err);
-		}
-		res.redirect('/flight');
-	});
-});
-
-var sumView = function(hourly){
-	var count = 0;
-	if(typeof (hourly) != 'undefined' && hourly != null){
-		for(var i in hourly){
-			count += hourly[i].view;
-		}
-	}
-	return count;
-}
-
-//delete
-// router.post('/delete/:id', function (req, res, next) {
-// 	flight.findOneAndRemove({id: req.params.id}, function(err, doc){
+// 	flight.findOne({id: req.params.id}, function(err, doc){
 // 		if(err){
 // 			return console.error(err);
 // 		}
-// 		res.sendStatus(200);
+		
+// 		data.flight = doc;
+// 		data.begin_time = moment(doc.begin).format('LT');
+// 		data.end_time = moment(doc.end).format('LT');
+// 		res.render('flight/edit', data);
+// 	})
+// });
+
+// router.post('/edit/:id', function (req, res, next) {
+// 	hourly_demo = [{view: 3101},{view: 2000}];
+
+// 	var items = {};
+// 	items.name = req.body.name;
+// 	items.begin = req.body.begin_date +" "+ req.body.begin_time;
+// 	items.end = req.body.end_date +" "+ req.body.end_time;
+// 	items.status = req.body.status;
+// 	items.hourly = hourly_demo;
+// 	items.view = sumView(items.hourly);
+
+// 	flight.findOneAndUpdate({id: req.params.id}, items, function(err, doc){
+
+// 		if(err){
+// 			return console.error(err);
+// 		}
+// 		res.redirect('/flight');
 // 	});
 // });
 

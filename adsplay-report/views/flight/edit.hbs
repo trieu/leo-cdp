@@ -1,76 +1,84 @@
 <div class="row">
     <div class="col-lg-12">
-        <h3 class="page-header">
-            Edit Ad Live Event
-        </h3>
+        <h1 class="page-header">
+            {{dashboard_title}}
+        </h1>
     </div>
 </div>
-
 <div class="row">
   <div class="col-md-6 col-sm-12">
     <div class="panel panel-default">
       <div class="panel-heading">
-        Information
+        Create flight
       </div>
       <div class="panel-body">
-        <form action="/event/edit/{{event.id}}" method="post">
+        <form action="/flight/create" method="post" id="flight-form">
           <div class="form-group">
-            <label>Name</label>
-            <input type="text" class="form-control" name="name" placeholder="Name" value="{{event.name}}">
-          </div>
-          <div class="form-group">
-            <label>Begin date</label>
-            <div class="row">
-              <div class="col-md-6 col-sm-12">
-                <div class='input-group date' id='begin_date'>
-                  <input type='text' class="form-control" value="{{event.begin}}" name="begin_date" placeholder="Enter date"/>
-                  <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                  </span>
-                </div>
-              </div>
-              <div class="col-md-6 col-sm-12">
-                <div class='input-group date' id='begin_time'>
-                  <input type='text' class="form-control" value="{{begin_time}}" name="begin_time" placeholder="Enter time"/>
-                  <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-time"></span>
-                  </span>
-                </div>
-              </div>
-            </div>
+            <label>Select Ads</label>
+            <select type="select" class="select-multi" id="ads_select" name="id" data-placeholder="please select a Ads">
+                {{#each ads}}
+                <option value="{{id}}">{{name}}</option>
+                {{/each}}
+            </select>
           </div>
 
-          <div class="form-group">
-            <label>End date</label>
-            <div class="row">
-              <div class="col-md-6 col-sm-12">
-                <div class='input-group date' id='end_date'>
-                  <input type='text' class="form-control" value="{{event.end}}" name="end_date" placeholder="Enter date" />
-                  <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                  </span>
-                </div>
-              </div>
-              <div class="col-md-6 col-sm-12">
-                <div class='input-group date' id='end_time'>
-                  <input type='text' class="form-control" value="{{end_time}}" name="end_time" placeholder="Enter time" />
-                  <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-time"></span>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
+          <div id="schedules">
 
-          <div class="form-group">
-              <label>Status</label>
-              <select class="form-control" name="status" data-value="{{event.status}}">
-                  <option value="0">Invalid</option>
-                  <option value="1">Pending</option>
-                  <option value="2">Running</option>
-                  <option value="3">Finished</option>
-                  <option value="4">Expired</option>
-              </select>
+            <a href="#" class="btn-plus" id="schedules-plus"><span class="schedules-label">Schedule</span><i class="fa fa-plus-square" aria-hidden="true"></i></a>
+          
+
+          <div class="form-group-wrap">
+              <div class="form-group">
+                <label>Begin date</label>
+                <div class="row">
+                  <div class="col-md-6 col-sm-12">
+                    <div class='input-group date begin_date'>
+                      <input type='text' class="form-control" name="begin_date" placeholder="Enter date"/>
+                      <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-sm-12">
+                    <div class='input-group date begin_time'>
+                      <input type='text' class="form-control" name="begin_time" placeholder="Enter time"/>
+                      <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-time"></span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>End date</label>
+                <div class="row">
+                  <div class="col-md-6 col-sm-12">
+                    <div class='input-group date end_date'>
+                      <input type='text' class="form-control" name="end_date" placeholder="Enter date" />
+                      <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-sm-12">
+                    <div class='input-group date end_time'>
+                      <input type='text' class="form-control" name="end_time" placeholder="Enter time" />
+                      <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-time"></span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Booking</label>
+                <input type='number' class="form-control" name="booking" placeholder="Enter booking">
+              </div>
+
+            </div>
+
           </div>
 
           <button type="submit" class="btn btn-default">Submit</button>
@@ -79,16 +87,4 @@
     </div>
   </div>
 </div>
-<script type="text/javascript">
-
-  $('#begin_date,#end_date').datetimepicker({
-    format: 'YYYY-MM-DD'
-  });
-  $('#begin_time,#end_time').datetimepicker({
-    format: 'LT'
-  });
-
-  $status = $('[name="status"]');
-  $status.val($status.attr('data-value'));
-
-</script>
+<script src="js/business-domains/flight-handle.js"></script>

@@ -12,53 +12,21 @@
         Create Event
       </div>
       <div class="panel-body">
-        <form action="/event/create" method="post">
+        <form action="/campaign/create" method="post" id="campaign-form">
+
+          <input type="hidden" name="_id">
           <div class="form-group">
-            <label>Name</label>
+            <label class="label-important">Name</label>
             <input type="text" class="form-control" name="name" placeholder="Name">
           </div>
+          
           <div class="form-group">
-            <label>Begin date</label>
-            <div class="row">
-              <div class="col-md-6 col-sm-12">
-                <div class='input-group date' id='begin_date'>
-                  <input type='text' class="form-control" name="begin_date" placeholder="Enter date"/>
-                  <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                  </span>
-                </div>
-              </div>
-              <div class="col-md-6 col-sm-12">
-                <div class='input-group date' id='begin_time'>
-                  <input type='text' class="form-control" name="begin_time" placeholder="Enter time"/>
-                  <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-time"></span>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label>End date</label>
-            <div class="row">
-              <div class="col-md-6 col-sm-12">
-                <div class='input-group date' id='end_date'>
-                  <input type='text' class="form-control" name="end_date" placeholder="Enter date" />
-                  <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                  </span>
-                </div>
-              </div>
-              <div class="col-md-6 col-sm-12">
-                <div class='input-group date' id='end_time'>
-                  <input type='text' class="form-control" name="end_time" placeholder="Enter time" />
-                  <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-time"></span>
-                  </span>
-                </div>
-              </div>
-            </div>
+            <label class="label-important">Select Ads</label>
+            <select type="select" class="select-multi" id="ads_select" name="ads" data-placeholder="please select a Ads" multiple="multiple">
+                {{#each ads}}
+                <option value="{{id}}">{{name}}</option>
+                {{/each}}
+            </select>
           </div>
 
           <button type="submit" class="btn btn-default">Submit</button>
@@ -68,18 +36,5 @@
   </div>
 </div>
 <script type="text/javascript">
-  $('#begin_date,#end_date').datetimepicker({
-    format: 'YYYY-MM-DD'
-  });
-  $('#begin_time,#end_time').datetimepicker({
-    format: 'LT'
-  });
-
-  $("#begin_date").on("dp.change", function (e) {
-      $('#end_date').data("DateTimePicker").minDate(e.date);
-  });
-  $("#end_date").on("dp.change", function (e) {
-      $('#begin_date').data("DateTimePicker").maxDate(e.date);
-  });
-
+$("#ads_select").chosen({width: "100%", no_results_text: "Oops, nothing found!"});
 </script>

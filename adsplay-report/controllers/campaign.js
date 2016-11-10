@@ -9,6 +9,57 @@ var express = require('express')
     , constantUtils = require('../helpers/constant_utils')
     , request = require('request')
     , moment = require('moment');
+var dataUtils = require('../helpers/data_utils.js');    
+var Sync = require('sync');    
+
+router.get('/', function (req, res, next) {
+    var data = modelUtils.baseModel(req);
+    data.statuses = constantUtils.statuses;
+    data.dashboard_title = "Campaign list";
+
+    res.render('campaign/list', data);
+});
+
+//create
+router.get('/create', function (req, res, next) {
+var data = modelUtils.baseModel(req);
+    data.statuses = constantUtils.statuses;
+    data.dashboard_title = "campaign list";
+
+    var url = data.site.api_domain + '/api/creative/summary?begin=2016-05-01';
+
+    Sync(function(){
+        try{
+            // result from callback
+            var result = dataUtils.request.sync(null, url);
+            data.ads = [];
+            for(var i in result){
+                data.ads.push({id: result[i].id, name: result[i].name});
+            }
+            res.render('campaign/create', data);
+        }
+
+        catch (e) {
+            console.error(e);
+        }
+    })
+});
+router.post('/create', function (req, res, next) {
+    var items = {};
+    items.name = req.body.name;
+    if (!Array.isArray(req.body.ads)) {
+        items.ads = [];
+        items.ads.push(req.body.ads);
+    }
+    
+    var obj = new Campaign(items);
+    obj.save(function(err, obj){
+        if(err){
+            return console.error(err);
+        }
+        res.redirect('/');
+    });
+});
 
 router.get('/:id', function (req, res) {
     var data = modelUtils.baseModel(req);
