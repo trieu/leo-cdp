@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
 
+import net.adsplay.holder.AdsPlayHolderVideo;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -26,13 +28,13 @@ public class DownloadFileFromUrl extends AsyncTask<Integer, String, AdData> {
 
     //final static int CACHE_MINUTE = 12*60;//12 hours
     final static int CACHE_MINUTE = 0;// no cache
-    //AdsPlayHolderVideo adsPlayHolderVideo;
+    AdsPlayHolderVideo adsPlayHolderVideo;
     String downloadedFilePath = null;
     AdsPlayReady adsPlayReady;
     Activity activity;
 
     public DownloadFileFromUrl(AdsPlayReady adsPlayReady) {
-        //this.adsPlayHolderVideo = adsPlayHolderVideo;
+        this.adsPlayHolderVideo = adsPlayHolderVideo;
         this.adsPlayReady = adsPlayReady;
     }
 
