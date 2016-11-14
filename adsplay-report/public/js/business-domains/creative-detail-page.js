@@ -223,14 +223,17 @@ var drawHourlyStatsData = function (url, previousDay, currentDay) {
                     timeArray.push(data[i].t);
                 }
             }
+            
             var x = chart.xAxis;
-            x.tickValues(timeArray);
+            x.scale(timeArray);
+            x.ticks(8);
             x.tickFormat(function (d) {
                 return new moment(d).format("HH:mm");
             });
             var y = chartHourly.yAxis;
             y.axisLabel('View');
             y.tickFormat(d3.format(',r'));
+
         };
 
         if (chartDataHourly == null) {
