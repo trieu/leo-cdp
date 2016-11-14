@@ -9,14 +9,14 @@
 {{#if editable }}
 <p>
     <a href="/campaign/create" class="btn btn-primary" id="new-creative">
-        <i class="fa fa-industry"></i> New Ad Live campaign
+        <i class="fa fa-industry"></i> Ad Campaign
     </a>
 </p>
 {{/if}}
 
 <div class="row">
     <div class="col-lg-12">
-        <div class="table-responsive" id="campaign-list">
+        <div class="table-responsive table-style" id="campaign-list">
         </div>
     </div>
 </div>
@@ -26,6 +26,7 @@
 
         Handlebars.registerHelper('formatCurrency', function(value) { return value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"); });
 
+        render_list();
 
         function list_html (data){
             var dataList = {campaign: data};
@@ -37,6 +38,7 @@
 		                    <th>ID</th> \
 		                    <th>Name</th> \
 		                    <th>Ads</th> \
+                            <th>Action</th> \
 		                </tr> \
                     </thead> \
                     <tbody> \
@@ -49,7 +51,7 @@
             if (!data || data.length == 0) {
                 $('#tbl-campaign').find('tbody').empty().append('<tr><td colspan="8" style="text-align: center">No record found!</td></tr>');
             } else {
-                var source = $("#tpl-crt-list").html();
+                var source = $("#table-list").html();
                 var template = Handlebars.compile(source);
                 var htmlTable = template(dataList);
 
@@ -57,9 +59,9 @@
             }
         }
 
-        function render_list(begin, end){
+        function render_list(){
             $.ajax({
-                url: '/campaign/find?begin='+begin+'&end='+end,
+                url: '/campaign/find/',
                 type: "GET",
                 contentType: "application/json",
                 dataType:'json',
@@ -69,17 +71,11 @@
                 success: function(data){
                     $('.loader').remove();
                     list_html(data);
-                    icon_status();
                     var table = $("#tbl-campaign").DataTable({
                         "pageLength": 25,
                         "order": [[0,'desc']]
                     });
 
-                    $("#filter-status").change(function(){
-			        	table.search($(this).val()).draw();
-			        });
-
-                    render_action();
                     $('[title]').tooltip();
                 }
             });
@@ -89,16 +85,20 @@
 
 </script>
 
-<script id="tpl-crt-list" type="text/x-handlebars">
+<script id="table-list" type="text/x-handlebars">
     \{{#each campaign}}
         <tr >
-            <td>\{{id}}</td>
-            <td><a href="/campaign/find/\{{id}}">\{{name}}</a></td>
-            <td>\{{view}}</td>
-            <td data-status="\{{status}}" data-order="\{{status}}"  data-search="\{{status}}">\{{status}}</td>
-            <td class="td-max-400">\{{begin}} &#10145; \{{end}}</td>
+            <td>\{{_id}}</td>
+            <td><a href="/campaign/find/\{{_id}}">\{{name}}</a></td>
             <td>
-            	<a title="Edit" href="/campaign/edit/\{{id}}"><i class="fa fa-pencil"></i></a>
+                <ul>
+                    \{{#each ads}}
+                        <li>\{{this}}</li>
+                    \{{/each}}
+                </ul>
+            </td>
+            <td>
+            	<a title="Edit" href="/campaign/edit/\{{_id}}"><i class="fa fa-pencil"></i></a>
             </td>
         </tr>
     \{{/each}}

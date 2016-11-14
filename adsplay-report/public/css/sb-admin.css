@@ -463,7 +463,8 @@ table.dataTable td{
 }
 
 #table-creative-list,
-#event-list{
+#event-list,
+.table-style{
     padding: 15px;
     border: 1px solid #eee;
     border-radius: 4px;

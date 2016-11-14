@@ -19,5 +19,14 @@ campaignSchema.plugin(autoIncrement.plugin, {
     startAt: 1000
 });
 
+campaignSchema.methods.getAll = function(id, data, cb) {
+    data.cpid = id;
+    return cb(null, data);
+};
+
+campaignSchema.methods.allByUser = function(sessionId, data , cb) {
+	return cb(null, data);
+};
+
 module.exports = mongoose.model('campaign', campaignSchema);
 
