@@ -6,7 +6,6 @@ var connection = mongoose.createConnection(dbConfig.url);
 
 var flightSchema = new mongoose.Schema({
 	_id: { type: Number, index: true },
-	name: { type: String },
 	schedules: [
 		{
 			begin: { type: Date, default: Date.now},

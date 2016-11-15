@@ -9,13 +9,13 @@
   <div class="col-md-6 col-sm-12">
     <div class="panel panel-default">
       <div class="panel-heading">
-        Create flight
+        Form {{dashboard_title}}
       </div>
       <div class="panel-body">
         <form action="/flight/create" method="post" id="flight-form">
           <div class="form-group">
             <label class="label-important">Select Ads</label>
-            <select type="select" class="select-multi" id="ads_select" name="id" data-placeholder="please select a Ads">
+            <select type="select" class="select-multi" id="ads_select" name="_id" data-placeholder="please select a Ads">
                 {{#each ads}}
                 <option value="{{id}}">{{name}}</option>
                 {{/each}}

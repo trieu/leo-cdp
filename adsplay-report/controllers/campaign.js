@@ -19,7 +19,7 @@ var Sync = require('sync');
 router.get('/', function (req, res, next) {
     var data = modelUtils.baseModel(req);
     data.statuses = constantUtils.statuses;
-    data.dashboard_title = "Campaign list";
+    data.dashboard_title = "Campaign Management";
 
     res.render('campaign/list', data);
 });
@@ -28,7 +28,7 @@ router.get('/', function (req, res, next) {
 router.get('/create', function (req, res, next) {
 var data = modelUtils.baseModel(req);
     data.statuses = constantUtils.statuses;
-    data.dashboard_title = "campaign list";
+    data.dashboard_title = "New Campaign";
 
     var url = data.site.api_domain + '/api/creative/summary?begin=2015-05-01';
 
