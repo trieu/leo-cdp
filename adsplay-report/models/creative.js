@@ -309,7 +309,7 @@ var convert_video = function(obj, crtName, callback){
     var input = obj.url;
     //output file convert with name = convert-video.mp4
     var output = obj.folder + "convert-video.mp4";
-    var option = {videoCodec: 'libx264', audioCodec: 'libmp3lame', format: 'mp4', bitrate: '360p'};
+    var option = {videoCodec: 'libx264', audioCodec: 'aac', format: 'mp4', bitrate: '360p'}; //h.264 = libx264
 
     convert.command(input, output, option, function () {
 
