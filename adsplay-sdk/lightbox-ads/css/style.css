@@ -41,6 +41,9 @@ body{
   	filter: alpha(opacity=60);
 }
 
-	
+.popup-result {
+	top:2.5%;
+	z-index: 100000000;
+}
 	
 
