@@ -34,5 +34,13 @@ body{
       bottom: 6.5%;
 }
 
+.popup-point img{
+	height: 100px;
+	width: 80px;
+	opacity: 0.8;
+  	filter: alpha(opacity=60);
+}
+
 	
 	
+
