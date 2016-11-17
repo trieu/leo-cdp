@@ -15,12 +15,11 @@
             android:orientation="vertical">
 
             <!-- AdsPlay Masterhead Tag Code -->
-            <net.adsplay.masterhead.AdsPlayHolderVideo
+            <net.adsplay.holder.AdsPlayHolderVideo
                 android:id="@+id/masterhead_view"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 />
-
 
             <Button
                 android:id="@+id/button1"
@@ -28,6 +27,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Element" />
+
+            <!-- AdsPlay Image Banner Tag Code -->
+            <net.adsplay.holder.AdsPlayHolderImage
+                android:id="@+id/banner_view"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                />
 
             <Button
                 android:id="@+id/button2"
