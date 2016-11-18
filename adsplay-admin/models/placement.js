@@ -16,6 +16,8 @@ var placementSchema = new mongoose.Schema({
     publisher  : {type : Number, ref : 'publishers'},
     enabled: {type: Boolean, default: true },
     type: { type: Number, default: 0 },
+    impression: { type: Number, default: 0 },
+    view: { type: Number, default: 0 },
     width: { type: Number, default: 0 },
     height: { type: Number, default: 0 },
     updatedDate : {type: Date, default: Date.now },

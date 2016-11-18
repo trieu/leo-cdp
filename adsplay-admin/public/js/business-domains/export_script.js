@@ -11,8 +11,9 @@ function dateTimeValid(a, b){
 	};
 
 	var temp_begin = (time_begin <= int_begin) ? formatDatetime(int_begin) : formatDatetime(time_begin);
-	var temp_end = (time_end >= int_end) ? formatDatetime(int_end) : formatDatetime(time_end);
-
+	//FIX ME
+	//var temp_end = (time_end >= int_end) ? formatDatetime(int_end) : formatDatetime(time_end);
+	var temp_end = formatDatetime(int_end);
 	return {begin: temp_begin, end: temp_end};
 	
 }
@@ -55,7 +56,7 @@ $(window).load(function() {
                             <label>End</label>\
                             <input type="datetime-local" class="form-control" id="export_end" value="'+end+'" placeholder="Enter End Date">\
                         </div>\
-                        <button type="button" onclick="drawHourlyStatsChange()" class="btn btn-primary">Ok</button>\
+                        <button type="button" onclick="drawHourlyStatsChange()" id="export_ok" class="btn btn-primary">Ok</button>\
                         <a href="#" target="_blank" id="export_btn" class="btn btn-primary">Export</a>\
                     </form>');
 		$('.export_form').append(export_form);
@@ -64,6 +65,7 @@ $(window).load(function() {
 
 	//event click export
 	$(document).on("click", "#export_btn", function(){
+		$("#export_ok").trigger("click");
 
 		var getDateTime = dateTimeValid($("#export_begin").val(),$("#export_end").val());
 
