@@ -14,6 +14,7 @@ $(window).load(function() {
 				$.each(result, function (i, item) {
 					$("#ads-publisher").append('<option value="'+item._id+'">'+item.name+'</option>');
 				});
+				responsiveCheck();
 			}
 		});
 	},100);
@@ -43,6 +44,14 @@ $(window).load(function() {
 			}
 		}
 		return false;
+	}
+
+	function responsiveCheck(){
+		$(".plt_w, .plt_h").each(function(){
+			if($(this).text() == "0"){
+				$(this).text("100%");
+			}
+		});
 	}
 
 	$("#table-placement").DataTable({"pageLength": 25});
@@ -182,6 +191,7 @@ $(window).load(function() {
 				else{
 					$('#plt_container').append(plt_print(result));
 				}
+				responsiveCheck();
 
 				$('#modal-placement').modal('hide');
 				
