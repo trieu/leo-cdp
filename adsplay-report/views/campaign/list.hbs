@@ -49,7 +49,7 @@
             $("#campaign-list").append(table)
             
             if (!data || data.length == 0) {
-                $('#tbl-campaign').find('tbody').empty().append('<tr><td colspan="8" style="text-align: center">No record found!</td></tr>');
+                $('#tbl-campaign').find('tbody').empty().append('<tr><td colspan="4" style="text-align: center">No record found!</td></tr>');
             } else {
                 var source = $("#table-list").html();
                 var template = Handlebars.compile(source);
