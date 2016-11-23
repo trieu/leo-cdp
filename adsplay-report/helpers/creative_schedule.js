@@ -33,7 +33,7 @@ Schedule.prototype.updateStatus = function (){
             	var expDate = new Date(result[i].expiredDate).getTime();
 
                 //check is running & expired date
-            	if(result[i].status == '2' && expDate <= current){
+            	if(result[i].status == '2' && expDate < current){
             		console.log("Ads expired date is",result[i].id);
                     // api update
                     var url = site.api_domain + '/api/creatives/' + result[i].id;
