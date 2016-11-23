@@ -28,10 +28,6 @@ module.exports = function (app) {
             next();
         }
     };
-    
-    //creative schedule
-    var Schedule = require('../helpers/creative_schedule');
-    var creative_schedule = new Schedule(1000 * 60 * 60);
 
     //______________ router not authorization
     app.route('/ping').get(function (req, res) {
