@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>dddd</title>
+	<script type="text/javascript" src="js/zepto.min.js"></script>
+</head>
+<body>
+<div id="mydiv">
+     <iframe id="frame" src="" width="100%" height="300">
+     </iframe>
+ </div>
+ <button id="button">Load</button>
+
+</body>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#button").click(function () { 
+		$("#frame").attr("src", "//www.tinhte.vn/");
+	});
+});
+</script>
+</html>
