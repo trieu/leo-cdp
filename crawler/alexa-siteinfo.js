@@ -16,7 +16,7 @@ var json = require('./json/alexa-topsites-VN-OUTPUT.json');
 var casper = require('casper').create({
 	waitTimeout: 12000,
 	// stepTimeout: 2400,
-	proxy: "192.30.252.153",
+	proxy: "191.102.93.250:8080",
 	pageSettings: {
 		userAgent: useragent[Math.floor(Math.random() * useragent.length)],
 		// javascriptEnabled: true,
