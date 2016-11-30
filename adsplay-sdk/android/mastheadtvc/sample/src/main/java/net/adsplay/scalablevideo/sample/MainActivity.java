@@ -14,13 +14,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //start ad video view
+        //Init AdsPlay code
         AdPermissionChecker.checkSystemPermissions(this);
-        AdsPlayHolderVideo mVideoView = (AdsPlayHolderVideo) findViewById(R.id.masterhead_view);
-        mVideoView.start(this);
+        ((AdsPlayHolderImage) findViewById(R.id.banner_view)).start(this);
 
-        AdsPlayHolderImage holderImage = (AdsPlayHolderImage) findViewById(R.id.banner_view);
-        holderImage.start(this);
+
+        //AdsPlayHolderVideo mVideoView = (AdsPlayHolderVideo) findViewById(R.id.masterhead_view);
+        //mVideoView.start(this);
 
 
     }
