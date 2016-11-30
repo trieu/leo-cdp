@@ -17,15 +17,14 @@ var casper = require('casper').create({
     }
 });
 
-
 casper.start('about:blank');
 
-var urls = ['http://example.com','http://emptys.com/'];
+var urls = ['http://tinhte.vn'];
 
 casper.each(urls, function(casper, url) {
 
   casper.thenOpen(url, function() {
-        this.echo("I'm in your " + url + ".");
+        this.echo("I'm in your" + url);
     });
 });
 
