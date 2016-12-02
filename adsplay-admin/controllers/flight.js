@@ -139,7 +139,7 @@ var data = modelUtils.baseModel(req);
 router.post('/create', function (req, res, next) {
 	var items = {};
 	items = req.body;
-	var obj = new flight(items);
+	var obj = new Flight(items);
 	obj.save(function(err, obj){
 		if(err){
 			res.json({messege: false});

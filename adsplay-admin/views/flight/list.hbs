@@ -49,7 +49,7 @@
             $("#flight-list").append(table)
             
             if (!data || data.length == 0) {
-                $('#tbl-flight').find('tbody').empty().append('<tr><td colspan="8" style="text-align: center">No record found!</td></tr>');
+                $('#tbl-flight').find('tbody').empty().append('<tr><td colspan="4" style="text-align: center">No record found!</td></tr>');
             } else {
                 var source = $("#table-list").html();
                 var template = Handlebars.compile(source);
@@ -94,13 +94,13 @@
                 <ul>
                     \{{#each schedules}}
                         <li>\{{begin}} <i class="fa fa-arrow-right" aria-hidden="true"></i> \{{end}}
-                        <strong class="color-blue" title="booking"> <i class="fa fa-hand-o-right" aria-hidden="true"></i> \{{booking}}</strong>
+                        <strong class="color-blue"> <i class="fa fa-chevron-circle-right" aria-hidden="true" style="margin: 0 5px"></i> Booking: \{{booking}}</strong>
                         </li>
                     \{{/each}}
                 </ul>
             </td>
             <td>
-                <a title="Edit" href="/flight/edit/\{{_id}}"><i class="fa fa-pencil"></i></a>
+                <a title="Edit" href="/flight/edit/\{{_id}}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
             </td>
         </tr>
     \{{/each}}

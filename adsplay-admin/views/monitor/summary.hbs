@@ -260,7 +260,7 @@
 
         $('#graphType').on('change', function () {
             //alert( this.value ); // or $(this).val()
-            window.location = '//' + location.host + '/?graphName=' + this.value;
+            window.location = '//' + location.host + '/monitor?graphName=' + this.value;
         }).val('{{graphName}}');
     });
 </script>

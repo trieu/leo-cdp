@@ -298,6 +298,7 @@ var loadSummaryData = function (url) {
             var crtStats = data[0];
             $('#totalImp').text(formatNumber(crtStats.imp));
             $('#totalTrv').text(formatNumber(crtStats.trv));
+            $('#totalCpv').text(formatNumber(crtStats.trv));
             $('#totalClick').text(formatNumber(crtStats.c));
             $('#ctr').text((crtStats.ctr * 100).toFixed(2));
             $('#reach').text(formatNumber(crtStats.reach));
@@ -320,6 +321,7 @@ var loadSummaryData = function (url) {
             }
             if (totalTrvPrev > 0) {
                 $('#totalTrvDelta').text(formatNumber(crtStats.trv - totalTrvPrev)).show();
+                $('#totalCpvDelta').text(formatNumber(crtStats.trv - totalTrvPrev)).show();
                 $('span[datatype="real-time"]').animate({backgroundColor: "#40FF00"}, 'slow').animate({backgroundColor: "#CEF6CE"}, 'slow');
             }
 

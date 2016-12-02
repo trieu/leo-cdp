@@ -28,7 +28,6 @@ module.exports = function (app) {
             next();
         }
     };
-    
 
     //______________ router not authorization
     app.route('/ping').get(function (req, res) {

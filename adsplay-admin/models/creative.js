@@ -247,10 +247,14 @@ exports.update = function (url, body, res, callback) {
     
     if(!stringUtils.isEmpty(body)){
         request.patch(url).form(JSON.stringify(body));
-        res.json({message: 'success'});
+        if(res != null){
+            res.json({message: 'success'});
+        }
     }
     else{
-        res.json({message: 'Error !!! request data'});
+        if (res != null) {
+            res.json({message: 'Error !!! request data'});
+        }
     }
 };
 
