@@ -13,6 +13,7 @@ function render_vast() {
 							<label>Tracking Events <a href="#" class="btn-plus" id="plus-tracking"><i class="fa fa-plus-square" aria-hidden="true"></i></a></label>\
 							<div class="form-group-inner">\
 								<select name="TrackingEvents-name" class="form-control" placeholder="Enter tracking name event">\
+									<option value="creativeView">creativeView</option>\
 									<option value="start">start</option>\
 									<option value="firstQuartile">firstQuartile</option>\
 									<option value="thirdQuartile">thirdQuartile</option>\

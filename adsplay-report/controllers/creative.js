@@ -20,7 +20,7 @@ router.get('/api/list', function (req, res) {
     data.end = req.query.end;
     if (!data.begin || !data.end) {
         data.begin = new moment().format("YYYY-MM-DD");
-        data.end = new moment().subtract(60, 'days').format("YYYY-MM-DD");
+        data.end = new moment().subtract(90, 'days').format("YYYY-MM-DD");
     }
 	var url = data.site.api_domain + '/api/creative/summary?begin='+data.begin+'&end='+data.end;
 
