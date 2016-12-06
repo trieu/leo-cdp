@@ -71,18 +71,16 @@
                     <label>Third-party tracking URL</label>
                     <input type="url" class="form-control" name="vastXml3rd" placeholder="Enter Third-party Ad URL">
                 </div>
-                {{#if crt.status}}
-                <div class="form-group">
+                <div class="form-group" id="crt-status">
                     <label>Ad Status</label>
                     <select class="form-control" id="ads_status" name="status">
-                        <option value="0">Invalid</option>
+                        <option value="0" selected>Invalid</option>
                         <option value="1">Pending</option>
                         <option value="2">Running</option>
                         <option value="3">Finished</option>
                         <option value="4">Expired</option>
                     </select>
                 </div>
-                {{/if}}
                 <div class="form-group">
                     <label title="for 1 Impression or Complete-view">Base Cost</label>
                     <input type="number" class="form-control" name="cost" placeholder="Enter Base Cost" value="0" data-validate-minmax="0" required>

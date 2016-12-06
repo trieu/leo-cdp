@@ -1,25 +1,32 @@
-/**
- * Created by trieu on 5/27/15.
- */
+var moment = require('moment');
+var dbConfig = require('../configs/database');
+var mongoose = require('mongoose');
+var autoIncrement = require('mongoose-auto-increment');
 
+//setup connect autoIncrement
+var connection = mongoose.createConnection(dbConfig.url);
+autoIncrement.initialize(connection);
 
-// Create new campaign in your database and return its id
-exports.create = function(user, text, cb) {
-    cb('12345')
-}
+var campaignSchema = new mongoose.Schema({
+	_id: { type: Number, index: true },
+	name: { type: String },
+	ads: []
+});
 
-// Get a particular campaign
-exports.get = function(id, data, cb) {
+campaignSchema.plugin(autoIncrement.plugin, {
+    model: 'campaign',
+    field: '_id',
+    startAt: 1000
+});
+
+campaignSchema.methods.getAll = function(id, data, cb) {
     data.cpid = id;
-    cb(null, data)
-}
+    return cb(null, data);
+};
 
-// Get all campaigns
-exports.all = function(cb) {
-    cb(null, data)
-}
+campaignSchema.methods.allByUser = function(sessionId, data , cb) {
+	return cb(null, data);
+};
 
-// Get all campaigns by a particular user
-exports.allByUser = function(sessionId, data , cb) {
-    cb(null, data)
-}
+module.exports = mongoose.model('campaign', campaignSchema);
+

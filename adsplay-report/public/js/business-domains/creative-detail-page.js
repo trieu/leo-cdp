@@ -27,8 +27,34 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+var confirmDeleteCrt = function(self){
+    var url = $(self).attr('href');
+    var adsName = 'ads "' + $('.panel-heading>strong').text() + '"' || 'this'; 
+    var message = 'Are you sure you want to delete ' + adsName + '?';
+    modal_alert(message);
+    $('#modal-alert-ok').show();
 
+    $('#modal-alert-ok').click(function(){
+        $('#wrapper').append('<div class="loader"></div>');
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function(data){
+                $('.loader').remove();
+                if(data.message == "success"){
+                    alert('success');
+                    //window.location = location.protocol+'//'+location.host+'/creative/list';
+                }
+            },
+            error: function(){
+                $('.loader').remove();
+                alert('error delete!!!');
+            }
+        });
+    });
 
+    return false;
+}
 
 
 //->->->->-> build DATA
@@ -197,14 +223,17 @@ var drawHourlyStatsData = function (url, previousDay, currentDay) {
                     timeArray.push(data[i].t);
                 }
             }
+            
             var x = chart.xAxis;
-            x.tickValues(timeArray);
+            x.scale(timeArray);
+            x.ticks(8);
             x.tickFormat(function (d) {
                 return new moment(d).format("HH:mm");
             });
             var y = chartHourly.yAxis;
             y.axisLabel('View');
             y.tickFormat(d3.format(',r'));
+
         };
 
         if (chartDataHourly == null) {
@@ -269,6 +298,7 @@ var loadSummaryData = function (url) {
             var crtStats = data[0];
             $('#totalImp').text(formatNumber(crtStats.imp));
             $('#totalTrv').text(formatNumber(crtStats.trv));
+            $('#totalCpv').text(formatNumber(crtStats.trv));
             $('#totalClick').text(formatNumber(crtStats.c));
             $('#ctr').text((crtStats.ctr * 100).toFixed(2));
             $('#reach').text(formatNumber(crtStats.reach));
@@ -291,6 +321,7 @@ var loadSummaryData = function (url) {
             }
             if (totalTrvPrev > 0) {
                 $('#totalTrvDelta').text(formatNumber(crtStats.trv - totalTrvPrev)).show();
+                $('#totalCpvDelta').text(formatNumber(crtStats.trv - totalTrvPrev)).show();
                 $('span[datatype="real-time"]').animate({backgroundColor: "#40FF00"}, 'slow').animate({backgroundColor: "#CEF6CE"}, 'slow');
             }
 

@@ -1,0 +1,105 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h3 class="page-header">
+            Campaign Management
+        </h3>
+    </div>
+</div>
+
+{{#if editable }}
+<p>
+    <a href="/campaign/create" class="btn btn-primary" id="new-creative">
+        <i class="fa fa-industry"></i> Ad Campaign
+    </a>
+</p>
+{{/if}}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="table-responsive table-style" id="campaign-list">
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+
+        Handlebars.registerHelper('formatCurrency', function(value) { return value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"); });
+
+        render_list();
+
+        function list_html (data){
+            var dataList = {campaign: data};
+
+            var table = '\
+                <table class="table table-hover table-striped" id="tbl-campaign"> \
+                	<thead> \
+		                <tr> \
+		                    <th class="td-max-60">ID</th> \
+		                    <th>Name</th> \
+		                    <th>Ads</th> \
+                            <th class="td-max-60">Action</th> \
+		                </tr> \
+                    </thead> \
+                    <tbody> \
+                    </tbody> \
+                </table> \
+            ';
+            $("#campaign-list").empty();
+            $("#campaign-list").append(table)
+            
+            if (!data || data.length == 0) {
+                $('#tbl-campaign').find('tbody').empty().append('<tr><td colspan="4" style="text-align: center">No record found!</td></tr>');
+            } else {
+                var source = $("#table-list").html();
+                var template = Handlebars.compile(source);
+                var htmlTable = template(dataList);
+
+                $('#tbl-campaign').find('tbody').empty().append(htmlTable);
+            }
+        }
+
+        function render_list(){
+            $.ajax({
+                url: '/campaign/find/',
+                type: "GET",
+                contentType: "application/json",
+                dataType:'json',
+                beforeSend: function(){
+                    $('#wrapper').append('<div class="loader"></div>');
+                },
+                success: function(data){
+                    $('.loader').remove();
+                    list_html(data);
+                    var table = $("#tbl-campaign").DataTable({
+                        "pageLength": 25,
+                        "order": [[0,'desc']]
+                    });
+
+                    $('[title]').tooltip();
+                }
+            });
+        }
+
+    });
+
+</script>
+
+<script id="table-list" type="text/x-handlebars">
+    \{{#each campaign}}
+        <tr >
+            <td>\{{_id}}</td>
+            <td><a href="/campaign/find/\{{_id}}">\{{name}}</a></td>
+            <td>
+                <ul>
+                    \{{#each ads}}
+                        <li>\{{this}}</li>
+                    \{{/each}}
+                </ul>
+            </td>
+            <td>
+            	<a title="Edit" href="/campaign/edit/\{{_id}}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+            </td>
+        </tr>
+    \{{/each}}
+</script>

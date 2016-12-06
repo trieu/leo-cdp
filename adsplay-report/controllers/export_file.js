@@ -82,15 +82,17 @@ router.get('/excel/Impression-CompletedView', function(req, res, next){
 			res.send('No data');
 		}
 		var data_rename = [];
+		var data_sort = _.sortBy(data, function(o) { return o.t; });
+
 		var path = 'public/export/excel-'+ moment().format('YYYY-MM-DD-hh-mm-ss');
 
-		for (var i in data) {
-			var date = moment(data[i]['t']).format('YYYY-MM-DD HH:mm');
+		for (var i in data_sort) {
+			var date = moment(data_sort[i]['t']).format('YYYY-MM-DD HH:mm');
 			data_rename.push({
 				t: date,
-				imp: data[i]['imp'],
-				trv: data[i]['trv'],
-				c: data[i]['c']
+				imp: data_sort[i]['imp'],
+				trv: data_sort[i]['trv'],
+				c: data_sort[i]['c']
 			});
 		}
 

@@ -28,7 +28,6 @@ module.exports = function (app) {
             next();
         }
     };
-    
 
     //______________ router not authorization
     app.route('/ping').get(function (req, res) {
@@ -87,6 +86,7 @@ module.exports = function (app) {
     app.use('/booking', require('./booking'));
     app.use('/export', require('./export_file'));
     app.use('/event', require('./event'));
+    app.use('/flight', require('./flight'));
     app.use('/user', require('./user'));
 
     app.route('/').get(function (req, res) {

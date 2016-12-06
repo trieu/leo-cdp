@@ -36,6 +36,8 @@
 						<th>Name</th>
 						<th>Publisher</th>
 						<th>Type</th>
+						<th>Impression</th>
+						<th>View</th>
 						<th class="td-max-60">Width</th>
 						<th class="td-max-60">Height</th>
 						<th>Updated Date</th>
@@ -49,11 +51,13 @@
 						<td class="plt_name">{{name}}</td>
 						<td class="plt_publisher">{{publisher}}</td>
 						<td class="plt_type">{{type}}</td>
+						<td class="plt_impression">{{impression}}</td>
+						<td class="plt_view">{{view}}</td>
 						<td class="plt_w">{{width}}</td>
 						<td class="plt_h">{{height}}</td>
 						<td class="plt_updatedDate">{{updatedDate}}</td>
 						<td width="60px">
-							<button type="button" id="{{id}}" class="btn btn-primary btn-xs action-btn" title="action">
+							<button type="button" id="{{id}}" class="btn btn-primary btn-xs action-btn" title="get ads code">
 								<i class="fa fa-file-code-o"></i>
 							</button>
 							<button type="button" id="{{id}}" class="btn btn-primary btn-xs edit-placement" title="edit">
@@ -74,7 +78,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Form Placement</h4>
+        <h4 class="modal-title">Placement Information</h4>
       </div>
       <div class="modal-body">
       	<form id="plt_form">
@@ -103,6 +107,18 @@
 				                <option value="2">Display Banner</option>
 				                <option value="3">Overlay Banner</option>
 				            </select>
+						</td>
+					</tr>
+					<tr>
+						<td><strong>Impression</strong></td>
+						<td>
+							<input type="number" class="form-control" name="impression">
+						</td>
+					</tr>
+					<tr>
+						<td><strong>View</strong></td>
+						<td>
+							<input type="number" class="form-control" name="view">
 						</td>
 					</tr>
 					<tr class="row-size-display">

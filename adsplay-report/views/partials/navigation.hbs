@@ -85,6 +85,13 @@
                         <li class="">
                             <a href="/event/" title="Ad Live Event Management"><i class="fa fa-fw fa-list"></i> Ad Live Events</a>
                         </li>
+                        <li class="">
+                            <a href="/campaign/" title="Campaign Management"><i class="fa fa-fw fa-list"></i> Ad Campaign</a>
+                        </li>
+                        <li class="">
+                            <a href="/flight/" title="Flight Management"><i class="fa fa-fw fa-list"></i> Ad Flight</a>
+                        </li>
+
                     {{/if}}
 
                     {{#if editable }}
@@ -142,7 +149,7 @@
                     <a href="javascript:;" data-toggle="collapse"
                        data-target="#menuAnalytics"><i class="fa fa-fw fa-line-chart"></i> Analytics<i
                             class="fa fa-fw fa-caret-down"></i></a>
-                    <ul id="menuAnalytics" class="collapse in" aria-expanded="true" style="">
+                    <ul id="menuAnalytics" class="collapse" aria-expanded="false">
 
                         {{#if isSuperAdminGroup }}
                         <li class="">
@@ -154,6 +161,19 @@
                             <a href="/monitor/user"><i class="fa fa-fw fa-bar-chart-o"></i> Audience Report</a>
                         </li>
 
+                    </ul>
+                </li>
+            {{/if}}
+
+            {{#if isSuperAdminGroup }}
+                <li>
+                    <a href="javascript:;" data-toggle="collapse"
+                       data-target="#menuUsers"><i class="fa fa-users" aria-hidden="true"></i> Users Management<i
+                            class="fa fa-fw fa-caret-down"></i></a>
+                    <ul id="menuUsers" class="collapse" aria-expanded="false">
+                        <li class="">
+                            <a href="/user"><i class="fa fa-user" aria-hidden="true"></i> Users Tool</a>
+                        </li>
                     </ul>
                 </li>
             {{/if}}

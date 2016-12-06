@@ -84,8 +84,14 @@ else{
 		}
 	}
 }
-//______________ end create folder
+//______________ end create folder________________
 
+    
+//______________ creative schedule______________________
+    var Schedule = require('./helpers/creative_schedule');
+    //15 minutes
+    var creative_schedule = new Schedule(1000 * 60 * 15);
+//______________ creative schedule______________________
 
 
 //TODO

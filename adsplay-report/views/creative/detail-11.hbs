@@ -20,13 +20,16 @@
                     <source src="{{site.ads_cdn_domain}}/{{crt.media}}" type="video/mp4">
                 </video>
             </div>
-            <div class="panel-body">
+            <div class="panel-body margin-btn-5">
                 {{#if editable }}
                     <a href="{{buildUrl editUrl}}" class="btn btn-primary">
-                        <i class="fa fa-pencil-square-o fa-2" aria-hidden="true"></i> Edit Ad
+                        <i class="fa fa-pencil-square-o fa-2" aria-hidden="true"></i> Edit
                     </a>
                     <a href="{{buildUrl editUrl}}?copy=true" class="btn btn-default">
-                        <i class="fa fa-files-o" aria-hidden="true"></i> Copy Ad
+                        <i class="fa fa-files-o" aria-hidden="true"></i> Copy
+                    </a>
+                    <a href="{{site.base_domain}}/creative/delete/{{crt.id}}" onclick="return confirmDeleteCrt(this)" class="btn btn-danger">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i> Delete
                     </a>
                 {{/if}}
             </div>
@@ -108,9 +111,16 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><strong>Total Completed View</strong></td>
+                            <td><strong>Total True View</strong></td>
                             <td><span datatype="real-time" id="totalTrv">0</span>
                                 <span datatype="real-time" id="totalTrvDelta" style="display: none"
+                                      class="glyphicon glyphicon-export">0</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total Completed View</strong></td>
+                            <td><span datatype="real-time" id="totalCpv">0</span>
+                                <span datatype="real-time" id="totalCpvDelta" style="display: none"
                                       class="glyphicon glyphicon-export">0</span>
                             </td>
                         </tr>
@@ -282,6 +292,8 @@
     </div>
 
 </div>
+
+{{>popup-partial}}
 
 <script src="js/business-domains/action-handler.js"></script>
 <script src="js/business-domains/creative-detail-page.js"></script>

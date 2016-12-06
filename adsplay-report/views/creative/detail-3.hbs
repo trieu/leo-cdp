@@ -16,13 +16,16 @@
             <div class="panel-body">
                 <img style="max-width: 100%" src="{{site.static_domain}}/{{crt.media}}" class="">
             </div>
-            <div class="panel-body">
+            <div class="panel-body margin-btn-5">
                 {{#if editable }}
                     <a href="{{buildUrl editUrl}}" class="btn btn-primary">
-                        <i class="fa fa-pencil-square-o fa-2" aria-hidden="true"></i> Edit Ad
+                        <i class="fa fa-pencil-square-o fa-2" aria-hidden="true"></i> Edit
                     </a>
                     <a href="{{buildUrl editUrl}}?copy=true" class="btn btn-default">
-                        <i class="fa fa-files-o" aria-hidden="true"></i> Copy Ad
+                        <i class="fa fa-files-o" aria-hidden="true"></i> Copy
+                    </a>
+                    <a href="{{site.base_domain}}/creative/delete/{{crt.id}}" onclick="return confirmDeleteCrt(this)" class="btn btn-danger">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i> Delete
                     </a>
                 {{/if}}
             </div>
@@ -189,6 +192,8 @@
     </div>
 
 </div>
+
+{{>popup-partial}}
 
 <script src="js/business-domains/action-handler.js"></script>
 <script src="js/business-domains/creative-detail-page.js"></script>
