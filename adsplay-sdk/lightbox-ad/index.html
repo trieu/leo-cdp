@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Video.js VAST Example</title>
+  <!-- AdsPlay HTML5 Video Ads CSS-->
+ 
+  <link href="http://vjs.zencdn.net/5.10.2/video-js.min.css" rel="stylesheet">
+  <link href="css/popup-fplay.css" rel="stylesheet" type="text/css">
+  <!-- lightbox-ads -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+  <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+  <script src="http://vjs.zencdn.net/5.10.2/video.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-youtube/2.0.8/Youtube.min.js"></script>
+  <script src="js/popup-fplay.js" type="text/javascript"></script>
+
+</head>
+<body class="main">
+  <div class="test">
+    <div class="imgbg"> <img src="images/background_lightboxads.png"></div>
+    <div class="example-video-container">
+       <video id="my-video" class="video-js vjs-default-skin" autoplay controls preload="auto" >    
+      <source src="http://ads.fptplay.net.vn/static/ads/demo/my-memory.mp4" type='video/mp4' />
+      </video>
+      
+      <!-- add id -->
+      <div id="ads-123"></div>
+      
+    </div>
+  </div>
+  <!-- lightbox-ads-->
+
+        
+            
+
+  <script>
+    /*===============Log========================*/
+      function callBeaconLogTracking(opts) {
+      // Make sure we have a base object for opts
+      opts = opts || {};
+      // Setup defaults for options
+      opts.url = opts.url || null;
+      opts.vars = opts.vars || {};
+      opts.error = opts.error || function() {};
+      opts.success = opts.success || function() {};
+      
+      //cache busting
+      if( opts.url.indexOf('?') < 0 ){
+        opts.vars.cb = Math.floor(Math.random() * 10e12);  
+      }
+      
+      
+      // Split up vars object into an array
+      var varsArray = [];
+      for ( var key in opts.vars) {
+        varsArray.push(encodeURIComponent(key) + '=' + encodeURIComponent(opts.vars[key]));
+      }
+      
+      // Build query string
+      var qString = varsArray.join('&');      
+  
+      // Create a beacon if a url is provided
+      if (opts.url) {
+        // Create a brand NEW image object
+        var beacon = new Image();
+        // Attach the event handlers to the image object
+        if (beacon.onerror) {
+          beacon.onerror = opts.error;
+        }
+        if (beacon.onload) {
+          beacon.onload = opts.success;
+        } 
+        // Attach the src for the script call
+        if(opts.noParameter){
+          beacon.src = opts.url;
+        } else {
+          beacon.src = opts.url + '?' + qString;
+        }       
+      }
+    }
+      
+    /*========================Main=========================*/
+      $.ajax({
+              url: "https://d2.adsplay.net/delivery?at=tvc&placement=102&url=-adsplay-demo-1300",
+              dataType: 'xml',
+              success: function(data) {
+               
+                var linkMedia = $(data).find('MediaFile').text();
+                  //popupAds(id, placementId, option)
+                  //options = {action: "hover or click (default both)", thumnail: "link", text: "content", pausevideo: "id video"}
+                var options = {
+                          action: "click", 
+                          thumbnail: "images/lightbox_thumbnail.png", 
+                          pausevideo: "my-video"};
+
+                popupAds(linkMedia,"ads-123", options);
+
+
+                var arrayUrl = [];
+                $(data).find('Impression').each(function(){
+         
+                      var name = $(this).text();
+                      arrayUrl.push(name);
+                 
+                });
+                console.log("Impression");
+                console.log(arrayUrl);
+                for( var i = 0 ; i< arrayUrl.length; i++) {
+                  // log click
+                  callBeaconLogTracking({
+                    url : arrayUrl[i],
+                    vars : {},
+                    noParameter : true
+                  });
+
+                }
+
+
+
+
+                // var arrayUrlEvent = [];
+                // $(data).find('Tracking[event="complete"]').each(function(){
+         
+                //       var name = $(this).text();
+                //       arrayUrlEvent.push(name);
+                 
+                // });
+                // console.log(111111133333)
+                // console.log(arrayUrlEvent[1])
+                // for( var i = 0 ; i< arrayUrlEvent.length; i++) {
+                //   // log click
+                //   callBeaconLogTracking({
+                //     url : arrayUrlEvent[i],
+                //     vars : {},
+                //     noParameter : true
+                //   });
+
+                // }
+                
+                  
+              },
+              error: function() {
+                alert("error");
+              }
+          }); 
+  </script>
+  
+
+</body>
+</html>
+  
+  
+  
+        
+   
+
+        
+          
+      
+    
+    
+
