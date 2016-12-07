@@ -52,9 +52,10 @@ public class AsyncVideoAdLoadTask extends AsyncTask<Integer, String, AdData> {
             return null;
         }
 
+        String deviceId = "";
         int placementId = placementIds[0];
 
-        AdData adData = AdDataLoader.get(placementId);
+        AdData adData = AdDataLoader.getAdData(deviceId, placementId);
 
         String remoteMediaPath = adData.getMedia();
 

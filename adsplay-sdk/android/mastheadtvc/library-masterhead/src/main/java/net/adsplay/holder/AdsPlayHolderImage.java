@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -64,12 +65,12 @@ public class AdsPlayHolderImage extends RelativeLayout implements AdsPlayReady {
     @Override
     public void start(Activity activity){
         this.activity = activity;
-        int placementId = 332;
-        AdData adData = AdDataLoader.get(placementId);
+        //String deviceId = "abc";
+        String deviceId = Settings.Secure.getString(activity.getContentResolver(), Settings.Secure.ANDROID_ID);
+        int bottomMobilePlacement = 1008;
+        AdData adData = AdDataLoader.getAdData(deviceId, bottomMobilePlacement);
         showAd(adData);
     }
-
-
 
     void showAd(final AdData adData){
         try {

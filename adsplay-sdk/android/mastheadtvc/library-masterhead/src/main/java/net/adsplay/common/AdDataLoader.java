@@ -2,6 +2,9 @@ package net.adsplay.common;
 
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -12,10 +15,16 @@ import okhttp3.Response;
 
 public class AdDataLoader {
 
-    static final String[] baseDeliveryUrls = {
+    static final String[] baseVideoDeliveryUrls = {
             "http://d2.adsplay.net/vmap/ads",
             "http://d4.adsplay.net/vmap/ads",
             "http://d6.adsplay.net/vmap/ads",
+    };
+
+    static final String[] baseAdDeliveryUrls = {
+            "http://d2.adsplay.net/delivery",
+            "http://d4.adsplay.net/delivery",
+            "http://d6.adsplay.net/delivery",
     };
 
     /**
@@ -32,8 +41,8 @@ public class AdDataLoader {
      */
     public static String getVastUrl(String contentId,String categoryId,String uuid, int placementId, int userType){
         int t = (int) (System.currentTimeMillis()/1000L);
-        int s = baseDeliveryUrls.length;
-        String baseUrl = baseDeliveryUrls[t % s];
+        int s = baseVideoDeliveryUrls.length;
+        String baseUrl = baseVideoDeliveryUrls[t % s];
         StringBuilder url = new StringBuilder(baseUrl);
         url.append("?placement=").append(placementId);
         url.append("&ctid=").append(contentId);
@@ -44,42 +53,46 @@ public class AdDataLoader {
         return url.toString();
     }
 
-    public static AdData get(int placementId){
-        String media;
-        AdData adData;
-        if(placementId == 331){
-            media = "https://ads-cdn.fptplay.net/static/ads/demo/toshiba-truehome-360p.mp4";
-            adData = new AdData(123
-                    , media
-                    ,"TOSHIBA True Home - Tổ ấm trọn niềm vui"
-                    ,"https://www.toshiba.com.vn"
-            );
-        } else {
-            media = "https://st88.adsplay.net/ads/overlay/1480497011613/a240d50de544d7a9e55ba2965232a89a.png";
-            adData = new AdData(1309
-                    , media
-                    ,"iTVad-MobileBanner-FptPhone-X559"
-                    ,"https://tiki.vn/fpt-x559-p272232.html"
-            );
-        }
-
-
-        return adData;
+    public static String getDisplayAdUrl(String uuid, int placementId, int userType){
+        int t = (int) (System.currentTimeMillis()/1000L);
+        int s = baseAdDeliveryUrls.length;
+        String baseUrl = baseAdDeliveryUrls[t % s];
+        StringBuilder url = new StringBuilder(baseUrl);
+        url.append("?at=display&placement=").append(placementId);
+        url.append("&uuid=").append(uuid);
+        url.append("&ut=").append(userType);
+        url.append("&t=").append(t);
+        return url.toString();
     }
 
-    public static AdData get(int placementId, String contentId, String deviceId ){
+
+    public static AdData getAdData(String uuid, int placementId){
         OkHttpClient client = new OkHttpClient();
+        AdData adData = null;
         try {
-            String url = getVastUrl();
+            String url = getDisplayAdUrl(uuid, placementId, 0);
+            Log.i("AdsPlay", url);
             Request request = new Request.Builder()
                     .url(url)
                     .addHeader("User-Agent","AdsPlayAndroidSDK1x6")
                     .build();
             Response response = client.newCall(request).execute();
             String rs = response.body().string();
+            JSONArray ads = new JSONArray(rs);
+            JSONObject ad = ads.getJSONObject(0);
+            int adId = ad.getInt("adId");
+            String media = "http:" + ad.getString("adMedia");
+            String clickthroughUrl = ad.getString("clickthroughUrl");
+            adData = new AdData(adId
+                    , media
+                    , ""
+                    ,clickthroughUrl
+            );
+
             Log.i("AdsPlay",rs);
         } catch (Exception e){
             Log.i("AdsPlay",e.toString());
         }
+        return adData;
     }
 }
