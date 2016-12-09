@@ -8,7 +8,7 @@ var xl = require('excel4node');
 var Redis = require('ioredis'),  
     redis = new Redis({port: 6482, host: '42.119.252.87'});
 
-//https://monitor.adsplay.net/livestream-tvc/excel?match=2016-12-04,01,22&match=2016-12-05,04,22
+//https://monitor.adsplay.net/epl-report/excel?match=2016-12-04,01,22&match=2016-12-05,04,22
 
 router.get('/excel', function(req, res, next){
 	Sync(function(){

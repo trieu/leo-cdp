@@ -88,7 +88,7 @@ module.exports = function (app) {
     app.use('/event', require('./event'));
     app.use('/flight', require('./flight'));
     app.use('/inventory', require('./inventory'));
-    app.use('/livestream-tvc', require('./livestream-tvc'));
+    app.use('/epl-report', require('./epl-report'));
     app.use('/user', require('./user'));
 
     app.route('/').get(function (req, res) {
