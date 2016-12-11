@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -16,8 +15,8 @@ import net.adsplay.common.AdData;
 import net.adsplay.common.AdDataLoader;
 import net.adsplay.common.AdLogDataUtil;
 import net.adsplay.common.AdsPlayReady;
-
 import net.adsplay.common.DownloadImageTask;
+import net.adsplay.common.UserProfileUtil;
 
 
 /**
@@ -59,17 +58,22 @@ public class AdsPlayHolderImage extends RelativeLayout implements AdsPlayReady {
 
     @Override
     public void onMediaReady(AdData adData) {
-        showAd(adData);
+        if(adData != null){
+            showAd(adData);
+        }
     }
 
     @Override
-    public void start(Activity activity){
+    public void loadDataAdUnit(Activity activity, int placementId){
         this.activity = activity;
         //String deviceId = "abc";
-        String deviceId = Settings.Secure.getString(activity.getContentResolver(), Settings.Secure.ANDROID_ID);
-        int bottomMobilePlacement = 1008;
-        AdData adData = AdDataLoader.getAdData(deviceId, bottomMobilePlacement);
-        showAd(adData);
+
+        int adType = AdData.ADTYPE_IMAGE_DISPLAY_AD;
+        String uuid = UserProfileUtil.getUUID();
+        AdData adData = AdDataLoader.getAdData(uuid, placementId, adType);
+        if(adData != null){
+            showAd(adData);
+        }
     }
 
     void showAd(final AdData adData){

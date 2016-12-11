@@ -41,8 +41,6 @@ public class AsyncVideoAdLoadTask extends AsyncTask<Integer, String, AdData> {
         Log.i("AdsPlay","Starting Download");
     }
 
-
-
     /**
      * Downloading file in background thread
      */
@@ -52,31 +50,32 @@ public class AsyncVideoAdLoadTask extends AsyncTask<Integer, String, AdData> {
             return null;
         }
 
-        String deviceId = "";
+        String uuid = UserProfileUtil.getUUID();
         int placementId = placementIds[0];
+        int adType = AdData.ADTYPE_VIDEO_INPAGE_AD;
 
-        AdData adData = AdDataLoader.getAdData(deviceId, placementId);
+        AdData adData = AdDataLoader.getAdData(uuid, placementId, adType);
+        if(adData != null){
+            String remoteMediaPath = adData.getMedia();
+            String root = Environment.getExternalStorageDirectory().toString();
+            downloadedFilePath = root +"/" + CommonUtil.md5(remoteMediaPath)+".gif";
 
-        String remoteMediaPath = adData.getMedia();
-
-
-        String root = Environment.getExternalStorageDirectory().toString();
-        downloadedFilePath = root +"/" + CommonUtil.md5(remoteMediaPath)+".gif";
-
-        File localFile = new File (downloadedFilePath);
-        if(localFile.isFile()){
-            Date lastModified = new Date(localFile.lastModified());
-            long diff = new Date().getTime() - lastModified.getTime();//as given
-            long minutes = TimeUnit.MILLISECONDS.toMinutes(diff);
-            if(minutes < Constants.CACHE_TIME){
-                //downloadedFilePath = filepath;
-                adData.setMedia(downloadedFilePath);
-                return adData;
+            File localFile = new File (downloadedFilePath);
+            if(localFile.isFile()){
+                Date lastModified = new Date(localFile.lastModified());
+                long diff = new Date().getTime() - lastModified.getTime();//as given
+                long minutes = TimeUnit.MILLISECONDS.toMinutes(diff);
+                if(minutes < Constants.CACHE_TIME){
+                    //downloadedFilePath = filepath;
+                    adData.setMedia(downloadedFilePath);
+                    return adData;
+                }
             }
+            writeRemotedMediaToLocalFile(remoteMediaPath);
+            adData.setMedia(downloadedFilePath);
+            return adData;
         }
-        writeRemotedMediaToLocalFile(remoteMediaPath);
-        adData.setMedia(downloadedFilePath);
-        return adData;
+        return null;
     }
 
     private void writeRemotedMediaToLocalFile(String mediaPath) {

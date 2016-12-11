@@ -3,8 +3,8 @@ package net.adsplay.scalablevideo.sample;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import net.adsplay.holder.AdsPlayHolderImage;
 import net.adsplay.common.AdPermissionChecker;
+import net.adsplay.holder.AdsPlayHolderImage;
 import net.adsplay.holder.AdsPlayHolderVideo;
 
 
@@ -16,11 +16,12 @@ public class MainActivity extends AppCompatActivity {
 
         //Init AdsPlay code
         AdPermissionChecker.checkSystemPermissions(this);
-        ((AdsPlayHolderImage) findViewById(R.id.banner_view)).start(this);
 
+        //for mobile banner
+        ((AdsPlayHolderImage)findViewById(R.id.banner_view)).loadDataAdUnit(this, 1008);
 
-        //AdsPlayHolderVideo mVideoView = (AdsPlayHolderVideo) findViewById(R.id.masterhead_view);
-        //mVideoView.start(this);
+        //for mobile infeed video
+        ((AdsPlayHolderVideo)findViewById(R.id.masterhead_view)).loadDataAdUnit(this, 1009);
 
 
     }

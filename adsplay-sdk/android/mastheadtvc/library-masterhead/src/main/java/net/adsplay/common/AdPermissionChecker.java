@@ -14,5 +14,6 @@ public class AdPermissionChecker {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         AdsPlayHolderVideo.verifyStoragePermissions(activity);
+        UserProfileUtil.init(activity);
     }
 }

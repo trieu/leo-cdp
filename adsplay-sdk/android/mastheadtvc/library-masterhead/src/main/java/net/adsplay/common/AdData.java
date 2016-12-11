@@ -1,33 +1,57 @@
 package net.adsplay.common;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by trieu on 10/30/16.
  */
 public class AdData {
-    String media;
-    String title;
-    long adId;
-    String clickthroughUrl;
+    public static final int ADTYPE_INSTREAM_VIDEO = 1;//standard VAST video Ad: Preroll, Midroll
+    public static final int ADTYPE_EXPANDABLE_OVERLAY = 2;///Interactive HTML5 Overlay on Video
+    public static final int ADTYPE_IMAGE_OVERLAY = 3;//Static Image Overlay on Video
+    public static final int ADTYPE_BREAKING_NEWS_OVERLAY = 4;//Interactive Text Overlay on Video
+    public static final int ADTYPE_HTML5_DISPLAY_AD = 5;//HTML5 Interactive Ad
+    public static final int ADTYPE_IMAGE_DISPLAY_AD = 6;// static banner: jpeg, gif, png
+    public static final int ADTYPE_VIDEO_INPAGE_AD = 7;//Video Popup Ad in Content Marketing
+    public static final int ADTYPE_SPONSORED_STORY_AD = 8;//Native sponsored content in Content Marketing
+    public static final int ADTYPE_BIDDING_AD = 9;//Google Ad JavaScript
+    public static final int ADTYPE_STREAMING_VIDEO_AD = 10;//Instream Video in Live TV
+    public static final int ADTYPE_MASTER_HEAD_AD = 11;//master head for mobile app
+    public static final int ADTYPE_INFEED_AD = 12;//infeed for mobile app
 
-    public AdData(long adId, String media, String title, String clickthroughUrl) {
+    protected String media;
+    protected String clickthroughUrl;
+    protected String clickActionText;
+    protected String title;
+    protected int adId;
+    protected String adBeacon;
+    protected int adType = 0;
+    protected int width = 0;
+    protected int height = 0;
+    protected int placementId = 0;
+    protected String adCode = "";
+    protected List<String> tracking3rdUrls = new ArrayList<>();
+
+    public AdData(int adId, String media, String title, String clickthroughUrl) {
         this.adId = adId;
         this.media = media;
         this.title = title;
         this.clickthroughUrl = clickthroughUrl;
     }
 
-    public AdData(long adId, String media, String clickthroughUrl) {
+    public AdData(int adId, String media, String clickthroughUrl) {
         this.adId = adId;
         this.media = media;
         this.clickthroughUrl = clickthroughUrl;
         this.title = "";
     }
 
-    public long getAdId() {
+    public int getAdId() {
         return adId;
     }
 
-    public void setAdId(long adId) {
+    public void setAdId(int adId) {
         this.adId = adId;
     }
 
@@ -53,6 +77,70 @@ public class AdData {
 
     public void setClickthroughUrl(String clickthroughUrl) {
         this.clickthroughUrl = clickthroughUrl;
+    }
+
+    public String getClickActionText() {
+        return clickActionText;
+    }
+
+    public void setClickActionText(String clickActionText) {
+        this.clickActionText = clickActionText;
+    }
+
+    public String getAdBeacon() {
+        return adBeacon;
+    }
+
+    public void setAdBeacon(String adBeacon) {
+        this.adBeacon = adBeacon;
+    }
+
+    public int getAdType() {
+        return adType;
+    }
+
+    public void setAdType(int adType) {
+        this.adType = adType;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int getPlacementId() {
+        return placementId;
+    }
+
+    public void setPlacementId(int placementId) {
+        this.placementId = placementId;
+    }
+
+    public String getAdCode() {
+        return adCode;
+    }
+
+    public void setAdCode(String adCode) {
+        this.adCode = adCode;
+    }
+
+    public List<String> getTracking3rdUrls() {
+        return tracking3rdUrls;
+    }
+
+    public void setTracking3rdUrls(List<String> tracking3rdUrls) {
+        this.tracking3rdUrls = tracking3rdUrls;
     }
 
     @Override

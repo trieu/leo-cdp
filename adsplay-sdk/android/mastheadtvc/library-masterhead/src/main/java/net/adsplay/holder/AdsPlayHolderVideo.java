@@ -142,13 +142,15 @@ public class AdsPlayHolderVideo extends RelativeLayout implements AdsPlayReady {
 
 
     @Override
-    public void start(Activity activity){
+    public void loadDataAdUnit(Activity activity, int placementId){
         this.activity = activity;
-        new AsyncVideoAdLoadTask(this).execute(331);
+        new AsyncVideoAdLoadTask(this).execute(placementId);
     }
 
     @Override
     public void onMediaReady(AdData adData) {
-        playAd(adData);
+        if(adData != null){
+            playAd(adData);
+        }
     }
 }

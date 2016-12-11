@@ -7,6 +7,6 @@ import android.app.Activity;
  */
 
 public interface AdsPlayReady {
-    public void start(Activity activity);
+    public void loadDataAdUnit(Activity activity, int placementId);
     public void onMediaReady(AdData adData);
 }
