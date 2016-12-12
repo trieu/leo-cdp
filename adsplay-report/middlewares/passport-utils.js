@@ -138,7 +138,9 @@ module.exports = function(passport) {
 						if(err){
 							return console.error(err);
 						}
-						res.redirect('/user/details/'+obj._id);
+						//FIX ME
+						//res.redirect('/user/find/'+obj._id);
+						res.redirect('/login');
 					});
 
 				}

@@ -261,8 +261,6 @@ $(window).load(function() {
 						<td class="plt_name">'+data.name+'</td> \
 						<td class="plt_publisher">'+data.publisher+'</td> \
 						<td class="plt_type">'+get_type(data.type)+'</td> \
-						<td class="plt_impression">'+data.impression+'</td> \
-						<td class="plt_view">'+data.view+'</td> \
 						<td class="plt_w">'+data.width+'</td> \
 						<td class="plt_h">'+data.height+'</td> \
 						<td class="plt_updatedDate">'+ moment(data.updatedDate).format("YYYY-MM-DD")+'</td> \
