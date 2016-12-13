@@ -17,7 +17,6 @@ $(document).ready(function () {
     });
 
     // video is youtube
-    var video_ads = $("#video_ads").hide();
     var parent_video = $("#video_ads").parent();
     var src = video_ads.find("source").attr("src");
     var arr = src.split("https://");
