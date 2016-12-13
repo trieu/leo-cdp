@@ -67,7 +67,7 @@
                         <tr>
                             <td><strong>Status</strong></td>
                             <td>
-                                <span id="ads_status" data-status="{{crt.status}}">{{crt.status}}</span>
+                                <span {{#if editable }} id="ads_status" data-status="{{crt.status}}" {{/if}}>{{crt.status}}</span>
                             </td>
                         </tr>
                         <tr>
