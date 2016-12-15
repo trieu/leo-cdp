@@ -66,7 +66,6 @@ public class AdsPlayHolderImage extends RelativeLayout implements AdsPlayReady {
     @Override
     public void loadDataAdUnit(Activity activity, int placementId){
         this.activity = activity;
-        //String deviceId = "abc";
 
         int adType = AdData.ADTYPE_IMAGE_DISPLAY_AD;
         String uuid = UserProfileUtil.getUUID();

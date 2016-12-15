@@ -9,6 +9,7 @@ import net.adsplay.holder.AdsPlayHolderVideo;
 
 
 public class MainActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
