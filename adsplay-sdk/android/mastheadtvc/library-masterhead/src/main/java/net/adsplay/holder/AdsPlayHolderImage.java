@@ -12,11 +12,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import net.adsplay.common.AdData;
-import net.adsplay.common.AdDataLoader;
+
 import net.adsplay.common.AdLogDataUtil;
 import net.adsplay.common.AdsPlayReady;
+import net.adsplay.common.AsyncImageAdLoadTask;
 import net.adsplay.common.DownloadImageTask;
-import net.adsplay.common.UserProfileUtil;
+
 
 
 /**
@@ -56,50 +57,47 @@ public class AdsPlayHolderImage extends RelativeLayout implements AdsPlayReady {
         return imageView;
     }
 
+    void closeAdView(){
+        AdsPlayHolderImage.this.adHolder.setVisibility(GONE);
+        AdsPlayHolderImage.this.imageView.setVisibility(GONE);
+    }
+
     @Override
-    public void onMediaReady(AdData adData) {
+    public void onMediaReady(final AdData adData) {
         if(adData != null){
-            showAd(adData);
+            try {
+                Log.i("AdsPlay","--------------------------------------------------------------------");
+                String file =  adData.getMedia();
+                //String adTitle = adData.getTitle();
+                Log.i("AdsPlay","-------> playAd file: "+file);
+
+                new DownloadImageTask(this.imageView).execute(file);
+
+                this.imageView.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        closeAdView();
+                        if(adData.getClickthroughUrl() != null){
+                            Intent i = new Intent(Intent.ACTION_VIEW);
+                            i.setData(Uri.parse(adData.getClickthroughUrl()));
+                            AdsPlayHolderImage.this.activity.startActivity(i);
+                            AdLogDataUtil.log("https://log1.adsplay.net/ping");
+                        }
+                    }
+                });
+            } catch (Exception ioe) {
+                Log.i("AdsPlay",ioe.getMessage());
+                Log.i("AdsPlay",ioe.toString());
+            }
+        } else {
+            closeAdView();
         }
     }
 
     @Override
     public void loadDataAdUnit(Activity activity, int placementId){
         this.activity = activity;
-
-        int adType = AdData.ADTYPE_IMAGE_DISPLAY_AD;
-        String uuid = UserProfileUtil.getUUID();
-        AdData adData = AdDataLoader.getAdData(uuid, placementId, adType);
-        if(adData != null){
-            showAd(adData);
-        }
+        new AsyncImageAdLoadTask(this).execute(placementId);
     }
 
-    void showAd(final AdData adData){
-        try {
-            Log.i("AdsPlay","--------------------------------------------------------------------");
-            String file =  adData.getMedia();
-            //String adTitle = adData.getTitle();
-            Log.i("AdsPlay","-------> playAd file: "+file);
-
-            new DownloadImageTask(this.imageView).execute(file);
-
-            this.imageView.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                AdsPlayHolderImage.this.adHolder.setVisibility(GONE);
-                AdsPlayHolderImage.this.imageView.setVisibility(GONE);
-                if(adData.getClickthroughUrl() != null){
-                    Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setData(Uri.parse(adData.getClickthroughUrl()));
-                    AdsPlayHolderImage.this.activity.startActivity(i);
-                    AdLogDataUtil.log("https://log1.adsplay.net/ping");
-                }
-                }
-            });
-        } catch (Exception ioe) {
-            Log.i("AdsPlay",ioe.getMessage());
-            Log.i("AdsPlay",ioe.toString());
-        }
-    }
 }

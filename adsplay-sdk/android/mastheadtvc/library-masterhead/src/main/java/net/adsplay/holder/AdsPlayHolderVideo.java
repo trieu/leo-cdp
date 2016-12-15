@@ -83,63 +83,6 @@ public class AdsPlayHolderVideo extends RelativeLayout implements AdsPlayReady {
         this.txttitle.setVisibility(GONE);
     }
 
-    void playAd(AdData adData){
-        try {
-            Log.i("AdsPlay","--------------------------------------------------------------------");
-            String file = "file://"+adData.getMedia();
-            String adTitle = adData.getTitle();
-
-            Log.i("AdsPlay","-------> playAd file: "+file);
-            this.videoView.setVisibility(VISIBLE);
-            this.txttitle.setVisibility(VISIBLE);
-
-            this.videoView.setDataSource(file);
-            this.videoView.setVolume(0, 2);
-            this.txttitle.setText(adTitle);
-
-            this.videoView.prepareAsync(new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mp) {
-                    Log.i("AdsPlay","Ad Duration: "+mp.getDuration());
-                    AdsPlayHolderVideo.this.videoView.start();
-
-                    getVideoView().setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                        @Override
-                        public void onCompletion(MediaPlayer mp) {
-                            mp.stop();
-                            mp.release();
-
-                            AdsPlayHolderVideo.this.videoView.setVisibility(GONE);
-                            AdsPlayHolderVideo.this.txttitle.setVisibility(GONE);
-                            AdsPlayHolderVideo.this.adHolder.setVisibility(GONE);
-                        }
-                    });
-
-                }
-            });
-
-            this.videoView.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    synchronized(this) {
-                        if( ! valumeEnabled ){
-                            valumeEnabled = true;
-                            AdsPlayHolderVideo.this.videoView.setVolume(0, 2);
-                        } else {
-                            valumeEnabled = false;
-                            AdsPlayHolderVideo.this.videoView.setVolume(0, 0);
-                        }
-                    }
-                }
-            });
-
-        } catch (Exception ioe) {
-            Log.i("AdsPlay",ioe.getMessage());
-            Log.i("AdsPlay",ioe.toString());
-        }
-    }
-
-
 
     @Override
     public void loadDataAdUnit(Activity activity, int placementId){
@@ -147,10 +90,67 @@ public class AdsPlayHolderVideo extends RelativeLayout implements AdsPlayReady {
         new AsyncVideoAdLoadTask(this).execute(placementId);
     }
 
+    void closeAdView(){
+        AdsPlayHolderVideo.this.videoView.setVisibility(GONE);
+        AdsPlayHolderVideo.this.txttitle.setVisibility(GONE);
+        AdsPlayHolderVideo.this.adHolder.setVisibility(GONE);
+    }
+
     @Override
     public void onMediaReady(AdData adData) {
         if(adData != null){
-            playAd(adData);
+            try {
+                Log.i("AdsPlay","--------------------------------------------------------------------");
+                String file = "file://"+adData.getMedia();
+                String adTitle = adData.getTitle();
+
+                Log.i("AdsPlay","-------> playAd file: "+file);
+                this.videoView.setVisibility(VISIBLE);
+                this.txttitle.setVisibility(VISIBLE);
+
+                this.videoView.setDataSource(file);
+                this.videoView.setVolume(0, 2);
+                this.txttitle.setText(adTitle);
+
+                this.videoView.prepareAsync(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        Log.i("AdsPlay","Ad Duration: "+mp.getDuration());
+                        AdsPlayHolderVideo.this.videoView.start();
+
+                        getVideoView().setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                            @Override
+                            public void onCompletion(MediaPlayer mp) {
+                                mp.stop();
+                                mp.release();
+                                closeAdView();
+                            }
+                        });
+
+                    }
+                });
+
+                this.videoView.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        synchronized(this) {
+                            if( ! valumeEnabled ){
+                                valumeEnabled = true;
+                                AdsPlayHolderVideo.this.videoView.setVolume(0, 2);
+                            } else {
+                                valumeEnabled = false;
+                                AdsPlayHolderVideo.this.videoView.setVolume(0, 0);
+                            }
+                        }
+                    }
+                });
+
+            } catch (Exception ioe) {
+                Log.i("AdsPlay",ioe.getMessage());
+                Log.i("AdsPlay",ioe.toString());
+            }
+        } else {
+            closeAdView();
         }
     }
 }

@@ -21,14 +21,11 @@ import java.util.concurrent.TimeUnit;
 
 public class AsyncVideoAdLoadTask extends AsyncTask<Integer, String, AdData> {
 
-
-//    AdsPlayHolderVideo adsPlayHolderVideo;
+    static boolean rendered = false;
     String downloadedFilePath = null;
     AdsPlayReady adsPlayReady;
-//    Activity activity;
 
     public AsyncVideoAdLoadTask(AdsPlayReady adsPlayReady) {
-//        this.adsPlayHolderVideo = adsPlayHolderVideo;
         this.adsPlayReady = adsPlayReady;
     }
 
@@ -46,14 +43,12 @@ public class AsyncVideoAdLoadTask extends AsyncTask<Integer, String, AdData> {
      */
     @Override
     protected AdData doInBackground(Integer... placementIds) {
-        if(placementIds.length==0){
+        if(placementIds.length==0 || rendered){
             return null;
         }
-
         String uuid = UserProfileUtil.getUUID();
         int placementId = placementIds[0];
         int adType = AdData.ADTYPE_VIDEO_INPAGE_AD;
-
         AdData adData = AdDataLoader.getAdData(uuid, placementId, adType);
         if(adData != null){
             String remoteMediaPath = adData.getMedia();
@@ -66,7 +61,6 @@ public class AsyncVideoAdLoadTask extends AsyncTask<Integer, String, AdData> {
                 long diff = new Date().getTime() - lastModified.getTime();//as given
                 long minutes = TimeUnit.MILLISECONDS.toMinutes(diff);
                 if(minutes < Constants.CACHE_TIME){
-                    //downloadedFilePath = filepath;
                     adData.setMedia(downloadedFilePath);
                     return adData;
                 }
@@ -138,14 +132,9 @@ public class AsyncVideoAdLoadTask extends AsyncTask<Integer, String, AdData> {
      **/
     @Override
     protected void onPostExecute(AdData adData) {
-        //Log.i("AdsPlay","onPostExecute downloadedFilePath: "+downloadedFilePath);
-
+        rendered = true;
         Log.i("AdsPlay","--> onPostExecute : "+adData);
-        if(adData != null){
-            //this.adsPlayHolderVideo.playAd(filepath);
-            this.adsPlayReady.onMediaReady(adData);
-        }
-
+        this.adsPlayReady.onMediaReady(adData);
     }
 
 }
