@@ -1,104 +1,142 @@
 var express = require('express')
     , router = express.Router()
     , modelUtils = require('../helpers/model_utils');
+var crypto = require('crypto');
 var path = require('path');
-var fs = require('fs');
+var fs = require('fs.extra');
+var request = require('request');
 var builder = require('xmlbuilder');
 var Vast = require('../models/vast');
+var formidable = require('formidable');
+var destVast = "public/ads/vast/";
 
-router.post('/save', function (req, res, next){
+router.post('/save/upload', function (req, res, next){
 	var data = modelUtils.baseModel(req);
 
-	if(data.editable){
-		Vast.findOne({ _id: req.body._id })
-	    .exec(function(err, doc){
-	        if (err) { return next(err); }
+	var form = new formidable.IncomingForm();
+		form.parse(req, function (err, fields, files) {
+			if (err) {
+				console.error(err);
+			}
+			else {
+				var file = files.files;
+				console.log(fields);
+				var filename = checkFileExists(fields.temp) == false ? hashName(file.name) : checkFileExists(fields.temp);
+				var dest = destVast+filename;
 
-	        if (!doc) {
-	            //create new
-	            var doc = new Vast();
-	            doc._id = req.body._id;
-	        }
+				createFile(dest, fs.readFileSync(file.path), function (message){
+					res.json({message: message, filename: filename});
+				});
 
-	        doc.Name = req.body.Name;
-	        doc.Impression = req.body.Impression;
-	        doc.TrackingEvents = req.body.TrackingEvents;
-
-	        doc.save(function(err) {
-	            if(!err){
-	                res.json({message: "success", url: data.site.base_domain+"/vast/"+doc._id });
-	            }
-	            else {
-	                console.log(err);
-	                res.sendStatus(500);
-	            }
-	        });
-	         
-	    });
-	}
-	else{
-		res.json({message: "success"});
-	}
-    
+			}
+		});
 });
-router.get('/find/:id', function (req, res, next) {
-	Vast.findOne({ _id: req.params.id })
-	.exec(function(err, doc){
-		if (err) { return next(err); }
 
-		if (doc) {
-			res.json(doc);
+router.post('/save/url', function (req, res, next){
+	var data = modelUtils.baseModel(req);
+
+	var filename = checkFileExists(req.body.temp) == false ? hashName(req.body.url) : checkFileExists(req.body.temp);
+	var dest = destVast+filename;
+	request(req.body.url ,function (err, response, body) {
+		if(!err && response.statusCode == 200){
+			createFile(dest, body, function (message){
+				res.json({message: message, filename: filename});
+			});
+		}
+		else{
+			res.json({message: false});
 		}
 	});
 });
-router.get('/:id', function (req, res, next) {
 
-	Vast.findOne({ _id: req.params.id })
-	.exec(function(err, doc){
-		if (err) { return next(err); }
+router.post('/save', function (req, res, next){
+	var data = modelUtils.baseModel(req);
+		var obj = xmlObj(req.body); //object xml
+		var filename = checkFileExists(req.body.temp) == false ? hashName(req.body.Name) : checkFileExists(req.body.temp);
+		var dest = destVast+filename;
+		var body = builder.create(obj).end({ pretty: true});
+		createFile(dest, body, function (message){
+			res.json({message: message, filename: filename});
+		});
+});
 
-		if (doc) {
-			var Impression = [];
-			doc.Impression.forEach(function(item) {
-				Impression.push({'#cdata': item});
-			});
+router.get('/file/:name', function (req, res, next) {
+	var path = __dirname + '/../public/ads/vast/' + req.params.name;
+	fs.readFile(path, function (err, data) {
+        if (err) {
+            res.send('Error: ENOENT: no such file or directory');
+        }
+        else {
+            res.writeHeader(200, {"Content-Type": "application/xml"});
+            res.end(data);
+        }
+    });
+});
 
-			var TrackingEvents = [];
-			doc.TrackingEvents.forEach(function(item) {
-				TrackingEvents.push({'@event': item.name, '#cdata': item.value});
-			});
+var checkFileExists = function(name){
+	if(name == ""){
+		return false;
+	}
+	else{
+		if(name.indexOf('monitor.adsplay.net') != -1){
+			var splitUrl = name.split('/');
+			return splitUrl[splitUrl.length-1];
+		}
+		else{
+			return false;
+		}
+	}
+}
 
-			var obj = {
-				VAST: {
-					'@version': '2.0',
-					'Ad': {
-						'Wrapper':{
-							'AdSystem': {
-								'#cdata': "Ad Serving System"
+var hashName = function(name){
+	return crypto.createHash('md5').update(name).digest('hex') + ".xml";
+}
+
+var createFile = function(dest, body, cb){
+	fs.writeFile(dest, body, function (err) {
+		if (err){
+			console.log(err);
+			cb(false);
+		}
+		cb("success");
+	});
+}
+
+var xmlObj = function(doc){
+	console.log(doc)
+	var Impression = [];
+		doc.Impression.forEach(function(item) {
+			Impression.push({'#cdata': item});
+		});
+
+		var TrackingEvents = [];
+		doc.TrackingEvents.forEach(function(item) {
+			TrackingEvents.push({'@event': item.name, '#cdata': item.value});
+		});
+
+		var obj = {
+			VAST: {
+				'@version': '2.0',
+				'Ad': {
+					'Wrapper':{
+						'AdSystem': {
+							'#cdata': "Ad Serving System"
+						},
+						'Impression': Impression,
+						'Creatives':{
+							'Creative':{
+								'@sequence': 1
 							},
-							'Impression': Impression,
-							'Creatives':{
-								'Creative':{
-									'@id': doc._id,
-									'@AdID': doc._id,
-									'@sequence': 1
-								},
-								'Linear':{
-									'TrackingEvents': TrackingEvents
-								}
+							'Linear':{
+								'TrackingEvents': TrackingEvents
 							}
 						}
 					}
 				}
-			};
+			}
+		};
 
-			var root = builder.create(obj).end({ pretty: true});
-
-			res.set('Content-Type', 'application/xml');
-			res.send(new Buffer(root));
-		}
-	});
-	
-});
+		return obj;
+}
 
 module.exports = router;

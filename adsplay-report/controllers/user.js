@@ -9,9 +9,15 @@ var express = require('express')
 
 router.get('/', function (req, res, next) {
 	var data = modelUtils.baseModel(req);
-	data.statuses = constantUtils.statuses;
-	data.dashboard_title = "User Detail";
-	res.render('user/list', data);
+	if(data.ssid == 1000){
+		data.statuses = constantUtils.statuses;
+		data.dashboard_title = "User List";
+		res.render('user/list', data);
+	}
+	else{
+		res.redirect('/permission');
+	}
+	
 });
 
 router.get('/find', function (req, res, next) {
