@@ -10,10 +10,15 @@ import net.adsplay.holder.AdsPlayHolderVideo;
  */
 
 public class AdPermissionChecker {
+
+    static boolean checked = false;
     public static void checkSystemPermissions(Activity activity){
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-        AdsPlayHolderVideo.verifyStoragePermissions(activity);
-        UserProfileUtil.init(activity);
+        if(!checked){
+            checked = true;
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            //AdsPlayHolderVideo.verifyStoragePermissions(activity);
+            UserProfileUtil.init(activity);
+        }
     }
 }

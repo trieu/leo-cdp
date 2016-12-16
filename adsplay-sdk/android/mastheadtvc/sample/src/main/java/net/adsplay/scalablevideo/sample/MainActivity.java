@@ -15,15 +15,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Init AdsPlay code
-        AdPermissionChecker.checkSystemPermissions(this);
-
         //for mobile banner
         ((AdsPlayHolderImage)findViewById(R.id.banner_view)).loadDataAdUnit(this, 1008);
 
         //for mobile infeed video
         ((AdsPlayHolderVideo)findViewById(R.id.masterhead_view)).loadDataAdUnit(this, 1009);
-
 
     }
 }

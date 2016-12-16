@@ -70,7 +70,6 @@ public class AdDataLoader {
                     , ""
                     ,clickUrl
             );
-
             Log.i("AdsPlay",rs);
         } catch (Exception e){
             Log.i("AdsPlay",e.toString());

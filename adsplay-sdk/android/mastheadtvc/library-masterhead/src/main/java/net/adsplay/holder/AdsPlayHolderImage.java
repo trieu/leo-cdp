@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -14,6 +15,7 @@ import android.widget.RelativeLayout;
 import net.adsplay.common.AdData;
 
 import net.adsplay.common.AdLogDataUtil;
+import net.adsplay.common.AdPermissionChecker;
 import net.adsplay.common.AdsPlayReady;
 import net.adsplay.common.AsyncImageAdLoadTask;
 import net.adsplay.common.DownloadImageTask;
@@ -29,6 +31,7 @@ public class AdsPlayHolderImage extends RelativeLayout implements AdsPlayReady {
     Activity activity;
     private LinearLayout adHolder;
     private ImageView imageView;
+    int width, height;
 
     public AdsPlayHolderImage(Context context) {
         super(context);
@@ -62,13 +65,29 @@ public class AdsPlayHolderImage extends RelativeLayout implements AdsPlayReady {
         AdsPlayHolderImage.this.imageView.setVisibility(GONE);
     }
 
+    void hideAdView(){
+        ViewGroup.LayoutParams params = adHolder.getLayoutParams();
+        this.width = params.width;
+        this.height = params.height;
+        params.height = 0;
+        params.width = 0;
+        adHolder.setLayoutParams(params);
+    }
+
+    void showAdView(){
+        ViewGroup.LayoutParams params = adHolder.getLayoutParams();
+        params.height = this.height;
+        params.width = this.width;
+        adHolder.setLayoutParams(params);
+    }
+
     @Override
     public void onMediaReady(final AdData adData) {
         if(adData != null){
             try {
+                showAdView();
                 Log.i("AdsPlay","--------------------------------------------------------------------");
                 String file =  adData.getMedia();
-                //String adTitle = adData.getTitle();
                 Log.i("AdsPlay","-------> playAd file: "+file);
 
                 new DownloadImageTask(this.imageView).execute(file);
@@ -97,7 +116,13 @@ public class AdsPlayHolderImage extends RelativeLayout implements AdsPlayReady {
     @Override
     public void loadDataAdUnit(Activity activity, int placementId){
         this.activity = activity;
+        AdPermissionChecker.checkSystemPermissions(activity);
+        hideAdView();
         new AsyncImageAdLoadTask(this).execute(placementId);
     }
 
+    @Override
+    public String getCacheDir(){
+        return this.activity.getCacheDir().getPath();
+    }
 }

@@ -9,11 +9,13 @@ import android.support.v4.app.ActivityCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import net.adsplay.common.AdData;
+import net.adsplay.common.AdPermissionChecker;
 import net.adsplay.common.AdsPlayReady;
 import net.adsplay.common.Constants;
 import net.adsplay.common.AsyncVideoAdLoadTask;
@@ -28,7 +30,7 @@ public class AdsPlayHolderVideo extends RelativeLayout implements AdsPlayReady {
     private ScalableVideoView videoView;
     private TextView txttitle;
     //private TextView txtdescription
-    //private Button btnClose;;
+    //private Button btnClose;
 
     public AdsPlayHolderVideo(Context context) {
         super(context);
@@ -71,6 +73,8 @@ public class AdsPlayHolderVideo extends RelativeLayout implements AdsPlayReady {
     }
 
     boolean valumeEnabled = false;
+    int width, height;
+
 
     private void init() {
         inflate(getContext(), R.layout.holdervideo, this);
@@ -87,7 +91,25 @@ public class AdsPlayHolderVideo extends RelativeLayout implements AdsPlayReady {
     @Override
     public void loadDataAdUnit(Activity activity, int placementId){
         this.activity = activity;
+        AdPermissionChecker.checkSystemPermissions(activity);
+        hideAdView();
         new AsyncVideoAdLoadTask(this).execute(placementId);
+    }
+
+    void hideAdView(){
+        ViewGroup.LayoutParams params = adHolder.getLayoutParams();
+        this.width = params.width;
+        this.height = params.height;
+        params.height = 0;
+        params.width = 0;
+        adHolder.setLayoutParams(params);
+    }
+
+    void showAdView(){
+        ViewGroup.LayoutParams params = adHolder.getLayoutParams();
+        params.height = this.height;
+        params.width = this.width;
+        adHolder.setLayoutParams(params);
     }
 
     void closeAdView(){
@@ -100,6 +122,7 @@ public class AdsPlayHolderVideo extends RelativeLayout implements AdsPlayReady {
     public void onMediaReady(AdData adData) {
         if(adData != null){
             try {
+                showAdView();
                 Log.i("AdsPlay","--------------------------------------------------------------------");
                 String file = "file://"+adData.getMedia();
                 String adTitle = adData.getTitle();
@@ -153,4 +176,10 @@ public class AdsPlayHolderVideo extends RelativeLayout implements AdsPlayReady {
             closeAdView();
         }
     }
+
+    @Override
+    public String getCacheDir(){
+        return this.activity.getCacheDir().getPath();
+    }
+
 }

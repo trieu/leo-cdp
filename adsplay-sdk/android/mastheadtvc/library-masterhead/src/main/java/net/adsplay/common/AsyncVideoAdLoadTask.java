@@ -52,7 +52,7 @@ public class AsyncVideoAdLoadTask extends AsyncTask<Integer, String, AdData> {
         AdData adData = AdDataLoader.getAdData(uuid, placementId, adType);
         if(adData != null){
             String remoteMediaPath = adData.getMedia();
-            String root = Environment.getExternalStorageDirectory().toString();
+            String root = adsPlayReady.getCacheDir();
             downloadedFilePath = root +"/" + CommonUtil.md5(remoteMediaPath)+".gif";
 
             File localFile = new File (downloadedFilePath);
