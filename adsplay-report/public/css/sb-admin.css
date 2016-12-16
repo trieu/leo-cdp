@@ -493,7 +493,28 @@ span.impress-text {
     font-weight: bold;
     font-size: 18px;
 }
-
+.square{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin: 0 5px;
+    background: #ddd;
+    vertical-align: middle;
+}
+.square-green{
+    background-color: #093;
+}
+.square-border{
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+.square-pattern-1{
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAAKElEQVQYV2NkwA7+M2IR/8/AwMCILgEWBClGloALIkugCMIkMARBEgC7IAYGchlNYwAAAABJRU5ErkJggg==");
+}
+.square-pattern-2{
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAALElEQVQYV2NkYGD4z8DAwMiAAHA+TBAmgKIQqw6YIQR1ErQTyT0IJrKdGAoAsQ8JCEbHmJcAAAAASUVORK5CYII=");
+}
+.table-auto{table-layout: auto !important;}
 .table {
     table-layout: fixed;
 }
@@ -724,3 +745,6 @@ span.impress-text {
 .margin-btn-5 a{
     margin-bottom: 5px !important; 
 }
+
+/*tab*/
+.tab-content{padding: 10px 0;}
