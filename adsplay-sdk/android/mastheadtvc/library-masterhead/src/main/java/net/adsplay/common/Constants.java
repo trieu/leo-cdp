@@ -15,6 +15,6 @@ public class Constants {
     };
 
 
-    //final static int CACHE_TIME = 12*60;//12 hours
-    public final static int CACHE_TIME = 0;// no cache
+    public final static int CACHE_TIME = 12*60;//12 hours
+    //public final static int CACHE_TIME = 0;// no cache
 }

@@ -1,7 +1,6 @@
 package net.adsplay.common;
 
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
@@ -53,7 +52,7 @@ public class AsyncVideoAdLoadTask extends AsyncTask<Integer, String, AdData> {
         if(adData != null){
             String remoteMediaPath = adData.getMedia();
             String root = adsPlayReady.getCacheDir();
-            downloadedFilePath = root +"/" + CommonUtil.md5(remoteMediaPath)+".gif";
+            downloadedFilePath = root +"/" + CommonUtil.md5(remoteMediaPath)+".mp4";
 
             File localFile = new File (downloadedFilePath);
             if(localFile.isFile()){
