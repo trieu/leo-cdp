@@ -18,7 +18,7 @@ $(document).ready(function () {
 
     // video is youtube
     var parent_video = $("#video_ads").parent();
-    var src = video_ads.find("source").attr("src");
+    var src = $("#video_ads").find("source").attr("src");
     var arr = src.split("https://");
     for(var i in arr){
         var checkLink = checkLinkYoutube(arr[i]);

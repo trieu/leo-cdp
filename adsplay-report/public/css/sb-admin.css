@@ -748,3 +748,34 @@ span.impress-text {
 
 /*tab*/
 .tab-content{padding: 10px 0;}
+
+/*arrow*/
+#demo-graphic .panel-heading{
+    padding: 0;
+}
+#demo-graphic .panel-title > a{
+    display: block;
+    position: relative;
+    padding: 10px 15px;
+    text-decoration: none !important;
+}
+
+#demo-graphic .panel-title > a:hover{
+    background-color: #fff;
+}
+#demo-graphic .panel-title > a:after{
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 9px solid #808080;
+}
+#demo-graphic .panel-title > a[aria-expanded="true"]:after{
+    border-bottom: 0;
+    border-top: 9px solid #808080;
+}

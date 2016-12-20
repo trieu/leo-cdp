@@ -4,14 +4,15 @@
 var config_authorization = {
     // enable roles 
     access: [
-        {routes: '/creative/*', roles: ['*']}, //all roles and all method
-        {routes: '/placement/*', roles: ['admin', 'operator']}, //roles admin and operator
-        {routes: '/campaign/*', roles: ['*'], method: ['get', 'post']}, //with method get and post
-        {routes: '/monitor/*', roles: ['*']},
+        {routes: '/creative/*', roles: ['*']}, //all roles and all method        
+        {routes: '/campaign/*', roles: ['*'], method: ['get', 'post']}, //with method get and post        
         {routes: '/content/*', roles: ['*']},
         {routes: '/user-profile/*', roles: ['*']},
         {routes: '/booking/*', roles: ['*']},
         {routes: '/export/*', roles: ['*']},
+
+        {routes: '/placement/*', roles: ['admin', 'operator']}, //roles admin and operator
+        {routes: '/monitor/*', roles: ['*']},
     ],
     // disable roles
     denied: [

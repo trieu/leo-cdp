@@ -162,10 +162,32 @@
         <li class="active"><a href="#tc-main-graphs">Report Details</a></li>
         <li><a href="#tc-daily-details">Daily Report</a></li>
         <li><a href="#tc-excel-export">Excel Export</a></li>
+        <li><a href="#demo-graphic">Demographics</a></li>
     </ul>
 
     <div class="tab-content">
         <div id="tc-main-graphs" class="tab-pane fade in active">
+
+            <div class="row" id="piechart-wrap">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>
+                                <strong>Content Source</strong></h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-5 col-xs-12">
+                                    <div id="piechart" style="height: 250px"><svg></svg></div>
+                                </div>
+                                <div class="col-md-7 col-xs-12" id="table-content-source">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="row">
                 <div class="col-lg-12">
@@ -293,6 +315,254 @@
             </div>
             <br><br><br>
         </div>
+
+        <div id="demo-graphic">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1" aria-expanded="true">
+                                <i class="fa fa-users" aria-hidden="true"></i> Age
+
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th> Age </th>
+                                        <th> <15 </th>
+                                        <th> 16-25 </th>
+                                        <th> 26-35 </th>
+                                        <th> 36-45 </th>
+                                        <th> 46-55 </th>
+                                        <th> 56-65 </th>
+                                        <th> 66-75 </th>
+                                        <th> 76+ </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td> Total </td>
+                                        <td> 6% </td>
+                                        <td> 43% </td>
+                                        <td> 32% </td>
+                                        <td> 10% </td>
+                                        <td> 5% </td>
+                                        <td> 4% </td>
+                                        <td> 0% </td>
+                                        <td> 0% </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                                <i class="fa fa-child" aria-hidden="true"></i> Children
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse2" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th> Children </th>
+                                        <th> Yes </th>
+                                        <th> No </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td> Total </td>
+                                        <td> 58% </td>
+                                        <td> 42% </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                                <i class="fa fa-graduation-cap" aria-hidden="true"></i> Education
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse3" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th> Education </th>
+                                        <th> Primary school </th>
+                                        <th> High school </th>
+                                        <th> Secondary: technical/vocational </th>
+                                        <th> Secondary: university-preparatory </th>
+                                        <th> University or College </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td> Total </td>
+                                        <td> 14% </td>
+                                        <td> 21% </td>
+                                        <td> 6% </td>
+                                        <td> 8% </td>
+                                        <td> 51% </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+                                <i class="fa fa-suitcase" aria-hidden="true"></i> Employment
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse4" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th> Employment </th>
+                                        <th> Employed </th>
+                                        <th> Currently unemployed </th>
+                                        <th> Retired, pensioner </th>
+                                        <th> Homemaker </th>
+                                        <th> Student </th>
+                                        <th> Other </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td> Total </td>
+                                        <td> 54% </td>
+                                        <td> 6% </td>
+                                        <td> 2% </td>
+                                        <td> 2% </td>
+                                        <td> 33% </td>
+                                        <td> 3% </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
+                                <i class="fa fa-mars"></i> Gender
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse5" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th> Gender </th>
+                                        <th> Male </th>
+                                        <th> Female </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td> Total </td>
+                                        <td> 62% </td>
+                                        <td> 38% </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse6">
+                                <i class="fa fa-home" aria-hidden="true"></i> Householdsize
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse6" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th> Householdsize </th>
+                                        <th> 1 </th>
+                                        <th> 2 </th>
+                                        <th> 3 </th>
+                                        <th> 4 </th>
+                                        <th> 5 </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td> Total </td>
+                                        <td> 4% </td>
+                                        <td> 9% </td>
+                                        <td> 16% </td>
+                                        <td> 43% </td>
+                                        <td> 28% </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse7">
+                                <i class="fa fa-usd" aria-hidden="true"></i> Income in VND
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse7" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th> Income in VND </th>
+                                        <th> <3M </th>
+                                        <th> 3M-7,5M </th>
+                                        <th> 7,5M-30M </th>
+                                        <th> 30M-45M </th>
+                                        <th> 45M+ </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td> Total </td>
+                                        <td> 24% </td>
+                                        <td> 38% </td>
+                                        <td> 31% </td>
+                                        <td> 4% </td>
+                                        <td> 4% </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 </div>
@@ -378,3 +648,4 @@ setTimeout(displayPlatforms(urlPlacements), 100);
     </table>
 </script>
 <script type="text/javascript" src="js/business-domains/export_script.js"></script>
+<script type="text/javascript" src="js/business-domains/chart_script.js"></script>
