@@ -32,7 +32,7 @@ function table_sum(data){
             <tr>\
                 <th>Source</th>\
                 <th>Impression</th>\
-                <th>Total</th>\
+                <th>Estimated Revenue (VND)</th>\
             </tr>\
         </thead>\
         <tbody>\
