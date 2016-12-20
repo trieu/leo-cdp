@@ -1,3 +1,59 @@
+body{
+	margin: 0px;
+	background-image:none;
+	position:static;
+	left:auto;
+	
+}
+.imgbg img {
+
+	width: 100%;
+}
+.test{
+	position: relative;
+}
+.example-video-container{
+	position: absolute;
+	z-index: 10;
+	top: 6%;
+	left: 23.5%;
+	height: 57%;
+	width: 53%;
+	overflow: hidden;
+	/* border: 1px solid red; */
+
+}
+.example-video-container #my-video{
+	height: 100%;
+	width: 100%;
+}
+.example-video-container #box{
+      position: absolute;
+      z-index: 2000;
+      right:-1%;
+      bottom: 6.5%;
+}
+
+.popup-point img{
+	height: 100px;
+	width: 80px;
+	opacity: 0.8;
+  	filter: alpha(opacity=60);
+}
+
+.popup-result {
+	top:2.5%;
+	z-index: 100000000;
+}
+	
+
+
+
+ /*=================================================================*/
+
+
+
+
 .popup-output .video-js .vjs-big-play-button{
 	width: 64px;
 	border-radius: 64px;
