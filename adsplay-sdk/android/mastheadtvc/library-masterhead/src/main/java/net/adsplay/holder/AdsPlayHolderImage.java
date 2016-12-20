@@ -74,18 +74,21 @@ public class AdsPlayHolderImage extends RelativeLayout implements AdsPlayReady {
         adHolder.setLayoutParams(params);
     }
 
-    void showAdView(){
+    void showAdView(AdData adData){
         ViewGroup.LayoutParams params = adHolder.getLayoutParams();
         params.height = this.height;
         params.width = this.width;
         adHolder.setLayoutParams(params);
+
+        String metric = "impression";
+        AdLogDataUtil.log(metric,adData);
     }
 
     @Override
     public void onMediaReady(final AdData adData) {
         if(adData != null){
             try {
-                showAdView();
+                showAdView(adData);
                 Log.i("AdsPlay","--------------------------------------------------------------------");
                 String file =  adData.getMedia();
                 Log.i("AdsPlay","-------> playAd file: "+file);
@@ -97,10 +100,10 @@ public class AdsPlayHolderImage extends RelativeLayout implements AdsPlayReady {
                     public void onClick(View v) {
                         closeAdView();
                         if(adData.getClickthroughUrl() != null){
+                            AdLogDataUtil.log("click",adData);
                             Intent i = new Intent(Intent.ACTION_VIEW);
                             i.setData(Uri.parse(adData.getClickthroughUrl()));
                             AdsPlayHolderImage.this.activity.startActivity(i);
-                            AdLogDataUtil.log("https://log1.adsplay.net/ping");
                         }
                     }
                 });

@@ -61,6 +61,7 @@ public class AdDataLoader {
 
             int adId = ad.getInt("adId");
             String media = ad.getString("adMedia");
+            String adBeacon = ad.getString("adBeacon");
             if(adType == AdData.ADTYPE_IMAGE_DISPLAY_AD){
                 media = "http:" + media;
             }
@@ -70,6 +71,7 @@ public class AdDataLoader {
                     , ""
                     ,clickUrl
             );
+            adData.setAdBeacon(adBeacon);
             Log.i("AdsPlay",rs);
         } catch (Exception e){
             Log.i("AdsPlay",e.toString());
