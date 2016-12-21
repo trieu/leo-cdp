@@ -189,5 +189,9 @@ router.get('/summary/:graphId', function (req, res) {
 });
 // res.send('ok');
 
+router.get('/live-event', function (req, res) {
+    var data = modelUtils.baseModel(req);
+    res.render('monitor/live-event', data);
+});
 
 module.exports = router;
