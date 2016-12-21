@@ -1,0 +1,63 @@
+<div class="row">
+	<div class="col-lg-12">
+		<h1 class="page-header">
+			{{dashboard_title}}
+		</h1>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6 col-sm-12">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<form id="form_epl">
+					<div class="form-group">
+						<label>Target</label>
+						<input type="number" class="form-control" name="target" value="2000000" placeholder="Enter number">
+						<span class="help-block">example: 2000000</span>
+					</div>
+
+					<div class="form-group">
+						<label>
+							<strong>Schedule</strong>
+							<a href="#" class="btn-plus" id="plus-schedule"><i class="fa fa-plus-square" aria-hidden="true"></i></a>
+						</label>
+						<div class="form-group-inline">
+							<div class="form-group">
+								<label>Date</label>
+								<input type="text" class="form-control" name="date" placeholder="yyyy-mm-dd">
+								<span class="help-block">example: 2016-12-30</span>
+							</div>
+							<div class="form-group">
+								<label>Hour of the match</label>
+								<input type="text" class="form-control" name="hour" placeholder="hh">
+								<span class="help-block">( example single: 02 ) or ( example multiple: 02,02,21,22 )</span>
+							</div>
+						</div>
+					</div>
+
+					<button type="submit" class="btn btn-default">Submit</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+<script type="text/javascript">
+	$("#form_epl").submit(function(e){
+		e.preventDefault();
+		var data = "target=" + $('[name="target"]').val();
+		$('.form-group-inline').each(function(){
+			var date = $(this).find('[name="date"]').val();
+			var hour = $(this).find('[name="hour"]').val();
+			data = data + "&match=" + date+','+hour;
+		});
+		var url = window.location.protocol+ "//" + window.location.hostname + "/epl-report/excel?"+ data;
+		console.log(url)
+		window.open(url);  
+	});
+	$(document).on('click','#plus-schedule', function(e){
+		e.preventDefault();
+		var pa = $(this).parents('.form-group');
+		var copy = pa.find('.form-group-inline:first').clone();
+		pa.append(copy);
+	});
+</script>

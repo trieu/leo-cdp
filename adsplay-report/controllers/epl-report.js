@@ -16,13 +16,16 @@ router.get('/excel', function(req, res, next){
 			//-------------------------------calculate form redis
 			//req.query.match 2016-12-04,00,20 
 			//          		  date  ,hour
-			var query = [];
-			var item;
+
+			var item = [];
 			if(Array.isArray(req.query.match)){
-				item = req.query.match; //array match
+				var query = req.query.match; //array match
+				for (var i in query) {
+					item.push(query[i]);
+				}
 			}
 			else{
-				item = query.push(req.query.match);
+				item.push(req.query.match);
 			}
 			
 			var MATCH = [];
@@ -72,17 +75,25 @@ router.get('/excel', function(req, res, next){
 				col_date++;
 			}
 			
+			//calculator target
+			var target = 0;
+			var targetDefault = req.query.target || 2000000;
+			for(var i in MATCH){
+				target = target + MATCH[i].pre + MATCH[i].mid + MATCH[i].post;
+			}
+			var xTarget = (targetDefault > target) ? Math.ceil(targetDefault/target) : 1;
+
 			//number
 			var sum = 0;
 			var col_number = 2;
 			for(var i in MATCH){
-				ws.cell(3,col_number).number(MATCH[i].pre).style(numFormat);
-				ws.cell(4,col_number).number(MATCH[i].mid).style(numFormat);
-				ws.cell(5,col_number).number(MATCH[i].post).style(numFormat);
+				ws.cell(3,col_number).number(MATCH[i].pre * xTarget).style(numFormat);
+				ws.cell(4,col_number).number(MATCH[i].mid * xTarget).style(numFormat);
+				ws.cell(5,col_number).number(MATCH[i].post * xTarget).style(numFormat);
 				col_number++;
 				sum++;
 			}
-
+			
 			// Sum 
 			var sumAll = "";
 			var charCode = 66; // = B
@@ -101,7 +112,8 @@ router.get('/excel', function(req, res, next){
 			var col_sumAll = sumAll.slice(0, -1);
 			ws.cell(7, 2, 7, sum+1, true).formula(col_sumAll).style(numFormat).style(bold);
 
-			wb.write('Livestream-tvc.xlsx', res);
+			var nameXml = "Livestream-tvc-xtarget" + xTarget + ".xlsx";
+			wb.write(nameXml, res);
 			//--------------------------------export excel
 			
 		}
