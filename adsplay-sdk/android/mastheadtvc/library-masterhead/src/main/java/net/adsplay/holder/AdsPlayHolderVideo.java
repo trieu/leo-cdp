@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import net.adsplay.common.AdData;
+import net.adsplay.common.AdLogDataUtil;
 import net.adsplay.common.AdPermissionChecker;
 import net.adsplay.common.AdsPlayReady;
 import net.adsplay.common.Constants;
@@ -105,11 +106,14 @@ public class AdsPlayHolderVideo extends RelativeLayout implements AdsPlayReady {
         adHolder.setLayoutParams(params);
     }
 
-    void showAdView(){
+    void showAdView(AdData adData){
         ViewGroup.LayoutParams params = adHolder.getLayoutParams();
         params.height = this.height;
         params.width = this.width;
         adHolder.setLayoutParams(params);
+
+        String metric = "impression";
+        AdLogDataUtil.log(metric,adData);
     }
 
     void closeAdView(){
@@ -119,10 +123,10 @@ public class AdsPlayHolderVideo extends RelativeLayout implements AdsPlayReady {
     }
 
     @Override
-    public void onMediaReady(AdData adData) {
+    public void onMediaReady(final AdData adData) {
         if(adData != null){
             try {
-                showAdView();
+                showAdView(adData);
                 Log.i("AdsPlay","--------------------------------------------------------------------");
                 String file = "file://"+adData.getMedia();
                 String adTitle = adData.getTitle();
@@ -156,6 +160,7 @@ public class AdsPlayHolderVideo extends RelativeLayout implements AdsPlayReady {
                 this.videoView.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        AdLogDataUtil.log("click",adData);
                         synchronized(this) {
                             if( ! valumeEnabled ){
                                 valumeEnabled = true;

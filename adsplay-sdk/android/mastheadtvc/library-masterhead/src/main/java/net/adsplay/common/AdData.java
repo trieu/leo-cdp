@@ -7,16 +7,9 @@ import java.util.List;
  * Created by trieu on 10/30/16.
  */
 public class AdData {
-    public static final int ADTYPE_INSTREAM_VIDEO = 1;//standard VAST video Ad: Preroll, Midroll
-    public static final int ADTYPE_EXPANDABLE_OVERLAY = 2;///Interactive HTML5 Overlay on Video
-    public static final int ADTYPE_IMAGE_OVERLAY = 3;//Static Image Overlay on Video
-    public static final int ADTYPE_BREAKING_NEWS_OVERLAY = 4;//Interactive Text Overlay on Video
-    public static final int ADTYPE_HTML5_DISPLAY_AD = 5;//HTML5 Interactive Ad
+
     public static final int ADTYPE_IMAGE_DISPLAY_AD = 6;// static banner: jpeg, gif, png
     public static final int ADTYPE_VIDEO_INPAGE_AD = 7;//Video Popup Ad in Content Marketing
-    public static final int ADTYPE_SPONSORED_STORY_AD = 8;//Native sponsored content in Content Marketing
-    public static final int ADTYPE_BIDDING_AD = 9;//Google Ad JavaScript
-    public static final int ADTYPE_STREAMING_VIDEO_AD = 10;//Instream Video in Live TV
     public static final int ADTYPE_MASTER_HEAD_AD = 11;//master head for mobile app
     public static final int ADTYPE_INFEED_AD = 12;//infeed for mobile app
 
