@@ -7,7 +7,6 @@ var mongoose = require('mongoose');
 var connection = mongoose.createConnection(dbConfig.url);
 
 var vastSchema = new mongoose.Schema({
-	_id: {type: Number, required: true, index: true},
     Name: { type: String, default: '' },
     Impression: { type: [String] },
     TrackingEvents: { type: [] }, //{name: , value: }

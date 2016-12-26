@@ -1,0 +1,407 @@
+<div class="row">
+	<div class="col-md-8 col-sm-12">
+		<h3 class="text-center">
+			<span>{{dashboard_title}}</span>
+		</h3>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-8 col-sm-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4>Requirement</h4>
+			</div>
+			<div class="panel-body">
+				<div class="form-horizontal col-md-12">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">
+							Exclusions
+							<i class="fa fa-question-circle" aria-hidden="true"></i>
+						</label>
+						<div class="col-sm-8">
+							<div class="checkbox"> <label> <input type="checkbox" name="exclusions"> Remember me </label> </div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-4 control-label">
+							Advertiser
+							<i class="fa fa-question-circle" aria-hidden="true"></i>
+						</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" name="advertiser" placeholder="...">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-4 control-label">
+							Inventory size
+							<i class="fa fa-question-circle" aria-hidden="true"></i>
+						</label>
+						<div class="col-sm-8">
+							<div class="radio">
+								<label>
+									<input type="radio" name="size" value="standard">
+										Standard
+								</label>
+							</div>
+							<div class="radio">
+								<label>
+									<input type="radio" name="size" value="videovast">
+										Video VAST
+								</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-4 control-label">
+							Label
+							<i class="fa fa-question-circle" aria-hidden="true"></i>
+						</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" name="labels" placeholder="...">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-4 control-label">
+							<i class="fa fa-question-circle" aria-hidden="true"></i>
+						</label>
+						<div class="col-sm-8">
+							<div class="checkbox"> <label> <input type="checkbox" name="allow"> Allow same advertiser exception. </label> </div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-8 col-sm-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4>Setting</h4>
+			</div>
+			<div class="panel-body">
+				<div class="form-horizontal col-md-12">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">
+							Type
+							<i class="fa fa-question-circle" aria-hidden="true"></i>
+						</label>
+						<div class="col-sm-3">
+							<select class="form-control" name="type1">
+								<option>Standard</option>
+							</select>
+						</div>
+						<div class="col-sm-3">
+							<select class="form-control" name="type2">
+								<option>Normal</option>
+							</select>
+						</div>
+						<div class="col-sm-2">
+							<input type="number" class="form-control" name="labels">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-4 control-label">
+							Start Time & End Time
+							<i class="fa fa-question-circle" aria-hidden="true"></i>
+						</label>
+						<div class="col-sm-4">
+							<input type="text" id="begin" class="form-control" name="labels">
+						</div>
+						<div class="col-sm-4">
+							<input type="text" id="end" class="form-control" name="labels">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-4 control-label">
+							Quantity
+							<i class="fa fa-question-circle" aria-hidden="true"></i>
+						</label>
+						<div class="col-sm-4">
+							<select class="form-control" name="quantity1">
+								<option>Max available</option>
+							</select>
+						</div>
+						<div class="col-sm-4">
+							<select class="form-control" name="quantity2">
+								<option>Impressions</option>
+							</select>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-8 col-sm-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4>Adjust delivery</h4>
+			</div>
+			<div class="panel-body">
+				<div class="form-horizontal col-md-12">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">
+							Deliver Impressions
+							<i class="fa fa-question-circle" aria-hidden="true"></i>
+						</label>
+						<div class="col-sm-4">
+							<select class="form-control" name="deliver1">
+								<option>Frontloaded</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-4 control-label">
+							Display Creatives
+							<i class="fa fa-question-circle" aria-hidden="true"></i>
+						</label>
+						<div class="col-sm-4">
+							<select class="form-control" name="deliver1">
+								<option>One or more</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-4 control-label">
+							Rotate Creatives
+							<i class="fa fa-question-circle" aria-hidden="true"></i>
+						</label>
+						<div class="col-sm-4">
+							<select class="form-control" name="deliver1">
+								<option>Optimized</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-4 control-label">
+							Frequency
+							<i class="fa fa-question-circle" aria-hidden="true"></i>
+						</label>
+						<div class="col-sm-8">
+							<div class="checkbox"> <label> <input type="checkbox" name="allow"> Set per user frequency cap </label> </div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-8 col-sm-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4>Add Targeting</h4>
+			</div>
+			<div class="panel-body">
+				<div class="form-horizontal col-md-12">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">
+							Location
+							<i class="fa fa-question-circle" aria-hidden="true"></i>
+						</label>
+						<div class="col-sm-8">
+							<select multiple="multiple" class="boxSelect" name="location">
+								<option value='mienbac'>mien bac</option>
+								<option value='miennam'>mien nam</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label">
+							Device
+							<i class="fa fa-question-circle" aria-hidden="true"></i>
+						</label>
+						<div class="col-sm-8">
+							<select multiple="multiple" class="boxSelect" name="location">
+								<option value='mobile'>mobile</option>
+								<option value='desktop'>desktop</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label">
+							Platforms
+							<i class="fa fa-question-circle" aria-hidden="true"></i>
+						</label>
+						<div class="col-sm-8">
+							<select multiple="multiple" class="boxSelect" name="location">
+								<option value='mienbac'>mien bac</option>
+								<option value='miennam'>mien nam</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-8 col-sm-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4>Delivery Forecast</h4>
+			</div>
+			<div class="panel-body">
+				<div class="form-horizontal col-md-12">
+					<p>
+						<a class="btn btn-default" href="#" role="button">
+							<i class="fa fa-refresh" aria-hidden="true"></i>
+							Check Inventory
+						</a>
+						<a class="btn btn-success" href="#" role="button">
+							<i class="fa fa-file" aria-hidden="true"></i>
+							Export Forecast
+						</a>
+					</p>
+					
+					<div class="panel-group" id="accordion">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+										Forecast Summary 
+										<span id="forecast-date">
+											&nbsp;from&nbsp;
+											<span id="forecast-begin"></span>
+											&nbsp;to&nbsp;
+											<span id="forecast-end"></span>
+										</span>
+									</a>
+								</h4>
+							</div>
+							<div id="collapseOne" class="panel-collapse collapse">
+								<div class="panel-body">
+									<p>
+										<strong>
+											<i class="fa fa-check-square-o" aria-hidden="true"></i> Maximum of 20,999,999 impressions are available for the selected targeting criteria
+										</strong>
+									</p>
+
+									<div class="table-responsive">
+										<table class="table table-auto">
+											<tbody>
+												<tr>
+													<td class="text-right">20,999,999</td>
+													<td>
+														<span class="square square-green"></span>
+														Available
+													</td>
+												</tr>
+												<tr>
+													<td class="text-right">0</td>
+													<td>
+														<span class="square square-border"></span>
+														Remaining unreserved impressions
+													</td>
+												</tr>
+												<tr>
+													<td class="text-right">0</td>
+													<td>
+														<span class="square square-pattern-1"></span>
+														Reserved by lower-priotity line items
+													</td>
+												</tr>
+												<tr>
+													<td class="text-right">0</td>
+													<td>
+														<span class="square square-pattern-2"></span>
+														Unavailable
+													</td>
+												</tr>
+												<tr>
+													<td class="text-right">20,999,999</td>
+													<td>Matched capacity</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+										Content Line Items
+									</a>
+								</h4>
+							</div>
+							<div id="collapseTwo" class="panel-collapse collapse">
+								<div class="panel-body">
+									Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-8 col-sm-12">
+		<p class="text-right" style="margin-bottom: 50px;">
+			<a class="btn btn-primary" href="#" role="button">
+				<i class="fa fa-check" aria-hidden="true"></i>
+				Submit
+			</a>
+		</p>
+	</div>
+</div>
+
+<link rel="stylesheet" type="text/css" href="css/multi-select.css">
+<script type="text/javascript" src="js/jquery.multi-select.js"></script>
+<script type="text/javascript">
+$(function () {
+	$('.boxSelect').multiSelect();
+    var begin = moment().add(1, 'days').format("YYYY-MM-DD");
+    var end = new moment().add(2, 'days').format("YYYY-MM-DD");
+
+    var formatTime = function (x) {
+        return new moment(x).format("YYYY-MM-DD");
+    };
+
+    $('#forecast-begin').text(begin);
+    $('#forecast-end').text(end);
+    $('#begin').datetimepicker({
+        format: 'YYYY-MM-DD',
+        defaultDate: begin
+    });
+    $('#end').datetimepicker({
+        format: 'YYYY-MM-DD',
+        defaultDate: end
+    });
+    $("#begin").on("dp.change", function (e) {
+    	$('#forecast-begin').text(begin);
+        $('#end').data("DateTimePicker").minDate(e.date);
+    });
+    $("#end").on("dp.change", function (e) {
+    	$('#forecast-end').text(end);
+        $('#begin').data("DateTimePicker").maxDate(e.date);
+
+        var max90 = new moment().add(90, 'days').format("YYYY-MM-DD");
+        $('#end').data("DateTimePicker").maxDate(max90);
+    });
+
+});
+</script>

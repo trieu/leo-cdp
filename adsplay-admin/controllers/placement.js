@@ -73,8 +73,8 @@ router.post('/save', function (req, res, next){
         doc.name = req.body.name;
         doc.publisher = req.body.publisher;
         doc.type = parseInt(req.body.type);
-        doc.width = parseInt(req.body.width);
-        doc.height = parseInt(req.body.height);
+        doc.width = parseInt(req.body.width) || 0;
+        doc.height = parseInt(req.body.height) || 0;
 
         doc.enabled = req.body.enabled;
         doc.adCode3rd = req.body.adCode3rd;

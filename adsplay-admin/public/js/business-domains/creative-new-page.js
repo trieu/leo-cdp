@@ -114,7 +114,10 @@ function setFieldsCreative(){
 		}
 		
 		//set default Running Date
-		$('#ads_running_date').val(moment().format('YYYY-MM-DDTHH:mm'));
+		var set_running = moment().format('YYYY-MM-DDTHH:mm');
+		var set_expired = moment().add(1, 'days').format('YYYY-MM-DDTHH:mm');
+		$('#ads_running_date').val(set_running);
+		$('#ads_expired_date').val(set_expired);
 		//set hide status new
 		$('#crt-status').hide();
 	}

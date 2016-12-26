@@ -69,7 +69,7 @@ if(!fs.existsSync(exportFolder)){
 	fs.mkdirSync(exportFolder);
 }
 
-var folder = ['overlay','display','video'];
+var folder = ['overlay','display','video','vast'];
 var adsFolder = __dirname + '/public/ads/';
 if (!fs.existsSync(adsFolder)) {
 	fs.mkdirSync(adsFolder);

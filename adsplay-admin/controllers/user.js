@@ -9,9 +9,15 @@ var express = require('express')
 
 router.get('/', function (req, res, next) {
 	var data = modelUtils.baseModel(req);
-	data.statuses = constantUtils.statuses;
-	data.dashboard_title = "User Detail";
-	res.render('user/list', data);
+	if(data.ssid == 1000){
+		data.statuses = constantUtils.statuses;
+		data.dashboard_title = "User List";
+		res.render('user/list', data);
+	}
+	else{
+		res.redirect('/permission');
+	}
+	
 });
 
 router.get('/find', function (req, res, next) {
@@ -21,7 +27,8 @@ router.get('/find', function (req, res, next) {
 		if(err){
 			return console.error(err);
 		}
-		res.json(doc);
+		var convert = convert_data(doc);
+		res.json(convert);
 	})
 });
 
@@ -68,5 +75,25 @@ router.get('/update/:id/:status', function (req, res, next) {
 	}
 	
 });
+
+var convert_data = function(doc){
+	var obj = [];
+	for(var i in doc){
+		var gender = (doc[i].gender == 1) ? "male" : "female";
+
+		obj.push({
+			_id: doc[i]._id,
+			email: doc[i].email,
+			username: doc[i].username,
+			avatar: doc[i].avatar,
+			gender: gender,
+			updated_at: doc[i].updated_at,
+			created_at: doc[i].created_at,
+			status: doc[i].status,
+			roles: doc[i].roles
+		});
+	};
+	return obj;
+}
 
 module.exports = router;
