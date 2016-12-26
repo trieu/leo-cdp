@@ -272,19 +272,9 @@
                 <label>FptPlay Ad Placements</label>
                 <select type="select" class="select-multi" id="fptplay_placements" name="tgpms"
                         data-placeholder="Select Placements" multiple="multiple" required>
-                    <option value="101">TVC_LIVE_TV</option>
-                    <option value="102">TVC_VOD</option>
-                    <option value="201">TVC_SMARTTV_LIVE_TV</option>
-                    <option value="202">TVC_SMART_TV_VOD</option>
-                    <option value="301">TVC_LIVE_STREAM_MOBILE</option>
-                    <option value="302">TVC_VOD_MOBILE</option>
-                    <option value="303">TVC_LIVE_STREAM_ANDROID_BOX</option>
-                    <option value="304">TVC_VOD_ANDROID_BOX</option>
-                    <option value="305">TVC_LIVE_STREAM_ANDROID_APP</option>
-                    <option value="306">TVC_VOD_ANDROID_APP</option>
-                    <option value="307">TVC_LIVE_STREAM_ANDROID_SMART_TV</option>
-                    <option value="308">TVC_VOD_ANDROID_SMART_TV</option>
-                    <option value="446">TVC_LiveStream_Auto</option>
+                    {{#each fptplayPlacementVideoEnabled}}
+                        <option value="{{id}}" {{checked}}>{{name}}</option>
+                    {{/each}}
                 </select>
 
                 <label>FptPlay Categories</label>

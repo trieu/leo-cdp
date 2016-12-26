@@ -82,19 +82,30 @@ router.get('/new/:typeId', function (req, res) {
 
 	var page = 'creative/new-'+req.params.typeId;
 
-	console.log(constantUtils.getAdType(req.params.typeId));
-	if(req.params.typeId == "video-paytv"){
-		data.dashboard_title = "New Video Ad Unit - PayTV";
-		data.locationCodes = constantUtils.getLocationCodes().Area;
-		res.render('creative/new-video-paytv', data);
-	}
-	else if(constantUtils.getAdType(req.params.typeId)){
-		res.render(page, data);
-	}
-	else{
-		data.dashboard_title = "New Ad Unit";
-		res.render('creative/new', data);
-	}
+	Sync(function(){
+		try{
+			console.log(constantUtils.getAdType(req.params.typeId));
+			data.fptplayPlacementVideoEnabled = creativeModel.fptplayPlacementVideoEnabled.sync(null);
+			
+			if(req.params.typeId == "video-paytv"){
+				data.dashboard_title = "New Video Ad Unit - PayTV";
+				data.locationCodes = constantUtils.getLocationCodes().Area;
+				res.render('creative/new-video-paytv', data);
+			}
+			else if(constantUtils.getAdType(req.params.typeId)){
+				res.render(page, data);
+			}
+			else{
+				data.dashboard_title = "New Ad Unit";
+				res.render('creative/new', data);
+			}
+		}
+
+		catch (e) {
+			console.error(e);
+		}
+	});
+
 });
 
 
@@ -111,7 +122,8 @@ router.get('/edit/:id', function (req, res) {
 	Sync(function(){
 		try{
 			// result from callback
-			result = creativeModel.edit.sync(null, url, data);
+			var result = creativeModel.edit.sync(null, url, data);
+			data.fptplayPlacementVideoEnabled = creativeModel.fptplayPlacementVideoEnabled.sync(null);
 
 			//page paytv edit
 			if (result.crt && result.crt.adType && result.crt.name && result.crt.tgpfs == 6){

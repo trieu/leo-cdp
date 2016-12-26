@@ -16,6 +16,8 @@ var request = require('request');
 var crypto = require('crypto');
 var _ = require('underscore');
 
+var Placement = require('../models/placement');
+
 exports.list = function (url, data, callback) {
 
 	Sync(function(){
@@ -72,10 +74,13 @@ exports.list = function (url, data, callback) {
                 else if (data.ssid === 1007 && (adName.indexOf('paytv') >= 0 )) {
                     filteredList.push(crt);
                 }
+                else if (data.ssid === 1008 && (adName.indexOf('startalk') >= 0 )) {
+                    filteredList.push(crt);
+                }
                 else if (data.ssid === 1009 && (adName.indexOf('panasonic') >= 0 )) {
                     filteredList.push(crt);
                 }
-		else if (data.ssid === 1008 && (adName.indexOf('startalk') >= 0 )) {
+                else if (data.ssid === 1011 && (adName.indexOf('vtc_client') >= 0 )) {
                     filteredList.push(crt);
                 }
 
@@ -299,6 +304,23 @@ exports.metrics = function (url, data, callback) {
 
 };
 
+exports.fptplayPlacementVideoEnabled = function(callback){
+    var temp = [];
+    var placements = constantUtils.fptplay_placements;
+    for(var k in placements){
+        temp.push({id: k, name: placements[k], checked: ""});
+    }
+
+    Placement.find({ enabled: true, type:1 ,publisher: 1000 })
+    .exec(function(err, doc){
+        if (err) { return next(err); }
+        for(var i in doc){
+            //console.log(doc[i])
+            temp.push({id: doc[i]._id, name: doc[i].name, checked: ""});
+        }
+        callback(null, temp);
+    });
+};
 
 // ------------- function extend
 function youtubeValid(url) {

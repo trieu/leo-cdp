@@ -17,6 +17,23 @@ var placements = {
     401: 'FptPlay-Overlay', 411: 'Masterhead Mobile',412: 'Infeed Mobile',
     446: 'LiveStream Auto'
 };
+
+var fptplay_placements = {
+    101: 'TVC_LIVE_TV',
+    102: 'TVC_VOD',
+    201: 'TVC_SMARTTV_LIVE_TV',
+    202: 'TVC_SMART_TV_VOD',
+    301: 'TVC_LIVE_STREAM_MOBILE',
+    302: 'TVC_VOD_MOBILE',
+    303: 'TVC_LIVE_STREAM_ANDROID_BOX',
+    304: 'TVC_VOD_ANDROID_BOX',
+    305: 'TVC_LIVE_STREAM_ANDROID_APP',
+    306: 'TVC_VOD_ANDROID_APP',
+    307: 'TVC_LIVE_STREAM_ANDROID_SMART_TV',
+    308: 'TVC_VOD_ANDROID_SMART_TV',
+    446: 'TVC_LiveStream_Auto'
+};
+
 var userNames = {1000: 'Admin', 1001: 'Manager', 1002: 'Customer', 1003: 'epl_fptplay',
     1004: 'Lava', 1005: 'Ambient', 1006: 'iTVad_Sale', 1007: 'PayTV_Admin'};
 var sites = {'www.fshare.vn': 'FShare', 'fptplay-live': 'FptPlay-LiveEvent' };
@@ -190,6 +207,7 @@ exports.getLocationCodes = function () {
 
 exports.statuses = statuses;
 exports.placements = placements;
+exports.fptplay_placements = fptplay_placements;
 exports.sites = sites;
 exports.platforms = platforms;
 exports.publishers = publishers;
