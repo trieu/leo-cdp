@@ -20,7 +20,7 @@ var casper = require('casper').create({
 		javascriptEnabled: true
 	},
 	verbose: true,
-	clientScripts: ["jquery.min.js"]
+	clientScripts: ["./public/js/jquery.min.js"]
 });
 
 

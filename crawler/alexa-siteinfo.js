@@ -26,7 +26,7 @@ var casper = require('casper').create({
 		// loadImages:  false	// The WebPage instance used by Casper will
 	},
 	verbose: true,
-	clientScripts: ["jquery.min.js"]
+	clientScripts: ["./public/js/jquery.min.js"]
 });
 
 

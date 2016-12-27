@@ -1,6 +1,6 @@
 var jsonfile = require('jsonfile');
 var _ = require('underscore');
-var file = './json/data2.json';
+var file = '../json/data2.json';
 jsonfile.readFile(file, function(err, obj) {
 	console.log(obj)
 	var sort = _.sortBy(obj.result, function(o) { return parseInt(o.id); });
@@ -15,7 +15,7 @@ jsonfile.readFile(file, function(err, obj) {
 			image: sort[i].image
 		})
 	}
-	jsonfile.writeFile('./json/final2.json', result, {spaces: 2}, function(err) {
+	jsonfile.writeFile('../json/final2.json', result, {spaces: 2}, function(err) {
 		console.error(err)
 	})
 })
