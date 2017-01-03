@@ -177,5 +177,93 @@ router.get('/excel', function(req, res, next){
 		});
 		
 	}
+});
+
+router.get('/banner-view', function(req, res, next){
+	Sync(function(){
+		try{
+			//https://monitor.adsplay.net/epl-report/banner-view?begin=2017-01-01&end=2017-01-03
+			var begin = req.query.begin;
+			var end = req.query.end;
+			function between_date(begin, end){
+				var dateArray = [];
+				var get_time_begin = new Date(begin).getTime();
+				var get_time_end = new Date(end).getTime();
+				while (get_time_begin <= get_time_end) {
+					dateArray.push(moment(get_time_begin).format('YYYY-MM-DD'));
+					get_time_begin = moment(get_time_begin).add(1, 'day');
+				}
+				return dateArray;
+			}
+			
+			var result = COUNTVIEW.sync(null, between_date(begin, end));
+			//console.log(result);
+
+			//--------------------------------export excel
+			var wb = new xl.Workbook();// Create a new instance of a Workbook class 
+			var ws = wb.addWorksheet('Sheet Toshiba');// Add Worksheets to the workbook 
+			var bold = wb.createStyle({
+				font: {
+					bold: true,
+				}
+			});
+			var numFormat = wb.createStyle({
+				numberFormat: '#,##0; (#,##0); -'
+			});
+			
+			//title
+			ws.cell(1, 1, 1, 4, true).string('Toshiba Banner View').style(bold);
+			//category
+			ws.cell(2,2).string('View Number');
+
+			//date title
+			var col_date = 3;
+			for(var i in result){
+				ws.cell(col_date, 1).string(result[i].date);
+				col_date++;
+			}
+			
+			//number
+			var sum_view = 0;
+			var col_number = 3;
+			for(var i in result){
+				ws.cell(col_number, 2).number(result[i].view).style(numFormat);
+				col_number++;
+				sum_view += result[i].view;
+			}
+			
+			// Sum 
+			ws.cell(col_number, 1).string('Sum View').style(bold);
+			ws.cell(col_number, 2).number(sum_view).style(numFormat);
+
+			var nameXml = "Toshiba-Banner-View-" + sum_view + ".xlsx";
+			wb.write(nameXml, res);
+			//--------------------------------export excel
+		}
+		catch (e) {
+			console.error(e);
+		}
+	});
+
+	function COUNTVIEW(keys, cb) {
+		var group = {};
+	    var pipeline = redis.pipeline();
+
+	    keys.forEach(function(key, index){
+	        pipeline.pfcount('pv:'+key+':u:fptplay.net:web-home-epl');
+	    });
+
+	    pipeline.exec(function(err, result){
+	    	group.view = [];
+			for(var k in result){
+				group.view.push({
+					date: keys[k],
+					view: result[k][1]
+				});
+			}
+	        cb(err, group.view);
+	    });
+	}
+
 })
 module.exports = router;
