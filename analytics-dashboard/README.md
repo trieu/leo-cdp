@@ -1,5 +1,4 @@
-# Super MEAN Stack
-> An Angular + Node/Express + MongoDB + gulp
+# REACT WEBAPP WITH EXPRESS.JS
 
 ## Setup
 1. `npm install`
