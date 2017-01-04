@@ -1,10 +1,25 @@
-var express = require('express');
 var favicon = require('serve-favicon');
 var morgan = require('morgan');             // log requests to the console (express4)
 var bodyParser = require('body-parser');    // pull information from HTML POST (express4)
 var cookieParser = require('cookie-parser');// pull information from HTML cookies (express4)
 var expressSession = require('express-session');
+var express = require('express');
 var app = express();
+
+/************
+config webpack
+************/
+if(NODE_ENV == "dev"){
+	console.log('webpack')
+	var webpack = require('webpack');
+	var webpackConfig = require('../webpack.config.js');
+	var compiler = webpack(webpackConfig);
+	app.use(require('webpack-dev-middleware')(compiler, webpackConfig.devServer));
+	//app.use(require('webpack-hot-middleware')(compiler));
+}
+/************
+config webpack
+************/
 
 /************
 config app express
@@ -33,5 +48,8 @@ routes(app);
 
 //listen port
 app.listen(3000, function() {
-  console.log('Angular app listening on port 3000');
+console.log('React app listening on port 3000');
 });
+
+
+

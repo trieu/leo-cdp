@@ -6,14 +6,13 @@
 
 ## Usage
 
-1. `npm test`
+1. `npm start` //for build code dev
 
-2. `npm start` 
+2. `npm start:windows`  //for windows os
+
+3. `npm run start:prod`  //for build code productment
 
 ## Action
-1. `npm test` (gulp) compress file and watch file changed + nodemon auto restart
-
-2. `npm start` (gulp) compress minimize file <not watch file> + nodemon auto restart 
 
 ## Passport
 Login success (call session request in router express js)
@@ -25,19 +24,19 @@ Login success (call session request in router express js)
 ```
 mean-stack/
  │
- ├── app/
+ ├── src/
  │   ├──components/                 *
  │   │   ├──folder
  │   │
- │   └──controllers/                *
+ │   └──layouts/                *
  │   │   └──file
  │   │
- │   └──views
- │   │   ├──partial folder
- │   │	 └──pages file
- │   │
- │   ├──index.js					* config route angular & add module angular & run app
- │   └──layout.html					* root layout
+ │   └──pages
+ │   │   └──file
+ │   │	 
+ │   │──index.js                    * main js of react
+ │   ├──routes.js					* config route
+ │   └──........				    
  │
  ├── public/
  │   ├──css
@@ -48,7 +47,7 @@ mean-stack/
      ├──configs/					*
      │   ├──routes.js 
      │   ├──passport-config.js
-     │   └──.......
+     │   └──........
      │
      ├──controllers/				* all file api
      ├──helpers/
