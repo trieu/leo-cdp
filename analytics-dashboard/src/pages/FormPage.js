@@ -44,11 +44,11 @@ const FormPage = () => {
 
         <SelectField
           floatingLabelText="City"
-          value=""
-          fullWidth={true}>
-          <MenuItem key={0} primaryText="London"/>
-          <MenuItem key={1} primaryText="Paris"/>
-          <MenuItem key={2} primaryText="Rome"/>
+          value={1}
+        >
+          <MenuItem value={1} primaryText="London" />
+          <MenuItem value={2} primaryText="Paris" />
+          <MenuItem value={3} primaryText="Rome" />
         </SelectField>
 
         <DatePicker
