@@ -19,7 +19,9 @@ const DashboardPage = () => {
             <div style={globalStyles.clear}/>
             <ChartCategory />
           </Paper>
+        </div>
 
+        <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 m-b-15 ">
           <Paper style={globalStyles.paper}>
             <span style={globalStyles.title}>Category Report</span>
 

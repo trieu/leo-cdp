@@ -17,20 +17,28 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
   );
 };
 
-const ChartCategory = React.createClass({
-  getInitialState: function() {
-    return { data: [] };
-  },
 
-  componentWillMount: function(){
+class ChartCategory extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: []
+    };
+  }
+
+  // getInitialState() {
+  //   return { data: [] };
+  // }
+
+  componentWillMount(){
     this.dataSource();
-  },
+  }
 
-  componentWillReceiveProps: function(nextProps){
+  componentWillReceiveProps(nextProps){
     this.dataSource(nextProps);
-  },
+  }
 
-  dataSource: function(props){
+  dataSource(props){
     props = props || this.props;
 
     return $.ajax({
@@ -44,7 +52,7 @@ const ChartCategory = React.createClass({
       }
       this.setState({ data: data });
     }.bind(this));
-  },
+  }
 
 	render () {
   	return (
@@ -69,6 +77,7 @@ const ChartCategory = React.createClass({
       </PieChart>
     );
   }
-})
+}
+
 
 export default ChartCategory;
