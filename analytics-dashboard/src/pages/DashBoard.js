@@ -13,8 +13,15 @@ const DashboardPage = () => {
       <div className="row">
 
         <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 m-b-15 ">
-          <Paper>
-            <span style={globalStyles.title}>Browser Usage</span>
+          <Paper style={globalStyles.paper}>
+            <span style={globalStyles.title}>Category Report</span>
+
+            <div style={globalStyles.clear}/>
+            <ChartCategory />
+          </Paper>
+
+          <Paper style={globalStyles.paper}>
+            <span style={globalStyles.title}>Category Report</span>
 
             <div style={globalStyles.clear}/>
             <ChartCategory />

@@ -15,7 +15,7 @@ const styles = {
     marginBottom: 20
   },
   paper: {
-    padding: 30
+    padding: 15
   },
   clear: {
     clear: 'both'
