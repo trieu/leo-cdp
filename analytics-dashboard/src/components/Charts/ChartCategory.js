@@ -1,10 +1,12 @@
 import React from 'react';
+import DatePicker from 'material-ui/DatePicker';
+import RaisedButton from 'material-ui/RaisedButton';
 import { PieChart, Pie, Sector, Cell , Tooltip , Legend } from 'recharts';
 
-const data = [{name: 'Group A', value: 400}, {name: 'Group B', value: 300},
-                  {name: 'Group C', value: 300}, {name: 'Group D', value: 200}];
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
-
+const COLORS = ['#8884d8', '#83a6ed', '#8dd1e1', '#82ca9d','#a4de6c', 
+                      '#d0ed57', '#FABFA1', '#B86A54', '#FE8A71', '#DC626F',
+                      '#FE6860', '#F3C9BF', '#C9C7AF', '#93BFB6', '#7CA39C',
+                      '#726680', '#779BF0', '#849FBB', '#C2B6D6', '#EBE1E2'];
 const RADIAN = Math.PI / 180;                    
 
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
@@ -17,6 +19,23 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
   );
 };
 
+const ChartFilter = () => {
+  return (
+    <div>
+      <div class="col-md-12 col-sm-6">
+        <DatePicker
+          hintText="Begin Date"
+          floatingLabelText="Begin Date"/>
+      </div>
+      <div class="col-md-12 col-sm-6">
+        <DatePicker
+            hintText="End Date"
+            floatingLabelText="End Date"/>
+      </div>
+      <RaisedButton label="Default" primary={true} />
+    </div>
+  );
+}
 
 class ChartCategory extends React.Component {
   constructor(props) {
@@ -34,9 +53,9 @@ class ChartCategory extends React.Component {
     this.dataSource();
   }
 
-  componentWillReceiveProps(nextProps){
-    this.dataSource(nextProps);
-  }
+  // componentWillReceiveProps(nextProps){
+  //   this.dataSource(nextProps);
+  // }
 
   dataSource(props){
     props = props || this.props;
@@ -46,9 +65,10 @@ class ChartCategory extends React.Component {
       dataType: 'json',
       url: 'https://360.adsplay.net/api/categoryview/report?startDate=2016-12-09%2014:00:00&endDate=2016-12-20%2014:00:00&limit=10',
     }).done(function(result){
-      var data = [];
-      for(var i in result){
-          data.push({ name: result[i].category, value: result[i].contentView });
+      let data = [];
+      
+      for(let i in result){
+          data.push({ name: result[i].category, value: result[i].contentView , fill: COLORS[i]});
       }
       this.setState({ data: data });
     }.bind(this));
@@ -56,25 +76,25 @@ class ChartCategory extends React.Component {
 
 	render () {
   	return (
-    	<PieChart width={500} height={400} onMouseEnter={this.onPieEnter}>
-        <Pie
-          data={this.state.data} 
-          cx={120} 
-          cy={200} 
-          innerRadius={40}
-          outerRadius={80} 
-          fill="#8884d8"
-          paddingAngle={5}
-          labelLine={false}
-          label={renderCustomizedLabel}
-        >
-        	{
-          	data.map((entry, index) => <Cell fill={COLORS[index % COLORS.length]}/>)
-          }
-        </Pie>
-        <Tooltip/>
-        <Legend layout="vertical" align="right" verticalAlign="top" />
-      </PieChart>
+      <div>
+        <ChartFilter/>
+        <PieChart width={500} height={400} onMouseEnter={this.onPieEnter}>
+          <Pie
+            data={this.state.data} 
+            cx={120} 
+            cy={200} 
+            innerRadius={40}
+            outerRadius={80} 
+            fill="#8884d8"
+            paddingAngle={5}
+            labelLine={false}
+            label={renderCustomizedLabel}
+          >
+          </Pie>
+          <Tooltip/>
+          <Legend layout="vertical" align="right" verticalAlign="top" />
+        </PieChart>
+      </div>
     );
   }
 }
