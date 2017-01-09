@@ -1,7 +1,21 @@
 import React from 'react';
 import DatePicker from 'material-ui/DatePicker';
 import RaisedButton from 'material-ui/RaisedButton';
-import { PieChart, Pie, Sector, Cell , Tooltip , Legend } from 'recharts';
+import { ResponsiveContainer, PieChart, Pie, Sector, Cell , Tooltip , Legend } from 'recharts';
+
+const styles = {
+  size: {
+    clear: "both",
+    height: 300,
+  },
+  cleatfix: { 
+    clear: "both",
+  },
+  grid50: {
+    float: "left",
+    width: "50%",
+  },
+};
 
 const COLORS = ['#8884d8', '#83a6ed', '#8dd1e1', '#82ca9d','#a4de6c', 
                       '#d0ed57', '#FABFA1', '#B86A54', '#FE8A71', '#DC626F',
@@ -22,17 +36,12 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 const ChartFilter = () => {
   return (
     <div>
-      <div class="col-md-12 col-sm-6">
-        <DatePicker
+        <DatePicker style={styles.grid50}
           hintText="Begin Date"
           floatingLabelText="Begin Date"/>
-      </div>
-      <div class="col-md-12 col-sm-6">
-        <DatePicker
+        <DatePicker style={styles.grid50}
             hintText="End Date"
             floatingLabelText="End Date"/>
-      </div>
-      <RaisedButton label="Default" primary={true} />
     </div>
   );
 }
@@ -78,23 +87,28 @@ class ChartCategory extends React.Component {
   	return (
       <div>
         <ChartFilter/>
-        <PieChart width={500} height={400} onMouseEnter={this.onPieEnter}>
-          <Pie
-            data={this.state.data} 
-            cx={120} 
-            cy={200} 
-            innerRadius={40}
-            outerRadius={80} 
-            fill="#8884d8"
-            paddingAngle={5}
-            labelLine={false}
-            label={renderCustomizedLabel}
-          >
-          </Pie>
-          <Tooltip/>
-          <Legend layout="vertical" align="right" verticalAlign="top" />
-        </PieChart>
+        <div style={styles.size}>
+          <ResponsiveContainer>
+          <PieChart onMouseEnter={this.onPieEnter}>
+            <Pie
+              data={this.state.data} 
+              cx={120} 
+              cy={200} 
+              innerRadius={40}
+              outerRadius={80} 
+              fill="#8884d8"
+              paddingAngle={5}
+              labelLine={false}
+              label={renderCustomizedLabel}
+            >
+            </Pie>
+            <Tooltip/>
+            <Legend layout="vertical" align="right" verticalAlign="bottom" />
+          </PieChart>
+          </ResponsiveContainer>
+        </div>
       </div>
+      
     );
   }
 }
