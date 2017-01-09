@@ -2,6 +2,7 @@ import React from 'react';
 import globalStyles from '../styles';
 import Data from '../data';
 import Paper from 'material-ui/Paper';
+import ChartPlatform from '../components/Charts/ChartPlatform';
 import ChartCategory from '../components/Charts/ChartCategory';
 
 const DashboardPage = () => {
@@ -26,7 +27,7 @@ const DashboardPage = () => {
             <span style={globalStyles.title}>Category Report</span>
 
             <div style={globalStyles.clear}/>
-            <ChartCategory />
+            <ChartPlatform />
           </Paper>
         </div>
 
