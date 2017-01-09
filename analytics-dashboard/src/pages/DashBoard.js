@@ -4,6 +4,7 @@ import Data from '../data';
 import Paper from 'material-ui/Paper';
 import ChartPlatform from '../components/Charts/ChartPlatform';
 import ChartCategory from '../components/Charts/ChartCategory';
+import ChartContentView from '../components/Charts/ChartContentView';
 
 const DashboardPage = () => {
 
@@ -28,6 +29,15 @@ const DashboardPage = () => {
 
             <div style={globalStyles.clear}/>
             <ChartPlatform />
+          </Paper>
+        </div>
+
+        <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 m-b-15 ">
+          <Paper style={globalStyles.paper}>
+            <span style={globalStyles.title}>Category Report</span>
+
+            <div style={globalStyles.clear}/>
+            <ChartContentView />
           </Paper>
         </div>
 
