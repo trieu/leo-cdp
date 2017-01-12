@@ -5,20 +5,17 @@
  * Created by anhvt on 09/01/2017.
  */
 import React from 'react';
-import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
+import {CustomBarLabel,ComposedChart, Line, Area, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
 
 
 const {PropTypes} = React;
-
-const data = [
-    {name: 'Page A', pv: 2400},
-    {name: 'Page B', pv: 1398},
-    {name: 'Page C',  pv: 9800},
-    {name: 'Page D',  pv: 3908},
-    {name: 'Page E',  pv: 4800},
-    {name: 'Page F',  pv: 3800},
-    {name: 'Page G',  pv: 4300},
-];
+// const {ComposedChart, Line, Area, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} = Recharts;
+const data = [{name: 'Page A', pv: 800},
+    {name: 'Page B',  pv: 967, amt:2000},
+    {name: 'Page C', pv: 1098, amt:1000},
+    {name: 'Page D', pv: 1200, amt:1000},
+    {name: 'Page E', pv: 1108, amt:1000},
+    {name: 'Page F', pv: 680, amt:1000}];
 
 
 class ChartContentView extends React.Component {
@@ -45,74 +42,36 @@ class ChartContentView extends React.Component {
             dataType: 'json',
             url: 'https://360.adsplay.net/api/contentview/report?startDate=2016-12-09%2014:00:00&endDate=2016-12-20%2014:00:00&limit=10',
         }).done(function(result){
-            console.log(result)
+
             var data = [];
             for(var i in result){
-                data.push({ name: result[i].videoTitle, pv: result[i].contentView, vt: result[i].videoCategory});
+
+                data.push({ name: result[i].videoTitle, pv: result[i].contentView,vc: result[i].videoCategory });
             }
             this.setState({ data: data });
-            console.log(111)
-            console.log(data)
+            // console.log(111)
+            // console.log(data)
         }.bind(this));
 
     }
     render () {
         return (
-            <BarChart className="fSize" width={1200} height={400} data={this.state.data}
-                      margin={{top: 5, right: 30, left: 20, bottom: 5}} >
-                <XAxis dataKey="name" />
-                <YAxis/>
-                <CartesianGrid strokeDasharray="3 3"/>
-                <Tooltip content={<CustomTooltip/>}/>
-                {/*<Legend />*/}
-                <Bar dataKey="pv" barSize={30} fill="#8884d8" />
-            </BarChart>
+            <ComposedChart layout="vertical" width={1200} height={400} data={this.state.data}
+                           margin={{top: 20, right: 20, bottom: 20, left: 200}}>
+                <XAxis dataKey="pv" type="number" />
+                <YAxis dataKey="vc" type="category" allowDataOverflow={false} tickSize={10} tickLine={false} minTickGap={15} tick={true} tickCount={3} />
+
+                <Tooltip />
+                {/*<Legend/>*/}
+                <CartesianGrid stroke='#f5f5f5'/>
+                <Area dataKey='amt' fill='#8884d8' stroke='#8884d8'/>
+                <Bar dataKey='pv' barSize={20} fill='#413ea0'   />
+                <Line dataKey='uv' stroke='#ff7300'/>
+            </ComposedChart>
         );
     }
 }
-const CustomTooltip  = React.createClass({
-    propTypes: {
-        type: PropTypes.string,
-        payload: PropTypes.array,
-        label: PropTypes.string,
-        vt: PropTypes.string,
-    },
 
-    getIntroOfPage(label) {
-        if (label === 'Page A') {
-            return "Page A is about men's clothing";
-        } else if (label === 'Page B') {
-            return "Page B is about women's dress";
-        } else if (label === 'Page C') {
-            return "Page C is about women's bag";
-        } else if (label === 'Page D') {
-            return "Page D is about household goods";
-        } else if (label === 'Page E') {
-            return "Page E is about food";
-        } else if (label === 'Page F') {
-            return "Page F is about baby food";
-        }
-    },
-
-    render() {
-        const { active } = this.props;
-
-        if (active) {
-            const { payload, label } = this.props;
-            // console.log(222222)
-            // console.log(payload)
-            return (
-                <div className="custom-tooltip">
-                    <p className="label"  >{`${label} : ${payload[0].value}-${payload[0].payload.vt}`}</p>
-                    {/*<p className="intro">{this.getIntroOfPage(label)}</p>*/}
-                    {/*<p className="desc"></p>*/}
-                </div>
-            );
-        }
-
-        return null;
-    }
-});
 
 
 
