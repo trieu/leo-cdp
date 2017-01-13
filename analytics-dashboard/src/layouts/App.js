@@ -5,14 +5,47 @@ import LeftDrawer from '../components/LeftDrawer/index';
 import withWidth, {LARGE, SMALL} from 'material-ui/utils/withWidth';
 import ThemeDefault from '../theme-default';
 import Data from '../data';
+import axios from 'axios';
+import {browserHistory} from 'react-router';
+
+//check auth
+const requireAuth = (resolve, reject) => {
+    axios({
+      method: 'get',
+      url: '/loggedin'
+    })
+    .then(function(response) {
+      if(response.data.USER.constructor === Object && Object.keys(response.data.USER).length === 0){
+        console.log('unauthorized !!!');
+        browserHistory.push('/login');
+        reject();
+      }
+      resolve(response.data);
+    });
+}
+
 
 class App extends React.Component {
 
   constructor(props) {
     super(props);
+    
     this.state = {
-      navDrawerOpen: false
+      navDrawerOpen: false,
+      USER: {}
     };
+  }
+  
+  //set state USER
+  componentWillMount() {
+    var seft = this;
+    new Promise(requireAuth)
+    .then(function(response){
+      seft.setState({
+          USER: response.USER
+      });
+    })
+    .catch(function(){});
   }
 
   componentWillReceiveProps(nextProps) {
@@ -47,9 +80,10 @@ class App extends React.Component {
           <Header styles={styles.header}
                   handleChangeRequestNavDrawer={this.handleChangeRequestNavDrawer.bind(this)}/>
 
-            <LeftDrawer navDrawerOpen={navDrawerOpen}
+            <LeftDrawer appTitle={Data.appTitle}
+                        navDrawerOpen={navDrawerOpen}
                         menus={Data.menus}
-                        username="User Admin"/>
+                        username={this.state.USER.username || Data.profileName}/>
 
             <div style={styles.container}>
               {this.props.children}

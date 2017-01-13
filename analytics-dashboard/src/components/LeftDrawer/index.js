@@ -7,18 +7,20 @@ import {Link} from 'react-router';
 import Avatar from 'material-ui/Avatar';
 
 const LeftDrawer = (props) => {
-  let { navDrawerOpen } = props;
 
   const styles = {
     logo: {
       cursor: 'pointer',
       fontSize: 22,
+      textAlign: 'center',
       color: typography.textFullWhite,
-      lineHeight: `${spacing.desktopKeylineIncrement}px`,
       fontWeight: typography.fontWeightLight,
       backgroundColor: blue600,
-      paddingLeft: 40,
+      paddingLeft: 15,
+      paddingRight: 15,
       height: 56,
+      lineHeight: '56px',
+      //lineHeight: `${spacing.desktopKeylineIncrement}px`,
     },
     menuItem: {
       color: white,
@@ -48,12 +50,12 @@ const LeftDrawer = (props) => {
   return (
     <Drawer
       docked={true}
-      open={navDrawerOpen}>
+      open={props.navDrawerOpen}>
         <div style={styles.logo}>
-          Material Admin
+          {props.appTitle}
         </div>
         <div style={styles.avatar.div}>
-          <Avatar src="http://www.material-ui.com/images/uxceo-128.jpg"
+          <Avatar src="public/img/avatar.jpg"
                   size={50}
                   style={styles.avatar.icon}/>
           <span style={styles.avatar.span}>{props.username}</span>
@@ -73,10 +75,11 @@ const LeftDrawer = (props) => {
   );
 };
 
-LeftDrawer.propTypes = {
-  navDrawerOpen: PropTypes.bool,
-  menus: PropTypes.array,
-  username: PropTypes.string,
-};
+// LeftDrawer.propTypes = {
+//   navDrawerOpen: PropTypes.bool,
+//   menus: PropTypes.array,
+//   username: PropTypes.string,
+//   appTitle: PropTypes.string
+// };
 
 export default LeftDrawer;

@@ -8,6 +8,7 @@ import Menu from 'material-ui/svg-icons/navigation/menu';
 import ViewModule from 'material-ui/svg-icons/action/view-module';
 import {white} from 'material-ui/styles/colors';
 import SearchBox from '../SearchBox/index';
+import SignOut from '../SignOut/index';
 
 class Header extends React.Component {
 
@@ -61,7 +62,7 @@ class Header extends React.Component {
                             targetOrigin={{horizontal: 'right', vertical: 'top'}}
                             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                   >
-                    <MenuItem primaryText="Sign out"/>
+                    <SignOut text="Sign out" />
                   </IconMenu>
                 </div>
               }

@@ -1,16 +1,16 @@
 
 module.exports = function(app) {
 
-  // //passport
-  // var passport = require('passport');
-  // app.use(passport.initialize());
-  // app.use(passport.session());
+  //passport
+  var passport = require('passport');
+  app.use(passport.initialize());
+  app.use(passport.session());
 
-  // var auth = require('../middlewares/passport_utils.js')(passport);
-  // app.get('/loggedin', auth.isLoggedIn);
-  // app.post('/login', auth.loginLocal);
-  // app.get('/logout', auth.logOut);
-  // //end passport
+  var auth = require('../middlewares/passport_utils.js')(passport);
+  app.get('/loggedin', auth.isLoggedIn);
+  app.post('/login', auth.loginLocal);
+  app.get('/logout', auth.logOut);
+  //end passport
 
   
   // app.use((req, res, next) => {

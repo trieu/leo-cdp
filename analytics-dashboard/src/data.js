@@ -9,10 +9,11 @@ import ExpandMore from 'material-ui/svg-icons/navigation/expand-more';
 import ChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
 
 const data = {
+  appTitle: "Analatics Adsplay",
+  profileName: "Admin",
   menus: [
     { text: 'DashBoard', icon: <Assessment/>, link: '/dashboard' },
-    { text: 'Form Page', icon: <Web/>, link: '/form' },
-    { text: 'Login Page', icon: <PermIdentity/>, link: '/login' }
+    { text: 'Form Page', icon: <Web/>, link: '/form' }
   ]
 };
 
