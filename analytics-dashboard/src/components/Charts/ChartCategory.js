@@ -93,11 +93,11 @@ class ChartCategory extends React.Component {
             <Pie
               data={this.state.data} 
               cx={120} 
-              cy={200} 
+              cy={200}
               innerRadius={40}
-              outerRadius={80} 
+              outerRadius={60}
               fill="#8884d8"
-              paddingAngle={5}
+              paddingAngle={3}
               labelLine={false}
               label={renderCustomizedLabel}
             >
