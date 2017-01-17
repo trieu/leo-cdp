@@ -9,6 +9,11 @@ import Chart from 'chart.js';
 import RC2 from 'react-chartjs2';
 
 
+const COLORS = ['#8884d8', '#83a6ed', '#8dd1e1', '#82ca9d','#a4de6c',
+    '#d0ed57', '#FABFA1', '#B86A54', '#FE8A71', '#DC626F',
+    '#FE6860', '#F3C9BF', '#C9C7AF', '#93BFB6', '#7CA39C',
+    '#726680', '#779BF0', '#849FBB', '#C2B6D6', '#EBE1E2'];
+
 const data = {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
     datasets: [
@@ -46,7 +51,7 @@ class ChartContentView extends Component {
         return $.ajax({
             type: "get",
             dataType: 'json',
-            url: 'https://360.adsplay.net/api/contentview/report?startDate=2016-11-20%2014:00:00&endDate=2016-12-20%2014:00:00&limit=10',
+            url: 'https://360.adsplay.net/api/contentview/report?startDate=2016-11-20%2014:00:00&endDate=2016-12-20%2014:00:00&limit=20',
         }).done(function(result){
             console.log(result)
             var data = {};
@@ -67,8 +72,8 @@ class ChartContentView extends Component {
                 datasets: [
                     {
                         label: 'View',
-                        backgroundColor: 'rgba(255,99,132,0.2)',
-                        borderColor: 'rgba(255,99,132,1)',
+                        backgroundColor: "#83a6ed",
+                        borderColor: "#83a6ed",
                         borderWidth: 1,
                         hoverBackgroundColor: 'rgba(255,99,132,0.4)',
                         hoverBorderColor: 'rgba(255,99,132,1)',

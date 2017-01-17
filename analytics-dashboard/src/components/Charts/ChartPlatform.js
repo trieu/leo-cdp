@@ -1,69 +1,38 @@
-import React from 'react';
 
-import { PieChart, Pie, Sector, Cell , Tooltip } from 'recharts';
+import React, {Component, PropTypes} from 'react';
+import {Pie} from 'react-chartjs2';
+import NVD3Chart from "react-nvd3";
+import d3 from "d3";
 
-const data = [{name: 'Group A', value: 400}, {name: 'Group B', value: 300},
-    {name: 'Group C', value: 300}, {name: 'Group D', value: 200}];
 
-const renderActiveShape = (props) => {
-    const RADIAN = Math.PI / 180;
-    const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle,
-        fill, payload, percent, value } = props;
-    const sin = Math.sin(-RADIAN * midAngle);
-    const cos = Math.cos(-RADIAN * midAngle);
-    const sx = cx + (outerRadius + 10) * cos;
-    const sy = cy + (outerRadius + 10) * sin;
-    const mx = cx + (outerRadius + 30) * cos;
-    const my = cy + (outerRadius + 30) * sin;
-    const ex = mx + (cos >= 0 ? 1 : -1) * 22;
-    const ey = my;
-    const textAnchor = cos >= 0 ? 'start' : 'end';
+const COLORS = ['#8884d8', '#83a6ed', '#8dd1e1', '#82ca9d','#a4de6c',
+    '#d0ed57', '#FABFA1', '#B86A54', '#FE8A71', '#DC626F',
+    '#FE6860', '#F3C9BF', '#C9C7AF', '#93BFB6', '#7CA39C',
+    '#726680', '#779BF0', '#849FBB', '#C2B6D6', '#EBE1E2'];
 
-    return (
-        <g>
-            <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>{payload.name}</text>
-            <Sector
-                cx={cx}
-                cy={cy}
-                innerRadius={innerRadius}
-                outerRadius={outerRadius}
-                startAngle={startAngle}
-                endAngle={endAngle}
-                fill={fill}
-            />
-            <Sector
-                cx={cx}
-                cy={cy}
-                startAngle={startAngle}
-                endAngle={endAngle}
-                innerRadius={outerRadius + 6}
-                outerRadius={outerRadius + 10}
-                fill={fill}
-            />
-            <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none"/>
-            <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none"/>
-            <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`ContentView ${value}`}</text>
-            <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
-                {`(Rate ${(percent * 100).toFixed(2)}%)`}
-            </text>
-        </g>
-    );
-};
+
+const data = [
+    {key: "Eight", y: 6},
+    {key: "Nine", y: 2},
+    {key: "Ten", y: 11},
+];
 
 class ChartPlatform extends React.Component{
+
     constructor(props) {
+
         // Pass props to parent class
         super(props);
         // Set initial state
-        this.state = {activeIndex: 0}
+        this.state = {data: []}
         // this.apiUrl = 'https://360.adsplay.net/api/platformview/report?startDate=2016-12-09%2014:00:00&endDate=2016-12-20%2014:00:00'
-
-
     }
+
     componentWillMount() {
         this.dataSource();
 
     }
+
     dataSource(props){
         props = props || this.props;
         return $.ajax({
@@ -71,32 +40,60 @@ class ChartPlatform extends React.Component{
             dataType: 'json',
             url: 'https://360.adsplay.net/api/platformview/report?startDate=2016-12-09%2014:00:00&endDate=2016-12-20%2014:00:00',
         }).done(function(result){
+            console.log(result)
             var data = [];
+            var videoTitle = [];
+            var contentView = [];
             for(var i in result){
-                data.push({ name: result[i].platformName, value: result[i].contentView });
+                // // var temp = result[i].videoTitle.match(/[A-Z]+/g);
+                // var temp = result[i].videoTitle.substring(0, 8) + "......";
+                // // data.push({ name: temp, pv: result[i].contentView,vc: result[i].videoCategory });
+                //
+                // videoTitle.push(result[i].videoTitle);
+                // contentView.push(result[i].contentView);
+                data.push({
+                    key:result[i].platformName,
+                    y:result[i].contentView,
+                    color:COLORS[i]
+
+                })
             }
+            // console.log(videoTitle)
+            // console.log(contentView)
+            // data = [
+            //     {key: "Eight", y: 6},
+            //     {key: "Nine", y: 2},
+            //     {key: "Ten", y: 11},
+            // ]
+
             this.setState({ data: data });
+            // console.log(111)
+            // console.log(data)
         }.bind(this));
+
     }
-    onPieEnter(data, index) {
-        this.setState({
-            activeIndex: index,
-        });
-    }
-    render () {
+
+
+    render() {
         return (
-            <PieChart width={600} height={400} onMouseEnter={this.onPieEnter.bind(this)}>
-                <Pie
-                    activeIndex={this.state.activeIndex}
-                    activeShape={renderActiveShape}
-                    data={this.state.data}
-                    cx={300}
-                    cy={200}
-                    innerRadius={80}
-                    outerRadius={120}
-                    fill="#8884d8"/>
-            </PieChart>
-        );
+            <div>
+                <NVD3Chart
+                    id="chart"
+                    width="600"
+                    height="430"
+                    type="pieChart"
+                    datum={this.state.data}
+                    x="key"
+                    y="y"
+                    showTooltipPercent="true"
+                    renderEnd={function(chart, e){console.log( chart.id(), e)}}
+                    renderStart={function(chart, e){console.log( chart.id(), e)}}
+                    ready={function(chart, e){console.log( chart.id(), e)}}
+                />
+            </div>
+        )
     }
+
+
 }
 export default ChartPlatform;

@@ -16,7 +16,7 @@ const DashboardPage = () => {
 
                 <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 m-b-15 ">
           <Paper style={globalStyles.paper}>
-            <span style={globalStyles.title}>Category Report</span>
+            <span style={globalStyles.title}>Thể loại phim</span>
 
             <div style={globalStyles.clear}/>
             <ChartCategory />
@@ -25,7 +25,7 @@ const DashboardPage = () => {
 
         <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 m-b-15 ">
           <Paper style={globalStyles.paper}>
-            <span style={globalStyles.title}>Category Report</span>
+            <span style={globalStyles.title}>Nền tảng thiết bị</span>
 
             <div style={globalStyles.clear}/>
             <ChartPlatform />
@@ -34,7 +34,7 @@ const DashboardPage = () => {
 
         <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 m-b-15 ">
           <Paper style={globalStyles.paper}>
-            <span style={globalStyles.title}>Category Report</span>
+            <span style={globalStyles.title}>20 phim xem nhiều nhất</span>
 
             <div style={globalStyles.clear}/>
             <ChartContentView />
