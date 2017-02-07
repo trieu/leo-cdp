@@ -26,6 +26,7 @@
     "react": "^15.4.2",
     "react-chartjs2": "^1.1.0",
     "react-dom": "^15.4.2",
+    "react-nvd3": "^0.5.7",
     "react-router": "^3.0.0",
     "react-tap-event-plugin": "^2.0.1",
     "request": "^2.72.0",

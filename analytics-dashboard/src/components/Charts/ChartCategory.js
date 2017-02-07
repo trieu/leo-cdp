@@ -4,7 +4,6 @@ import {Pie} from 'react-chartjs2';
 import NVD3Chart from "react-nvd3";
 import d3 from "d3";
 
-
 const COLORS = ['#8884d8', '#83a6ed', '#8dd1e1', '#82ca9d','#a4de6c',
     '#d0ed57', '#FABFA1', '#B86A54', '#FE8A71', '#DC626F',
     '#FE6860', '#F3C9BF', '#C9C7AF', '#93BFB6', '#7CA39C',
@@ -63,22 +62,22 @@ class ChartCategory extends React.Component{
 
         return (
             <div>
-              <NVD3Chart
-                  id="chart"
-                  width="600"
-                  height="470"
-                  type="pieChart"
-                  datum={this.state.data}
-                  x="key"
-                  y="y"
-                  donut="true"
-                  donutRatio="0.3"
-                  labelType="percent"
-                  showTooltipPercent="true"
-                  renderEnd={function(chart, e){console.log( chart.id(), e)}}
-                  renderStart={function(chart, e){console.log( chart.id(), e)}}
-                  ready={function(chart, e){console.log( chart.id(), e)}}
-              />
+                <NVD3Chart
+                    id="chart"
+                    width="600"
+                    height="470"
+                    type="pieChart"
+                    datum={this.state.data}
+                    x="key"
+                    y="y"
+                    donut="true"
+                    donutRatio="0.3"
+                    labelType="percent"
+                    showTooltipPercent="true"
+                    renderEnd={function(chart, e){console.log( chart.id(), e)}}
+                    renderStart={function(chart, e){console.log( chart.id(), e)}}
+                    ready={function(chart, e){console.log( chart.id(), e)}}
+                />
             </div>
         )
     }
