@@ -1,8 +1,8 @@
-
 import React, {Component, PropTypes} from 'react';
 import {Pie} from 'react-chartjs2';
 import NVD3Chart from "react-nvd3";
 import d3 from "d3";
+import moment from 'moment';
 
 
 const COLORS = ['#8884d8', '#83a6ed', '#8dd1e1', '#82ca9d','#a4de6c',
@@ -30,15 +30,23 @@ class ChartPlatform extends React.Component{
 
     componentWillMount() {
         this.dataSource();
+    }
 
+    componentWillReceiveProps(nextProps) {
+        this.dataSource(nextProps);
     }
 
     dataSource(props){
         props = props || this.props;
+        let beginDate = moment(props.beginDate).format('YYYY-MM-DD');
+        let endDate = moment(props.endDate).format('YYYY-MM-DD');
+        let url = 'https://360.adsplay.net/api/platformview/report?startDate='+ beginDate +
+        '&endDate='+ endDate + '&limit=10';
+
         return $.ajax({
             type: "get",
             dataType: 'json',
-            url: 'https://360.adsplay.net/api/platformview/report?startDate=2016-12-09%2014:00:00&endDate=2016-12-20%2014:00:00',
+            url: url,
         }).done(function(result){
             console.log(result)
             var data = [];

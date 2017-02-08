@@ -20,10 +20,16 @@ class DashboardPage extends React.Component{
           beginDate: beginDate
       };
 
+      this.updateFilter = this.updateFilter.bind(this);
+
   }
 
-  someMethod() {
-        console.log('bar');
+  updateFilter(beginDate, endDate) {
+      console.log(beginDate, endDate);
+      this.setState({
+          beginDate: beginDate,
+          endDate: endDate
+      });
   }
 
   render() {
@@ -31,7 +37,7 @@ class DashboardPage extends React.Component{
       <div>
         <h3 style={globalStyles.navigation}>Application / Overview</h3>
 
-        <ChartFilter parentMethod={this.someMethod} endDate={this.state.endDate} beginDate={this.state.beginDate} />
+        <ChartFilter update={this.updateFilter} endDate={this.state.endDate} beginDate={this.state.beginDate} />
 
         <div className="row">
 
@@ -40,7 +46,7 @@ class DashboardPage extends React.Component{
               <span style={globalStyles.title}>Thể loại phim</span>
 
               <div style={globalStyles.clear}/>
-              <ChartCategory onChange={this.change} />
+              <ChartCategory endDate={this.state.endDate} beginDate={this.state.beginDate} />
             </Paper>
           </div>
 
@@ -49,7 +55,7 @@ class DashboardPage extends React.Component{
               <span style={globalStyles.title}>Nền tảng thiết bị</span>
 
               <div style={globalStyles.clear}/>
-              <ChartPlatform />
+              <ChartPlatform endDate={this.state.endDate} beginDate={this.state.beginDate} />
             </Paper>
           </div>
 
@@ -58,7 +64,7 @@ class DashboardPage extends React.Component{
               <span style={globalStyles.title}>20 phim xem nhiều nhất</span>
 
               <div style={globalStyles.clear}/>
-              <ChartContentView />
+              <ChartContentView endDate={this.state.endDate} beginDate={this.state.beginDate} />
             </Paper>
           </div>
 

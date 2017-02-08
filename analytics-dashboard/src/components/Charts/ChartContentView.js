@@ -1,12 +1,10 @@
 /**
  * Created by anhvt on 09/01/2017.
  */
-/**
- * Created by anhvt on 09/01/2017.
- */
 import React, {Component, PropTypes} from 'react';
 import Chart from 'chart.js';
 import RC2 from 'react-chartjs2';
+import moment from 'moment';
 
 
 const COLORS = ['#8884d8', '#83a6ed', '#8dd1e1', '#82ca9d','#a4de6c',
@@ -30,8 +28,6 @@ const data = {
 };
 
 
-
-
 class ChartContentView extends Component {
     constructor(props) {
 
@@ -44,14 +40,23 @@ class ChartContentView extends Component {
 
     componentWillMount() {
         this.dataSource();
-
     }
+
+    componentWillReceiveProps(nextProps) {
+        this.dataSource(nextProps);
+    }
+
     dataSource(props){
         props = props || this.props;
+        let beginDate = moment(props.beginDate).format('YYYY-MM-DD');
+        let endDate = moment(props.endDate).format('YYYY-MM-DD');
+        let url = 'https://360.adsplay.net/api/contentview/report?startDate='+ beginDate +
+        '&endDate='+ endDate + '&limit=10';
+
         return $.ajax({
             type: "get",
             dataType: 'json',
-            url: 'https://360.adsplay.net/api/contentview/report?startDate=2016-11-20%2014:00:00&endDate=2016-12-20%2014:00:00&limit=20',
+            url: url,
         }).done(function(result){
             console.log(result)
             var data = {};

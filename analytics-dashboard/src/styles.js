@@ -15,6 +15,7 @@ const styles = {
     marginBottom: 20
   },
   paper: {
+    position: "relative",
     padding: 15
   },
   clear: {
