@@ -2,7 +2,9 @@ import React, {Component, PropTypes} from 'react';
 import {Pie} from 'react-chartjs2';
 import NVD3Chart from "react-nvd3";
 import d3 from "d3";
+import axios from "axios";
 import moment from 'moment';
+import Loading from '../Loading/LoadingPager';
 
 const COLORS = ['#8884d8', '#83a6ed', '#8dd1e1', '#82ca9d','#a4de6c',
     '#d0ed57', '#FABFA1', '#B86A54', '#FE8A71', '#DC626F',
@@ -20,7 +22,7 @@ class ChartCategory extends React.Component{
 
     constructor(props) {
         super(props);
-        this.state = { data: []};
+        this.state = { data: [] , show: false };
     }
 
     componentWillMount() {
@@ -38,25 +40,28 @@ class ChartCategory extends React.Component{
         let url = 'https://360.adsplay.net/api/categoryview/report?startDate='+ beginDate +
         '&endDate='+ endDate + '&limit=10';
 
-        return $.ajax({
-            type: "get",
-            dataType: 'json',
-            url: url,
-        }).done(function(result){
-            console.log(result)
+        var seft = this;
+        seft.setState({ show: true });
+
+        axios.get(url)
+        .then(function (response) {
+            var result = response.data;
             var data = [];
             for(var i in result){
                 data.push({
                     key:result[i].category,
                     y:result[i].contentView,
                     color:COLORS[i]
-
-                })
+                });
             }
 
-            this.setState({ data: data });
-
-        }.bind(this));
+            console.log(data)
+            seft.setState({ data: data });
+            seft.setState({ show: false });
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 
     }
 
@@ -78,6 +83,7 @@ class ChartCategory extends React.Component{
                     labelType="percent"
                     showTooltipPercent="true"
                 />
+                <Loading show={this.state.show} />
             </div>
         )
     }

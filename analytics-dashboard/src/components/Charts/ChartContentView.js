@@ -4,7 +4,9 @@
 import React, {Component, PropTypes} from 'react';
 import Chart from 'chart.js';
 import RC2 from 'react-chartjs2';
+import axios from "axios";
 import moment from 'moment';
+import Loading from '../Loading/LoadingPager';
 
 
 const COLORS = ['#8884d8', '#83a6ed', '#8dd1e1', '#82ca9d','#a4de6c',
@@ -30,12 +32,8 @@ const data = {
 
 class ChartContentView extends Component {
     constructor(props) {
-
-        // Pass props to parent class
         super(props);
-        // Set initial state
         this.state = {data: {}}
-        // this.apiUrl = 'https://360.adsplay.net/api/platformview/report?startDate=2016-12-09%2014:00:00&endDate=2016-12-20%2014:00:00'
     }
 
     componentWillMount() {
@@ -51,27 +49,22 @@ class ChartContentView extends Component {
         let beginDate = moment(props.beginDate).format('YYYY-MM-DD');
         let endDate = moment(props.endDate).format('YYYY-MM-DD');
         let url = 'https://360.adsplay.net/api/contentview/report?startDate='+ beginDate +
-        '&endDate='+ endDate + '&limit=10';
+        '&endDate='+ endDate + '&limit=30';
 
-        return $.ajax({
-            type: "get",
-            dataType: 'json',
-            url: url,
-        }).done(function(result){
-            console.log(result)
+
+        var seft = this;
+        seft.setState({ show: true });
+
+        axios.get(url)
+        .then(function (response) {
+            var result = response.data;
             var data = {};
             var videoTitle = [];
             var contentView = [];
             for(var i in result){
-                // // var temp = result[i].videoTitle.match(/[A-Z]+/g);
-                // var temp = result[i].videoTitle.substring(0, 8) + "......";
-                // // data.push({ name: temp, pv: result[i].contentView,vc: result[i].videoCategory });
-                //
                 videoTitle.push(result[i].videoTitle);
                 contentView.push(result[i].contentView);
             }
-            console.log(videoTitle)
-            console.log(contentView)
             data = {
                 labels: videoTitle,
                 datasets: [
@@ -87,15 +80,20 @@ class ChartContentView extends Component {
                 ]
             };
 
-            this.setState({ data: data });
-            // console.log(111)
-            // console.log(data)
-        }.bind(this));
+            seft.setState({ data: data });
+            seft.setState({ show: false });
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 
     }
     render() {
         return (
-            <RC2 data={this.state.data} type='horizontalBar' />
+            <div>
+                <RC2 data={this.state.data} type='horizontalBar' />
+                <Loading show={this.state.show} />
+            </div>
         );
     }
 }
