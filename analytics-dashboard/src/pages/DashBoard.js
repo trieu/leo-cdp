@@ -61,7 +61,7 @@ class DashboardPage extends React.Component{
 
           <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 m-b-15 ">
             <Paper style={globalStyles.paper}>
-              <span style={globalStyles.title}>20 phim xem nhiều nhất</span>
+              <span style={globalStyles.title}>30 phim xem nhiều nhất</span>
 
               <div style={globalStyles.clear}/>
               <ChartContentView endDate={this.state.endDate} beginDate={this.state.beginDate} />
