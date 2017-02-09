@@ -4,20 +4,15 @@ import CircularProgress from 'material-ui/CircularProgress';
 class Loading extends React.Component{
     constructor(props) {
         super(props);
-
-        console.log(this.props.show)
         this.state = {
             show: this.props.show || false
         }
-
-        
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState({
             show: nextProps.show
         });
-        console.log(this.state.show)
     }
 
     render() {
