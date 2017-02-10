@@ -9,11 +9,14 @@ import ExpandMore from 'material-ui/svg-icons/navigation/expand-more';
 import ChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
 
 const data = {
-  appTitle: "Analytics Adsplay",
+  appTitle: "Adsplay Analytics",
   profileName: "Admin",
   menus: [
     { text: 'DashBoard', icon: <Assessment/>, link: '/dashboard' },
     // { text: 'Form Page', icon: <Web/>, link: '/form' }
+  ],
+  pages: [
+    { id: 'DashBoard', title: 'Xem báo cáo chi tiết fpt adsplay inventory' }
   ]
 };
 

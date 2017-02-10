@@ -14,6 +14,12 @@ const styles = {
     fontWeight: typography.fontWeightLight,
     marginBottom: 20
   },
+  titlePage:{
+    fontFamily: "sans-serif",
+    fontSize: "24px",
+    fontWeight: "300",
+    margin: "10px 0"
+  },
   paper: {
     position: "relative",
     padding: 15

@@ -5,8 +5,8 @@
     "author": "kimthiendung@gmail.com",
     "scripts": {
         "start": "export NODE_ENV=dev&&node app.js",
-        "start:windows": "set NODE_ENV=dev&&node app.js",
-        "start:prod": "npm run build && node app.js",
+        "start:win": "set NODE_ENV=dev&&node app.js",
+        "start:pro": "node app.js",
         "build": "webpack --config ./webpack.config.prod.js --progress --color"
     },
     "dependencies": {

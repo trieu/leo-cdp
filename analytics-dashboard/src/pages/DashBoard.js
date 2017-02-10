@@ -33,10 +33,17 @@ class DashboardPage extends React.Component{
   }
 
   render() {
+    const titlePage = Data.pages.map((page , index) => {
+        if(page.id == 'DashBoard'){
+          return <h2 key={index} style={globalStyles.titlePage}>{page.title}</h2>
+        }
+    });
+
     return (
       <div>
         <h3 style={globalStyles.navigation}>Application / Overview</h3>
-
+        {titlePage}
+        
         <ChartFilter update={this.updateFilter} endDate={this.state.endDate} beginDate={this.state.beginDate} />
 
         <div className="row">

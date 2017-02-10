@@ -5,13 +5,6 @@ import Divider from 'material-ui/Divider';
 import RaisedButton from 'material-ui/RaisedButton';
 
 const styles = {
-  title:{
-    fontFamily: "sans-serif",
-    fontSize: "24px",
-    fontWeight: "300",
-    margin: "10px 0"
-  },
-
   mb15: {
     margin: "0 0 15px 0"
   }
@@ -50,7 +43,6 @@ class ChartFilter extends React.Component{
     render() {
         return (
             <div>
-                <h2 style={styles.title}>Xem báo cáo chi tiết adsplay inventory</h2>
                 <div className="row middle-xs">
                     
                     <div className="col-xs">

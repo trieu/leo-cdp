@@ -27,7 +27,21 @@ const LoginPage = () => {
       padding: 20,
       overflow: 'auto'
     },
+    logo: {
+      textAlign: 'center',
+    },
+    logoImg:{
+      width: '100px'
+    },
+    title:{
+      fontSize: "28px",
+      textAlign: 'center',
+      fontWeight: 100,
+      textTransform: 'capitalize',
+      color: '#666',
+    },
     buttonsDiv: {
+      display: 'none',
       textAlign: 'center',
       padding: 10
     },
@@ -75,9 +89,12 @@ const LoginPage = () => {
     <MuiThemeProvider muiTheme={ThemeDefault}>
       <div>
         <div style={styles.loginContainer}>
-
+          <div style={styles.logo}>
+            <img src="public/img/logo.png" style={styles.logoImg} />
+          </div>
+          <h1 style={styles.title}>Adsplay Inventory Analytics</h1>
           <Paper style={styles.paper}>
-            <LoginForm />
+              <LoginForm />
           </Paper>
 
           <div style={styles.buttonsDiv}>
