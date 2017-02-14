@@ -18,17 +18,17 @@ module.exports = function(passport) {
 		passwordField : 'password'
 	},
 	function(username, password, done) {
-		// Delay the execution of findOrCreateUser and execute 
-		// the method in the next tick of the event loop
 		console.log(username, password)
-		User.findOne({ 'username' :  'admin' }, function(err, user) {
-			if (err){ return done(err); }
-			else{
-				if(user && user.validPassword(password, user.password)){
-					return done(null, output(user));// all is well, return successful user
+		process.nextTick(function(){
+			User.findOne({ 'username' :  username }, function(err, user) {
+				if (err){ return done(err); }
+				else{
+					if(user && user.validPassword(password, user.password)){
+						return done(null, output(user));// all is well, return successful user
+					}
+					return done(null, false, { message: false });
 				}
-				return done(null, false, { message: false });
-			}
+			});
 		});
 
 	}));
