@@ -93,7 +93,7 @@ class ChartContentView extends Component {
         return (
             <div>
                 <RC2 
-                    data={this.state.data} type='horizontalBar' options={chartOptions} />
+                    data={this.state.data} type='horizontalBar'  />
                 <Loading show={this.state.show} />
             </div>
         );
