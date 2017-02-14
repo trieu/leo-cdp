@@ -1,6 +1,7 @@
 /**
  * Created by anhvt on 09/01/2017.
  */
+ /*Phim xem  nhieu nhat*/
 import React, {Component, PropTypes} from 'react';
 import Chart from 'chart.js';
 import RC2 from 'react-chartjs2';
@@ -86,12 +87,13 @@ class ChartContentView extends Component {
         .catch(function (error) {
             console.log(error);
         });
-
+ 
     }
     render() {
         return (
             <div>
-                <RC2 data={this.state.data} type='horizontalBar' />
+                <RC2 
+                    data={this.state.data} type='horizontalBar' options={chartOptions} />
                 <Loading show={this.state.show} />
             </div>
         );

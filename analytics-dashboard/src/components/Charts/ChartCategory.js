@@ -1,3 +1,4 @@
+/*The loai phim*/
 import React, {Component, PropTypes} from 'react';
 import {Pie} from 'react-chartjs2';
 import NVD3Chart from "react-nvd3";
@@ -17,7 +18,7 @@ const data = [
     {key: "Nine", y: 2},
     {key: "Ten", y: 11},
 ];
-
+ 
 class ChartCategory extends React.Component{
 
     constructor(props) {
@@ -65,6 +66,11 @@ class ChartCategory extends React.Component{
 
     }
 
+        // function configure(chart) {
+        //   // chart.tooltip.keyFormatter( function(d){ return d3.format(',f')(d) });
+        //   chart.pie.valueFormat(d3.format(',.0d'));
+        //   // chart.legend.key(someOtherFn);
+        // }
 
     render() {
 
@@ -80,8 +86,12 @@ class ChartCategory extends React.Component{
                     y="y"
                     donut="true"
                     donutRatio="0.3"
+                    labelThreshold=".05"
                     labelType="percent"
                     showTooltipPercent="true"
+                    tooltip={{ enabled: true,  valueFormatter: function(d){
+                                    return d3.format(',.0d')(d);
+                            }}}
                 />
                 <Loading show={this.state.show} />
             </div>

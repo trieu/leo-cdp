@@ -1,3 +1,4 @@
+/*Thiet bi*/
 import React, {Component, PropTypes} from 'react';
 import {Pie} from 'react-chartjs2';
 import NVD3Chart from "react-nvd3";
@@ -28,7 +29,7 @@ class ChartPlatform extends React.Component{
 
     componentWillMount() {
         this.dataSource();
-    }
+    } 
 
     componentWillReceiveProps(nextProps) {
         this.dataSource(nextProps);
@@ -80,7 +81,11 @@ class ChartPlatform extends React.Component{
                     datum={this.state.data}
                     x="key"
                     y="y"
+                    labelType="percent"
                     showTooltipPercent="true"
+                    tooltip={{ enabled: true,  valueFormatter: function(d){
+                                    return d3.format(',.0d')(d);
+                            }}}
                 />
                 <Loading show={this.state.show} />
             </div>
