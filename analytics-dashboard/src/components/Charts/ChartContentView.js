@@ -93,7 +93,19 @@ class ChartContentView extends Component {
         return (
             <div>
                 <RC2 
-                    data={this.state.data} type='horizontalBar'  />
+                    data={this.state.data} type='horizontalBar' 
+                        options={{
+                            tooltips: {
+                                enabled: true,
+                                callbacks: {
+                                    label: function(tooltipItems, data) { 
+                                        return tooltipItems.xLabel.toLocaleString();
+                                    }
+                                }
+                        
+                            }
+                        }}
+                         />
                 <Loading show={this.state.show} />
             </div>
         );
