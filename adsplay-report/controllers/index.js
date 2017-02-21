@@ -79,6 +79,7 @@ module.exports = function (app) {
     app.use('/placement', require('./placement'));
     app.use('/publisher', require('./publisher'));
     app.use('/campaign', require('./campaign'));
+    app.use('/campaign-details', require('./campaign-details'));
     app.use('/monitor', require('./monitor'));
     app.use('/device', require('./device'));
     app.use('/content', require('./content'));
