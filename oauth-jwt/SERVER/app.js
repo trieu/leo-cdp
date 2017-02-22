@@ -1,6 +1,7 @@
 var express = require('express')
 var bodyParser = require('body-parser')
 var expressSession = require('express-session')
+var exphbs = require('express-handlebars')
 var app = express()
 
 var path = require('path')
@@ -21,6 +22,14 @@ app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
     next();
 });
+app.set('views', path.resolve(__dirname) + '/server/views');
+app.set('view engine', '.hbs');
+app.engine('.hbs', exphbs({
+        defaultLayout: 'main', 
+        extname: '.hbs',
+        layoutsDir: 'server/views/layouts',
+        partialsDir: 'server/views/partials'
+}));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

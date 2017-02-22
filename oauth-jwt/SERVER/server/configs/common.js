@@ -12,10 +12,22 @@ module.exports = {
     },
     tokenExpiry: 1000 * 60 * 60 * 2, //2 hour
     email: {
-        username: "adsplayfpt@gmail.com",
+        email: "adsplayfpt@gmail.com",
         password: "trieunguyen",
         accountName: "gmail",
         verifyEmailUrl: "verifyEmail"
+    },
+    superuser:{
+        _id: 0,
+        username: "adsplayfpt",
+        email: "adsplayfpt@gmail.com",
+        password: "trieunguyen",
+        roles: ["admin","super"]
+    },
+    recaptcha:{
+        siteKey: "6LfDchYUAAAAAGb0F37R3Ui3KWEZQJ97B8bzGVeo",
+        secretKey: "6LfDchYUAAAAAAEtC3-XcBXksTaVgBcf6mxWm_Oh",
+        ssl: true
     },
     oauth:{
 		facebook: {

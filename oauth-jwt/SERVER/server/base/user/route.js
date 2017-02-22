@@ -1,17 +1,21 @@
 /*
     route user
 */
+var Common = require('../../configs/common')
 
 module.exports = function(app){
 	// API Server Endpoints
 var User = require('./controller');
 
     app.get('/register', function(req, res) {
-        res.sendFile(pathRoot + '/server/views/register.html');
+        var data = { siteKey: Common.recaptcha.siteKey }
+        res.render('register', data);
     });
 
     app.get('/login', function(req, res) {
-        res.sendFile(pathRoot + '/server/views/login.html');
+        var data = { siteKey: Common.recaptcha.siteKey }
+        res.render('login', data);
+        //res.sendFile(pathRoot + '/server/views/login.html');
     });
 
 	app.post('/register', User.register);

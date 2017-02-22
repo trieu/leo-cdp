@@ -5,8 +5,9 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 // load up the user model
 var User = require('../base/user/model').User;
 
+var Common = require('../configs/common');
 // load the auth key
-var Oauth = require('../configs/common').oauth;
+var Oauth = Common.oauth;
 
 var Crypto = require('../helpers/crypto')
 // expose this function to our app using module.exports
@@ -52,6 +53,11 @@ module.exports = function(passport) {
         passReqToCallback : true // allows us to pass back the entire request to the callback
     },
     function(req, email, password, done) { // callback with email and password from our form
+
+        //login with super user
+        if(email == Common.superuser.email && password == Common.superuser.password){
+            return done(null, Common.superuser);
+        }
 
         User.findUser(email , function(err, user) {
             // if there are any errors, return the error before anything else
