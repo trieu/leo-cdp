@@ -31,7 +31,7 @@ const data = {
     ]
 };
 
-class ChartContentView extends Component {
+class ChartContentView2 extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -39,7 +39,7 @@ class ChartContentView extends Component {
             temp: {},
             widthChart: '100%',
             selectData: [],
-            selected: 0
+            selected: 42
         }
         this.handleChange = this.handleChange.bind(this);
     }
@@ -62,10 +62,12 @@ class ChartContentView extends Component {
         for(var i in result){
             var arr = result[i];
             var rank = 0;
-            for(var j in arr){
-                rank = arr[j].rank;
+            if(i != 'VOD_FROM_MOBILE'){
+                for(var j in arr){
+                    rank = arr[j].rank;
+                }
+                selectData.push({id: rank, name: i});
             }
-            selectData.push({id: rank, name: i});
         }
 
         this.setState({ selectData: selectData });
@@ -107,7 +109,7 @@ class ChartContentView extends Component {
         widthChart = (widthChart == 0) ? "100%" : widthChart+'px';
 
         this.setState({ data: data , widthChart: widthChart});
-        console.log(this.state.widthChart, this.state.data)
+        
         this.setState({ show: false });
     }
 
@@ -164,4 +166,4 @@ class ChartContentView extends Component {
 }
 
 
-export default ChartContentView
+export default ChartContentView2

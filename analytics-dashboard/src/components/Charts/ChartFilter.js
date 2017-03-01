@@ -47,6 +47,7 @@ class ChartFilter extends React.Component{
                     
                     <div className="col-xs">
                         <DatePicker
+                            autoOk={true}
                             defaultDate={this.state.beginDate}
                             maxDate={this.state.endDate}
                             fullWidth={true} style={styles.mb15}
@@ -58,6 +59,7 @@ class ChartFilter extends React.Component{
 
                     <div className="col-xs">
                         <DatePicker
+                            autoOk={true}
                             defaultDate={this.state.endDate}
                             minDate={this.state.beginDate}
                             fullWidth={true} style={styles.mb15}

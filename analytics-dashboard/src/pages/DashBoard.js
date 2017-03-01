@@ -6,6 +6,7 @@ import moment from 'moment';
 import ChartPlatform from '../components/Charts/ChartPlatform';
 import ChartCategory from '../components/Charts/ChartCategory';
 import ChartContentView from '../components/Charts/ChartContentView';
+import ChartContentView2 from '../components/Charts/ChartContentView2';
 import ChartFilter from '../components/Charts/ChartFilter';
 
 class DashboardPage extends React.Component{
@@ -68,10 +69,19 @@ class DashboardPage extends React.Component{
 
           <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 m-b-15 ">
             <Paper style={globalStyles.paper}>
-              <span style={globalStyles.title}>30 phim xem nhiều nhất</span>
+              <span style={globalStyles.title}>10 phim xem nhiều nhất</span>
 
               <div style={globalStyles.clear}/>
               <ChartContentView endDate={this.state.endDate} beginDate={this.state.beginDate} />
+            </Paper>
+          </div>
+
+          <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 m-b-15 ">
+            <Paper style={globalStyles.paper}>
+              <span style={globalStyles.title}>Phim xem nhiều theo thể loại</span>
+
+              <div style={globalStyles.clear}/>
+              <ChartContentView2 endDate={this.state.endDate} beginDate={this.state.beginDate} />
             </Paper>
           </div>
 

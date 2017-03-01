@@ -49,14 +49,15 @@ class ChartCategory extends React.Component{
             var result = response.data;
             var data = [];
             for(var i in result){
-                data.push({
-                    key:result[i].category,
-                    y:result[i].contentView,
-                    color:COLORS[i]
-                });
+                if(result[i].category != 'VOD_FROM_MOBILE'){
+                    data.push({
+                        key:result[i].category,
+                        y:result[i].contentView,
+                        color:COLORS[i]
+                    });
+                }
             }
 
-            console.log(data)
             seft.setState({ data: data });
             seft.setState({ show: false });
         })

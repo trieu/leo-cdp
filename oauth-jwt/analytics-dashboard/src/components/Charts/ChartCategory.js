@@ -1,6 +1,5 @@
 /*The loai phim*/
 import React, {Component, PropTypes} from 'react';
-import {Pie} from 'react-chartjs2';
 import NVD3Chart from "react-nvd3";
 import d3 from "d3";
 import axios from "axios";

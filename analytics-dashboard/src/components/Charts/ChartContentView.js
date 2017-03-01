@@ -50,7 +50,7 @@ class ChartContentView extends Component {
         let beginDate = moment(props.beginDate).format('YYYY-MM-DD');
         let endDate = moment(props.endDate).format('YYYY-MM-DD');
         let url = 'https://360.adsplay.net/api/contentview/report?startDate='+ beginDate +
-        '&endDate='+ endDate + '&limit=30';
+        '&endDate='+ endDate + '&limit=11';
 
 
         var seft = this;
@@ -63,8 +63,10 @@ class ChartContentView extends Component {
             var videoTitle = [];
             var contentView = [];
             for(var i in result){
-                videoTitle.push(result[i].videoTitle);
-                contentView.push(result[i].contentView);
+                if(result[i].videoCategory != 'VOD_FROM_MOBILE'){
+                    videoTitle.push(result[i].videoTitle);
+                    contentView.push(result[i].contentView);
+                }
             }
             data = {
                 labels: videoTitle,
@@ -92,7 +94,7 @@ class ChartContentView extends Component {
     render() {
         return (
             <div>
-                <RC2 
+                <RC2 height={80}
                     data={this.state.data} type='horizontalBar' 
                         options={{
                             tooltips: {
