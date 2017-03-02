@@ -141,7 +141,7 @@ class ChartContentView2 extends Component {
     render() {
         return (
             <div>
-                <SelectField floatingLabelText="Frequency"
+                <SelectField floatingLabelText="Thể loại"
                     value={this.state.selected} 
                     onChange={this.handleChange}
                     >
