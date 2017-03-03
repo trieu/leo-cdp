@@ -30,6 +30,9 @@ class LoginForm extends React.Component {
             if(response.data.USER.constructor === Object && Object.keys(response.data.USER).length > 0){
                 browserHistory.push('/');
             }
+            else{
+                alert('Username or password is incorrect !')
+            }
         });
     }
 

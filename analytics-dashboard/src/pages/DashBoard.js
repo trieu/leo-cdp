@@ -8,28 +8,68 @@ import ChartCategory from '../components/Charts/ChartCategory';
 import ChartContentView from '../components/Charts/ChartContentView';
 import ChartContentView2 from '../components/Charts/ChartContentView2';
 import ChartFilter from '../components/Charts/ChartFilter';
+import ChartFilterSource from '../components/Charts/ChartFilterSource';
+
+//check auth
+const requireAuth = (resolve, reject) => {
+    axios({
+      method: 'get',
+      url: '/loggedin'
+    })
+    .then(function(response) {
+      if(response.data.USER.constructor === Object && Object.keys(response.data.USER).length === 0){
+        console.log('unauthorized !!!');
+        browserHistory.push('/login');
+        reject();
+      }
+      resolve(response.data);
+    });
+}
 
 class DashboardPage extends React.Component{
 
   constructor(props) {
-      super();
+      super(props);
+      
       var endDate = new Date();
       var beginDate = new Date(moment().subtract(7, 'days').format('YYYY-MM-DD'));
 
+      let name = props.USER.username;
+      let disabled = true;
+      let sourceMedia = "danet-mienphi";
+      if(name.indexOf("admin") != -1){
+        sourceMedia = "all";
+        disabled = false;
+      }
+
+      console.log(sourceMedia)
       this.state = {
+          USER: props.USER,
           endDate: endDate,
-          beginDate: beginDate
+          beginDate: beginDate,
+          sourceMedia: sourceMedia,
+          disabled: disabled
       };
 
       this.updateFilter = this.updateFilter.bind(this);
+      this.updateSourceMedia = this.updateSourceMedia.bind(this);
+  }
 
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps)
   }
 
   updateFilter(beginDate, endDate) {
-      console.log(beginDate, endDate);
+      //console.log(beginDate, endDate);
       this.setState({
           beginDate: beginDate,
           endDate: endDate
+      });
+  }
+
+  updateSourceMedia(value){
+      this.setState({
+          sourceMedia: value
       });
   }
 
@@ -42,10 +82,18 @@ class DashboardPage extends React.Component{
 
     return (
       <div>
-        <h3 style={globalStyles.navigation}>Application / Overview</h3>
+        <h3 style={globalStyles.navigation}>Application / Dashboard</h3>
+
         {titlePage}
         
-        <ChartFilter update={this.updateFilter} endDate={this.state.endDate} beginDate={this.state.beginDate} />
+        <div className="row middle-xs">
+          <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 m-b-15 ">
+            <ChartFilterSource update={this.updateSourceMedia} sourceMedia={this.state.sourceMedia} disabled={this.state.disabled} />
+          </div>
+          <div className="col-xs-12 col-sm-12 col-md-10 col-lg-10 m-b-15 ">
+            <ChartFilter update={this.updateFilter} endDate={this.state.endDate} beginDate={this.state.beginDate} />
+          </div>
+        </div>
 
         <div className="row">
 
@@ -54,7 +102,7 @@ class DashboardPage extends React.Component{
               <span style={globalStyles.title}>Thể loại phim</span>
 
               <div style={globalStyles.clear}/>
-              <ChartCategory endDate={this.state.endDate} beginDate={this.state.beginDate} />
+              <ChartCategory sourceMedia={this.state.sourceMedia} endDate={this.state.endDate} beginDate={this.state.beginDate} />
             </Paper>
           </div>
 
@@ -63,7 +111,7 @@ class DashboardPage extends React.Component{
               <span style={globalStyles.title}>Nền tảng thiết bị</span>
 
               <div style={globalStyles.clear}/>
-              <ChartPlatform endDate={this.state.endDate} beginDate={this.state.beginDate} />
+              <ChartPlatform sourceMedia={this.state.sourceMedia} endDate={this.state.endDate} beginDate={this.state.beginDate} />
             </Paper>
           </div>
 
@@ -72,7 +120,7 @@ class DashboardPage extends React.Component{
               <span style={globalStyles.title}>10 phim xem nhiều nhất</span>
 
               <div style={globalStyles.clear}/>
-              <ChartContentView endDate={this.state.endDate} beginDate={this.state.beginDate} />
+              <ChartContentView sourceMedia={this.state.sourceMedia} endDate={this.state.endDate} beginDate={this.state.beginDate} />
             </Paper>
           </div>
 
@@ -81,7 +129,7 @@ class DashboardPage extends React.Component{
               <span style={globalStyles.title}>Phim xem nhiều theo thể loại</span>
 
               <div style={globalStyles.clear}/>
-              <ChartContentView2 endDate={this.state.endDate} beginDate={this.state.beginDate} />
+              <ChartContentView2 sourceMedia={this.state.sourceMedia} endDate={this.state.endDate} beginDate={this.state.beginDate} />
             </Paper>
           </div>
 

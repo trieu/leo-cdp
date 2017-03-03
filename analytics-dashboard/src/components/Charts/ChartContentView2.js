@@ -34,6 +34,7 @@ const data = {
 class ChartContentView2 extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             data: {},
             temp: {},
@@ -49,6 +50,10 @@ class ChartContentView2 extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        if (this.props.sourceMedia !== nextProps.sourceMedia) {
+            var selected = (nextProps.sourceMedia == "all") ? 42 : 1;
+            this.setState({selected: selected});
+        }
         this.dataSource(nextProps);
     }
 
@@ -69,7 +74,7 @@ class ChartContentView2 extends Component {
                 selectData.push({id: rank, name: i});
             }
         }
-
+        console.log(selectData)
         this.setState({ selectData: selectData });
     }
 
@@ -120,8 +125,16 @@ class ChartContentView2 extends Component {
         var self = this;
         self.setState({ show: true });
 
+        var nameMedia = "";
+        var bySource = ""
+        if(props.sourceMedia != "all"){
+            nameMedia = "source";
+            bySource = "&source=" + props.sourceMedia;
+        }
+
+
         //get data for chart
-        let url = 'https://360.adsplay.net/api/contentviewbycategory/report?startDate='+ beginDate +'&endDate='+ endDate +'&limit=10';
+        let url = 'https://360.adsplay.net/api/contentviewbycategory'+nameMedia+'/report?startDate='+ beginDate +'&endDate='+ endDate +'&limit=10' + bySource;
         axios.get(url)
         .then(function (response) {
             self.setState({ temp: response.data });
@@ -135,7 +148,7 @@ class ChartContentView2 extends Component {
     }
 
     widthChange(width){
-        return {width: width};
+        return {width: "100%", maxWidth: width};
     }
 
     render() {

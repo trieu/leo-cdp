@@ -38,8 +38,14 @@ class ChartCategory extends React.Component{
         props = props || this.props;
         let beginDate = moment(props.beginDate).format('YYYY-MM-DD');
         let endDate = moment(props.endDate).format('YYYY-MM-DD');
-        let url = 'https://360.adsplay.net/api/categoryview/report?startDate='+ beginDate +
-        '&endDate='+ endDate + '&limit=10';
+
+        var nameMedia = "";
+        var bySource = ""
+        if(props.sourceMedia != "all"){
+            nameMedia = "bysource";
+            bySource = "&source=" + props.sourceMedia;
+        }
+        let url = 'https://360.adsplay.net/api/categoryview'+nameMedia+'/report?startDate='+ beginDate + '&endDate='+ endDate + '&limit=10' + bySource;
 
         var seft = this;
         seft.setState({ show: true });

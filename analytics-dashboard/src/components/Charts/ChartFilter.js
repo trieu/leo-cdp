@@ -6,7 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 const styles = {
   mb15: {
-    margin: "0 0 15px 0"
+    margin: "0 0 5px 0"
   }
 };
 
@@ -42,36 +42,34 @@ class ChartFilter extends React.Component{
 
     render() {
         return (
-            <div>
-                <div className="row middle-xs">
-                    
-                    <div className="col-xs">
-                        <DatePicker
-                            autoOk={true}
-                            defaultDate={this.state.beginDate}
-                            maxDate={this.state.endDate}
-                            fullWidth={true} style={styles.mb15}
-                            hintText="Nhập ngày"
-                            floatingLabelText="Ngày bắt đầu"
-                            floatingLabelFixed={true}
-                            onChange={this.handleChangeBegin} />
-                    </div>
+            <div className="row middle-xs bottom-md">
+                
+                <div className="col-xs-12 col-md-3">
+                    <DatePicker
+                        autoOk={true}
+                        defaultDate={this.state.beginDate}
+                        maxDate={this.state.endDate}
+                        fullWidth={true}
+                        hintText="Nhập ngày"
+                        floatingLabelText="Ngày bắt đầu"
+                        floatingLabelFixed={true}
+                        onChange={this.handleChangeBegin} />
+                </div>
 
-                    <div className="col-xs">
-                        <DatePicker
-                            autoOk={true}
-                            defaultDate={this.state.endDate}
-                            minDate={this.state.beginDate}
-                            fullWidth={true} style={styles.mb15}
-                            hintText="Nhập ngày"
-                            floatingLabelText="Ngày kết thúc"
-                            floatingLabelFixed={true}
-                            onChange={this.handleChangeEnd} />
-                    </div>
+                <div className="col-xs-12 col-md-3">
+                    <DatePicker
+                        autoOk={true}
+                        defaultDate={this.state.endDate}
+                        minDate={this.state.beginDate}
+                        fullWidth={true}
+                        hintText="Nhập ngày"
+                        floatingLabelText="Ngày kết thúc"
+                        floatingLabelFixed={true}
+                        onChange={this.handleChangeEnd} />
+                </div>
 
-                    <div className="col-xs">
-                        <RaisedButton label="Xem" primary={true} onClick={this.handleChange} />
-                    </div>
+                <div className="col-xs-12 col-md-3">
+                    <RaisedButton label="Xem" primary={true} onClick={this.handleChange} />
                 </div>
             </div>
         );

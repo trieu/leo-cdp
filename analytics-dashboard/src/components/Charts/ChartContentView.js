@@ -49,9 +49,16 @@ class ChartContentView extends Component {
         props = props || this.props;
         let beginDate = moment(props.beginDate).format('YYYY-MM-DD');
         let endDate = moment(props.endDate).format('YYYY-MM-DD');
-        let url = 'https://360.adsplay.net/api/contentview/report?startDate='+ beginDate +
-        '&endDate='+ endDate + '&limit=11';
 
+        var nameMedia = "";
+        var bySource = ""
+        if(props.sourceMedia != "all"){
+            nameMedia = "bysource";
+            bySource = "&source=" + props.sourceMedia;
+        }
+
+        let url = 'https://360.adsplay.net/api/contentview'+nameMedia+'/report?startDate='+ beginDate +
+        '&endDate='+ endDate + '&limit=11' + bySource;
 
         var seft = this;
         seft.setState({ show: true });
