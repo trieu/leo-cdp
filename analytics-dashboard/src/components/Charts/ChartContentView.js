@@ -50,6 +50,7 @@ class ChartContentView extends Component {
         let beginDate = moment(props.beginDate).format('YYYY-MM-DD');
         let endDate = moment(props.endDate).format('YYYY-MM-DD');
 
+        //custom role
         var nameMedia = "";
         var bySource = ""
         if(props.sourceMedia != "all"){

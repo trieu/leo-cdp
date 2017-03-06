@@ -40,7 +40,7 @@ class ChartContentView2 extends Component {
             temp: {},
             widthChart: '100%',
             selectData: [],
-            selected: 42
+            selected: 0
         }
         this.handleChange = this.handleChange.bind(this);
     }
@@ -50,10 +50,10 @@ class ChartContentView2 extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.sourceMedia !== nextProps.sourceMedia) {
-            var selected = (nextProps.sourceMedia == "all") ? 42 : 1;
-            this.setState({selected: selected});
-        }
+        // if (this.props.sourceMedia !== nextProps.sourceMedia) {
+        //     var selected = (nextProps.sourceMedia == "all") ? 42 : 1;
+        //     this.setState({selected: selected});
+        // }
         this.dataSource(nextProps);
     }
 
@@ -125,6 +125,7 @@ class ChartContentView2 extends Component {
         var self = this;
         self.setState({ show: true });
 
+        //custom role
         var nameMedia = "";
         var bySource = ""
         if(props.sourceMedia != "all"){
