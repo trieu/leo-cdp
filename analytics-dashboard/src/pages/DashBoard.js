@@ -3,6 +3,7 @@ import globalStyles from '../styles';
 import Data from '../data';
 import Paper from 'material-ui/Paper';
 import moment from 'moment';
+import SummaryChartPlatform from '../components/Charts/SummaryChartPlatform';
 import ChartPlatform from '../components/Charts/ChartPlatform';
 import ChartCategory from '../components/Charts/ChartCategory';
 import ChartContentView from '../components/Charts/ChartContentView';
@@ -48,11 +49,13 @@ class DashboardPage extends React.Component{
           endDate: endDate,
           beginDate: beginDate,
           sourceMedia: sourceMedia,
+          sumChartPlatform: 0,
           disabled: disabled
       };
 
       this.updateFilter = this.updateFilter.bind(this);
       this.updateSourceMedia = this.updateSourceMedia.bind(this);
+      this.updateChartPlatform = this.updateChartPlatform.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -70,6 +73,13 @@ class DashboardPage extends React.Component{
   updateSourceMedia(value){
       this.setState({
           sourceMedia: value
+      });
+  }
+
+  updateChartPlatform(value){
+    console.log(value)
+      this.setState({
+          sumChartPlatform: value.toLocaleString()
       });
   }
 
@@ -95,6 +105,12 @@ class DashboardPage extends React.Component{
           </div>
         </div>
 
+        <div className="row middle-xs">
+          <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
+            <SummaryChartPlatform value={this.state.sumChartPlatform} />
+          </div>
+        </div>
+
         <div className="row">
 
           <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 m-b-15 ">
@@ -111,7 +127,7 @@ class DashboardPage extends React.Component{
               <span style={globalStyles.title}>Nền tảng thiết bị</span>
 
               <div style={globalStyles.clear}/>
-              <ChartPlatform sourceMedia={this.state.sourceMedia} endDate={this.state.endDate} beginDate={this.state.beginDate} />
+              <ChartPlatform getSum={this.updateChartPlatform} sourceMedia={this.state.sourceMedia} endDate={this.state.endDate} beginDate={this.state.beginDate} />
             </Paper>
           </div>
 

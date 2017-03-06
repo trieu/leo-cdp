@@ -26,6 +26,11 @@ const styles = {
   },
   clear: {
     clear: 'both'
+  },
+  caption: {
+    fontSize: "12px",
+    fontWeight: typography.fontWeightLight,
+    color: "#999"
   }
 };
 

@@ -24,7 +24,7 @@ class ChartPlatform extends React.Component{
 
     constructor(props) {
         super(props);
-        this.state = {data: []}
+        this.state = {data: [], sum: 0}
     }
 
     componentWillMount() {
@@ -33,6 +33,13 @@ class ChartPlatform extends React.Component{
 
     componentWillReceiveProps(nextProps) {
         this.dataSource(nextProps);
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+        
+        if(this.state.sum != nextState.sum){
+            this.props.getSum(nextState.sum);
+        }
     }
 
     dataSource(props){
@@ -50,8 +57,8 @@ class ChartPlatform extends React.Component{
         let url = 'https://360.adsplay.net/api/platformview'+nameMedia+'/report?startDate='+ beginDate +
         '&endDate='+ endDate + '&limit=10' + bySource;
 
-        var seft = this;
-        seft.setState({ show: true });
+        var self = this;
+        self.setState({ show: true });
 
         axios.get(url)
         .then(function (response) {
@@ -59,7 +66,9 @@ class ChartPlatform extends React.Component{
             var data = [];
             var videoTitle = [];
             var contentView = [];
+            var sum = 0;
             for(var i in result){
+                sum += parseInt(result[i].contentView);
                 data.push({
                     key:result[i].platformName,
                     y:result[i].contentView,
@@ -68,8 +77,10 @@ class ChartPlatform extends React.Component{
                 })
             }
 
-            seft.setState({ data: data });
-            seft.setState({ show: false });
+            self.setState({ data: data});
+            self.setState({ sum: sum});
+
+            self.setState({ show: false });
         })
         .catch(function (error) {
             console.log(error);
