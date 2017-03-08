@@ -9,6 +9,7 @@ import MenuItem from 'material-ui/MenuItem';
 import axios from "axios";
 import moment from 'moment';
 import Loading from '../Loading/LoadingPager';
+import _ from "lodash";
 
 
 const COLORS = ['#8884d8', '#83a6ed', '#8dd1e1', '#82ca9d','#a4de6c',
@@ -74,8 +75,9 @@ class ChartContentView2 extends Component {
                 selectData.push({id: rank, name: i});
             }
         }
-        console.log(selectData)
-        this.setState({ selectData: selectData });
+
+        var dataASC = _.orderBy(selectData, ['name'], ['asc']);
+        this.setState({ selectData: dataASC });
     }
 
     renderChart(rank, result){

@@ -36,7 +36,6 @@ class ChartPlatform extends React.Component{
     }
 
     componentWillUpdate(nextProps, nextState) {
-        
         if(this.state.sum != nextState.sum){
             this.props.getSum(nextState.sum);
         }

@@ -57,11 +57,7 @@ class DashboardPage extends React.Component{
       this.updateSourceMedia = this.updateSourceMedia.bind(this);
       this.updateChartPlatform = this.updateChartPlatform.bind(this);
   }
-
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps)
-  }
-
+  
   updateFilter(beginDate, endDate) {
       //console.log(beginDate, endDate);
       this.setState({
@@ -77,7 +73,7 @@ class DashboardPage extends React.Component{
   }
 
   updateChartPlatform(value){
-    console.log(value)
+      console.log(value)
       this.setState({
           sumChartPlatform: value.toLocaleString()
       });
