@@ -3,6 +3,12 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
+  // resolve: {
+  //     alias: {
+  //         'react': 'preact-compat',
+  //         'react-dom': 'preact-compat'
+  //     }
+  // },
   entry: glob.sync(['./src/index.js']),
   output: {
     path: path.join(__dirname, 'public'),
@@ -15,7 +21,12 @@ module.exports = {
     new webpack.NoErrorsPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {warnings: false} //disable message warnings
-    }) //Minimize all JavaScript output of chunks
+    }), //Minimize all JavaScript output of chunks
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    })
   ],
   module: {
     loaders: [

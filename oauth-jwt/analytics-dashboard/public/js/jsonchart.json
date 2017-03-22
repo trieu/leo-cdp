@@ -1,0 +1,924 @@
+{
+  "Thiếu Nhi Nổi Bật": [
+    {
+      "videoTitle": "Chiến Xa Thần Thú",
+      "videoCategory": "Thiếu Nhi Nổi Bật",
+      "contentView": 47398,
+      "rank": 59
+    },
+    {
+      "videoTitle": "Cô Bé Siêu Quậy và Chú Gấu Xiếc (Phần 1)",
+      "videoCategory": "Thiếu Nhi Nổi Bật",
+      "contentView": 32107,
+      "rank": 59
+    }
+  ],
+  "Truyện Cổ Tích": [
+    {
+      "videoTitle": "Cô Bé Lọ Lem",
+      "videoCategory": "Truyện Cổ Tích",
+      "contentView": 709,
+      "rank": 66
+    },
+    {
+      "videoTitle": "Con Rồng Cháu Tiên",
+      "videoCategory": "Truyện Cổ Tích",
+      "contentView": 494,
+      "rank": 66
+    }
+  ],
+  "phim-Vip": [
+    {
+      "videoTitle": "Siêu Nhân Mãnh Thú",
+      "videoCategory": "phim-Vip",
+      "contentView": 1134,
+      "rank": 49
+    },
+    {
+      "videoTitle": "Anh Hùng Trái Đất",
+      "videoCategory": "phim-Vip",
+      "contentView": 1130,
+      "rank": 49
+    }
+  ],
+  "Việt Nam": [
+    {
+      "videoTitle": "Gia Đình Là Số 1",
+      "videoCategory": "Việt Nam",
+      "contentView": 16519,
+      "rank": 73
+    },
+    {
+      "videoTitle": "Vì Em Là Dâu Mới",
+      "videoCategory": "Việt Nam",
+      "contentView": 12932,
+      "rank": 73
+    }
+  ],
+  "Live show": [
+    {
+      "videoTitle": "Liveshow Dạ Khúc Cho Tình Nhân",
+      "videoCategory": "Live show",
+      "contentView": 5350,
+      "rank": 30
+    },
+    {
+      "videoTitle": "Minishow Đàm Vĩnh Hưng và MV 'Vì Anh Là Soái Ca'",
+      "videoCategory": "Live show",
+      "contentView": 4000,
+      "rank": 30
+    }
+  ],
+  "Hành Động": [
+    {
+      "videoTitle": "Hunter X Hunter – Thợ Săn",
+      "videoCategory": "Hành Động",
+      "contentView": 14790,
+      "rank": 22
+    },
+    {
+      "videoTitle": "Vua Bếp Soma",
+      "videoCategory": "Hành Động",
+      "contentView": 13358,
+      "rank": 22
+    }
+  ],
+  "Kinh dị": [
+    {
+      "videoTitle": "Con Ma Nhà Hàng Xóm",
+      "videoCategory": "Kinh dị",
+      "contentView": 6696,
+      "rank": 28
+    },
+    {
+      "videoTitle": "Căn Nhà Rỉ Máu",
+      "videoCategory": "Kinh dị",
+      "contentView": 5796,
+      "rank": 28
+    }
+  ],
+  "Hài & Lãng mạn": [
+    {
+      "videoTitle": "Tái Bút Anh Yêu Em",
+      "videoCategory": "Hài & Lãng mạn",
+      "contentView": 4185,
+      "rank": 19
+    },
+    {
+      "videoTitle": "Yêu Cuồng Si",
+      "videoCategory": "Hài & Lãng mạn",
+      "contentView": 2286,
+      "rank": 19
+    }
+  ],
+  "Anime Nổi Bật": [
+    {
+      "videoTitle": "Vua Hải Tặc",
+      "videoCategory": "Anime Nổi Bật",
+      "contentView": 449248,
+      "rank": 3
+    },
+    {
+      "videoTitle": "Thám Tử Lừng Danh",
+      "videoCategory": "Anime Nổi Bật",
+      "contentView": 151604,
+      "rank": 3
+    }
+  ],
+  "Hoạt Hình": [
+    {
+      "videoTitle": "Đảo Hải Tặc (Lồng tiếng) - Phần 1",
+      "videoCategory": "Hoạt Hình",
+      "contentView": 168997,
+      "rank": 26
+    },
+    {
+      "videoTitle": "Cô Bé Siêu Quậy và Chú Gấu Xiếc (Phần 3)",
+      "videoCategory": "Hoạt Hình",
+      "contentView": 30611,
+      "rank": 26
+    }
+  ],
+  "Truyện Văn Học": [
+    {
+      "videoTitle": "Cô Gái Trên Tàu",
+      "videoCategory": "Truyện Văn Học",
+      "contentView": 1540,
+      "rank": 68
+    },
+    {
+      "videoTitle": "Những Chuyện Hay Viết Cho Thiếu Nhi",
+      "videoCategory": "Truyện Văn Học",
+      "contentView": 837,
+      "rank": 68
+    }
+  ],
+  "Phim bộ Việt Nam": [
+    {
+      "videoTitle": "Đặc Vụ ở Macao",
+      "videoCategory": "Phim bộ Việt Nam",
+      "contentView": 34847,
+      "rank": 42
+    },
+    {
+      "videoTitle": "Hợp Đồng Định Mệnh",
+      "videoCategory": "Phim bộ Việt Nam",
+      "contentView": 8880,
+      "rank": 42
+    }
+  ],
+  "Reality show": [
+    {
+      "videoTitle": "We Got Married - Gong Myung & Jung Hye Sung Couple",
+      "videoCategory": "Reality show",
+      "contentView": 81796,
+      "rank": 53
+    },
+    {
+      "videoTitle": "Sao Nhập Ngũ - Vượt Qua Giới Hạn",
+      "videoCategory": "Reality show",
+      "contentView": 14535,
+      "rank": 53
+    }
+  ],
+  "Tâm Lý Tình Cảm": [
+    {
+      "videoTitle": "Tình Tay Ba",
+      "videoCategory": "Tâm Lý Tình Cảm",
+      "contentView": 112,
+      "rank": 57
+    },
+    {
+      "videoTitle": "Đế Quốc Bạch Ngân",
+      "videoCategory": "Tâm Lý Tình Cảm",
+      "contentView": 102,
+      "rank": 57
+    }
+  ],
+  "TỔNG HỢP": [
+    {
+      "videoTitle": "Mật Danh IRIS 2",
+      "videoCategory": "TỔNG HỢP",
+      "contentView": 1403,
+      "rank": 64
+    },
+    {
+      "videoTitle": "Mật Danh Iris 1",
+      "videoCategory": "TỔNG HỢP",
+      "contentView": 1343,
+      "rank": 64
+    }
+  ],
+  "Bóng Đá Việt Nam": [
+    {
+      "videoTitle": "U23 Việt Nam 3-0 U23 Malaysia Highlights",
+      "videoCategory": "Bóng Đá Việt Nam",
+      "contentView": 3343,
+      "rank": 6
+    },
+    {
+      "videoTitle": "Sông Lam Nghệ An 1 - 1 Cần Thơ Highlights",
+      "videoCategory": "Bóng Đá Việt Nam",
+      "contentView": 1237,
+      "rank": 6
+    }
+  ],
+  "TV show": [
+    {
+      "videoTitle": "Xuân Phát Tài 6",
+      "videoCategory": "TV show",
+      "contentView": 101,
+      "rank": 69
+    }
+  ],
+  "Viễn Tưởng": [
+    {
+      "videoTitle": "Kono Subarashii Sekai ni Shukufuku wo",
+      "videoCategory": "Viễn Tưởng",
+      "contentView": 6346,
+      "rank": 72
+    },
+    {
+      "videoTitle": "No Game No Life ",
+      "videoCategory": "Viễn Tưởng",
+      "contentView": 4604,
+      "rank": 72
+    }
+  ],
+  "Thể Loại Khác": [
+    {
+      "videoTitle": "Aoi Bungaku Series - Blue Literature",
+      "videoCategory": "Thể Loại Khác",
+      "contentView": 958,
+      "rank": 58
+    },
+    {
+      "videoTitle": "Yami Shibai 3rd Season",
+      "videoCategory": "Thể Loại Khác",
+      "contentView": 941,
+      "rank": 58
+    }
+  ],
+  "League Of Legends": [
+    {
+      "videoTitle": "SKT vs KOO",
+      "videoCategory": "League Of Legends",
+      "contentView": 193,
+      "rank": 29
+    }
+  ],
+  "Hành Động Phiêu Lưu": [
+    {
+      "videoTitle": "Người Băng",
+      "videoCategory": "Hành Động Phiêu Lưu",
+      "contentView": 268,
+      "rank": 23
+    },
+    {
+      "videoTitle": "Series Người Bảo Vệ",
+      "videoCategory": "Hành Động Phiêu Lưu",
+      "contentView": 177,
+      "rank": 23
+    }
+  ],
+  "Talk show": [
+    {
+      "videoTitle": "Những Kẻ Lắm Lời",
+      "videoCategory": "Talk show",
+      "contentView": 1925,
+      "rank": 55
+    }
+  ],
+  "Phim bộ HOT": [
+    {
+      "videoTitle": "Thiếu Gia Ác Ma, Đừng Hôn Tôi",
+      "videoCategory": "Phim bộ HOT",
+      "contentView": 143109,
+      "rank": 40
+    },
+    {
+      "videoTitle": "Cô Phương Bất Tự Thưởng (Thuyết minh)",
+      "videoCategory": "Phim bộ HOT",
+      "contentView": 58998,
+      "rank": 40
+    }
+  ],
+  "Quốc gia khác": [
+    {
+      "videoTitle": "Vòng Xoáy Tội Ác",
+      "videoCategory": "Quốc gia khác",
+      "contentView": 16901,
+      "rank": 52
+    },
+    {
+      "videoTitle": "Tôi, Thapki",
+      "videoCategory": "Quốc gia khác",
+      "contentView": 14884,
+      "rank": 52
+    }
+  ],
+  "PHÔ DIỄN KỸ THUẬT": [
+    {
+      "videoTitle": "25' Skill - Eden Hazard",
+      "videoCategory": "PHÔ DIỄN KỸ THUẬT",
+      "contentView": 6620,
+      "rank": 50
+    },
+    {
+      "videoTitle": "36' Skill - Zlatan Ibrahimovic ",
+      "videoCategory": "PHÔ DIỄN KỸ THUẬT",
+      "contentView": 5886,
+      "rank": 50
+    }
+  ],
+  "World Cup 2018": [
+    {
+      "videoTitle": "Bỉ 8-1 Estonia Highlights",
+      "videoCategory": "World Cup 2018",
+      "contentView": 1800,
+      "rank": 74
+    },
+    {
+      "videoTitle": "Bồ Đào Nha 4-1 Latvia Highlight",
+      "videoCategory": "World Cup 2018",
+      "contentView": 1627,
+      "rank": 74
+    }
+  ],
+  "Phim Bộ Nổi Bật": [
+    {
+      "videoTitle": "Tam Sinh Tam Thế, Thập Lý Đào Hoa",
+      "videoCategory": "Phim Bộ Nổi Bật",
+      "contentView": 267507,
+      "rank": 41
+    },
+    {
+      "videoTitle": "Tân Anh Hùng Xạ Điêu 2017",
+      "videoCategory": "Phim Bộ Nổi Bật",
+      "contentView": 128005,
+      "rank": 41
+    }
+  ],
+  "phim-bo": [
+    {
+      "videoTitle": "Harry Potter Và Tù Nhân Azkaban - 21h00 ngày 17/07/2016",
+      "videoCategory": "phim-bo",
+      "contentView": 4396,
+      "rank": 37
+    },
+    {
+      "videoTitle": "Nguồn Gốc Những Sinh Vật Huyền Bí",
+      "videoCategory": "phim-bo",
+      "contentView": 1135,
+      "rank": 37
+    }
+  ],
+  "Âm Nhạc": [
+    {
+      "videoTitle": "Hát Cùng Siêu Chíp (Phần 4)",
+      "videoCategory": "Âm Nhạc",
+      "contentView": 7628,
+      "rank": 1
+    },
+    {
+      "videoTitle": "Mùa Xuân Em Hát",
+      "videoCategory": "Âm Nhạc",
+      "contentView": 2440,
+      "rank": 1
+    }
+  ],
+  "Phim cho FA": [
+    {
+      "videoTitle": "Người Đẹp Và Quái Vật",
+      "videoCategory": "Phim cho FA",
+      "contentView": 4113,
+      "rank": 43
+    },
+    {
+      "videoTitle": "Trái Tim Không Được Yêu",
+      "videoCategory": "Phim cho FA",
+      "contentView": 1773,
+      "rank": 43
+    }
+  ],
+  "Phim Lẻ": [
+    {
+      "videoTitle": "Thần Kê Đấu Ngô Công",
+      "videoCategory": "Phim Lẻ",
+      "contentView": 18436,
+      "rank": 46
+    },
+    {
+      "videoTitle": "Căn Phòng 2046",
+      "videoCategory": "Phim Lẻ",
+      "contentView": 13660,
+      "rank": 46
+    }
+  ],
+  "Phim 20/11": [
+    {
+      "videoTitle": "Anh Bạn Gia Sư",
+      "videoCategory": "Phim 20/11",
+      "contentView": 376,
+      "rank": 35
+    }
+  ],
+  "Hoa ngữ": [
+    {
+      "videoTitle": "Tam Sinh Tam Thế, Thập Lý Đào Hoa (Thuyết minh)",
+      "videoCategory": "Hoa ngữ",
+      "contentView": 62960,
+      "rank": 25
+    },
+    {
+      "videoTitle": "Đại Đường Vinh Diệu (Thuyết minh)",
+      "videoCategory": "Hoa ngữ",
+      "contentView": 37933,
+      "rank": 25
+    }
+  ],
+  "Mùa Thu 2016": [
+    {
+      "videoTitle": "Future Card Buddyfight DDD",
+      "videoCategory": "Mùa Thu 2016",
+      "contentView": 7976,
+      "rank": 32
+    },
+    {
+      "videoTitle": "Qualidea Code",
+      "videoCategory": "Mùa Thu 2016",
+      "contentView": 2977,
+      "rank": 32
+    }
+  ],
+  "RIÊNG CHO BÉ": [
+    {
+      "videoTitle": "Siêu Nhân Phép Thuật",
+      "videoCategory": "RIÊNG CHO BÉ",
+      "contentView": 153,
+      "rank": 54
+    },
+    {
+      "videoTitle": "Thần Xe Siêu Tốc - Sấm Chớp Tốc Độ",
+      "videoCategory": "RIÊNG CHO BÉ",
+      "contentView": 139,
+      "rank": 54
+    }
+  ],
+  "PHIM TÌNH CẢM": [
+    {
+      "videoTitle": "Cưới Anh, Em Dám Không?",
+      "videoCategory": "PHIM TÌNH CẢM",
+      "contentView": 2291,
+      "rank": 48
+    },
+    {
+      "videoTitle": "Xin Lỗi, Anh Yêu Em",
+      "videoCategory": "PHIM TÌNH CẢM",
+      "contentView": 2223,
+      "rank": 48
+    }
+  ],
+  "Các Môn Thể Thao Khác": [
+    {
+      "videoTitle": "Tạp chí thế giới Golf 16/09/2016",
+      "videoCategory": "Các Môn Thể Thao Khác",
+      "contentView": 255,
+      "rank": 7
+    },
+    {
+      "videoTitle": "Truyền hình Vĩnh Long vs Thông tin LVPB",
+      "videoCategory": "Các Môn Thể Thao Khác",
+      "contentView": 175,
+      "rank": 7
+    }
+  ],
+  "Tâm lý": [
+    {
+      "videoTitle": "Ám Ảnh Dục Vọng",
+      "videoCategory": "Tâm lý",
+      "contentView": 14303,
+      "rank": 56
+    },
+    {
+      "videoTitle": "Thần Bài Sát Gái",
+      "videoCategory": "Tâm lý",
+      "contentView": 4609,
+      "rank": 56
+    }
+  ],
+  "Bóng Đá Quốc Tế": [
+    {
+      "videoTitle": "Italia 1-3 Pháp Highlights",
+      "videoCategory": "Bóng Đá Quốc Tế",
+      "contentView": 1909,
+      "rank": 5
+    },
+    {
+      "videoTitle": "Bồ Đào Nha 5-0 Gibraltar Highlights",
+      "videoCategory": "Bóng Đá Quốc Tế",
+      "contentView": 735,
+      "rank": 5
+    }
+  ],
+  "Phim Lẻ Nổi Bật": [
+    {
+      "videoTitle": "Già Gân, Mỹ Nhân Và Găng Tơ",
+      "videoCategory": "Phim Lẻ Nổi Bật",
+      "contentView": 37304,
+      "rank": 47
+    },
+    {
+      "videoTitle": "Ma Dai",
+      "videoCategory": "Phim Lẻ Nổi Bật",
+      "contentView": 13205,
+      "rank": 47
+    }
+  ],
+  "Đối Kháng": [
+    {
+      "videoTitle": "Cody Garbrandt vs Takeya Mizugaki",
+      "videoCategory": "Đối Kháng",
+      "contentView": 1941,
+      "rank": 13
+    },
+    {
+      "videoTitle": "Ronda Rousey vs Miesha Tate",
+      "videoCategory": "Đối Kháng",
+      "contentView": 991,
+      "rank": 13
+    }
+  ],
+  "Anime Hot": [
+    {
+      "videoTitle": "Bảy Viên Ngọc Rồng Siêu Cấp (Thuyết minh)",
+      "videoCategory": "Anime Hot",
+      "contentView": 66104,
+      "rank": 2
+    },
+    {
+      "videoTitle": "Vua Trò Chơi",
+      "videoCategory": "Anime Hot",
+      "contentView": 43719,
+      "rank": 2
+    }
+  ],
+  "Phim bộ Hoa Ngữ": [
+    {
+      "videoTitle": "BẰNG CHỨNG THÉP II",
+      "videoCategory": "Phim bộ Hoa Ngữ",
+      "contentView": 22132,
+      "rank": 39
+    },
+    {
+      "videoTitle": "Thần Thám Phúc Lộc Thọ",
+      "videoCategory": "Phim bộ Hoa Ngữ",
+      "contentView": 16814,
+      "rank": 39
+    }
+  ],
+  "Trò Chơi Truyền Hình": [
+    {
+      "videoTitle": "King of Mask Singer (2015)",
+      "videoCategory": "Trò Chơi Truyền Hình",
+      "contentView": 12633,
+      "rank": 65
+    },
+    {
+      "videoTitle": "Giọng Hát Hay (Mùa 11)",
+      "videoCategory": "Trò Chơi Truyền Hình",
+      "contentView": 8957,
+      "rank": 65
+    }
+  ],
+  "VIDEO MỚI NHẤT": [
+    {
+      "videoTitle": "Watford vs Manchester United Full match",
+      "videoCategory": "VIDEO MỚI NHẤT",
+      "contentView": 196,
+      "rank": 71
+    },
+    {
+      "videoTitle": "Arsenal vs Chelsea Full match",
+      "videoCategory": "VIDEO MỚI NHẤT",
+      "contentView": 128,
+      "rank": 71
+    }
+  ],
+  "Phim bộ Hàn Quốc": [
+    {
+      "videoTitle": "Hôn Nhân Không Tình Yêu",
+      "videoCategory": "Phim bộ Hàn Quốc",
+      "contentView": 7042,
+      "rank": 38
+    },
+    {
+      "videoTitle": "Nhịp Đập Trái Tim 2",
+      "videoCategory": "Phim bộ Hàn Quốc",
+      "contentView": 1258,
+      "rank": 38
+    }
+  ],
+  "Mùa Đông 2017": [
+    {
+      "videoTitle": "Masamune Kun No Revenge",
+      "videoCategory": "Mùa Đông 2017",
+      "contentView": 17772,
+      "rank": 31
+    },
+    {
+      "videoTitle": "Cặp Đội Cặn Bã",
+      "videoCategory": "Mùa Đông 2017",
+      "contentView": 15101,
+      "rank": 31
+    }
+  ],
+  "Truyền Hình Thực Tế": [
+    {
+      "videoTitle": "We Got Married - JjongAh Couple",
+      "videoCategory": "Truyền Hình Thực Tế",
+      "contentView": 60093,
+      "rank": 67
+    },
+    {
+      "videoTitle": "We Got Married - Joy And SungJae Couple",
+      "videoCategory": "Truyền Hình Thực Tế",
+      "contentView": 28793,
+      "rank": 67
+    }
+  ],
+  "Xem lại trận đấu": [
+    {
+      "videoTitle": "Everton 4 - 0 Manchester City Full match",
+      "videoCategory": "Xem lại trận đấu",
+      "contentView": 12269,
+      "rank": 75
+    },
+    {
+      "videoTitle": "Swansea City 0 - 4 Arsenal Full match",
+      "videoCategory": "Xem lại trận đấu",
+      "contentView": 2798,
+      "rank": 75
+    }
+  ],
+  "Tình cảm": [
+    {
+      "videoTitle": "Đam Mê Tội Lỗi",
+      "videoCategory": "Tình cảm",
+      "contentView": 2108,
+      "rank": 61
+    },
+    {
+      "videoTitle": "Thanh Xuân Rực Lửa",
+      "videoCategory": "Tình cảm",
+      "contentView": 1837,
+      "rank": 61
+    }
+  ],
+  "Tốc Độ": [
+    {
+      "videoTitle": "Chặng 17 Grand Prix of Malaysia",
+      "videoCategory": "Tốc Độ",
+      "contentView": 427,
+      "rank": 63
+    },
+    {
+      "videoTitle": "Chặng 15 Grand Prix of Japan",
+      "videoCategory": "Tốc Độ",
+      "contentView": 169,
+      "rank": 63
+    }
+  ],
+  "Bản tin": [
+    {
+      "videoTitle": "Thế giới Premier League Tuần 20",
+      "videoCategory": "Bản tin",
+      "contentView": 10380,
+      "rank": 4
+    },
+    {
+      "videoTitle": "Tạp chí Netbusters vòng 22",
+      "videoCategory": "Bản tin",
+      "contentView": 6360,
+      "rank": 4
+    }
+  ],
+  "Quần Vợt": [
+    {
+      "videoTitle": "Highlights nội dung đơn nam",
+      "videoCategory": "Quần Vợt",
+      "contentView": 217,
+      "rank": 51
+    },
+    {
+      "videoTitle": "WTA và những cú đánh ấn tượng tháng 7",
+      "videoCategory": "Quần Vợt",
+      "contentView": 196,
+      "rank": 51
+    }
+  ],
+  "Tiếng Anh": [
+    {
+      "videoTitle": "Zool Babies Collection Part 2",
+      "videoCategory": "Tiếng Anh",
+      "contentView": 29591,
+      "rank": 60
+    },
+    {
+      "videoTitle": "Zool Babies Collection Part 1",
+      "videoCategory": "Tiếng Anh",
+      "contentView": 23980,
+      "rank": 60
+    }
+  ],
+  "Hàn Quốc": [
+    {
+      "videoTitle": "Vì Sao Đưa Anh Tới",
+      "videoCategory": "Hàn Quốc",
+      "contentView": 20355,
+      "rank": 24
+    },
+    {
+      "videoTitle": "Truy Tìm Sát Nhân (Thuyết minh)",
+      "videoCategory": "Hàn Quốc",
+      "contentView": 14157,
+      "rank": 24
+    }
+  ],
+  "CẢ NHÀ CÙNG XEM": [
+    {
+      "videoTitle": "Doraemon Đôi Bạn Thân",
+      "videoCategory": "CẢ NHÀ CÙNG XEM",
+      "contentView": 193,
+      "rank": 9
+    },
+    {
+      "videoTitle": "Người Đẹp Và Quái Vật",
+      "videoCategory": "CẢ NHÀ CÙNG XEM",
+      "contentView": 133,
+      "rank": 9
+    }
+  ],
+  "Game show": [
+    {
+      "videoTitle": "I Can See Your Voice (Season 1)",
+      "videoCategory": "Game show",
+      "contentView": 8488,
+      "rank": 15
+    },
+    {
+      "videoTitle": "SBS Drama Awards 2016",
+      "videoCategory": "Game show",
+      "contentView": 2680,
+      "rank": 15
+    }
+  ],
+  "Hài hước": [
+    {
+      "videoTitle": "ATM Lỗi Tình Yêu,",
+      "videoCategory": "Hài hước",
+      "contentView": 8482,
+      "rank": 17
+    },
+    {
+      "videoTitle": "Gia Hữu Hỷ Sự",
+      "videoCategory": "Hài hước",
+      "contentView": 6545,
+      "rank": 17
+    }
+  ],
+  "Hot clip": [
+    {
+      "videoTitle": "Bà Tổng lãnh sự Mỹ đi chợ hoa, gói bánh chưng ăn Tết Việt",
+      "videoCategory": "Hot clip",
+      "contentView": 12330,
+      "rank": 27
+    },
+    {
+      "videoTitle": "Bích Phương nói hộ nỗi lòng 'gái ế' mỗi khi dịp Tết về",
+      "videoCategory": "Hot clip",
+      "contentView": 6936,
+      "rank": 27
+    }
+  ],
+  "Hành động": [
+    {
+      "videoTitle": "Kinh Thiên Phá",
+      "videoCategory": "Hành động",
+      "contentView": 17486,
+      "rank": 21
+    },
+    {
+      "videoTitle": "Bẫy Rồng",
+      "videoCategory": "Hành động",
+      "contentView": 14652,
+      "rank": 21
+    }
+  ],
+  "Cải Lương": [
+    {
+      "videoTitle": "NSUT Lệ Thủy - Thái Tử Sĩ Đạt Ta",
+      "videoCategory": "Cải Lương",
+      "contentView": 247,
+      "rank": 8
+    },
+    {
+      "videoTitle": "NSUT Lệ Thủy - Bông Hồng Tôn Kính Mẹ Cha",
+      "videoCategory": "Cải Lương",
+      "contentView": 177,
+      "rank": 8
+    }
+  ],
+  "Đàm Luận": [
+    {
+      "videoTitle": "Weekly Idol",
+      "videoCategory": "Đàm Luận",
+      "contentView": 3768,
+      "rank": 12
+    },
+    {
+      "videoTitle": "Infinity Challenge Song Festival",
+      "videoCategory": "Đàm Luận",
+      "contentView": 2497,
+      "rank": 12
+    }
+  ],
+  "Nổi bật": [
+    {
+      "videoTitle": "Dòng Máu Anh Hùng",
+      "videoCategory": "Nổi bật",
+      "contentView": 32586,
+      "rank": 34
+    },
+    {
+      "videoTitle": "Hài Tết 2017 - Bờm",
+      "videoCategory": "Nổi bật",
+      "contentView": 20334,
+      "rank": 34
+    }
+  ],
+  "Hài Kịch": [
+    {
+      "videoTitle": "Bụng Làm Dạ Chịu",
+      "videoCategory": "Hài Kịch",
+      "contentView": 271,
+      "rank": 18
+    },
+    {
+      "videoTitle": "Hoài Linh - Chàng Rể Quý",
+      "videoCategory": "Hài Kịch",
+      "contentView": 210,
+      "rank": 18
+    }
+  ],
+  "Tình Cảm": [
+    {
+      "videoTitle": "Yumeiro Patissiere",
+      "videoCategory": "Tình Cảm",
+      "contentView": 23088,
+      "rank": 62
+    },
+    {
+      "videoTitle": "Katekyo Hitman Reborn!",
+      "videoCategory": "Tình Cảm",
+      "contentView": 7246,
+      "rank": 62
+    }
+  ],
+  "Gia đình": [
+    {
+      "videoTitle": "Vương Quốc Loài Ếch 2",
+      "videoCategory": "Gia đình",
+      "contentView": 1275,
+      "rank": 16
+    }
+  ],
+  "Chơi Mà Học": [
+    {
+      "videoTitle": "Câu Lạc Bộ Giai Điệu Cổ Tích (Phần 2)",
+      "videoCategory": "Chơi Mà Học",
+      "contentView": 6020,
+      "rank": 10
+    },
+    {
+      "videoTitle": "Từ Ngữ Kỳ Diệu ",
+      "videoCategory": "Chơi Mà Học",
+      "contentView": 1927,
+      "rank": 10
+    }
+  ],
+  "TVShow Nổi Bật": [
+    {
+      "videoTitle": "Thử Thách Thần Tượng",
+      "videoCategory": "TVShow Nổi Bật",
+      "contentView": 413138,
+      "rank": 70
+    },
+    {
+      "videoTitle": "We Got Married - Apink Bomi and Choi Tae Joon Couple",
+      "videoCategory": "TVShow Nổi Bật",
+      "contentView": 53645,
+      "rank": 70
+    }
+  ]
+}

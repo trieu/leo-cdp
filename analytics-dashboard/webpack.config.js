@@ -3,6 +3,12 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
+  // resolve: {
+  //     alias: {
+  //         'react': 'preact-compat',
+  //         'react-dom': 'preact-compat'
+  //     }
+  // },
   entry: glob.sync([
     'webpack/hot/dev-server', './src/index.js'
     ]),

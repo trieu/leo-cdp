@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 
-class ChartFilterSource extends Component {
+class FilterSource extends Component {
 
     constructor(props) {
         super(props);
@@ -32,4 +32,4 @@ class ChartFilterSource extends Component {
     }
 }
 
-export default ChartFilterSource;
+export default FilterSource;

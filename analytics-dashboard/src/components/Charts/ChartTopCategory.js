@@ -1,38 +1,16 @@
-/**
- * Created by anhvt on 09/01/2017.
- */
- /*Phim xem  nhieu nhat*/
+/*The loai phim*/
 import React, {Component, PropTypes} from 'react';
 import NVD3Chart from "react-nvd3";
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import axios from "axios";
 import moment from 'moment';
 import Loading from '../Loading/LoadingPager';
-import _ from "lodash";
 
+import { connect } from 'react-redux';
+import { fetchTopCategory } from './_Action';
 
-const COLORS = ['#8884d8', '#83a6ed', '#8dd1e1', '#82ca9d','#a4de6c',
-    '#d0ed57', '#FABFA1', '#B86A54', '#FE8A71', '#DC626F',
-    '#FE6860', '#F3C9BF', '#C9C7AF', '#93BFB6', '#7CA39C',
-    '#726680', '#779BF0', '#849FBB', '#C2B6D6', '#EBE1E2'];
+class ChartTopCategory extends React.Component{
 
-const data = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    datasets: [
-        {
-            label: 'My First dataset',
-            backgroundColor: 'rgba(255,99,132,0.2)',
-            borderColor: 'rgba(255,99,132,1)',
-            borderWidth: 1,
-            hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-            hoverBorderColor: 'rgba(255,99,132,1)',
-            data: [65, 59, 80, 81, 56, 55, 40],
-        }
-    ]
-};
-
-class ChartContentView2 extends Component {
     constructor(props) {
         super(props);
 
@@ -44,19 +22,30 @@ class ChartContentView2 extends Component {
             selected: 0
         }
         this.handleChange = this.handleChange.bind(this);
+        this.dataSource = this.dataSource.bind(this);
     }
+
 
     componentWillMount() {
         this.dataSource();
     }
 
     componentWillReceiveProps(nextProps) {
-        // if (this.props.sourceMedia !== nextProps.sourceMedia) {
-        //     var selected = (nextProps.sourceMedia == "all") ? 42 : 1;
-        //     this.setState({selected: selected});
-        // }
-        this.dataSource(nextProps);
+        if(this.props.sourceMedia != nextProps.sourceMedia
+         || this.props.beginDate != nextProps.beginDate
+         || this.props.endDate != nextProps.endDate){
+            this.dataSource(nextProps);
+        }
     }
+
+    componentWillUpdate(nextProps, nextState) {
+        
+        if(this.props.data != nextProps.data){
+            this.setState({ temp: nextProps.data });
+            this.renderFilter(nextProps.data);
+            this.renderChart(this.state.selected, nextProps.data);
+        }
+    }  
 
     handleChange(event, index, value){
         this.setState({selected: value});
@@ -111,7 +100,7 @@ class ChartContentView2 extends Component {
         data = [{
             key: "videoTitle",
             values: values
-        }]
+        }];
 
         widthChart = (widthChart == 0) ? "100%" : widthChart+'px';
 
@@ -121,33 +110,13 @@ class ChartContentView2 extends Component {
     }
 
     dataSource(props){
+        var self = this;
+
         props = props || this.props;
         let beginDate = moment(props.beginDate).format('YYYY-MM-DD');
         let endDate = moment(props.endDate).format('YYYY-MM-DD');
-        var self = this;
-        self.setState({ show: true });
 
-        //custom role
-        var nameMedia = "";
-        var bySource = ""
-        if(props.sourceMedia != "all"){
-            nameMedia = "source";
-            bySource = "&source=" + props.sourceMedia;
-        }
-
-
-        //get data for chart
-        let url = 'https://360.adsplay.net/api/contentviewbycategory'+nameMedia+'/report?startDate='+ beginDate +'&endDate='+ endDate +'&limit=10' + bySource;
-        axios.get(url)
-        .then(function (response) {
-            self.setState({ temp: response.data });
-            self.renderFilter(response.data);
-            self.renderChart(self.state.selected);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
- 
+        this.props.fetchTopCategory(props.sourceMedia, beginDate, endDate);
     }
 
     widthChange(width){
@@ -175,11 +144,16 @@ class ChartContentView2 extends Component {
                             }}} />
                 </div>
                 
-                <Loading show={this.state.show} />
+                <Loading show={this.props.loading} />
             </div>
         );
     }
+
+
 }
 
+function mapStateToProps(state) {
+  return { data: state.charts.topcategory, loading: state.charts.loading_topcategory };
+}
 
-export default ChartContentView2
+export default connect(mapStateToProps, { fetchTopCategory })(ChartTopCategory);

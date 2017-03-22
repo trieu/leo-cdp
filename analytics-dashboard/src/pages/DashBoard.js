@@ -3,13 +3,13 @@ import globalStyles from '../styles';
 import Data from '../data';
 import Paper from 'material-ui/Paper';
 import moment from 'moment';
-import SummaryChartPlatform from '../components/Charts/SummaryChartPlatform';
+import TotalPlatform from '../components/Charts/TotalPlatform';
 import ChartPlatform from '../components/Charts/ChartPlatform';
 import ChartCategory from '../components/Charts/ChartCategory';
-import ChartContentView from '../components/Charts/ChartContentView';
-import ChartContentView2 from '../components/Charts/ChartContentView2';
-import ChartFilter from '../components/Charts/ChartFilter';
-import ChartFilterSource from '../components/Charts/ChartFilterSource';
+import ChartTopView from '../components/Charts/ChartTopView';
+import ChartTopCategory from '../components/Charts/ChartTopCategory';
+import FilterDate from '../components/Charts/FilterDate';
+import FilterSource from '../components/Charts/FilterSource';
 
 //check auth
 const requireAuth = (resolve, reject) => {
@@ -43,7 +43,7 @@ class DashboardPage extends React.Component{
         disabled = false;
       }
 
-      console.log(sourceMedia)
+      //console.log(sourceMedia)
       this.state = {
           USER: props.USER,
           endDate: endDate,
@@ -73,7 +73,7 @@ class DashboardPage extends React.Component{
   }
 
   updateChartPlatform(value){
-      console.log(value)
+      //console.log(value)
       this.setState({
           sumChartPlatform: value.toLocaleString()
       });
@@ -94,16 +94,49 @@ class DashboardPage extends React.Component{
         
         <div className="row middle-xs">
           <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 m-b-15 ">
-            <ChartFilterSource update={this.updateSourceMedia} sourceMedia={this.state.sourceMedia} disabled={this.state.disabled} />
+            <FilterSource update={this.updateSourceMedia} sourceMedia={this.state.sourceMedia} disabled={this.state.disabled} />
           </div>
           <div className="col-xs-12 col-sm-12 col-md-10 col-lg-10 m-b-15 ">
-            <ChartFilter update={this.updateFilter} endDate={this.state.endDate} beginDate={this.state.beginDate} />
+            <FilterDate update={this.updateFilter} endDate={this.state.endDate} beginDate={this.state.beginDate} />
           </div>
         </div>
 
         <div className="row middle-xs">
           <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
-            <SummaryChartPlatform value={this.state.sumChartPlatform} />
+            <TotalPlatform value={this.state.sumChartPlatform} />
+          </div>
+          <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
+            <div>
+                <Paper style={globalStyles.paper}>
+                    <span style={globalStyles.caption}>Total Impression</span>
+
+                    <div style={globalStyles.clear}/>
+                    
+                    <span style={globalStyles.title}>16,042,859</span>
+                </Paper>
+            </div>
+          </div>
+          <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
+            <div>
+                <Paper style={globalStyles.paper}>
+                    <span style={globalStyles.caption}>Total Completed-View</span>
+
+                    <div style={globalStyles.clear}/>
+                    
+                    <span style={globalStyles.title}>4,765,149</span>
+                </Paper>
+            </div>
+          </div>
+          <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
+            <div>
+                <Paper style={globalStyles.paper}>
+                    <span style={globalStyles.caption}>Total Click</span>
+
+                    <div style={globalStyles.clear}/>
+                    
+                    <span style={globalStyles.title}>127,359</span>
+                </Paper>
+            </div>
           </div>
         </div>
 
@@ -132,7 +165,7 @@ class DashboardPage extends React.Component{
               <span style={globalStyles.title}>10 phim xem nhiều nhất</span>
 
               <div style={globalStyles.clear}/>
-              <ChartContentView sourceMedia={this.state.sourceMedia} endDate={this.state.endDate} beginDate={this.state.beginDate} />
+              <ChartTopView sourceMedia={this.state.sourceMedia} endDate={this.state.endDate} beginDate={this.state.beginDate} />
             </Paper>
           </div>
 
@@ -141,7 +174,7 @@ class DashboardPage extends React.Component{
               <span style={globalStyles.title}>Phim xem nhiều theo thể loại</span>
 
               <div style={globalStyles.clear}/>
-              <ChartContentView2 sourceMedia={this.state.sourceMedia} endDate={this.state.endDate} beginDate={this.state.beginDate} />
+              <ChartTopCategory sourceMedia={this.state.sourceMedia} endDate={this.state.endDate} beginDate={this.state.beginDate} />
             </Paper>
           </div>
 

@@ -11,7 +11,7 @@ const styles = {
 };
 
 
-class ChartFilter extends React.Component{
+class FilterDate extends React.Component{
     constructor(props) {
         super(props);
 
@@ -77,4 +77,4 @@ class ChartFilter extends React.Component{
 }
 
 
-export default ChartFilter;
+export default FilterDate;
