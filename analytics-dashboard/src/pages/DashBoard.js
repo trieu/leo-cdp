@@ -11,21 +11,6 @@ import ChartTopCategory from '../components/Charts/ChartTopCategory';
 import FilterDate from '../components/Charts/FilterDate';
 import FilterSource from '../components/Charts/FilterSource';
 
-//check auth
-const requireAuth = (resolve, reject) => {
-    axios({
-      method: 'get',
-      url: '/loggedin'
-    })
-    .then(function(response) {
-      if(response.data.USER.constructor === Object && Object.keys(response.data.USER).length === 0){
-        console.log('unauthorized !!!');
-        browserHistory.push('/login');
-        reject();
-      }
-      resolve(response.data);
-    });
-}
 
 class DashboardPage extends React.Component{
 

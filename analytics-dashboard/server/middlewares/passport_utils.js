@@ -18,7 +18,6 @@ module.exports = function(passport) {
 		passwordField : 'password'
 	},
 	function(username, password, done) {
-		console.log(username, password)
 		process.nextTick(function(){
 			User.findOne({ 'username' :  username }, function(err, user) {
 				if (err){ return done(err); }
@@ -47,14 +46,12 @@ module.exports = function(passport) {
 			passport.authenticate('login-local', function(err, user, info) {
 				if (err) { return next(err); } 
 				if (!user) {
-					console.log('aaaa')
 					//res.sendStatus(401); //unauthorized
 					res.json({ USER: {} }); //unauthorized
 				}
 				else{
 					req.logIn(user, function(err) {
 						if (err) { return next(err); }
-						console.log('ddd', user)
 						res.json({ USER: user });
 					});
 				}
@@ -62,7 +59,6 @@ module.exports = function(passport) {
 		},
 		isLoggedIn: function(req, res, next){
 			if (req.isAuthenticated()){
-				console.log(req.user)
 				res.json({ USER: req.user });
 			}
 			else{

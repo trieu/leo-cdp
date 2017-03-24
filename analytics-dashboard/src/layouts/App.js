@@ -5,7 +5,6 @@ import LeftDrawer from '../components/LeftDrawer/index';
 import withWidth, {LARGE, SMALL} from 'material-ui/utils/withWidth';
 import ThemeDefault from '../theme-default';
 import Data from '../data';
-import axios from 'axios';
 import {browserHistory} from 'react-router';
 
 
