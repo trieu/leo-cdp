@@ -38,6 +38,7 @@
     "ioredis": "^2.4.2",
     "js-yaml": "~2.1.0",
     "jsftp": "^1.5.3",
+    "later": "^1.2.0",
     "lodash-node": "*",
     "mem-shm": "*",
     "mkdirp": "~0.3.5",
