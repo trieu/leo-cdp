@@ -5,6 +5,7 @@ var ArrayUtils = require('./array_utils');
 var site = require('../configs/site');
 var dataUtils = require('./data_utils.js');
 var creativeModel = require('../models/creative.js');
+var scheduler = require('node-schedule');
 
 function Schedule(period){
     this.period = period;
@@ -15,10 +16,8 @@ function Schedule(period){
     }, _this.period);
 
     // schedule daily
-    // schedule every 00:01am 
-    var textSched = later.parse.text('at 01:01am every weekday');
-    //console.log(JSON.stringify(textSched.schedules))
-    var timer = later.setInterval(_this.handleDailyBooking, textSched);
+    // schedule every 00:02am
+    scheduler.scheduleJob({hour: 0, minute: 02, dayOfWeek: [0, 1, 2, 3, 4, 5, 6]}, _this.handleDailyBooking);
 
 }
 
@@ -57,7 +56,7 @@ Schedule.prototype.updateStatus = function (){
                     else{
 
                         /**
-                         * check total daily booking
+                         * check total daily booking and pause
                          */
                         if(result[i].adType == 1){
                             var resultDetail = dataUtils.request.sync(null, urlDetail + result[i].id);
@@ -76,8 +75,8 @@ Schedule.prototype.updateStatus = function (){
                                     // api update status
                                     console.log('pending dailybooking '+ result[i].id)
                                     console.log(result[i].id, resultDetail.dBk, countImp)
-                                    // var url = site.api_domain + '/api/creatives/' + result[i].id;
-                                    // creativeModel.update(url, {status: '1'}, null);
+                                    var url = site.api_domain + '/api/creatives/' + result[i].id;
+                                    creativeModel.update(url, {status: '1'}, null);
                                 }
                             }
                         }
@@ -115,10 +114,10 @@ Schedule.prototype.handleDailyBooking = function (){
                 // check condition
             	if(result[i].status == '1' && expDate > current){
 
-                    console.log('passing 1');
+                    console.log('passing 1 with ads ', result[i].id);
 
                     if(result[i].adType == 1){
-                        console.log('passing 2');
+                        console.log('passing 2 with ads ', result[i].id);
 
                         var resultDetail = dataUtils.request.sync(null, urlDetail + result[i].id);
                         
@@ -126,8 +125,8 @@ Schedule.prototype.handleDailyBooking = function (){
                             console.log('passing 3');
                             console.log("On running creative id ",result[i].id);
 
-                            // var url = site.api_domain + '/api/creatives/' + result[i].id;
-                            // creativeModel.update(url, {status: '2'}, null);
+                            var url = site.api_domain + '/api/creatives/' + result[i].id;
+                            creativeModel.update(url, {status: '2'}, null);
                         }
                     }
 
