@@ -1,8 +1,8 @@
 {
   "name": "rfx-report",
-  "version": "0.0.1",
+  "version": "1.0",
   "private": "true",
-  "author": "@tantrieuf31",
+  "author": "AdsPlay",
   "description": "Reactive Marketing Report",
   "main": "app.js",
   "repository": {
@@ -15,7 +15,7 @@
     "compress": "gulp default"
   },
   "keywords": [
-    "reactive marketing"
+    "AdsPlay Admin"
   ],
   "dependencies": {
     "body-parser": "~1.12.4",
@@ -64,7 +64,7 @@
     "youtube-dl": "^1.11.1"
   },
   "engine": {
-    "node": ">=0.8"
+    "node": ">=4.0"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
