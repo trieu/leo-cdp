@@ -1,6 +1,5 @@
 var Sync = require('sync');
 var moment = require('moment');
-var later = require('later');
 var ArrayUtils = require('./array_utils');
 var site = require('../configs/site');
 var dataUtils = require('./data_utils.js');
