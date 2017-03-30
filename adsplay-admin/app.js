@@ -89,8 +89,8 @@ else{
     
 //______________ creative schedule______________________
     var Schedule = require('./helpers/creative_schedule');
-    //15 minutes
-    var creative_schedule = new Schedule(1000 * 60 * 15);
+    //5 minutes
+    var creative_schedule = new Schedule(1000 * 60 * 5);
 //______________ creative schedule______________________
 
 

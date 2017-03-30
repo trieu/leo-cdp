@@ -57,16 +57,12 @@
                     <input type="text" class="form-control" name="name" placeholder="Enter Ad Name" required data-validate-length-range="10">
                 </div>
                 <div class="form-group">
-                    <label>Description</label>
-                    <textarea class="form-control" rows="3" name="desc" placeholder="Enter Ad Description"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Click-through URL</label>
+                    <label class="label-important">Click-through URL</label>
                     <input type="url" class="form-control" name="cliThr" placeholder="Enter Click-through URL">
                 </div>
-                <div class="form-group" id="tracking-placement">
-                    <label>Third-party tracking URL</label>
-                    <input type="url" class="form-control" name="vastXml3rd" placeholder="Enter Third-party Ad URL">
+                <div class="form-group">
+                    <label class="label-important" title="Impression or Complete-view">Total Booking</label>
+                    <input type="number" class="form-control" name="tBk" placeholder="Enter Total Booking" value="0" data-validate-minmax="0" required>
                 </div>
                 <div class="form-group" id="crt-status">
                     <label>Ad Status</label>
@@ -78,19 +74,41 @@
                         <option value="4">Expired</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label title="for 1 Impression or Complete-view">Base Cost</label>
-                    <input type="number" class="form-control" name="cost" placeholder="Enter Base Cost" value="0" data-validate-minmax="0" required>
-                </div>
-                <div class="form-group">
-                    <label class="label-important" title="Impression or Complete-view">Total Booking</label>
-                    <input type="number" class="form-control" name="tBk" placeholder="Enter Total Booking" value="0" data-validate-minmax="0" required>
-                </div>
-                <div class="form-group">
-                    <label title="Impression or Complete-view">Daily Booking</label>
-                    <input type="number" class="form-control" name="dBk" placeholder="Enter Ad Name" value="0" data-validate-minmax="0" required>
-                </div>
                 
+                <div class="panel-group" id="accordion-2">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion-2" href="#2-collapse-1">
+                                    Advance Options
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="2-collapse-1" class="panel-collapse collapse">
+                            <div class="panel-body">
+
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <textarea class="form-control" rows="3" name="desc" placeholder="Enter Ad Description"></textarea>
+                                </div>
+                                <div class="form-group" id="tracking-placement">
+                                    <label>Third-party tracking URL</label>
+                                    <input type="url" class="form-control" name="vastXml3rd" placeholder="Enter Third-party Ad URL">
+                                </div>
+                                <div class="form-group">
+                                    <label title="for 1 Impression or Complete-view">Base Cost</label>
+                                    <input type="number" class="form-control" name="cost" placeholder="Enter Base Cost" value="0" data-validate-minmax="0" required>
+                                </div>
+                                <div class="form-group">
+                                    <label title="Impression or Complete-view">Daily Booking</label>
+                                    <input type="number" class="form-control" name="dBk" placeholder="Enter Ad Name" value="0" data-validate-minmax="0" required>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
         
@@ -120,37 +138,56 @@
                     </label>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label>Ad Frequency</label>
-                    <select class="form-control" id="ads_fqccap" name="fqcCap">
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3" selected >3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                    </select>
+
+                <div class="panel-group" id="accordion-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion-3" href="#3-collapse-1">
+                                    Advanced Options
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="3-collapse-1" class="panel-collapse collapse">
+                            <div class="panel-body">
+
+                                <div class="form-group">
+                                    <label>Ad Frequency</label>
+                                    <select class="form-control" id="ads_fqccap" name="fqcCap">
+                                        <option value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3" selected >3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Priority Score (higher is better)</label>
+                                    <select class="form-control" id="ads_score" name="score">
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="30">30</option>
+                                        <option value="40">40</option>
+                                        <option value="50">50</option>
+                                        <option value="60">60</option>
+                                        <option value="70">70</option>
+                                        <option value="80">80</option>
+                                        <option value="90">90</option>
+                                        <option value="100">100</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Priority Score (higher is better)</label>
-                    <select class="form-control" id="ads_score" name="score">
-                        <option value="10">10</option>
-                        <option value="20">20</option>
-                        <option value="30">30</option>
-                        <option value="40">40</option>
-                        <option value="50">50</option>
-                        <option value="60">60</option>
-                        <option value="70">70</option>
-                        <option value="80">80</option>
-                        <option value="90">90</option>
-                        <option value="100">100</option>
-                    </select>
-                </div>
+
             </div>
         </div>
 
