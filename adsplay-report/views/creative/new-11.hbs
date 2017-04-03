@@ -15,7 +15,7 @@
 
     <div class="panel panel-default" id="frame_upload">
         <div class="panel-heading">
-            <h4><span class="icon-number">1</span> Video Uploader</h4>
+            <h4><span class="icon-number">1</span> Media Uploader</h4>
         </div>
         <div class="panel-body" id="frame_upload_body">
             <div class="iframeVideo">
@@ -36,7 +36,7 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <i class="fa fa-youtube-square"></i>
-                            <a data-toggle="collapse" data-parent="#frame_upload" href="#video_youtube">File from
+                            <a data-toggle="collapse" href="#video_youtube">File from
                                 YouTube</a>
                         </h4>
                     </div>
@@ -54,7 +54,7 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <i class="fa fa-upload"></i>
-                            <a data-toggle="collapse" data-parent="#frame_upload" href="#video_local">File from PC</a>
+                            <a data-toggle="collapse" href="#video_local">File from PC</a>
                         </h4>
                     </div>
                     <div id="video_local" class="panel-collapse collapse">
@@ -65,6 +65,51 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <i class="fa fa-file-image-o"></i>
+                            <a data-toggle="collapse" href="#background_ads">Background Image File</a>
+                        </h4>
+                    </div>
+                    <div id="background_ads" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="iframeFrame">
+                                <input type="file" name="background_file" id="background_file">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <i class="fa fa-picture-o"></i>
+                            <a data-toggle="collapse" href="#logo_ads">Logo Image File</a>
+                        </h4>
+                    </div>
+                    <div id="logo_ads" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="iframeFrame">
+                                <input type="file" name="logo_file" id="logo_file">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Headline text</label>
+                <input type="text" name="m_headline" id="m_headline" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <input type="text" name="m_description" id="m_description" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label>Link</label>
+                <input type="text" name="m_link" id="m_link" class="form-control" required />
             </div>
         </div>
     </div>
