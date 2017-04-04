@@ -477,13 +477,11 @@ if( ! window.AdsPlayBannerReady ) {
 		    
 		    adBeacons[adId] = beacon;
 		    		    
-	    	var pmadid = placementNode.getAttribute('data-adsplay-adid');	    
+	    	var pmadid = placementNode.getAttribute('data-adsplay-adid');
 	    	if( ! pmadid ){
 	    		placementNode.setAttribute('style',css);
 		    	placementNode.setAttribute('data-adsplay-adid',adId);
-		    			    	
-		    	//console.log(placementNode);
-		    				    
+				
 			    var displayOk = false;
 			    if(adType === 5){
 			    	//ADTYPE_HTML5_DISPLAY_AD = 5;//HTML5 Interactive Ad
@@ -499,6 +497,7 @@ if( ! window.AdsPlayBannerReady ) {
 			    	displayOk = true;
 			    }
 			    else if(adType === 9 && adCode != ''){
+					
 			    	//ADTYPE_BIDDING_AD = 9;//Google Ad JavaScript	
 			    				    	
 			    	var adIframe = document.createElement("iframe");
@@ -519,8 +518,11 @@ if( ! window.AdsPlayBannerReady ) {
 			    	placementNode.appendChild(adIframe);				    	
 			    	adIframe.contentDocument.write(adCode);
 			    } else if(adType === 11) {
+					console.log('mastershead')
                     //ADTYPE_MASTHEAD_AD = 11 master head for mobile app, smart-tv and Web
-                    renderMastheadView(data,placementNode);
+					//var placementNode = document.createElement("div");
+					var renderedAdNode = renderMastheadView(data);				
+					placementNode.appendChild(renderedAdNode);
                     displayOk = true;
                 }
 			    
@@ -542,19 +544,81 @@ if( ! window.AdsPlayBannerReady ) {
 		}
 
         // ADTYPE_MASTHEAD_AD rendering
-        function renderMastheadView(data, placementNode){
+        function renderMastheadView(data){
             var div = document.createElement('div');
-            div.innerHTML = "OK";
-			placementNode.appendChild(div);
+				div.style.position = 'relative';
+			console.log(data)
+			/**
+			 * background element
+			 */
+			var bg = document.createElement('div');
+			bg.className = 'background';
+			// background image inner
+			var bgImage = document.createElement('div');
+			bgImage.style.backgroundImage = 'url("'+data.backgroundImage+'")';
+			bgImage.style.backgroundColor = '#000';
+			bgImage.style.backgroundRepeat = 'no-repeat';
+			bgImage.style.backgroundPosition = 'center center';
+			bgImage.style.backgroundSize = 'cover';
+			bgImage.style.cursor = 'default';
+			bgImage.style.width ='970px';
+			bgImage.style.height ='250px';
+			bgImage.style.position = 'relative';
+			bgImage.style.top = 0;
+			bgImage.style.left = 0;
+			bgImage.style.margin = '0 auto';
+			bg.appendChild(bgImage);
+			/**
+			 * video element
+			 */
+			var v = document.createElement('div');
+			v.className = 'video';
+			v.style.cssText = 'position:absolute; '+ data.styleAttr;
+			//video inner
+			var vIframe = '';
+			if(typeof (data.adMedia) != 'undefined' && 
+			(data.adMedia.indexOf('youtu.be') == -1 || data.adMedia.indexOf('youtube') == -1)){
+				vIframe = '<video width="100%" height="100%" controls><source src="'+data.adMedia+'" type="video/mp4"></video>';
+			}
+			else{
+				vIframe = '<iframe frameborder="0" allowfullscreen="1" width="100%" height="100%" src="'+data.adMedia+'"></iframe>';
+			}
+			v.innerHTML += vIframe;
+			/**
+			 * brand element
+			 */
+			var brand = document.createElement('div');
+				brand.className = 'brand';
+				brand.style.cssText = 'position: absolute; width: 40%; top: 50%; left: 80px; margin-top: -40px;';
+			
+			var brandIcon = '<img src="'+data.brandIcon+'" style="width: 80px;float: left;margin-right: 10px;" />';
+			var headlineText = '<p style="text-align: left; font-size: 26px; color: #fff; margin: 0 0 5px; vertical-align: middle; line-height: 80px;">'
+									+data.headlineText+
+									'<button style="background-color: #222; color: #fff; border-radius: 6px; border: 1px solid transparent; padding: 4px 8px; vertical-align: text-bottom; margin-left: 10px; font-size: 16px;" >'
+										+data.clickActionText+
+									'</button>'
+								'</p>';
+
+			brand.innerHTML += brandIcon;
+			brand.innerHTML += headlineText;
+
+            div.appendChild(bg);
+			div.appendChild(v);
+			div.appendChild(brand);
+			return div;
 		}
 		
 		AdsPlayBanner.getAds = function(pmIds, mapPmIdsNodes){	       	       
 	       var h = function(text){
-	    	   var ads = JSON.parse(text);	    	   
+	    	   var ads = JSON.parse(text);
 	    	   for(var i=0; i < ads.length; i++){	    		   	
-					var data = ads[i];					
+					var data = ads[i];
 					var placementId = data.placementId+'';
 					var pmNodes = mapPmIdsNodes[placementId];
+					// //FIXME
+					// 	data.adType = 11;
+					// 	pmNodes = mapPmIdsNodes[113];
+					// //END FIXME	
 					if(pmNodes){
 						var node = pmNodes.pop();
 						if(node){							
@@ -637,7 +701,7 @@ if( ! window.AdsPlayBannerReady ) {
 		    		pmIds.push(pmId);	    		
 		    	} else {	    		
 		    		//case if tag is <ins class="adsplay-placement" data-aplpm="1001" >
-		    		var spmid = nodes[i].getAttribute('data-aplpm');	    		
+		    		var spmid = nodes[i].getAttribute('data-aplpm');
 		    		if(typeof spmid === 'string'){		    		
 		    			pmId = parseInt(spmid);
 		    			pmIds.push(parseInt(spmid));	
@@ -651,9 +715,14 @@ if( ! window.AdsPlayBannerReady ) {
 		    		mapPmIdsNodes[k].push(nodes[i]);		    		
 		    	}	
 	    	}	    	
-	    }	    
+		}
+		// //FIXME
+		// // get demo data
+		// console.log(pmIds, mapPmIdsNodes)
+		// pmIds = [1002];
 	    AdsPlayBanner.getAds(pmIds, mapPmIdsNodes);
-	    
+	    // //END FIXME
+		
 	    var meta = document.createElement('meta');
 	    meta.setAttribute('name','referrer');
 	    meta.setAttribute('content','unsafe-url');
