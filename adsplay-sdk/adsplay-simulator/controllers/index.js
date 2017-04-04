@@ -19,6 +19,18 @@ module.exports = function (app) {
         data.head_title = "Demo Mobile Masthead";
         res.render('ad-demo/mobile-masthead', data);
     });
+
+     app.route('/banner').get(function (req, res) {
+        var data = {};
+        data.head_title = "Demo ad banner";
+        res.render('ad-demo/display-ad-banner', data);
+    });
+
+     app.route('/masthead').get(function (req, res) {
+        var data = {};
+        data.head_title = "Demo Ad Masthead";
+        res.render('ad-demo/display-ad-masthead', data);
+    });
    
     app.route('/*').get(function (req, res) {
         var data = {};
