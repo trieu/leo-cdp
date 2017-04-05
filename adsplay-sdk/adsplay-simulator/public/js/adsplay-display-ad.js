@@ -704,11 +704,11 @@ if( ! window.AdsPlayBannerReady ) {
 			if(data.headlineText != ''){
 				var brandLink = '';
 				if(data.clickthroughUrl != ''){
-					brandLink = '<a style="font-size: 2.0vmax;color: #3f51b5;" href="'+data.clickthroughUrl+'">'+data.clickActionText+'</a>';
+					brandLink = '<a style="font-size: 2.4vmax;color: #3f51b5;" href="'+data.clickthroughUrl+'">'+data.clickActionText+'</a>';
 				}
 				var brandText = '<div style="'+styletable+'width:100%; text-align: left; padding-left:1.5%;">\
-									<h4 style="margin: 0 0 5px; font-weight: 100; font-size: 2.2vmax;">'+data.headlineText+'</h4>\
-									<div style="color: #777;font-size: 1.2vmax;">'+data.descriptionText+'</div>\
+									<h4 style="margin: 0 0 5px; font-weight: 100; font-size: 2.8vmax;">'+data.headlineText+'</h4>\
+									<div style="color: #777;font-size: 1.6vmax;">'+data.descriptionText+'</div>\
 									'+brandLink+'\
 								</div>';
 				brand.innerHTML += brandText;
