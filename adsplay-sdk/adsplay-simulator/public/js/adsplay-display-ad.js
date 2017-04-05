@@ -595,7 +595,8 @@ if( ! window.AdsPlayBannerReady ) {
 			var vIframe = '';
 			if(typeof (data.adMedia) != 'undefined' && 
 			(data.adMedia.indexOf('youtu.be') == -1 || data.adMedia.indexOf('youtube') == -1)){
-				vIframe = '<video width="100%" height="100%" autoplay loop muted><source src="'+data.adMedia+'" type="video/mp4"></video>';
+				data.adMedia = '//www.w3schools.com/html/mov_bbb.mp4';
+				vIframe = '<video width="100%" ><source src="'+data.adMedia+'" type="video/mp4"><source src="https://www.w3schools.com/html/mov_bbb.ogg" type="video/ogg"></video>';
 			}
 			else{
 				var options = '&';
@@ -672,7 +673,8 @@ if( ! window.AdsPlayBannerReady ) {
 			var vIframe = '';
 			if(typeof (data.adMedia) != 'undefined' && 
 			(data.adMedia.indexOf('youtu.be') == -1 || data.adMedia.indexOf('youtube') == -1)){
-				vIframe = '<video width="100%" height="100%" autoplay loop muted><source src="'+data.adMedia+'" type="video/mp4"></video>';
+				data.adMedia = '//www.w3schools.com/html/mov_bbb.mp4';
+				vIframe = '<video width="100%" autoplay loop muted><source src="'+data.adMedia+'" type="video/mp4"><source src="https://www.w3schools.com/html/mov_bbb.ogg" type="video/ogg"></video>';
 			}
 			else{
 				var options = '&';

@@ -21,3 +21,6 @@
 	public static final int FPT_PLAY_LIVE_STREAM_ANDROID_SMART_TV = 307;	
 	public static final int FPT_PLAY_VOD_ANDROID_SMART_TV = 308;
 	
+    //Mobile Masthead
+	public static final int FPT_PLAY_VOD_ANDROID_MASTHEAD = 313;
+	public static final int FPT_PLAY_VOD_IOS_MASTHEAD = 314;
