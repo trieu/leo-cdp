@@ -456,19 +456,14 @@ if( ! window.AdsPlayBannerReady ) {
 		
 		function processAdData(data, placementNode) {
 			var css = 'display:block;border:none;margin:0 auto;padding:0;position:relative;visibility:visible;background-color:transparent;text-align: center;';
-			if(data.width > 0){
-	    		css = css + ';width:' + width+'px';	
-	    	}
-	    	if(data.height > 0){
-	    		css = css + ';height:'+ height+'px';	
-	    	}	
-	    	
+			  	
 			var clickTag = data.clickthroughUrl;
 		    var adUrl = data.adMedia;
 		    var adId = data.adId;
 		    var beacon = data.adBeacon;
-		    var width =  data.width == 0  ? '100%' : data.width;
-		    var height = data.height == 0 ? '100%' : data.height;
+		    var width =  data.width > 0  ? (data.width+'px') : '100%';
+		    var height = data.height > 0 ? (data.height+'px') : '100%';
+			
 		    var placementId = data.placementId;
 		    var title = data.clickActionText;
 		    var adType = data.adType;
@@ -479,11 +474,14 @@ if( ! window.AdsPlayBannerReady ) {
 		    		    
 	    	var pmadid = placementNode.getAttribute('data-adsplay-adid');
 	    	if( ! pmadid ){
-	    		placementNode.setAttribute('style',css);
+				
+	    		
 		    	placementNode.setAttribute('data-adsplay-adid',adId);
 				
 			    var displayOk = false;
 			    if(adType === 5){
+					css = css + ';width:' + width + ';height:'+ height;	
+					placementNode.setAttribute('style',css);
 			    	//ADTYPE_HTML5_DISPLAY_AD = 5;//HTML5 Interactive Ad
 			    	var srcUrl = adUrl + '#adid='+adId+'&beacon='+beacon+'&clicktag='+clickTag;						
 					var renderedAdNode = getIframeNode(title,width,height,srcUrl, adId, beacon, clickTag);
@@ -491,13 +489,16 @@ if( ! window.AdsPlayBannerReady ) {
 					displayOk = true;
 			    }
 			    else if(adType === 6){
+					css = css + ';width:' + width + ';height:'+ height;	
+					placementNode.setAttribute('style',css);
 			    	//ADTYPE_IMAGE_DISPLAY_AD = 6;// static banner: jpeg, gif, png
 			    	var renderedAdNode = getImageNode(title,width,height,adUrl, adId, beacon, clickTag);				
 					placementNode.appendChild(renderedAdNode);
 			    	displayOk = true;
 			    }
 			    else if(adType === 9 && adCode != ''){
-					
+					css = css + ';width:' + width + ';height:'+ height;	
+					placementNode.setAttribute('style',css);
 			    	//ADTYPE_BIDDING_AD = 9;//Google Ad JavaScript	
 			    				    	
 			    	var adIframe = document.createElement("iframe");
@@ -523,10 +524,15 @@ if( ! window.AdsPlayBannerReady ) {
 					//var placementNode = document.createElement("div");
 					var renderedAdNode = renderMastheadView(data);				
 					placementNode.appendChild(renderedAdNode);
+					if(placementId<300){
+						css = css + ';width:' + width + ';height:'+ height;	
+						placementNode.setAttribute('style',css);
+					}
                     displayOk = true;
                 }
 			    
 			    if(displayOk){
+					
 			    	
 			    	// log imp for AdsPlay
 			    	callBeaconLogTracking({
@@ -557,20 +563,23 @@ if( ! window.AdsPlayBannerReady ) {
 		}
         function renderMastheadWeb(data){
 
+			var textColor = (data.textColor) ? data.textColor : "#fff";
             var div = document.createElement('div');
 				div.style.position = 'relative';
 				div.className = 'masthead-web';
-				div.style.cssText = 'position: relative; width: 970px; height: 250px; margin: 0 auto; font-family: system-ui, sans-serif;';
+				div.style.cssText = 'position: relative; width: 970px; height: 250px; margin: 0 auto; font-family: sans-serif;';
 			/**
 			 * background image element
 			 */
-			var bgImage = document.createElement('div');
-			bgImage.style.cssText = 'background-image: url("'+data.backgroundImage+'");'+
+			var bgImage = document.createElement('a');
+			var href = data.clickthroughUrl ? data.clickthroughUrl : "#";
+			bgImage.setAttribute('href', href);
+			bgImage.style.cssText = 'background-image: url("'+data.background+'");'+
 									'background-color: #000;'+
 									'background-repeat: no-repeat;'+
 									'background-position: center center;'+
 									'background-size: cover;'+
-									'cursor: default;'+
+									'cursor: pointer;'+
 									'width: 100%;'+
 									'height: 100%;'+
 									'position: absolute;'+
@@ -586,7 +595,7 @@ if( ! window.AdsPlayBannerReady ) {
 			var vIframe = '';
 			if(typeof (data.adMedia) != 'undefined' && 
 			(data.adMedia.indexOf('youtu.be') == -1 || data.adMedia.indexOf('youtube') == -1)){
-				vIframe = '<video width="100%" height="100%" controls autoplay muted><source src="'+data.adMedia+'" type="video/mp4"></video>';
+				vIframe = '<video width="100%" height="100%" autoplay loop muted><source src="'+data.adMedia+'" type="video/mp4"></video>';
 			}
 			else{
 				var options = '&';
@@ -604,22 +613,30 @@ if( ! window.AdsPlayBannerReady ) {
 				brand.className = 'brand';
 				brand.style.cssText = 'position: absolute; width: 40%; top: 50%; left: 80px; margin-top: -40px;';
 			
-			var brandIcon = '<img src="'+data.brandIcon+'" style="width: 80px;float: left;margin-right: 10px;" />';
-			var headlineText = '<p style="text-align: left; font-size: 26px; color: #fff; margin: 0 0 5px; vertical-align: middle; line-height: 80px;">'
-									+data.headlineText+
-									'<a href="#" style="background-color: rgba(0, 0, 0, 0.8); color: #fff; border-radius: 6px; border: 1px solid transparent; padding: 4px 8px; vertical-align: top; margin-left: 10px; font-size: 18px; text-decoration: none;" >'
-										+data.clickActionText+
-									'</a>'
-								'</p>';
+			var styletable = 'display: table-cell;vertical-align: middle;';
 
-			brand.innerHTML += brandIcon;
-			brand.innerHTML += headlineText;
+			// case background 
+			if(data.background == ''){
+				if(data.brandIcon != ''){
+					var brandIcon = '<div style="'+styletable+'"><img src="'+data.brandIcon+'" style="width: 80px; margin-right: 10px;" /></div>';
+					brand.innerHTML += brandIcon;
+				}
+
+				var headlineText = '<div style="'+styletable+'">\
+									<h4 style="margin: 0 0 5px;font-weight: 100;font-size: 22px;'+textColor+'">'
+										+data.headlineText+
+										'<a href="'+data.clickthroughUrl+'" style="'+textColor+'cursor: pointer;background-color: rgba(0, 0, 0, 0.8); border-radius: 6px; padding: 4px 8px; margin-left: 10px; font-size: 16px; text-decoration: none;" >'
+											+data.clickActionText+
+										'</a>'
+									'</h4>\
+								</div>';
+				brand.innerHTML += headlineText;
+			}
 
 			/**
 			 * close element
 			 */
-			var closeImage = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZAQAAAADskrjOAAAAAnRSTlMAAHaTzTgAAAAoSURBVHgBY8AJmP8/YGBgYRBAIZJBRDmIsAMRMnBWOUQWTQfEFJwAALwiBxU/mndIAAAAAElFTkSuQmCC';
-			var close = '<a style="position: absolute; top: 0; right: 0;line-height: 25px;height: 25px; color: #fff;">Close Ad <img src="'+closeImage+'" style="vertical-align: bottom" /></a>';
+			var close = '<a style="'+textColor+'cursor: pointer;position: absolute; top: 0; right: 5px;line-height: 25px;height: 25px; font-size: 12px;">Close Ad &#10060;</a>';
 
 			/**
 			 * append into element root
@@ -635,15 +652,15 @@ if( ! window.AdsPlayBannerReady ) {
 			var div = document.createElement('div');
 				div.style.position = 'relative';
 				div.className = 'masthead-mobile';
-				div.style.cssText = 'position: relative; width: 100%; margin: 0 auto; font-family: system-ui, sans-serif;';
+				div.style.cssText = 'position: relative; box-sizing: border-box; width: 100%; margin: 0; padding: 1%; font-family: sans-serif;';
 			
+			var styletable = 'display: table-cell;vertical-align: middle;';
 			/**
 			 * video element
 			 */
 			var v = document.createElement('div');
 			v.className = 'video';
 			v.style.cssText = 'width: 100%;display: inline-block;position: relative;';
-			
 			 /* 16:9 ratio */
 			var vAspectRatio = document.createElement('div');
 			vAspectRatio.style.cssText = 'padding-top: 56.25%; display: block;';
@@ -651,12 +668,11 @@ if( ! window.AdsPlayBannerReady ) {
 			vAspectMain.style.cssText = 'position: absolute;top: 0;bottom: 0;right: 0;left: 0;';
 			v.appendChild(vAspectRatio);
 			v.appendChild(vAspectMain);
-
 			//video inner
 			var vIframe = '';
 			if(typeof (data.adMedia) != 'undefined' && 
 			(data.adMedia.indexOf('youtu.be') == -1 || data.adMedia.indexOf('youtube') == -1)){
-				vIframe = '<video width="100%" height="100%" controls autoplay muted><source src="'+data.adMedia+'" type="video/mp4"></video>';
+				vIframe = '<video width="100%" height="100%" autoplay loop muted><source src="'+data.adMedia+'" type="video/mp4"></video>';
 			}
 			else{
 				var options = '&';
@@ -668,7 +684,40 @@ if( ! window.AdsPlayBannerReady ) {
 			}
 			vAspectMain.innerHTML += vIframe;
 
-			div.appendChild(v);
+			/**
+			 * brand
+			 */
+			var brand = document.createElement('div');
+			brand.className = 'brand';
+			brand.style.cssText = 'width:100%;'
+
+			if(data.brandIcon != ''){
+				if(data.align == 1){
+					var brandIcon = '<div style="'+styletable+'width:12%;"><img src="'+data.brandIcon+'" style="max-width:100%;"/></div>';
+					brand.innerHTML += brandIcon;
+				}
+				else{
+					v.style.cssText = styletable + 'position:relative; width:30%; min-width: 160px;';
+					brand.appendChild(v);
+				}
+			}
+			if(data.headlineText != ''){
+				var brandLink = '';
+				if(data.clickthroughUrl != ''){
+					brandLink = '<a style="font-size: 2.0vmax;color: #3f51b5;" href="'+data.clickthroughUrl+'">'+data.clickActionText+'</a>';
+				}
+				var brandText = '<div style="'+styletable+'width:100%; text-align: left; padding-left:1.5%;">\
+									<h4 style="margin: 0 0 5px; font-weight: 100; font-size: 2.2vmax;">'+data.headlineText+'</h4>\
+									<div style="color: #777;font-size: 1.2vmax;">'+data.descriptionText+'</div>\
+									'+brandLink+'\
+								</div>';
+				brand.innerHTML += brandText;
+			}
+
+			if(data.align == 1){
+				div.appendChild(v);
+			}
+			div.appendChild(brand);
 
 			return div;
 		}
@@ -680,10 +729,7 @@ if( ! window.AdsPlayBannerReady ) {
 					var data = ads[i];
 					var placementId = data.placementId+'';
 					var pmNodes = mapPmIdsNodes[placementId];
-					// //FIXME
-					// 	data.adType = 11;
-					// 	pmNodes = mapPmIdsNodes[113];
-					// //END FIXME	
+
 					if(pmNodes){
 						var node = pmNodes.pop();
 						if(node){							
@@ -781,12 +827,7 @@ if( ! window.AdsPlayBannerReady ) {
 		    	}	
 	    	}	    	
 		}
-		// //FIXME
-		// // get demo data
-		// console.log(pmIds, mapPmIdsNodes)
-		// pmIds = [1002];
 	    AdsPlayBanner.getAds(pmIds, mapPmIdsNodes);
-	    // //END FIXME
 		
 	    var meta = document.createElement('meta');
 	    meta.setAttribute('name','referrer');
