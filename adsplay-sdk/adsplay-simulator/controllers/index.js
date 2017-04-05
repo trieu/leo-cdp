@@ -26,10 +26,16 @@ module.exports = function (app) {
         res.render('ad-demo/display-ad-banner', data);
     });
 
-     app.route('/masthead').get(function (req, res) {
+    app.route('/masthead').get(function (req, res) {
         var data = {};
         data.head_title = "Demo Ad Masthead";
         res.render('ad-demo/display-ad-masthead', data);
+    });
+
+    app.route('/masthead-mobile').get(function (req, res) {
+        var data = {};
+        data.head_title = "Demo Ad Masthead";
+        res.render('ad-demo/display-ad-masthead-mobile', data);
     });
    
     app.route('/*').get(function (req, res) {

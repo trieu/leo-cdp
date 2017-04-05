@@ -544,30 +544,38 @@ if( ! window.AdsPlayBannerReady ) {
 		}
 
         // ADTYPE_MASTHEAD_AD rendering
-        function renderMastheadView(data){
+		function renderMastheadView(data){
+			console.log(data)
+			//web
+			if(data.placementId < 300){
+				return renderMastheadWeb(data);
+			}
+			//mobile
+			else{
+				return renderMastheadMobile(data);
+			}
+		}
+        function renderMastheadWeb(data){
+
             var div = document.createElement('div');
 				div.style.position = 'relative';
-			console.log(data)
+				div.className = 'masthead-web';
+				div.style.cssText = 'position: relative; width: 970px; height: 250px; margin: 0 auto; font-family: system-ui, sans-serif;';
 			/**
-			 * background element
+			 * background image element
 			 */
-			var bg = document.createElement('div');
-			bg.className = 'background';
-			// background image inner
 			var bgImage = document.createElement('div');
-			bgImage.style.backgroundImage = 'url("'+data.backgroundImage+'")';
-			bgImage.style.backgroundColor = '#000';
-			bgImage.style.backgroundRepeat = 'no-repeat';
-			bgImage.style.backgroundPosition = 'center center';
-			bgImage.style.backgroundSize = 'cover';
-			bgImage.style.cursor = 'default';
-			bgImage.style.width ='970px';
-			bgImage.style.height ='250px';
-			bgImage.style.position = 'relative';
-			bgImage.style.top = 0;
-			bgImage.style.left = 0;
-			bgImage.style.margin = '0 auto';
-			bg.appendChild(bgImage);
+			bgImage.style.cssText = 'background-image: url("'+data.backgroundImage+'");'+
+									'background-color: #000;'+
+									'background-repeat: no-repeat;'+
+									'background-position: center center;'+
+									'background-size: cover;'+
+									'cursor: default;'+
+									'width: 100%;'+
+									'height: 100%;'+
+									'position: absolute;'+
+									'top: 0;'+
+									'left: 0;';
 			/**
 			 * video element
 			 */
@@ -578,10 +586,15 @@ if( ! window.AdsPlayBannerReady ) {
 			var vIframe = '';
 			if(typeof (data.adMedia) != 'undefined' && 
 			(data.adMedia.indexOf('youtu.be') == -1 || data.adMedia.indexOf('youtube') == -1)){
-				vIframe = '<video width="100%" height="100%" controls><source src="'+data.adMedia+'" type="video/mp4"></video>';
+				vIframe = '<video width="100%" height="100%" controls autoplay muted><source src="'+data.adMedia+'" type="video/mp4"></video>';
 			}
 			else{
-				vIframe = '<iframe frameborder="0" allowfullscreen="1" width="100%" height="100%" src="'+data.adMedia+'"></iframe>';
+				var options = '&';
+				if(data.adMedia.indexOf('?') != -1){
+					options = '?';
+				}
+				options += 'rel=0&enablejsapi=1&autoplay=1&loop=1&iv_load_policy=3';
+				vIframe = '<iframe frameborder="0" allowfullscreen="1" width="100%" height="100%" src="'+data.adMedia+options+'"></iframe>';
 			}
 			v.innerHTML += vIframe;
 			/**
@@ -594,17 +607,69 @@ if( ! window.AdsPlayBannerReady ) {
 			var brandIcon = '<img src="'+data.brandIcon+'" style="width: 80px;float: left;margin-right: 10px;" />';
 			var headlineText = '<p style="text-align: left; font-size: 26px; color: #fff; margin: 0 0 5px; vertical-align: middle; line-height: 80px;">'
 									+data.headlineText+
-									'<button style="background-color: #222; color: #fff; border-radius: 6px; border: 1px solid transparent; padding: 4px 8px; vertical-align: text-bottom; margin-left: 10px; font-size: 16px;" >'
+									'<a href="#" style="background-color: rgba(0, 0, 0, 0.8); color: #fff; border-radius: 6px; border: 1px solid transparent; padding: 4px 8px; vertical-align: top; margin-left: 10px; font-size: 18px; text-decoration: none;" >'
 										+data.clickActionText+
-									'</button>'
+									'</a>'
 								'</p>';
 
 			brand.innerHTML += brandIcon;
 			brand.innerHTML += headlineText;
 
-            div.appendChild(bg);
+			/**
+			 * close element
+			 */
+			var closeImage = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZAQAAAADskrjOAAAAAnRSTlMAAHaTzTgAAAAoSURBVHgBY8AJmP8/YGBgYRBAIZJBRDmIsAMRMnBWOUQWTQfEFJwAALwiBxU/mndIAAAAAElFTkSuQmCC';
+			var close = '<a style="position: absolute; top: 0; right: 0;line-height: 25px;height: 25px; color: #fff;">Close Ad <img src="'+closeImage+'" style="vertical-align: bottom" /></a>';
+
+			/**
+			 * append into element root
+			 */
+            div.appendChild(bgImage);
 			div.appendChild(v);
 			div.appendChild(brand);
+			div.innerHTML += close;
+			return div;
+		}
+
+		function renderMastheadMobile(data) {
+			var div = document.createElement('div');
+				div.style.position = 'relative';
+				div.className = 'masthead-mobile';
+				div.style.cssText = 'position: relative; width: 100%; margin: 0 auto; font-family: system-ui, sans-serif;';
+			
+			/**
+			 * video element
+			 */
+			var v = document.createElement('div');
+			v.className = 'video';
+			v.style.cssText = 'width: 100%;display: inline-block;position: relative;';
+			
+			 /* 16:9 ratio */
+			var vAspectRatio = document.createElement('div');
+			vAspectRatio.style.cssText = 'padding-top: 56.25%; display: block;';
+			var vAspectMain = document.createElement('div');
+			vAspectMain.style.cssText = 'position: absolute;top: 0;bottom: 0;right: 0;left: 0;';
+			v.appendChild(vAspectRatio);
+			v.appendChild(vAspectMain);
+
+			//video inner
+			var vIframe = '';
+			if(typeof (data.adMedia) != 'undefined' && 
+			(data.adMedia.indexOf('youtu.be') == -1 || data.adMedia.indexOf('youtube') == -1)){
+				vIframe = '<video width="100%" height="100%" controls autoplay muted><source src="'+data.adMedia+'" type="video/mp4"></video>';
+			}
+			else{
+				var options = '&';
+				if(data.adMedia.indexOf('?') != -1){
+					options = '?';
+				}
+				options += 'rel=0&enablejsapi=1&autoplay=1&loop=1&iv_load_policy=3';
+				vIframe = '<iframe frameborder="0" allowfullscreen="1" width="100%" height="100%" src="'+data.adMedia+options+'"></iframe>';
+			}
+			vAspectMain.innerHTML += vIframe;
+
+			div.appendChild(v);
+
 			return div;
 		}
 		
