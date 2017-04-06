@@ -533,7 +533,6 @@ if( ! window.AdsPlayBannerReady ) {
 			    
 			    if(displayOk){
 					
-			    	
 			    	// log imp for AdsPlay
 			    	callBeaconLogTracking({
 						url : baseUrlTrackingAds,
@@ -562,7 +561,7 @@ if( ! window.AdsPlayBannerReady ) {
 			}
 		}
         function renderMastheadWeb(data){
-
+			var adId = data.adId;
 			var textColor = (data.textColor) ? data.textColor : "#fff";
             var div = document.createElement('div');
 				div.style.position = 'relative';
@@ -574,6 +573,9 @@ if( ! window.AdsPlayBannerReady ) {
 			var bgImage = document.createElement('a');
 			var href = data.clickthroughUrl ? data.clickthroughUrl : "#";
 			bgImage.setAttribute('href', href);
+		    bgImage.setAttribute('target','_blank');
+		    bgImage.setAttribute('id','adsplay-click-handle-'+adId);
+		    bgImage.setAttribute('onclick','AdsPlayBanner.handleAdClick('+adId+')');	
 			bgImage.style.cssText = 'background-image: url("'+data.background+'");'+
 									'background-color: #000;'+
 									'background-repeat: no-repeat;'+
@@ -595,8 +597,7 @@ if( ! window.AdsPlayBannerReady ) {
 			var vIframe = '';
 			if(typeof (data.adMedia) != 'undefined' && 
 			(data.adMedia.indexOf('youtu.be') == -1 || data.adMedia.indexOf('youtube') == -1)){
-				data.adMedia = '//www.w3schools.com/html/mov_bbb.mp4';
-				vIframe = '<video width="100%" ><source src="'+data.adMedia+'" type="video/mp4"><source src="https://www.w3schools.com/html/mov_bbb.ogg" type="video/ogg"></video>';
+				vIframe = '<video width="100%" autoplay loop muted ><source src="'+data.adMedia+'" type="video/mp4"></video>';
 			}
 			else{
 				var options = '&';
@@ -650,6 +651,7 @@ if( ! window.AdsPlayBannerReady ) {
 		}
 
 		function renderMastheadMobile(data) {
+			var adId = data.adId;
 			var div = document.createElement('div');
 				div.style.position = 'relative';
 				div.className = 'masthead-mobile';
@@ -673,8 +675,7 @@ if( ! window.AdsPlayBannerReady ) {
 			var vIframe = '';
 			if(typeof (data.adMedia) != 'undefined' && 
 			(data.adMedia.indexOf('youtu.be') == -1 || data.adMedia.indexOf('youtube') == -1)){
-				data.adMedia = '//www.w3schools.com/html/mov_bbb.mp4';
-				vIframe = '<video width="100%" autoplay loop muted><source src="'+data.adMedia+'" type="video/mp4"><source src="https://www.w3schools.com/html/mov_bbb.ogg" type="video/ogg"></video>';
+				vIframe = '<video width="100%" autoplay loop muted ><source src="'+data.adMedia+'" type="video/mp4"></video>';
 			}
 			else{
 				var options = '&';
@@ -706,7 +707,9 @@ if( ! window.AdsPlayBannerReady ) {
 			if(data.headlineText != ''){
 				var brandLink = '';
 				if(data.clickthroughUrl != ''){
-					brandLink = '<a style="font-size: 2.4vmax;color: #3f51b5;" href="'+data.clickthroughUrl+'">'+data.clickActionText+'</a>';
+					var aid = 'adsplay-click-handle-'+adId;
+					var onclick = 'AdsPlayBanner.handleAdClick('+adId+')';
+					brandLink = '<a onclick="'+onclick+'" target="_blank" id="'+aid+'" style="font-size: 2.4vmax;color: #3f51b5;" href="'+data.clickthroughUrl+'">'+data.clickActionText+'</a>';
 				}
 				var brandText = '<div style="'+styletable+'width:100%; text-align: left; padding-left:1.5%;">\
 									<h4 style="margin: 0 0 5px; font-weight: 100; font-size: 2.8vmax;">'+data.headlineText+'</h4>\
