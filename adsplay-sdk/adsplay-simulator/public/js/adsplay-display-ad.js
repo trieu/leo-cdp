@@ -246,6 +246,9 @@ if( ! window.AdsPlayBannerReady ) {
 	})(typeof window === 'undefined' ? this : window);
 	
 	(function(global, undefined) {
+
+		var volume_on = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDQ4IDQ4IiB3aWR0aD0iNDgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTYgMTh2MTJoOGwxMCAxMFY4TDE0IDE4SDZ6bTI3IDZjMC0zLjUzLTIuMDQtNi41OC01LTguMDV2MTYuMTFjMi45Ni0xLjQ4IDUtNC41MyA1LTguMDZ6TTI4IDYuNDZ2NC4xM2M1Ljc4IDEuNzIgMTAgNy4wNyAxMCAxMy40MXMtNC4yMiAxMS42OS0xMCAxMy40MXY0LjEzYzguMDEtMS44MiAxNC04Ljk3IDE0LTE3LjU0UzM2LjAxIDguMjggMjggNi40NnoiLz48cGF0aCBkPSJNMCAwaDQ4djQ4SDB6IiBmaWxsPSJub25lIi8+PC9zdmc+';
+		var volume_off = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDQ4IDQ4IiB3aWR0aD0iNDgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTMzIDI0YzAtMy41My0yLjA0LTYuNTgtNS04LjA1djQuNDJsNC45MSA0LjkxYy4wNi0uNDIuMDktLjg1LjA5LTEuMjh6bTUgMGMwIDEuODgtLjQxIDMuNjUtMS4wOCA1LjI4bDMuMDMgMy4wM0M0MS4yNSAyOS44MiA0MiAyNyA0MiAyNGMwLTguNTYtNS45OS0xNS43Mi0xNC0xNy41NHY0LjEzYzUuNzggMS43MiAxMCA3LjA3IDEwIDEzLjQxek04LjU1IDZMNiA4LjU1IDE1LjQ1IDE4SDZ2MTJoOGwxMCAxMFYyNi41NWw4LjUxIDguNTFjLTEuMzQgMS4wMy0yLjg1IDEuODYtNC41MSAyLjM2djQuMTNjMi43NS0uNjMgNS4yNi0xLjg5IDcuMzctMy42MkwzOS40NSA0MiA0MiAzOS40NWwtMTgtMThMOC41NSA2ek0yNCA4bC00LjE4IDQuMThMMjQgMTYuMzZWOHoiLz48cGF0aCBkPSJNMCAwaDQ4djQ4SDB6IiBmaWxsPSJub25lIi8+PC9zdmc+';
 			
 		function callBeaconLogTracking(opts) {
 			// Make sure we have a base object for opts
@@ -580,12 +583,36 @@ if( ! window.AdsPlayBannerReady ) {
 			if(data.placementId < 300){
 				var videoWrap = renderMastheadWeb(data);
 				window.addEventListener('DOMContentLoaded', eVideo(videoWrap), false);
+				videoWrap.querySelector(".volume").addEventListener("click", function(){
+					if(this.classList.contains('active')){
+						this.classList.remove("active");
+						this.style.backgroundImage = 'url('+volume_off+')';
+						videoWrap.querySelector("video").muted= true;
+					}
+					else{
+						this.classList.add("active");
+						this.style.backgroundImage = 'url('+volume_on+')';
+						videoWrap.querySelector("video").muted= false;
+					}
+				});
 				return videoWrap;
 			}
 			//mobile
 			else{
 				var videoWrap = renderMastheadMobile(data);
 				window.addEventListener('DOMContentLoaded', eVideo(videoWrap), false);
+				videoWrap.querySelector(".volume").addEventListener("click", function(){
+					if(this.classList.contains('active')){
+						this.classList.remove("active");
+						this.style.backgroundImage = 'url('+volume_off+')';
+						videoWrap.querySelector("video").muted= true;
+					}
+					else{
+						this.classList.add("active");
+						this.style.backgroundImage = 'url('+volume_on+')';
+						videoWrap.querySelector("video").muted= false;
+					}
+				});
 				return videoWrap;
 			}
 		}
@@ -647,6 +674,16 @@ if( ! window.AdsPlayBannerReady ) {
 							  'background-repeat: no-repeat; background-image: url('+data.background+');';
 			var loader = '<div class="loader" style="'+loaderStyle+'">';
 			v.innerHTML += loader;
+
+			/**
+			 * volume
+			 */
+			var volumeStyle = 'position: absolute; top: 0; left: 0; z-idex: 999; width: 48pt; height: 48pt; opacity: 0.6;'+
+							  'background-image: url('+volume_off+'); background-color: rgba(0, 0, 0, 0.2);'+
+							  'background-repeat: no-repeat; background-size: contain;';
+			var volume = '<div class="volume" style="'+volumeStyle+'">';
+			v.innerHTML += volume;
+
 			/**
 			 * brand element
 			 */
@@ -736,6 +773,15 @@ if( ! window.AdsPlayBannerReady ) {
 							  'background-repeat: no-repeat; background-image: url('+data.background+');';
 			var loader = '<div class="loader" style="'+loaderStyle+'">';
 			vAspectMain.innerHTML += loader;
+
+			/**
+			 * volume
+			 */
+			var volumeStyle = 'position: absolute; top: 0; left: 0; z-idex: 999; width: 48pt; height: 48pt; opacity: 0.6;'+
+							  'background-image: url('+volume_off+'); background-color: rgba(0, 0, 0, 0.2);'+
+							  'background-repeat: no-repeat; background-size: contain;';
+			var volume = '<div class="volume" style="'+volumeStyle+'">';
+			vAspectMain.innerHTML += volume;
 
 			/**
 			 * brand
