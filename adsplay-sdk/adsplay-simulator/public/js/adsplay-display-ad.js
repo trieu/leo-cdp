@@ -519,7 +519,7 @@ if( ! window.AdsPlayBannerReady ) {
 			    	placementNode.appendChild(adIframe);				    	
 			    	adIframe.contentDocument.write(adCode);
 			    } else if(adType === 11) {
-					console.log('mastershead')
+					// console.log('mastershead')
                     //ADTYPE_MASTHEAD_AD = 11 master head for mobile app, smart-tv and Web
 					//var placementNode = document.createElement("div");
 					var renderedAdNode = renderMastheadView(data);				
@@ -550,7 +550,7 @@ if( ! window.AdsPlayBannerReady ) {
 
         // ADTYPE_MASTHEAD_AD rendering
 		function renderMastheadView(data){
-			console.log(data)
+			// console.log(data)
 			
 			/**
 			 * Event Listener
@@ -561,10 +561,10 @@ if( ! window.AdsPlayBannerReady ) {
 				var video = videoWrap.querySelector('video')
 
 				video.addEventListener('loadstart', eStart(videoWrap), false);
-				// vvideo.addEventListener('canplay', ePlay(videoWrap), false);
+				// video.addEventListener('canplay', ePlay(videoWrap), false);
 
 				function eStart(el) {
-					console.log('loading')
+					// console.log('loading')
 					var loader = el.querySelector('.loader');
 					loader.style.display =  'block';
 
@@ -628,7 +628,7 @@ if( ! window.AdsPlayBannerReady ) {
 			var vIframe = '';
 			if(typeof (data.adMedia) != 'undefined' && 
 			(data.adMedia.indexOf('youtu.be') == -1 || data.adMedia.indexOf('youtube') == -1)){
-				vIframe = '<video width="100% loop muted preload="auto"><source src="'+data.adMedia+'" type="video/mp4"></video>';
+				vIframe = '<video width="100% loop preload="auto" muted><source src="'+data.adMedia+'" type="video/mp4"></video>';
 			}
 			else{
 				var options = '&';
@@ -716,7 +716,7 @@ if( ! window.AdsPlayBannerReady ) {
 			var vIframe = '';
 			if(typeof (data.adMedia) != 'undefined' && 
 			(data.adMedia.indexOf('youtu.be') == -1 || data.adMedia.indexOf('youtube') == -1)){
-				vIframe = '<video width="100%" height="100%" loop preload="auto"><source src="'+data.adMedia+'" type="video/mp4"></video>';
+				vIframe = '<video width="100%" height="100%" loop muted preload="auto"><source src="'+data.adMedia+'" type="video/mp4"></video>';
 			}
 			else{
 				var options = '&';
@@ -789,15 +789,15 @@ if( ! window.AdsPlayBannerReady ) {
 						var node = pmNodes.pop();
 						if(node){							
 							processAdData(data,node);
-							if(window.console){
-								window.console.log(placementId  + ' -> ' + data.adId);
-							}
+							// if(window.console){
+							// 	window.console.log(placementId  + ' -> ' + data.adId);
+							// }
 						}							
 					}					
 				}
-				if(window.console){					
-					window.console.log(ads);					
-				}
+				// if(window.console){					
+				// 	window.console.log(ads);					
+				// }
 			}
 	        // make request server
 			var url = buildAdUrlRequest(pmIds) + '&at=display';		
@@ -835,9 +835,9 @@ if( ! window.AdsPlayBannerReady ) {
 						initTrackingLogStreamingAd(data);
 					}
 				}
-				if(window.console){					
-					window.console.log(ads);
-				}
+				// if(window.console){					
+				// 	window.console.log(ads);
+				// }
 			}			
 			var url = buildAdUrlRequest(pmIds) + '&at=overlay';
 			ajaxCorsRequest(url, h)	;	
@@ -850,9 +850,9 @@ if( ! window.AdsPlayBannerReady ) {
 	
 	//put at the end
 	AdsPlayBannerReady(function() {	 		
-		if(window.console){					
-			window.console.log("AdsPlayBannerReady ...");
-		}
+		// if(window.console){					
+		// 	window.console.log("AdsPlayBannerReady ...");
+		// }
 		
 		var nodes = document.getElementsByClassName('adsplay-placement');		
 		var pmIds = [], mapPmIdsNodes = [];
