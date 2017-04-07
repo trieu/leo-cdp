@@ -551,13 +551,42 @@ if( ! window.AdsPlayBannerReady ) {
         // ADTYPE_MASTHEAD_AD rendering
 		function renderMastheadView(data){
 			console.log(data)
+			
+			/**
+			 * Event Listener
+			 */
+			var waiting = 0; // preview background 0s
+			
+			function eVideo(videoWrap) {
+				var video = videoWrap.querySelector('video')
+
+				video.addEventListener('loadstart', eStart(videoWrap), false);
+				// vvideo.addEventListener('canplay', ePlay(videoWrap), false);
+
+				function eStart(el) {
+					console.log('loading')
+					var loader = el.querySelector('.loader');
+					loader.style.display =  'block';
+
+					var video = el.querySelector('video');
+					setTimeout(function(){
+						loader.style.display =  'none';
+						video.play();
+					}, 1000 * waiting);
+				}
+			}
+
 			//web
 			if(data.placementId < 300){
-				return renderMastheadWeb(data);
+				var videoWrap = renderMastheadWeb(data);
+				window.addEventListener('DOMContentLoaded', eVideo(videoWrap), false);
+				return videoWrap;
 			}
 			//mobile
 			else{
-				return renderMastheadMobile(data);
+				var videoWrap = renderMastheadMobile(data);
+				window.addEventListener('DOMContentLoaded', eVideo(videoWrap), false);
+				return videoWrap;
 			}
 		}
         function renderMastheadWeb(data){
@@ -567,9 +596,11 @@ if( ! window.AdsPlayBannerReady ) {
 				div.style.position = 'relative';
 				div.className = 'masthead-web';
 				div.style.cssText = 'position: relative; width: 970px; height: 250px; margin: 0 auto; font-family: sans-serif;';
+			
 			/**
 			 * background image element
 			 */
+
 			var bgImage = document.createElement('a');
 			var href = data.clickthroughUrl ? data.clickthroughUrl : "#";
 			bgImage.setAttribute('href', href);
@@ -597,7 +628,7 @@ if( ! window.AdsPlayBannerReady ) {
 			var vIframe = '';
 			if(typeof (data.adMedia) != 'undefined' && 
 			(data.adMedia.indexOf('youtu.be') == -1 || data.adMedia.indexOf('youtube') == -1)){
-				vIframe = '<video width="100%" autoplay loop muted ><source src="'+data.adMedia+'" type="video/mp4"></video>';
+				vIframe = '<video width="100% loop muted preload="auto"><source src="'+data.adMedia+'" type="video/mp4"></video>';
 			}
 			else{
 				var options = '&';
@@ -608,6 +639,14 @@ if( ! window.AdsPlayBannerReady ) {
 				vIframe = '<iframe frameborder="0" allowfullscreen="1" width="100%" height="100%" src="'+data.adMedia+options+'"></iframe>';
 			}
 			v.innerHTML += vIframe;
+			/**
+			 * loader
+			 */
+			var loaderStyle = "display: none; z-index: 999; position: absolute; left: 0; top: 0; width: 100%; height: 100%;"+
+				 			  'background-color: #333; background-size: cover; background-position: left center;'+
+							  'background-repeat: no-repeat; background-image: url('+data.background+');';
+			var loader = '<div class="loader" style="'+loaderStyle+'">';
+			v.innerHTML += loader;
 			/**
 			 * brand element
 			 */
@@ -625,7 +664,7 @@ if( ! window.AdsPlayBannerReady ) {
 				}
 
 				var headlineText = '<div style="'+styletable+'">\
-									<h4 style="margin: 0 0 5px;font-weight: 100;font-size: 22px;'+textColor+'">'
+									<h4 style="margin: 0 0 5px;font-weight: 200;font-size: 22px;'+textColor+'">'
 										+data.headlineText+
 										'<a href="'+data.clickthroughUrl+'" style="'+textColor+'cursor: pointer;background-color: rgba(0, 0, 0, 0.8); border-radius: 6px; padding: 4px 8px; margin-left: 10px; font-size: 16px; text-decoration: none;" >'
 											+data.clickActionText+
@@ -651,6 +690,7 @@ if( ! window.AdsPlayBannerReady ) {
 		}
 
 		function renderMastheadMobile(data) {
+			
 			var adId = data.adId;
 			var div = document.createElement('div');
 				div.style.position = 'relative';
@@ -658,6 +698,7 @@ if( ! window.AdsPlayBannerReady ) {
 				div.style.cssText = 'position: relative; box-sizing: border-box; width: 100%; margin: 0; padding: 1%; font-family: sans-serif;';
 			
 			var styletable = 'display: table-cell;vertical-align: middle;';
+
 			/**
 			 * video element
 			 */
@@ -675,7 +716,7 @@ if( ! window.AdsPlayBannerReady ) {
 			var vIframe = '';
 			if(typeof (data.adMedia) != 'undefined' && 
 			(data.adMedia.indexOf('youtu.be') == -1 || data.adMedia.indexOf('youtube') == -1)){
-				vIframe = '<video width="100%" autoplay loop muted ><source src="'+data.adMedia+'" type="video/mp4"></video>';
+				vIframe = '<video width="100%" height="100%" loop preload="auto"><source src="'+data.adMedia+'" type="video/mp4"></video>';
 			}
 			else{
 				var options = '&';
@@ -686,6 +727,15 @@ if( ! window.AdsPlayBannerReady ) {
 				vIframe = '<iframe frameborder="0" allowfullscreen="1" width="100%" height="100%" src="'+data.adMedia+options+'"></iframe>';
 			}
 			vAspectMain.innerHTML += vIframe;
+			
+			/**
+			 * loader
+			 */
+			var loaderStyle = "display: none; z-index: 999; position: absolute; left: 0; top: 0; width: 100%; height: 100%;"+
+				 			  'background-color: #333; background-size: cover; background-position: left center;'+
+							  'background-repeat: no-repeat; background-image: url('+data.background+');';
+			var loader = '<div class="loader" style="'+loaderStyle+'">';
+			vAspectMain.innerHTML += loader;
 
 			/**
 			 * brand
@@ -696,7 +746,7 @@ if( ! window.AdsPlayBannerReady ) {
 
 			if(data.brandIcon != ''){
 				if(data.align == 1){
-					var brandIcon = '<div style="'+styletable+'width:12%;"><img src="'+data.brandIcon+'" style="max-width:100%;"/></div>';
+					var brandIcon = '<div style="'+styletable+'width:20%;"><img src="'+data.brandIcon+'" style="max-width:100%;"/></div>';
 					brand.innerHTML += brandIcon;
 				}
 				else{
@@ -709,11 +759,11 @@ if( ! window.AdsPlayBannerReady ) {
 				if(data.clickthroughUrl != ''){
 					var aid = 'adsplay-click-handle-'+adId;
 					var onclick = 'AdsPlayBanner.handleAdClick('+adId+')';
-					brandLink = '<a onclick="'+onclick+'" target="_blank" id="'+aid+'" style="font-size: 2.4vmax;color: #3f51b5;" href="'+data.clickthroughUrl+'">'+data.clickActionText+'</a>';
+					brandLink = '<a onclick="'+onclick+'" target="_blank" id="'+aid+'" style="font-size: 3.6vmax;color: #3f51b5;" href="'+data.clickthroughUrl+'">'+data.clickActionText+'</a>';
 				}
 				var brandText = '<div style="'+styletable+'width:100%; text-align: left; padding-left:1.5%;">\
-									<h4 style="margin: 0 0 5px; font-weight: 100; font-size: 2.8vmax;">'+data.headlineText+'</h4>\
-									<div style="color: #777;font-size: 1.6vmax;">'+data.descriptionText+'</div>\
+									<h4 style="margin: 0 0 5px; font-weight: 100; font-size: 4.0vmax;">'+data.headlineText+'</h4>\
+									<div style="color: #777;font-size: 2.6vmax;">'+data.descriptionText+'</div>\
 									'+brandLink+'\
 								</div>';
 				brand.innerHTML += brandText;
