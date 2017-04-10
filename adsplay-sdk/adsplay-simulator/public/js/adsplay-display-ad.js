@@ -385,7 +385,7 @@ if (!window.AdsPlayBannerReady) {
                     beacon: adBeacons[adId]
                 }
             });
-            return true;
+            return false;
         }
 
         var baseUrlTrackingAds = document.location.protocol + "//log.adsplay.net/track/ads";
@@ -609,6 +609,7 @@ if (!window.AdsPlayBannerReady) {
                     } else {
                         this.pause();
                     }
+                    return false;
                 }, false);
                 return videoWrap;
             }
@@ -688,14 +689,11 @@ if (!window.AdsPlayBannerReady) {
                     brand.innerHTML += brandIcon;
                 }
 
-                var headlineText = '<div style="' + styletable + '">\
-									<h4 style="margin: 0 0 5px;font-weight: 200;font-size: 22px;' + textColor + '">' +
+                var headlineText = '<div style="' + styletable + '"><h4 style="margin: 0 0 5px;font-weight: 200;font-size: 22px;' + textColor + '">' +
                     data.headlineText +
                     '<a href="' + data.clickthroughUrl + '" style="' + textColor + 'cursor: pointer;background-color: rgba(0, 0, 0, 0.8); border-radius: 6px; padding: 4px 8px; margin-left: 10px; font-size: 16px; text-decoration: none;" >' +
                     data.clickActionText +
-                    '</a>'
-                '</h4>\
-								</div>';
+                    '</a></h4></div>';
                 brand.innerHTML += headlineText;
             }
 
@@ -793,11 +791,7 @@ if (!window.AdsPlayBannerReady) {
                     var onclick = 'AdsPlayBanner.handleAdClick(' + adId + ')';
                     brandLink = '<a onclick="' + onclick + '" target="_blank" id="' + aid + '" style="font-size: 3.6vmax;color: #3f51b5;" href="' + data.clickthroughUrl + '">' + data.clickActionText + '</a>';
                 }
-                var brandText = '<div style="' + styletable + 'width:100%; text-align: left; padding-left:1.5%;">\
-									<h4 style="margin: 0 0 5px; font-weight: 100; font-size: 4.0vmax;">' + data.headlineText + '</h4>\
-									<div style="color: #777;font-size: 2.6vmax;">' + data.descriptionText + '</div>\
-									' + brandLink + '\
-								</div>';
+                var brandText = '<div style="' + styletable + 'width:100%; text-align: left; padding-left:1.5%;"><h4 style="margin: 0 0 5px; font-weight: 100; font-size: 4.0vmax;">' + data.headlineText + '</h4><div style="color: #777;font-size: 2.6vmax;">' + data.descriptionText + '</div>' + brandLink + '</div>';
                 brand.innerHTML += brandText;
             }
 
@@ -815,6 +809,7 @@ if (!window.AdsPlayBannerReady) {
                 document.getElementsByTagName("body")[0].innerHTML = "";
                 global.MastheadWebviewNative.closeAdView();
             }
+            return false;
         }
 
         AdsPlayBanner.getAds = function(pmIds, mapPmIdsNodes) {
@@ -882,7 +877,6 @@ if (!window.AdsPlayBannerReady) {
             var url = buildAdUrlRequest(pmIds) + '&at=overlay';
             ajaxCorsRequest(url, h);
         }
-
         global.AdsPlayTracker = AdsPlayTracker;
 
     })(typeof window === 'undefined' ? this : window);
