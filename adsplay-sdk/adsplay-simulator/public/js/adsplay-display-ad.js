@@ -624,7 +624,7 @@ if (!window.AdsPlayBannerReady) {
             var div = document.createElement('div');
             div.style.position = 'relative';
             div.className = 'masthead-web';
-            div.style.cssText = 'position: relative; width: 970px; height: 250px; margin: 0 auto; font-family: sans-serif;';
+            div.style.cssText = 'position: relative; width: 970px; height: 250px; margin: 0 auto; font-family: "Roboto", sans-serif;';
 
             /**
              * background image element
@@ -721,7 +721,7 @@ if (!window.AdsPlayBannerReady) {
             var div = document.createElement('div');
             div.style.position = 'relative';
             div.className = 'masthead-mobile';
-            div.style.cssText = 'position: relative; box-sizing: border-box; width: 100%; margin: 0; padding: 1%; font-family: sans-serif;';
+            div.style.cssText = 'position: relative; box-sizing: border-box; width: 100%; margin: 0; padding: 1%; font-family: "Roboto", sans-serif;';
 
             var styletable = 'display: inline-block;vertical-align: middle;box-sizing: border-box;';
 
