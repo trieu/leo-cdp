@@ -6,6 +6,10 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressHbs = require('express-handlebars');
 var app = express();
+var cors = require('cors')
+
+//Cross-site 
+app.use(cors())
 
 //config view engine
 var hbsConfigs = {extname: 'hbs', defaultLayout: 'main-layout'};
