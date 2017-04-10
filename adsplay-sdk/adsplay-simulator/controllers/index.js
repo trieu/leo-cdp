@@ -32,7 +32,13 @@ module.exports = function (app) {
         res.render('ad-demo/display-ad-masthead', data);
     });
 
-    app.route('/masthead-mobile').get(function (req, res) {
+    app.route('/masthead-313').get(function (req, res) {
+        var data = {};
+        data.head_title = "Demo Ad Masthead";
+        res.render('ad-demo/display-ad-masthead-mobile-1', data);
+    });
+
+    app.route('/masthead-314').get(function (req, res) {
         var data = {};
         data.head_title = "Demo Ad Masthead";
         res.render('ad-demo/display-ad-masthead-mobile', data);

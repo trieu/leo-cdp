@@ -599,7 +599,10 @@ if (!window.AdsPlayBannerReady) {
             else {
                 var videoWrap = renderMastheadMobile(data);
                 window.addEventListener('DOMContentLoaded', eventVideo(videoWrap), false);
-                eventBehaviour(videoWrap);
+
+                if(data.align == 1){
+                    eventBehaviour(videoWrap);
+                }
 
                 // toggle play/pause video
                 var video = videoWrap.querySelector('video')
@@ -720,7 +723,7 @@ if (!window.AdsPlayBannerReady) {
             div.className = 'masthead-mobile';
             div.style.cssText = 'position: relative; box-sizing: border-box; width: 100%; margin: 0; padding: 1%; font-family: sans-serif;';
 
-            var styletable = 'display: table-cell;vertical-align: middle;';
+            var styletable = 'display: inline-block;vertical-align: middle;box-sizing: border-box;';
 
             /**
              * video element
@@ -750,37 +753,42 @@ if (!window.AdsPlayBannerReady) {
             }
             vAspectMain.innerHTML += vIframe;
 
-            /**
-             * volume
-             */
-            var volumeStyle = 'position: absolute; top: 0; left: 0; z-idex: 999; width: 36pt; height: 36pt; opacity: 0.6;' +
-                'background-image: url(' + volume_off + '); background-color: rgba(0, 0, 0, 0.2);' +
-                'background-repeat: no-repeat; background-size: contain;';
-            var volume = '<div class="volume" style="' + volumeStyle + '"></div>';
-            vAspectMain.innerHTML += volume;
+            //FIXME
+            if (data.align == 1) {
+                /**
+                 * volume
+                 */
+                var volumeStyle = 'position: absolute; top: 0; left: 0; z-idex: 999; width: 36pt; height: 36pt; opacity: 0.6;' +
+                    'background-image: url(' + volume_off + '); background-color: rgba(0, 0, 0, 0.2);' +
+                    'background-repeat: no-repeat; background-size: contain;';
+                var volume = '<div class="volume" style="' + volumeStyle + '"></div>';
+                vAspectMain.innerHTML += volume;
 
-            /**
-             * close
-             */
-            var closeStyle = 'position: absolute; top: 0; right: 0; z-idex: 999; width: 36pt; height: 36pt; opacity: 0.8;' +
-                'background-image: url(' + close_icon + '); background-color: rgba(0, 0, 0, 0.2);' +
-                'background-repeat: no-repeat; background-size: contain;';
-            var closeDiv = '<div class="close" style="' + closeStyle + '" onclick="AdsPlayBanner.closeAdView('+adId+')" ></div>';
-            vAspectMain.innerHTML += closeDiv;
+                /**
+                 * close
+                 */
+                var closeStyle = 'position: absolute; top: 0; right: 0; z-idex: 999; width: 36pt; height: 36pt; opacity: 0.8;' +
+                    'background-image: url(' + close_icon + '); background-color: rgba(0, 0, 0, 0.2);' +
+                    'background-repeat: no-repeat; background-size: contain;';
+                var closeDiv = '<div class="close" style="' + closeStyle + '" onclick="AdsPlayBanner.closeAdView('+adId+')" ></div>';
+                vAspectMain.innerHTML += closeDiv;
+            }
 
             /**
              * brand
              */
             var brand = document.createElement('div');
             brand.className = 'brand';
-            brand.style.cssText = 'width:100%;'
-
+            brand.style.cssText = 'width:100%;';
+            
+            var sizeFix = 20;
             if (data.brandIcon != '') {
                 if (data.align == 1) {
-                    var brandIcon = '<div style="' + styletable + 'width:20%;"><img src="' + data.brandIcon + '" style="max-width:100%;"/></div>';
+                    var brandIcon = '<div style="' + styletable + 'width:'+sizeFix+'%;"><img src="' + data.brandIcon + '" style="max-width:100%;"/></div>';
                     brand.innerHTML += brandIcon;
                 } else {
-                    v.style.cssText = styletable + 'position:relative; width:30%; min-width: 160px;';
+                    sizeFix = 40;
+                    v.style.cssText = styletable + 'position:relative; width:'+sizeFix+'%;';
                     brand.appendChild(v);
                 }
             }
@@ -791,7 +799,7 @@ if (!window.AdsPlayBannerReady) {
                     var onclick = 'AdsPlayBanner.handleAdClick(' + adId + ')';
                     brandLink = '<a onclick="' + onclick + '" target="_blank" id="' + aid + '" style="font-size: 3.6vmax;color: #3f51b5;" href="' + data.clickthroughUrl + '">' + data.clickActionText + '</a>';
                 }
-                var brandText = '<div style="' + styletable + 'width:100%; text-align: left; padding-left:1.5%;"><h4 style="margin: 0 0 5px; font-weight: 100; font-size: 4.0vmax;">' + data.headlineText + '</h4><div style="color: #777;font-size: 2.6vmax;">' + data.descriptionText + '</div>' + brandLink + '</div>';
+                var brandText = '<div style="' + styletable + 'width:'+(100-sizeFix)+'%; text-align: left; padding-left:1.5%;"><h4 style="margin: 0 0 5px; font-weight: 100; font-size: 4.0vmax;">' + data.headlineText + '</h4><div style="color: #777;font-size: 2.6vmax;">' + data.descriptionText + '</div>' + brandLink + '</div>';
                 brand.innerHTML += brandText;
             }
 
