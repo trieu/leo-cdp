@@ -555,53 +555,61 @@ if (!window.AdsPlayBannerReady) {
             //TODO
             var waiting = 0; // preview background 0s
 
-            function eVideo(videoWrap) {
-                var video = videoWrap.querySelector('video')
-
-                video.addEventListener('loadstart', eStart(videoWrap), false);
-                // video.addEventListener('canplay', ePlay(videoWrap), false);
-
-                function eStart(el) {
-
-                    var video = el.querySelector('video');
+            function eventVideo(videoWrap) {
+                var video = videoWrap.querySelector('video');
+                video.addEventListener('loadstart', function () {
                     setTimeout(function() {
                         video.play();
                     }, 1000 * waiting);
-                }
+                }, false);
+
+                // video.addEventListener('canplay', ePlay(videoWrap), false);
+            }
+
+            function eventBehaviour(videoWrap){
+                videoWrap.querySelector(".volume").addEventListener("click", function() {
+                    if (this.classList.contains('active')) {
+                        this.classList.remove("active");
+                        this.style.backgroundImage = 'url(' + volume_off + ')';
+                        videoWrap.querySelector("video").muted = true;
+                    } else {
+                        this.classList.add("active");
+                        this.style.backgroundImage = 'url(' + volume_on + ')';
+                        videoWrap.querySelector("video").muted = false;
+                    }
+                });
             }
 
             //web
             if (data.placementId < 300) {
                 var videoWrap = renderMastheadWeb(data);
-                window.addEventListener('DOMContentLoaded', eVideo(videoWrap), false);
-                videoWrap.querySelector(".volume").addEventListener("click", function() {
-                    if (this.classList.contains('active')) {
-                        this.classList.remove("active");
-                        this.style.backgroundImage = 'url(' + volume_off + ')';
-                        videoWrap.querySelector("video").muted = true;
-                    } else {
-                        this.classList.add("active");
-                        this.style.backgroundImage = 'url(' + volume_on + ')';
-                        videoWrap.querySelector("video").muted = false;
-                    }
-                });
+                window.addEventListener('DOMContentLoaded', eventVideo(videoWrap), false);
+                eventBehaviour(videoWrap);
+
+                // click href video
+                var video = videoWrap.querySelector('video');
+                var href = videoWrap.querySelector('a').getAttribute('href');
+                video.addEventListener("click", function(){
+                    window.open(href);
+                }, false);
+
                 return videoWrap;
             }
             //mobile
             else {
                 var videoWrap = renderMastheadMobile(data);
-                window.addEventListener('DOMContentLoaded', eVideo(videoWrap), false);
-                videoWrap.querySelector(".volume").addEventListener("click", function() {
-                    if (this.classList.contains('active')) {
-                        this.classList.remove("active");
-                        this.style.backgroundImage = 'url(' + volume_off + ')';
-                        videoWrap.querySelector("video").muted = true;
+                window.addEventListener('DOMContentLoaded', eventVideo(videoWrap), false);
+                eventBehaviour(videoWrap);
+
+                // toggle play/pause video
+                var video = videoWrap.querySelector('video')
+                video.addEventListener("click", function(){
+                    if (this.paused) {
+                        this.play();
                     } else {
-                        this.classList.add("active");
-                        this.style.backgroundImage = 'url(' + volume_on + ')';
-                        videoWrap.querySelector("video").muted = false;
+                        this.pause();
                     }
-                });
+                }, false);
                 return videoWrap;
             }
         }
