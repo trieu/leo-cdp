@@ -781,14 +781,15 @@ if (!window.AdsPlayBannerReady) {
             brand.className = 'brand';
             brand.style.cssText = 'width:100%;';
             
-            var sizeFix = 20;
+            var sizePercent = 0; // size logo , video
             if (data.brandIcon != '') {
                 if (data.align == 1) {
-                    var brandIcon = '<div style="' + styletable + 'width:'+sizeFix+'%;"><img src="' + data.brandIcon + '" style="max-width:100%;"/></div>';
+                    sizePercent = 20;
+                    var brandIcon = '<div style="' + styletable + 'width:'+sizePercent+'%;"><img src="' + data.brandIcon + '" style="max-width:100%;"/></div>';
                     brand.innerHTML += brandIcon;
                 } else {
-                    sizeFix = 40;
-                    v.style.cssText = styletable + 'position:relative; width:'+sizeFix+'%;';
+                    sizePercent = 40;
+                    v.style.cssText = styletable + 'position:relative; width:'+sizePercent+'%;';
                     brand.appendChild(v);
                 }
             }
@@ -799,7 +800,7 @@ if (!window.AdsPlayBannerReady) {
                     var onclick = 'AdsPlayBanner.handleAdClick(' + adId + ')';
                     brandLink = '<a onclick="' + onclick + '" target="_blank" id="' + aid + '" style="font-size: 3.6vmax;color: #3f51b5;" href="' + data.clickthroughUrl + '">' + data.clickActionText + '</a>';
                 }
-                var brandText = '<div style="' + styletable + 'width:'+(100-sizeFix)+'%; text-align: left; padding-left:1.5%;"><h4 style="margin: 0 0 5px; font-weight: 100; font-size: 4.0vmax;">' + data.headlineText + '</h4><div style="color: #777;font-size: 2.6vmax;">' + data.descriptionText + '</div>' + brandLink + '</div>';
+                var brandText = '<div style="' + styletable + 'width:'+(100-sizePercent)+'%; text-align: left; padding-left:1.5%;"><h4 style="margin: 0 0 5px; font-weight: 100; font-size: 4.0vmax;">' + data.headlineText + '</h4><div style="color: #777;font-size: 2.6vmax;">' + data.descriptionText + '</div>' + brandLink + '</div>';
                 brand.innerHTML += brandText;
             }
 
