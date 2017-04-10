@@ -248,7 +248,7 @@ if (!window.AdsPlayBannerReady) {
 
         var volume_on = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDQ4IDQ4IiB3aWR0aD0iNDgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTYgMTh2MTJoOGwxMCAxMFY4TDE0IDE4SDZ6bTI3IDZjMC0zLjUzLTIuMDQtNi41OC01LTguMDV2MTYuMTFjMi45Ni0xLjQ4IDUtNC41MyA1LTguMDZ6TTI4IDYuNDZ2NC4xM2M1Ljc4IDEuNzIgMTAgNy4wNyAxMCAxMy40MXMtNC4yMiAxMS42OS0xMCAxMy40MXY0LjEzYzguMDEtMS44MiAxNC04Ljk3IDE0LTE3LjU0UzM2LjAxIDguMjggMjggNi40NnoiLz48cGF0aCBkPSJNMCAwaDQ4djQ4SDB6IiBmaWxsPSJub25lIi8+PC9zdmc+';
         var volume_off = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDQ4IDQ4IiB3aWR0aD0iNDgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTMzIDI0YzAtMy41My0yLjA0LTYuNTgtNS04LjA1djQuNDJsNC45MSA0LjkxYy4wNi0uNDIuMDktLjg1LjA5LTEuMjh6bTUgMGMwIDEuODgtLjQxIDMuNjUtMS4wOCA1LjI4bDMuMDMgMy4wM0M0MS4yNSAyOS44MiA0MiAyNyA0MiAyNGMwLTguNTYtNS45OS0xNS43Mi0xNC0xNy41NHY0LjEzYzUuNzggMS43MiAxMCA3LjA3IDEwIDEzLjQxek04LjU1IDZMNiA4LjU1IDE1LjQ1IDE4SDZ2MTJoOGwxMCAxMFYyNi41NWw4LjUxIDguNTFjLTEuMzQgMS4wMy0yLjg1IDEuODYtNC41MSAyLjM2djQuMTNjMi43NS0uNjMgNS4yNi0xLjg5IDcuMzctMy42MkwzOS40NSA0MiA0MiAzOS40NWwtMTgtMThMOC41NSA2ek0yNCA4bC00LjE4IDQuMThMMjQgMTYuMzZWOHoiLz48cGF0aCBkPSJNMCAwaDQ4djQ4SDB6IiBmaWxsPSJub25lIi8+PC9zdmc+';
-        var close_icon = 'data:image/png;base64,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'
+        var close_icon = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDQ4IDQ4IiB3aWR0aD0iNDgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTM4IDEyLjgzbC0yLjgzLTIuODMtMTEuMTcgMTEuMTctMTEuMTctMTEuMTctMi44MyAyLjgzIDExLjE3IDExLjE3LTExLjE3IDExLjE3IDIuODMgMi44MyAxMS4xNy0xMS4xNyAxMS4xNyAxMS4xNyAyLjgzLTIuODMtMTEuMTctMTEuMTd6Ii8+PHBhdGggZD0iTTAgMGg0OHY0OGgtNDh6IiBmaWxsPSJub25lIi8+PC9zdmc+';
 
         function callBeaconLogTracking(opts) {
             // Make sure we have a base object for opts
@@ -658,7 +658,7 @@ if (!window.AdsPlayBannerReady) {
             /**
              * volume
              */
-            var volumeStyle = 'position: absolute; top: 0; left: 0; z-idex: 999; width: 48pt; height: 48pt; opacity: 0.6;' +
+            var volumeStyle = 'position: absolute; top: 0; left: 0; z-idex: 999; width: 36pt; height: 36pt; opacity: 0.6;' +
                 'background-image: url(' + volume_off + '); background-color: rgba(0, 0, 0, 0.2);' +
                 'background-repeat: no-repeat; background-size: contain;';
             var volume = '<div class="volume" style="' + volumeStyle + '">';
@@ -747,7 +747,7 @@ if (!window.AdsPlayBannerReady) {
             /**
              * volume
              */
-            var volumeStyle = 'position: absolute; top: 0; left: 0; z-idex: 999; width: 48pt; height: 48pt; opacity: 0.6;' +
+            var volumeStyle = 'position: absolute; top: 0; left: 0; z-idex: 999; width: 36pt; height: 36pt; opacity: 0.6;' +
                 'background-image: url(' + volume_off + '); background-color: rgba(0, 0, 0, 0.2);' +
                 'background-repeat: no-repeat; background-size: contain;';
             var volume = '<div class="volume" style="' + volumeStyle + '"></div>';
@@ -756,7 +756,7 @@ if (!window.AdsPlayBannerReady) {
             /**
              * close
              */
-            var closeStyle = 'position: absolute; top: 0; right: 0; z-idex: 999; width: 48pt; height: 48pt; opacity: 0.8;' +
+            var closeStyle = 'position: absolute; top: 0; right: 0; z-idex: 999; width: 36pt; height: 36pt; opacity: 0.8;' +
                 'background-image: url(' + close_icon + '); background-color: rgba(0, 0, 0, 0.2);' +
                 'background-repeat: no-repeat; background-size: contain;';
             var closeDiv = '<div class="close" style="' + closeStyle + '" onclick="AdsPlayBanner.closeAdView('+adId+')" ></div>';
