@@ -707,7 +707,6 @@ if (!window.AdsPlayBannerReady) {
         }
 
         function renderMastheadMobile(data) {
-
             var adId = data.adId;
             var div = document.createElement('div');
             div.style.position = 'relative';
@@ -776,7 +775,7 @@ if (!window.AdsPlayBannerReady) {
             if (data.brandIcon != '') {
                 if (data.align == 1) {
                     sizePercent = 20;
-                    var brandIcon = '<div style="' + styletable + 'width:'+sizePercent+'%;"><img src="' + data.brandIcon + '" style="max-width:100%;"/></div>';
+                    var brandIcon = '<div style="' + styletable + 'width:'+sizePercent+'%;"><img src="' + data.brandIcon + '" style="max-width:100%;max-height:48pt;"/></div>';
                     brand.innerHTML += brandIcon;
                 } else {
                     sizePercent = 40;
@@ -786,12 +785,16 @@ if (!window.AdsPlayBannerReady) {
             }
             if (data.headlineText != '') {
                 var brandLink = '';
+                var fontSizeAction = 10, fontSizeHead = 12, fontSizeDesc = 9;
+                if( /iPad/i.test(navigator.userAgent) ) {
+                    fontSizeAction +=4; fontSizeHead += 4; fontSizeDesc += 4;
+                }
                 if (data.clickthroughUrl != '') {
                     var aid = 'adsplay-click-handle-' + adId;
                     var onclick = 'AdsPlayBanner.handleAdClick(' + adId + ')';
-                    brandLink = '<a onclick="' + onclick + '" target="_blank" id="' + aid + '" style="font-size: 3.6vmax;color: #3f51b5;" href="' + data.clickthroughUrl + '">' + data.clickActionText + '</a>';
+                    brandLink = '<a onclick="' + onclick + '" target="_blank" id="' + aid + '" style="font-size: '+fontSizeAction+'pt;color: #3f51b5;" href="' + data.clickthroughUrl + '">' + data.clickActionText + '</a>';
                 }
-                var brandText = '<div style="' + styletable + 'width:'+(100-sizePercent)+'%; text-align: left; padding-left:1.5%;"><h4 style="margin: 0 0 5px; font-weight: 100; font-size: 4.0vmax;">' + data.headlineText + '</h4><div style="color: #777;font-size: 2.6vmax;">' + data.descriptionText + '</div>' + brandLink + '</div>';
+                var brandText = '<div style="' + styletable + 'width:'+(100-sizePercent)+'%; text-align: left; padding-left:1.5%;"><span style="margin: 0 0 5px; font-weight: 100; font-size: '+fontSizeHead+'pt;">' + data.headlineText + '</span><div style="color: #777;font-size:'+fontSizeDesc+'pt;">' + data.descriptionText + '</div>' + brandLink + '</div>';
                 brand.innerHTML += brandText;
             }
 
@@ -808,6 +811,7 @@ if (!window.AdsPlayBannerReady) {
             if (global.MastheadWebviewNative) {
                 document.getElementsByTagName("body")[0].innerHTML = "";
                 global.MastheadWebviewNative.closeAdView();
+                return false;
             }
             return false;
         }
