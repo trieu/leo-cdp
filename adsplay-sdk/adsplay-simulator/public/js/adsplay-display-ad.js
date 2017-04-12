@@ -285,8 +285,12 @@ if (!window.AdsPlayBannerReady) {
                 // Attach the src for the script call
                 if (opts.noParameter) {
                     beacon.src = opts.url;
-                } else {
-                    beacon.src = opts.url + '?' + qString;
+                } else {                    
+                    if( opts.url.indexOf('?')>0 ) {
+                        beacon.src = opts.url + '&' +  qString;
+                    } else {
+                        beacon.src = opts.url + '?' + qString;
+                    }
                 }
             }
         }
@@ -548,6 +552,25 @@ if (!window.AdsPlayBannerReady) {
         // ADTYPE_MASTHEAD_AD rendering
         function renderMastheadView(data) {
             // console.log(data)
+
+            //3rd party-tracking
+            var initTracking3rdUrl = function(data) {
+                var tracking3rdUrls = data.tracking3rdUrls;
+                //log all 3rd tracking URL
+                if (typeof tracking3rdUrls === 'object') {
+                    for (var i = 0; i < tracking3rdUrls.length; i++) {
+                        var obj = tracking3rdUrls[i];
+                        if (obj) {
+                            var delay = obj.delay * 1000;
+                            var url = obj.url;
+                            setTimeout(function(u) {
+                                callBeaconLogTracking({ url: u, vars: {} });
+                            }, delay, url);
+                        }
+                    }
+                }
+            }
+            initTracking3rdUrl(data);
 
             /**
              * Event Listener
