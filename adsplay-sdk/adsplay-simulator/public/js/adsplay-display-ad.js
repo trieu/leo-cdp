@@ -553,14 +553,14 @@ if (!window.AdsPlayBannerReady) {
              * Event Listener
              */
             //TODO
-            var waiting = 0; // preview background 0s
+            var delay = data.delayShowVideo || 0; // preview background 0s
 
             function eventVideo(videoWrap) {
                 var video = videoWrap.querySelector('video');
                 video.addEventListener('loadstart', function () {
                     setTimeout(function() {
                         video.play();
-                    }, 1000 * waiting);
+                    }, delay);
                 }, false);
 
                 // click href video
