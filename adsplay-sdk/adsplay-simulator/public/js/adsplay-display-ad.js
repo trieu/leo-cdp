@@ -613,9 +613,25 @@ if (!window.AdsPlayBannerReady) {
             var adId = data.adId;
             var textColor = (data.textColor) ? data.textColor : "#fff";
             var div = document.createElement('div');
+            var width = (data.width) ? data.width+'px' : '100%';
+            var height = (data.height) ? data.height+'px' : '100%';
+
+            var background = 'background-color: #000;',
+                poster = "";
+            if(data.background){
+                if(data.background.indexOf('//') != -1){
+                    background = 'background-image: url("' + data.background + '")';
+                    poster= 'poster:"' + data.background + '"';
+                }
+                else{
+                   background = data.background; 
+                }
+            }
+
+            var sizeWrap = 'width: '+width+'; height: '+height+';'
             div.style.position = 'relative';
             div.className = 'masthead-web';
-            div.style.cssText = 'position: relative; width: 970px; height: 250px; margin: 0 auto; font-family: "Roboto", sans-serif;';
+            div.style.cssText = sizeWrap + 'position: relative; margin: 0 auto; font-family: "Roboto", sans-serif;';
 
             /**
              * background image element
@@ -627,8 +643,7 @@ if (!window.AdsPlayBannerReady) {
             bgImage.setAttribute('target', '_blank');
             bgImage.setAttribute('id', 'adsplay-click-handle-' + adId);
             bgImage.setAttribute('onclick', 'AdsPlayBanner.handleAdClick(' + adId + ')');
-            bgImage.style.cssText = 'background-image: url("' + data.background + '");' +
-                'background-color: #000;' +
+            bgImage.style.cssText = background +
                 'background-repeat: no-repeat;' +
                 'background-position: center center;' +
                 'background-size: cover;' +
@@ -648,7 +663,7 @@ if (!window.AdsPlayBannerReady) {
             var vIframe = '';
             if (typeof(data.adMedia) != 'undefined' &&
                 (data.adMedia.indexOf('youtu.be') == -1 || data.adMedia.indexOf('youtube') == -1)) {
-                vIframe = '<video width="100%" height="100%" poster="'+data.background+'" loop preload="auto" muted onclick="AdsPlayBanner.handleAdClick('+data.adId+')"><source src="' + data.adMedia + '" type="video/mp4"></video>';
+                vIframe = '<video width="100%" height="100%" '+poster+' loop preload="auto" muted onclick="AdsPlayBanner.handleAdClick('+data.adId+')"><source src="' + data.adMedia + '" type="video/mp4"></video>';
             } else {
                 var options = '&';
                 if (data.adMedia.indexOf('?') != -1) {
