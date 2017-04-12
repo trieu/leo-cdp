@@ -394,7 +394,7 @@ $(document).ready(function(){
 			return {device: 'SmartTV', color: '#f39c12'};
 		}
 		else{
-			return {device: 'Other Device', color: '#d62728'};
+			return {device: 'PayTv', color: '#d62728'};
 		}
 	}
 
