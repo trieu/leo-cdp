@@ -691,13 +691,13 @@ if (!window.AdsPlayBannerReady) {
 
             var styletable = 'display: table-cell;vertical-align: middle;';
 
-            // case background 
-            if (data.background == '') {
-                if (data.brandIcon != '') {
-                    var brandIcon = '<div style="' + styletable + '"><img src="' + data.brandIcon + '" style="width: 80px; margin-right: 10px;" /></div>';
-                    brand.innerHTML += brandIcon;
-                }
+            // case brand
+            if (data.brandIcon != '') {
+                var brandIcon = '<div style="' + styletable + '"><img src="' + data.brandIcon + '" style="width: 80px; margin-right: 10px;" /></div>';
+                brand.innerHTML += brandIcon;
+            }
 
+            if (data.headlineText != '') {
                 var headlineText = '<div style="' + styletable + '"><h4 style="margin: 0 0 5px;font-weight: 200;font-size: 22px;' + textColor + '">' +
                     data.headlineText +
                     '<a href="' + data.clickthroughUrl + '" style="' + textColor + 'cursor: pointer;background-color: rgba(0, 0, 0, 0.8); border-radius: 6px; padding: 4px 8px; margin-left: 10px; font-size: 16px; text-decoration: none;" >' +
@@ -707,17 +707,19 @@ if (!window.AdsPlayBannerReady) {
             }
 
             /**
-             * close element
-             */
-            var close = '<a href="javascript:AdsPlayBanner.closeAdView('+adId+')" style="' + textColor + 'cursor: pointer;position: absolute; top: 0; right: 5px;line-height: 25px;height: 25px; font-size: 12px;">Close Ad &#10060;</a>';
-
-            /**
              * append into element root
              */
             div.appendChild(bgImage);
             div.appendChild(v);
             div.appendChild(brand);
-            div.innerHTML += close;
+            /**
+             * close element
+             */
+            if(data.closeAd){
+                var close = '<a href="javascript:AdsPlayBanner.closeAdView('+adId+')" style="' + textColor + 'cursor: pointer;position: absolute; top: 0; right: 5px;line-height: 25px;height: 25px; font-size: 12px;">Close Ad &#10060;</a>';
+                div.innerHTML += close;
+            }
+            
             return div;
         }
 
