@@ -34,9 +34,8 @@ export function fetchCategory(sourceMedia, beginDate, endDate, limit) {
     }
 
     var url = CHART_CATEGORY_URL + nameMedia+'/report?startDate='+ beginDate + '&endDate='+ endDate + limit + bySource;
-
     return function (dispatch) {
-        
+
         dispatch({
             type: CHART_CATEGORY,
             payload: {data: [], loading: true}
@@ -80,7 +79,7 @@ export function fetchPlatform(sourceMedia, beginDate, endDate, limit) {
     var url = CHART_PLATFORM_URL + nameMedia+'/report?startDate='+ beginDate + '&endDate='+ endDate + limit + bySource;
 
     return function (dispatch) {
-        
+
         dispatch({
             type: CHART_PLATFORM,
             payload: {data: [], loading: true, sum: 0}
@@ -88,7 +87,7 @@ export function fetchPlatform(sourceMedia, beginDate, endDate, limit) {
 
         return axios.get(url)
                 .then(function (response) {
-                    
+
                     var result = response.data;
                     var data = [];
                     var sum = 0;
@@ -121,9 +120,9 @@ export function fetchTopView(sourceMedia, beginDate, endDate, limit) {
     }
 
     var url = CHART_TOP_VIEW_URL + nameMedia+'/report?startDate='+ beginDate + '&endDate='+ endDate + limit + bySource;
-    
+
     return function (dispatch) {
-        
+
         dispatch({
             type: CHART_TOP_VIEW,
             payload: {data: [], loading: true}
@@ -175,9 +174,9 @@ export function fetchTopCategory(sourceMedia, beginDate, endDate, limit) {
     }
 
     var url = CHART_TOP_CATEGORY_URL + nameMedia+'/report?startDate='+ beginDate + '&endDate='+ endDate + limit + bySource;
-    
+
     return function (dispatch) {
-        
+
         dispatch({
             type: CHART_TOP_CATEGORY,
             payload: {data: [], loading: true}

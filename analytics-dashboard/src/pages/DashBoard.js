@@ -10,9 +10,9 @@ import ChartTopView from '../components/Charts/ChartTopView';
 import ChartTopCategory from '../components/Charts/ChartTopCategory';
 import FilterDate from '../components/Charts/FilterDate';
 import FilterSource from '../components/Charts/FilterSource';
-import TotalPlayview from '../components/Total/_playview';
-import TotalImpression from '../components/Total/_impression';
-import TotalCompleteView from '../components/Total/_completeView';
+import TotalPlayview from '../components/Total/TotalPlayview';
+import TotalImpression from '../components/Total/TotalImpression';
+import TotalCompleteView from '../components/Total/TotalCompleteView';
 
 class DashboardPage extends React.Component{
 
@@ -91,7 +91,7 @@ class DashboardPage extends React.Component{
         <div className="row middle-xs">
           <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
           {/*<TotalPlatform value={this.state.sumChartPlatform} /> */}
-          <TotalPlayview />
+          <TotalPlayview sourceMedia={this.state.sourceMedia} endDate={this.state.endDate} beginDate={this.state.beginDate}/>
           </div>
           <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
           {/*  <div>
@@ -104,7 +104,7 @@ class DashboardPage extends React.Component{
                 </Paper>
             </div>
             */}
-            <TotalImpression />
+            <TotalImpression sourceMedia={this.state.sourceMedia} endDate={this.state.endDate} beginDate={this.state.beginDate} />
           </div>
           <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
             {/*<div>
@@ -116,7 +116,7 @@ class DashboardPage extends React.Component{
                     <span style={globalStyles.title}>4,765,149</span>
                 </Paper>
             </div>*/}
-            <TotalCompleteView />
+            <TotalCompleteView sourceMedia={this.state.sourceMedia} endDate={this.state.endDate} beginDate={this.state.beginDate} />
           </div>
           <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
             <div>

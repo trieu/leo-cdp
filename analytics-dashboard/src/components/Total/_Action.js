@@ -11,6 +11,7 @@ export const TOTAL_COMPLETE_VIEW = 'TOTAL_COMPLETE_VIEW';
  * Search 20 feed ở page theo 1 từ khóa
  */
 const TOTAL_PLATFORM_URL = '//360.adsplay.net/api/platformview';
+  // var url = '//360.adsplay.net/api/platformview/report?startDate=2017-04-03&endDate=2017-04-11&limit=10';
 
 export function fetchTotalPlayview(sourceMedia, beginDate, endDate, limit) {
 
@@ -21,8 +22,7 @@ export function fetchTotalPlayview(sourceMedia, beginDate, endDate, limit) {
         nameMedia = "bysource";
         bySource = "&source=" + sourceMedia;
     }
-
-    var url = '//360.adsplay.net/api/platformview/report?startDate=2017-04-03&endDate=2017-04-11&limit=10';
+    var url = TOTAL_PLATFORM_URL + nameMedia+'/report?startDate='+ beginDate + '&endDate='+ endDate + limit + bySource;
     return function (dispatch) {
 
         dispatch({
@@ -55,7 +55,7 @@ export function fetchTotalImpression(sourceMedia, beginDate, endDate, limit) {
         bySource = "&source=" + sourceMedia;
     }
 
-    var url = '//360.adsplay.net/api/platformview/report?startDate=2017-04-03&endDate=2017-04-11&limit=10';
+    var url = TOTAL_PLATFORM_URL + nameMedia+'/report?startDate='+ beginDate + '&endDate='+ endDate + limit + bySource;
     return function (dispatch) {
 
         dispatch({
@@ -88,7 +88,7 @@ export function fetchTotalCompleteView(sourceMedia, beginDate, endDate, limit) {
         bySource = "&source=" + sourceMedia;
     }
 
-    var url = '//360.adsplay.net/api/platformview/report?startDate=2017-04-03&endDate=2017-04-11&limit=10';
+    var url = TOTAL_PLATFORM_URL + nameMedia+'/report?startDate='+ beginDate + '&endDate='+ endDate + limit + bySource;
     return function (dispatch) {
 
         dispatch({
