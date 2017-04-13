@@ -10,13 +10,15 @@ import ChartTopView from '../components/Charts/ChartTopView';
 import ChartTopCategory from '../components/Charts/ChartTopCategory';
 import FilterDate from '../components/Charts/FilterDate';
 import FilterSource from '../components/Charts/FilterSource';
-
+import TotalPlayview from '../components/Total/_playview';
+import TotalImpression from '../components/Total/_impression';
+import TotalCompleteView from '../components/Total/_completeView';
 
 class DashboardPage extends React.Component{
 
   constructor(props) {
       super(props);
-      
+
       var endDate = new Date();
       var beginDate = new Date(moment().subtract(7, 'days').format('YYYY-MM-DD'));
 
@@ -42,7 +44,7 @@ class DashboardPage extends React.Component{
       this.updateSourceMedia = this.updateSourceMedia.bind(this);
       this.updateChartPlatform = this.updateChartPlatform.bind(this);
   }
-  
+
   updateFilter(beginDate, endDate) {
       //console.log(beginDate, endDate);
       this.setState({
@@ -76,7 +78,7 @@ class DashboardPage extends React.Component{
         <h3 style={globalStyles.navigation}>Application / Dashboard</h3>
 
         {titlePage}
-        
+
         <div className="row middle-xs">
           <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 m-b-15 ">
             <FilterSource update={this.updateSourceMedia} sourceMedia={this.state.sourceMedia} disabled={this.state.disabled} />
@@ -88,29 +90,33 @@ class DashboardPage extends React.Component{
 
         <div className="row middle-xs">
           <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
-            <TotalPlatform value={this.state.sumChartPlatform} />
+          {/*<TotalPlatform value={this.state.sumChartPlatform} /> */}
+          <TotalPlayview />
           </div>
           <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
-            <div>
+          {/*  <div>
                 <Paper style={globalStyles.paper}>
                     <span style={globalStyles.caption}>Total Impression</span>
 
                     <div style={globalStyles.clear}/>
-                    
+
                     <span style={globalStyles.title}>16,042,859</span>
                 </Paper>
             </div>
+            */}
+            <TotalImpression />
           </div>
           <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
-            <div>
+            {/*<div>
                 <Paper style={globalStyles.paper}>
                     <span style={globalStyles.caption}>Total Completed-View</span>
 
                     <div style={globalStyles.clear}/>
-                    
+
                     <span style={globalStyles.title}>4,765,149</span>
                 </Paper>
-            </div>
+            </div>*/}
+            <TotalCompleteView />
           </div>
           <div className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 ">
             <div>
@@ -118,7 +124,7 @@ class DashboardPage extends React.Component{
                     <span style={globalStyles.caption}>Total Click</span>
 
                     <div style={globalStyles.clear}/>
-                    
+
                     <span style={globalStyles.title}>127,359</span>
                 </Paper>
             </div>
