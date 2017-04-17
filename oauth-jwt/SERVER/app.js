@@ -1,5 +1,6 @@
 var express = require('express')
 var bodyParser = require('body-parser')
+var cookieParser = require('cookie-parser')
 var expressSession = require('express-session')
 var exphbs = require('express-handlebars')
 var app = express()
@@ -33,7 +34,7 @@ app.engine('.hbs', exphbs({
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
+app.use(cookieParser());
 app.use(expressSession({
     cookie: {
 		path: '/', httpOnly: true, maxAge: Common.tokenExpiry

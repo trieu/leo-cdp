@@ -1,7 +1,7 @@
 module.exports = {
     privateKey: 'ha!@#$%fpt6789',
     server: {
-        host: 'localhost',
+        host: 'id.adsplay.net',
         port: 4000
     },
     database: {
@@ -19,14 +19,14 @@ module.exports = {
     },
     superuser:{
         _id: 0,
+        roles: {"superadmin" : true},
         username: "adsplayfpt",
         email: "adsplayfpt@gmail.com",
         password: "trieunguyen",
-        roles: ["admin","super"]
     },
     recaptcha:{
-        siteKey: "6LfDchYUAAAAAGb0F37R3Ui3KWEZQJ97B8bzGVeo",
-        secretKey: "6LfDchYUAAAAAAEtC3-XcBXksTaVgBcf6mxWm_Oh",
+        siteKey: "6LfW_iUTAAAAAEinX_Pe_RVqZryKrDI5D1Jy237-",
+        secretKey: "6LfW_iUTAAAAAM_U5Ia77l2ifg9uI7OlZCOzEKMB",
         ssl: true
     },
     oauth:{

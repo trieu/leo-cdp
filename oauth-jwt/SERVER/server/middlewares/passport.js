@@ -12,12 +12,13 @@ var Oauth = Common.oauth;
 var Crypto = require('../helpers/crypto')
 // expose this function to our app using module.exports
 module.exports = function(passport) {
-    
+    var isSuperAdmin = false;
+
     var output = function(user){
 		return {
 			_id: user._id,
-			username: user.local.username,
-            email: user.local.email,
+			username: user.username,
+            email: user.email,
 			roles: user.roles
 		};
 	};
@@ -35,9 +36,14 @@ module.exports = function(passport) {
 
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
-        User.findById(id, function(err, user) {
-            done(err, user);
-        });
+        if(isSuperAdmin){
+            return done(null, Common.superuser);
+        }
+        else{
+            User.findById(id, function(err, user) {
+                return done(err, user);
+            });
+        }
     });
 
     // =========================================================================
@@ -48,34 +54,37 @@ module.exports = function(passport) {
 
     passport.use('login-local', new LocalStrategy({
         // by default, local strategy uses username and password, we will override with email
-        usernameField : 'email',
+        usernameField : 'username',
         passwordField : 'password',
         passReqToCallback : true // allows us to pass back the entire request to the callback
     },
-    function(req, email, password, done) { // callback with email and password from our form
+    function(req, username, password, done) { // callback with email and password from our form
 
         //login with super user
-        if(email == Common.superuser.email && password == Common.superuser.password){
-            return done(null, Common.superuser);
+        if(username == Common.superuser.username && password == Common.superuser.password){
+            //console.log('is superadmin login');
+            isSuperAdmin = true;
+            return done(null, output(Common.superuser));
         }
-
-        User.findUser(email , function(err, user) {
+        else{
+            User.findUser(username , function(err, user) {
             // if there are any errors, return the error before anything else
-            if (err)
-                return done(err);
+                if (err)
+                    return done(err);
 
-            // if no user is found, return the message
-            if (!user)
-                return done(null, false, { message: "No user found." }); // req.flash is the way to set flashdata using connect-flash
+                // if no user is found, return the message
+                if (!user)
+                    return done(null, false, { message: "No user found." }); // req.flash is the way to set flashdata using connect-flash
 
-            // if the user is found but the password is wrong
-            //console.log(password, Crypto.decrypt(user.local.password))
-            if (password != Crypto.decrypt(user.local.password))
-                return done(null, false, { message: "Oops! Wrong password." }); // create the loginMessage and save it to session as flashdata
+                // if the user is found but the password is wrong
+                //console.log(password, Crypto.decrypt(user.password))
+                if (password != Crypto.decrypt(user.password))
+                    return done(null, false, { message: "Oops! Wrong password." }); // create the loginMessage and save it to session as flashdata
 
-            // all is well, return successful user
-            return done(null, output(user));
-        });
+                // all is well, return successful user
+                return done(null, output(user));
+            });
+        }
 
     }));
 

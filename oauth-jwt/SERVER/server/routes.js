@@ -7,7 +7,8 @@ module.exports = function(app){
 
 	// API Server Endpoints
     app.get('/', function(req, res){
-        res.send('Server API Authetication');
+        res.setHeader('Content-Type', 'text/html');
+        res.send('<h1>Server API Authetication</h1>');
     });
 
     app.get('/ping', function(req, res){

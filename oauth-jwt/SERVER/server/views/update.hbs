@@ -11,21 +11,30 @@
     <form  id="form-register" class="col s12" method="POST" action="/register" autocomplete="off">
         <div class="row">
             <div class="input-field col s12">
-                <input id="username" type="text" class="validate" autocomplete="off" required>
+                <input id="username" type="text" name="username" class="validate" autocomplete="off" required>
                 <label for="username">Username</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12">
-                <input id="email" type="email" class="validate" autocomplete="off" required>
+                <input id="email" type="email" name="email" class="validate" autocomplete="off" required>
                 <label for="email">Email</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12">
-                <input id="password" type="password" class="validate" autocomplete="off" required>
+                <input id="password" type="password" name="password" class="validate" autocomplete="off" required>
                 <label for="password">Password</label>
             </div>
+        </div>
+
+        <div class="input-field col s12">
+            <select>
+                <option value="" disabled selected>Choose your option</option>
+                <option value="0">disabled</option>
+                <option value="1">enabled</option>
+            </select>
+            <label>Status User</label>
         </div>
 
         <button type="submit" class="waves-effect waves-light btn-large right">Ok</button>
@@ -39,12 +48,11 @@
     //disable autocomplete
     $( document ).ready(function() {
         $('input[autocomplete=off]').each(function(){
-            var that = $(this);
-            var copy = that.clone();
+            var copy = $(this).clone();
             copy.val('');
             copy.removeAttr('autocomplete');
-            copy.insertAfter(that).removeAttr('required id class');
-            that.remove();
+            copy.insertAfter($(this));
+            $(this).hide().removeAttr('required id class');
         });
     });
     $(function(){

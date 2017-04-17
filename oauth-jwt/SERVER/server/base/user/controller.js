@@ -31,16 +31,15 @@ exports.register = function (req, res){
 }
 
 exports.loginLocal = function (req, res, next){
-    console.log(req.body)
+    //console.log(req.body)
     //check recaptcha
     recaptcha.validateRequest(req)
     .then(function(){
         //use passport login-local
         passport.authenticate('login-local', function(err, user, info) {
-            console.log(user)
             if (err) { return next(err); } 
             if (!user) {
-                res.json({ success: false, status:401, message: "Unauthorized." }); //unauthorized
+                res.json({ success: false, status:401, message: info.message }); //unauthorized
             }
             else{
                 req.logIn(user, function(err) {

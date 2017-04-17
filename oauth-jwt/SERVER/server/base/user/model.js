@@ -15,28 +15,23 @@ autoIncrement.initialize(db);
  */
 
 var User = new Schema({
+    status: { type: Number, default: 1 },
 
-    roles: { type: Array, default: ['user'] },
+    roles: { type: Schema.Types.Mixed, default: {"user": true} },
 
-    local: {
-        username: {
-            type: String,
-            unique: true,
-            required: true
-        },
-        email: {
-            type: String,
-            unique: true,
-            required: true
-        },
-        password: {
-            type: String,
-            required: true
-        },
-        isVerified: {
-            type: Boolean,
-            default: false
-        }
+    username: {
+        type: String,
+        unique: true,
+        required: true
+    },
+    email: {
+        type: String,
+        unique: true,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
     },
 
     facebook: {
@@ -55,8 +50,8 @@ User.plugin(autoIncrement.plugin, {
 
 User.statics = {
     saveUser: function(data, callback) {
-        var obj = {local: {}};
-        obj.local = data;
+        var obj = {};
+        obj = data;
         this.create(obj, callback);
     },
     findUserUpdate: function(query, user, callback) {
@@ -66,12 +61,12 @@ User.statics = {
         user.save(callback);
     },
 
-    findUser: function(email, callback) {
-        this.findOne({'local.email': email}, callback);
+    findUser: function(username, callback) {
+        this.findOne({'username': username}, callback);
     },
 
-    findUserByIdAndemail: function(id, email, callback) {
-        this.findOne({ 'local.email': email, _id: id }, callback);
+    findUserByIdAndemail: function(id, username, callback) {
+        this.findOne({ 'username': username, _id: id }, callback);
     }
 }
 

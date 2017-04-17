@@ -40,3 +40,7 @@ mean-stack/
  │   └──template    
  │
  └── app.js
+
+```
+
+## Config

@@ -10,8 +10,8 @@
     <form id="form-login" class="col s12" method="POST" action="/login">
         <div class="row">
             <div class="input-field col s12">
-                <input id="email" type="email" name="email" class="validate">
-                <label for="email">Email</label>
+                <input id="username" type="text" name="username" class="validate">
+                <label for="username">Username</label>
             </div>
         </div>
         <div class="row">
@@ -57,6 +57,7 @@
                     location.href = data.redirect_uri;
                 }
                 else{
+                    if (window.grecaptcha) grecaptcha.reset();
                     $('#message').html('<div class="alert alert-danger m-t-15">'+data.message+'</div>');
                 }
             });
