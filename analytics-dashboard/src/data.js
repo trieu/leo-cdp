@@ -16,7 +16,7 @@ const data = {
     // { text: 'Form Page', icon: <Web/>, link: '/form' }
   ],
   pages: [
-    { id: 'DashBoard', title: 'Xem báo cáo chi tiết fpt adsplay inventory' }
+    { id: 'DashBoard', title: 'Xem báo cáo chi tiết FptPlay Inventory' }
   ]
 };
 
