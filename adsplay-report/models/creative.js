@@ -83,7 +83,9 @@ exports.list = function (url, data, callback) {
                 else if (data.ssid === 1011 && (adName.indexOf('vtc') >= 0 )) {
                     filteredList.push(crt);
                 }
-
+                else if (data.ssid === 1013 && (adName.indexOf('danet') >= 0 )) {
+                    filteredList.push(crt);
+                }
             });
 
 			callback(null, filteredList);
