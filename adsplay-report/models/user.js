@@ -40,8 +40,8 @@ userSchema.methods.validPassword = function(password, passwordHash) {
 	// Decrypt 
 	var bytes  = CryptoJS.AES.decrypt(passwordHash.toString(), SALT);
 	var plaintext = bytes.toString(CryptoJS.enc.Utf8);
-    console.log(plaintext)
-	return (password == plaintext);
+    //console.log(plaintext)
+	return (password === plaintext);
 };
 
 module.exports =  mongoose.model('users', userSchema);

@@ -77,7 +77,7 @@ exports.list = function (url, data, callback) {
                 else if (data.ssid === 1008 && (adName.indexOf('startalk') >= 0 )) {
                     filteredList.push(crt);
                 }
-                else if (data.ssid === 1009 && (adName.indexOf('panasonic') >= 0 )) {
+                else if (data.ssid === 1012 && (adName.indexOf('sapporo-tvc-30s-fshare') >= 0 )) {
                     filteredList.push(crt);
                 }
                 else if (data.ssid === 1011 && (adName.indexOf('vtc') >= 0 )) {
