@@ -9,24 +9,25 @@ module.exports = function (app) {
 
     //______________ captcha
     var checkCaptcha = function(req, res, next){
-        if(NODE_ENV == 'product'){
-            var captcha = req.body.captcha.toLowerCase();
-            if( ! req.session.captcha){
-                console.log("Recaptcha is NULL !");
-                res.redirect('/login');
-            }
-            var sscaptcha = req.session.captcha.toLowerCase();
-            if(sscaptcha == captcha){
-                next();
-            }
-            else{
-                console.log("Recaptcha verify failed !");
-                res.redirect('/login');
-            }
-        }
-        else{
-            next();
-        }
+        // if(NODE_ENV == 'product'){
+        //     var captcha = req.body.captcha.toLowerCase();
+        //     if( ! req.session.captcha){
+        //         console.log("Recaptcha is NULL !");
+        //         res.redirect('/login');
+        //     }
+        //     var sscaptcha = req.session.captcha.toLowerCase();
+        //     if(sscaptcha == captcha){
+        //         next();
+        //     }
+        //     else{
+        //         console.log("Recaptcha verify failed !");
+        //         res.redirect('/login');
+        //     }
+        // }
+        // else{
+        //     next();
+        // }
+        next();
     };
 
     //______________ router not authorization
@@ -115,12 +116,12 @@ module.exports = function (app) {
         data.dashboard_title = "User";
         data.loginMessage = req.flash('loginMessage');
 
-        if(NODE_ENV == 'product'){
-            // enable captcha in session
-            var text = svgCaptcha.randomText();
-            req.session.captcha = text;
-            data.captcha = svgCaptcha(text);
-        }
+        // if(NODE_ENV == 'product'){
+        //     // enable captcha in session
+        //     var text = svgCaptcha.randomText();
+        //     req.session.captcha = text;
+        //     data.captcha = svgCaptcha(text);
+        // }
 
         res.render('common/login', data);
     });
