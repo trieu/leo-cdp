@@ -1,0 +1,36 @@
+<div class="row" id="page-title">
+    <div class="col s12">
+        <h2 id="form-title">{{pageTitle}}</h2>
+    </div>
+</div>
+
+{{#if userInfo}}
+<table class="responsive-table">
+    <thead>
+        <tr>
+            <th>UserName</th>
+            <th>Roles</th>
+            <th>Status</th>
+            <th>Update</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each userInfo}}
+        <tr>
+            <td>{{username}}</td>
+            <td>
+                {{#each roles}}
+                <div class="chip">
+                    {{@key}}
+                </div>
+                {{/each}}
+            </td>
+            <td>{{status}}</td>
+            <td>
+                <a href="/user/update/{{_id}}"><i class="material-icons">mode_edit</i></a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+{{/if}}

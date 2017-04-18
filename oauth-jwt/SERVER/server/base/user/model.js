@@ -15,7 +15,7 @@ autoIncrement.initialize(db);
  */
 
 var User = new Schema({
-    status: { type: Number, default: 1 },
+    status: { type: Boolean, default: true },
 
     roles: { type: Schema.Types.Mixed, default: {"user": true} },
 
@@ -45,7 +45,8 @@ var User = new Schema({
 
 User.plugin(autoIncrement.plugin, {
     model: 'user',
-    field: '_id'
+    field: '_id',
+    startAt: 1000
 });
 
 User.statics = {
@@ -55,7 +56,7 @@ User.statics = {
         this.create(obj, callback);
     },
     findUserUpdate: function(query, user, callback) {
-        this.findOneAndUpdate(query, user, callback);
+        this.findOneAndUpdate(query, {$set: user}, {new: true}, callback);
     },
     updateUser: function(user, callback) {
         user.save(callback);

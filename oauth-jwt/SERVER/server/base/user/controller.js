@@ -15,11 +15,38 @@ var recaptcha=new reCAPTCHA({
   ssl: Common.recaptcha.ssl
 })
 
+exports.index = function (req, res){
+    var data = {};
+    data.pageTitle = "Home Page";
+    console.log(req.user)
+    if(req.user){
+        if(req.user.roles['superadmin']){
+            User.find({})
+                .exec(function(err, user){
+                    //console.log(err, user)
+                    if(!err && user){
+                        data.userInfo = user;
+                        return res.render('index', data);
+                    }
+
+                    res.render('index', data);
+                });
+        }
+        else{
+            res.render('index', data);
+        }
+    }
+    else{
+        res.render('index', data);
+    }
+};
+
 exports.register = function (req, res){
-    req.body.password = Crypto.encrypt(req.body.password);
+    req.body.password = Crypto.encode(req.body.password);
+    console.log(req.body.password)
     User.saveUser(req.body, function(err, user) {
         if (!err) {
-            return res.json({success: true, message: "Success register"});
+            return res.json({success: true, message: "Success! register"});
         } else {
             if (11000 === err.code || 11001 === err.code) {
                 return  res.json({success: false, message: "Please provide another username and email"});
@@ -30,6 +57,45 @@ exports.register = function (req, res){
     })
 }
 
+// ---------------------------------------------------------
+// update
+// ---------------------------------------------------------
+exports.edit = function (req, res){
+    User.findOne({"_id": req.params.id})
+        .exec(function(err, user){
+            console.log(err, user)
+            if(!err && user){
+                data = {};
+                data.pageTitle = "update user";
+                data.userInfo = user;
+                data.userInfo.password = Crypto.decode(user.password);
+                data.userInfo.roles = JSON.stringify(user.roles);
+                return res.render('update', data);
+            }
+            else{
+                return res.render('/');
+            }
+        });
+}
+
+exports.save = function (req, res){
+    var password = Crypto.encode(req.body.password.toString());
+    var data = {};
+    data = req.body;
+    data.password = password;
+    console.log(password)
+    User.findUserUpdate({"_id": req.body.id}, data, function(err, user){
+        if(err){
+            return res.json({success: false, message: "Error! update"});
+        }
+
+        return res.json({success: true, message: "Success! updated"});
+    });
+}
+
+// ---------------------------------------------------------
+// login => user info
+// ---------------------------------------------------------
 exports.loginLocal = function (req, res, next){
     //console.log(req.body)
     //check recaptcha

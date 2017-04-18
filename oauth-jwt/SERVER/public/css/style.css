@@ -76,6 +76,50 @@
 
 /*style custom*/
 .m-t-15{margin-top: 15px;}
-#form-title{
-    font-size: 20px;
+
+#page-title{
+  padding-left: 78pt;
+}
+#page-title h2{color: #585858;margin: 10px 0;font-size: 24pt;font-weight: 300;}
+
+#header{
+  border-bottom: 4px double #9e9e9e;
+}
+#header .row{
+  margin-bottom: 0;
+}
+#brand{
+  position: relative;
+  font-weight: 300;
+  font-size: 26pt;
+  padding: 0;
+  margin: 5pt 0;
+}
+
+#brand a{
+  color: #8e8e8e;
+}
+
+#logo{
+    width: 60pt;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 12pt;
+}
+
+#logo img{
+  max-width: 100%;
+  margin-bottom: -60px;
+}
+
+@media screen and (max-width:768px){
+  #page-title{
+    padding-left: 0;
+  }
+  #logo{
+    width: 48pt;
+  }
+  #logo img{
+    margin-bottom: 0;
+  }
 }

@@ -1,29 +1,27 @@
+<div class="row" id="page-title">
+    <div class="col s12">
+        <h2 id="form-title">{{pageTitle}}</h2>
+    </div>
+</div>
+
 <div class="row">
-
-    <div class="col s12 center" style="margin-top: 1em;">
-        <img src="img/logo.png" width="100">
-    </div>
-
-    <div class="col s12 center">
-        <h1 id="form-title">Register Form</h1>
-    </div>
 
     <form  id="form-register" class="col s12" method="POST" action="/register" autocomplete="off">
         <div class="row">
             <div class="input-field col s12">
-                <input id="username" type="text" class="validate" autocomplete="off" required>
+                <input id="username" type="text" name="username" autocomplete="new-username" required>
                 <label for="username">Username</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12">
-                <input id="email" type="email" class="validate" autocomplete="off" required>
+                <input id="email" type="email" name="email" autocomplete="new-email" required>
                 <label for="email">Email</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12">
-                <input id="password" type="password" class="validate" autocomplete="off" required>
+                <input id="password" type="password" name="password" autocomplete="new-password" required>
                 <label for="password">Password</label>
             </div>
         </div>
@@ -31,37 +29,21 @@
         <button type="submit" class="waves-effect waves-light btn-large right">Ok</button>
     </form>
 
-    <div  id="message" class="col s12"></div>
+    <div id="message" class="col s12"></div>
 
 </div>
 
 <script type="text/javascript">
-    //disable autocomplete
-    $( document ).ready(function() {
-        $('input[autocomplete=off]').each(function(){
-            var that = $(this);
-            var copy = that.clone();
-            copy.val('');
-            copy.removeAttr('autocomplete');
-            copy.insertAfter(that).removeAttr('required id class');
-            that.remove();
-        });
-    });
+    
     $(function(){
         $('#form-register').submit(function(e){
             e.preventDefault();
+            var url = $(this).attr('action');
             var data = $(this).serialize();
-            $.post('/register',
-            data,
+            $.post(url, data,
             function(data, status){
-                if(data.success){
-                    var url = window.location.href;
-                    var url_param =  url.split('?').slice(1).join('?');
-                    window.location.href = (window.location.protocol + '//' + window.location.hostname + (location.port ? ':'+location.port: '') + '/login?' + url_param);
-                }
-                else{
-                    $('#message').html('<div class="alert alert-danger m-t-15">'+data.message+'</div>');
-                }
+                var alert = (data.success) ? 'alert-success' : 'alert-danger';
+                $('#message').html('<div class="alert '+alert+' m-t-15">'+data.message+'</div>');
             });
         });
 

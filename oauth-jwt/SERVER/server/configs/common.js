@@ -1,5 +1,5 @@
 module.exports = {
-    privateKey: 'ha!@#$%fpt6789',
+    privateKey: '6789jifdeop',
     server: {
         host: 'id.adsplay.net',
         port: 4000
