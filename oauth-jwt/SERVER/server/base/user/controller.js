@@ -3,7 +3,7 @@
 */
 var passport = require('passport')
 var Jwt = require('jsonwebtoken')
-var Crypto = require('../../helpers/crypto')
+var Encryption = require('../../helpers/encryption')
 var Parameter = require('../../helpers/parameter')
 var User = require('./model').User
 var Common = require('../../configs/common')
@@ -42,7 +42,7 @@ exports.index = function (req, res){
 };
 
 exports.register = function (req, res){
-    req.body.password = Crypto.encode(req.body.password);
+    req.body.password = Encryption.hash(req.body.password);
     console.log(req.body.password)
     User.saveUser(req.body, function(err, user) {
         if (!err) {
@@ -79,11 +79,8 @@ exports.edit = function (req, res){
 }
 
 exports.save = function (req, res){
-    var password = Crypto.encode(req.body.password.toString());
     var data = {};
     data = req.body;
-    data.password = password;
-    console.log(password)
     User.findUserUpdate({"_id": req.body.id}, data, function(err, user){
         if(err){
             return res.json({success: false, message: "Error! update"});

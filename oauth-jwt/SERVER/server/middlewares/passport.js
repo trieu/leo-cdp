@@ -9,7 +9,7 @@ var Common = require('../configs/common');
 // load the auth key
 var Oauth = Common.oauth;
 
-var Crypto = require('../helpers/crypto')
+var Encryption = require('../helpers/encryption')
 // expose this function to our app using module.exports
 module.exports = function(passport) {
     var isSuperAdmin = false;
@@ -77,8 +77,7 @@ module.exports = function(passport) {
                     return done(null, false, { message: "No user found." }); // req.flash is the way to set flashdata using connect-flash
 
                 // if the user is found but the password is wrong
-                //console.log(password, Crypto.decode(user.password))
-                if (password != Crypto.decode(user.password))
+                if (!Encryption.compare(password, user.password))
                     return done(null, false, { message: "Oops! Wrong password." }); // create the loginMessage and save it to session as flashdata
 
                 // all is well, return successful user

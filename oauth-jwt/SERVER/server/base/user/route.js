@@ -33,8 +33,11 @@ var User = require('./controller');
     });
 	app.post('/register', User.register);
 
-    app.get('/edit/:id', User.edit);
-    app.post('/save', User.save);
+    app.get('/update/:id', User.edit);
+    app.post('/update', User.save);
+
+    app.get('/new-password/:id', User.newPassword);
+	app.post('/new-password', User.savePassword);
 
 	// app.post('/forgotPassword', User.forgotPassword);
 	// app.post('/resendVerificationEmail', User.resendVerificationEmail);
