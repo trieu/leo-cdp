@@ -46,4 +46,4 @@ mean-stack/
 ## Flow
 ![alt text][logo]
 
-[logo]: https://lh4.googleusercontent.com/TwT7Y_L9ggFdT3KAFIYxA8f5rMWLDQOpsMjhsvXSkcakzbEYfZhTh1e6u6KEqulVU5fIaMPsFQ7XTw8=w1205-h961-rw
+[logo]: http://sv1.upsieutoc.com/2017/04/19/adsplayID.png
