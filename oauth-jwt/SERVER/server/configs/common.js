@@ -1,5 +1,5 @@
 module.exports = {
-    privateKey: '6789jifdeop',
+    privateKey: '6789ifadop#@$!',
     server: {
         host: 'id.adsplay.net',
         port: 4000
@@ -11,12 +11,6 @@ module.exports = {
         url: 'mongodb://127.0.0.1:27017/fptoauth'
     },
     tokenExpiry: 1000 * 60 * 60 * 2, //2 hour
-    email: {
-        email: "adsplayfpt@gmail.com",
-        password: "trieunguyen",
-        accountName: "gmail",
-        verifyEmailUrl: "verifyEmail"
-    },
     superuser:{
         _id: 0,
         roles: {"superadmin" : true},
@@ -28,6 +22,13 @@ module.exports = {
         siteKey: "6LfW_iUTAAAAAEinX_Pe_RVqZryKrDI5D1Jy237-",
         secretKey: "6LfW_iUTAAAAAM_U5Ia77l2ifg9uI7OlZCOzEKMB",
         ssl: true
+    },
+    //TODO
+    email: {
+        email: "adsplayfpt@gmail.com",
+        password: "trieunguyen",
+        accountName: "gmail",
+        verifyEmailUrl: "verifyEmail"
     },
     oauth:{
 		facebook: {

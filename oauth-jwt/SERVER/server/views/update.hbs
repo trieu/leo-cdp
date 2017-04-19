@@ -10,7 +10,7 @@
         <input id="_id" type="hidden" name="_id" value="{{userInfo._id}}" />
         <div class="row">
             <div class="input-field col s12">
-                <input id="username" type="text" name="username" value="{{userInfo.username}}" autocomplete="new-username" required/>
+                <input id="username" type="text" name="username" value="{{userInfo.username}}" autocomplete="new-username" readonly disabled/>
                 <label for="username">Username</label>
             </div>
         </div>
@@ -20,13 +20,6 @@
                 <label for="email">Email</label>
             </div>
         </div>
-        <div class="row">
-            <div class="input-field col s12">
-                <input id="password" type="password" name="password" value="{{userInfo.password}}" autocomplete="new-password" required/>
-                <label for="password">Password</label>
-            </div>
-        </div>
-
         <div class="row">
             <div class="col s12">
                 <div id="chip-roles" data-chip={{userInfo.roles}}></div>
@@ -52,6 +45,18 @@
 
     <div  id="message" class="col s12"></div>
 
+</div>
+
+<div class="row">
+    <div class="col s12">
+        <a href="/">
+            <i class="material-icons" style="vertical-align: bottom;">replay</i> Back
+        </a>
+         | 
+        <a href="/new-password/{{userInfo._id}}">
+            <i class="material-icons" style="vertical-align: bottom;">https</i> Change password
+        </a>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -92,7 +97,6 @@
             data._id = $('#_id').val();
             data.username = $('#username').val();
             data.email = $('#email').val();
-            data.password = $('#password').val();
             data.roles = roles;
             data.status = ( $('#status:checked').length == 1 ) ? true : false;
             console.log(data)

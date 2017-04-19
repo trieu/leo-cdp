@@ -19,9 +19,9 @@ const data = {
     { id: 'DashBoard', title: 'Xem báo cáo chi tiết fpt adsplay inventory' }
   ],
   oauthLink: {
-    login: 'http://localhost:4000/login?redirect_uri=http://localhost:3000&attach=userInfo',
-    logout: 'http://localhost:4000/logout',
-    userInfo: 'http://localhost:4000/user'
+    login: '//id.adsplay.net:4000/login?redirect_uri=http://localhost:3000&attach=userInfo',
+    logout: '//id.adsplay.net:4000/logout',
+    userInfo: '//id.adsplay.net:4000/user'
   }
   
 };

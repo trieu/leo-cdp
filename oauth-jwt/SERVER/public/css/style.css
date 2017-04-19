@@ -112,6 +112,20 @@
   margin-bottom: -60px;
 }
 
+#account-btn {
+    float: right;
+    margin: 5pt 0;
+    line-height: 31pt;
+    font-size: 14pt;
+    font-weight: 300;
+    color: #656565;
+}
+
+#account-btn:hover,
+#brand a:hover{
+  color: #f37328;
+}
+
 @media screen and (max-width:768px){
   #page-title{
     padding-left: 0;
@@ -121,5 +135,8 @@
   }
   #logo img{
     margin-bottom: 0;
+  }
+  #account-btn{
+    line-height: 48pt;
   }
 }

@@ -18,7 +18,7 @@ var recaptcha=new reCAPTCHA({
 exports.index = function (req, res){
     var data = {};
     data.pageTitle = "Home Page";
-    console.log(req.user)
+    data.USER = req.user;
     if(req.user){
         if(req.user.roles['superadmin']){
             User.find({})
@@ -58,7 +58,7 @@ exports.register = function (req, res){
 }
 
 // ---------------------------------------------------------
-// update
+// update contact
 // ---------------------------------------------------------
 exports.edit = function (req, res){
     User.findOne({"_id": req.params.id})
@@ -67,8 +67,8 @@ exports.edit = function (req, res){
             if(!err && user){
                 data = {};
                 data.pageTitle = "update user";
+                data.USER = req.user;
                 data.userInfo = user;
-                data.userInfo.password = Crypto.decode(user.password);
                 data.userInfo.roles = JSON.stringify(user.roles);
                 return res.render('update', data);
             }
@@ -78,10 +78,21 @@ exports.edit = function (req, res){
         });
 }
 
+exports.newPassword = function (req, res){
+    data = {};
+    data.pageTitle = "update user";
+    data.USER = req.user;
+    res.render('new-password', data);
+}
+
 exports.save = function (req, res){
     var data = {};
+    if(req.body.password){
+        req.body.password = Encryption.hash(req.body.password);
+    }
     data = req.body;
-    User.findUserUpdate({"_id": req.body.id}, data, function(err, user){
+    console.log(data)
+    User.findUserUpdate({"_id": req.body._id}, data, function(err, user){
         if(err){
             return res.json({success: false, message: "Error! update"});
         }
@@ -89,6 +100,8 @@ exports.save = function (req, res){
         return res.json({success: true, message: "Success! updated"});
     });
 }
+
+
 
 // ---------------------------------------------------------
 // login => user info

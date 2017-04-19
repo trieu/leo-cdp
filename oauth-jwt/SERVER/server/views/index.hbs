@@ -5,32 +5,51 @@
 </div>
 
 {{#if userInfo}}
-<table class="responsive-table">
-    <thead>
-        <tr>
-            <th>UserName</th>
-            <th>Roles</th>
-            <th>Status</th>
-            <th>Update</th>
-        </tr>
-    </thead>
-    <tbody>
-        {{#each userInfo}}
-        <tr>
-            <td>{{username}}</td>
-            <td>
-                {{#each roles}}
-                <div class="chip">
-                    {{@key}}
-                </div>
+<div class="row">
+    <div class="col s12">
+        <a href="/register">
+            <i class="material-icons" style="vertical-align: bottom;">perm_identity</i> register
+        </a>
+    </div>
+</div>
+<div class="row">
+    <div class="col s12">
+        <table class="responsive-table highlight">
+            <thead>
+                <tr>
+                    <th>UserName</th>
+                    <th>Roles</th>
+                    <th>Status</th>
+                    <th>Update</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each userInfo}}
+                <tr>
+                    <td>{{username}}</td>
+                    <td>
+                        {{#each roles}}
+                        <div class="chip">
+                            {{@key}}
+                        </div>
+                        {{/each}}
+                    </td>
+                    <td>{{status}}</td>
+                    <td>
+                        <a href="/update/{{_id}}"><i class="material-icons">mode_edit</i></a>
+                    </td>
+                </tr>
                 {{/each}}
-            </td>
-            <td>{{status}}</td>
-            <td>
-                <a href="/user/update/{{_id}}"><i class="material-icons">mode_edit</i></a>
-            </td>
-        </tr>
-        {{/each}}
-    </tbody>
-</table>
+            </tbody>
+        </table>
+    </div>
+</div>
+{{else}}
+<div class="row">
+    <div class="col s12">
+        <a href="/login">
+            <i class="material-icons" style="vertical-align: bottom;">https</i> Login
+        </a>
+    </div>
+</div>
 {{/if}}

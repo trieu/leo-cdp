@@ -1,4 +1,4 @@
-# Server Api Auth
+# SSO
 > Node/Express + MongoDB + Json Web Token
 
 ## Setup
@@ -43,4 +43,7 @@ mean-stack/
 
 ```
 
-## Config
+## Flow
+![alt text][logo]
+
+[logo]: https://lh4.googleusercontent.com/TwT7Y_L9ggFdT3KAFIYxA8f5rMWLDQOpsMjhsvXSkcakzbEYfZhTh1e6u6KEqulVU5fIaMPsFQ7XTw8=w1205-h961-rw
