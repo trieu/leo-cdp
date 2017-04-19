@@ -1,0 +1,112 @@
+<div class="row" id="page-title">
+    <div class="col s12">
+        <h2 id="form-title">{{pageTitle}}</h2>
+    </div>
+</div>
+
+<div class="row">
+
+    <form  id="form-edit" class="col s12" method="POST" action="/update" autocomplete="off">
+        <input id="_id" type="hidden" name="_id" value="{{userInfo._id}}" />
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="username" type="text" name="username" value="{{userInfo.username}}" autocomplete="new-username" readonly disabled/>
+                <label for="username">Username</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="email" type="email" name="email" value="{{userInfo.email}}" autocomplete="new-email" required/>
+                <label for="email">Email</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <div id="chip-roles" data-chip={{userInfo.roles}}></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12">
+                <label>Status</label>
+                <div class="switch">
+                    <label>
+                    Off
+                    <input id="status" type="checkbox" {{#if userInfo.status}} checked {{/if}}>
+                    <span class="lever"></span>
+                    On
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="waves-effect waves-light btn-large right">Ok</button>
+    </form>
+
+    <div  id="message" class="col s12"></div>
+
+</div>
+
+<div class="row">
+    <div class="col s12">
+        <a href="/">
+            <i class="material-icons" style="vertical-align: bottom;">replay</i> Back
+        </a>
+         | 
+        <a href="/new-password/{{userInfo._id}}">
+            <i class="material-icons" style="vertical-align: bottom;">https</i> Change password
+        </a>
+    </div>
+</div>
+
+<script type="text/javascript">
+    
+    $(function(){
+
+        var chipRoles = $('#chip-roles');
+        var data_chip = new Array();
+        var get_chip = JSON.parse(chipRoles.attr('data-chip'));
+        for(var i in get_chip){
+            data_chip.push({tag: i});
+        }
+        chipRoles.material_chip({
+            autocompleteOptions: {
+                data: {
+                    'user': null,
+                    'agency': null,
+                    'sale': null,
+                    'publisher': null,
+                    'admin': null
+                },
+                minLength: 1
+            },
+            data: data_chip,
+            secondaryPlaceholder: '+Role',
+            placeholder: 'Enter a role'
+        });
+
+        $('#form-edit').submit(function(e){
+            e.preventDefault();
+            var url = $(this).attr('action');
+            var roles = {};
+            var roles_data = chipRoles.material_chip('data');
+            for(var i in roles_data){
+                roles[roles_data[i].tag] = true;
+            }
+            var data = {};
+            data._id = $('#_id').val();
+            data.username = $('#username').val();
+            data.email = $('#email').val();
+            data.roles = roles;
+            data.status = ( $('#status:checked').length == 1 ) ? true : false;
+            console.log(data)
+
+            $.post(url, data,
+            function(data, status){
+                var alert = (data.success) ? 'alert-success' : 'alert-danger';
+                $('#message').html('<div class="alert '+alert+' m-t-15">'+data.message+'</div>');
+            });
+        });
+
+    });
+</script>

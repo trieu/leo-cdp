@@ -1,0 +1,10 @@
+{{#if USER}}
+<!-- Dropdown Trigger -->
+<a class='dropdown-button' id="account-btn" href='#' data-activates='account-dd'>{{USER.username}}</a>
+
+<!-- Dropdown Structure -->
+<ul id='account-dd' class='dropdown-content'>
+<li><a href="/logout">logout</a></li>
+</ul>
+
+{{/if}}
