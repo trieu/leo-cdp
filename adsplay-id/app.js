@@ -56,4 +56,4 @@ var port = Common.server.port;
 
 app.listen(process.env.PORT || port);
 
-console.log('App started on port ' + port);
+console.log('App started with: --HOST: ' + Common.server.host + ' --PORT: ' + port);

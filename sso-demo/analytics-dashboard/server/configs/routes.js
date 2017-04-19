@@ -19,6 +19,10 @@ module.exports = function(app) {
   // });
   
   // all other routes are handled by Angular
+  app.post('/callback', function(req, res) {
+      console.log('ddd')
+      console.log(req.query.access_token)
+  });
   app.get('/*', function(req, res) {
       res.sendFile('./public/layout.html', { root: __dirname + "/../../"});
   });

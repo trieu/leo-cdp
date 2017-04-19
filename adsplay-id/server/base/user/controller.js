@@ -135,7 +135,7 @@ exports.loginLocal = function (req, res, next){
                     else{
                         var redirectUri = Parameter.insert(param_redirect, 'access_token', token, false);
                         var param_attach = req.query.attach;
-                        console.log(param_attach)
+                        //console.log(param_attach)
                         if(typeof (param_attach) != "undefined" || param_attach != ""){
                             var user_info = JSON.stringify(decodeToken(token))
                             redirectUri = Parameter.insert(redirectUri, 'user_info', user_info, false);

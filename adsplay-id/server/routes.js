@@ -10,6 +10,10 @@ module.exports = function(app){
         res.send('PONG');
     });
 
+    app.get('/file/adsplayid', function (req, res, next) {
+        res.sendFile(pathRoot + '/public/js/adsplayid.js');
+    });
+
 	require("./base/user/route")(app);
 
 }
