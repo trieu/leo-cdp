@@ -17,7 +17,7 @@ var User = require('./controller');
  * login
  */
     app.get('/login', function(req, res) {
-        if(req.user){
+        if(req.user && typeof(req.query.redirect_uri) == undefined){
             return res.redirect('/');
         }
         var data = {};

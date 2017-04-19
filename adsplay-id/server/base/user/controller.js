@@ -129,14 +129,14 @@ exports.loginLocal = function (req, res, next){
                     //redirect uri
                     var param_redirect = req.query.redirect_uri;
 
-                    if(typeof (param_redirect) == "undefined" || param_redirect == ""){
+                    if(typeof (param_redirect) === "undefined" || param_redirect == ""){
                         return res.json({ success: true, redirect_uri: '/' }); //redirect home index
                     }
                     else{
                         var redirectUri = Parameter.insert(param_redirect, 'access_token', token, false);
                         var param_attach = req.query.attach;
-                        //console.log(param_attach)
-                        if(typeof (param_attach) != "undefined" || param_attach != ""){
+                        console.log(param_attach, typeof (param_attach) !== undefined, param_attach != "")
+                        if(typeof (param_attach) !== "undefined" && param_attach != ""){
                             var user_info = JSON.stringify(decodeToken(token))
                             redirectUri = Parameter.insert(redirectUri, 'user_info', user_info, false);
                         }
