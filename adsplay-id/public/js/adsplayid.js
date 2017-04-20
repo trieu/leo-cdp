@@ -1,6 +1,13 @@
 function AdsPlayID (server, authServerApp, authUrl, expiryDays) {
     var URL_HOST = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':'+window.location.port: '');
     var key = '.adsplay';
+    var loadingBase64 = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzgiIGhlaWdodD0iMzgiIHZpZXdCb3g9IjAgMCAzOCAzOCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBzdHJva2U9IiNmZmYiPiAgICA8ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMSAxKSIgc3Ryb2tlLXdpZHRoPSIyIj4gICAgICAgICAgICA8Y2lyY2xlIHN0cm9rZS1vcGFjaXR5PSIuNSIgY3g9IjE4IiBjeT0iMTgiIHI9IjE4Ii8+ICAgICAgICAgICAgPHBhdGggZD0iTTM2IDE4YzAtOS45NC04LjA2LTE4LTE4LTE4Ij4gICAgICAgICAgICAgICAgPGFuaW1hdGVUcmFuc2Zvcm0gICAgICAgICAgICAgICAgICAgIGF0dHJpYnV0ZU5hbWU9InRyYW5zZm9ybSIgICAgICAgICAgICAgICAgICAgIHR5cGU9InJvdGF0ZSIgICAgICAgICAgICAgICAgICAgIGZyb209IjAgMTggMTgiICAgICAgICAgICAgICAgICAgICB0bz0iMzYwIDE4IDE4IiAgICAgICAgICAgICAgICAgICAgZHVyPSIxcyIgICAgICAgICAgICAgICAgICAgIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIi8+ICAgICAgICAgICAgPC9wYXRoPiAgICAgICAgPC9nPiAgICA8L2c+PC9zdmc+";
+    var loadingCss = 'z-index: 9999; width: 100%; height: 100%;'+
+                    'position: fixed; top: 0; left: 0; right: 0; bottom: 0;'+
+                    'background-color: #3498DB; background-repeat: no-repeat; background-position: center;'+
+                    'background-image: url('+loadingBase64+'); background-size: auto 15%;';
+    document.body.innerHTML += '<div id="loading-AdsPlayID" style="'+loadingCss+'"></div>';
+
     var that = this;
     //config
     that.server = server || "//id.adsplay.net/"; //sso server
@@ -37,6 +44,10 @@ function AdsPlayID (server, authServerApp, authUrl, expiryDays) {
         }
         
         return window.location.href = this.server + "login?redirect_uri=" + that.redirect_uri;
+    }
+    else{
+        var loading = document.getElementById('loading-AdsPlayID');
+        document.body.removeChild(loading);
     }
 
     window.onclick= function(e, b){

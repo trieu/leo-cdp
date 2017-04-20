@@ -13,34 +13,21 @@ var User = require('./controller');
     app.get('/logout', User.logout);
     app.get('/userinfo', User.userInfo); //get user info from token
 
-/**
- * login
- */
-    app.get('/login', function(req, res) {
-        if(req.user && typeof(req.query.redirect_uri) == undefined){
-            return res.redirect('/');
-        }
-        var data = {};
-        data.pageTitle = "Login";
-        data.siteKey = Common.recaptcha.siteKey;
-        res.render('login', data);
-    });
+    /**
+     * login
+     */
+    app.get('/login', User.login);
     app.post('/login', User.loginLocal);
 
-/**
- * create
- */
-    app.get('/register', function(req, res) {
-        var data = {};
-        data.pageTitle = "Register";
-        data.USER = req.user;
-        res.render('register', data);
-    });
-	app.post('/register', User.register);
+    /**
+     * create
+     */
+    app.get('/register', User.register);
+	app.post('/register', User.registerSave);
 
-/**
- * update
- */
+    /**
+     * update
+     */
     app.get('/update/:id', User.edit);
     app.post('/update', User.save);
 

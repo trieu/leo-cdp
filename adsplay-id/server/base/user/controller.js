@@ -42,7 +42,18 @@ exports.index = function (req, res){
     }
 };
 
+// ---------------------------------------------------------
+// register
+// ---------------------------------------------------------
+
 exports.register = function (req, res){
+    var data = {};
+        data.pageTitle = "Register";
+        data.USER = req.user;
+        res.render('register', data);
+}
+
+exports.registerSave = function (req, res){
     req.body.password = Encryption.hash(req.body.password);
     console.log(req.body.password)
     User.saveUser(req.body, function(err, user) {
@@ -92,7 +103,7 @@ exports.save = function (req, res){
         req.body.password = Encryption.hash(req.body.password);
     }
     data = req.body;
-    console.log(data)
+    //console.log(data)
     User.findUserUpdate({"_id": req.body._id}, data, function(err, user){
         if(err){
             return res.json({success: false, message: "Error! update"});
@@ -105,8 +116,34 @@ exports.save = function (req, res){
 
 
 // ---------------------------------------------------------
-// login => user info
+// login 
 // ---------------------------------------------------------
+exports.login = function (req, res){
+    if(req.user){
+        if(typeof(req.query.redirect_uri) === "undefined"){
+            return res.redirect('/');
+        }
+        else{
+            // check loggin redirect webapp client attach token
+            var token = Jwt.sign(req.user, Common.privateKey, {
+                expiresIn: Common.tokenExpiry
+            });
+            token = token + last_token;
+            var param_redirect = req.query.redirect_uri;
+            var redirectUri = Parameter.insert(param_redirect, 'access_token', token, false);
+            var param_attach = req.query.attach;
+            if(typeof (param_attach) !== "undefined" && param_attach != ""){
+                var user_info = JSON.stringify(user);
+                redirectUri = Parameter.insert(redirectUri, 'user_info', user_info, false);
+            }
+            return res.redirect(redirectUri);
+        }
+    }
+    var data = {};
+    data.pageTitle = "Login";
+    data.siteKey = Common.recaptcha.siteKey;
+    res.render('login', data);
+}
 exports.loginLocal = function (req, res, next){
     //console.log(req.body)
     //check recaptcha
