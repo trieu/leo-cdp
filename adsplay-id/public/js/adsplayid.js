@@ -65,8 +65,8 @@ function AdsPlayID (server, authServerApp, authUrl, expiryDays) {
         for (var i in dataLogout){
             if (dataLogout.hasOwnProperty(i)) {
                 dataLogout[i].addEventListener('click', function() {
-                    window.localStorage.removeItem('user_token');
-                    window.localStorage.removeItem('user_info');
+                    that.deleteCookie('user_token');
+                    that.deleteCookie('user_info');
                     window.location.href = this.server + "logout";
                 }, false);
             }
@@ -111,6 +111,10 @@ AdsPlayID.prototype.getCookie = function(cname) {
         }
     }
     return "";
+}
+
+AdsPlayID.prototype.deleteCookie = function(cname) {
+    document.cookie = cname+"=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 }
 
 AdsPlayID.prototype.checkCookie = function(cname) {
