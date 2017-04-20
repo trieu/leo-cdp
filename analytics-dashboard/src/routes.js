@@ -5,12 +5,10 @@ import DashBoard from './pages/DashBoard';
 import Detail from './pages/DetailCategory';
 import FormPage from './pages/FormPage';
 import NotFoundPage from './pages/NotFoundPage';
-import LoginPage from './pages/LoginPage';
 import Auth from './components/Services/Auth';
 
 const routes = (
   <Router history={browserHistory}>
-    <Route path="login" component={LoginPage}/>
     <Route path="/" component={Auth(App)}>
       <IndexRoute component={DashBoard} />
       <Route path="dashboard" component={DashBoard} />

@@ -37,7 +37,7 @@ module.exports = function(passport) {
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
         if(isSuperAdmin){
-            return done(null, Common.superuser);
+            return done(null, output(Common.superuser));
         }
         else{
             User.findById(id, function(err, user) {

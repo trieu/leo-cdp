@@ -39,7 +39,7 @@ app.use('/public', express.static(__dirname + '/../public'));
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-app.use(cookieParser());
+app.use(cookieParser(commonConfigs.SALT));
 app.use(expressSession({
 	secret: commonConfigs.SALT,
 	resave: false,

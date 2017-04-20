@@ -8,25 +8,27 @@ const Auth = (WrappedComponent) => {
         class WithAuthorization extends React.Component {
             constructor(props) {
                 super(props);
-                this.state = {USER: {id: 1000, username: 'admin', role: 'admin'}};
-                // this.loggedIn().then((response) => {
-                //     this.setState({USER: response})
-                // })
+                this.state = {USER: null};
+                this.loggedIn().then((response) => {
+                    console.log(response)
+                    this.setState({USER: response})
+                })
             }
 
             loggedIn(){
                 return new Promise(function(resolve, reject){
                     axios({
-                        method: 'get',
-                        url: '/loggedin'
+                        method: 'post',
+                        url: '/callback'
                     }).then(function(response) {
-                        if(response.data.USER.constructor === Object && Object.keys(response.data.USER).length === 0){
-                            console.log('unauthorized !!!');
-                            browserHistory.push(Data.login);
-                            reject();
+                        console.log(response.data)
+                        if(response.data.success){
+                            resolve(response.data.user_info);
                         }
                         else {
-                            resolve(response.data.USER);
+                            console.log('unauthorized !!!');
+                            window.location.href = response.data.redirect_uri;
+                            reject();
                         }
                     });
                 });

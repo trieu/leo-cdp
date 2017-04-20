@@ -47,15 +47,15 @@ function AdsPlayID (server, authServerApp, authUrl, expiryDays) {
     }
     else{
         var loading = document.getElementById('loading-AdsPlayID');
-        document.body.removeChild(loading);
+        that.fadeOut(loading);
     }
 
     window.onclick= function(e, b){
+        var attach = (that.attach == 'user_info') ? '&attach=' + that.user_info : "";
         var dataLogin = document.querySelectorAll(that.login_placement);
         for (var i in dataLogin){
             if (dataLogin.hasOwnProperty(i)) {
                 dataLogin[i].addEventListener('click', function() {
-                    var attach = (that.attach == 'user_info') ? '&attach=' + that.user_info : "";
                     window.location.href = that.server + "login?redirect_uri=" + that.redirect_uri + attach;
                 }, false);
             }
@@ -67,7 +67,8 @@ function AdsPlayID (server, authServerApp, authUrl, expiryDays) {
                 dataLogout[i].addEventListener('click', function() {
                     that.deleteCookie('user_token');
                     that.deleteCookie('user_info');
-                    window.location.href = that.server + "logout";
+                    console.log(that.server + "logout?redirect_uri=" + that.redirect_uri + attach)
+                    window.location.href = that.server + "logout?redirect_uri=" + that.redirect_uri + attach;
                 }, false);
             }
         }
@@ -179,4 +180,18 @@ AdsPlayID.prototype.removeParameterURL = function(parameter, url) {
     } else {
         return url;
     }
+}
+
+AdsPlayID.prototype.fadeOut = function(element, millisecond) {
+    millisecond = millisecond || 80;
+    var op = 1;  // initial opacity
+    var timer = setInterval(function () {
+        if (op <= 0.1){
+            clearInterval(timer);
+            element.style.display = 'none';
+        }
+        element.style.opacity = op;
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        op -= op * 0.1;
+    }, millisecond);
 }

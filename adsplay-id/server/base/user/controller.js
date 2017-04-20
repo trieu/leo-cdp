@@ -167,7 +167,6 @@ exports.loginLocal = function (req, res, next){
 
                     //redirect uri
                     var param_redirect = req.query.redirect_uri;
-
                     if(typeof (param_redirect) === "undefined" || param_redirect == ""){
                         return res.json({ success: true, redirect_uri: '/' }); //redirect home index
                     }
@@ -216,8 +215,9 @@ exports.userInfo = function (req, res, next){
 
 exports.logout = function (req, res, next){
     console.log('log out success !');
+    var redirect_uri = req.originalUrl.replace('/logout','');
     req.logout();
-    return res.redirect('/login');
+    return res.redirect('/login'+redirect_uri);
 }
 
 exports.logoutJSON = function (req, res, next){

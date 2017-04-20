@@ -17,8 +17,7 @@ const data = {
   ],
   pages: [
     { id: 'DashBoard', title: 'Xem báo cáo chi tiết FptPlay Inventory' }
-  ],
-  login: '//id.adsplay.net:4000/login'
+  ]
 };
 
 export default data;

@@ -53,7 +53,7 @@
             data,
             function(data, status){
                 if(data.success){
-                    location.href = data.redirect_uri;
+                    window.location.href = data.redirect_uri;
                 }
                 else{
                     if (window.grecaptcha) grecaptcha.reset();

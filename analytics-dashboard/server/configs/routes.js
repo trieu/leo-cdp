@@ -1,26 +1,25 @@
 var request = require('request');
+var commonConfigs = require('./common.js')(NODE_ENV);
+var params = require('../helpers/params_utils.js');
 module.exports = function(app) {
-
-  //passport
-  var passport = require('passport');
-  app.use(passport.initialize());
-  app.use(passport.session());
-
-  var auth = require('../middlewares/passport_utils.js')(passport);
-  app.get('/loggedin', auth.isLoggedIn);
-  app.post('/login', auth.loginLocal);
-  app.get('/logout', auth.logOut);
-  //end passport
-
+  
+  // set user_info
   app.post('/callback', function(req, res) {
+      var urlApp = req.protocol + '://' + req.get('host');
       var user_token = req.query.access_token || req.cookies['user_token'];
-      console.log(user_token);
-      request('http://id.adsplay.net/userinfo?access_token='+user_token, function (error, response, body) {
+      // console.log('user_token',user_token);
+      // console.log('Cookies: ', req.cookies);
+      request(commonConfigs.sso+'userinfo?access_token='+user_token, function (error, response, body) {
+        console.log(body)
         if(!error){
           var result = JSON.parse(body);
-          console.log(result)
           req.session.user = result.user_info;
-          res.cookie('user_info', 'value', {maxAge : 9999});
+          // set cookie if need
+          // res.cookie('user_info', JSON.stringify(result.user_info), { signed: false, encode: String, maxAge: commonConfigs.session });
+          return res.json(result);
+        }
+        else{
+          return res.json({success: false, redirect_uri: commonConfigs.sso+'login?redirect_uri='+urlApp});
         }
       });
   });
