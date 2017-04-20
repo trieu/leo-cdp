@@ -43,7 +43,7 @@ function AdsPlayID (server, authServerApp, authUrl, expiryDays) {
             return window.location.href = that.redirect_uri;
         }
         
-        return window.location.href = this.server + "login?redirect_uri=" + that.redirect_uri;
+        return window.location.href = that.server + "login?redirect_uri=" + that.redirect_uri;
     }
     else{
         var loading = document.getElementById('loading-AdsPlayID');
@@ -56,7 +56,7 @@ function AdsPlayID (server, authServerApp, authUrl, expiryDays) {
             if (dataLogin.hasOwnProperty(i)) {
                 dataLogin[i].addEventListener('click', function() {
                     var attach = (that.attach == 'user_info') ? '&attach=' + that.user_info : "";
-                    window.location.href = this.server + "login?redirect_uri=" + that.redirect_uri + attach;
+                    window.location.href = that.server + "login?redirect_uri=" + that.redirect_uri + attach;
                 }, false);
             }
         }
@@ -67,7 +67,7 @@ function AdsPlayID (server, authServerApp, authUrl, expiryDays) {
                 dataLogout[i].addEventListener('click', function() {
                     that.deleteCookie('user_token');
                     that.deleteCookie('user_info');
-                    window.location.href = this.server + "logout";
+                    window.location.href = that.server + "logout";
                 }, false);
             }
         }

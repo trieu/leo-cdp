@@ -11,6 +11,7 @@ var User = require('./controller');
     app.get('/', User.index);
 
     app.get('/logout', User.logout);
+    app.get('/logoutJSON', User.logoutJSON);
     app.get('/userinfo', User.userInfo); //get user info from token
 
     /**

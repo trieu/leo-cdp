@@ -215,6 +215,12 @@ exports.userInfo = function (req, res, next){
 }
 
 exports.logout = function (req, res, next){
+    console.log('log out success !');
+    req.logout();
+    return res.redirect('/login');
+}
+
+exports.logoutJSON = function (req, res, next){
     req.logout();
     return res.json({ success: true, message: "log out success !!" });
 }
