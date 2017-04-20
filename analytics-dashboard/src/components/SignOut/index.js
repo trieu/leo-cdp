@@ -6,23 +6,11 @@ import MenuItem from 'material-ui/MenuItem';
 class SignOut extends React.Component {
     constructor(props) {
         super(props);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleSubmit(event) {
-        event.preventDefault();
-        axios({
-            method: 'get',
-            url: '/logout'
-        })
-        .then(function(response) {
-            browserHistory.push('/login');
-        });
     }
 
     render() {
         return (
-            <MenuItem primaryText={this.props.text} onClick={this.handleSubmit}/>
+            <MenuItem primaryText={this.props.text} data-logout/>
         );
     };
 }

@@ -1,17 +1,17 @@
 import React, { PropTypes } from 'react';
 import axios from 'axios';
 import {browserHistory} from 'react-router';
+import Data from '../../data';
 
 const Auth = (WrappedComponent) => {
     return (
         class WithAuthorization extends React.Component {
             constructor(props) {
                 super(props);
-                this.state = {};
-                
-                this.loggedIn().then((response) => {
-                    this.setState({USER: response})
-                })
+                this.state = {USER: {id: 1000, username: 'admin', role: 'admin'}};
+                // this.loggedIn().then((response) => {
+                //     this.setState({USER: response})
+                // })
             }
 
             loggedIn(){
@@ -22,7 +22,7 @@ const Auth = (WrappedComponent) => {
                     }).then(function(response) {
                         if(response.data.USER.constructor === Object && Object.keys(response.data.USER).length === 0){
                             console.log('unauthorized !!!');
-                            browserHistory.push('/login');
+                            browserHistory.push(Data.login);
                             reject();
                         }
                         else {

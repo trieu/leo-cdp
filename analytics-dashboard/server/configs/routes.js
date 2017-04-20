@@ -1,4 +1,4 @@
-
+var request = require('request');
 module.exports = function(app) {
 
   //passport
@@ -12,7 +12,19 @@ module.exports = function(app) {
   app.get('/logout', auth.logOut);
   //end passport
 
-  
+  app.post('/callback', function(req, res) {
+      var user_token = req.query.access_token || req.cookies['user_token'];
+      console.log(user_token);
+      request('http://id.adsplay.net/userinfo?access_token='+user_token, function (error, response, body) {
+        if(!error){
+          var result = JSON.parse(body);
+          console.log(result)
+          req.session.user = result.user_info;
+          res.cookie('user_info', 'value', {maxAge : 9999});
+        }
+      });
+  });
+
   // app.use((req, res, next) => {
   //   console.log(' ====== DEBUG ====== '); // DEBUG
   //   next();

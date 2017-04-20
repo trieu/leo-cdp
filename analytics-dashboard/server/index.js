@@ -43,7 +43,10 @@ app.use(cookieParser());
 app.use(expressSession({
 	secret: commonConfigs.SALT,
 	resave: false,
-	saveUninitialized: false
+	saveUninitialized: false,
+	cookie :{ 
+		path: '/', httpOnly: true, maxAge: commonConfigs.session
+	}
 }));
 //app.use(morgan('dev'));
 app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal']);
