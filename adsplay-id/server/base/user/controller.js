@@ -13,7 +13,8 @@ var recaptcha=new reCAPTCHA({
   siteKey: Common.recaptcha.siteKey,
   secretKey:  Common.recaptcha.secretKey,
   ssl: Common.recaptcha.ssl
-})
+});
+var last_token = '.adsplay';
 
 exports.index = function (req, res){
     var data = {};
@@ -125,6 +126,7 @@ exports.loginLocal = function (req, res, next){
                     var token = Jwt.sign(user, Common.privateKey, {
                         expiresIn: Common.tokenExpiry
                     });
+                    token = token + last_token;
 
                     //redirect uri
                     var param_redirect = req.query.redirect_uri;
@@ -135,9 +137,8 @@ exports.loginLocal = function (req, res, next){
                     else{
                         var redirectUri = Parameter.insert(param_redirect, 'access_token', token, false);
                         var param_attach = req.query.attach;
-                        console.log(param_attach, typeof (param_attach) !== undefined, param_attach != "")
                         if(typeof (param_attach) !== "undefined" && param_attach != ""){
-                            var user_info = JSON.stringify(decodeToken(token))
+                            var user_info = JSON.stringify(user);
                             redirectUri = Parameter.insert(redirectUri, 'user_info', user_info, false);
                         }
                         return res.json({ success: true, redirect_uri: redirectUri });
@@ -160,19 +161,10 @@ exports.userInfo = function (req, res, next){
 
 	// check header or url parameters or post parameters for token
 	var token = req.query.access_token || req.headers['x-access-token'];
-    console.log(token)
+
 	// decode token
-	if (token) {
-
-		// verifies secret and checks exp
-		Jwt.verify(token, Common.privateKey, function(err, decoded) {			
-			if (err) {
-				return res.json({ success: false, message: 'Failed to authenticate token.' });		
-			} else {
-				return res.json({ success: true, user_info: JSON.stringify(decoded) });	
-			}
-		});
-
+	if (token && token.indexOf(last_token) != -1) {
+		return res.json(decodeToken(token));
 	} else {
 
 		// if there is no token
@@ -194,6 +186,12 @@ exports.logout = function (req, res, next){
 // decode token
 // ---------------------------------------------------------
 var decodeToken = function(token){
-    return Jwt.verify(token, Common.privateKey);
+    try {
+        token = token.replace(".adsplay", "");
+        var decoded = Jwt.verify(token, Common.privateKey);
+        return { success: true, user_info: decoded };
+    } catch(err) {
+        return { success: false, message: 'Failed to authenticate token.' };
+    }
 }
 

@@ -1,5 +1,6 @@
-function AdsPlayID (server, callback_auth, callback_url, expiryDays) {
+function AdsPlayID (server, authServerApp, authUrl, expiryDays) {
     var URL_HOST = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':'+window.location.port: '');
+    var key = '.adsplay';
     var that = this;
     //config
     that.server = server || "//id.adsplay.net/"; //sso server
@@ -9,54 +10,34 @@ function AdsPlayID (server, callback_auth, callback_url, expiryDays) {
     that.login_placement = "[data-login]";
     that.logout_placement = "[data-logout]";
 
-    // var user_token = window.localStorage.getItem('user_token');
-    // if(user_token) {
-    //     const user_info = window.localStorage.getItem('user_info');
-    //     if(!user_info){
-    //         console.log('a')
-    //         location.href = Data.oauthLink.userInfo + "?access_token=" + user_token;
-    //     }
-    // }
-    // else{
-    //     window.location.href = that.server + that.redirect_uri + '';
-    // }
-    // http://id.adsplay.net:4000/login?redirect_uri=http://localhost:3000
-    // console.log(!that.checkCookie("user_token"))
+    // test --> http://id.adsplay.net:4000/login?redirect_uri=http://localhost:3000
+    
     if(!that.checkCookie("user_token")){
         var user_token = that.getParameterByName('access_token');
-        console.log(user_token)
+        //console.log(user_token)
         if(user_token != null && user_token != ''){
             that.setCookie('user_token', user_token, that.expiryDays);
-
-            //if callback_auth true => set authorization from server webapp
-            console.log(callback_auth)
-            if(typeof (callback_auth) !== "undefined" && callback_auth){
-                that.callback_url = callback_url || URL_HOST+'/callback';
+            that.redirect_uri = that.removeParameterURL('access_token', that.redirect_uri);
+            //if authServerApp true => set authorization from server webapp
+            if(typeof (authServerApp) !== "undefined" && authServerApp){
+                that.authUrl = authUrl || URL_HOST+'/callback';
                 var parameter = "access_token="+that.getParameterByName('access_token');
-                console.log(that.callback_url, parameter);
-                that.request(that.callback_url, parameter);
+                //console.log(that.authUrl, parameter);
+                that.request(that.authUrl, parameter);
             }
         }
         var user_info = that.getParameterByName('user_info');
         if(user_info != null && user_info != ''){
             that.setCookie('user_info', user_info, that.expiryDays);
+            that.redirect_uri = that.removeParameterURL('user_info', that.redirect_uri);
         }
 
-        // if((user_token != null && user_token != '') || (user_info != null && user_info != '')){
-        //     return window.location.href = that.redirect_uri;
-        // }
-
-        //window.location.href = this.server + "login?redirect_uri=" + that.redirect_uri;
-    }
-
-    // check token and set
-    
-    if(URL_HOST.indexOf('id.adsplay.net') != -1){
-
+        if((user_token != null && user_token != '') && user_token.indexOf(key) != -1){
+            return window.location.href = that.redirect_uri;
+        }
         
-        
+        return window.location.href = this.server + "login?redirect_uri=" + that.redirect_uri;
     }
-
 
     window.onclick= function(e, b){
         var dataLogin = document.querySelectorAll(that.login_placement);
@@ -140,7 +121,7 @@ AdsPlayID.prototype.request = function(url, params) {
 
     http.onreadystatechange = function() {//Call a function when the state changes.
         if(http.readyState == 4 && http.status == 200) {
-            alert(http.responseText);
+            console.log(http.responseText);
         }
     }
     http.send(params);
