@@ -56,7 +56,7 @@ User.statics = {
         this.create(obj, callback);
     },
     findUserUpdate: function(query, user, callback) {
-        this.findOneAndUpdate(query, {$set: user}, {new: true}, callback);
+        this.findOneAndUpdate(query, {$set: user}, callback);
     },
     updateUser: function(user, callback) {
         user.save(callback);

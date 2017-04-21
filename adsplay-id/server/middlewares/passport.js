@@ -59,7 +59,7 @@ module.exports = function(passport) {
         passReqToCallback : true // allows us to pass back the entire request to the callback
     },
     function(req, username, password, done) { // callback with email and password from our form
-
+        isSuperAdmin = false;
         //login with super user
         if(username == Common.superuser.username && password == Common.superuser.password){
             //console.log('is superadmin login');

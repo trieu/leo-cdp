@@ -23,7 +23,8 @@ exports.index = function (req, res){
     if(req.user){
         data.USER = req.user;
         data.isSuperAdmin = data.USER.roles['superadmin'];
-        if(req.user.roles['superadmin']){
+        //console.log(data.USER, data.isSuperAdmin)
+        if(data.isSuperAdmin){
             User.find({})
                 .exec(function(err, user){
                     //console.log(err, user)
@@ -101,11 +102,22 @@ exports.newPassword = function (req, res){
 
 exports.save = function (req, res){
     var data = {};
+    
     if(req.body.password){
         req.body.password = Encryption.hash(req.body.password);
     }
+    if(req.body.roles){
+        var roles = {};
+        var regex = /^[a-zA-Z\-]+$/;
+        for(var i in req.body.roles){
+            if(i.match(regex)){
+                roles[i] = true;
+            }
+        }
+        req.body.roles = roles;
+    }
     data = req.body;
-    //console.log(data)
+    
     User.findUserUpdate({"_id": req.body._id}, data, function(err, user){
         if(err){
             return res.json({success: false, message: "Error! update"});
