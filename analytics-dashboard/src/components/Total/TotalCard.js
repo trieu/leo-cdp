@@ -15,7 +15,7 @@ class TotalCard extends React.Component{
 
                     <div style={globalStyles.clear}/>
                     
-                    <span style={globalStyles.title}>{this.props.value}</span>
+                    <span style={globalStyles.title}>{this.props.value.toLocaleString()}</span>
                 </Paper>
             </div>
         )

@@ -944,3 +944,6 @@ body {
 .ReactTable {
     font-family: sans-serif;
 }
+.ReactTable .rt-tbody .rt-td:first-child {
+    text-align: left;
+}
