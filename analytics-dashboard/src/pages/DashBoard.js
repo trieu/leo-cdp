@@ -23,9 +23,10 @@ class DashboardPage extends React.Component{
       var beginDate = new Date(moment().subtract(7, 'days').format('YYYY-MM-DD'));
 
       let name = props.USER.username;
+      let roles = props.USER.roles;
       let disabled = true;
       let sourceMedia = "danet-mienphi";
-      if(name.indexOf("admin") != -1){
+      if(roles["admin"] || roles["superadmin"]){
         sourceMedia = "all";
         disabled = false;
       }

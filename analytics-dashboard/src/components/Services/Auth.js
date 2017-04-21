@@ -10,7 +10,7 @@ const Auth = (WrappedComponent) => {
                 super(props);
                 this.state = {USER: null};
                 this.loggedIn().then((response) => {
-                    console.log(response)
+                    //console.log(response)
                     this.setState({USER: response})
                 })
             }
@@ -21,7 +21,7 @@ const Auth = (WrappedComponent) => {
                         method: 'post',
                         url: '/callback'
                     }).then(function(response) {
-                        console.log(response.data)
+                        //console.log(response.data)
                         if(response.data.success){
                             resolve(response.data.user_info);
                         }

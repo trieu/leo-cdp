@@ -7,10 +7,9 @@ module.exports = function(app) {
   app.post('/callback', function(req, res) {
       var urlApp = req.protocol + '://' + req.get('host');
       var user_token = req.query.access_token || req.cookies['user_token'];
-      // console.log('user_token',user_token);
-      // console.log('Cookies: ', req.cookies);
+      
       request(commonConfigs.sso+'userinfo?access_token='+user_token, function (error, response, body) {
-        console.log(body)
+        //console.log(body)
         if(!error){
           var result = JSON.parse(body);
           req.session.user = result.user_info;
