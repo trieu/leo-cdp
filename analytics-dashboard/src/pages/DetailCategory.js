@@ -18,13 +18,16 @@ class DetailCategory extends React.Component{
       var beginDate = new Date(moment().subtract(7, 'days').format('YYYY-MM-DD'));
 
       let name = props.USER.username;
+      let roles = props.USER.roles;
       let disabled = true;
       let sourceMedia = "danet-mienphi";
-      if(name.indexOf("admin") != -1){
-        sourceMedia = "all";
-        disabled = false;
+      if(typeof (roles) !== "undefined"){
+        if(roles["admin"] || roles["superadmin"]){
+          sourceMedia = "all";
+          disabled = false;
+        }
       }
-
+      
       //console.log(sourceMedia)
       this.state = {
           USER: props.USER,

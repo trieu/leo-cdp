@@ -9,6 +9,6 @@ module.exports = function(env) {
 		SALT: 'adsplay$123*&^mvc@#!',
 		session: 48*60*60*1000, //2 day
 		dbUrl: dbConfigs.url,
-		sso: 'http://id.adsplay.net:4000/',
+		sso: 'http://id.adsplay.net/',
 	}
 };

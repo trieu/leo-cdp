@@ -36,11 +36,9 @@ export function fetchTotal(sourceMedia, beginDate, endDate) {
                     }
         })
 
-        console.log(url)
         return axios.get(url)
                 .then(function (response) {
                     var result = response.data;
-                    console.log(result)
                     dispatch({
                         type: TOTAL,
                         payload: {sum: result}

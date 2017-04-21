@@ -23,11 +23,13 @@ class DashboardPage extends React.Component{
       let roles = props.USER.roles;
       let disabled = true;
       let sourceMedia = "danet-mienphi";
-      if(roles["admin"] || roles["superadmin"]){
-        sourceMedia = "all";
-        disabled = false;
+      if(typeof (roles) !== "undefined"){
+        if(roles["admin"] || roles["superadmin"]){
+          sourceMedia = "all";
+          disabled = false;
+        }
       }
-
+      
       //console.log(sourceMedia)
       this.state = {
           USER: props.USER,
