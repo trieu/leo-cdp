@@ -65,8 +65,6 @@ class DashboardPage extends React.Component{
 
     return (
       <div>
-        <h3 style={globalStyles.navigation}>Application / Dashboard</h3>
-
         {titlePage}
 
         <div className="row middle-xs">

@@ -19,8 +19,10 @@ var last_token = '.adsplay';
 exports.index = function (req, res){
     var data = {};
     data.pageTitle = "Home Page";
-    data.USER = req.user;
+    
     if(req.user){
+        data.USER = req.user;
+        data.isSuperAdmin = data.USER.roles['superadmin'];
         if(req.user.roles['superadmin']){
             User.find({})
                 .exec(function(err, user){
@@ -38,7 +40,7 @@ exports.index = function (req, res){
         }
     }
     else{
-        res.render('index', data);
+        res.redirect('/login');
     }
 };
 

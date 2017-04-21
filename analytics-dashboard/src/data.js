@@ -12,11 +12,12 @@ const data = {
   appTitle: "Adsplay Analytics",
   profileName: "Admin",
   menus: [
-    { text: 'DashBoard', icon: <Assessment/>, link: '/dashboard' },
-    // { text: 'Form Page', icon: <Web/>, link: '/form' }
+    { text: 'Báo cáo tổng quát', icon: <Assessment/>, link: '/dashboard' },
+    { text: 'Báo cáo chi tiết', icon: <Web/>, link: '/detail' }
   ],
   pages: [
-    { id: 'DashBoard', title: 'Xem báo cáo chi tiết FptPlay Inventory' }
+    { id: 'DashBoard', title: 'Xem báo cáo chi tiết FptPlay Inventory' },
+    { id: 'VOD', title: 'Xem báo cáo chi tiết FptPlay Inventory VOD' }
   ]
 };
 

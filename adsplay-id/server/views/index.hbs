@@ -4,14 +4,15 @@
     </div>
 </div>
 
-{{#if userInfo}}
+{{#if isSuperAdmin}}
 <div class="row">
     <div class="col s12">
         <a href="/register">
-            <i class="material-icons" style="vertical-align: bottom;">perm_identity</i> register
+            <i class="material-icons" style="vertical-align: bottom;">perm_identity</i> Register
         </a>
     </div>
 </div>
+{{#if userInfo}}
 <div class="row">
     <div class="col s12">
         <table class="responsive-table highlight">
@@ -44,12 +45,5 @@
         </table>
     </div>
 </div>
-{{else}}
-<div class="row">
-    <div class="col s12">
-        <a href="/login">
-            <i class="material-icons" style="vertical-align: bottom;">https</i> Login
-        </a>
-    </div>
-</div>
+{{/if}}
 {{/if}}

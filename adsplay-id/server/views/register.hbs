@@ -44,6 +44,9 @@
             function(data, status){
                 var alert = (data.success) ? 'alert-success' : 'alert-danger';
                 $('#message').html('<div class="alert '+alert+' m-t-15">'+data.message+'</div>');
+                setTimeout(function(){
+                    window.location.href = '/';
+                },1000)
             });
         });
 
