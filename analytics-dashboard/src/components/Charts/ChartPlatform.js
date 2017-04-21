@@ -25,12 +25,6 @@ class ChartPlatform extends React.Component{
         }
     }
 
-    componentWillUpdate(nextProps, nextState) {
-        if(this.props.sum != nextProps.sum){
-            this.props.getSum(nextProps.sum);
-        }
-    }
-
     dataSource(props){
         props = props || this.props;
         let beginDate = moment(props.beginDate).format('YYYY-MM-DD');
@@ -64,7 +58,7 @@ class ChartPlatform extends React.Component{
 }
 
 function mapStateToProps(state) {
-  return { data: state.charts.platform, loading: state.charts.loading_platform, sum: state.charts.sum};
+  return { data: state.charts.platform, loading: state.charts.loading_platform};
 }
 
 export default connect(mapStateToProps, { fetchPlatform })(ChartPlatform);

@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import globalStyles from '../../styles';
 import Paper from 'material-ui/Paper';
 
-class SummaryChartPlatform extends React.Component{
+class TotalCard extends React.Component{
 
     constructor(props) {
         super(props);
@@ -11,7 +11,7 @@ class SummaryChartPlatform extends React.Component{
         return (
             <div>
                 <Paper style={globalStyles.paper}>
-                    <span style={globalStyles.caption}>Total playview</span>
+                    <span style={globalStyles.caption}>{this.props.title}</span>
 
                     <div style={globalStyles.clear}/>
                     
@@ -23,4 +23,4 @@ class SummaryChartPlatform extends React.Component{
 
 
 }
-export default SummaryChartPlatform;
+export default TotalCard;
