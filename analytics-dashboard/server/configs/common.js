@@ -5,10 +5,11 @@ module.exports = function(env) {
 	var dbConfigs = require('./database');
 
 	return {
-        port: 3000,
-		SALT: 'adsplay$123*&^mvc@#!',
-		session: 48*60*60*1000, //2 day
-		dbUrl: dbConfigs.url,
-		sso: 'http://id.adsplay.net/',
-	}
+        port: 9881,
+                SALT: 'adsplay$123*&^mvc@#!',
+                session: 48*60*60*1000, //2 day
+                dbUrl: dbConfigs.url,
+                sso: 'http://id.adsplay.net/',
+        }
+
 };
