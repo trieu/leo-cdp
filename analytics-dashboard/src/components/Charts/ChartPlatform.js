@@ -38,8 +38,8 @@ class ChartPlatform extends React.Component{
             <div>
                 <NVD3Chart
                     id="chart"
-                    width="600"
-                    height="470"
+                    width={600}
+                    height={470}
                     type="pieChart"
                     datum={this.props.data}
                     x="key"

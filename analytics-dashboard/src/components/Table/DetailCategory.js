@@ -35,7 +35,10 @@ class Category extends React.Component {
     render() {
         const columns = [{
                 header: 'Name',
-                accessor: 'name'
+                accessor: 'name',
+                render: row => {
+                    return <span title={row.value}>{row.value}</span>
+                }
             },
             {
                 header: 'Category',
@@ -72,6 +75,7 @@ class Category extends React.Component {
                         data = { this.props.data }
                         columns = { columns }
                         defaultPageSize = { 20 }
+                        resizable={true}
                     />
                 </div>
             </div>
