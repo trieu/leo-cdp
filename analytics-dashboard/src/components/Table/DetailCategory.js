@@ -35,10 +35,12 @@ class Category extends React.Component {
     render() {
         const columns = [{
                 header: 'Name',
-                accessor: 'name',
+                id: 'name',
+                accessor: d => d.name,
                 render: row => {
                     return <span title={row.value}>{row.value}</span>
-                }
+                },
+                filterMethod: (filter, row) => (row[filter.id].includes(filter.value))
             },
             {
                 header: 'Category',
@@ -76,6 +78,7 @@ class Category extends React.Component {
                         columns = { columns }
                         defaultPageSize = { 20 }
                         resizable={true}
+                        showFilters={true}
                     />
                 </div>
             </div>

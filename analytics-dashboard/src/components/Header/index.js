@@ -7,7 +7,6 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Menu from 'material-ui/svg-icons/navigation/menu';
 import ViewModule from 'material-ui/svg-icons/action/view-module';
 import {white} from 'material-ui/styles/colors';
-import SearchBox from '../SearchBox/index';
 import SignOut from '../SignOut/index';
 
 class Header extends React.Component {
@@ -34,9 +33,6 @@ class Header extends React.Component {
         <div>
             <AppBar
               style={{...styles, ...style.appBar}}
-              title={
-                <SearchBox />
-              }
               iconElementLeft={
                   <IconButton style={style.menuButton} onClick={handleChangeRequestNavDrawer}>
                     <Menu color={white} />

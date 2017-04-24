@@ -1,9 +1,10 @@
 /*The loai phim*/
 import React, {Component, PropTypes} from 'react';
+import ReactDOM from 'react-dom';
+import _ from 'lodash';
 import NVD3Chart from "react-nvd3";
 import moment from 'moment';
 import Loading from '../Loading/LoadingPager';
-import _ from "lodash";
 
 import { connect } from 'react-redux';
 import { fetchCategory } from './_Action';
@@ -12,11 +13,24 @@ class ChartCategory extends React.Component{
 
     constructor(props) {
         super(props);
+        this.state = {
+            width: 600,
+            height: 460
+        }
     }
 
     componentWillMount() {
         this.dataSource();
     }
+
+    componentDidMount () {
+        var that = this;
+        var width = (ReactDOM.findDOMNode(that).offsetWidth > 600) ? 600 : ReactDOM.findDOMNode(that).offsetWidth;
+        that.setState({width: width});
+		window.addEventListener('resize', _.debounce(function(){
+            that.setState({width: ReactDOM.findDOMNode(that).offsetWidth});
+        }, 200), true);
+	}
 
     componentWillReceiveProps(nextProps) {
         if(this.props.sourceMedia != nextProps.sourceMedia
@@ -39,8 +53,8 @@ class ChartCategory extends React.Component{
             <div>
                 <NVD3Chart
                     id="chart"
-                    width={600}
-                    height={470}
+                    width={this.state.width}
+                    height={this.state.height}
                     type="pieChart"
                     datum={this.props.data}
                     x="key"

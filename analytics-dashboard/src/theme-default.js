@@ -9,7 +9,7 @@ const themeDefault = getMuiTheme({
     color: blue600
   },
   drawer: {
-    width: 230,
+    width: 180,
     color: grey900
   },
   raisedButton: {

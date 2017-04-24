@@ -33,7 +33,7 @@ class App extends React.Component {
 
   render() {
     let { navDrawerOpen } = this.state;
-    const paddingLeftDrawerOpen = 236;
+    const paddingLeftDrawerOpen = 186;
 
     const styles = {
       header: {

@@ -1,5 +1,7 @@
 /*Thiet bi*/
 import React, {Component, PropTypes} from 'react';
+import ReactDOM from 'react-dom';
+import _ from 'lodash';
 import NVD3Chart from "react-nvd3";
 import moment from 'moment';
 import Loading from '../Loading/LoadingPager';
@@ -11,11 +13,24 @@ class ChartPlatform extends React.Component{
 
     constructor(props) {
         super(props);
+        this.state = {
+            width: 600,
+            height: 460
+        }
     }
 
     componentWillMount() {
         this.dataSource();
     }
+
+    componentDidMount () {
+        var that = this;
+        var width = (ReactDOM.findDOMNode(that).offsetWidth > 600) ? 600 : ReactDOM.findDOMNode(that).offsetWidth;
+        that.setState({width: width});
+		window.addEventListener('resize', _.debounce(function(){
+            that.setState({width: ReactDOM.findDOMNode(that).offsetWidth});
+        }, 200), true);
+	}
 
     componentWillReceiveProps(nextProps) {
         if(this.props.sourceMedia != nextProps.sourceMedia
@@ -35,11 +50,11 @@ class ChartPlatform extends React.Component{
 
     render() {
         return (
-            <div>
+            <div id="chartPlatform">
                 <NVD3Chart
                     id="chart"
-                    width={600}
-                    height={470}
+                    width={this.state.width}
+                    height={this.state.height}
                     type="pieChart"
                     datum={this.props.data}
                     x="key"

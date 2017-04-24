@@ -11,7 +11,7 @@ const LeftDrawer = (props) => {
   const styles = {
     logo: {
       cursor: 'pointer',
-      fontSize: 22,
+      fontSize: 19,
       textAlign: 'center',
       color: typography.textFullWhite,
       fontWeight: typography.fontWeightLight,
@@ -68,6 +68,7 @@ const LeftDrawer = (props) => {
               primaryText={menu.text}
               leftIcon={menu.icon}
               containerElement={<Link to={menu.link}/>}
+              innerDivStyle={{padding: '0 10px 0 50px'}}
             />
           )}
         </div>
