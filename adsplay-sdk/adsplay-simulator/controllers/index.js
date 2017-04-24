@@ -20,7 +20,7 @@ module.exports = function (app) {
         res.render('ad-demo/mobile-masthead', data);
     });
 
-     app.route('/banner').get(function (req, res) {
+    app.route('/banner').get(function (req, res) {
         var data = {};
         data.head_title = "Demo ad banner";
         res.render('ad-demo/display-ad-banner', data);
@@ -46,6 +46,12 @@ module.exports = function (app) {
         data.min = "";
         data.version = "";
         res.render('ad-demo/display-ad-masthead-mobile', data);
+    });
+
+    app.route('/epl-demo').get(function (req, res) {
+        var data = {};
+        data.head_title = "Demo EPL page";
+        res.render('ad-demo/epl-demo-view', data);
     });
    
     app.route('/*').get(function (req, res) {

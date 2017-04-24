@@ -580,42 +580,46 @@ if (!window.AdsPlayBannerReady) {
 
             function eventVideo(videoWrap) {
                 var video = videoWrap.querySelector('video');
-                video.addEventListener('loadstart', function () {
-                    setTimeout(function() {
-                        video.play();
-                    }, delay);
-                }, false);
+                if(video){
+                    video.addEventListener('loadstart', function () {
+                        setTimeout(function() {
+                            video.play();
+                        }, delay);
+                    }, false);
 
-                // click href video
-                var href = videoWrap.querySelector('a').getAttribute('href');
+                    // click href video
+                    var href = videoWrap.querySelector('a').getAttribute('href');
 
-                video.addEventListener("click", function(){
-                    window.open(href);
-                }, false);
+                    video.addEventListener("click", function(){
+                        window.open(href);
+                    }, false);
+                }
 
                 // video.addEventListener('canplay', ePlay(videoWrap), false);
             }
 
             function eventBehaviour(videoWrap){
-                
-                videoWrap.querySelector(".volume").addEventListener("click", function() {
-                    if (this.classList.contains('active')) {
-                        this.classList.remove("active");
-                        this.style.backgroundImage = 'url(' + volume_off + ')';
-                        videoWrap.querySelector("video").muted = true;
-                    } else {
-                        this.classList.add("active");
-                        this.style.backgroundImage = 'url(' + volume_on + ')';
-                        videoWrap.querySelector("video").muted = false;
-                    }
-                });
+                var video = videoWrap.querySelector('video');
+                if(video){
+                    videoWrap.querySelector(".volume").addEventListener("click", function() {
+                        if (this.classList.contains('active')) {
+                            this.classList.remove("active");
+                            this.style.backgroundImage = 'url(' + volume_off + ')';
+                            video.muted = true;
+                        } else {
+                            this.classList.add("active");
+                            this.style.backgroundImage = 'url(' + volume_on + ')';
+                        video.muted = false;
+                        }
+                    });
+                }
 
             }
 
             //web
             if (data.placementId < 300) {
                 var videoWrap = renderMastheadWeb(data);
-                window.addEventListener('DOMContentLoaded', eventVideo(videoWrap), false);
+                window.addEventListener('DOMContentLoaded', eventVideo(videoWrap) , false);
                 eventBehaviour(videoWrap);
 
                 return videoWrap;
@@ -638,13 +642,13 @@ if (!window.AdsPlayBannerReady) {
             var div = document.createElement('div');
             var width = (data.width) ? data.width+'px' : '100%';
             var height = (data.height) ? data.height+'px' : '100%';
+            var hasVideo = data.adMedia != "";
 
-            var background = 'background-color: #000;',
-                poster = "";
+            var background = 'background-color: #000;',  poster = "";
             if(data.background){
                 if(data.background.indexOf('//') != -1){
-                    background = 'background-image: url("' + data.background + '")';
-                    poster= 'poster:"' + data.background + '"';
+                    background = 'background-image: url("' + data.background + '");';
+                    poster= 'poster:"' + data.background + '"';                    
                 }
                 else{
                    background = data.background; 
@@ -666,7 +670,8 @@ if (!window.AdsPlayBannerReady) {
             bgImage.setAttribute('target', '_blank');
             bgImage.setAttribute('id', 'adsplay-click-handle-' + adId);
             bgImage.setAttribute('onclick', 'AdsPlayBanner.handleAdClick(' + adId + ')');
-            bgImage.style.cssText = background +
+            
+            var bgImageCss = background +
                 'background-repeat: no-repeat;' +
                 'background-position: center center;' +
                 'background-size: cover;' +
@@ -676,34 +681,39 @@ if (!window.AdsPlayBannerReady) {
                 'position: absolute;' +
                 'top: 0;' +
                 'left: 0;';
-            /**
-             * video element
-             */
-            var v = document.createElement('div');
-            v.className = 'video';
-            v.style.cssText = 'position:absolute; ' + data.styleAttr;
-            //video inner
-            var vIframe = '';
-            if (typeof(data.adMedia) != 'undefined' &&
-                (data.adMedia.indexOf('youtu.be') == -1 || data.adMedia.indexOf('youtube') == -1)) {
-                vIframe = '<video width="100%" height="100%" '+poster+' loop preload="auto" muted onclick="AdsPlayBanner.handleAdClick('+data.adId+')"><source src="' + data.adMedia + '" type="video/mp4"></video>';
-            } else {
-                var options = '&';
-                if (data.adMedia.indexOf('?') != -1) {
-                    options = '?';
+            bgImage.style.cssText = bgImageCss;
+
+            if(hasVideo){
+                /**
+                 * video element
+                 */
+                var v = document.createElement('div');
+                v.className = 'video';
+                v.style.cssText = 'position:absolute; ' + data.styleAttr;
+                //video inner
+                var vIframe = '';
+                if (typeof(data.adMedia) != 'undefined' &&
+                    (data.adMedia.indexOf('youtu.be') == -1 || data.adMedia.indexOf('youtube') == -1)) {
+                    vIframe = '<video width="100%" height="100%" '+poster+' loop preload="auto" muted onclick="AdsPlayBanner.handleAdClick('+data.adId+')"><source src="' + data.adMedia + '" type="video/mp4"></video>';
+                } else {
+                    var options = '&';
+                    if (data.adMedia.indexOf('?') != -1) {
+                        options = '?';
+                    }
+                    options += 'rel=0&enablejsapi=1&autoplay=1&loop=1&iv_load_policy=3';
+                    vIframe = '<iframe frameborder="0" allowfullscreen="1" width="100%" height="100%" src="' + data.adMedia + options + '"></iframe>';
                 }
-                options += 'rel=0&enablejsapi=1&autoplay=1&loop=1&iv_load_policy=3';
-                vIframe = '<iframe frameborder="0" allowfullscreen="1" width="100%" height="100%" src="' + data.adMedia + options + '"></iframe>';
+                v.innerHTML += vIframe;
+                /**
+                 * volume
+                 */
+                var volumeStyle = 'position: absolute; top: 0; left: 0; z-idex: 999; width: 36pt; height: 36pt; opacity: 0.6;' +
+                    'background-image: url(' + volume_off + '); background-color: rgba(0, 0, 0, 0.2);' +
+                    'background-repeat: no-repeat; background-size: contain;';
+                var volume = '<div class="volume" style="' + volumeStyle + '">';
+                v.innerHTML += volume;
             }
-            v.innerHTML += vIframe;
-            /**
-             * volume
-             */
-            var volumeStyle = 'position: absolute; top: 0; left: 0; z-idex: 999; width: 36pt; height: 36pt; opacity: 0.6;' +
-                'background-image: url(' + volume_off + '); background-color: rgba(0, 0, 0, 0.2);' +
-                'background-repeat: no-repeat; background-size: contain;';
-            var volume = '<div class="volume" style="' + volumeStyle + '">';
-            v.innerHTML += volume;
+
 
             /**
              * brand element
@@ -733,7 +743,9 @@ if (!window.AdsPlayBannerReady) {
              * append into element root
              */
             div.appendChild(bgImage);
-            div.appendChild(v);
+            if(hasVideo){
+                div.appendChild(v);
+            }
             div.appendChild(brand);
             /**
              * close element
