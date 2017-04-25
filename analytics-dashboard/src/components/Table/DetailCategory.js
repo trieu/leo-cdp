@@ -51,7 +51,7 @@ class Category extends React.Component {
                 accessor: 'playview'
             },
             {
-                header: 'Impression',
+                header: 'Impression phát sinh',
                 accessor: 'impression'
             },
             {
@@ -64,7 +64,7 @@ class Category extends React.Component {
                 accessor: 'click'
             },
             {
-                header: 'Revenue',
+                header: 'Doanh thu ước tính',
                 accessor: 'revenue'
             }
         ]

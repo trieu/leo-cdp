@@ -35,17 +35,23 @@ class TotalAll extends React.Component{
     render() {
         return (
             <div className="row middle-xs">
-                <div className="col-xs-12 col-sm-12 col-md-3 m-b-15 ">
-                    <TotalCard title="Total playview" value={this.props.sum.sumPlayView} sourceMedia={this.props.sourceMedia} endDate={this.props.endDate} beginDate={this.props.beginDate} />
+                <div className="col-xs-12 col-sm-6 col-md-4 col-lg-2 m-b-15 ">
+                    <TotalCard title="Tổng Playview" value={this.props.sum.sumPlayView} sourceMedia={this.props.sourceMedia} endDate={this.props.endDate} beginDate={this.props.beginDate} />
                 </div>
-                <div className="col-xs-12 col-sm-12 col-md-3 m-b-15 ">
-                    <TotalCard title="Total Impression" value={this.props.sum.sumImpression} sourceMedia={this.props.sourceMedia} endDate={this.props.endDate} beginDate={this.props.beginDate} />
+                <div className="col-xs-12 col-sm-6 col-md-4 col-lg-2 m-b-15 ">
+                    <TotalCard title="Tổng Booking Impression" value={0} sourceMedia={this.props.sourceMedia} endDate={this.props.endDate} beginDate={this.props.beginDate} />
                 </div>
-                <div className="col-xs-12 col-sm-12 col-md-3 m-b-15 ">
-                    <TotalCard title="Total Completed-View" value={this.props.sum.sumTrueView} sourceMedia={this.props.sourceMedia} endDate={this.props.endDate} beginDate={this.props.beginDate} />
+                <div className="col-xs-12 col-sm-6 col-md-4 col-lg-2 m-b-15 ">
+                    <TotalCard title="Tổng Impression phát sinh" value={this.props.sum.sumImpression} sourceMedia={this.props.sourceMedia} endDate={this.props.endDate} beginDate={this.props.beginDate} />
                 </div>
-                <div className="col-xs-12 col-sm-12 col-md-3 m-b-15 ">
-                    <TotalCard title="Total Click" value={this.props.sum.sumClick} sourceMedia={this.props.sourceMedia} endDate={this.props.endDate} beginDate={this.props.beginDate} />
+                <div className="col-xs-12 col-sm-6 col-md-4 col-lg-2 m-b-15 ">
+                    <TotalCard title="Tổng Trueview" value={this.props.sum.sumTrueView} sourceMedia={this.props.sourceMedia} endDate={this.props.endDate} beginDate={this.props.beginDate} />
+                </div>
+                <div className="col-xs-12 col-sm-6 col-md-4 col-lg-2 m-b-15 ">
+                    <TotalCard title="Tổng Click" value={this.props.sum.sumClick} sourceMedia={this.props.sourceMedia} endDate={this.props.endDate} beginDate={this.props.beginDate} />
+                </div>
+                <div className="col-xs-12 col-sm-6 col-md-4 col-lg-2 m-b-15 ">
+                    <TotalCard title="Tổng doanh thu ước tính" value={this.props.sum.revenueValue} sourceMedia={this.props.sourceMedia} endDate={this.props.endDate} beginDate={this.props.beginDate} />
                 </div>
             </div>
         )
