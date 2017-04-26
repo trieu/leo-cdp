@@ -1,5 +1,5 @@
 /*
- * AdsPlay Display Ad Banner - version 1.7.1 - date: October 13, 2016
+ * AdsPlay Display Ad - version 1.7.2 - date: April 24, 2017
  */
 if (!window.AdsPlayBannerReady) {
     // BEGIN window.AdsPlayBannerReady

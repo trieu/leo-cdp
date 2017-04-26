@@ -30,7 +30,6 @@
         }
         .three-by-two.aspect-ratio { padding-bottom: 66.666% } /* 3:2 ratio */
         .four-by-three.aspect-ratio { padding-bottom: 75% } /* 4:3 ratio */
-
         .aspect-main {
             position: absolute;
             top: 0;
@@ -40,7 +39,7 @@
         }
     </style>
 
-<h1 class="text-center">AdsPlay Demo</h1>
+<h1 class="text-center">AdsPlay Display Ad Demo</h1>
 
 <div class="col-md-12">
     <!-- ADSPLAY WEB MASTHEAD TOP -->
@@ -56,22 +55,35 @@
 
     <div id="player-wrapper">        
         <video id="my-video" class="video-js vjs-default-skin" autoplay controls preload="auto" data-setup='{}' width='100%' height='100%' >
-            <source type='video/mp4' src="//adsplay.net/demo/videos/piano.mp4"/>
+            <source type='video/mp4' src="//adsplay.net/demo/videos/demo-video-sport.mp4"/>
         </video>             
+        
     </div>
 
     <div style="position: absolute;height: 500px;right:0px;top:0;">
         <!-- ADSPLAY RIGHT SIDE PLAYER BANNER -->
         <ins class="adsplay-placement" data-aplpm="1015" ></ins>
     </div>
-
 </div>
+
+<div class="col-md-12 detail-description">
+    <p class="information"><span>Thể loại:</span></p>
+    <!--p class="information"><span>Upload bởi:</span> kimchisuck</p-->
+    <p class="information"><span>Thời lượng dự kiến:</span> 0 giờ 25 phút 42 giây phút</p>
+    <p class="information"><span>Mô tả:</span>Ra sân golf cùng các cầu thủ Watford, nhìn lại cây săn bàn cự phách của West Ham - Marlon Harewood và trò chuyện cùng chuyên gia dự bị, thủ thành Brad Jones.</p>
+</div>
+
+<div class="col-md-12">
+    <!-- ADSPLAY banner -->
+    <div class="adsplay-placement" data-aplpm="1005" >    
+</div>
+
+<br><br>
 
 <script type="text/javascript" async>
     (function() {
     var s = document.createElement("script"), el = document.getElementsByTagName("script")[0]; s.async = true;
-    //s.src = (document.location.protocol == "https:" ? "https://" : "http://") + "st.adsplay.net/js/adsplay-display-ad.min.js";
-    s.src = "http://localhost:8183/js/adsplay-display-ad.js";    
+    s.src = (document.location.protocol == "https:" ? "https://" : "http://") + "st.adsplay.net/js/adsplay-display-ad.min.js";      
     el.parentNode.insertBefore(s, el);
     })();
 </script>
