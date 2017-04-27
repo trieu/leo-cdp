@@ -10,15 +10,24 @@ var User = require('./controller');
 
     app.get('/', User.index);
 
+    /**
+     * logout
+     */
     app.get('/logout', User.logout);
-    app.get('/logoutJSON', User.logoutJSON);
-    app.get('/userinfo', User.userInfo); //get user info from token
+    app.get('/logout/api', User.logoutAPI);
 
     /**
      * login
      */
     app.get('/login', User.login);
-    app.post('/login', User.loginLocal);
+    app.post('/login', User.loginOnSite);
+    app.post('/login/api', User.loginLocal);
+
+    /**
+     * user 
+     */
+    app.get('/userinfo', User.userInfo); //get user info from token
+    app.get('/authentication', User.authentication); //authentication check login
 
     /**
      * create

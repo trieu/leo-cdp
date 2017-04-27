@@ -37,7 +37,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(expressSession({
     cookie: {
-		path: '/', httpOnly: true, maxAge: Common.tokenExpiry
+		path: '/', httpOnly: true, maxAge: Common.sessionExpiry
 	},
     secret: Common.privateKey,
     resave: false,

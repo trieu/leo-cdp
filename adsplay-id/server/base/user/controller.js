@@ -45,10 +45,10 @@ exports.index = function (req, res){
     }
 };
 
+
 // ---------------------------------------------------------
 // register
 // ---------------------------------------------------------
-
 exports.register = function (req, res){
     var data = {};
         data.pageTitle = "Register";
@@ -58,7 +58,7 @@ exports.register = function (req, res){
 
 exports.registerSave = function (req, res){
     req.body.password = Encryption.hash(req.body.password);
-    console.log(req.body.password)
+    //console.log(req.body.password)
     User.saveUser(req.body, function(err, user) {
         if (!err) {
             return res.json({success: true, message: "Success! register"});
@@ -72,13 +72,14 @@ exports.registerSave = function (req, res){
     })
 }
 
+
 // ---------------------------------------------------------
 // update contact
 // ---------------------------------------------------------
 exports.edit = function (req, res){
     User.findOne({"_id": req.params.id})
         .exec(function(err, user){
-            console.log(err, user)
+            //console.log(err, user)
             if(!err && user){
                 data = {};
                 data.pageTitle = "update user";
@@ -128,10 +129,65 @@ exports.save = function (req, res){
 }
 
 
+// ---------------------------------------------------------
+// logout
+// ---------------------------------------------------------
+exports.logout = function (req, res, next){
+    console.log('log out success !');
+    var redirect_uri = req.originalUrl.replace('/logout','');
+    req.logout();
+    return res.redirect('/login'+redirect_uri);
+}
+
+exports.logoutAPI = function (req, res, next){
+    req.logout();
+    return res.json({ success: true, message: "log out success !!" });
+}
+
 
 // ---------------------------------------------------------
 // login 
 // ---------------------------------------------------------
+var loginLocal = function(req, res, next){
+    passport.authenticate('login-local', function(err, user, info) {
+        if (err) { return next(err); } 
+        if (!user) {
+            res.json({ success: false, status:401, message: info.message }); //unauthorized
+        }
+        else{
+            req.logIn(user, function(err) {
+                if (err) { return next(err); }
+                
+                //create token with timers expires
+                var token = createToken(user);
+                //console.log(token)
+                //redirect uri
+                var param_redirect = req.query.redirect_uri;
+                if(typeof (param_redirect) === "undefined" || param_redirect == ""){
+                    return res.json({ success: true, redirect_uri: '/' }); //redirect home index
+                }
+                else{
+                    var redirectUri = Parameter.insert(param_redirect, 'access_token', token, false);
+
+                    // attach user info
+                    var param_attach = req.query.attach;
+                    if(typeof (param_attach) !== "undefined" && param_attach != ""){
+                        var user_info = JSON.stringify(user);
+                        redirectUri = Parameter.insert(redirectUri, 'user_info', user_info, false);
+                    }
+
+                    return res.json({ success: true, redirect_uri: redirectUri });
+                }
+
+            });
+        }
+    })(req, res, next);
+};
+
+//login 
+exports.loginLocal = loginLocal;
+
+//login view
 exports.login = function (req, res){
     if(req.user){
         if(typeof(req.query.redirect_uri) === "undefined"){
@@ -139,10 +195,7 @@ exports.login = function (req, res){
         }
         else{
             // check loggin redirect webapp client attach token
-            var token = Jwt.sign(req.user, Common.privateKey, {
-                expiresIn: Common.tokenExpiry
-            });
-            token = token + last_token;
+            var token = createToken(req.user);
             var param_redirect = req.query.redirect_uri;
             var redirectUri = Parameter.insert(param_redirect, 'access_token', token, false);
             var param_attach = req.query.attach;
@@ -158,45 +211,14 @@ exports.login = function (req, res){
     data.siteKey = Common.recaptcha.siteKey;
     res.render('login', data);
 }
-exports.loginLocal = function (req, res, next){
+
+exports.loginOnSite = function (req, res, next){
     //console.log(req.body)
     //check recaptcha
     recaptcha.validateRequest(req)
     .then(function(){
         //use passport login-local
-        passport.authenticate('login-local', function(err, user, info) {
-            if (err) { return next(err); } 
-            if (!user) {
-                res.json({ success: false, status:401, message: info.message }); //unauthorized
-            }
-            else{
-                req.logIn(user, function(err) {
-                    if (err) { return next(err); }
-                    
-                    //create token with timers expires
-                    var token = Jwt.sign(user, Common.privateKey, {
-                        expiresIn: Common.tokenExpiry
-                    });
-                    token = token + last_token;
-
-                    //redirect uri
-                    var param_redirect = req.query.redirect_uri;
-                    if(typeof (param_redirect) === "undefined" || param_redirect == ""){
-                        return res.json({ success: true, redirect_uri: '/' }); //redirect home index
-                    }
-                    else{
-                        var redirectUri = Parameter.insert(param_redirect, 'access_token', token, false);
-                        var param_attach = req.query.attach;
-                        if(typeof (param_attach) !== "undefined" && param_attach != ""){
-                            var user_info = JSON.stringify(user);
-                            redirectUri = Parameter.insert(redirectUri, 'user_info', user_info, false);
-                        }
-                        return res.json({ success: true, redirect_uri: redirectUri });
-                    }
-
-                });
-            }
-        })(req, res, next);
+        loginLocal(req, res, next);
     })
     .catch(function(errorCodes){
         return res.json({ success: false, message:recaptcha.translateErrors(errorCodes) });
@@ -204,8 +226,22 @@ exports.loginLocal = function (req, res, next){
 
 }
 
+
 // ---------------------------------------------------------
 // decode token => user info
+// ---------------------------------------------------------
+exports.authentication = function (req, res){
+    if(req.user){
+        var refreshToken = createToken(req.user);
+        return res.json({ success: true, access_token: refreshToken });
+    }
+    else{
+        return res.json({ success: false, message: 'Not logged in !' });
+    }
+}
+
+// ---------------------------------------------------------
+// get user info from token
 // ---------------------------------------------------------
 exports.userInfo = function (req, res, next){
 
@@ -227,17 +263,6 @@ exports.userInfo = function (req, res, next){
 	}
 }
 
-exports.logout = function (req, res, next){
-    console.log('log out success !');
-    var redirect_uri = req.originalUrl.replace('/logout','');
-    req.logout();
-    return res.redirect('/login'+redirect_uri);
-}
-
-exports.logoutJSON = function (req, res, next){
-    req.logout();
-    return res.json({ success: true, message: "log out success !!" });
-}
 
 // ---------------------------------------------------------
 // decode token
@@ -248,7 +273,29 @@ var decodeToken = function(token){
         var decoded = Jwt.verify(token, Common.privateKey);
         return { success: true, user_info: decoded };
     } catch(err) {
-        return { success: false, message: 'Failed to authenticate token.' };
+        //'Failed to authenticate token.'
+        return { success: false, message: err.message };
     }
 }
 
+
+// ---------------------------------------------------------
+// create token
+// ---------------------------------------------------------
+var createToken = function(user){
+    var token = Jwt.sign(user, Common.privateKey, {
+        expiresIn: Common.tokenExpiry
+    });
+    return token + last_token;
+}
+
+/** @flow
+ * 1. client login
+ *          -> true -> create session (sessionExpiry) & create token (tokenExpiry)
+ *          -> return token for client
+ * 2. client use token
+ *          -> create cookie token or set headers : { Authorization : 'adsplayid '+ jwt},
+ *          -> get user info with token (tokenExpiry default 30 minutes)
+ * 3. client refresh token
+ *          -> refresh client application -> check authentication and refresh token
+ */
