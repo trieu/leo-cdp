@@ -164,7 +164,7 @@ var loginLocal = function(req, res, next){
                 //redirect uri
                 var param_redirect = req.query.redirect_uri;
                 if(typeof (param_redirect) === "undefined" || param_redirect == ""){
-                    return res.json({ success: true, redirect_uri: '/' }); //redirect home index
+                    return res.json({ success: true, redirect_uri: '/', access_token: token }); //redirect home index
                 }
                 else{
                     var redirectUri = Parameter.insert(param_redirect, 'access_token', token, false);
@@ -176,7 +176,7 @@ var loginLocal = function(req, res, next){
                         redirectUri = Parameter.insert(redirectUri, 'user_info', user_info, false);
                     }
 
-                    return res.json({ success: true, redirect_uri: redirectUri });
+                    return res.json({ success: true, redirect_uri: redirectUri, access_token: token });
                 }
 
             });

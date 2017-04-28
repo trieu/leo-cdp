@@ -10,8 +10,8 @@ module.exports = {
         db: 'fptoauth',
         url: 'mongodb://127.0.0.1:27017/fptoauth'
     },
-    sessionExpiry: 3600000 * 24 * 2, //2 day
-    tokenExpiry: 3600 * 2, //2 minutes
+    sessionExpiry: 1000 * 3600 * 24 * 2, //2 day
+    tokenExpiry: 3600 * 24 * 2, //2 day
     superuser:{
         _id: 0,
         roles: {"superadmin" : true},
