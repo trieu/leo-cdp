@@ -23,19 +23,20 @@ export function fetchTotal(sourceMedia, beginDate, endDate) {
     var url = TOTAL_URL +'?startDate='+ beginDate + '&endDate='+ endDate + bySource;
     return function (dispatch) {
 
-        dispatch({
-            type: TOTAL,
-            payload: {
-                        sum: {
-                            sumPlayView: 0,
-                            sumImpression: 0,
-                            sumTrueView: 0,
-                            sumClick: 0,
-                            revenueValue: 0
-                        }
-                    }
-        })
-
+        // dispatch({
+        //     type: TOTAL,
+        //     payload: {
+        //                 sum: {
+        //                     revenueValue: 0,
+        //                     sumBooking: 0,
+        //                     sumClick: 0,
+        //                     sumImpression: 0,
+        //                     sumPlayView: 0,
+        //                     sumTrueView: 0
+        //                 }
+        //             }
+        // })
+        
         return axios.get(url)
                 .then(function (response) {
                     var result = response.data;

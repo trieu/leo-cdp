@@ -78,7 +78,6 @@ class Category extends React.Component {
                         columns = { columns }
                         defaultPageSize = { 20 }
                         resizable={true}
-                        showFilters={true}
                     />
                 </div>
             </div>

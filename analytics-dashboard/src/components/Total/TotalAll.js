@@ -39,9 +39,6 @@ class TotalAll extends React.Component{
                     <TotalCard title="Tổng Playview" value={this.props.sum.sumPlayView} sourceMedia={this.props.sourceMedia} endDate={this.props.endDate} beginDate={this.props.beginDate} />
                 </div>
                 <div className="col-xs-12 col-sm-6 col-md-4 col-lg-2 m-b-15 ">
-                    <TotalCard title="Tổng Booking Impression" value={0} sourceMedia={this.props.sourceMedia} endDate={this.props.endDate} beginDate={this.props.beginDate} />
-                </div>
-                <div className="col-xs-12 col-sm-6 col-md-4 col-lg-2 m-b-15 ">
                     <TotalCard title="Tổng Impression phát sinh" value={this.props.sum.sumImpression} sourceMedia={this.props.sourceMedia} endDate={this.props.endDate} beginDate={this.props.beginDate} />
                 </div>
                 <div className="col-xs-12 col-sm-6 col-md-4 col-lg-2 m-b-15 ">
@@ -49,6 +46,9 @@ class TotalAll extends React.Component{
                 </div>
                 <div className="col-xs-12 col-sm-6 col-md-4 col-lg-2 m-b-15 ">
                     <TotalCard title="Tổng Click" value={this.props.sum.sumClick} sourceMedia={this.props.sourceMedia} endDate={this.props.endDate} beginDate={this.props.beginDate} />
+                </div>
+                <div className="col-xs-12 col-sm-6 col-md-4 col-lg-2 m-b-15 ">
+                    <TotalCard title="Tổng Booking" value={this.props.sum.sumBooking} sourceMedia={this.props.sourceMedia} endDate={this.props.endDate} beginDate={this.props.beginDate} />
                 </div>
                 <div className="col-xs-12 col-sm-6 col-md-4 col-lg-2 m-b-15 ">
                     <TotalCard title="Tổng doanh thu ước tính" value={this.props.sum.revenueValue} sourceMedia={this.props.sourceMedia} endDate={this.props.endDate} beginDate={this.props.beginDate} />
