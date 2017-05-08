@@ -9,7 +9,7 @@ import ExpandMore from 'material-ui/svg-icons/navigation/expand-more';
 import ChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
 
 const data = {
-  appTitle: "Adsplay Analytics",
+  appTitle: "Adsplay Report",
   profileName: "Admin",
   menus: [
     { text: 'Báo cáo tổng quát', icon: <Assessment/>, link: '/dashboard' },

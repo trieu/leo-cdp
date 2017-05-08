@@ -31,6 +31,8 @@ class SearchBox extends Component {
           dataSource={this.state.dataSource}
           onUpdateInput={this.handleChange}
           fullWidth={true}
+          textFieldStyle={{background: "#333"}}
+          disableFocusRipple={false}
         />
     );
   }

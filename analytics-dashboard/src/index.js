@@ -14,10 +14,10 @@ import promise from 'redux-promise';
 import createLogger from 'redux-logger';
 import allReducers from './reducers';
 
-const logger = createLogger();
+//const logger = createLogger();
 const store = createStore(
     allReducers,
-    applyMiddleware(thunk, promise, logger)
+    applyMiddleware(thunk, promise)
 );
 
 render(
