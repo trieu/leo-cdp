@@ -5,7 +5,6 @@ class SearchResult extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(this.props)
     }
 
     render() {
@@ -28,9 +27,10 @@ class SearchResult extends React.Component {
             div className = "row" >
                 <div className = "col-xs-12 m-b-15 " >
                     <ReactTable className = '-striped -highlight'
-                        data = { this.props.dataSearch }
-                        columns = { col }
-                        defaultPageSize = { 20 }
+                        data = {this.props.data}
+                        loading={this.props.loading}
+                        columns = {col}
+                        defaultPageSize = {10}
                         resizable={true}
                     />
                 </div>

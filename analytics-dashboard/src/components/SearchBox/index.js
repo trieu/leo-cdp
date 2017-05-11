@@ -6,7 +6,7 @@ class Search extends Component {
 
   constructor(props) {
     super(props);
-    
+
     this.handleChange = _.debounce(this.handleChange.bind(this), 500);
   }
 
@@ -34,9 +34,10 @@ class Search extends Component {
     };
     return (
         <div style={{position: 'relative'}}>
-            <input ref={el => this.inputTitle = el} type="text" style={style.int} onChange={this.handleChange} />
-            <SearchResult dataSearch={this.props.dataSearch}
+            <input type="text" style={style.int} placeholder="Search" ref={el => this.inputTitle = el} onChange={this.handleChange} />
+            <SearchResult data={this.props.data}
             columns={this.props.columns}
+            loading={this.props.loading}
             />
         </div>
     );

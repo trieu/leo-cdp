@@ -11,6 +11,7 @@ class SearchPage extends React.Component{
       this.state = {
         dataSearch:[
             {
+                image: 'https://s3-eu-west-1.amazonaws.com/imdbimages/images/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_SX300.jpg',
                 video_title: "Trạch Thiên Ký",
                 category: "Phim Bộ Nổi Bật",
                 sumPlayView: 203996,
@@ -21,6 +22,7 @@ class SearchPage extends React.Component{
                 revenueValue: 1989896
             },
             {
+                image: 'https://s3-eu-west-1.amazonaws.com/imdbimages/images/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_SX300.jpg',
                 video_title: "Thử Thách Thần Tượng",
                 category: "TVShow Nổi Bật",
                 sumPlayView: 136070,
@@ -31,6 +33,7 @@ class SearchPage extends React.Component{
                 revenueValue: 1462391
             },
             {
+                image: 'https://s3-eu-west-1.amazonaws.com/imdbimages/images/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_SX300.jpg',
                 video_title: "Vua Hải Tặc",
                 category: "Anime Nổi Bật",
                 sumPlayView: 98711,
@@ -40,7 +43,8 @@ class SearchPage extends React.Component{
                 sumBooking: 1,
                 revenueValue: 1256456
             }
-        ]
+        ],
+        loading: false
     };
   }
 
@@ -56,7 +60,7 @@ class SearchPage extends React.Component{
             }
         });
     return (
-        <Search dataSearch={this.state.dataSearch} update={this.updateInput}
+        <Search data={this.state.dataSearch} update={this.updateInput}
         columns={[
                 { key: 'video_title', name: 'Name' },
                 { key: 'category', name: 'Category' },
@@ -65,9 +69,11 @@ class SearchPage extends React.Component{
                 { key: 'sumTrueView', name: 'Trueview' },
                 { key: 'sumClick', name: 'Click' },
                 { key: 'revenueValue', name: 'Doanh thu ước tính' },
-            ]} />
+            ]}
+        loading={this.state.loading}
+        />
     )
   }
 };
-export default SearchPage
-;
+
+export default SearchPage;
