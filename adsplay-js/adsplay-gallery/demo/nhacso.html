@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Nhacso Video Player with Ads</title>
+
+
+    <!-- Vast Advertising Player -->
+    <link rel="stylesheet" type="text/css" href="http://st.nhacso.net/html/css/font-awesome.css?v=102" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="http://st.nhacso.net/html/css/plugins.css?v=102" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="http://st.nhacso.net/html/css/video-js.css?v=102" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="http://st.nhacso.net/html/css/screen.css?v=102" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="http://st.nhacso.net/html/css/peakPlayer.css?v=102">
+    <link rel="stylesheet" type="text/css" href="http://st.nhacso.net/html/css/foundation.css?v=102" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="http://st.nhacso.net/html/css/video-js.css?v=102" media="screen"/>
+    <link href="http://adsplay.net/js/sdk/videojs.vast.css" rel="stylesheet" type="text/css">
+
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="http://st.nhacso.net/html/js/html5.js?v=102"></script><![endif]-->
+
+    <script type="text/javascript" src="http://st.nhacso.net/html/js/jquery-1.11.0.min.js?v=102"></script>
+    <script type="text/javascript" src="http://st.nhacso.net/html/js/jquery-ui.js?v=102"></script>
+    <script type="text/javascript" src="http://st.nhacso.net/html/js/slick.js?v=102"></script>
+    <script type="text/javascript" src="http://st.nhacso.net/html/js/readmore.min.js?v=102"></script>
+
+    <script type="text/javascript" src="http://st.nhacso.net/html/js/bs3.min.js?v=102"></script>
+    <script type="text/javascript" src="http://st.nhacso.net/html/js/soundmanager/soundmanager2.js?v=102"></script>
+    <script type="text/javascript" src="http://st.nhacso.net/html/js/new-peakPlayer.js?v=102"></script>
+    <script type="text/javascript" src="http://st.nhacso.net/html/js/new-player.js?v=102"></script>
+
+    <script type="text/javascript" src="http://st.nhacso.net/html/js/bootstrap-tagsinput.min.js?v=102"></script>
+    <script type="text/javascript" src="http://st.nhacso.net/html/js/typeahead.bundle.js?v=102"></script>
+
+    <script type="text/javascript" src="http://st.nhacso.net/html/js/video.js?v=102"></script>
+    <script type="text/javascript" src="http://st.nhacso.net/html/js/luxUtilities.min.js?v=102"></script>
+
+
+    <!-- Vast Advertising Player -->
+
+    <!--[if lt IE 9]>
+    <script src="http://adsplay.net/js/sdk/es5.js"></script>
+    <![endif]-->
+
+
+
+    <!--
+         <script src="http://localhost:63342/adsplay-website/demo/lib/vast-client.js"></script>
+         <script src="http://localhost:63342/adsplay-website/demo/videojs.vast.js"></script>
+         <script src="http://localhost:63342/adsplay-website/demo/videojs.vast.js"></script>
+    -->
+
+    <script src="http://adsplay.net/js/sdk/videojs.ads.min.js?v=05102015"></script>
+    <script src="http://adsplay.net/js/sdk/vast-client.min.js?v=05102015"></script>
+    <script src="http://adsplay.net/js/sdk/videojs.vast.min.js?v=05102015"></script>
+    <script src="http://adsplay.net/js/adsplay.js?v=05102015"></script>
+
+
+</head>
+   <body>
+
+   <!-- HTML5 VideoJS Player -->
+
+<video id="contentElement" class="video-js vjs-default-skin" autoplay controls preload="auto" data-setup="{}"
+       width="auto" height="auto">
+    <source src="http://st02.freesocialmusic.com/mp4/2015/06/18/1430055571/14346190335_2882.mp4" />
+</video>
+
+<!-- loading VideoJS Player  -->
+<script>
+    //var adURL = 'http://delivery.adnetwork.vn/247/xmlvideoad/zid_1417748624/wid_1417747567/type_inline/cb_';// AdsPlay.getVastUrl(100, 100);
+
+    var vjsPlayer = videojs('contentElement', { "controls": true, "autoplay": true, "preload": "auto" });
+    vjsPlayer.ads();
+    vjsPlayer.vast({ url: AdsPlay.getVastUrl(1002, 103) });
+
+
+    AdsPlay.trackingPlayView('nhacso-video');
+</script>
+
+</body>
+</html>

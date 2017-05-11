@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
+    <script src="http://vjs.zencdn.net/c/video.js"></script>
+    <!--script src="../plugin/video.3.2.dev.js"></script-->
+
+    <link href="http://player.influx.is/videos/googleplayer/vast/plugin/vast.plugin.css" rel="stylesheet">
+    <script src="http://player.influx.is/videos/googleplayer/vast/plugin/vast.plugin.js"></script>
+
+
+</head>
+<body>
+<video id="video" class="video-js vjs-default-skin vjs-big-play-centered" controls
+       preload="auto" width="870" height="490" controls
+       poster="http://blog.realmatch.com/wp-content/uploads/2015/04/TV-Advertising.png"
+       data-setup='{ "techOrder": ["flash", "html5"] }'>
+
+    <source src="http://demo.adsplay.net/videos/demo-content.mp4" type='video/mp4'>
+    <p>HTML5 Video Playback Not Supported</p>
+</video>
+
+<script src="http://adsplay.net/js/adsplay.js"></script>
+<script type="text/javascript">
+    var adURL = AdsPlay.getVastUrl(100, 100);
+    var options = {
+        ads: {
+            'skipAd': {
+                'enabled': true,
+                'timeOut': 5
+            },
+            'servers': [
+                {
+                    'apiAddress': adURL
+                }
+            ],
+            'schedule': [
+                {
+                    'position': 'mid-roll',
+                    'startTime': '00:00:10'
+                }
+            ]
+        }
+    };
+    _V_("video", options);
+</script>
+
+</body>
+</html>

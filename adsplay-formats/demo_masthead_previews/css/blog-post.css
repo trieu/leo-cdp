@@ -1,0 +1,199 @@
+
+body {
+    padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+	background-color: #F0F0F0;
+	padding-bottom: 70px;
+}
+
+
+
+.container {
+	position: relative;
+	z-index: 1000;
+	background-color: white;
+}
+
+#wrapper {
+	padding: 60px;
+	font-size: 16px;
+}
+
+
+#wrapper h1{
+	font-size: 50px;
+}
+
+footer {
+    margin: 50px 0;
+}
+
+#wrapper-desktop {
+	position: relative;
+	width: 100%;
+	height: 270px;
+}
+
+/* show */
+.id_video_show {
+	
+	position: absolute;
+	width: 57%;
+	height: 92%;
+	z-index: 1000;
+	left: 0%;
+	top: 0%;
+	margin:10px;
+}
+
+ #id_video {
+	
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: 1000;
+	left: 0%;
+	top: 0%;
+	margin:0px;
+}
+ 
+#id_video > iframe{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+#wrapper-mobile {
+	position: relative;
+	width: 100%;
+	height: 400px;
+	
+	margin-top: 0%;
+
+}
+
+#id_thumb {
+	position: absolute;
+	width: 94%;
+	height: 60%;
+	
+	left: 0%;
+	top: 0%;
+	margin:10px;
+}
+
+#id_thumb > img{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	
+}
+
+/* Mobile */
+
+#id_content_mobile {
+	position: absolute;
+	width: 94%;
+	height: 50%;
+	left: 0%;
+	bottom:0%;
+	margin:10px;
+
+
+}
+
+#id_content_mobile #title_m {
+	position: absolute;
+	width: 97%;
+	margin-top:53px;
+	margin-left:5px;
+	margin-right :5px;
+	margin-bottom:5px;
+
+
+}
+
+#id_content_mobile #description_m {
+	position: absolute;
+	width: 60%;
+	margin:5px;
+	top: 60%;
+	left: 0%;
+
+
+}
+
+#id_content_mobile #action_but_m {
+	position: absolute;
+	width: 30%;
+	height: 26%;
+	margin:5px;
+	top: 65%;
+	right: 0%;
+
+
+}
+
+#id_content_mobile #action_but_m #button_m{
+	
+	color: white;
+	background-color: #1B7FCC;
+	width: 100%;
+	height: 100%
+	
+
+}
+
+/* desktop */ 
+
+#id_content_desktop {
+	position: absolute;
+	width: 37%;
+	height: 100%;
+	
+	right: 0%;
+	top:0%;
+	margin:10px;
+	
+
+
+}
+
+#id_content_desktop #title_d {
+	position: absolute;
+	width: 97%;
+	margin:5px;
+	top: -6%;
+
+}
+
+#id_content_desktop #description_d {
+	position: absolute;
+	width: 100%;
+	margin:5px;
+	top: 20%;
+	left: 0%;
+	
+
+}
+
+#id_content_desktop #action_but_d {
+	position: absolute;
+	width: 30%;
+	height: 35%;
+	margin:5px;
+	top: 72.5%;
+	right: 66%;
+
+}
+
+#id_content_desktop #action_but_d #button_d{
+	
+	/*border-radius: 50%;*/
+	color: white;
+	background-color: #1B7FCC;
+	width: 100%;
+	height: 50%;
+	border-color: transparent;
+	
+
+}

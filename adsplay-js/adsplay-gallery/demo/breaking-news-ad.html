@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>AdsPLAY - Instream Video Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- for AdsPlay -->
+    <meta name="apl:name" content="Du lịch Vietnam" />
+    <meta name="apl:category" content="du lịch, vietnam" />
+
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+
+    <link href="http://vjs.zencdn.net/4.7.1/video-js.css" rel="stylesheet">
+    <link href="http://adsplay.net/demo/lib/videojs-contrib-ads/videojs.ads.css" rel="stylesheet" type="text/css">
+    <link href="http://adsplay.net/demo/videojs.vast.css" rel="stylesheet" type="text/css">
+
+    <!--[if lt IE 9]>
+    <script src="http://demo.adsplay.net/demo/lib/es5.js"></script><![endif]-->
+
+    <script src="http://vjs.zencdn.net/4.7.1/video.js"></script>
+    <script src="http://adsplay.net/demo/lib/videojs-contrib-ads/videojs.ads.js"></script>
+    <script src="http://adsplay.net/demo/lib/vast-client.js"></script>
+    <script src="http://adsplay.net/demo/videojs.vast.js"></script>
+
+    <style>
+        #vjs-image-overlay-holder {
+            position: absolute;
+            top: 10px;
+            left: 130px;
+            text-align: center;
+        }
+        #vjs-image-overlay-holder img {
+            margin: auto;
+            cursor: pointer;
+        }
+
+        .breaking_news_ad_holder a {
+            color: green;
+        }
+    </style>
+
+</head>
+<body>
+
+
+<video id="player-wrapper" class="video-js vjs-default-skin vjs-big-play-centered" controls autoplay="true" preload="auto"
+       poster="http://adsplay.net/img/vietnam-travel.jpg"
+       data-setup='{}'
+       width='800'
+       height='600'  >
+    <source src="http://ads.fptplay.net.vn/static/ads/instream/demo-content.mp4" type='video/mp4'>
+    <p>HTML5 Video Playback Not Supported</p>
+</video>
+
+<script src="http://adsplay.net/js/adsplay.js"></script>
+<script>
+
+    var vid2 = videojs('player-wrapper');
+    vid2.muted(true);
+
+
+    var adHtml = '<marquee class="breaking_news_ad_holder"> Quảng cáo của AdsPlay - <a href="http://adsplay.net/" target="_blank" >Click đê xem</a></marquee>';
+    setTimeout(function(){
+        var style = {'position':'absolute','top':'1px', 'font-size':'24px'};
+        style['z-index'] = '1';
+        var node = $(adHtml);
+        node.css(style);
+        $('#player-wrapper').prepend(node);
+
+    },2000);
+</script>
+
+</body>
+
+
+</html>
+
+

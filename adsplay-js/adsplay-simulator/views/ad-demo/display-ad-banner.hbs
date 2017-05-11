@@ -1,0 +1,98 @@
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    
+    <style>
+        .epl_player {
+            width: 100%;
+            display: block;
+            background: #000;
+            height: 500px;
+            margin-bottom: 25px;
+        }
+        #player-wrapper {
+                height: 100%;
+                margin-left: auto;
+                margin-right: auto;
+                padding-top: 65px;
+                width: 73%;
+                z-index: 1;
+                padding-top: 0;
+                height: 500px;
+        }
+        .aspect-ratio {
+            width: 100%;/* whatever width you want */
+            display: inline-block;
+            position: relative;
+        }
+        .aspect-ratio:after {
+            padding-top: 56.25%; /* 16:9 ratio */
+            display: block;
+            content: '';
+        }
+        .three-by-two.aspect-ratio { padding-bottom: 66.666% } /* 3:2 ratio */
+        .four-by-three.aspect-ratio { padding-bottom: 75% } /* 4:3 ratio */
+
+        .aspect-main {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+        }
+    </style>
+
+<h1 class="text-center">AdsPlay Demo</h1>
+
+<div class="col-md-12">
+    <!-- ADSPLAY WEB MASTHEAD TOP 
+    <div class="adsplay-placement" data-aplpm="113" >
+    -->
+</div>
+
+<div class="epl_player col-md-12">
+
+    <div style="position: absolute;height: 500px;top:0;left: 0px;">
+        <!-- ADSPLAY LEFT SIDE PLAYER BANNER -->
+        <ins class="adsplay-placement" data-aplpm="1011" ></ins>
+    </div>
+
+    <div id="player-wrapper">        
+        <video id="my-video" class="video-js vjs-default-skin" autoplay controls preload="auto" data-setup='{}' width='100%' height='100%' >
+            <source type='video/mp4' src="//adsplay.net/demo/videos/piano.mp4"/>
+        </video>             
+    </div>
+
+    <div style="position: absolute;height: 500px;right:0px;top:0;">
+        <!-- ADSPLAY RIGHT SIDE PLAYER BANNER -->
+        <ins class="adsplay-placement" data-aplpm="1012" ></ins>
+    </div>
+
+</div>
+
+<script type="text/javascript" async>
+    (function() {
+    var s = document.createElement("script"), el = document.getElementsByTagName("script")[0]; s.async = true;
+    s.src = (document.location.protocol == "https:" ? "https://" : "http://") + "st.adsplay.net/js/adsplay-display-ad.min.js";
+    el.parentNode.insertBefore(s, el);
+    })();
+</script>
+
+
+<!--
+<br><br>
+<div class="col-md-12">
+
+    <div class="adsplay-placement" data-aplpm="1001" ></div>
+    <script src="/js/adsplay-display-ad.js"></script>
+
+    <br>
+
+    <div class="adsplay-placement" data-aplpm="1002" ></div>
+    <script src="/js/adsplay-display-ad.js"></script>
+
+    <br>
+
+    <div class="adsplay-placement" data-aplpm="1004" ></div>
+    <script src="/js/adsplay-display-ad.js"></script>
+
+</div>
+-->

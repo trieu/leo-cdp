@@ -1,0 +1,25 @@
+{
+  "name": "adsplay-simulator",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "compress": "gulp compress"
+  },
+  "dependencies": {
+    "body-parser": "~1.15.1",
+    "cookie-parser": "~1.4.3",
+    "cors": "^2.8.3",
+    "debug": "~2.2.0",
+    "express": "~4.13.4",
+    "express-handlebars": "*",
+    "morgan": "~1.7.0",
+    "serve-favicon": "~2.3.0",
+    "serve-static": "*"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-uglify": "^2.1.2"
+  }
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <base href="http://localhost:63342/adsplay-website/">
+    <title>Instream with jwplayer</title>
+    <script type='text/javascript' src='http://phimhd.vn/js/jwplayer.js'></script>
+</head>
+<body>
+
+<div id="playercontainer">
+    <div id="mainplayer">
+        <div id='mediaspace'></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    jwplayer('mediaspace').setup({
+        'flashplayer': 'http://phimhd.vn/playerHD/playerHD.swf',
+        'id': 'playerID',
+        'item': '0',
+        'width': '900',
+        'height': '444',
+        'repeat': 'list',
+        'controlbar':'bottom',
+        'autostart': 'true',
+        'image': 'http://1.bp.blogspot.com/-HUHz1suavF8/VaUPFp_RoyI/AAAAAAAAJNE/CSY3a_Q_MuY/s1600/chu-gau-ted-2.jpg',
+        'skin': 'http://phimhd.vn/playerHD/phdlist.swf',
+        'logo.file' : 'http://phimhd.vn/img/logo-video.png',
+        'file': 'http://st02.freesocialmusic.com/mp4/2015/06/18/1430055571/14346190335_2882.mp4'
+        ,'config': 'http://l.adsplay.net/delivery/zone/nhacso.xml?placement=104'
+    });
+</script>
+
+
+
+</body>
+</html>

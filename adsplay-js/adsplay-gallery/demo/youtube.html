@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>YouTube Video Player with Ads</title>
+
+    <!--
+    <link href="http://vjs.zencdn.net/4.7.1/video-js.css" rel="stylesheet">
+    <link href="http://adsplay.net/demo/lib/videojs-contrib-display-ad-test/videojs.display-ad-test.css" rel="stylesheet" type="text/css">
+    <link href="http://adsplay.net/demo/videojs.vast.css" rel="stylesheet" type="text/css">
+    -->
+</head>
+<body>
+
+
+<div class="ym-detail-two-cen" style="width: 800px;">
+    <div class='articleContent' itemprop='articleBody'>
+        <p>
+            <iframe frameborder="0" height="450" scrolling="no"
+                    src="https://www.youtube.com/embed/bEiqmpPLYjo?autoplay=1&rel=0" width="800"></iframe>
+        </p>
+    </div>
+</div>
+
+<!-- HTML5 Video Ads -->
+<link href="http://static.adsplay.net/js/sdk/html5.video.ads.player.css" rel="stylesheet" type="text/css">
+<script src="//static.adsplay.net/js/sdk/html5.video.ads.player.js"></script>
+<script>
+    //var videoAdUrl = 'http://adserver.adtech.de/?advideo/3.0/78.109/5779507/0//cc=2;vidAS=pre_roll;vidRT=VAST;vidRTV=2.0.1;cors=yes';
+    var videoAdUrl = 'http://d2.adsplay.net/delivery/zone/1001?placement=333';
+    var contentTag = document.getElementsByClassName('articleContent')[0];
+    var contentHolderTag = contentTag.parentNode;
+    AdsPlay.setHtml5VideoAdPlayer(contentTag, contentHolderTag, videoAdUrl);
+
+</script>
+
+
+
+
+
+
+
+</body>
+</html>

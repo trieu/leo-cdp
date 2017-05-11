@@ -1,0 +1,322 @@
+<div class="row">
+    <div class="col-lg-12">
+        <ol class="breadcrumb">
+            <li><a href="creative/list">All Advertising Units</a></li>
+            <li class="active">Ad Unit Information Editor</li>
+        </ol>
+        <h3 class="text-center">
+            <span>{{dashboard_title}}</span>
+        </h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-5 col-sm-12">
+
+        <div class="panel panel-default" id="frame_upload">
+            <div class="panel-heading">
+                <h4><span class="icon-number">1</span> Video Uploader</h4>
+            </div>
+            <div class="panel-body" id="frame_upload_body">
+                <div class="iframeVideo">
+                {{#if crt.media}}
+                <video id="video_ads" class="video-js vjs-default-skin vjs-big-play-centered" autoplay muted controls
+                   loop preload="auto"
+                   poster="//adsplay.net/img/logo.png"
+                   data-setup=''
+                   width='100%'
+                   height='300'>
+                <source src="{{site.ads_cdn_domain}}/{{crt.media}}" type="video/mp4">
+                </video>
+                {{/if}}
+                </div>
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <i class="fa fa-youtube-square"></i>
+                                <a data-toggle="collapse" data-parent="#frame_upload" href="#video_youtube">File from YouTube</a>
+                            </h4>
+                        </div>
+                        <div id="video_youtube" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="iframeFrame">
+                                    <input type="url" class="form-control" placeholder="Enter YouTube URL" name="video_url" id="video_url">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <i class="fa fa-upload"></i>
+                                <a data-toggle="collapse" data-parent="#frame_upload" href="#video_local">File from PC</a>
+                            </h4>
+                        </div>
+                        <div id="video_local" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="iframeFrame">
+                                    <input type="file" name="video_file" id="video_file">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- form -->
+    <form id="form_creative" novalidate>
+
+    <div class="col-lg-7 col-sm-12">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4><span class="icon-number">2</span> Ad Information</h4>
+            </div>
+            <div class="panel-body">
+            
+                <input type="hidden" name="id"></input>
+                <input type="hidden" name="adType"></input>
+                <input type="hidden" name="media" id="media"></input>
+                <div class="form-group">
+                    <label class="label-important">Name</label>
+                    <input type="text" class="form-control" name="name" placeholder="Enter Ad Name" required data-validate-length-range="10">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-control" rows="3" name="desc" placeholder="Enter Ad Description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Click-through URL</label>
+                    <input type="url" class="form-control" name="cliThr" placeholder="Enter Click-through URL">
+                </div>
+                <div class="form-group" id="crt-status">
+                    <label>Ad Status</label>
+                    <select class="form-control" id="ads_status" name="status">
+                        <option value="0" selected>Invalid</option>
+                        <option value="1">Pending</option>
+                        <option value="2">Running</option>
+                        <option value="3">Finished</option>
+                        <option value="4">Expired</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label title="for 1 Impression or Complete-view">Base Cost</label>
+                    <input type="number" class="form-control" name="cost" placeholder="Enter Base Cost" value="0" data-validate-minmax="0" required>
+                </div>
+                <div class="form-group">
+                    <label class="label-important" title="Impression or Complete-view">Total Booking</label>
+                    <input type="number" class="form-control" name="tBk" placeholder="Enter Total Booking" value="0" data-validate-minmax="0" required>
+                </div>
+                <div class="form-group">
+                    <label title="Impression or Complete-view">Daily Booking</label>
+                    <input type="number" class="form-control" name="dBk" placeholder="Enter Ad Name" value="0" data-validate-minmax="0" required>
+                </div>
+                <div class="form-group">
+                    <label>Duration</label>
+                    <select class="form-control" id="ads_duration" name="dura">
+                        <option value="00:00:05"> TVC 5 seconds</option>
+                        <option value="00:00:15" selected> TVC 15 seconds</option>
+                        <option value="00:00:30"> TVC 30 seconds</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Skip time</label>
+                    <select class="form-control" id="ads_skip" name="skip">
+                        <option value="00:00:00">0 seconds</option>
+                        <option value="00:00:05">5 seconds</option>
+                        <option value="00:00:15" selected>15 seconds</option>
+                        <option value="00:00:30">30 seconds</option>
+                    </select>
+                </div>
+                
+            </div>
+        </div>
+        
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4><span class="icon-number">3</span> Ad Delivery</h4>
+            </div>
+            <div class="panel-body">
+                <div class="form-group" style="display: none;">
+                    <label>Device Type</label>
+                    <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="tgpfs" value="6" checked> IPTV
+                    </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Profile</label>
+                    <div class="checkbox">
+                    <label>
+                    <input type="checkbox" name="profile" value="adsl"> ADSL
+                    </label>
+                    </div>
+                    <div class="checkbox">
+                    <label>
+                    <input type="checkbox" name="profile" value="vdsl"> VDSL
+                    </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Start time</label>
+                    <select class="form-control" id="ads_startime" name="staTime"  >
+                        <option value="00:00:00">Pre-roll</option>
+                        <option value="00:05:00">Mid-roll after 5 minutes</option>
+                        <option value="00:10:00">Mid-roll after 10 minutes</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="label-important">Running Date (format Month/Day/Year)</label>
+                    <input type="datetime-local" class="form-control" id="ads_running_date" name="runDate" placeholder="Enter Running Date" required>
+                </div>
+                <div class="form-group">
+                    <label class="label-important">Expired Date (format Month/Day/Year)</label>
+                    <input type="datetime-local" class="form-control" id="ads_expired_date" name="expDate" placeholder="Enter Expired Date" required>
+                </div>
+                <div class="form-group">
+                    <label class="label-important">Pricing Model</label>
+                    <div class="radio">
+                    <label>
+                        <input type="radio" name="prcModel" value="1">  CPV (Cost per Complete-View)
+                    </label>
+                    </div>
+                    <div class="radio">
+                    <label>
+                        <input type="radio" name="prcModel" value="2">  CPM (Cost per Mile)
+                    </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Ad Frequency</label>
+                    <select class="form-control" id="ads_fqccap" name="fqcCap">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3" selected >3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Priority Score (higher is better)</label>
+                    <select class="form-control" id="ads_score" name="score">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                        <option value="50">50</option>
+                        <option value="60">60</option>
+                        <option value="70">70</option>
+                        <option value="80">80</option>
+                        <option value="90">90</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4><span class="icon-number">4</span> Targeting Information</h4>
+            </div>
+            <div class="panel-body">
+                <div class="form-group" style="display: none;">
+                    <label>PayTV Ad Placements</label>
+                    <select type="select" class="select-multi" id="paytv_placements" name="tgpms" data-placeholder="Select Placements" multiple="multiple">
+                    <option value="320" selected>TVC_PAYTV_IPTV_VOD</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Targeting Categories</label>
+                    <select class="select-multi" id="paytv_categories" type="select" name="tgcats" data-placeholder="Show Ads in these categories" multiple="multiple">
+                        {{#each payTVCategories}}
+                            <optgroup label="{{TypeName}}">
+                                {{#each ListView}}
+                                    <option value="{{ID}}">{{Category}}</option>
+                                {{/each}}
+                            </optgroup>
+                        {{/each}}
+                    </select>
+                </div>
+            
+                <div class="form-group">
+                    <label>Targeting Location</label>
+                    <select type="select" class="select-multi" id="ads_target_location" name="tglocs" data-placeholder="Show Ads in these locations" multiple="multiple">
+                        {{#each locationCodes}}
+                            <optgroup label="{{AreaName}}">
+                                {{#each ListArea}}
+                                    <option value="{{ConChar}}" class="optLocation">{{LocName}}</option>
+                                {{/each}}
+                            </optgroup>
+                        {{/each}}
+                    </select>
+
+                    <label>
+                        <input type="checkbox" id="checkAllLocs">All Location</input>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row text-center margin-b-80">
+            <div class="col-lg-6 col-sm-12">
+                <button type="submit" class="btn btn-success btn-lg btn-block">OK</button>
+            </div>
+            <div class="col-lg-6 col-sm-12">
+                <a href="creative/new" class="btn btn-default btn-lg btn-block">Cancel</a>
+            </div>
+        </div>
+    </div>
+
+    </form>
+
+</div>
+
+{{>popup-partial}}
+
+<script src="js/business-domains/creative-new-page.js"></script>
+<script type="text/javascript">
+
+//submit form
+$('#form_creative').submit(function(e){
+    e.preventDefault();
+
+    // check video
+    if(!checkVideo()){
+        return false;
+    }
+
+    // check form
+    if(!checkFormValidator(this)){
+        scrollTopPage();
+        return false;
+    }
+
+    var url = '/creative/save/1'; //number is adType
+    var media = $('#video_file')[0].files[0] || $("#video_url").val() || $("#media").val();
+    var data = buildData($(this), media); //formdata
+    sendForm(url,data,60000); //send ajax (url, data, timeout)
+})
+
+{{#if crt}}
+    //set edit form
+    var creativeData = {{{json crt}}};
+    setFormData($("#form_creative"), creativeData);
+{{/if}}
+
+</script>
+

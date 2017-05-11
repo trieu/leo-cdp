@@ -1,0 +1,100 @@
+<style type="text/css">
+	#pub_form table td{
+		position: relative;
+	}
+	.validatr-message{
+		padding: 1px 5px !important;
+		font-size: 11px;
+		max-width: 160;
+		z-index: 1;
+	}
+	.row-overlay{
+		display: none;
+	}
+</style>
+<div class="row">
+    <div class="col-lg-12">
+        <h3 class="page-header">
+            Ad publisher Management
+        </h3>
+    </div>
+</div>
+
+<p>
+	<button type="button" class="btn btn-primary" id="new-publisher">
+		<i class="fa fa-fw fa-list"></i> New publisher
+	</button>
+</p>
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="table-responsive">
+			<table class="table table-hover table-striped" id="table-publisher">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Domain</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody id="pub_container">
+					{{#each publishers}}
+					<tr>
+						<td class="pub_id">{{_id}}</td>
+						<td class="pub_name">{{name}}</td>
+						<td class="pub_domain">{{domain}}</td>
+						<td width="60px">
+							<button type="button" id="{{id}}" class="btn btn-primary btn-xs edit-publisher" title="edit">
+								<i class="fa fa-pencil"></i>
+							</button>
+						</td>
+					</tr>
+					{{/each}}
+				</tbody>
+            </table>
+		</div>
+	</div>
+</div>
+
+<!-- modal form popup -->
+<div id="modal-publisher" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Form Publisher</h4>
+      </div>
+      <div class="modal-body">
+      	<form id="pub_form">
+      		<table class="table table-bordered table-hover table-striped">
+				<tbody>
+					<input type="hidden" class="form-control" name="id">
+					<tr>
+						<td><strong>Name</strong></td>
+						<td>
+							<input type="text" class="form-control" name="name" data-minlength="6" required>
+						</td>
+					</tr>
+					<tr>
+						<td><strong>Domain</strong></td>
+						<td>
+							<input type="url" class="form-control" name="domain">
+						</td>
+					</tr>
+				</tbody>
+	        </table>
+	        <div class="text-right">
+	        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        	<button type="submit" class="btn btn-primary" id="pub_submit">
+					OK
+				</button>
+	        </div>
+      	</form>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/business-domains/publisher-handler.js"></script>

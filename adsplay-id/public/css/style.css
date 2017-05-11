@@ -1,0 +1,142 @@
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+.alert h4 {
+  margin-top: 0;
+  color: inherit;
+}
+.alert .alert-link {
+  font-weight: bold;
+}
+.alert > p,
+.alert > ul {
+  margin-bottom: 0;
+}
+.alert > p + p {
+  margin-top: 5px;
+}
+.alert-dismissable,
+.alert-dismissible {
+  padding-right: 35px;
+}
+.alert-dismissable .close,
+.alert-dismissible .close {
+  position: relative;
+  top: -2px;
+  right: -21px;
+  color: inherit;
+}
+.alert-success {
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+  color: #3c763d;
+}
+.alert-success hr {
+  border-top-color: #c9e2b3;
+}
+.alert-success .alert-link {
+  color: #2b542c;
+}
+.alert-info {
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+  color: #31708f;
+}
+.alert-info hr {
+  border-top-color: #a6e1ec;
+}
+.alert-info .alert-link {
+  color: #245269;
+}
+.alert-warning {
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+  color: #8a6d3b;
+}
+.alert-warning hr {
+  border-top-color: #f7e1b5;
+}
+.alert-warning .alert-link {
+  color: #66512c;
+}
+.alert-danger {
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  color: #a94442;
+}
+.alert-danger hr {
+  border-top-color: #e4b9c0;
+}
+.alert-danger .alert-link {
+  color: #843534;
+}
+
+/*style custom*/
+.m-t-15{margin-top: 15px;}
+
+#page-title{
+  padding-left: 78pt;
+}
+#page-title h2{color: #585858;margin: 10px 0;font-size: 24pt;font-weight: 300;}
+
+#header{
+  border-bottom: 4px double #9e9e9e;
+}
+#header .row{
+  margin-bottom: 0;
+}
+#brand{
+  position: relative;
+  font-weight: 300;
+  font-size: 26pt;
+  padding: 0;
+  margin: 5pt 0;
+}
+
+#brand a{
+  color: #8e8e8e;
+}
+
+#logo{
+    width: 60pt;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 12pt;
+}
+
+#logo img{
+  max-width: 100%;
+  margin-bottom: -60px;
+}
+
+#account-btn {
+    float: right;
+    margin: 5pt 0;
+    line-height: 31pt;
+    font-size: 14pt;
+    font-weight: 300;
+    color: #656565;
+}
+
+#account-btn:hover,
+#brand a:hover{
+  color: #f37328;
+}
+
+@media screen and (max-width:768px){
+  #page-title{
+    padding-left: 0;
+  }
+  #logo{
+    width: 48pt;
+  }
+  #logo img{
+    margin-bottom: 0;
+  }
+  #account-btn{
+    line-height: 48pt;
+  }
+}

@@ -1,0 +1,20 @@
+
+
+<config>
+<ova.title>A pre-roll ad with a show stream</ova.title>
+<ova.json>
+{
+    "ads": {
+        "schedule": [
+        {
+            "position": "pre-roll",
+            "tag": "http://adserver.adtech.de/?advideo/3.0/78.109/5723244/0//cc=2;vidAS=pre_roll;vidRT=VAST;vidRTV=2.0.1"
+        }
+        ]
+    },
+    "debug":{
+        "levels" : " none "
+    }
+}
+</ova.json>
+</config>

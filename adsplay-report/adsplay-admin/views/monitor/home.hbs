@@ -1,0 +1,315 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">
+            Report in 30 days.
+        </h1>
+    </div>
+</div>
+
+<div class="row" id="dSummaryStats">
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <div class="text-right">
+                    <div class="huge" id="cTotalPv">0</div>
+                    <div class="total-view-text">Total Playview</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="text-right">
+                    <div class="huge" id="cTotalImp">0</div>
+                    <div class="total-view-text">Total Impression</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <div class="text-right">
+                    <div class="huge" id="cTotalTrv">0</div>
+                    <div class="total-view-text">Total Completed-View</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <div class="text-right">
+                    <div class="huge" id="cTotalClick">0</div>
+                    <div class="total-view-text">Total Click</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" >
+    <div class="col-sm-4 col-xs-12">
+        <div id="piechart-1" style="height: 300px"><svg></svg></div>
+    </div>
+    <div class="col-sm-8 col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Details</div>
+            <div class="panel-body">
+                <div id="table-content-source">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i><strong>Daily Audience Reach</strong></h3>
+            </div>
+            <div class="panel-body">
+                <div id="chart_user_count_from_pv" class="graph" style='height:210px;'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" >
+    <div class="col-sm-4 col-xs-12">
+        <div id="piechart" style=""><svg></svg></div>
+    </div>
+    <div class="col-sm-8 col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Details</div>
+            <div class="panel-body">
+                <div id="table-wrap">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+var end = new moment().format("YYYY-MM-DD");
+var begin = new moment().subtract(30, 'days').format("YYYY-MM-DD");
+var urlAdsStats = "{{site.ssl_api_domain}}/api/adstats?begin=" + begin + "&end=" + end;
+var urlUserCouter = "{{site.ssl_api_domain}}/api/count/user?begin=" + begin + "&end=" + end;
+var urlPlatforms = "{{site.ssl_api_domain}}/api/platform/summary/stats/?pmId=101&pmId=102&pmId=301&pmId=302&pmId=303&pmId=304&pmId=305&pmId=306&pmId=308&pmId=308&pmId=333&pmId=201&pmId=202&pmId=103&pmId=330&pmId=230&pmId=120&pmId=121&pmId=321&pmId=220&pmId=320&begin=" + begin + "&end=" + end;
+
+var formatTime = function (x) {
+    return new moment(x).format("YYYY-MM-DD");
+};
+function getJsonD3(url, callback) {
+    d3.json(url, callback);
+}
+
+function SummaryStatsView(data){
+    data.sort(function(a, b) {return a.period - b.period });
+
+    var cTotalPv = 0, cTotalImp = 0, cTotalTrv = 0, cTotalClick = 0;
+    for(var k in data){
+        cTotalPv += data[k].totalPv;
+        cTotalImp += data[k].totalImp;
+        cTotalTrv += data[k].totalTrv;
+        cTotalClick += data[k].totalClick;
+    }
+    $('#cTotalPv').html(formatNumber(cTotalPv));
+    $('#cTotalImp').html(formatNumber(cTotalImp));
+    $('#cTotalTrv').html(formatNumber(cTotalTrv));
+    $('#cTotalClick').html(formatNumber(cTotalClick));
+}
+
+function dailyUser(data){
+    data.forEach(function (countObj) {
+        countObj.period = formatTime(countObj.t);
+    });
+    Morris.Area({
+        element: 'chart_user_count_from_pv',
+        data: data,
+        xkey: 't',
+        ykeys: ['pv'],
+        labels: ['User from Playview'],
+        pointSize: 1,
+        goalStrokeWidth: 1,
+        fillOpacity: 0.3,
+        hideHover: 'auto',
+        resize: true,
+        dateFormat: formatTime
+    });
+}
+
+function pie_chart(result){
+    var data = [];
+
+    for(var i in result){
+        var pf = check_device(result[i].pfId);
+        data.push({key: pf.device, sum: result[i].totalPv, color: pf.color});
+    }
+        
+    nv.addGraph(function() {
+        var chart = nv.models.pieChart()
+        .x(function(d) { return d.key })
+        .y(function(d) { return d.sum })
+        .color(function(d,i){ 
+            return (d.data && d.data.color) || colors[i % colors.length]
+        })
+        .showLabels(false)
+        .showLegend(true)
+        .showLabels(true)
+        .labelThreshold(.03)
+        .labelType("percent")
+        .height(300);
+
+        d3.select("#piechart svg")
+        .datum(data)
+        .transition().duration(350)
+        .call(chart);
+
+        return chart;
+    });
+
+    table_data('#table-wrap', result, 
+        [   
+            { key: "Device" , field: "pfId"},
+            { key: "Play-View" , field: "totalPv"}
+        ]
+    );
+}
+
+
+function table_data(placementID, data, data_col){
+    $(placementID).empty();
+
+    if (jQuery.isEmptyObject(data)) {
+        $(placementID).append('<h4>No Data</h4>');
+        return false;
+    }
+
+    var table = $('<table class="table-details" class="table table-hover table-striped"><tbody></tbody></table>');
+    
+    $(placementID).append(table);
+    
+    for (var k in data){
+
+        var title = [];
+        var td = "";
+        for (var i in data_col) {
+            if(data_col[i].field == 'pfId'){
+                var pf = check_device(data[k][data_col[i].field]);
+                data[k][data_col[i].field] = pf.device;
+            }
+            else{
+                data[k][data_col[i].field] = formatNumber(data[k][data_col[i].field]);
+            }
+
+            td += '<td>'+data[k][data_col[i].field]+'</td>';
+
+            title.push({title: data_col[i].key});
+
+        }
+        var tr = '<tr>'+td+'</tr>';
+        table.find('tbody').append(tr);
+    }
+    
+    $('.table-details').DataTable({
+        columns: title
+    });
+}
+
+function check_device(id){
+    if(id == 1){
+        return {device: 'Web', color: '#27ae60'};
+    }
+    else if(id == 2){
+        return {device: 'Mobile Web', color: '#8e44ad'};
+    }
+    else if(id == 3){
+        return {device: 'Tablet', color: '#f1c40f'};
+    }
+    else if(id == 4){
+        return {device: 'Mobile App', color: '#2980b9'};
+    }
+    else if(id == 5){
+        return {device: 'SmartTV', color: '#f39c12'};
+    }
+    else{
+        return {device: 'Other Device', color: '#d62728'};
+    }
+}
+
+
+getJsonD3(urlAdsStats, SummaryStatsView);
+getJsonD3(urlUserCouter, dailyUser);
+getJsonD3(urlPlatforms, pie_chart);
+
+/******************* demo *********************/
+
+
+function pie_chart_demo(data){
+
+    nv.addGraph(function() {
+        var chart = nv.models.pieChart()
+        .x(function(d) { return d.key })
+        .y(function(d) { return d.sum })
+        .color(function(d,i){ 
+            return (d.data && d.data.color) || colors[i % colors.length]
+        })
+        .showLabels(false)
+        .showLegend(true)
+        .showLabels(true)
+        .labelThreshold(.03)
+        .labelType("percent")
+        .donut(true)
+        .donutRatio(0.35);
+
+        d3.select("#piechart-1 svg")
+        .datum(data)
+        .transition().duration(350)
+        .call(chart);
+
+        return chart;
+    });
+}
+
+function table_sum(data){
+    var table = $('<table class="table table-hover">\
+        <thead>\
+            <tr>\
+                <th>Source</th>\
+                <th>Impression</th>\
+                <th>Estimated Revenue (VND)</th>\
+            </tr>\
+        </thead>\
+        <tbody>\
+        </tbody>\
+    </table>');
+    for (var i = 0; i < data.length; i++) {
+        table.append('<tr>\
+                        <td>'+data[i].key+'</td>\
+                        <td>'+formatNumber(data[i].sum)+'</td>\
+                        <td>'+formatNumber(data[i].sum*65)+'</td>\
+                    </tr>');
+    }
+    $("#table-content-source").html(table);
+}
+    var Sum_Imp = parseInt($("#cTotalImp").text().replace(",", "")) || 20013298;
+    console.log(Sum_Imp)
+
+    var pie_data = [
+            {"t":1466269200000, "key": "FptPlay","sum":Sum_Imp*0.48, color: "#fe7726"},
+            {"t":1466269200000, "key": "BHD","sum":Sum_Imp*0.25, color: '#8ac441'},
+            {"t":1466269200000, "key": "Sony","sum":Sum_Imp*0.17, color: '#8a9c9c'},
+            {"t":1466269200000, "key": "MyThanh","sum":Sum_Imp*0.1, color: '#59ABE3'}
+        ];
+    pie_chart_demo(pie_data);
+    table_sum(pie_data);
+
+
+
+</script>

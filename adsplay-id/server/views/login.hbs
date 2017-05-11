@@ -1,0 +1,74 @@
+<div class="row" id="page-title">
+    <div class="col s12">
+        <h2 id="form-title">{{pageTitle}}</h2>
+    </div>
+</div>
+
+<div class="row">
+
+    <form id="form-login" class="col s12" method="POST" action="/login">
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="_name" type="text" name="_name">
+                <label for="_name">Username</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="_pass" type="password" name="_pass">
+                <label for="_pass">Password</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12">
+                <div class="g-recaptcha"
+                    data-sitekey="{{siteKey}}"
+                    data-callback="onSubmit">
+                </div>
+            </div>
+        </div>
+        
+        <button type="submit" class="waves-effect waves-light btn-large right">
+            Submit
+        </button>
+    </form>
+
+    <div  id="message" class="col s12"></div>
+
+<!--
+    <div class="col s12 center">
+        <a href="#" id="register"> Sign up for webapp </a>
+    </div>
+-->
+
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $('#form-login').submit(function(e){
+            e.preventDefault();
+            var data = $(this).serialize();
+            $.post(location.href,
+            data,
+            function(data, status){
+                if(data.success){
+                    window.location.href = data.redirect_uri;
+                }
+                else{
+                    if (window.grecaptcha) grecaptcha.reset();
+                    $('#message').html('<div class="alert alert-danger m-t-15">'+data.message+'</div>');
+                }
+            });
+        });
+
+/*
+        $('#register').click(function(e){
+            e.preventDefault()
+            var url = window.location.href;
+            var url_param =  url.split('?').slice(1).join('?');
+            window.location.href = (window.location.protocol + '//' + window.location.hostname + (location.port ? ':'+location.port: '') + '/register?' + url_param);
+        })
+*/
+    });
+</script>

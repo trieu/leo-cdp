@@ -1,0 +1,189 @@
+{
+	"cats": [
+		{
+            "TypeID": "1",
+            "TypeName": "Phim truyện",
+            "ListView": [
+            {
+                "ID": "2",
+                "Category": "Hành Động"
+               
+            },
+            {
+                "ID": "6",
+                "Category": "KINH DỊ"
+               
+            },
+            {
+                "ID": "11",
+                "Category": "HOẠT HÌNH"
+                
+            },
+            {
+                "ID": "13",
+                "Category": "TÂM LÝ"
+                
+            },
+            {
+                "ID": "14",
+                "Category": "PHIM BỘ HOA NGỮ"
+               
+            },
+            {
+                "ID": "15",
+                "Category": "HÀI"
+                
+            },
+            {
+                "ID": "16",
+                "Category": "TÀI LIỆU"
+                
+            },
+            {
+                "ID": "20",
+                "Category": "PHIM BỘ HÀN QUỐC"
+              
+            },
+            {
+                "ID": "23",
+                "Category": "PHIM BỘ VIỆT NAM"
+                
+            },
+            {
+                "ID": "24",
+                "Category": "TÌNH CẢM"
+                
+            },
+            {
+                "ID": "25",
+                "Category": "PHIM BỘ ÂU MỸ"
+                
+            },
+            {
+                "ID": "28",
+                "Category": "PHIM GIA ĐÌNH"
+                
+            },
+            {
+                "ID": "33",
+                "Category": "PHIM BỘ KHÁC"
+             
+            }]
+        },
+        {
+            "TypeID": "2",
+            "TypeName": "Thiếu nhi",
+            "ListView": [
+            {
+                "ID": "161",
+                "Category": "Phim"
+            
+            },
+            {
+                "ID": "162",
+                "Category": "Ca nhạc"
+                
+            },
+            {
+                "ID": "405",
+                "Category": "Tiếng Anh Cho Bé"
+             
+            },
+            {
+                "ID": "406",
+                "Category": "Kể Chuyện Bé Nghe"
+                
+            },
+            {
+                "ID": "407",
+                "Category": "Bé Học Điều Hay"
+                
+            }]
+        },
+        {
+            "TypeID": "3",
+            "TypeName": "Giải trí",
+            "ListView": [
+            {
+                "ID": "181",
+                "Category": "Nhạc Việt Nam"
+                
+            },
+            {
+                "ID": "182",
+                "Category": "Nhạc quốc tế"
+                
+            },
+            {
+                "ID": "261",
+                "Category": "Đề xuất"
+              
+            },
+            {
+                "ID": "262",
+                "Category": "Cải lương"
+                
+            },
+            {
+                "ID": "263",
+                "Category": "Đờn Ca Tài Tử"
+                
+            },
+            {
+                "ID": "266",
+                "Category": "Kịch Nói"
+                
+            },
+            {
+                "ID": "267",
+                "Category": "Quan Họ"
+                
+            },
+            {
+                "ID": "268",
+                "Category": "Chèo"
+                
+            },
+            {
+                "ID": "269",
+                "Category": "SK Khác"
+                
+            },
+            {
+                "ID": "301",
+                "Category": "Danh Hài"
+            
+            },
+            {
+                "ID": "120",
+                "Category": "TV Show"
+               
+            },
+            {
+                "ID": "121",
+                "Category": "Truyền hình thực tế"
+              
+            },
+            {
+                "ID": "122",
+                "Category": "Trò chơi truyền hình"
+               
+            },
+            {
+                "ID": "123",
+                "Category": "Đàm luận"
+                
+            },
+            {
+                "ID": "124",
+                "Category": "Giải thưởng"
+              
+            },
+            {
+                "ID": "125",
+                "Category": "LiveShow"
+                
+            }]
+        }
+	]
+}

@@ -1,0 +1,309 @@
+<div class="row">
+    <div class="col-sm-12">
+        <ol class="breadcrumb">
+            <li><a href="creative/list">All Advertising Units</a></li>
+            <li class="active">Ad Unit Information Editor</li>
+        </ol>
+        <h3 class="text-center">
+            <span>{{dashboard_title}}</span>
+        </h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-5 col-xs-12">
+
+        <div class="panel panel-default" id="frame_upload">
+            <div class="panel-heading">
+                <h4><span class="icon-number">1</span> Breaking news demo</h4>
+            </div>
+            <div class="panel-body" id="frame_upload_body">
+                <div class="video-container-breakingnews" >
+                    <div class="breaking-news"><marquee id="news-marquee">{{crt.media}}</marquee></div>
+                    <video id="my-video" class="video-js vjs-default-skin vjs-big-play-centered" autoplay muted controls
+                           loop preload="auto"
+                           poster="//adsplay.net/img/logo.png"
+                           data-setup=''
+                           width='100%'
+                           height='300'>
+                            >
+                        <source src="https://ads-cdn.fptplay.net/static/videos/demo-sport-2.mp4" type='video/mp4' />
+                    </video>
+                </div>
+                <textarea style="margin-top: 10px;" id="BreakingNews_Text" class="form-control"
+                          placeholder="Enter the ad message here">{{crt.media}}</textarea><br/>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- form -->
+    <form id="form_creative" novalidate>
+
+    <div class="col-sm-7 col-xs-12">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4><span class="icon-number">2</span> Ad Information</h4>
+            </div>
+            <div class="panel-body">
+            
+                <input type="hidden" name="id"></input>
+                <input type="hidden" name="adType"></input>
+                <input type="hidden" name="media" id="media"></input>
+                <div class="form-group">
+                    <label class="label-important">Name</label>
+                    <input type="text" class="form-control" name="name" placeholder="Enter Ad Name" required data-validate-length-range="10">
+                </div>
+                <div class="form-group">
+                    <label class="label-important">Click-through URL</label>
+                    <input type="url" class="form-control" name="cliThr" placeholder="Enter Click-through URL">
+                </div>
+                <div class="form-group">
+                    <label class="label-important" title="Impression or Complete-view">Total Booking</label>
+                    <input type="number" class="form-control" name="tBk" placeholder="Enter Total Booking" value="0" data-validate-minmax="0" required>
+                </div>
+                <div class="form-group">
+                    <label title="Impression or Complete-view">Daily Booking</label>
+                    <input type="number" class="form-control" name="dBk" placeholder="Enter Ad Name" value="0" data-validate-minmax="0" required>
+                </div>
+                
+                <div class="form-group" id="crt-status">
+                    <label>Ad Status</label>
+                    <select class="form-control" id="ads_status" name="status">
+                        <option value="0" selected>Invalid</option>
+                        <option value="1">Pending</option>
+                        <option value="2">Running</option>
+                        <option value="3">Finished</option>
+                        <option value="4">Expired</option>
+                    </select>
+                </div>
+                
+                <div class="panel-group" id="accordion-2">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion-2" href="#2-collapse-1">
+                                    Advance Options
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="2-collapse-1" class="panel-collapse collapse">
+                            <div class="panel-body">
+
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <textarea class="form-control" rows="3" name="desc" placeholder="Enter Ad Description"></textarea>
+                                </div>
+                                <div class="form-group" id="tracking-placement">
+                                    <label>Third-party tracking URL</label>
+                                    <input type="url" class="form-control" name="vastXml3rd" placeholder="Enter Third-party Ad URL">
+                                </div>
+                                <div class="form-group">
+                                    <label title="for 1 Impression or Complete-view">Base Cost</label>
+                                    <input type="number" class="form-control" name="cost" placeholder="Enter Base Cost" value="0" data-validate-minmax="0" required>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4><span class="icon-number">3</span> Ad Delivery</h4>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="label-important">Running Date (format Month/Day/Year)</label>
+                    <input type="datetime-local" class="form-control" id="ads_running_date" name="runDate" placeholder="Enter Running Date" required>
+                </div>
+                <div class="form-group">
+                    <label class="label-important">Expired Date (format Month/Day/Year)</label>
+                    <input type="datetime-local" class="form-control" id="ads_expired_date" name="expDate" placeholder="Enter Expired Date" required>
+                </div>
+                <div class="form-group">
+                    <label class="label-important">Pricing Model</label>
+                    <div class="radio">
+                    <label>
+                        <input type="radio" name="prcModel" value="2">  CPM (Cost per Mile)
+                    </label>
+                    </div>
+                     <div class="radio">
+                    <label>
+                        <input type="radio" name="prcModel" value="3">  CPC (Cost per Click)
+                    </label>
+                    </div>
+                </div>
+
+                <div class="panel-group" id="accordion-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion-3" href="#3-collapse-1">
+                                    Advanced Options
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="3-collapse-1" class="panel-collapse collapse">
+                            <div class="panel-body">
+
+                                <div class="form-group">
+                                    <label>Ad Frequency</label>
+                                    <select class="form-control" id="ads_fqccap" name="fqcCap">
+                                        <option value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3" selected >3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Priority Score (higher is better)</label>
+                                    <select class="form-control" id="ads_score" name="score">
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="30">30</option>
+                                        <option value="40">40</option>
+                                        <option value="50">50</option>
+                                        <option value="60">60</option>
+                                        <option value="70">70</option>
+                                        <option value="80">80</option>
+                                        <option value="90">90</option>
+                                        <option value="100">100</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4><span class="icon-number">4</span> Targeting Information</h4>
+            </div>
+            <div class="panel-body">
+            
+                <div class="form-group">
+                    <label>Location</label>
+                    <select type="select" class="select-multi" id="ads_target_location" name="tglocs" data-placeholder="Show Ads in these locations" multiple="multiple">
+                        {{#each locationCodes}}
+                            <option value="{{ConChar}}" class="optLocation">{{LocName}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="label-important">Device Type</label>
+                    <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="tgpfs"  value="1" disabled checked> Web (PC,Laptop)
+                    </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="label-important">Ad Placement</label>
+
+                    <div class="form-group-inline">
+                        <label>FptPlay Ad Placements</label>
+                        <select type="select" class="select-multi" id="fptplay_placements" name="tgpms" data-placeholder="Select Placements" multiple="multiple" required>
+                            <option value="401">OVERLAY_WEB</option>
+                        </select>
+
+                        <label>FptPlay Categories</label>
+                        <select class="select-multi" id="fptplay_categories" type="select" name="tgkws"
+                                data-placeholder="Enter the category's names" multiple="multiple">
+                            {{#each fptplayCategories}}
+                                <option value="{{this}}">{{this}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+
+                </div>
+            
+            </div>
+        </div>
+
+        <div class="row text-center margin-b-80">
+            <div class="col-sm-6 col-xs-12">
+                <button type="submit" class="btn btn-success btn-lg btn-block">OK</button>
+            </div>
+            <div class="col-sm-6 col-xs-12">
+                <a href="creative/new" class="btn btn-default btn-lg btn-block">Cancel</a>
+            </div>
+        </div>
+    </div>
+
+    </form>
+
+</div>
+
+{{>popup-partial}}
+
+<script src="js/business-domains/creative-new-page.js"></script>
+<script type="text/javascript">
+//javascript of breaking news
+$(document).ready(function() {
+    videojs('#my-video').play();
+
+    setTimeout(playText, 1000000);
+
+    function playText(){
+        document.getElementById('mymarquee').start();
+    }
+
+    $('#BreakingNews_Text').keyup(function(){
+        $('.break-news').show();
+        var text = $('#BreakingNews_Text').val();
+        $('#news-marquee').html(text);
+
+    });
+
+});
+
+
+//submit form
+$('#form_creative').submit(function(e){
+    e.preventDefault();
+
+    // check breaking news
+    if($('#BreakingNews_Text').val() == ""){
+        errorCss($('#frame_upload'), $('#frame_upload_body .alert'), false);
+        return false;
+    }
+
+    // check form
+    if(!checkFormValidator(this)){
+        scrollTopPage();
+        return false;
+    }
+
+    var url = '/creative/save/4'; //number is adType
+    var media = $('#BreakingNews_Text').val() || $("#media").val();
+    var data = buildData($(this), media); //formdata
+    sendForm(url,data,60000); //send ajax (url, data, timeout)
+})
+
+{{#if crt}}
+    //set edit form
+    var creativeData = {{{json crt}}};
+    setFormData($("#form_creative"), creativeData);
+{{/if}}
+
+</script>
+<script src="js/business-domains/vast-xml.js"></script>
+

@@ -1,0 +1,54 @@
+<div class="row" id="page-title">
+    <div class="col s12">
+        <h2 id="form-title">{{pageTitle}}</h2>
+    </div>
+</div>
+
+<div class="row">
+
+    <form  id="form-register" class="col s12" method="POST" action="/register" autocomplete="off">
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="username" type="text" name="username" autocomplete="new-username" required>
+                <label for="username">Username</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="email" type="email" name="email" autocomplete="new-email" required>
+                <label for="email">Email</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="password" type="password" name="password" autocomplete="new-password" required>
+                <label for="password">Password</label>
+            </div>
+        </div>
+
+        <button type="submit" class="waves-effect waves-light btn-large right">Ok</button>
+    </form>
+
+    <div id="message" class="col s12"></div>
+
+</div>
+
+<script type="text/javascript">
+    
+    $(function(){
+        $('#form-register').submit(function(e){
+            e.preventDefault();
+            var url = $(this).attr('action');
+            var data = $(this).serialize();
+            $.post(url, data,
+            function(data, status){
+                var alert = (data.success) ? 'alert-success' : 'alert-danger';
+                $('#message').html('<div class="alert '+alert+' m-t-15">'+data.message+'</div>');
+                setTimeout(function(){
+                    window.location.href = '/';
+                },1000)
+            });
+        });
+
+    });
+</script>

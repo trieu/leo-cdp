@@ -1,0 +1,129 @@
+body{
+	margin: 0px;
+	background-image:none;
+	position:static;
+	left:auto;
+	
+}
+.imgbg img {
+
+	width: 100%;
+}
+#test{
+	position: relative;
+}
+.example-video-container{
+	position: absolute;
+	z-index: 10;
+	top: 6%;
+	left: 23.5%;
+	height: 57%;
+	width: 53%;
+	overflow: hidden;
+
+
+}
+.example-video-container #my-video{
+	height: 100%;
+	width: 100%;
+}
+
+
+/*Config Thumbnail*/
+.classThumbnail img {
+	position: absolute;
+    z-index: 100;
+    width: 28%;
+    height: 28%;
+    bottom: 15%;
+    right: 2.3%;
+    opacity: 0.7;
+  	filter: alpha(opacity=60);
+	cursor: pointer;
+}
+/*Config classClose*/
+.classClose img{
+	position: absolute;
+    z-index: 101;
+    width: 4%;
+    height: 5%;
+    bottom: 38%;
+    right: 0%;
+    opacity: 0.9;
+  	filter: alpha(opacity=60);
+  	cursor: pointer;
+}
+.classClosePopup {
+  position: absolute;
+  top:1.5%;
+  right:2%;
+  z-index: 1001;
+  color: black;
+  font-size: 2.4vw;
+  font-weight: bold;
+  width: 4.5%;
+  height: 8%;
+  background-color: white;
+  border-radius: 40px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  opacity: 0.9;
+  filter: alpha(opacity=60);
+}
+
+.classClosePopup span{
+  margin-left: 21%;
+}
+
+.buttonCloseThumbnail {
+  z-index: 1001;
+  position: absolute;
+  top: 53%;
+  right: 0%;
+  width: 4.5%;
+  height: 8%;
+  line-height: -20%;
+  font-size: 2.4vw;
+  /*font-size: 36px;*/
+  font-weight: bold;
+  text-indent: 1px;
+  text-align: center;
+  background-color: #fff;
+  color: #111;
+  border-radius: 40px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  opacity: 0.6;
+  filter: alpha(opacity=60);
+}
+
+.classVideoAds  {
+	position: absolute;
+  z-index: 120;
+  width: 90%;
+  height: 88%;
+  top: 5%;
+  right: 4%;
+  border: 5px solid white;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+
+.classVideoAds .classYoutubeAds{
+  width: 100%;
+  height: 100%;
+}
+
+.classVideoAds #idVideoAds{
+  width: 100%;
+  height: 100%;
+}
+
+
+ /*=================================================================*/
+
+
+
+
+

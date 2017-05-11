@@ -1,0 +1,48 @@
+<div class="row">
+    <div class="col-lg-12">
+        <ol class="breadcrumb">
+            <li><a href="/event/">Ad Event Management</a></li>
+            <li class="active">Ad Event Report</li>
+        </ol>
+        <h3 class="page-header">
+            Ad Event Report
+        </h3>
+    </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6 col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+      	<div class="table-responsive">
+            <table class="table table-bordered table-hover table-striped">
+                <tbody>
+                <tr>
+                    <td><strong>Name</strong></td>
+                    <td><span id="event_name">{{event.name}}</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Begin time</strong></td>
+                    <td><span id="event_begin">{{event.begin}}</span></td>
+                </tr>
+                <tr>
+                    <td><strong>End time</strong></td>
+                    <td><span id="event_end">{{event.end}}</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Status</strong></td>
+                    <td>
+                        <span id="ads_status" data-status="{{event.status}}">{{event.status}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Total View</strong></td>
+                    <td><span id="ads_view">{{event.view}}</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
