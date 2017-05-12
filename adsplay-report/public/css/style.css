@@ -905,13 +905,126 @@ body{
   }
 }
 
+/*Pagination*/
+.pagination {
+  display:inline-block;
+  width: 100%;
+  text-align: center;
+  padding-left:0;
+  margin:20px 0;
+  border-radius:4px;
+}
 
+.pagination>li {
+  display: inline-block;
+}
+
+.pagination>li>a,.pagination>li>span {
+  position:relative;
+  float:left;
+  margin-left:-1px;
+  color: #1e88e5;
+  text-decoration:none;
+  background-color:#fff;
+  border:1px solid #ddd;
+  cursor: pointer;
+  padding: 8px 16px;
+  font-family: sans-serif;
+  font-size: 18px;
+  line-height:1.3333333;
+}
+
+.pagination>li:first-child>a,.pagination>li:first-child>span {
+  margin-left:0;
+  border-top-left-radius:4px;
+  border-bottom-left-radius:4px
+}
+
+.pagination>li:last-child>a,.pagination>li:last-child>span {
+  border-top-right-radius:4px;
+  border-bottom-right-radius:4px
+}
+
+.pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover {
+  z-index:3;
+  color:#23527c;
+  background-color:#eee;
+  border-color:#ddd
+}
+
+.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover {
+  z-index: 4;
+  color:#fff;
+  cursor:default;
+  background-color: #1e88e5;
+  border-color: #1e88e5;
+}
+
+.pagination>.disabled>a,.pagination>.disabled>a:focus,.pagination>.disabled>a:hover,.pagination>.disabled>span,.pagination>.disabled>span:focus,.pagination>.disabled>span:hover {
+  color:#777;
+  cursor:not-allowed;
+  background-color:#fff;
+  border-color:#ddd
+}
+/**/
+.media {
+  margin-top: 15px;
+}
+.media:first-child {
+  margin-top: 0;
+}
+.media,
+.media-body {
+  zoom: 1;
+  overflow: hidden;
+}
+.media-body {
+  width: 10000px;
+}
+.media-object {
+  display: block;
+}
+.media-maxw{
+  max-width: 100px;
+}
+.media-object.img-thumbnail {
+  max-width: none;
+}
+.media-right,
+.media > .pull-right {
+  padding-left: 10px;
+}
+.media-left,
+.media > .pull-left {
+  padding-right: 10px;
+}
+.media-left,
+.media-right,
+.media-body {
+  display: table-cell;
+  vertical-align: top;
+}
+.media-middle {
+  vertical-align: middle;
+}
+.media-bottom {
+  vertical-align: bottom;
+}
+.media-heading {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+.media-heading a{
+  text-decoration: none;
+  color: #333;
+}
+.media-list {
+  padding-left: 0;
+  list-style: none;
+}
 /** WEBPACK FOOTER **
  ** webpack:///~/flexboxgrid/css/~/flexboxgrid/css/flexboxgrid.css
  **/
-body {
-  margin: 0;
-}
 #app {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -947,3 +1060,4 @@ body {
 .ReactTable .rt-tbody .rt-td:first-child {
     text-align: left;
 }
+

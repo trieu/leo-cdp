@@ -10,6 +10,7 @@ class Category extends React.Component {
 
     constructor(props) {
         super(props);
+
     }
 
     componentWillMount() {
@@ -33,42 +34,28 @@ class Category extends React.Component {
     }
 
     render() {
-        const columns = [{
-                header: 'Name',
-                id: 'name',
-                accessor: d => d.name,
-                render: row => {
-                    return <span title={row.value}>{row.value}</span>
-                },
-                filterMethod: (filter, row) => (row[filter.id].includes(filter.value))
-            },
-            {
-                header: 'Category',
-                accessor: 'category'
-            },
-            {
-                header: 'Playview',
-                accessor: 'playview'
-            },
-            {
-                header: 'Impression phát sinh',
-                accessor: 'impression'
-            },
-            {
-                header: 'Trueview',
-                accessor: 'trueview'
-
-            },
-            {
-                header: 'Click',
-                accessor: 'click'
-            },
-            {
-                header: 'Doanh thu ước tính',
-                accessor: 'revenue'
-            }
+        var dcol = [
+            { key: 'name', name: 'Name' },
+            { key: 'category', name: 'Category' },
+            { key: 'playview', name: 'Playview' },
+            { key: 'impression', name: 'Impression phát sinh`' },
+            { key: 'trueview', name: 'Trueview' },
+            { key: 'click', name: 'Click' },
+            { key: 'revenue', name: 'Doanh thu ước tính' },
         ]
-
+        const columns = [];
+        dcol.forEach(function(item) {
+            columns.push(
+                {
+                    header: item.name,
+                    id: item.key,
+                    accessor: item.key,
+                    render: row => {
+                        return <span title={row.value}>{row.value}</span>
+                    }
+                }
+            )
+        });
 
         return ( <
             div className = "row" >

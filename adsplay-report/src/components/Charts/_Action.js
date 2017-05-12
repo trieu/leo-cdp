@@ -5,6 +5,8 @@ export const CHART_CATEGORY = 'CHART_CATEGORY';
 export const CHART_PLATFORM = 'CHART_PLATFORM';
 export const CHART_TOP_VIEW = 'CHART_TOP_VIEW';
 export const CHART_TOP_CATEGORY = 'CHART_TOP_CATEGORY';
+export const CHART_DETAIL_FILM = 'CHART_DETAIL_FILM';
+
 
 /**
  * Lấy thống kê số feed các pages hiện có
@@ -188,6 +190,47 @@ export function fetchTopCategory(sourceMedia, beginDate, endDate, limit) {
                     dispatch({
                         type: CHART_TOP_CATEGORY,
                         payload: {data: response.data, loading: false}
+                    })
+                });
+    }
+}
+export function fetchDetailFilm(sourceMedia, beginDate, endDate, limit) {
+
+    var limit = (limit) ? '&limit='+limit : '&limit=10';
+    var nameMedia = "";
+    var bySource = ""
+    if(sourceMedia != "all"){
+        nameMedia = "bysource";
+        bySource = "&source=" + sourceMedia;
+    }
+
+    var url = CHART_PLATFORM_URL + nameMedia+'/report?startDate='+ beginDate + '&endDate='+ endDate + limit + bySource;
+
+    return function (dispatch) {
+
+        dispatch({
+            type: CHART_DETAIL_FILM,
+            payload: {data: [], loading: true, sum: 0}
+        })
+
+        return axios.get(url)
+                .then(function (response) {
+
+                    var result = response.data;
+                    var data = [];
+                    var sum = 0;
+                    for(var i in result){
+                        sum += parseInt(result[i].contentView);
+                        data.push({
+                            key:result[i].platformName,
+                            value:result[i].contentView,
+                            color:COLORS[i]
+                        })
+                    }
+
+                    dispatch({
+                        type: CHART_DETAIL_FILM,
+                        payload: {data: data, loading: false}
                     })
                 });
     }

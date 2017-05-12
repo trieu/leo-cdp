@@ -1,6 +1,6 @@
-import { CHART_CATEGORY, CHART_PLATFORM, CHART_TOP_VIEW, CHART_TOP_CATEGORY } from './_Action';
+import { CHART_CATEGORY, CHART_PLATFORM, CHART_TOP_VIEW, CHART_TOP_CATEGORY, CHART_DETAIL_FILM } from './_Action';
 
-const INITIAL_STATE = { category: [], platform: [], topview: [], topcategory: [] };
+const INITIAL_STATE = { category: [], platform: [], topview: [], topcategory: [], detailfilm: []};
 
 export default function (state = INITIAL_STATE, action) {
     
@@ -13,6 +13,8 @@ export default function (state = INITIAL_STATE, action) {
             return { ...state, topview: action.payload.data, loading_topview: action.payload.loading };
         case CHART_TOP_CATEGORY:
             return { ...state, topcategory: action.payload.data, loading_topcategory: action.payload.loading };
+        case CHART_DETAIL_FILM:
+            return { ...state, detailfilm: action.payload.data, loading_detailfilm: action.payload.loading };
         default:
             return state;
     }

@@ -7,6 +7,7 @@ import Detail from './pages/DetailCategory';
 import SearchPage from './pages/SearchPage';
 import NotFoundPage from './pages/NotFoundPage';
 import Auth from './components/Services/Auth';
+import DetailFilm from './pages/DetailFilm';
 
 const routes = (
   <Router history={browserHistory}>
@@ -15,6 +16,7 @@ const routes = (
       <Route path="dashboard" component={DashBoard} />
       <Route path="detail" component={Detail} />
       <Route path="search" component={SearchPage} />
+      <Route path="detailFilm/:filmID" component={DetailFilm} />
       {/*<Route path="form" component={FormPage}/>*/}
       <Route path="*" component={NotFoundPage}/>
     </Route>

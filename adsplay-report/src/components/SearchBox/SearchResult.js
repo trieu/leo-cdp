@@ -1,90 +1,68 @@
-import React, {Component} from 'react';
-import {Tabs, Tab} from 'material-ui/Tabs';
-import {grey400, darkBlack, lightBlack} from 'material-ui/styles/colors';
+import React, { Component, PropTypes } from 'react';
+import Pagination from '../Pagination/index';
+import { Link } from 'react-router';
+import Visibility from 'material-ui/svg-icons/action/visibility';
 
-/**
- * The input is used to create the `dataSource`, so the input always matches three entries.
- */
-class SearchResult extends Component {
+class SearchResult extends React.Component {
 
-  constructor(props) {
-      super(props);
-      this.state = {
-        value: 'tab-1', //default
-      };
-      this.handleChange = this.handleChange.bind(this);
-  }
+    constructor(props) {
+        super(props);
 
-  handleChange(value){
-    this.setState({
-      value: value,
-    });
-  };
+        this.state = {
+            data: this.props.data || [],
+            pageOfItems: []
+        };
 
-  render() {
-    const styles = {
-        tab: {
-            background: '#fff',
-            color: '#333',
-        },
-        list: {
-            padding: '10px 0',
-            borderBottom: '1px solid #eee',
-        },
-        listLink: {
-            color: '#0064bb',
-            fontSize: '18px',
-            textDecoration: 'none'
-        },
-        listText: {
-            margin: '0 0 5px',
-            color: '#545454'
+        this.onChangePage = this.onChangePage.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(this.props.data != nextProps.data){
+            this.setState({data: nextProps.data});
         }
-    };
+    }
 
-    return (
-      <Tabs
-        value={this.state.value}
-        onChange={this.handleChange}
-        inkBarStyle={{background: '#1e88e5'}}
-        tabItemContainerStyle={{borderBottom: '1px solid #e0e0e0'}}
-      >
-        <Tab label="Tất cả" value="tab-1" style={styles.tab}>
-          <div style={styles.list}>
-            <a href="#" style={styles.listLink}>Giấc Mơ Ca Sĩ</a>
-            <p style={styles.listText}>
-                Phim Bộ Nổi Bật | 434,442
-            </p>
-          </div>
-          <div style={styles.list}>
-            <a href="#" style={styles.listLink}>Thử Thách Thần Tượng</a>
-            <p style={styles.listText}>
-                TVShow Nổi Bật | 364,712
-            </p>
-          </div>
-        </Tab>
-        <Tab label="ADS" value="tab-2" style={styles.tab}>
-          <div>
-            <h2>Controllable Tab B</h2>
-            <p>
-              This is another example of a controllable tab. Remember, if you
-              use controllable Tabs, you need to give all of your tabs values or else
-              you wont be able to select them.
-            </p>
-          </div>
-        </Tab>
-        <Tab label="Phim" value="tab-3" style={styles.tab}>
-          <div>
-            <h2>Controllable Tab C</h2>
-            <p>
-              You need to give all of your tabs values or else
-              you wont be able to select them.
-            </p>
-          </div>
-        </Tab>
-      </Tabs>
-    );
-  }
-}
+    onChangePage(pageOfItems) {
+        this.setState({ pageOfItems: pageOfItems });
+    }
+
+    render() {
+        const styles = {
+            icon: {
+                verticalAlign: 'bottom',
+                width: '18px',
+                height: '18px'
+            }
+        }
+        if (this.state.data.length <= 0) {
+            return (
+                <p>No data</p>
+            )
+        };
+        return ( 
+            <div>
+                {this.state.pageOfItems.map((item, key) =>
+                    <div className="media" key={key}>
+                        <div className="media-left">
+                            <Link to={"/detailFilm/" + item.contentId}>
+                                <img className="media-object media-maxw" src={item.image} />
+                            </Link>
+                        </div>
+                        <div className="media-body">
+                            <h4 className="media-heading">
+                                <Link to={"/detailFilm/" + item.contentId}>
+                                    {item.name}
+                                </Link>
+                            </h4>
+                            <p title="Thể loại">{item.category}</p>
+                            <p title="Playview"><Visibility style={styles.icon} /> {item.playview}</p>
+                        </div>
+                    </div>
+                )}
+                <Pagination items={this.state.data} onChangePage={this.onChangePage} />
+            </div>
+        );
+    }
+};
 
 export default SearchResult;
