@@ -80,7 +80,7 @@ var buildImpressionAndTrueViewData = function (data) {
         trvs.push({x: d.t, y: d.trv});
     });
     return [
-        {key: "Impression", color: '#ff7f0e', values: impressions}
+        {key: "Impression", color: '#83a6ed', values: impressions}
         ,
         {key: "Completed View", color: '#2ca02c', values: trvs}
     ];
@@ -94,7 +94,7 @@ var buildImpressionAndClickData = function (data) {
         clicks.push({x: d.t, y: d.c});
     });
     return [
-        {key: "Impression", color: '#ff7f0e', values: impressions}
+        {key: "Impression", color: '#83a6ed', values: impressions}
         ,
         {key: "Click", color: '#2ca02c', values: clicks}
     ];
@@ -513,11 +513,15 @@ function displayPlatforms(url) {
 
     d3.json(url, function (error, data) {
         if (data.length > 0) {
-            var pc = mobile = smarttv = other = 0;
+            var pc = iptv = mobile = smarttv = other = 0;
 
             for (var i = 0; i < data.length; i++) {
+                console.log(data[i])
                 if(isDevice(data[i].pmId) == 'PC'){
                     pc += data[i].totalReach;
+                }
+                else if(isDevice(data[i].pmId) == 'IPTV'){
+                    iptv += data[i].totalReach;
                 }
                 else if(isDevice(data[i].pmId) == 'Mobile App'){
                     mobile += data[i].totalReach;
@@ -532,6 +536,7 @@ function displayPlatforms(url) {
             }
 
             platformsData.push({label: "PC", value: pc});
+            platformsData.push({label: "IPTV", value: iptv});
             platformsData.push({label: "Mobile App", value: mobile});
             platformsData.push({label: "SmartTV", value: smarttv});
             if(other > 0){
@@ -549,6 +554,10 @@ function displayPlatforms(url) {
 }
 
 function pieChart(placementID, data){
+    var COLORS = ['#83a6ed', '#8dd1e1', '#82ca9d','#a4de6c',
+    '#d0ed57', '#FABFA1', '#B86A54', '#FE8A71', '#DC626F',
+    '#FE6860', '#F3C9BF', '#C9C7AF', '#93BFB6', '#7CA39C',
+    '#726680', '#779BF0', '#849FBB', '#C2B6D6', '#EBE1E2'];
     nv.addGraph(function () {
         var chart = nv.models.pieChart()
                     .x(function (d) {
@@ -562,6 +571,7 @@ function pieChart(placementID, data){
                     .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
                     .donut(true)          //Turn on Donut mode. Makes pie chart look tasty!
                     .donutRatio(0.35)     //Configure how big you want the donut hole size to be.
+                    .color(COLORS)
                 ;
 
     d3.select(placementID)
@@ -577,6 +587,9 @@ function isDevice(id){
         return 'PC';
     }
     else if(id >= 300 && id <= 399){
+        if(id == 320){
+            return 'IPTV';
+        }
         return 'Mobile App';
     }
     else if(id >= 200 && id <= 299){
