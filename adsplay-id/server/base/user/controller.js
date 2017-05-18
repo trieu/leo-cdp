@@ -105,7 +105,6 @@ exports.newPassword = function (req, res){
 
 exports.save = function (req, res){
     var data = {};
-    console.log(req.body)
     if(req.body.password){
         req.body.password = Encryption.hash(req.body.password);
     }
@@ -116,7 +115,6 @@ exports.save = function (req, res){
         req.body.rolesAds = convertObjBoolean(req.body.rolesAds, true);
     }
     data = req.body;
-    console.log(data)
     
     User.findUserUpdate({"_id": req.body._id}, data, function(err, user){
         if(err){
