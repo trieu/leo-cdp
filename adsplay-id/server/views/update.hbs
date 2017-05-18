@@ -22,10 +22,49 @@
         </div>
         <div class="row">
             <div class="col s12">
+                <label class="chip-label">
+                    Roles (ex: user, agency, sale, publisher, admin)
+                </label>
                 <div id="chip-roles" data-chip={{userInfo.roles}}></div>
             </div>
         </div>
-
+        <div class="row">
+            <div class="col s12">
+                <label class="chip-label">
+                    Roles Ads
+                </label>
+                <table id="table-roles-ads" data-roles={{userInfo.rolesAds}} class="display" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th style="width:10%;">Id</th>
+                            <th style="width:40%;">Name</th>
+                            <th style="width:25%;">Booking Time</th>
+                            <th style="width:10%;">Status</th>
+                            <th style="width:15%;">Grant Permission</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <label class="chip-label">
+                    Roles Placement
+                </label>
+                <table id="table-roles-placement" data-roles={{userInfo.rolesPlacement}} class="display" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th style="width:10%;">Id</th>
+                            <th style="width:45%;">Name</th>
+                            <th style="width:30%;">Type</th>
+                            <th style="width:15%;">Grant Permission</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
         <div class="row">
             <div class="col s12">
                 <label>Status</label>
@@ -58,11 +97,23 @@
         </a>
     </div>
 </div>
-
+<link rel="stylesheet" type="text/css" href="css/jquery.dataTables.min.css" media="all">
+<script src="js/jquery.dataTables.min.js" type="text/javascript"></script>
 <script type="text/javascript">
     
-    $(function(){
+    function switcher(ele, id){
+        id = parseInt(id);
+        var ads = JSON.parse(ele.attr('data-roles'));
+        var checked = (!jQuery.isEmptyObject(ads) && ads[id]) ? 'checked' : '';
+        var html = '<div class="switch"><label>Off'+
+                    '<input class="roles-checkbox" type="checkbox" data-id='+id+' '+checked+ '>'+
+                    '<span class="lever"></span>On</label></div>';
+        return html;
+    }
 
+    $(window).on('load', function() {
+
+        // Setup Role
         var chipRoles = $('#chip-roles');
         var data_chip = new Array();
         var get_chip = JSON.parse(chipRoles.attr('data-chip'));
@@ -85,6 +136,77 @@
             placeholder: 'Enter a role'
         });
 
+
+        // Setup Role Ads
+        
+        var tableRolesAds = $("#table-roles-ads");
+        var dataRolesAds = JSON.parse(tableRolesAds.attr('data-roles'));
+        tableRolesAds.on("click",".roles-checkbox", function(){
+            var id = parseInt($(this).attr('data-id'));
+            if($(this).is(':checked')){
+                dataRolesAds[id] = true;
+            }
+            else{
+                delete dataRolesAds[id];
+            }
+        });
+
+        var tableRolesPlacement = $("#table-roles-placement");
+        var dataRolesPlacement = JSON.parse(tableRolesPlacement.attr('data-roles'));
+        tableRolesPlacement.on("click",".roles-checkbox", function(){
+            var id = parseInt($(this).attr('data-id'));
+            if($(this).is(':checked')){
+                dataRolesPlacement[id] = true;
+            }
+            else{
+                delete dataRolesPlacement[id];
+            }
+        });
+
+
+        $.ajax({
+            url: '/ads/api-roles-ads',
+            type: 'GET',
+            contentType: 'application/json',
+            dataType:'json',
+            success: function(data){
+                var t = $('#table-roles-ads').DataTable({
+                    "ordering": false,
+                    "info":     false
+                });
+                for(var i in data){
+                    t.row.add( [
+                        data[i].id,
+                        data[i].name,
+                        data[i].runDate + ' ➡ ' + data[i].expiredDate,
+                        data[i].status,
+                        switcher($('#table-roles-ads'), data[i].id)
+                    ] ).draw( false );
+                }
+            }
+        });
+
+        $.ajax({
+            url: '/ads/api-roles-placement',
+            type: 'GET',
+            contentType: 'application/json',
+            dataType:'json',
+            success: function(data){
+                var t = $('#table-roles-placement').DataTable({
+                    "ordering": false,
+                    "info":     false
+                });
+                for(var i in data){
+                    t.row.add( [
+                        data[i].id,
+                        data[i].name,
+                        data[i].type,
+                        switcher($('#table-roles-placement'), data[i].id)
+                    ] ).draw( false );
+                }
+            }
+        });
+
         $('#form-edit').submit(function(e){
             e.preventDefault();
             var url = $(this).attr('action');
@@ -99,12 +221,14 @@
             data.email = $('#email').val();
             data.roles = roles;
             data.status = ( $('#status:checked').length == 1 ) ? true : false;
-            console.log(data)
+            data.rolesAds = dataRolesAds || {};
+            data.rolesPlacement = dataRolesPlacement || {};
 
             $.post(url, data,
             function(data, status){
                 var alert = (data.success) ? 'alert-success' : 'alert-danger';
-                $('#message').html('<div class="alert '+alert+' m-t-15">'+data.message+'</div>');
+                var $toastContent = $('<div class="alert '+alert+'">'+data.message+'</div>');
+                Materialize.toast($toastContent, 10000);
             });
         });
 

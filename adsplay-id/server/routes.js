@@ -16,4 +16,6 @@ module.exports = function(app){
 
 	require("./base/user/route")(app);
 
+    require("./base/ads/route")(app);
+
 }

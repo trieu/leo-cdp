@@ -1,12 +1,12 @@
 /*
     route user
 */
-var Common = require('../../configs/common')
+// var Common = require('../../configs/common')
 var Roles = require('../../middlewares/roles');
 
 module.exports = function(app){
 	// API Server Endpoints
-var User = require('./controller');
+    var User = require('./controller');
 
     app.get('/', User.index);
 

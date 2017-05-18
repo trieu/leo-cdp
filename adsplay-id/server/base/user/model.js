@@ -19,6 +19,10 @@ var User = new Schema({
 
     roles: { type: Schema.Types.Mixed, default: {"user": true} },
 
+    rolesAds: { type: Schema.Types.Mixed, default: {} },
+
+    rolesPlacement: { type: Schema.Types.Mixed, default: {} },
+
     username: {
         type: String,
         unique: true,

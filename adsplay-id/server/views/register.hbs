@@ -43,7 +43,8 @@
             $.post(url, data,
             function(data, status){
                 var alert = (data.success) ? 'alert-success' : 'alert-danger';
-                $('#message').html('<div class="alert '+alert+' m-t-15">'+data.message+'</div>');
+                var $toastContent = $('<div class="alert '+alert+'">'+data.message+'</div>');
+                Materialize.toast($toastContent, 1000);
                 setTimeout(function(){
                     window.location.href = '/';
                 },1000)

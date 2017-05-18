@@ -86,6 +86,8 @@ exports.edit = function (req, res){
                 data.USER = req.user;
                 data.userInfo = user;
                 data.userInfo.roles = JSON.stringify(user.roles);
+                data.userInfo.rolesAds = JSON.stringify(user.rolesAds) || "{}";
+                data.userInfo.rolesPlacement = JSON.stringify(user.rolesPlacement) || "{}";
                 return res.render('update', data);
             }
             else{
@@ -103,21 +105,18 @@ exports.newPassword = function (req, res){
 
 exports.save = function (req, res){
     var data = {};
-    
+    console.log(req.body)
     if(req.body.password){
         req.body.password = Encryption.hash(req.body.password);
     }
     if(req.body.roles){
-        var roles = {};
-        var regex = /^[a-zA-Z\-]+$/;
-        for(var i in req.body.roles){
-            if(i.match(regex)){
-                roles[i] = true;
-            }
-        }
-        req.body.roles = roles;
+        req.body.roles = convertObjBoolean(req.body.roles);
+    }
+    if(req.body.rolesAds){
+        req.body.rolesAds = convertObjBoolean(req.body.rolesAds, true);
     }
     data = req.body;
+    console.log(data)
     
     User.findUserUpdate({"_id": req.body._id}, data, function(err, user){
         if(err){
@@ -287,6 +286,18 @@ var createToken = function(user){
         expiresIn: Common.tokenExpiry
     });
     return token + last_token;
+}
+
+var convertObjBoolean = function(temp, int){
+    var data = {};
+    var regex = /^[0-9a-zA-Z\-]+$/;
+    for(var i in temp){
+        if(i.match(regex)){
+            var key = (int) ? parseInt(i) : i;
+            data[key] = true;
+        }
+    }
+    return data;
 }
 
 /** @flow

@@ -24,6 +24,10 @@ module.exports = {
         secretKey: "6LfW_iUTAAAAAM_U5Ia77l2ifg9uI7OlZCOzEKMB",
         ssl: true
     },
+    domain:{
+        api: 'http://api.adsplay.net',
+        api_ssl: 'https://api.adsplay.net',
+    },
     //TODO
     email: {
         email: "adsplayfpt@gmail.com",
