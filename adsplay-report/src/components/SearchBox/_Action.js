@@ -6,12 +6,12 @@ export const SEARCH_FILM = 'SEARCH_FILM';
  * get detail category
  * @Mith
  */
-const SEARCH_FILM_URL = '//search.adsplay.net/test_data/rvn_media_table/_search?sort=sumPlayView:desc&q=';
+const SEARCH_FILM_URL = '/api/search?video_title=';
 
 /* Detail Category - Mith */
 export function fetchSearch(videoNameTitle) {
 
-    var search = (videoNameTitle) ? 'video_title:'+videoNameTitle : '*:*';
+    var search = (videoNameTitle) ? videoNameTitle : '';
     var url = SEARCH_FILM_URL + search;    
 
     return function (dispatch) {
@@ -24,7 +24,7 @@ export function fetchSearch(videoNameTitle) {
 
         return axios.get(url)   
                 .then(function (response) {
-                    var result = response.data.hits.hits;
+                    var result = response.data;
                     var data = [];
                     var imageDefault = 'http://1.fwcdn.pl/po/52/73/615273/7382116.3.jpg';
                    

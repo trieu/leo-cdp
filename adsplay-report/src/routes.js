@@ -8,6 +8,8 @@ import SearchPage from './pages/SearchPage';
 import NotFoundPage from './pages/NotFoundPage';
 import Auth from './components/Services/Auth';
 import DetailFilm from './pages/DetailFilm';
+import AdsManagement from './pages/AdsManagement';
+import AdsManagementDetail from './pages/AdsManagementDetail';
 
 const routes = (
   <Router history={browserHistory}>
@@ -15,8 +17,10 @@ const routes = (
       <IndexRoute component={DashBoard} />
       <Route path="dashboard" component={DashBoard} />
       <Route path="detail" component={Detail} />
-      <Route path="search" component={SearchPage} />
       <Route path="detailFilm/:filmID" component={DetailFilm} />
+      <Route path="adsmanagement" component={AdsManagement} />
+      <Route path="adsmanagement/:id" component={AdsManagementDetail} />
+      {/*<Route path="search" component={SearchPage} />*/}
       {/*<Route path="form" component={FormPage}/>*/}
       <Route path="*" component={NotFoundPage}/>
     </Route>

@@ -59,7 +59,7 @@ class Category extends React.Component {
 
         return ( <
             div className = "row" >
-                <div className = "col-xs-12 m-b-15 " >
+                <div id="table-category" className = "col-xs-12 m-b-15 " >
                     <ReactTable className = '-striped -highlight'
                         data = { this.props.data }
                         columns = { columns }
