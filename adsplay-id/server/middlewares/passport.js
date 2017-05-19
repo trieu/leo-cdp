@@ -19,7 +19,9 @@ module.exports = function(passport) {
 			_id: user._id,
 			username: user.username,
             email: user.email,
-			roles: user.roles
+			roles: user.roles,
+            rolesAds: user.rolesAds,
+			rolesPlacement: user.rolesPlacement
 		};
 	};
 

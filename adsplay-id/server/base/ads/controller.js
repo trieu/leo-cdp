@@ -5,8 +5,8 @@ var Common = require('../../configs/common')
 exports.apiRolesAds = function (req, res){
 
     try{
-        var end = new moment().format("YYYY-MM-DD");
-        var begin = new moment().subtract(90, 'days').format("YYYY-MM-DD");
+        var end = moment().format("YYYY-MM-DD");
+        var begin = moment().subtract(90, 'days').format("YYYY-MM-DD");
         var url = Common.domain.api + '/api/creative/summary?begin='+begin+'&end='+end;
         // result from callback
         
@@ -21,8 +21,8 @@ exports.apiRolesAds = function (req, res){
                         id: result[i].id,
                         name: result[i].name,
                         status: result[i].status,
-                        runDate: moment(result[i].runDate).format("YYYY-MM-DD"),
-                        expiredDate: moment(result[i].expiredDate).format("YYYY-MM-DD")
+                        runDate: moment(new Date(result[i].runDate)).format("YYYY-MM-DD"),
+                        expiredDate: moment(new Date(result[i].expiredDate)).format("YYYY-MM-DD")
                     })
                 }
 

@@ -32,16 +32,16 @@ module.exports = function(app){
     /**
      * create
      */
-    app.get('/register', User.register);
+    app.get('/register', Roles(['superadmin']), User.register);
 	app.post('/register', User.registerSave);
 
     /**
      * update
      */
-    app.get('/update/:id', User.edit);
+    app.get('/update/:id', Roles(['superadmin']), User.edit);
     app.post('/update', User.save);
 
-    app.get('/new-password/:id', User.newPassword);
+    app.get('/new-password/:id', Roles(['superadmin']), User.newPassword);
 	app.post('/new-password', User.save);
 
 	// app.post('/forgotPassword', User.forgotPassword);

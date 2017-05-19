@@ -156,6 +156,7 @@ var loginLocal = function(req, res, next){
                 if (err) { return next(err); }
                 
                 //create token with timers expires
+                console.log('user', user)
                 var token = createToken(user);
                 //console.log(token)
                 //redirect uri
@@ -268,6 +269,7 @@ var decodeToken = function(token){
     try {
         token = token.replace(".adsplay", "");
         var decoded = Jwt.verify(token, Common.privateKey);
+        decoded = (decoded._doc) ? decoded._doc : decoded;
         return { success: true, user_info: decoded };
     } catch(err) {
         //'Failed to authenticate token.'
