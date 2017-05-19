@@ -137,7 +137,7 @@ AdsPlayID.prototype.request = function(url, params) {
 
     http.onreadystatechange = function() {//Call a function when the state changes.
         if(http.readyState == 4 && http.status == 200) {
-            console.log(http.responseText);
+            //console.log(http.responseText);
         }
     }
     http.send(params);
