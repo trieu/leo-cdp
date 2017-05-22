@@ -8,6 +8,9 @@ var stringUtils = require('./string_utils');
 //const ftpBaseFolderPath = '/static/videos/';
 const ftpBaseFolderPath = '/static/ads/instream/';
 
+//log4js
+var logger = require('../helpers/logger_utils.js');
+
 var Upload = function () {};
 
 var storage = function(output){
@@ -55,8 +58,9 @@ Upload.prototype.youtube = function (link, callback) {
             });
         }
 
-        catch (e) {
-            console.error(e);
+        catch (err) {
+            logger.error(err);
+            return console.error(err);
         }
     });
 
@@ -70,7 +74,8 @@ Upload.prototype.video = function(file, callback){
 
     fs.copy(file.path, output, function(err) {  
         if (err) {
-            console.error(err);
+            logger.error(err);
+            return console.error(err);
         } else {
             var obj = {url: output, folder: dir, filename: file.name};
             callback(obj);
@@ -86,12 +91,21 @@ Upload.prototype.ftp_video = function(localFile, mediaName, callback){
         host: ftp_video.host,
         port: ftp_video.port, 
         user: ftp_video.user, 
-        pass: ftp_video.pass
+        pass: ftp_video.pass,
+        debugMode: true
+    });
+
+    ftp.on('error', function(err){
+        logger.error(err);
+        return console.log('onFTPError: ' + err);
     });
 
     var quitFtpConnection = function(){
-        ftp.raw.quit(function(err, data) {
-            if (err) return console.error(err);
+        ftp.raw("quit", function(err, data) {
+            if (err) {
+                logger.error(err);
+                return console.error(err);
+            }
             console.log("upload CDN Success !");
         });
     };
@@ -103,12 +117,17 @@ Upload.prototype.ftp_video = function(localFile, mediaName, callback){
         
         console.log("readFile OK " + localFile);
 
-        ftp.put(buffer, filePath, function(hadError) {
-            if (hadError){
-                    console.error('There was an error retrieving the file.');
+        ftp.put(buffer, filePath, function(err) {
+            if (err){
+                logger.error(err);
+                return console.error('There was an error retrieving the file.');
             }
             else{
                 ftp.ls(filePath, function(err, res) {
+                    if(err){
+                        logger.error(err);
+                        return console.error(err);
+                    }
                     res.forEach(function(file) {
                         if(file.name.indexOf(mediaName)>0){
                             console.log("Upload Success !");
@@ -131,7 +150,8 @@ Upload.prototype.image = function(file, callback){
 
     fs.copy(file.path, output, function(err) {  
         if (err) {
-            console.error(err);
+            logger.error(err);
+            return console.error(err);
         } else {
             var obj = {url: url[1], folder: dirSplit[dirSplit.length - 1], filename: file.name};
             callback(obj);
@@ -148,6 +168,10 @@ Upload.prototype.unzip = function(file, callback){
 
     var extract = require('extract-zip');
     extract(file.path, {dir: dir}, function (err) {
+        if(err){
+            logger.error(err);
+            return console.error(err);
+        }
         var obj = {url : '/display-banner/'+url[1], folder: dirSplit[dirSplit.length - 1]};
         callback(obj);
     });

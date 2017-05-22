@@ -5,8 +5,9 @@ var Sync = require('sync');
 var moment = require('moment');
 var xl = require('excel4node');
 
-var Redis = require('ioredis'),  
-    redis = new Redis({port: 6482, host: '42.119.252.87'});
+var redisPools = require('../configs/redis-pools.js');
+var Redis = require('ioredis'), 
+    redis = new Redis({port: redisPools.hostAdServer.port, host: redisPools.hostAdServer.host});
 
 //https://monitor.adsplay.net/epl-report/excel?match=2016-12-04,01,22&match=2016-12-05,04,22
 
