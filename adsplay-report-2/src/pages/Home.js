@@ -1,7 +1,7 @@
 import React from 'react';
 import Pie from '../components/Charts/Pie';
 import Bar from '../components/Charts/Bar';
-import DatePickerRanger from '../components/Helpers/DatePickerRanger';
+import Filter from '../components/Helpers/Filter';
 
 export default class Home extends React.Component {
 
@@ -62,7 +62,7 @@ export default class Home extends React.Component {
 
     return (
 		<div>
-			<DatePickerRanger />
+			<Filter />
 			<div className="row">
 				<div className="col-xs-12 col-md-6 padding-bottom-1rem">
 					<div className="ui card">

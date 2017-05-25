@@ -135,7 +135,7 @@ Header
 -------------------------------- */
 .cd-main-header {
   position: absolute;
-  z-index: 2;
+  z-index: 1001;
   top: 0;
   left: 0;
   height: 45px;
@@ -427,7 +427,7 @@ Sidebar
 -------------------------------- */
 .cd-side-nav {
   position: absolute;
-  z-index: 1;
+  z-index: 1000;
   left: 0;
   top: 0;
   width: 100%;
