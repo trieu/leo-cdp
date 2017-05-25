@@ -1,0 +1,6 @@
+.padding-bottom-1rem{
+    padding-bottom: 1rem;
+}
+.ui.card, .ui.cards>.card{
+    width: 100%;
+}
