@@ -22,8 +22,14 @@ export default class Bar extends React.Component {
         let opts = {
             showLabel: false,
 			plugins: [
-                Chartist.plugins.legend({legendNames: data.legendNames}),
-                Chartist.plugins.tooltip()
+                Chartist.plugins.legend({legendNames: data.legendNames, position: 'bottom'}),
+                Chartist.plugins.tooltip({
+                    tooltipOffset: {
+                        x: 13,
+                        y: 18
+                    },
+                    currency: 'view '
+                })
 			]
         }
 

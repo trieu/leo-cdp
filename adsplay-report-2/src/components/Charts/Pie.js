@@ -29,17 +29,26 @@ export default class Pie extends React.Component {
 				let total = [];
 				data.series.forEach(function(item){
 					total.push(item.data);
-				})
-				return Math.round(value / total.reduce(sum) * 100) + '%';
+				});
+                let percent = Math.round(value / total.reduce(sum) * 100);
+				return (percent > 4) ? percent + '%' : '';
 			},
 			plugins: [
-                Chartist.plugins.legend({legendNames: data.legendNames}),
-                Chartist.plugins.tooltip()
+                Chartist.plugins.legend({
+                    legendNames: data.legendNames, position: 'bottom',
+                    //className: 'ct-legend-inside'
+                }),
+                Chartist.plugins.tooltip({
+                    tooltipOffset: {
+                        x: 13,
+                        y: 18
+                    },
+                    currency: 'view '
+                })
 			]
         }
 
         Object.assign(options, opts);
-
 
         new Chartist.Pie(ReactDOM.findDOMNode(this), data, options);
     }

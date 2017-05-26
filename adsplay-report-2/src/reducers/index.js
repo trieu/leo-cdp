@@ -1,9 +1,9 @@
 import {combineReducers} from 'redux';
 
-import PagesReducer from './test/reducer';
+import ChartsReducer from './Charts/reducer';
 
 const rootReducer = combineReducers({
-    pages: PagesReducer
+    charts: ChartsReducer,
 });
 
 export default rootReducer;
