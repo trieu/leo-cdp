@@ -173,20 +173,25 @@ export function fetchTopCategory(sourceMedia, beginDate, endDate, limit) {
                 .then(function (response) {
                     var result = response.data;
                     var data = {};
-                        data.series = [];
-                        data.legendNames = [];
+                        data.series = {};
+                        data.select = [];
                     for(var i in result){
                         var key, seriesGroup = [];
                         for(var j in result[i]){
+                            key = result[i][j].rank;
                             seriesGroup.push({
                                 meta:result[i][j].videoTitle,
                                 data:result[i][j].contentView,
                             });
                         }
-                        data.series.push(seriesGroup);
-                        data.legendNames.push(i);
+                        
+                        data.series[key] = seriesGroup;
+                        data.select.push({
+                            key: key,
+                            value: i
+                        });
                     }
-                    console.log(data)
+                    //console.log(data)
 
                     dispatch({
                         type: CHART_TOP_CATEGORY,

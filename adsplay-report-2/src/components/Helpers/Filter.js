@@ -17,7 +17,7 @@ export default class Filter extends React.Component {
     }
 
     handleClick(){
-        this.props.onClick(this.getData);
+        this.props.onClick(this.getData());
     }
 
     getData(){

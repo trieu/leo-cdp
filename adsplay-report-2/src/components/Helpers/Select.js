@@ -5,32 +5,38 @@ export default class Search extends React.Component {
 
     constructor(props){
         super(props);
+        this.state = {
+            data: this.props.data || [],
+        }
     }
-
-    componentDidMount() {
-        this.renderElement(this.props);
-    }
-
+    
     componentWillReceiveProps(newProps) {
         this.renderElement(newProps);
     }
 
-        
     getData(){
         return this.refs.Select.value;
     }
 
-    renderElement(props){
-        var options = props.options || {};
-        if(!this.select){
-            this.select = $('select.dropdown').dropdown(options);
-        }
+    handleChange(){
+        console.log(this.getData())
+        this.props.onChange(this.getData());
     }
 
-    renderItem(data){
+    renderElement(props){
+        var options = props.options || {};
+        this.setState({data: props.data});
+        $('select.dropdown').dropdown(options);
+    }
+
+    renderItem(data, removeNoData){
+
         if(data.length <= 0){
+            if(removeNoData){
+                return;
+            }
             return (
-                <option value="">No data</option>
+                <option value="no_data">No data</option>
             )
         }
 
@@ -44,8 +50,8 @@ export default class Search extends React.Component {
 
     render() {
         return (
-            <select ref="Select" className="ui dropdown">
-                {this.renderItem(this.props.data)}
+            <select ref="Select" className="ui dropdown" onChange={this.handleChange.bind(this)}>
+                {this.renderItem(this.state.data, this.props.removeNoData || false)}
             </select>
         );
     }
