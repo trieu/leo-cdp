@@ -8,8 +8,10 @@ export default class BarWithSelect extends React.Component {
         super(props);
         this.state = {
             select: this.props.select || [],
-            selectDefault: 1,
-            selectChart: []
+            selectChart: {
+                series: [],
+                legendNames: []
+            }
         }
     }
     
@@ -21,9 +23,17 @@ export default class BarWithSelect extends React.Component {
     }
 
     handleChange(value){
-        console.log(value, this.props.data.series[value])
+        var series = this.props.data.series[value];
+        var legendNames = [];
+        series.forEach(function(item) {
+            legendNames.push(item.meta);
+        });
+
         this.setState({
-            selectChart: this.props.data.series[value]
+            selectChart: {
+                series: series,
+                legendNames: legendNames
+            }
         });
         
     }
@@ -40,7 +50,7 @@ export default class BarWithSelect extends React.Component {
                 <div className="field">
                     <label>Đối tác nội dung</label>
                     <Select
-                        removeNoData={true}
+                        selectDefault={1}
                         data={this.state.select || []}
                         onChange={this.handleChange.bind(this)}
                     />

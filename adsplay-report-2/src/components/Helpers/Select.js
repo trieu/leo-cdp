@@ -14,6 +14,13 @@ export default class Search extends React.Component {
         this.renderElement(newProps);
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if(prevProps.selectDefault){
+            console.log(ReactDOM.findDOMNode(this).value = prevProps.selectDefault)
+            ReactDOM.findDOMNode(this).value = prevProps.selectDefault;
+        }
+    }
+
     getData(){
         return this.refs.Select.value;
     }
@@ -26,17 +33,15 @@ export default class Search extends React.Component {
     renderElement(props){
         var options = props.options || {};
         this.setState({data: props.data});
-        $('select.dropdown').dropdown(options);
+        $(ReactDOM.findDOMNode(this)).dropdown();
+        console.log(1)
     }
 
     renderItem(data, removeNoData){
 
         if(data.length <= 0){
-            if(removeNoData){
-                return;
-            }
             return (
-                <option value="no_data">No data</option>
+                <option value="-1">No data</option>
             )
         }
 
