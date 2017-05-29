@@ -18,17 +18,18 @@ $(document).ready(function () {
 
     // video is youtube
     var parent_video = $("#video_ads").parent();
-    var src = $("#video_ads").find("source").attr("src");
-    var arr = src.split("https://");
-    for(var i in arr){
-        var checkLink = checkLinkYoutube(arr[i]);
-        if(checkLink != "error"){
-            var link = "https://www.youtube.com/embed/"+checkLink;
-            parent_video.html('<iframe width="100%" height="300" src="'+link+'" frameborder="0" allowfullscreen></iframe>');
+    if(parent_video.length > 0){
+        var src = $("#video_ads").find("source").attr("src");
+        var arr = src.split("https://");
+        for(var i in arr){
+            var checkLink = checkLinkYoutube(arr[i]);
+            if(checkLink != "error"){
+                var link = "https://www.youtube.com/embed/"+checkLink;
+                parent_video.html('<iframe width="100%" height="300" src="'+link+'" frameborder="0" allowfullscreen></iframe>');
+            }
         }
     }
-
-
+    
 });
 
 //format time for Chart

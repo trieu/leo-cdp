@@ -4,15 +4,13 @@
             <li><a href="/event/">Ad Event Management</a></li>
             <li class="active">Ad Event Report</li>
         </ol>
-        <h3 class="page-header">
-            Ad Event Report
-        </h3>
     </div>
 </div>
 
 <div class="row">
   <div class="col-md-6 col-sm-12">
     <div class="panel panel-default">
+      <div class="panel-heading"><strong>Ad Event Report Detail</strong></div>
       <div class="panel-body">
       	<div class="table-responsive">
             <table class="table table-bordered table-hover table-striped">
@@ -45,4 +43,41 @@
       </div>
     </div>
   </div>
+  <div class="col-md-6 col-sm-12">
+    <svg id="platforms-chart" class="report-detail-piechart"></svg>
+  </div>
 </div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>
+                    <strong>Hourly Report: Impression and Completed-View Data in last 24 hours</strong></h3>
+            </div>
+            <div class="panel-body">
+                <div id="chart_hourly_imp_and_click" class="graph" style='height:250px;'>
+                    <svg></svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/business-domains/creative-detail-page.js"></script>
+<!-- <script type="text/javascript" src="js/business-domains/export_script.js"></script> -->
+<script>
+    var now = moment();
+    var currentDay = now.format("YYYY-MM-DD-HH");
+    var previousDay = now.subtract(1, 'days').format("YYYY-MM-DD-HH");
+    var crtId = 1166;
+    var adType = 3;
+
+    var urlPlacements = "{{site.ssl_api_domain}}/api/creatives/"+crtId+"/placements";
+    setTimeout(displayPlatforms(urlPlacements), 100);
+
+    //test
+    // var urlDrawHourly = "https://api.adsplay.net/api/creative/stats/1483?type=hourly";
+    var urlDrawHourly = "{{site.ssl_api_domain}}/api/creative/stats/"+crtId+"?type=hourly";
+    drawHourlyStatsData(urlDrawHourly, previousDay, currentDay);
+</script>
