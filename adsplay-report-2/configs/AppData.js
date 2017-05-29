@@ -1,6 +1,6 @@
 module.exports = {
-  appTitle: "Adsplay Report",
-  profileName: "Admin",
+  appName: "AdsPlay Report",
+  UserName: "User",
   menus: [
     { text: 'Báo cáo tổng quát', icon: '<i class="signal icon"></i>', link: '/home' },
     { text: 'Báo cáo chi tiết', icon: '<i class="browser icon"></i>', link: '/detail' },

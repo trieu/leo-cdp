@@ -62,10 +62,10 @@ class Home extends React.Component {
 					</div>
 					<div className="col-xs-12 col-sm-12 col-md-12 padding-bottom-1rem">
 						<Card 
-							label="Phim xem nhiều theo thể loại"
-							loading={this.props.loading_topcategory}
-							body={<BarWithSelect 
-									data={this.props.topcategory}
+							label="10 phim xem nhiều nhất"
+							loading={this.props.loading_topview}
+							body={<Bar 
+									data={this.props.topview}
 									horizontal={true}
 									options={{height: 320,
 									distributeSeries: true}}
@@ -74,10 +74,11 @@ class Home extends React.Component {
 					</div>
 					<div className="col-xs-12 col-sm-12 col-md-12 padding-bottom-1rem">
 						<Card 
-							label="10 phim xem nhiều nhất"
-							loading={this.props.loading_topview}
-							body={<Bar 
-									data={this.props.topview}
+							label="Phim xem nhiều theo thể loại"
+							loading={this.props.loading_topcategory}
+							body={<BarWithSelect 
+									placeHolder="Chọn thể loại"
+									data={this.props.topcategory}
 									horizontal={true}
 									options={{height: 320,
 									distributeSeries: true}}

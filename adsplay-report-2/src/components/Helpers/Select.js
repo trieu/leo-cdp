@@ -14,34 +14,37 @@ export default class Search extends React.Component {
         this.renderElement(newProps);
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        if(prevProps.selectDefault){
-            console.log(ReactDOM.findDOMNode(this).value = prevProps.selectDefault)
-            ReactDOM.findDOMNode(this).value = prevProps.selectDefault;
-        }
-    }
+    // componentDidUpdate(prevProps, prevState) {
+    //     console.log(prevProps.data != this.props.data)
+    //     $(ReactDOM.findDOMNode(this)).dropdown({
+    //         fullTextSearch: true,
+    //         sortSelect: true
+    //     });
+    // }
 
     getData(){
         return this.refs.Select.value;
     }
 
     handleChange(){
-        console.log(this.getData())
-        this.props.onChange(this.getData());
+        if(this.props.onChange){
+            this.props.onChange(this.getData());
+        }
     }
 
     renderElement(props){
-        var options = props.options || {};
         this.setState({data: props.data});
-        $(ReactDOM.findDOMNode(this)).dropdown();
-        console.log(1)
+        var data = props.data || {};
+        $(ReactDOM.findDOMNode(this)).dropdown({
+            fullTextSearch: true,
+            sortSelect: true
+        })
     }
 
-    renderItem(data, removeNoData){
-
+    renderItem(data){
         if(data.length <= 0){
             return (
-                <option value="-1">No data</option>
+                <option value="-1">{(this.props.placeHolder) ? this.props.placeHolder : "No data"}</option>
             )
         }
 
@@ -55,8 +58,8 @@ export default class Search extends React.Component {
 
     render() {
         return (
-            <select ref="Select" className="ui dropdown" onChange={this.handleChange.bind(this)}>
-                {this.renderItem(this.state.data, this.props.removeNoData || false)}
+            <select ref="Select" className="ui dropdown search" onChange={this.handleChange.bind(this)}>
+                {this.renderItem(this.state.data)}
             </select>
         );
     }

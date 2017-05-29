@@ -18,19 +18,19 @@ export default class Pie extends React.Component {
 
 		const sum = function(a, b) { return a + b };
 
-        let data = props.data || {};
+        var data = props.data || {};
 
-        let options = Object.create(props.options || {});
+        var options = Object.create(props.options || {});
 
-        let opts = {
+        var opts = {
             labelOffset: 80,
             chartPadding: 20,
             labelInterpolationFnc: function(value, index) {
-				let total = [];
+				var total = [];
 				data.series.forEach(function(item){
 					total.push(item.data);
 				});
-                let percent = Math.round(value / total.reduce(sum) * 100);
+                var percent = Math.round(value / total.reduce(sum) * 100);
 				return (percent > 4) ? percent + '%' : '';
 			},
 			plugins: [

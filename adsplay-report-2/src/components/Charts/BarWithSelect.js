@@ -50,7 +50,7 @@ export default class BarWithSelect extends React.Component {
                 <div className="field">
                     <label>Đối tác nội dung</label>
                     <Select
-                        selectDefault={1}
+                        placeHolder={this.props.placeHolder}
                         data={this.state.select || []}
                         onChange={this.handleChange.bind(this)}
                     />

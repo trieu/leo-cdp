@@ -15,11 +15,11 @@ export default class Bar extends React.Component {
     }
 
     renderElement(props){
-        let data = props.data || {};
+        var data = props.data || {};
 
-        let options = Object.create(props.options || {});
+        var options = Object.create(props.options || {});
 
-        let opts = {
+        var opts = {
             showLabel: false,
 			plugins: [
                 Chartist.plugins.legend({legendNames: data.legendNames, position: 'bottom'}),
