@@ -10,10 +10,12 @@ class Detail extends React.Component {
 
 	componentDidMount() {
         var data = this.refs.Filter.getData();
+		console.log(data)
     }
 
 	handleClick(data){
 		var data = this.refs.Filter.getData();
+		console.log(data)
 	}
 
 	render() {

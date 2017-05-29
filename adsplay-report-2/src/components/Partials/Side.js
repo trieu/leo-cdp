@@ -15,8 +15,8 @@ class Side extends React.Component {
         <ul>
           <li className="cd-label">Main</li>
           {data.menus.map((item, index) =>
-            <li className="has-children" key={index}>
-              <Link href={item.link}><span dangerouslySetInnerHTML={this.iconMenu(item.icon)}/> {item.text}</Link>
+            <li key={index}>
+              <Link to={item.link}><span dangerouslySetInnerHTML={this.iconMenu(item.icon)}/> {item.text}</Link>
             </li>
           )}
           
