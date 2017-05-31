@@ -130,7 +130,8 @@ Upload.prototype.ftp_video = function(localFile, mediaName, callback){
                     }
                     res.forEach(function(file) {
                         if(file.name.indexOf(mediaName)>0){
-                            console.log("Upload Success !");
+                            console.log("Upload Success !", 'remove file ' + filePath);
+                            fs.unlinkSync(filePath);
                             callback({url: filePath, filename: mediaName});
                         }
                         quitFtpConnection();

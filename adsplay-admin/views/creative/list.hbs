@@ -80,8 +80,8 @@
         Handlebars.registerHelper('formatCurrency', function(value) { return value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"); });
 
         //select date
-        var end = new moment().add(1, 'days').format("YYYY-MM-DD");
-        var begin = moment(end).subtract(90, 'days').format("YYYY-MM-DD");
+        var end = new moment().add(14, 'days').format("YYYY-MM-DD");
+        var begin = new moment().subtract(180, 'days').format("YYYY-MM-DD");
         render_list(begin, end);
 
         var formatTime = function (x) {
