@@ -21,20 +21,17 @@ export function fetchDetailCategory(sourceMedia,beginDate, endDate, limit) {
 
         dispatch({
             type: DETAIL_CATEGORY,
-            payload: {data: {}, loading: true}
+            payload: {data: [], loading: true}
         })
 
         return axios.get(url)   
                 .then(function (response) {
 
                     var result = response.data;
-                    var data = {};
-                    data.label = ['name', 'category', 'playview', 'impression', 'trueview', 'click', 'revenue'];
-                    data.data = [];
-
+                    var data = [];
                     for(var i in result){
                         
-                        data.data.push([
+                        data.push([
                             result[i].video_title,
                             result[i].category,
                             result[i].sumPlayView.toLocaleString(),
@@ -45,7 +42,6 @@ export function fetchDetailCategory(sourceMedia,beginDate, endDate, limit) {
                         ]);
                     }
 
-                    console.log(data)
                     dispatch({
                         type: DETAIL_CATEGORY,
                         payload: {data: data, loading: false}

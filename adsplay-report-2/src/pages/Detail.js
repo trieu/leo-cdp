@@ -50,7 +50,9 @@ class Detail extends React.Component {
 				<Filter ref="Filter" onClick={this.handleClick.bind(this)} />
 				<div className="row">
 					<div className="col-xs-12 col-sm-12 col-md-12 padding-bottom-1rem">
-						<Table data={this.state.dataTable} />
+						<Table 
+							label={['name', 'category', 'playview', 'impression', 'trueview', 'click', 'revenue']}
+							data={this.props.data} />
 					</div>
 				</div>
 			</div>
