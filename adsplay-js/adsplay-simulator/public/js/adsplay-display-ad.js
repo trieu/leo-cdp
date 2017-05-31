@@ -1,5 +1,5 @@
 /*
- * AdsPlay Display Ad - version 1.7.3 - date: May 31, 2017
+ * AdsPlay Display Ad - version 1.7.4 - date: May 31, 2017
  */
 if (!window.AdsPlayBannerReady) {
     // BEGIN window.AdsPlayBannerReady
@@ -699,7 +699,7 @@ if (!window.AdsPlayBannerReady) {
                 var vIframe = '';
                 if (typeof(data.adMedia) != 'undefined' &&
                     (data.adMedia.indexOf('youtu.be') == -1 || data.adMedia.indexOf('youtube') == -1)) {
-                    vIframe = '<video width="100%" height="100%" '+poster+' loop preload="auto" muted playsinline onclick="AdsPlayBanner.handleAdClick('+data.adId+')"><source src="' + data.adMedia + '" type="video/mp4"></video>';
+                    vIframe = '<video width="100%" height="100%" '+poster+' loop preload="auto" muted playsinline webkit-playsinline onclick="AdsPlayBanner.handleAdClick('+data.adId+')"><source src="' + data.adMedia + '" type="video/mp4"></video>';
                 } else {
                     var options = '&';
                     if (data.adMedia.indexOf('?') != -1) {
@@ -789,7 +789,7 @@ if (!window.AdsPlayBannerReady) {
             var vIframe = '';
             if (typeof(data.adMedia) != 'undefined' &&
                 (data.adMedia.indexOf('youtu.be') == -1 || data.adMedia.indexOf('youtube') == -1)) {
-                vIframe = '<video width="100%" height="100%" poster="'+data.background+'" loop muted playsinline preload="auto" onclick="AdsPlayBanner.handleAdClick('+data.adId+')"><source src="' + data.adMedia + '" type="video/mp4"></video>';
+                vIframe = '<video width="100%" height="100%" poster="'+data.background+'" loop muted playsinline webkit-playsinline preload="auto" onclick="AdsPlayBanner.handleAdClick('+data.adId+')"><source src="' + data.adMedia + '" type="video/mp4"></video>';
             } else {
                 var options = '&';
                 if (data.adMedia.indexOf('?') != -1) {
@@ -814,11 +814,9 @@ if (!window.AdsPlayBannerReady) {
                 /**
                  * close
                  */
-                var closeStyle = 'position: absolute; top: 0; right: 0; z-idex: 999; width: 36pt; height: 36pt; opacity: 0.8;' +
-                    'background-image: url(' + close_icon + '); background-color: rgba(0, 0, 0, 0.2);' +
-                    'background-repeat: no-repeat; background-size: contain;';
-                var closeDiv = '<div class="close" style="' + closeStyle + '" onclick="AdsPlayBanner.closeAdView('+adId+')" ></div>';
-                vAspectMain.innerHTML += closeDiv;
+                //var closeStyle = 'position: absolute; top: 0; right: 0; z-idex: 999; width: 36pt; height: 36pt; opacity: 0.8;background-image: url(' + close_icon + '); background-color: rgba(0, 0, 0, 0.2);background-repeat: no-repeat; background-size: contain;';
+                //var closeDiv = '<div class="close" style="' + closeStyle + '" onclick="AdsPlayBanner.closeAdView('+adId+')" ></div>';
+                //vAspectMain.innerHTML += closeDiv;
             }
 
             /**
@@ -876,6 +874,12 @@ if (!window.AdsPlayBannerReady) {
         AdsPlayBanner.getAds = function(pmIds, mapPmIdsNodes) {
             var h = function(text) {
                     var ads = JSON.parse(text);
+                    if(ads.length === 0){
+                        if (global.MastheadWebviewNative) {                            
+                            global.MastheadWebviewNative.closeAdView();
+                            return false;
+                        }
+                    }
                     for (var i = 0; i < ads.length; i++) {
                         var data = ads[i];
                         var placementId = data.placementId + '';
@@ -890,7 +894,7 @@ if (!window.AdsPlayBannerReady) {
                                 // }
                             }
                         }
-                    }
+                    }                    
                     // if(window.console){					
                     // 	window.console.log(ads);					
                     // }
@@ -989,10 +993,8 @@ if (!window.AdsPlayBannerReady) {
         }
 
         //---------------------BEGIN the age of autobot------------------------        
-        var ran = (new Date().getTime()) % 4;
-		if (ran === 1) {
-		    setTimeout(function() { AdsPlayTracker.doImpressionLog([446]); }, 5000);
-		}
+        //var ran = (new Date().getTime()) % 4;
+		//if (ran === 1) {    setTimeout(function() { AdsPlayTracker.doImpressionLog([446]); }, 5000);	}
         //---------------------END the age of autobot------------------------
     });
     
