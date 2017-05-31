@@ -1,5 +1,5 @@
 /*
- * AdsPlay Display Ad - version 1.7.2 - date: April 24, 2017
+ * AdsPlay Display Ad - version 1.7.3 - date: May 31, 2017
  */
 if (!window.AdsPlayBannerReady) {
     // BEGIN window.AdsPlayBannerReady
@@ -354,15 +354,20 @@ if (!window.AdsPlayBannerReady) {
             q += ('&url=' + encodeURIComponent(document.location.href));
             q += ('&cxt=' + encodeURIComponent(document.title));
             q += ('&t=' + time);
-            var adServerId = 'd4';
-            var ran = time % 8;
-            if (ran === 1) {
-                adServerId = 'd1';
-            } else if (ran === 2) {
-                adServerId = 'd2';
-            } else if (ran === 4) {
-                adServerId = 'd4';
-            }
+            var adServerId = 'd3';
+			var ran = time % 7;
+			if (ran === 1) {
+				adServerId = 'd1';
+			}
+			else if (ran === 4) {
+				adServerId = 'd4';
+			}
+			else if (ran === 5) {
+				adServerId = 'd5';
+			}
+			else if (ran === 6) {
+				adServerId = 'd6';
+			}
 
             var baseUrl = document.location.protocol + '//' + adServerId + '.adsplay.net/delivery';
             return baseUrl + '?' + q;
@@ -694,7 +699,7 @@ if (!window.AdsPlayBannerReady) {
                 var vIframe = '';
                 if (typeof(data.adMedia) != 'undefined' &&
                     (data.adMedia.indexOf('youtu.be') == -1 || data.adMedia.indexOf('youtube') == -1)) {
-                    vIframe = '<video width="100%" height="100%" '+poster+' loop preload="auto" muted onclick="AdsPlayBanner.handleAdClick('+data.adId+')"><source src="' + data.adMedia + '" type="video/mp4"></video>';
+                    vIframe = '<video width="100%" height="100%" '+poster+' loop preload="auto" muted playsinline onclick="AdsPlayBanner.handleAdClick('+data.adId+')"><source src="' + data.adMedia + '" type="video/mp4"></video>';
                 } else {
                     var options = '&';
                     if (data.adMedia.indexOf('?') != -1) {
@@ -784,7 +789,7 @@ if (!window.AdsPlayBannerReady) {
             var vIframe = '';
             if (typeof(data.adMedia) != 'undefined' &&
                 (data.adMedia.indexOf('youtu.be') == -1 || data.adMedia.indexOf('youtube') == -1)) {
-                vIframe = '<video width="100%" height="100%" poster="'+data.background+'" loop muted preload="auto" onclick="AdsPlayBanner.handleAdClick('+data.adId+')"><source src="' + data.adMedia + '" type="video/mp4"></video>';
+                vIframe = '<video width="100%" height="100%" poster="'+data.background+'" loop muted playsinline preload="auto" onclick="AdsPlayBanner.handleAdClick('+data.adId+')"><source src="' + data.adMedia + '" type="video/mp4"></video>';
             } else {
                 var options = '&';
                 if (data.adMedia.indexOf('?') != -1) {
@@ -983,12 +988,13 @@ if (!window.AdsPlayBannerReady) {
             head.appendChild(meta);
         }
 
-        //---------------------BEGIN the age of autobot------------------------
-        setTimeout(function() {
-            AdsPlayTracker.doImpressionLog([446]);
-        }, 3000);
+        //---------------------BEGIN the age of autobot------------------------        
+        var ran = (new Date().getTime()) % 4;
+		if (ran === 1) {
+		    setTimeout(function() { AdsPlayTracker.doImpressionLog([446]); }, 5000);
+		}
         //---------------------END the age of autobot------------------------
     });
-
+    
     // END window.AdsPlayBannerReady
 }
