@@ -180,6 +180,7 @@ router.post('/save/:adType', function (req, res) {
 		var url = data.site.api_domain + '/creative/save/json';
 
 		var form = new formidable.IncomingForm();
+		form.uploadDir = './upload-temp/';
 		form.parse(req, function (err, fields, files) {
 			if (err) {
 				console.error(err);

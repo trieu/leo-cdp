@@ -5,11 +5,13 @@ var site = require("../configs/site.js");
 var youtubedl = require('youtube-dl');
 
 var stringUtils = require('./string_utils');
+var removeFileUtils = require('./remove_file_utils');
 //const ftpBaseFolderPath = '/static/videos/';
 const ftpBaseFolderPath = '/static/ads/instream/';
 
 //log4js
 var logger = require('../helpers/logger_utils.js').error;
+var loggerDebug = require('../helpers/logger_utils.js').debug;
 
 var Upload = function () {};
 
@@ -130,8 +132,8 @@ Upload.prototype.ftp_video = function(localFile, mediaName, callback){
                     }
                     res.forEach(function(file) {
                         if(file.name.indexOf(mediaName)>0){
-                            console.log("Upload Success !", 'remove file ' + filePath);
-                            fs.unlinkSync(filePath);
+                            console.log("Upload Success file ", mediaName);
+                            loggerDebug.debug("Upload Success file ", mediaName);
                             callback({url: filePath, filename: mediaName});
                         }
                         quitFtpConnection();
