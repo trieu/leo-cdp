@@ -10,6 +10,10 @@ export default class Search extends React.Component {
         }
     }
     
+    componentDidMount() {
+        this.renderElement(this.props);
+    }
+
     componentWillReceiveProps(newProps) {
         this.renderElement(newProps);
     }
@@ -35,10 +39,12 @@ export default class Search extends React.Component {
     renderElement(props){
         this.setState({data: props.data});
         var data = props.data || {};
-        $(ReactDOM.findDOMNode(this)).dropdown({
-            fullTextSearch: true,
-            sortSelect: true
-        })
+        if(!this.Select){
+            this.Select = $('select.dropdown').dropdown({
+                fullTextSearch: true,
+                sortSelect: true
+            });
+        }
     }
 
     renderItem(data){

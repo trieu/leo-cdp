@@ -7,7 +7,6 @@ export const CHART_TOP_VIEW = 'CHART_TOP_VIEW';
 export const CHART_TOP_CATEGORY = 'CHART_TOP_CATEGORY';
 export const CHART_DETAIL_FILM = 'CHART_DETAIL_FILM';
 
-
 /**
  * Lấy thống kê số feed các pages hiện có
  * Top 10 feed sắp xếp Like ở 1 page
