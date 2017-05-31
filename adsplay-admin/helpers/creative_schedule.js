@@ -6,6 +6,9 @@ var dataUtils = require('./data_utils.js');
 var creativeModel = require('../models/creative.js');
 var scheduler = require('node-schedule');
 
+//log4js
+var logger = require('./logger_utils.js').debug;
+
 function Schedule(period){
     this.period = period;
     var _this = this;
@@ -21,7 +24,8 @@ function Schedule(period){
 }
 
 Schedule.prototype.updateStatus = function (){
-    console.log("==> run schedule with ",this.period)
+    console.log("==> run schedule with ",this.period);
+    logger.debug("==> run schedule with ",this.period);
 	var current = new Date().getTime();
 
     // check ads creative in 30 days    
@@ -45,8 +49,8 @@ Schedule.prototype.updateStatus = function (){
 
                     // expired date
             		if(expDate < current){
-                        console.log("Ads expired date is",result[i].id);
-
+                        // console.log("==> run schedule with ",this.period);
+                        logger.debug("==> expired date with id ", result[i].id);
                         // api update status
                         var url = site.api_domain + '/api/creatives/' + result[i].id;
                         creativeModel.update(url, {status: '4'}, null);
@@ -62,6 +66,7 @@ Schedule.prototype.updateStatus = function (){
                             
                             if(resultDetail.dBk > 0){
                                 
+                                logger.debug("==> CHECK daily booking > 0 and adType = 1 : ", result[i].id);
                                 //console.log(urlDaily + result[i].id + '?type=daily&begin='+ now +'&end='+ now)
                                 var resultDaily = dataUtils.request.sync(null, urlDaily + result[i].id + '?type=daily&begin='+ now +'&end='+ now);
                                 var countImp = 0;
@@ -72,8 +77,7 @@ Schedule.prototype.updateStatus = function (){
                                 //pending if impression >= dailybooking
                                 if(countImp >= resultDetail.dBk){
                                     // api update status
-                                    console.log('pending dailybooking '+ result[i].id)
-                                    console.log(result[i].id, resultDetail.dBk, countImp)
+                                    logger.debug('pending if impression >= dailybooking '+ result[i].id, resultDetail.dBk, countImp)
                                     var url = site.api_domain + '/api/creatives/' + result[i].id;
                                     creativeModel.update(url, {status: '1'}, null);
                                 }
@@ -114,15 +118,18 @@ Schedule.prototype.handleDailyBooking = function (){
             	if(result[i].status == '1' && expDate > current){
 
                     console.log('passing 1 with ads ', result[i].id);
+                    logger.debug('passing 1 "status == 1 && expDate" with ads '+ result[i].id);
 
                     if(result[i].adType == 1){
                         console.log('passing 2 with ads ', result[i].id);
+                        logger.debug('passing 2 "adType == 1" with ads '+ result[i].id);
 
                         var resultDetail = dataUtils.request.sync(null, urlDetail + result[i].id);
                         
                         if(resultDetail.dBk > 0){
                             console.log('passing 3');
                             console.log("On running creative id ",result[i].id);
+                            logger.debug('passing 2 "daily booking > 0" with ads '+ result[i].id);
 
                             var url = site.api_domain + '/api/creatives/' + result[i].id;
                             creativeModel.update(url, {status: '2'}, null);

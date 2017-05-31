@@ -71,14 +71,22 @@ VAST.prototype = function() {
 				<label>Tracking Events <a href="#" class="btn-plus" id="plus-tracking"><i class="fa fa-plus-square" aria-hidden="true"></i></a></label>\
 				<div class="form-group-inner">\
 					<select name="TrackingEvents-name" class="form-control" placeholder="Enter tracking name event">\
-						<option value="creativeView">creativeView</option>\
-						<option value="start">start</option>\
-						<option value="firstQuartile">firstQuartile</option>\
-						<option value="thirdQuartile">thirdQuartile</option>\
-						<option value="complete">complete</option>\
-						<option value="pause">pause</option>\
-						<option value="mute">mute</option>\
-						<option value="fullscreen">fullscreen</option>\
+					<option value="acceptInvitation">acceptInvitation</option>\
+					<option value="close">close</option>\
+					<option value="collapse">collapse</option>\
+					<option value="complete">complete</option>\
+					<option value="creativeView">creativeView</option>\
+					<option value="expand">expand</option>\
+					<option value="firstQuartile">firstQuartile</option>\
+					<option value="fullscreen">fullscreen</option>\
+					<option value="midpoint">midpoint</option>\
+					<option value="mute">mute</option>\
+					<option value="pause">pause</option>\
+					<option value="resume">resume</option>\
+					<option value="rewind">rewind</option>\
+					<option value="start">start</option>\
+					<option value="thirdQuartile">thirdQuartile</option>\
+					<option value="unmute">unmute</option>\
 					</select>\
 				<input type="text" class="form-control" name="TrackingEvents-value" placeholder="Enter tracking value">\
 				</div>\

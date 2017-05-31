@@ -9,7 +9,7 @@ var stringUtils = require('./string_utils');
 const ftpBaseFolderPath = '/static/ads/instream/';
 
 //log4js
-var logger = require('../helpers/logger_utils.js');
+var logger = require('../helpers/logger_utils.js').error;
 
 var Upload = function () {};
 
