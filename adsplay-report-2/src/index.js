@@ -12,7 +12,8 @@ import allReducers from './reducers/index';
 
 const store = createStore(
     allReducers,
-    applyMiddleware(thunk, promise, (typeof(process.env.NODE_ENV) != '' && process.env.NODE_ENV == 'development') ? createLogger() : '')
+    (typeof(process.env.NODE_ENV) != '' && process.env.NODE_ENV == 'development') ? 
+    applyMiddleware(promise, thunk, createLogger()) : applyMiddleware(promise, thunk)
 );
 
 render(
