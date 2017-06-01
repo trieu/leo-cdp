@@ -128,7 +128,9 @@ var xmlObj = function(doc){
 								'@sequence': 1
 							},
 							'Linear':{
-								'TrackingEvents': TrackingEvents
+								'TrackingEvents': {
+									Tracking: TrackingEvents
+								}
 							}
 						}
 					}
