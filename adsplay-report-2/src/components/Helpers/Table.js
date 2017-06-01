@@ -3,59 +3,36 @@ import ReactDOM from 'react-dom';
 
 export default class Table extends React.Component {
 
+    constructor(props){
+        super(props);
+    }
+
     componentDidMount() {
-        this.renderElement(this.props);
+        this.Table = $(this.refs.Table).DataTable({
+            lengthMenu: [[14, 50, 100, -1], [14, 50, 100, "All"]],
+            data: this.props.data || [],
+            columns: this.props.columns
+        });
+    }
+
+    componentWillUnmount(){
+       this.Table.destroy(true);
     }
 
     componentWillReceiveProps(newProps) {
-        this.renderElement(newProps);
-    }
-
-    renderElement(props){
-        var options = props.options || {};
-        console.log(props.data.length, "<<")
-        if(props.data.length > 0){
-            console.log(props.data.length)
-            this.DataTable = $(ReactDOM.findDOMNode(this)).DataTable(options);
+        var that = this;
+        if(that.props.data != newProps.data){
+            that.Table.clear();
+            newProps.data.forEach(function(item) {
+                that.Table.row.add(item);
+            });
+            that.Table.draw();
         }
-        
-    }
-
-    renderItem(data){
-        if(data.length <= 0){
-            return;
-        }
-        return data.map((item, key) => {
-            var row = item.map((cell, k) => <td key={k}>{cell}</td>); 
-            return(
-                <tr key={key}>{row}</tr>
-            )
-        });
-    }
-
-    renderLabel(data){
-        if(data.length <= 0){
-            return;
-        }
-
-        return data.map((item, key) => {
-            return(
-                <th key={key}>{item}</th>
-            )
-        });
     }
 
     render() {
         return (
-            <table ref="Table" className="ui celled unstackable table" width="100%">
-                <thead>
-                    <tr>
-                        {this.renderLabel(this.props.label || [])}
-                    </tr>
-                </thead>
-                <tbody>
-                    {this.renderItem(this.props.data || [])}
-                </tbody>
+            <table ref="Table" className="ui celled unstackable table striped" width="100%">
             </table>
         );
     }

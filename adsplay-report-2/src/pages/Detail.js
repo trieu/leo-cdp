@@ -7,40 +7,46 @@ import { fetchDetailCategory } from '../reducers/Details/action';
 
 class Detail extends React.Component {
 
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
-			dataTable: {
-				label: ['Name','Position','Office','Age','Start date','Salary'],
-				data: [
-					['Name','Position','Office','Age','Start date','Salary'],
-					['Name2','Position2','Office2','Age2','Start date2','Salary2'],
-				]
-			}
+			columns: [
+				{
+					title: 'Name',
+					width: 400,
+				},
+				{
+					title: 'Category',
+				},
+				{
+					title: 'Playview',
+				},
+				{
+					title: 'Impression phát sinh',
+				},
+				{
+					title: 'Trueview',
+				},
+				{
+					title: 'Click',
+				},
+				{
+					title: 'Doanh thu ước tính'
+				},
+			]
 		}
 	}
 
 	componentDidMount() {
         var data = this.refs.Filter.getData();
 		this.props.fetchDetailCategory(data.sourceMedia, data.beginDate, data.endDate);
-		// var that = this;
-		// setTimeout(function(){
-		// 	that.setState({
-		// 		dataTable: {
-		// 		label: ['Name3','Position3','Office3','Age3','Start date3','Salary3'],
-		// 		data: [
-		// 			['Name','Position3','Office','Age','Start date','Salary'],
-		// 			['Name2','Position2','Office2','Age2','Start date2','Salary2'],
-		// 		]
-		// 	}
-		// 	})
-		// },10000)
 		console.log(data)
     }
 
 	handleClick(data){
 		var data = this.refs.Filter.getData();
-		console.log(data)
+		this.props.fetchDetailCategory(data.sourceMedia, data.beginDate, data.endDate);
+		console.log(data);
 	}
 
 	render() {
@@ -51,7 +57,7 @@ class Detail extends React.Component {
 				<div className="row">
 					<div className="col-xs-12 col-sm-12 col-md-12 padding-bottom-1rem">
 						<Table 
-							label={['name', 'category', 'playview', 'impression', 'trueview', 'click', 'revenue']}
+							columns={this.state.columns}
 							data={this.props.data} />
 					</div>
 				</div>

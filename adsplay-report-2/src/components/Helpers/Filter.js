@@ -50,7 +50,7 @@ export default class Filter extends React.Component {
                     <div className="ui form">
 						<div className="field">
 							<label>&nbsp;</label>
-							<div className="ui button" onClick={this.handleClick.bind(this)}>Ok</div>
+							<div className="ui button primary" onClick={this.handleClick.bind(this)}>OK</div>
 						</div>
 					</div>
                 </div>

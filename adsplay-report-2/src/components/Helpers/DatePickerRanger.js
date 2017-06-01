@@ -31,7 +31,7 @@ export default class DatePickerRanger extends React.Component {
         return (
             <div className="ui form">
                 <div className="field">
-                    <label>Begin Date to End Date</label>
+                    <label>Ngày bắt đầu - Ngày kết thúc</label>
                     <input ref="DatePickerRanger" />
                 </div>
             </div>
