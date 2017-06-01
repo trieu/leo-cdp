@@ -1,5 +1,5 @@
 /*
- * AdsPlay Display Ad - version 1.7.4 - date: May 31, 2017
+ * AdsPlay Display Ad - version 1.7.5 - date: Jun 1, 2017
  */
 if (!window.AdsPlayBannerReady) {
     // BEGIN window.AdsPlayBannerReady
@@ -699,7 +699,7 @@ if (!window.AdsPlayBannerReady) {
                 var vIframe = '';
                 if (typeof(data.adMedia) != 'undefined' &&
                     (data.adMedia.indexOf('youtu.be') == -1 || data.adMedia.indexOf('youtube') == -1)) {
-                    vIframe = '<video width="100%" height="100%" '+poster+' loop preload="auto" muted playsinline webkit-playsinline onclick="AdsPlayBanner.handleAdClick('+data.adId+')"><source src="' + data.adMedia + '" type="video/mp4"></video>';
+                    vIframe = '<video width="100%" height="100%" '+poster+' autoplay loop preload="auto" muted playsinline webkit-playsinline onclick="AdsPlayBanner.handleAdClick('+data.adId+')"><source src="' + data.adMedia + '" type="video/mp4"></video>';
                 } else {
                     var options = '&';
                     if (data.adMedia.indexOf('?') != -1) {
@@ -789,7 +789,7 @@ if (!window.AdsPlayBannerReady) {
             var vIframe = '';
             if (typeof(data.adMedia) != 'undefined' &&
                 (data.adMedia.indexOf('youtu.be') == -1 || data.adMedia.indexOf('youtube') == -1)) {
-                vIframe = '<video width="100%" height="100%" poster="'+data.background+'" loop muted playsinline webkit-playsinline preload="auto" onclick="AdsPlayBanner.handleAdClick('+data.adId+')"><source src="' + data.adMedia + '" type="video/mp4"></video>';
+                vIframe = '<video width="100%" height="100%" poster="'+data.background+'" autoplay loop preload="auto" muted playsinline webkit-playsinline onclick="AdsPlayBanner.handleAdClick('+data.adId+')"><source src="' + data.adMedia + '" type="video/mp4"></video>';
             } else {
                 var options = '&';
                 if (data.adMedia.indexOf('?') != -1) {
