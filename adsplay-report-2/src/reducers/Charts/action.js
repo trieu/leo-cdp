@@ -110,7 +110,7 @@ export function fetchPlatform(sourceMedia, beginDate, endDate, limit) {
 
 export function fetchTopView(sourceMedia, beginDate, endDate, limit) {
 
-    var limit = (limit) ? '&limit='+limit : '&limit=10';
+    var limit = (limit) ? '&limit='+limit : '&limit=20';
     var nameMedia = "";
     var bySource = ""
     if(sourceMedia != "admin" && sourceMedia != "superadmin"){

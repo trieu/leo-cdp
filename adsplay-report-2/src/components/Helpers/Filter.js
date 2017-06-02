@@ -17,13 +17,23 @@ export default class Filter extends React.Component {
     }
 
     handleClick(){
-        this.props.onClick(this.getData());
+        var data = this.getData();
+        if(data){
+            this.props.onClick(data);
+        }
     }
 
     getData(){
         let dateData = this.defaultDate.getData().split(" to ");
         let sourceData = this.sourceData.getData();
-        return {sourceMedia: sourceData, beginDate: dateData[0], endDate: dateData[1]};
+        if(dateData[0] == ""){
+            return null;
+        }
+        else{
+            this.setState({defaultDate: [dateData[0], dateData[1]]})
+            return {sourceMedia: sourceData, beginDate: dateData[0], endDate: dateData[1]};
+        }
+        
     }
 
     render() {

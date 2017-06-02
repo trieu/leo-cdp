@@ -24,6 +24,14 @@ export default class DatePickerRanger extends React.Component {
     }
 
     getData(){
+        var value = this.refs.DatePickerRanger.value;
+        var field = ReactDOM.findDOMNode(this).querySelector(".field");
+        if(value == ""){
+            field.classList.add("error");
+        }
+        else{
+            field.classList.remove("error");
+        }
         return this.refs.DatePickerRanger.value;
     }
 

@@ -27,7 +27,7 @@ class Home extends React.Component {
 		this.props.fetchCategory(data.sourceMedia, data.beginDate, data.endDate);
 		this.props.fetchPlatform(data.sourceMedia, data.beginDate, data.endDate);
 		this.props.fetchTopView(data.sourceMedia, data.beginDate, data.endDate);
-		//this.props.fetchTopCategory(data.sourceMedia, data.beginDate, data.endDate);
+		this.props.fetchTopCategory(data.sourceMedia, data.beginDate, data.endDate);
 	}
 
 	render() {
