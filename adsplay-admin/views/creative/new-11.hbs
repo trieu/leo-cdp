@@ -142,6 +142,15 @@
             <label class="label-important">Click-through URL</label>
             <input type="url" class="form-control" name="cliThr" placeholder="Enter Click-through URL">
         </div>
+        <div class="form-group" id="tracking-placement">
+            <label class="label-important">Third-party tracking URL</label>
+            <input type="url" class="form-control" name="vastXml3rd" placeholder="Enter Third-party Ad URL" required>
+        </div>
+        <div class="form-group">
+            <label class="label-important" title="for 1 Impression or Complete-view">Base Cost</label>
+            <input type="number" class="form-control" name="cost" placeholder="Enter Base Cost" value="0"
+                data-validate-minmax="0" required>
+        </div>
         <div class="form-group">
             <label class="label-important" title="Impression or Complete-view">Total Booking</label>
             <input type="number" class="form-control" name="tBk" placeholder="Enter Total Booking" value="0"
@@ -175,15 +184,6 @@
                 <div id="2-collapse-1" class="panel-collapse collapse">
                     <div class="panel-body">
                 
-                        <div class="form-group" id="tracking-placement">
-                            <label>Third-party tracking URL</label>
-                            <input type="url" class="form-control" name="vastXml3rd" placeholder="Enter Third-party Ad URL">
-                        </div>
-                        <div class="form-group">
-                            <label title="for 1 Impression or Complete-view">Base Cost</label>
-                            <input type="number" class="form-control" name="cost" placeholder="Enter Base Cost" value="0"
-                                data-validate-minmax="0" required>
-                        </div>
                         <div class="form-group">
                             <label>Duration</label>
                             <select class="form-control" id="ads_duration" name="dura">
