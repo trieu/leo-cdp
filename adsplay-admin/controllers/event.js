@@ -3,23 +3,10 @@ var express = require('express')
     , Event = require('../models/event')
     , modelUtils = require('../helpers/model_utils')
     , constantUtils = require('../helpers/constant_utils')
-    , moment = require('moment');
+    , moment = require('moment')
+	, Sync = require('sync')
+	, dataUtils = require('../helpers/data_utils.js');
 
-var convert_data = function(doc){
-	var statuses = {0: 'Invalid', 1: 'Pending', 2: 'Running', 3: 'Finished', 4: 'Expired'};
-	var obj = [];
-	for(var i in doc){
-		obj.push({
-			id: doc[i].id,
-			name: doc[i].name,
-			view: doc[i].view,
-			status: statuses[doc[i].status],
-			begin: moment(doc[i].begin).format('YYYY-MM-DD, hh:mm:ss A'),
-			end: moment(doc[i].end).format('YYYY-MM-DD, hh:mm:ss A')
-		});
-	};
-	return obj;
-}
 
 router.get('/', function (req, res, next) {
 	var data = modelUtils.baseModel(req);
@@ -33,21 +20,46 @@ router.get('/find/:id', function (req, res, next) {
 	var data = modelUtils.baseModel(req);
 	data.statuses = constantUtils.statuses;
 
+	var url = 'http://360.adsplay.net/api/liveevents/report?id='+req.params.id;
+	console.log(url)
+
+	Sync(function(){
+		try{
+			// result from callback
+			result = dataUtils.request.sync(null, url);
+			console.log(result)
+
+			if (result) {
+				data.event = convert_data_api([result])[0];
+				console.log(data.event)
+				res.render('event/detail', data);
+			} else {
+				res.render('event/list', data);
+			}
+		}
+
+		catch (e) {
+			console.error(e);
+		}
+
+	});
     
-	Event.findOne({id: req.params.id}, function(err, doc){
-		if(err){
-			return console.error(err);
-		}
-		if(doc == null){
-			res.render('event/list', data);
-		}
-		else{
+	// Event.findOne({id: req.params.id}, function(err, doc){
+	// 	if(err){
+	// 		return console.error(err);
+	// 	}
+	// 	if(doc == null){
+	// 		res.render('event/list', data);
+	// 	}
+	// 	else{
 			
-			data.event = convert_data([doc])[0];
-			res.render('event/detail', data);
-		}
+	// 		data.event = convert_data([doc])[0];
+	// 		res.render('event/detail', data);
+	// 	}
 		
-	})
+	// })
+
+
 });
 //select all
 router.get('/find', function (req, res, next) {
@@ -61,6 +73,29 @@ router.get('/find', function (req, res, next) {
 		res.json(convert_data(doc));
 	})
 });
+
+router.get('/findall', function (req, res, next) {
+	var url = 'http://360.adsplay.net/api/liveevents/selectall';
+
+	Sync(function(){
+		try{
+			// result from callback
+			result = dataUtils.request.sync(null, url);
+
+			if (result) {
+				res.json(convert_data_api(result));
+			} else {
+				res.json({});
+			}
+		}
+
+		catch (e) {
+			console.error(e);
+		}
+
+	});
+});
+
 
 //create
 router.get('/create', function (req, res, next) {
@@ -134,6 +169,39 @@ var sumView = function(hourly){
 		}
 	}
 	return count;
+}
+
+
+var convert_data_api = function(doc){
+	var statuses = {0: 'Invalid', 1: 'Pending', 2: 'Running', 3: 'Finished', 4: 'Expired'};
+	var obj = [];
+	for(var i in doc){
+		obj.push({
+			id: doc[i].liveId,
+			name: doc[i].eventName,
+			view: doc[i].totalView.toLocaleString(),
+			status: statuses[doc[i].status],
+			begin: moment(doc[i].startTime).format('YYYY-MM-DD, hh:mm:ss A'),
+			end: moment(doc[i].endTime).format('YYYY-MM-DD, hh:mm:ss A')
+		});
+	};
+	return obj;
+}
+
+var convert_data = function(doc){
+	var statuses = {0: 'Invalid', 1: 'Pending', 2: 'Running', 3: 'Finished', 4: 'Expired'};
+	var obj = [];
+	for(var i in doc){
+		obj.push({
+			id: doc[i].id,
+			name: doc[i].name,
+			view: doc[i].view,
+			status: statuses[doc[i].status],
+			begin: moment(doc[i].begin).format('YYYY-MM-DD, hh:mm:ss A'),
+			end: moment(doc[i].end).format('YYYY-MM-DD, hh:mm:ss A')
+		});
+	};
+	return obj;
 }
 
 //delete

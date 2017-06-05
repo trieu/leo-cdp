@@ -7,14 +7,14 @@
 </div>
 
 {{#if editable }}
-<p>
+<p style="display: none;">
     <a href="/event/create" class="btn btn-primary" id="new-creative">
         <i class="fa fa-industry"></i> New Ad Live Event
     </a>
 </p>
 {{/if}}
 
-<div class="row">
+<div class="row" style="display: none;">
 	<div class='col-lg-3'>
         <div class="form-group">
             <select class="form-control" id="filter-status" >
@@ -165,7 +165,8 @@
 
         function render_list(begin, end){
             $.ajax({
-                url: '/event/find?begin='+begin+'&end='+end,
+                //url: '/event/find?begin='+begin+'&end='+end,
+                url: '/event/findall',
                 type: "GET",
                 contentType: "application/json",
                 dataType:'json',

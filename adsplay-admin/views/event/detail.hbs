@@ -43,7 +43,7 @@
       </div>
     </div>
   </div>
-  <div class="col-md-6 col-sm-12">
+  <div class="col-md-6 col-sm-12" style="display: none;">
     <svg id="platforms-chart" class="report-detail-piechart"></svg>
   </div>
 </div>
@@ -56,7 +56,7 @@
                     <strong>Hourly Report: Impression and Completed-View Data in last 24 hours</strong></h3>
             </div>
             <div class="panel-body">
-                <div id="chart_hourly_imp_and_click" class="graph" style='height:250px;'>
+                <div id="chart_event" class="graph" style='height:250px;'>
                     <svg></svg>
                 </div>
             </div>
@@ -70,14 +70,62 @@
     var now = moment();
     var currentDay = now.format("YYYY-MM-DD-HH");
     var previousDay = now.subtract(1, 'days').format("YYYY-MM-DD-HH");
-    var crtId = 1166;
-    var adType = 3;
+ 
+    var url = "//360.adsplay.net/api/liveevents/detail?id={{event.id}}";
 
-    var urlPlacements = "{{site.ssl_api_domain}}/api/creatives/"+crtId+"/placements";
-    setTimeout(displayPlatforms(urlPlacements), 100);
+    d3.json(url, function (error, data) {
+        console.log(data)
 
-    //test
-    // var urlDrawHourly = "https://api.adsplay.net/api/creative/stats/1483?type=hourly";
-    var urlDrawHourly = "{{site.ssl_api_domain}}/api/creative/stats/"+crtId+"?type=hourly";
-    drawHourlyStatsData(urlDrawHourly, previousDay, currentDay);
+        if(error){
+            return;
+        }
+
+        nv.addGraph(function() {
+        var chart = nv.models.lineChart()
+                        .margin({left: 100})  //Adjust chart margins to give the x-axis some breathing room.
+                        .useInteractiveGuideline(true)  //We want nice looking tooltips and a guideline!
+                        .transitionDuration(350)  //how fast do you want the lines to transition?
+                        .showLegend(true)       //Show the legend, allowing users to turn on/off line series.
+                        .showYAxis(true)        //Show the y-axis
+                        .showXAxis(true)        //Show the x-axis
+        ;
+
+        chart.xAxis
+        .axisLabel('Time')
+        .tickFormat(function(d) {
+            return d3.time.format('%H:00 %d/%m/%Y ')(new Date(d))
+        });
+
+        chart.yAxis     //Chart y-axis settings
+            .axisLabel('View')
+            .tickFormat(d3.format(',f'));
+
+        /* Done setting the chart up? Time to render it!*/
+        var myData = [];
+        data.forEach(function(item){
+            myData.push({x: new Date(item.time), y: item.view});
+        })
+
+        var renderChart = [
+            {
+                values: myData,      //values - represents the array of {x,y} data points
+                key: 'View', //key  - the name of the series.
+                color: '#ff7f0e'  //color - optional: choose your own line color.
+            }
+        ]
+
+        console.log(myData)
+
+        d3.select('#chart_event svg')    //Select the <svg> element you want to render the chart in.   
+            .datum(renderChart)         //Populate the <svg> element with chart data...
+            .call(chart);          //Finally, render the chart!
+
+        //Update the chart when window resizes.
+        nv.utils.windowResize(function() { chart.update() });
+            return chart;
+        });
+
+    });
+
+
 </script>
