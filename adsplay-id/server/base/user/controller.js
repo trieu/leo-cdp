@@ -105,16 +105,31 @@ exports.newPassword = function (req, res){
 
 exports.save = function (req, res){
     var data = {};
+    
     if(req.body.password){
         req.body.password = Encryption.hash(req.body.password);
     }
     if(req.body.roles){
         req.body.roles = convertObjBoolean(req.body.roles);
     }
+
     if(req.body.rolesAds){
         req.body.rolesAds = convertObjBoolean(req.body.rolesAds, true);
     }
+    else{
+        req.body.rolesAds = {};
+    }
+
+    if(req.body.rolesPlacement){
+        req.body.rolesPlacement = convertObjBoolean(req.body.rolesPlacement, true);
+    }
+    else{
+        req.body.rolesPlacement = {};
+    }
+
     data = req.body;
+    
+    console.log(data)
     
     User.findUserUpdate({"_id": req.body._id}, data, function(err, user){
         if(err){
