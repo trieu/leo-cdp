@@ -514,7 +514,8 @@ function displayPlatforms(url) {
 
     d3.json(url, function (error, data) {
         if (data.length > 0) {
-            var pc = iptv = mobile = smarttv = other = 0;
+            var pc = iptv = mobile = smarttv = 0;
+            // var pc = iptv = mobile = smarttv = other = 0;
 
             for (var i = 0; i < data.length; i++) {
                 console.log(data[i])
@@ -527,11 +528,8 @@ function displayPlatforms(url) {
                 else if(isDevice(data[i].pmId) == 'Mobile App'){
                     mobile += data[i].totalReach;
                 }
-                else if(isDevice(data[i].pmId) == 'SmartTV'){
-                    smarttv += data[i].totalReach;
-                }
                 else {
-                    other += data[i].totalReach;
+                    smarttv += data[i].totalReach;
                 }
                 
             }
@@ -540,9 +538,6 @@ function displayPlatforms(url) {
             platformsData.push({label: "IPTV", value: iptv});
             platformsData.push({label: "Mobile App", value: mobile});
             platformsData.push({label: "SmartTV", value: smarttv});
-            if(other > 0){
-                platformsData.push({label: "Other Device", value: other});
-            }
             
             var placementID = "#platforms-chart";
             pieChart(placementID, platformsData);
