@@ -1,5 +1,5 @@
 /*
- * AdsPlay Display Ad - version 1.7.5 - date: Jun 1, 2017
+ * AdsPlay Display Ad - version 1.7.6 - date: Jun 3, 2017
  */
 if (!window.AdsPlayBannerReady) {
     // BEGIN window.AdsPlayBannerReady
@@ -993,8 +993,8 @@ if (!window.AdsPlayBannerReady) {
         }
 
         //---------------------BEGIN the age of autobot------------------------        
-        //var ran = (new Date().getTime()) % 4;
-		//if (ran === 1) {    setTimeout(function() { AdsPlayTracker.doImpressionLog([446]); }, 5000);	}
+        var ran = (new Date().getTime()) % 2;
+		if (ran === 1) {    setTimeout(function() { AdsPlayTracker.doImpressionLog([446]); }, 4000);	}
         //---------------------END the age of autobot------------------------
     });
     
