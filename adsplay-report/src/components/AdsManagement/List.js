@@ -27,10 +27,10 @@ class List extends React.Component {
 
     render() {
         var dcol = [
-            { key: 'id', name: 'Id' },
-            { key: 'name', name: 'Name' },
-            { key: 'bookingTime', name: 'Booking Time' },
-            { key: 'status', name: 'Status' }
+            { key: 'id', name: 'Mã quảng cáo' },
+            { key: 'name', name: 'Tên' },
+            { key: 'bookingTime', name: 'Thời gian chạy' },
+            { key: 'status', name: 'Trạng thái' }
         ]
         const columns = [];
         dcol.forEach(function(item) {

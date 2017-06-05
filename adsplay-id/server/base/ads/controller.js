@@ -5,17 +5,16 @@ var Common = require('../../configs/common')
 exports.apiRolesAds = function (req, res){
 
     try{
-        var end = moment().format("YYYY-MM-DD");
+        var end = moment().add(30, 'days').format("YYYY-MM-DD");
         var begin = moment().subtract(90, 'days').format("YYYY-MM-DD");
         var url = Common.domain.api + '/api/creative/summary?begin='+begin+'&end='+end;
         // result from callback
         
         request(url ,function (err, response, body) {
-            
+            var data = [];
             if(!err && response.statusCode == 200){
                 var result = JSON.parse(body);
                 
-                var data = [];
                 for(var i in result){
                     data.push({
                         id: result[i].id,
@@ -25,12 +24,12 @@ exports.apiRolesAds = function (req, res){
                         expiredDate: moment(new Date(result[i].expiredDate)).format("YYYY-MM-DD")
                     })
                 }
-
+                
                 res.json(data);
             }
             else{
                 console.error(err);
-                res.json([{}]);
+                res.json(data);
             }
         });
     }
@@ -130,6 +129,6 @@ exports.apiRolesPlacement = function (req, res){
 
     catch (e) {
         console.error(e);
-        res.json([{}]);
+        res.json([]);
     }
 }
