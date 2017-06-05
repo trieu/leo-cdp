@@ -129,8 +129,6 @@ exports.save = function (req, res){
 
     data = req.body;
     
-    console.log(data)
-    
     User.findUserUpdate({"_id": req.body._id}, data, function(err, user){
         if(err){
             return res.json({success: false, message: "Error! update"});
