@@ -142,7 +142,6 @@
 		                    <th>View</th> \
 		                    <th>Status</th> \
 		                    <th>Scheduled Time</th> \
-		                    <th>Actions</th> \
 		                </tr> \
                     </thead> \
                     <tbody> \
@@ -178,8 +177,7 @@
                     list_html(data);
                     icon_status();
                     var table = $("#tbl-event").DataTable({
-                        "pageLength": 25,
-                        "order": [[0,'desc']]
+                        "pageLength": 25
                     });
 
                     $("#filter-status").change(function(){
@@ -204,9 +202,11 @@
             <td>\{{view}}</td>
             <td data-status="\{{status}}" data-order="\{{status}}"  data-search="\{{status}}">\{{status}}</td>
             <td class="td-max-400">\{{begin}} &#10145; \{{end}}</td>
+            <!--
             <td>
             	<a title="Edit" href="/event/edit/\{{id}}"><i class="fa fa-pencil"></i></a>
             </td>
+            -->
         </tr>
     \{{/each}}
 </script>

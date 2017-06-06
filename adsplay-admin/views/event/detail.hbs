@@ -56,7 +56,7 @@
                     <strong>Hourly Report: Impression and Completed-View Data in last 24 hours</strong></h3>
             </div>
             <div class="panel-body">
-                <div id="chart_event" class="graph" style='height:250px;'>
+                <div id="chart_event" class="graph" style='height:360px;'>
                     <svg></svg>
                 </div>
             </div>
@@ -99,6 +99,12 @@
         chart.yAxis     //Chart y-axis settings
             .axisLabel('View')
             .tickFormat(d3.format(',f'));
+
+        data.sort(function compare(a, b) {
+            var dateA = new Date(a.time);
+            var dateB = new Date(b.time);
+            return dateA - dateB;
+        });
 
         /* Done setting the chart up? Time to render it!*/
         var myData = [];
