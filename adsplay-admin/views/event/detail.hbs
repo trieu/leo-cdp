@@ -53,7 +53,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>
-                    <strong>Hourly Report: Impression and Completed-View Data in last 24 hours</strong></h3>
+                    <strong>Report: Detail Match's View Data U20</strong></h3>
             </div>
             <div class="panel-body">
                 <div id="chart_event" class="graph" style='height:360px;'>
@@ -74,7 +74,6 @@
     var url = "//360.adsplay.net/api/liveevents/detail?id={{event.id}}";
 
     d3.json(url, function (error, data) {
-        console.log(data)
 
         if(error){
             return;
@@ -88,10 +87,13 @@
                         .showLegend(true)       //Show the legend, allowing users to turn on/off line series.
                         .showYAxis(true)        //Show the y-axis
                         .showXAxis(true)        //Show the x-axis
+                        
         ;
 
         chart.xAxis
         .axisLabel('Time')
+        .showMaxMin(false)
+        .rotateLabels(20)
         .tickFormat(function(d) {
             return d3.time.format('%H:00 %d/%m/%Y ')(new Date(d))
         });
@@ -120,7 +122,7 @@
             }
         ]
 
-        console.log(myData)
+        //console.log(myData)
 
         d3.select('#chart_event svg')    //Select the <svg> element you want to render the chart in.   
             .datum(renderChart)         //Populate the <svg> element with chart data...

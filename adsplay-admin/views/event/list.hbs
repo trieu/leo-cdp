@@ -56,6 +56,23 @@
 
 <div class="row">
     <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>
+                    <strong>U20 View By Hour</strong>
+                </h3>
+            </div>
+            <div class="panel-body">
+                <div id="chart_event" class="graph" style='height:360px;'>
+                    <svg></svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
         <div class="table-responsive" id="event-list">
         </div>
     </div>
@@ -192,6 +209,63 @@
 
     });
 
+</script>
+
+<script>
+    nv.addGraph(function() {
+        var chart = nv.models.lineChart()
+                        .margin({left: 100})  //Adjust chart margins to give the x-axis some breathing room.
+                        .useInteractiveGuideline(true)  //We want nice looking tooltips and a guideline!
+                        .transitionDuration(350)  //how fast do you want the lines to transition?
+                        .showLegend(true)       //Show the legend, allowing users to turn on/off line series.
+                        .showYAxis(true)        //Show the y-axis
+                        .showXAxis(true)        //Show the x-axis
+                        
+        ;
+
+        chart.xAxis
+        .axisLabel('Hourly')
+        .showMaxMin(false)
+        .tickFormat(function(d) {
+            return d
+        });
+
+        chart.yAxis     //Chart y-axis settings
+            .axisLabel('View')
+            .tickFormat(d3.format(',f'));
+
+        /* Done setting the chart up? Time to render it!*/
+        var myData = [
+            {x:"11", y: 129469},
+            {x:"12", y: 404744},
+            {x:"13", y: 662035},
+            {x:"14", y: 1382493},
+            {x:"15", y: 1432139},
+            {x:"16", y: 1126019},
+            {x:"17", y: 2221553},
+            {x:"18", y: 1817339},
+            {x:"19", y: 1582995},
+            {x:"20", y: 1358878}
+        ];
+
+        var renderChart = [
+            {
+                values: myData,      //values - represents the array of {x,y} data points
+                key: 'View', //key  - the name of the series.
+                color: '#ff7f0e'  //color - optional: choose your own line color.
+            }
+        ]
+
+        //console.log(myData)
+
+        d3.select('#chart_event svg')    //Select the <svg> element you want to render the chart in.   
+            .datum(renderChart)         //Populate the <svg> element with chart data...
+            .call(chart);          //Finally, render the chart!
+
+        //Update the chart when window resizes.
+        nv.utils.windowResize(function() { chart.update() });
+            return chart;
+        });
 </script>
 
 <script id="tpl-crt-list" type="text/x-handlebars">
