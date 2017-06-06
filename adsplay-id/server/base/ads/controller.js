@@ -132,3 +132,85 @@ exports.apiRolesPlacement = function (req, res){
         res.json([]);
     }
 }
+
+exports.apiRolesAdsList = function(req, res){
+
+    try{
+
+        var end = moment().add(30, 'days').format("YYYY-MM-DD");
+        var begin = moment().subtract(90, 'days').format("YYYY-MM-DD");
+        var url = Common.domain.api + '/api/creative/summary?begin='+begin+'&end='+end;
+
+        request(url ,function (err, response, body) {
+            if(!err && response.statusCode == 200){
+                var result = JSON.parse(body);
+                var user = req.user;
+                console.log(req)
+                if(user.roles['superadmin']){
+                    return res.json(result);
+                }
+                else{
+                    console.log(user.rolesAds)
+                    if(user.rolesAds){
+                        var data = [];
+                        for(var i in result){
+                            if(user.rolesAds[parseInt(result[i].id)]){
+                                data.push(result[i]);
+                            }
+                        }
+                        
+                        return res.json(data);
+                    }
+                    return res.json([]);
+                }
+            }
+            else{
+                console.error(err);
+                return res.json([]);
+            }
+        });
+
+    }
+
+    catch (e) {
+        console.error(e);
+    }
+};
+
+exports.apiRolesAdsDetail = function(req, res){
+
+    try{
+
+        var url = Common.domain.api + '/api/creatives/'+req.params.id;
+        request(url ,function (err, response, body) {
+            if(!err && response.statusCode == 200){
+                console.log(body)
+                return res.json(JSON.parse(body));
+            }
+            else{
+                console.error(err);
+                return res.json({});
+            }
+        });
+
+    }
+
+    catch (e) {
+        console.error(e);
+    }
+
+};
+
+exports.apiRolesAdsUpdateStatus = function(req, res){
+    try{
+        var id = req.query.id;
+        var status = req.query.status;
+        var url = Common.domain.api + '/api/creatives/' + id;
+        request.patch(url).form(JSON.stringify({status: status}));
+        res.json({success: true});
+    }
+
+    catch (e) {
+        console.error(e);
+    }
+};
