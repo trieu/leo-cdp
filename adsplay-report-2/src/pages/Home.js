@@ -62,12 +62,12 @@ class Home extends React.Component {
 					</div>
 					<div className="col-xs-12 col-sm-12 col-md-12 padding-bottom-1rem">
 						<Card 
-							label="10 phim xem nhiều nhất"
+							label="20 phim xem nhiều nhất"
 							loading={this.props.loading_topview}
 							body={<Bar 
 									data={this.props.topview}
 									horizontal={true}
-									options={{height: 320,
+									options={{height: 360,
 									distributeSeries: true}}
 								/>}
 						/>
@@ -80,7 +80,7 @@ class Home extends React.Component {
 									placeHolder="Chọn thể loại"
 									data={this.props.topcategory}
 									horizontal={true}
-									options={{height: 320,
+									options={{height: 300,
 									distributeSeries: true}}
 								/>}
 						/>

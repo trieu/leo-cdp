@@ -4,11 +4,29 @@ console.log('*******************');
 console.log('******** Enviroment '+ NODE.ENV);
 console.log('*******************','\n');
 
+var Common = require('./configs/common.js');
+
 var webpack = require('webpack');
 var path = require('path');
+var bodyParser = require('body-parser');    // pull information from HTML POST (express4)
+var cookieParser = require('cookie-parser');// pull information from HTML cookies (express4)
+var expressSession = require('express-session');
 var express = require('express');
+
 var app = express();
 app.use('/', express.static(__dirname + '/public'));
+
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(cookieParser(Common.SALT));
+app.use(expressSession({
+	secret: Common.SALT,
+	resave: false,
+	saveUninitialized: false,
+	cookie :{ 
+		path: '/', httpOnly: true, maxAge: Common.session
+	}
+}));
 
 
 if(NODE.ENV == 'dev'){

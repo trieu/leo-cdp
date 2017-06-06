@@ -6,10 +6,10 @@ const Auth = (WrappedComponent) => {
         class WithAuthorization extends React.Component {
             constructor(props) {
                 super(props);
-                this.state = {user_info: null};
+                this.state = {userInfo: null};
                 this.loggedIn().then((response) => {
-                    //console.log(response)
-                    this.setState({user_info: response})
+                    console.log(response)
+                    this.setState({userInfo: response})
                 })
             }
 

@@ -1,6 +1,6 @@
 module.exports = {
     HOST: '127.0.0.1',
-    PORT: '8889',
+    PORT: '9881',
     SALT: '$6*7&8^9mvc@#!AI',
 	SESSION: 1000*60*60*24*2, //2 day
 	VERSION: '20170330',
@@ -13,5 +13,6 @@ module.exports = {
 	},
 	API: {
 		PAGE: 'http://fastdataapi.adsplay.net/analytics/fb_pages',
-	}
+	},
+	SSO: 'http://id.adsplay.net/',
 };

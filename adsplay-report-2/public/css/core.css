@@ -371,6 +371,7 @@ Top Navigation
 }
 .cd-top-nav > li a {
   padding: 1em 5% !important;
+  text-transform: capitalize;
 }
 .cd-top-nav img {
   /* avatar image */
@@ -480,9 +481,9 @@ Sidebar
   border-bottom: none;
 }
 .cd-side-nav > ul > li > a i{
-  font-size: 18px;
+  font-size: 20px;
   color: #717479;
-  vertical-align: text-bottom;
+  vertical-align: middle;
 }
 .cd-side-nav .count {
   /* notification badge */
@@ -709,7 +710,6 @@ Sidebar
   }
   .cd-top-nav .has-children ul {
     background-color: #1c1f22;
-    width: 200px;
     top: 100%;
     right: 0;
     left: auto;

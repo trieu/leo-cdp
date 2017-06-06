@@ -1,5 +1,6 @@
 import React from 'react';
 import Search from './Search';
+import Logout from '../Auth/Logout';
 import AppData from '~/configs/AppData';
 
 export default class Header extends React.Component {
@@ -17,11 +18,11 @@ export default class Header extends React.Component {
 						<li className="has-children account">
 							<a>
 								<img src="img/cd-avatar.png" alt="avatar" />
-								{AppData.UserName}
+								{this.props.userInfo.username}
 							</a>
 
 							<ul>
-								<li><a href="#0">Logout</a></li>
+								<li><a><Logout text="Đăng Xuất" /></a></li>
 							</ul>
 						</li>
 					</ul>

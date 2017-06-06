@@ -79,10 +79,10 @@ module.exports = {
     ],
 
     //debug: true,
-    devtool: 'cheap-module-eval-source-map',
+    devtool: 'cheap-module-source-map',
     devServer: {
         publicPath: '/',
-        contentBase: path.resolve(__dirname),
+        contentBase: path.join(__dirname, 'public'),
         historyApiFallback: true,
         // proxy: {
         //     '!/*.{css,js,hot-update.json}': {

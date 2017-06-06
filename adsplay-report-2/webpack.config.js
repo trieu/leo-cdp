@@ -56,7 +56,7 @@ module.exports = {
             name: 'vendor',
             minChunks: Infinity
         }),
-        new ExtractTextPlugin('public/css/style-react.css', {
+        new ExtractTextPlugin('css/style-react.css', {
             allChunks: true
         }),
         new webpack.optimize.DedupePlugin(), //Search for equal or similar files and deduplicate them in the output
