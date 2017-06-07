@@ -8,7 +8,7 @@ const Auth = (WrappedComponent) => {
                 super(props);
                 this.state = {userInfo: null};
                 this.loggedIn().then((response) => {
-                    console.log(response)
+                    // console.log(response)
                     this.setState({userInfo: response})
                 })
             }

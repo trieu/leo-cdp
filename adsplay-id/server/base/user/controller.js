@@ -2,11 +2,11 @@
     controller user
 */
 var passport = require('passport')
-var Jwt = require('jsonwebtoken')
 var Encryption = require('../../helpers/encryption')
 var Parameter = require('../../helpers/parameter')
 var User = require('./model').User
 var Common = require('../../configs/common')
+var Token = require('../../helpers/token')
 var _ = require('lodash')
 var reCAPTCHA=require('recaptcha2')
 var recaptcha=new reCAPTCHA({
@@ -14,7 +14,6 @@ var recaptcha=new reCAPTCHA({
   secretKey:  Common.recaptcha.secretKey,
   ssl: Common.recaptcha.ssl
 });
-var last_token = '.adsplay';
 
 exports.index = function (req, res){
     var data = {};
@@ -170,7 +169,7 @@ var loginLocal = function(req, res, next){
                 
                 //create token with timers expires
                 console.log('user', user)
-                var token = createToken(user);
+                var token = Token.createToken(user);
                 //console.log(token)
                 //redirect uri
                 var param_redirect = req.query.redirect_uri;
@@ -206,7 +205,7 @@ exports.login = function (req, res){
         }
         else{
             // check loggin redirect webapp client attach token
-            var token = createToken(req.user);
+            var token = Token.createToken(req.user);
             var param_redirect = req.query.redirect_uri;
             var redirectUri = Parameter.insert(param_redirect, 'access_token', token, false);
             var param_attach = req.query.attach;
@@ -243,7 +242,7 @@ exports.loginOnSite = function (req, res, next){
 // ---------------------------------------------------------
 exports.authentication = function (req, res){
     if(req.user){
-        var refreshToken = createToken(req.user);
+        var refreshToken = decodeTokencreateToken(req.user);
         return res.json({ success: true, access_token: refreshToken });
     }
     else{
@@ -260,8 +259,8 @@ exports.userInfo = function (req, res, next){
 	var token = req.query.access_token || req.headers['x-access-token'];
 
 	// decode token
-	if (token && token.indexOf(last_token) != -1) {
-		return res.json(decodeToken(token));
+	if (token && token.indexOf(Token.lastToken) != -1) {
+		return res.json(Token.decodeToken(token));
 	} else {
 
 		// if there is no token
@@ -276,31 +275,8 @@ exports.userInfo = function (req, res, next){
 
 
 // ---------------------------------------------------------
-// decode token
+// helper
 // ---------------------------------------------------------
-var decodeToken = function(token){
-    try {
-        token = token.replace(".adsplay", "");
-        var decoded = Jwt.verify(token, Common.privateKey);
-        decoded = (decoded._doc) ? decoded._doc : decoded;
-        return { success: true, user_info: decoded };
-    } catch(err) {
-        //'Failed to authenticate token.'
-        return { success: false, message: err.message };
-    }
-}
-
-
-// ---------------------------------------------------------
-// create token
-// ---------------------------------------------------------
-var createToken = function(user){
-    var token = Jwt.sign(user, Common.privateKey, {
-        expiresIn: Common.tokenExpiry
-    });
-    return token + last_token;
-}
-
 var convertObjBoolean = function(temp, int){
     var data = {};
     var regex = /^[0-9a-zA-Z\-]+$/;

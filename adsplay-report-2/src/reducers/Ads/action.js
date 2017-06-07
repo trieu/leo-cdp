@@ -1,6 +1,7 @@
 //import insertParameter from '../../helpers/parameter';
 import axios from 'axios';
 import moment from 'moment';
+import {getCookie} from '../../components/Helpers/Cookie';
 
 export const ADS_LIST = 'ADS_LIST';
 
@@ -10,8 +11,9 @@ export const ADS_DETAIL = 'ADS_DETAIL';
  * get detail category
  * @Mith
  */
-const ADS_LIST_URL = '//id.adsplay.net/ads/api-roles-ads/list';
-const ADS_DETAIL_URL = '//id.adsplay.net/ads/api-roles-ads/detail';
+const access_token = getCookie('user_token');
+const ADS_LIST_URL = '//id.adsplay.net/ads/api-roles-ads/list?access_token='+access_token;
+const ADS_DETAIL_URL = '//id.adsplay.net/ads/api-roles-ads/detail?access_token='+access_token;
 
 
 const statuses = {0: 'Invalid', 1: 'Pending', 2: 'Running', 3: 'Finished', 4: 'Expired'};
@@ -31,12 +33,12 @@ export function fetchAdsList() {
                     var data = [];
 
                     for(var i in result){
-                        data.push({
-                            id: result[i].id,
-                            name: result[i].name,
-                            bookingTime: moment(new Date(result[i].runDate)).format('YYYY-MM-DD') + " ➡ " + moment(new Date(result[i].expiredDate)).format('YYYY-MM-DD'),
-                            status: statuses[result[i].status]
-                        })
+                        data.push([
+                            result[i].id,
+                            result[i].name,
+                            moment(new Date(result[i].runDate)).format('YYYY-MM-DD') + " ➡ " + moment(new Date(result[i].expiredDate)).format('YYYY-MM-DD'),
+                            statuses[result[i].status]
+                        ])
                     }
 
                     dispatch({

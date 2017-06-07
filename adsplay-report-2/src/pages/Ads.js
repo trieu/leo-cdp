@@ -11,26 +11,17 @@ class List extends React.Component {
 		this.state = {
 			columns: [
 				{
-					title: 'Name',
+					title: 'Mã quảng cáo',
+				},
+				{
+					title: 'Tên',
 					width: 400,
 				},
 				{
-					title: 'Category',
+					title: 'Thời gian chạy',
 				},
 				{
-					title: 'Playview',
-				},
-				{
-					title: 'Impression phát sinh',
-				},
-				{
-					title: 'Trueview',
-				},
-				{
-					title: 'Click',
-				},
-				{
-					title: 'Doanh thu ước tính'
+					title: 'Trại thái',
 				},
 			]
 		}
@@ -46,9 +37,9 @@ class List extends React.Component {
 			<div>
 				<div className="row">
 					<div className="col-xs-12 col-sm-12 col-md-12 padding-bottom-1rem">
-						{/*<Table 
+						<Table 
 							columns={this.state.columns}
-							data={this.props.data} />*/}
+							data={this.props.data} />
 					</div>
 				</div>
 			</div>

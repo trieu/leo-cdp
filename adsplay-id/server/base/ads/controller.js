@@ -1,6 +1,7 @@
 var moment = require('moment')
 var request = require('request')
 var Common = require('../../configs/common')
+var Token = require('../../helpers/token')
 
 exports.apiRolesAds = function (req, res){
 
@@ -137,39 +138,43 @@ exports.apiRolesAdsList = function(req, res){
 
     try{
 
-        var end = moment().add(30, 'days').format("YYYY-MM-DD");
-        var begin = moment().subtract(90, 'days').format("YYYY-MM-DD");
-        var url = Common.domain.api + '/api/creative/summary?begin='+begin+'&end='+end;
+        // check header or url parameters or post parameters for token
+        var token = req.query.access_token || req.headers['x-access-token'];
 
-        request(url ,function (err, response, body) {
-            if(!err && response.statusCode == 200){
-                var result = JSON.parse(body);
-                var user = req.user;
-                console.log(req)
-                if(user.roles['superadmin']){
-                    return res.json(result);
-                }
-                else{
-                    console.log(user.rolesAds)
-                    if(user.rolesAds){
-                        var data = [];
-                        for(var i in result){
-                            if(user.rolesAds[parseInt(result[i].id)]){
-                                data.push(result[i]);
-                            }
-                        }
-                        
-                        return res.json(data);
+        // check token
+        var checkToken = Token.checkToken(token);
+        if (checkToken.success) {
+            var end = moment().add(30, 'days').format("YYYY-MM-DD");
+            var begin = moment().subtract(90, 'days').format("YYYY-MM-DD");
+            var url = Common.domain.api + '/api/creative/summary?begin='+begin+'&end='+end;
+
+            request(url ,function (err, response, body) {
+                if(!err && response.statusCode == 200){
+                    var result = JSON.parse(body);
+                    var user = checkToken.user_info;
+                    console.log(user)
+                    if(user.roles['superadmin']){
+                        return res.json(result);
                     }
-                    return res.json([]);
+                    else{
+                        console.log(user.rolesAds)
+                        if(user.rolesAds){
+                            var data = [];
+                            for(var i in result){
+                                if(user.rolesAds[parseInt(result[i].id)]){
+                                    data.push(result[i]);
+                                }
+                            }
+                            return res.json(data);
+                        }
+                    }
                 }
-            }
-            else{
-                console.error(err);
-                return res.json([]);
-            }
-        });
-
+            });
+            
+        } 
+        else{
+            return res.json([]);
+        }
     }
 
     catch (e) {

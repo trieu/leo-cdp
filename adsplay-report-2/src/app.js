@@ -10,9 +10,10 @@ export default class App extends React.Component {
     }
     
     render() {
+        var userInfo = (this.props.userInfo) ? this.props.userInfo : {username: "user"}
         return (
             <div id="wrapper">
-                <Header userInfo={this.props.userInfo} />
+                <Header userInfo={userInfo} />
                 
                 <div id="main" className="cd-main-content">
                     <Side />

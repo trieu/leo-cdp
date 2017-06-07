@@ -495,9 +495,22 @@ function displayAudienceReachAndDeviceType(url, typePlacements) {
 
     d3.json(url, function (error, data) {
         if (data.length > 0) {
+            var web = mobile = smarttv = 0;
             for (var i = 0; i < data.length; i++) {
-                placementsPieChartData.push({label: typePlacements[data[i].pmId], value: data[i].totalReach});
+                if(data[i].pmId == 446 || (data[i].pmId > 200 && data[i].pmId <= 299) ){
+                    smarttv += data[i].totalReach;
+                }
+                else if(data[i].pmId > 300 && data[i].pmId <= 399){
+                    mobile += data[i].totalReach;
+                }
+                else{
+                    web += data[i].totalReach;
+                }
             }
+
+            placementsPieChartData.push({label: "VOD for Web", value: web});
+            placementsPieChartData.push({label: "VOD for SmartTV", value: smarttv});
+            placementsPieChartData.push({label: "VOD for Mobile App", value: mobile});
             
             var placementID = "#audience-wrapp";
             pieChart(placementID, placementsPieChartData);
