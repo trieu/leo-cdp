@@ -140,9 +140,8 @@ exports.apiRolesAdsList = function(req, res){
 
         // check header or url parameters or post parameters for token
         var token = req.query.access_token || req.headers['x-access-token'];
+        var checkToken = Token.checkToken(token);// check token
 
-        // check token
-        var checkToken = Token.checkToken(token);
         if (checkToken.success) {
             var end = moment().add(30, 'days').format("YYYY-MM-DD");
             var begin = moment().subtract(90, 'days').format("YYYY-MM-DD");
@@ -152,19 +151,20 @@ exports.apiRolesAdsList = function(req, res){
                 if(!err && response.statusCode == 200){
                     var result = JSON.parse(body);
                     var user = checkToken.user_info;
-                    console.log(user)
                     if(user.roles['superadmin']){
                         return res.json(result);
                     }
                     else{
-                        console.log(user.rolesAds)
                         if(user.rolesAds){
                             var data = [];
+                            // console.log(user)
                             for(var i in result){
                                 if(user.rolesAds[parseInt(result[i].id)]){
                                     data.push(result[i]);
+                                    // console.log(result[i].id)
                                 }
                             }
+                            // console.log(data)
                             return res.json(data);
                         }
                     }
@@ -186,18 +186,25 @@ exports.apiRolesAdsDetail = function(req, res){
 
     try{
 
-        var url = Common.domain.api + '/api/creatives/'+req.params.id;
-        request(url ,function (err, response, body) {
-            if(!err && response.statusCode == 200){
-                console.log(body)
-                return res.json(JSON.parse(body));
-            }
-            else{
-                console.error(err);
-                return res.json({});
-            }
-        });
-
+        // check header or url parameters or post parameters for token
+        var token = req.query.access_token || req.headers['x-access-token'];
+        var checkToken = Token.checkToken(token);// check token
+        
+        if (checkToken.success) {
+            var url = Common.domain.api + '/api/creatives/'+req.query.id;
+            request(url ,function (err, response, body) {
+                if(!err && response.statusCode == 200){
+                    return res.json(JSON.parse(body));
+                }
+                else{
+                    console.error(err);
+                    return res.json({});
+                }
+            });
+        }
+        else{
+            return res.json({});
+        }
     }
 
     catch (e) {
@@ -208,11 +215,20 @@ exports.apiRolesAdsDetail = function(req, res){
 
 exports.apiRolesAdsUpdateStatus = function(req, res){
     try{
-        var id = req.query.id;
-        var status = req.query.status;
-        var url = Common.domain.api + '/api/creatives/' + id;
-        request.patch(url).form(JSON.stringify({status: status}));
-        res.json({success: true});
+        // check header or url parameters or post parameters for token
+        var token = req.query.access_token || req.headers['x-access-token'];
+        var checkToken = Token.checkToken(token);// check token
+
+        if (checkToken.success) {
+            var id = req.query.id;
+            var status = req.query.status;
+            var url = Common.domain.api + '/api/creatives/' + id;
+            request.patch(url).form(JSON.stringify({status: status}));
+            res.json({success: true});
+        }
+        else{
+            res.json({success: false});
+        }
     }
 
     catch (e) {

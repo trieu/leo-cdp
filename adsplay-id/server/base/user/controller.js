@@ -168,7 +168,6 @@ var loginLocal = function(req, res, next){
                 if (err) { return next(err); }
                 
                 //create token with timers expires
-                console.log('user', user)
                 var token = Token.createToken(user);
                 //console.log(token)
                 //redirect uri
