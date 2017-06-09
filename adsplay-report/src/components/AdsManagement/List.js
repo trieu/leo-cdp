@@ -7,6 +7,7 @@ import ReactTable from 'react-table';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { fetchAdsList } from './_Action';
+import {getCookie} from '../Services/Cookie';
 import Toggle from 'material-ui/Toggle';
 
 class List extends React.Component {
@@ -26,6 +27,7 @@ class List extends React.Component {
     }
 
     render() {
+        const access_token = getCookie('user_token');
         var dcol = [
             { key: 'id', name: 'Mã quảng cáo' },
             { key: 'name', name: 'Tên' },
@@ -51,7 +53,7 @@ class List extends React.Component {
                                         (event, isInputChecked)=>{
                                             const id = event.target.value;
                                             const status = (isInputChecked) ? 2 : 1; 
-                                            axios.post('/api/update/status?id=' + id + '&status=' + status)
+                                            axios.get('//id.adsplay.net/ads/api-roles-ads/update/status?access_token='+access_token+'&id=' + id + '&status=' + status)
                                                 .then(function (response) {
                                                     //console.log(response)
                                                 })

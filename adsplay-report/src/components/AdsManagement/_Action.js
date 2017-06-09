@@ -1,6 +1,7 @@
 //import insertParameter from '../../helpers/parameter';
 import axios from 'axios';
 import moment from 'moment';
+import {getCookie} from '../Services/Cookie';
 
 export const ADS_LIST = 'ADS_LIST';
 
@@ -10,8 +11,9 @@ export const ADS_DETAIL = 'ADS_DETAIL';
  * get detail category
  * @Mith
  */
-const ADS_LIST_URL = '/api/ads-list';
-const ADS_DETAIL_URL = '/api/ads-detail';
+const access_token = getCookie('user_token');
+const ADS_LIST_URL = '//id.adsplay.net/ads/api-roles-ads/list?access_token='+access_token;
+const ADS_DETAIL_URL = '//id.adsplay.net/ads/api-roles-ads/detail?access_token='+access_token;
 
 
 const statuses = {0: 'Invalid', 1: 'Pending', 2: 'Running', 3: 'Finished', 4: 'Expired'};
@@ -56,7 +58,7 @@ export function fetchAdsDetail(id) {
             payload: {data: {}, loading: true}
         })
 
-        return axios.get(ADS_DETAIL_URL+'/'+id)   
+        return axios.get(ADS_DETAIL_URL+'&id='+id)   
                 .then(function (response) {
                     var result = response.data;
                     var data = {};
