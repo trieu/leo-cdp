@@ -83,15 +83,18 @@
                             <a href="/placement/list-all" title="Ad Placement Management"><i class="fa fa-fw fa-list"></i> Ad Placements</a>
                         </li>
                         <li class="">
-                            <a href="/event/" title="Ad Live Event Management"><i class="fa fa-fw fa-list"></i> Ad Live Events</a>
-                        </li>
-                        <li class="">
                             <a href="/campaign/" title="Campaign Management"><i class="fa fa-fw fa-list"></i> Ad Campaign</a>
                         </li>
                         <li class="">
                             <a href="/flight/" title="Flight Management"><i class="fa fa-fw fa-list"></i> Ad Flight</a>
                         </li>
 
+                    {{/if}}
+
+                    {{#if isOperatorGroup }}
+                        <li class="">
+                            <a href="/event/" title="Ad Live Event Management"><i class="fa fa-fw fa-list"></i> Ad Live Events</a>
+                        </li>
                     {{/if}}
 
                     {{#if editable }}
