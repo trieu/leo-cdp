@@ -9,8 +9,22 @@ class Detail extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {
-			columns: [
+	}
+
+	componentDidMount() {
+        var data = this.refs.Filter.getData();
+		this.props.fetchDetailCategory(data.sourceMedia, data.beginDate, data.endDate);
+		console.log(data)
+    }
+
+	handleClick(data){
+		var data = this.refs.Filter.getData();
+		this.props.fetchDetailCategory(data.sourceMedia, data.beginDate, data.endDate);
+		console.log(data);
+	}
+
+	render() {
+		const columns= [
 				{
 					title: 'Name',
 					width: 400,
@@ -33,23 +47,7 @@ class Detail extends React.Component {
 				{
 					title: 'Doanh thu ước tính'
 				},
-			]
-		}
-	}
-
-	componentDidMount() {
-        var data = this.refs.Filter.getData();
-		this.props.fetchDetailCategory(data.sourceMedia, data.beginDate, data.endDate);
-		console.log(data)
-    }
-
-	handleClick(data){
-		var data = this.refs.Filter.getData();
-		this.props.fetchDetailCategory(data.sourceMedia, data.beginDate, data.endDate);
-		console.log(data);
-	}
-
-	render() {
+			];
 
 		return (
 			<div>
@@ -57,7 +55,7 @@ class Detail extends React.Component {
 				<div className="row">
 					<div className="col-xs-12 col-sm-12 col-md-12 padding-bottom-1rem">
 						<Table 
-							columns={this.state.columns}
+							columns={columns}
 							data={this.props.data} />
 					</div>
 				</div>

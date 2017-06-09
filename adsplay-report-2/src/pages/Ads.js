@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import Table from '../components/Helpers/Table';
 
 import { connect } from 'react-redux';
@@ -8,23 +9,6 @@ class List extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {
-			columns: [
-				{
-					title: 'Mã quảng cáo',
-				},
-				{
-					title: 'Tên',
-					width: 400,
-				},
-				{
-					title: 'Thời gian chạy',
-				},
-				{
-					title: 'Trại thái',
-				},
-			]
-		}
 	}
 
 	componentDidMount() {
@@ -32,13 +16,33 @@ class List extends React.Component {
     }
 
 	render() {
-        console.log(this.props.data)
+        const columns= [
+				{
+					title: 'Mã quảng cáo',
+					data: null, render: 'id'
+				},
+				{
+					title: 'Tên',
+					width: 400,
+					data: null, render: 'name',
+					html: true
+				},
+				{
+					title: 'Thời gian chạy',
+					data: null, render: 'bookingTime'
+				},
+				{
+					title: 'Trại thái',
+					data: null, render: 'status'
+				},
+			];
+
 		return (
 			<div>
 				<div className="row">
 					<div className="col-xs-12 col-sm-12 col-md-12 padding-bottom-1rem">
 						<Table 
-							columns={this.state.columns}
+							columns={columns}
 							data={this.props.data} />
 					</div>
 				</div>

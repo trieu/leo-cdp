@@ -27,18 +27,19 @@ export function fetchAdsList() {
             payload: {data: [], loading: true}
         })
 
-        return axios.get(ADS_LIST_URL)   
+        return axios.get(ADS_LIST_URL)
                 .then(function (response) {
                     var result = response.data;
                     var data = [];
 
                     for(var i in result){
-                        data.push([
-                            result[i].id,
-                            result[i].name,
-                            moment(new Date(result[i].runDate)).format('YYYY-MM-DD') + " ➡ " + moment(new Date(result[i].expiredDate)).format('YYYY-MM-DD'),
-                            statuses[result[i].status]
-                        ])
+                        console.log(result[i].status)
+                        data.push({
+                            id: result[i].id,
+                            name: '<a href="/ads/'+result[i].id+'">'+result[i].name+'</a>',
+                            bookingTime: moment(new Date(result[i].runDate)).format('YYYY-MM-DD') + " ➡ " + moment(new Date(result[i].expiredDate)).format('YYYY-MM-DD'),
+                            status: '<div class="ui toggle checkbox"><input type="checkbox" name="public"><label>Subscribe to weekly newsletter</label></div>'
+                        })
                     }
 
                     dispatch({

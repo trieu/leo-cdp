@@ -8,6 +8,7 @@ import NotFound from './pages/NotFound';
 import Home from './pages/Home';
 import Detail from './pages/Detail';
 import Ads from './pages/Ads';
+import AdsDetail from './pages/AdsDetail';
 
 const routes = (
   <Router history={browserHistory}>
@@ -15,8 +16,9 @@ const routes = (
           <IndexRoute component={Home} />
           <Route path="/home" component={Home}/>
           <Route path="/detail" component={Detail}/>
-          <Route path="/ads" component={Ads}/>
-          <Route path="/*" component={NotFound}/>
+          <Route exact path="/ads" component={Ads} />
+          <Route path="/ads/:id" component={AdsDetail} />
+          <Route exact path="/*" component={NotFound}/>
       </Route>
   </Router>
 );
