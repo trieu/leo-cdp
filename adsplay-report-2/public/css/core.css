@@ -92,8 +92,12 @@ input[type="search"]::-webkit-search-results-decoration {
 Main Page Content
 
 -------------------------------- */
+.cd-main-content{
+  background-color: #2c3136;
+}
 .cd-main-content .content-wrapper {
   padding: 60px 1em 3em;
+  background-color: #fff;
 }
 .cd-main-content .content-wrapper h1 {
   text-align: center;
@@ -432,8 +436,8 @@ Sidebar
   left: 0;
   top: 0;
   width: 100%;
-  padding: 45px 0 0;
   background-color: #2c3136;
+  padding: 45px 0 0;
   visibility: hidden;
   opacity: 0;
   max-height: 100vh;

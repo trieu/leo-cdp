@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import Table from '../components/Helpers/Table';
+import ReactTable from 'react-table';
 
 import { connect } from 'react-redux';
 import { fetchAdsList } from '../reducers/Ads/action';
@@ -16,35 +16,27 @@ class List extends React.Component {
     }
 
 	render() {
-        const columns= [
-				{
-					title: 'Mã quảng cáo',
-					data: null, render: 'id'
-				},
-				{
-					title: 'Tên',
-					width: 400,
-					data: null, render: 'name',
-					html: true
-				},
-				{
-					title: 'Thời gian chạy',
-					data: null, render: 'bookingTime'
-				},
-				{
-					title: 'Trại thái',
-					data: null, render: 'status'
-				},
-			];
+        const renderLink = props => <Link to={"/ads/" + props.row.id}>
+									<span title={props.value}>{props.value}</span></Link>;
+
+		const columns = [
+			{ accessor: 'id', Header: 'Mã quảng cáo' },
+            { accessor: 'name', Header: 'Tên', Cell: renderLink },
+            { accessor: 'bookingTime', Header: 'Thời gian chạy' },
+            { accessor: 'status', Header: 'Trạng thái' }
+		]
+
 
 		return (
-			<div>
-				<div className="row">
-					<div className="col-xs-12 col-sm-12 col-md-12 padding-bottom-1rem">
-						<Table 
-							columns={columns}
-							data={this.props.data} />
-					</div>
+			<div className="row">
+				<div className="col-xs-12 col-sm-12 col-md-12 padding-bottom-1rem DataTable">
+					<ReactTable className = '-striped -highlight'
+						data = { this.props.data }
+						columns = { columns }
+						defaultPageSize = { 20 }
+						resizable={true}
+					/>
+
 				</div>
 			</div>
 		);

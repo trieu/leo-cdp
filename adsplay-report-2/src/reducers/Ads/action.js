@@ -33,12 +33,11 @@ export function fetchAdsList() {
                     var data = [];
 
                     for(var i in result){
-                        console.log(result[i].status)
                         data.push({
                             id: result[i].id,
-                            name: '<a href="/ads/'+result[i].id+'">'+result[i].name+'</a>',
+                            name: result[i].name,
                             bookingTime: moment(new Date(result[i].runDate)).format('YYYY-MM-DD') + " ➡ " + moment(new Date(result[i].expiredDate)).format('YYYY-MM-DD'),
-                            status: '<div class="ui toggle checkbox"><input type="checkbox" name="public"><label>Subscribe to weekly newsletter</label></div>'
+                            status: result[i].status
                         })
                     }
 
@@ -59,7 +58,7 @@ export function fetchAdsDetail(id) {
             payload: {data: {}, loading: true}
         })
 
-        return axios.get(ADS_DETAIL_URL+'/'+id)   
+        return axios.get(ADS_DETAIL_URL+'&id='+id)   
                 .then(function (response) {
                     var result = response.data;
                     var data = {};

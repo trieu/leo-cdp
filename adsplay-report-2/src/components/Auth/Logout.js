@@ -7,7 +7,7 @@ class Logout extends React.Component {
 
     render() {
         return (
-            <span data-logout style={{"cursor": "pointer"}}>{this.props.text}</span>
+            <a style={{"cursor": "pointer", width: "100%"}} data-logout>{this.props.text}</a>
         );
     };
 }

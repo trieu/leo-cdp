@@ -16,13 +16,13 @@ export default class Header extends React.Component {
 				<nav className="cd-nav">
 					<ul className="cd-top-nav">
 						<li className="has-children account">
-							<a>
+							<a style={{"cursor": "pointer"}}>
 								<img src="img/cd-avatar.png" alt="avatar" />
 								{this.props.userInfo.username}
 							</a>
 
 							<ul>
-								<li><a><Logout text="Đăng Xuất" /></a></li>
+								<li><Logout text="Đăng Xuất" /></li>
 							</ul>
 						</li>
 					</ul>

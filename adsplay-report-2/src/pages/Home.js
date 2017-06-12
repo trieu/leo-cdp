@@ -38,7 +38,7 @@ class Home extends React.Component {
 				<div className="row">
 					<div className="col-xs-12 col-sm-12 col-md-6 padding-bottom-1rem">
 						<Card 
-							label="Thể loại phim"
+							header="Thể loại phim"
 							loading={this.props.loading_category}
 							body={<Pie 
 									data={this.props.category}
@@ -50,7 +50,7 @@ class Home extends React.Component {
 					</div>
 					<div className="col-xs-12 col-sm-12 col-md-6 padding-bottom-1rem">
 						<Card 
-							label="Nền tảng thiết bị"
+							header="Nền tảng thiết bị"
 							loading={this.props.loading_platform}
 							body={<Pie 
 									data={this.props.platform}
@@ -62,7 +62,7 @@ class Home extends React.Component {
 					</div>
 					<div className="col-xs-12 col-sm-12 col-md-12 padding-bottom-1rem">
 						<Card 
-							label="20 phim xem nhiều nhất"
+							header="20 phim xem nhiều nhất"
 							loading={this.props.loading_topview}
 							body={<Bar 
 									data={this.props.topview}
@@ -74,7 +74,7 @@ class Home extends React.Component {
 					</div>
 					<div className="col-xs-12 col-sm-12 col-md-12 padding-bottom-1rem">
 						<Card 
-							label="Phim xem nhiều theo thể loại"
+							header="Phim xem nhiều theo thể loại"
 							loading={this.props.loading_topcategory}
 							body={<BarWithSelect 
 									placeHolder="Chọn thể loại"
