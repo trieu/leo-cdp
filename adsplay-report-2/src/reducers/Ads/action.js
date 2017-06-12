@@ -37,7 +37,7 @@ export function fetchAdsList() {
                             id: result[i].id,
                             name: result[i].name,
                             bookingTime: moment(new Date(result[i].runDate)).format('YYYY-MM-DD') + " ➡ " + moment(new Date(result[i].expiredDate)).format('YYYY-MM-DD'),
-                            status: result[i].status
+                            status: statuses[result[i].status]
                         })
                     }
 
