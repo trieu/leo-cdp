@@ -28,13 +28,13 @@ export default class Bar extends React.Component {
                         x: 13,
                         y: 18
                     },
-                    currency: 'view '
+                    currency: " ",
                 })
 			]
         }
 
         if(props.horizontal){
-            opts.reverseData = true;
+            // opts.reverseData = true;
             opts.horizontalBars = true;
             opts.axisX = {
                 // Allows you to correct label positioning on this axis by positive or negative x and y offset.

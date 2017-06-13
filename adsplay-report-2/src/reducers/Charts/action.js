@@ -133,7 +133,7 @@ export function fetchTopView(sourceMedia, beginDate, endDate, limit) {
                     var data = {};
                         data.series = [];
                         data.legendNames = [];
-                    for(var i in result){
+                    for(var i = result.length; i--;){
                         data.series.push({
                             meta:result[i].videoTitle,
                             data:result[i].contentView,
@@ -176,7 +176,7 @@ export function fetchTopCategory(sourceMedia, beginDate, endDate, limit) {
                         data.select = [];
                     for(var i in result){
                         var key, seriesGroup = [];
-                        for(var j in result[i]){
+                        for(var j = result[i].length; j--;){
                             key = result[i][j].rank;
                             seriesGroup.push({
                                 meta:result[i][j].videoTitle,

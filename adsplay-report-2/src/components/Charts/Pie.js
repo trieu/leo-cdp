@@ -43,7 +43,7 @@ export default class Pie extends React.Component {
                         x: 13,
                         y: 18
                     },
-                    currency: 'view '
+                    currency: ' '
                 })
 			]
         }

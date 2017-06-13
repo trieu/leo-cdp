@@ -12,7 +12,7 @@ export default class Filter extends React.Component {
                 {key: "admin", value: "Tất cả"},
                 {key: "danet-mienphi", value: "Danet"},
             ],
-            defaultDate: [moment().subtract(7, 'days').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')]
+            defaultDate: [moment().subtract(15, 'days').format('YYYY-MM-DD'), moment().subtract(1, 'days').format('YYYY-MM-DD')]
         }
     }
 

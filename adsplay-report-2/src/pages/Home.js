@@ -43,7 +43,7 @@ class Home extends React.Component {
 				<div className="row">
 					<div className="col-xs-12 col-sm-12 col-md-6 padding-bottom-1rem">
 						<Card 
-							header="Thể loại phim"
+							header="Thể loại phim (theo lượt view)"
 							loading={this.props.loading_category}
 							body={<Pie 
 									data={this.props.category}
@@ -67,7 +67,7 @@ class Home extends React.Component {
 					</div>
 					<div className="col-xs-12 col-sm-12 col-md-12 padding-bottom-1rem">
 						<Card 
-							header="20 phim xem nhiều nhất"
+							header="20 phim xem nhiều nhất (theo lượt view)"
 							loading={this.props.loading_topview}
 							body={<Bar 
 									data={this.props.topview}

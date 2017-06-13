@@ -34,8 +34,11 @@ class List extends React.Component {
         const renderLink = props => <Link to={"/ads/" + props.row.id}>
 									<span title={props.value}>{props.value}</span></Link>;
 
-		const renderToggle = props => (props.value == 'Pending' || props.value == 'Running') ? 
-									<Toggle value={props.row.id} checked={(props.value == 'Running') ? true : false} onChange={this.handleChange} /> : props.value;
+		const renderToggle = props => (props.value == 'Chờ duyệt' || props.value == 'Đã duyệt') ? 
+									<Toggle value={props.row.id} 
+									toggleLabel={['Đã duyệt','Chờ duyệt']}
+									checked={(props.value == 'Đã duyệt') ? true : false}
+									onChange={this.handleChange} /> : props.value;
 
 		const columns = [
 			{ accessor: 'id', Header: 'Mã quảng cáo' },

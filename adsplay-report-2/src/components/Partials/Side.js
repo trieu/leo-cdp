@@ -13,8 +13,18 @@ class Side extends React.Component {
     return (
       <nav className="cd-side-nav">
         <ul>
-          <li className="cd-label">Main</li>
-          {AppData.menus.map((item, index) =>
+          <li className="cd-label">{AppData.menus.menuReport}</li>
+          {AppData.menuReport.map((item, index) =>
+            <li key={index}>
+              <Link to={item.link}><span dangerouslySetInnerHTML={this.iconMenu(item.icon)}/> {item.text}</Link>
+            </li>
+          )}
+          
+        </ul>
+
+        <ul>
+          <li className="cd-label">{AppData.menus.menuManager}</li>
+          {AppData.menuManager.map((item, index) =>
             <li key={index}>
               <Link to={item.link}><span dangerouslySetInnerHTML={this.iconMenu(item.icon)}/> {item.text}</Link>
             </li>

@@ -20,7 +20,6 @@ export function fetchTotal(sourceMedia, beginDate, endDate) {
     else{
         bySource = "&source=" + sourceMedia;
     }
-    console.log(bySource)
     var url = TOTAL_URL +'?startDate='+ beginDate + '&endDate='+ endDate + bySource;
     return function (dispatch) {
 

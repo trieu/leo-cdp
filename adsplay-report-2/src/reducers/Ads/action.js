@@ -16,7 +16,7 @@ const ADS_LIST_URL = '//id.adsplay.net/ads/api-roles-ads/list?access_token='+acc
 const ADS_DETAIL_URL = '//id.adsplay.net/ads/api-roles-ads/detail?access_token='+access_token;
 
 
-const statuses = {0: 'Invalid', 1: 'Pending', 2: 'Running', 3: 'Finished', 4: 'Expired'};
+const statuses = {0: 'Không hợp lệ', 1: 'Chờ duyệt', 2: 'Đã duyệt', 3: 'Kết thúc', 4: 'Hết hạn'};
 /* Detail Category - Mith */
 export function fetchAdsList() {
 
@@ -65,9 +65,12 @@ export function fetchAdsDetail(id) {
                     data.id = result.id;
                     data.name = result.name;
                     data.media = result.media;
+                    data.totalBooking = result.tBk;
+                    data.dailyBooking = result.dBk;
                     data.createdDate = moment(new Date(result.crtDateL)).format("YYYY-MM-DD");
                     data.runDate = moment(new Date(result.runDateL)).format("YYYY-MM-DD");
                     data.expiredDate = moment(new Date(result.expDateL)).format("YYYY-MM-DD");
+                    data.status = statuses[result.status]
 
                     dispatch({
                         type: ADS_DETAIL,
