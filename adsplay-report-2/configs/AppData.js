@@ -10,7 +10,7 @@ module.exports = {
     { text: 'Báo cáo chi tiết', icon: '<i class="line chart icon"></i>', link: '/detail' },
   ],
   menuManager: [
-    { text: 'Quản lý quảng cáo', icon: '<i class="area chart icon"></i>', link: '/ads' }
+    { text: 'Quản lý quảng cáo', icon: '<i class="list icon"></i>', link: '/ads' }
   ],
   pages: [
     { id: 'DashBoard', title: 'Xem báo cáo chi tiết Inventory quảng cáo' },
