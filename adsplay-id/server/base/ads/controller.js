@@ -144,22 +144,23 @@ exports.apiRolesAdsList = function(req, res){
         var checkToken = Token.checkToken(token);// check token
 
         if (checkToken.success) {
-             User.findOne({"_id": checkToken.user_info._id})
-            .exec(function(err, doc){
-                //console.log(err, user)
-                if(!err && doc){
-                    var end = moment().add(30, 'days').format("YYYY-MM-DD");
-                    var begin = moment().subtract(90, 'days').format("YYYY-MM-DD");
-                    var url = Common.domain.api + '/api/creative/summary?begin='+begin+'&end='+end;
 
-                    request(url ,function (err, response, body) {
-                        if(!err && response.statusCode == 200){
-                            var result = JSON.parse(body);
-                            var user = doc;
-                            if(user.roles['superadmin']){
-                                return res.json(result);
-                            }
-                            else{
+            var end = moment().add(30, 'days').format("YYYY-MM-DD");
+            var begin = moment().subtract(90, 'days').format("YYYY-MM-DD");
+            var url = Common.domain.api + '/api/creative/summary?begin='+begin+'&end='+end;
+
+            request(url ,function (err, response, body) {
+                if(!err && response.statusCode == 200){
+                    var result = JSON.parse(body);
+                    if(checkToken.user_info.roles['superadmin']){
+                        return res.json(result);
+                    }
+                    else{
+                        User.findOne({"_id": checkToken.user_info._id})
+                        .exec(function(err, user){
+                            //console.log(err, user)
+                            if(!err && user){
+
                                 if(user.rolesAds){
                                     var data = [];
                                     // console.log(user)
@@ -173,14 +174,15 @@ exports.apiRolesAdsList = function(req, res){
                                     return res.json(data);
                                 }
                             }
-                        }
-                    });
-                }
-                else{
-                    return res.render('/');
+                            else{
+                                return res.json([]);
+                            }
+                        });
+                        
+                    }
                 }
             });
-            
+
         } 
         else{
             return res.json([]);
