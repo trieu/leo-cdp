@@ -4,13 +4,19 @@
 */
 jQuery(document).ready(function(){
 	//cache DOM elements
-	var mainContent = $('.cd-main-content'),
-		header = $('.cd-main-header'),
+	var mainContent = $('.cd-main-content');
+	// console.log(mainContent.length)
+	if(mainContent.length <= 0){
+		return false;
+	}
+
+	var header = $('.cd-main-header'),
 		sidebar = $('.cd-side-nav'),
 		sidebarTrigger = $('.cd-nav-trigger'),
 		topNavigation = $('.cd-top-nav'),
 		searchForm = $('.cd-search'),
 		accountInfo = $('.account');
+	
 
 	//on resize, move search and top nav position according to window width
 	var resizing = false;

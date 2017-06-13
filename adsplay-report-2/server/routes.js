@@ -11,7 +11,7 @@ module.exports = function(app) {
           //console.log(body)
           if(!error && response.statusCode == 200){
             var result = JSON.parse(body);
-            console.log(result);
+            //console.log(result);
             req.session.user = result.user_info;
             // set cookie if need
             // res.cookie('user_info', JSON.stringify(result.user_info), { signed: false, encode: String, maxAge: Common.session });

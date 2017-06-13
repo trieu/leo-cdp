@@ -1,9 +1,12 @@
 import React from 'react';
 import Filter from '../components/Helpers/Filter';
 import Table from '../components/Helpers/Table';
+import TotalAll from '../components/Totals/TotalAll';
+import ReactTable from 'react-table';
 
 import { connect } from 'react-redux';
 import { fetchDetailCategory } from '../reducers/Details/action';
+import { fetchTotal } from '../reducers/Totals/action';
 
 class Detail extends React.Component {
 
@@ -14,49 +17,42 @@ class Detail extends React.Component {
 	componentDidMount() {
         var data = this.refs.Filter.getData();
 		this.props.fetchDetailCategory(data.sourceMedia, data.beginDate, data.endDate);
-		console.log(data)
+		this.props.fetchTotal(data.sourceMedia, data.beginDate, data.endDate);
     }
 
 	handleClick(data){
 		var data = this.refs.Filter.getData();
 		this.props.fetchDetailCategory(data.sourceMedia, data.beginDate, data.endDate);
-		console.log(data);
+		this.props.fetchTotal(data.sourceMedia, data.beginDate, data.endDate);
 	}
 
 	render() {
-		const columns= [
-				{
-					title: 'Name',
-					width: 400,
-				},
-				{
-					title: 'Category',
-				},
-				{
-					title: 'Playview',
-				},
-				{
-					title: 'Impression phát sinh',
-				},
-				{
-					title: 'Trueview',
-				},
-				{
-					title: 'Click',
-				},
-				{
-					title: 'Doanh thu ước tính'
-				},
-			];
+
+		const renderNumber = props => <span title={props.value}>{props.value.toLocaleString()}</span>;
+
+		const columns = [
+			{ accessor: 'name', Header: 'Name' },
+			{ accessor: 'category', Header: 'Category'},
+			{ accessor: 'playview', Header: 'Playview', Cell: renderNumber },
+			{ accessor: 'impression', Header: 'Impression phát sinh', Cell: renderNumber },
+			{ accessor: 'trueview', Header: 'Trueview', Cell: renderNumber },
+			{ accessor: 'click', Header: 'Click', Cell: renderNumber },
+			{ accessor: 'revenue', Header: 'Doanh thu ước tính', Cell: renderNumber }
+		]
 
 		return (
 			<div>
 				<Filter ref="Filter" onClick={this.handleClick.bind(this)} />
+				<TotalAll sum={this.props.sum} bookingHide />
 				<div className="row">
 					<div className="col-xs-12 col-sm-12 col-md-12 padding-bottom-1rem">
-						<Table 
-							columns={columns}
-							data={this.props.data} />
+						<ReactTable className = '-striped -highlight'
+							data = { this.props.data }
+							columns = { columns }
+							defaultPageSize = { 16 }
+							filterable={true}
+							resizable={true}
+						/>
 					</div>
 				</div>
 			</div>
@@ -65,7 +61,7 @@ class Detail extends React.Component {
 };
 
 function mapStateToProps(state) {
-    return { data: state.details.detailcategory };
+    return { data: state.details.detailcategory, sum: state.totals.sum };
 }
 
-export default connect(mapStateToProps, { fetchDetailCategory })(Detail);
+export default connect(mapStateToProps, { fetchDetailCategory, fetchTotal })(Detail);

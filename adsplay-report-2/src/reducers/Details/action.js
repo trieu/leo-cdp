@@ -31,15 +31,15 @@ export function fetchDetailCategory(sourceMedia,beginDate, endDate, limit) {
                     var data = [];
                     for(var i in result){
                         
-                        data.push([
-                            result[i].video_title,
-                            result[i].category,
-                            result[i].sumPlayView.toLocaleString(),
-                            result[i].sumImpression.toLocaleString(),
-                            result[i].sumTrueView.toLocaleString(),
-                            result[i].sumClick.toLocaleString(),
-                            result[i].revenueValue.toLocaleString()
-                        ]);
+                        data.push({
+                            name: result[i].video_title,
+                            category: result[i].category,
+                            playview: result[i].sumPlayView,
+                            impression: result[i].sumImpression,
+                            trueview: result[i].sumTrueView,
+                            click: result[i].sumClick,
+                            revenue: result[i].revenueValue
+                        });
                     }
 
                     dispatch({

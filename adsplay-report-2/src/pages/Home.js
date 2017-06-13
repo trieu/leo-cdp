@@ -4,9 +4,11 @@ import Pie from '../components/Charts/Pie';
 import Bar from '../components/Charts/Bar';
 import BarWithSelect from '../components/Charts/BarWithSelect';
 import Filter from '../components/Helpers/Filter';
+import TotalAll from '../components/Totals/TotalAll';
 
 import { connect } from 'react-redux';
 import { fetchCategory, fetchPlatform, fetchTopView, fetchTopCategory } from '../reducers/Charts/action';
+import { fetchTotal } from '../reducers/Totals/action';
 
 class Home extends React.Component {
 
@@ -20,6 +22,7 @@ class Home extends React.Component {
 		this.props.fetchPlatform(data.sourceMedia, data.beginDate, data.endDate);
 		this.props.fetchTopView(data.sourceMedia, data.beginDate, data.endDate);
 		this.props.fetchTopCategory(data.sourceMedia, data.beginDate, data.endDate);
+		this.props.fetchTotal(data.sourceMedia, data.beginDate, data.endDate);
     }
 
 	handleClick(data){
@@ -28,6 +31,7 @@ class Home extends React.Component {
 		this.props.fetchPlatform(data.sourceMedia, data.beginDate, data.endDate);
 		this.props.fetchTopView(data.sourceMedia, data.beginDate, data.endDate);
 		this.props.fetchTopCategory(data.sourceMedia, data.beginDate, data.endDate);
+		this.props.fetchTotal(data.sourceMedia, data.beginDate, data.endDate);
 	}
 
 	render() {
@@ -35,6 +39,7 @@ class Home extends React.Component {
 		return (
 			<div>
 				<Filter ref="Filter" onClick={this.handleClick.bind(this)} />
+				<TotalAll sum={this.props.sum} />
 				<div className="row">
 					<div className="col-xs-12 col-sm-12 col-md-6 padding-bottom-1rem">
 						<Card 
@@ -101,7 +106,8 @@ function mapStateToProps(state) {
 		loading_topview: state.charts.loading_topview,
 		topcategory: state.charts.topcategory,
 		loading_topcategory: state.charts.loading_topcategory,
+		sum: state.totals.sum
 	};
 }
 
-export default connect(mapStateToProps, { fetchCategory, fetchPlatform, fetchTopView, fetchTopCategory })(Home);
+export default connect(mapStateToProps, { fetchCategory, fetchPlatform, fetchTopView, fetchTopCategory, fetchTotal })(Home);

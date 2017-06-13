@@ -73,9 +73,9 @@ module.exports = {
             name: 'vendor',
             minChunks: Infinity
         }),
-        // new ExtractTextPlugin('./public/css/style-react.css', {
-        //     allChunks: true
-        // }),
+        new ExtractTextPlugin('./public/css/style-react.css', {
+            allChunks: true
+        }),
     ],
 
     //debug: true,

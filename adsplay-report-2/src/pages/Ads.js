@@ -51,7 +51,8 @@ class List extends React.Component {
 					<ReactTable className = '-striped -highlight'
 						data = { this.props.data }
 						columns = { columns }
-						defaultPageSize = { 14 }
+						defaultPageSize = { 20 }
+						filterable={true}
 						resizable={true}
 					/>
 
