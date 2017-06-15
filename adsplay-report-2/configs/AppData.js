@@ -6,8 +6,8 @@ module.exports = {
     menuManager: 'Quản trị hệ thống'
   },
   menuReport: [
-    { text: 'Báo cáo tổng quát', icon: '<i class="pie chart icon"></i>', link: '/home' },
-    { text: 'Báo cáo chi tiết', icon: '<i class="line chart icon"></i>', link: '/detail' },
+    { text: 'Báo cáo tổng quát', icon: '<i class="pie chart icon"></i>', link: '/home', roles: ['superadmin', 'admin'] },
+    { text: 'Báo cáo chi tiết', icon: '<i class="line chart icon"></i>', link: '/detail', roles: ['superadmin', 'admin'] },
   ],
   menuManager: [
     { text: 'Quản lý quảng cáo', icon: '<i class="list icon"></i>', link: '/ads' }

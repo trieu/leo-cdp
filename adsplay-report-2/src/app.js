@@ -20,7 +20,7 @@ export default class App extends React.Component {
                 <Header userInfo={userInfo} />
                 
                 <div id="main" ref="Main" className="cd-main-content">
-                    <Side />
+                    <Side userInfo={userInfo} />
                     <div className="content-wrapper">
                         {this.props.children}
 		            </div>
