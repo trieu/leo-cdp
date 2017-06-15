@@ -1,4 +1,4 @@
-.ct-label {fill:rgba(0,0,0,0.4);color:rgba(0,0,0,0.4);font-size: 1rem;line-height:1;}
+.ct-label {fill:rgba(0,0,0,0.4);color:rgba(0,0,0,0.4);font-size: 0.8rem;line-height:1;}
 
 .ct-chart-line .ct-label,.ct-chart-bar .ct-label {
 display:block;
@@ -168,10 +168,7 @@ stroke:none;
 fill-opacity:.1
 }
 
-.ct-bar {
-fill:none;
-stroke-width:10px
-}
+.ct-bar {fill:none;stroke-width: 24px;}
 
 .ct-slice-donut {
 fill:none;

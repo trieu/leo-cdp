@@ -31,8 +31,8 @@ class Detail extends React.Component {
 		const renderNumber = props => <span title={props.value}>{props.value.toLocaleString()}</span>;
 
 		const columns = [
-			{ accessor: 'name', Header: 'Name' },
-			{ accessor: 'category', Header: 'Category'},
+			{ accessor: 'name', Header: 'Tên' },
+			{ accessor: 'category', Header: 'Thể loại'},
 			{ accessor: 'playview', Header: 'Playview', Cell: renderNumber },
 			{ accessor: 'impression', Header: 'Impression phát sinh', Cell: renderNumber },
 			{ accessor: 'trueview', Header: 'Trueview', Cell: renderNumber },

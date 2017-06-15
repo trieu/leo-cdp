@@ -132,13 +132,13 @@ export function fetchTopView(sourceMedia, beginDate, endDate, limit) {
                     var result = response.data;
                     var data = {};
                         data.series = [];
-                        data.legendNames = [];
+                        data.labels = [];
                     for(var i = result.length; i--;){
                         data.series.push({
                             meta:result[i].videoTitle,
                             data:result[i].contentView,
                         });
-                        data.legendNames.push(result[i].videoTitle);
+                        data.labels.push(result[i].videoTitle);
                     }
 
                     dispatch({

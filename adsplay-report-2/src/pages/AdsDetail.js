@@ -40,7 +40,7 @@ class Detail extends React.Component {
 
         const checkEmpty = Object.keys(this.props.data).length === 0 && this.props.data.constructor === Object;
         if(checkEmpty){
-            return (<div>No Data</div>);
+            return (<div>đang tải ...</div>);
         }
 
         const checkURL = function(url) {

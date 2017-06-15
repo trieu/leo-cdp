@@ -10,7 +10,7 @@ export default class BarWithSelect extends React.Component {
             select: this.props.select || [],
             selectChart: {
                 series: [],
-                legendNames: []
+                labels: []
             }
         }
     }
@@ -24,15 +24,15 @@ export default class BarWithSelect extends React.Component {
 
     handleChange(value){
         var series = this.props.data.series[value];
-        var legendNames = [];
+        var labels = [];
         series.forEach(function(item) {
-            legendNames.push(item.meta);
+            labels.push(item.meta);
         });
 
         this.setState({
             selectChart: {
                 series: series,
-                legendNames: legendNames
+                labels: labels
             }
         });
         

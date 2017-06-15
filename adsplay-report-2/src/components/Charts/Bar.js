@@ -20,9 +20,7 @@ export default class Bar extends React.Component {
         var options = Object.create(props.options || {});
 
         var opts = {
-            showLabel: false,
 			plugins: [
-                Chartist.plugins.legend({legendNames: data.legendNames, position: 'bottom'}),
                 Chartist.plugins.tooltip({
                     tooltipOffset: {
                         x: 13,
@@ -47,13 +45,27 @@ export default class Bar extends React.Component {
             };
             opts.axisY = {
                 // The offset of the chart drawing area to the border of the container
-                offset: 0,
+                offset: 200,
             };
         }
 
         Object.assign(options, opts);
 
-        new Chartist.Bar(ReactDOM.findDOMNode(this), data, options);
+        var optionsResponsive = [
+            ['screen and (max-width: 480px)', {
+                axisY: {
+                    offset: 60,
+                    labelInterpolationFnc: function(value) {
+                        return value.split(/\s+/).map(function(word) {
+                            return word[0];
+                        }).join('');
+                    }
+                },
+                labelDirection: 'explode',
+            }],
+        ]
+
+        new Chartist.Bar(ReactDOM.findDOMNode(this), data, options, optionsResponsive);
     }
 
     render() {

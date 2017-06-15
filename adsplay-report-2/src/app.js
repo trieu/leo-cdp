@@ -8,6 +8,10 @@ export default class App extends React.Component {
         // Hàm này Thực hiện việc thiết lập state cho component
         // Việc sử dụng super(props) là để có thể sử dụng this.props trong phạm vi hàm constructor này
     }
+
+    componentDidMount(){
+        window.CORE()
+    }
     
     render() {
         var userInfo = (this.props.userInfo) ? this.props.userInfo : {username: "user"}
@@ -15,7 +19,7 @@ export default class App extends React.Component {
             <div id="wrapper">
                 <Header userInfo={userInfo} />
                 
-                <div id="main" className="cd-main-content">
+                <div id="main" ref="Main" className="cd-main-content">
                     <Side />
                     <div className="content-wrapper">
                         {this.props.children}

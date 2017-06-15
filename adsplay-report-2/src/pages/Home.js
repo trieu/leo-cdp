@@ -72,7 +72,7 @@ class Home extends React.Component {
 							body={<Bar 
 									data={this.props.topview}
 									horizontal={true}
-									options={{height: 360,
+									options={{height: 600,
 									distributeSeries: true}}
 								/>}
 						/>
