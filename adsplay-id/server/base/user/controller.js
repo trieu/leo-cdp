@@ -84,6 +84,7 @@ exports.edit = function (req, res){
                 data.pageTitle = "update user";
                 data.USER = req.user;
                 data.userInfo = user;
+                data.userInfo.dataSources = JSON.stringify(user.dataSources);
                 data.userInfo.roles = JSON.stringify(user.roles);
                 data.userInfo.rolesAds = JSON.stringify(user.rolesAds) || "{}";
                 data.userInfo.rolesPlacement = JSON.stringify(user.rolesPlacement) || "{}";
@@ -107,6 +108,10 @@ exports.save = function (req, res){
     
     if(req.body.password){
         req.body.password = Encryption.hash(req.body.password);
+    }
+
+    if(req.body.dataSources){
+        req.body.dataSources = convertObjBoolean(req.body.dataSources);
     }
     if(req.body.roles){
         req.body.roles = convertObjBoolean(req.body.roles);

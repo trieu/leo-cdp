@@ -1,6 +1,5 @@
 import React from 'react';
 import Filter from '../components/Helpers/Filter';
-import Table from '../components/Helpers/Table';
 import TotalAll from '../components/Totals/TotalAll';
 import ReactTable from 'react-table';
 
@@ -16,14 +15,14 @@ class Detail extends React.Component {
 
 	componentDidMount() {
         var data = this.refs.Filter.getData();
-		this.props.fetchDetailCategory(data.sourceMedia, data.beginDate, data.endDate);
-		this.props.fetchTotal(data.sourceMedia, data.beginDate, data.endDate);
+		this.props.fetchDetailCategory(data.dataSources, data.beginDate, data.endDate);
+		this.props.fetchTotal(data.dataSources, data.beginDate, data.endDate);
     }
 
 	handleClick(data){
 		var data = this.refs.Filter.getData();
-		this.props.fetchDetailCategory(data.sourceMedia, data.beginDate, data.endDate);
-		this.props.fetchTotal(data.sourceMedia, data.beginDate, data.endDate);
+		this.props.fetchDetailCategory(data.dataSources, data.beginDate, data.endDate);
+		this.props.fetchTotal(data.dataSources, data.beginDate, data.endDate);
 	}
 
 	render() {
@@ -42,7 +41,7 @@ class Detail extends React.Component {
 
 		return (
 			<div>
-				<Filter ref="Filter" onClick={this.handleClick.bind(this)} />
+				<Filter ref="Filter" userInfo={this.props.userInfo} onClick={this.handleClick.bind(this)} />
 				<TotalAll sum={this.props.sum} bookingHide />
 				<div className="row">
 					<div className="col-xs-12 col-sm-12 col-md-12 padding-bottom-1rem">

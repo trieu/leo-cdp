@@ -17,6 +17,8 @@ autoIncrement.initialize(db);
 var User = new Schema({
     status: { type: Boolean, default: true },
 
+    dataSources: { type: Schema.Types.Mixed, default: {} },
+
     roles: { type: Schema.Types.Mixed, default: {"user": true} },
 
     rolesAds: { type: Schema.Types.Mixed, default: {} },

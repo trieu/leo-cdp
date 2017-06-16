@@ -5,16 +5,11 @@ export const DETAIL_CATEGORY = 'DETAIL_CATEGORY';
 const DETAIL_CATEGORY_URL = '//api4report.adsplay.net/api/rvnmedia';
 
 /* Detail Category - Mith */
-export function fetchDetailCategory(sourceMedia,beginDate, endDate, limit) {
+export function fetchDetailCategory(dataSources, beginDate, endDate, limit) {
 
     var limit = (limit) ? '&limit='+limit : '&limit=10';
     //var nameMedia = "";
-    var bySource = ""
-    if(sourceMedia != ""){
-        sourceMedia = (sourceMedia == "admin" || sourceMedia == "superadmin") ? "all" : "danet-mienphi";
-       // nameMedia = "bysource";
-        bySource = "&source=" + sourceMedia;
-    }
+    var bySource = "&source=" + dataSources || "";
     var url = DETAIL_CATEGORY_URL +'/detailreport?startDate='+ beginDate + '&endDate='+ endDate + limit + bySource;    
 
     return function (dispatch) {

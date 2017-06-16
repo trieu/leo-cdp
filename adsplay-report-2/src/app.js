@@ -14,15 +14,15 @@ export default class App extends React.Component {
     }
     
     render() {
-        var userInfo = (this.props.userInfo) ? this.props.userInfo : {username: "user"}
+        var userInfo = (this.props.userInfo) ? this.props.userInfo : {username: "user", roles: {"user": true}, dataSources: {} }
         return (
             <div id="wrapper">
                 <Header userInfo={userInfo} />
                 
                 <div id="main" ref="Main" className="cd-main-content">
-                    <Side userInfo={userInfo} />
+                    <Side />
                     <div className="content-wrapper">
-                        {this.props.children}
+                        {React.cloneElement(this.props.children, {userInfo})}
 		            </div>
                 </div>
 

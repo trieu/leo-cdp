@@ -56,7 +56,7 @@ export default class Search extends React.Component {
 
         return data.map((item, key) => {
             return(
-                <option value={item.key} key={key}>{item.value}</option>
+                <option value={item.key} key={key} disabled={item.disabled}>{item.value}</option>
             )
         });
     }

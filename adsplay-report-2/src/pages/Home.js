@@ -12,33 +12,29 @@ import { fetchTotal } from '../reducers/Totals/action';
 
 class Home extends React.Component {
 
-	constructor() {
-		super();
-	}
-
 	componentDidMount() {
 		var data = this.refs.Filter.getData();
-		this.props.fetchCategory(data.sourceMedia, data.beginDate, data.endDate);
-		this.props.fetchPlatform(data.sourceMedia, data.beginDate, data.endDate);
-		this.props.fetchTopView(data.sourceMedia, data.beginDate, data.endDate);
-		this.props.fetchTopCategory(data.sourceMedia, data.beginDate, data.endDate);
-		this.props.fetchTotal(data.sourceMedia, data.beginDate, data.endDate);
+		this.props.fetchCategory(data.dataSources, data.beginDate, data.endDate);
+		this.props.fetchPlatform(data.dataSources, data.beginDate, data.endDate);
+		this.props.fetchTopView(data.dataSources, data.beginDate, data.endDate);
+		this.props.fetchTopCategory(data.dataSources, data.beginDate, data.endDate);
+		this.props.fetchTotal(data.dataSources, data.beginDate, data.endDate);
     }
 
 	handleClick(data){
 		var data = this.refs.Filter.getData();
-		this.props.fetchCategory(data.sourceMedia, data.beginDate, data.endDate);
-		this.props.fetchPlatform(data.sourceMedia, data.beginDate, data.endDate);
-		this.props.fetchTopView(data.sourceMedia, data.beginDate, data.endDate);
-		this.props.fetchTopCategory(data.sourceMedia, data.beginDate, data.endDate);
-		this.props.fetchTotal(data.sourceMedia, data.beginDate, data.endDate);
+		this.props.fetchCategory(data.dataSources, data.beginDate, data.endDate);
+		this.props.fetchPlatform(data.dataSources, data.beginDate, data.endDate);
+		this.props.fetchTopView(data.dataSources, data.beginDate, data.endDate);
+		this.props.fetchTopCategory(data.dataSources, data.beginDate, data.endDate);
+		this.props.fetchTotal(data.dataSources, data.beginDate, data.endDate);
 	}
 
 	render() {
-
+		console.log(this.props)
 		return (
 			<div>
-				<Filter ref="Filter" onClick={this.handleClick.bind(this)} />
+				<Filter ref="Filter" userInfo={this.props.userInfo} onClick={this.handleClick.bind(this)} />
 				<TotalAll sum={this.props.sum} />
 				<div className="row">
 					<div className="col-xs-12 col-sm-12 col-md-6 padding-bottom-1rem">

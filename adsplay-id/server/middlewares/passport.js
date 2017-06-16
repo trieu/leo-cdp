@@ -19,6 +19,7 @@ module.exports = function(passport) {
 			_id: user._id,
 			username: user.username,
             email: user.email,
+            dataSources: user.dataSources,
 			roles: user.roles,
             rolesAds: user.rolesAds,
 			rolesPlacement: user.rolesPlacement

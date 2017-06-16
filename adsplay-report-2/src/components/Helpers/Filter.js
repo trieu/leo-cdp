@@ -3,15 +3,27 @@ import moment from 'moment';
 import ReactDOM from 'react-dom';
 import DatePickerRanger from './DatePickerRanger';
 import Select from './Select';
+import AppData from '~/configs/AppData';
 
 export default class Filter extends React.Component {
     constructor(props){
         super(props);
+        
+        var selectData = new Array();
+        if(this.props.userInfo){
+            for(var i in AppData.dataSources){
+                var disabled = (this.props.userInfo.roles['superadmin'] || this.props.userInfo.dataSources[i]) ? false : true;
+                selectData.push({
+                    key: i,
+                    value: AppData.dataSources[i],
+                    disabled: disabled
+                })
+                
+            }
+        }
+        
         this.state = {
-            selectData: [
-                {key: "admin", value: "Tất cả"},
-                {key: "danet-mienphi", value: "Danet"},
-            ],
+            selectData: selectData,
             defaultDate: [moment().subtract(15, 'days').format('YYYY-MM-DD'), moment().subtract(1, 'days').format('YYYY-MM-DD')]
         }
     }
@@ -25,13 +37,13 @@ export default class Filter extends React.Component {
 
     getData(){
         let dateData = this.defaultDate.getData().split(" to ");
-        let sourceData = this.sourceData.getData();
+        let dataSources = this.dataSources.getData();
         if(dateData[0] == ""){
             return null;
         }
         else{
             this.setState({defaultDate: [dateData[0], dateData[1]]})
-            return {sourceMedia: sourceData, beginDate: dateData[0], endDate: dateData[1]};
+            return {dataSources: dataSources, beginDate: dateData[0], endDate: dateData[1]};
         }
         
     }
@@ -44,7 +56,7 @@ export default class Filter extends React.Component {
 						<div className="field">
 							<label>Đối tác nội dung</label>
 							<Select
-                                ref={instance => { this.sourceData = instance; }}
+                                ref={instance => { this.dataSources = instance; }}
                                 data={this.state.selectData}
                             />
 						</div>
