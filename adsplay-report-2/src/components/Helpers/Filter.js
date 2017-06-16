@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import ReactDOM from 'react-dom';
-import DatePickerRanger from './DatePickerRanger';
+import DatePickerRange from './DatePickerRange';
 import Select from './Select';
 import AppData from '~/configs/AppData';
 
@@ -24,7 +24,6 @@ export default class Filter extends React.Component {
         
         this.state = {
             selectData: selectData,
-            defaultDate: [moment().subtract(15, 'days').format('YYYY-MM-DD'), moment().subtract(1, 'days').format('YYYY-MM-DD')]
         }
     }
 
@@ -36,19 +35,22 @@ export default class Filter extends React.Component {
     }
 
     getData(){
-        let dateData = this.defaultDate.getData().split(" to ");
+        let dateData = this.rangeDate.getData();
         let dataSources = this.dataSources.getData();
-        if(dateData[0] == ""){
-            return null;
+        if(dateData){
+            return {dataSources: dataSources, beginDate: moment(dateData.DateStart).format('YYYY-MM-DD'), endDate: moment(dateData.DateEnd).format('YYYY-MM-DD')};
         }
         else{
-            this.setState({defaultDate: [dateData[0], dateData[1]]})
-            return {dataSources: dataSources, beginDate: dateData[0], endDate: dateData[1]};
+            return null;
         }
         
     }
 
     render() {
+        var defaultDate = {
+            startDate: moment().subtract(15, 'days').format('YYYY-MM-DD'),
+            endDate: moment().subtract(1, 'days').format('YYYY-MM-DD')
+        }
         return (
             <div className="row">
                 <div className="col-xs-12 col-sm-6 col-md-3 padding-bottom-1rem">
@@ -62,12 +64,7 @@ export default class Filter extends React.Component {
 						</div>
 					</div>
 				</div>
-				<div className="col-xs-12 col-sm-6 col-md-3 padding-bottom-1rem">
-					<DatePickerRanger 
-                        ref={instance => { this.defaultDate = instance; }}
-                        options={{defaultDate: this.state.defaultDate}}
-                    />
-				</div>
+                <DatePickerRange ref={instance => { this.rangeDate = instance; }} defaultDate={defaultDate} />
                 <div className="col-xs-12 col-sm-2 col-md-1 padding-bottom-1rem">
                     <div className="ui form">
 						<div className="field">

@@ -31,7 +31,6 @@ class Home extends React.Component {
 	}
 
 	render() {
-		console.log(this.props)
 		return (
 			<div>
 				<Filter ref="Filter" userInfo={this.props.userInfo} onClick={this.handleClick.bind(this)} />
