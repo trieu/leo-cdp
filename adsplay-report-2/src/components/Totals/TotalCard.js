@@ -13,7 +13,7 @@ export default class TotalCard extends React.Component {
                 className={`ui card form ${(this.props.loading) ? 'loading' : ''} `}>
                 <div className="content">
                     <div className="meta">{this.props.header}</div>
-                    <div className="header" style={{marginTop: "0.1em", fontSize: "2em", fontWeight: "lighter"}}>{this.props.body}</div>
+                    <div className="header" style={{marginTop: "0.1em", fontSize: "1.8em", fontWeight: "lighter"}}>{this.props.body}</div>
                 </div>
             </div>
         );

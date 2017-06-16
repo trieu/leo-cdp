@@ -14,20 +14,20 @@ class Home extends React.Component {
 
 	componentDidMount() {
 		var data = this.refs.Filter.getData();
-		this.props.fetchCategory(data.dataSources, data.beginDate, data.endDate);
-		this.props.fetchPlatform(data.dataSources, data.beginDate, data.endDate);
-		this.props.fetchTopView(data.dataSources, data.beginDate, data.endDate);
-		this.props.fetchTopCategory(data.dataSources, data.beginDate, data.endDate);
-		this.props.fetchTotal(data.dataSources, data.beginDate, data.endDate);
+		this.props.fetchCategory(data.dataSources, data.startDate, data.endDate);
+		this.props.fetchPlatform(data.dataSources, data.startDate, data.endDate);
+		this.props.fetchTopView(data.dataSources, data.startDate, data.endDate);
+		this.props.fetchTopCategory(data.dataSources, data.startDate, data.endDate);
+		this.props.fetchTotal(data.dataSources, data.startDate, data.endDate);
     }
 
 	handleClick(data){
 		var data = this.refs.Filter.getData();
-		this.props.fetchCategory(data.dataSources, data.beginDate, data.endDate);
-		this.props.fetchPlatform(data.dataSources, data.beginDate, data.endDate);
-		this.props.fetchTopView(data.dataSources, data.beginDate, data.endDate);
-		this.props.fetchTopCategory(data.dataSources, data.beginDate, data.endDate);
-		this.props.fetchTotal(data.dataSources, data.beginDate, data.endDate);
+		this.props.fetchCategory(data.dataSources, data.startDate, data.endDate);
+		this.props.fetchPlatform(data.dataSources, data.startDate, data.endDate);
+		this.props.fetchTopView(data.dataSources, data.startDate, data.endDate);
+		this.props.fetchTopCategory(data.dataSources, data.startDate, data.endDate);
+		this.props.fetchTotal(data.dataSources, data.startDate, data.endDate);
 	}
 
 	render() {

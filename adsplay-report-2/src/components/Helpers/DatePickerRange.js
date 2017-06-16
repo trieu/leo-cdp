@@ -30,28 +30,28 @@ export default class DatePicker extends React.Component {
                     return year + '-' + month + '-' + day;
                 }
             };
-        this.DateStart = $(this.refs.DateStart);
-        this.DateEnd = $(this.refs.DateEnd);
+        this.startDate = $(this.refs.startDate);
+        this.endDate = $(this.refs.endDate);
 
-        this.DateStart.calendar({
+        this.startDate.calendar({
             type: 'date',
-            endCalendar: this.DateEnd,
+            endCalendar: this.endDate,
             formatter: formatter,
             text: text
         });
-        this.DateEnd.calendar({
+        this.endDate.calendar({
             type: 'date',
-            startCalendar: this.DateStart,
+            startCalendar: this.startDate,
             formatter: formatter,
             text: text
         });
     }
 
     getData(){
-        if(this.DateStart.calendar('get date') && this.DateEnd.calendar('get date')){
+        if(this.startDate.calendar('get date') && this.endDate.calendar('get date')){
             return {
-                DateStart: this.DateStart.calendar('get date'),
-                DateEnd: this.DateEnd.calendar('get date')
+                startDate: this.startDate.calendar('get date'),
+                endDate: this.endDate.calendar('get date')
             }
         }
         else{
@@ -67,7 +67,7 @@ export default class DatePicker extends React.Component {
                         <div className="ui form">
                             <div className="field">
                                 <label>Ngày bắt đầu</label>
-                                <div className="ui calendar" ref="DateStart">
+                                <div className="ui calendar" ref="startDate">
                                     <div className="ui input left icon">
                                         <i className="calendar icon"></i>
                                         <input type="text" placeholder="Chọn ngày bắt đầu" ref="Input" defaultValue={this.props.defaultDate.startDate || null} />
@@ -81,7 +81,7 @@ export default class DatePicker extends React.Component {
                         <div className="ui form">
                             <div className="field">
                                 <label>Ngày kết thúc</label>
-                                <div className="ui calendar" ref="DateEnd">
+                                <div className="ui calendar" ref="endDate">
                                     <div className="ui input left icon">
                                         <i className="calendar icon"></i>
                                         <input type="text" placeholder="Chọn ngày kết thúc" ref="Input" defaultValue={this.props.defaultDate.endDate || null} />

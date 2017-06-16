@@ -38,7 +38,7 @@ export default class Filter extends React.Component {
         let dateData = this.rangeDate.getData();
         let dataSources = this.dataSources.getData();
         if(dateData){
-            return {dataSources: dataSources, beginDate: moment(dateData.DateStart).format('YYYY-MM-DD'), endDate: moment(dateData.DateEnd).format('YYYY-MM-DD')};
+            return {dataSources: dataSources, startDate: moment(dateData.startDate).format('YYYY-MM-DD'), endDate: moment(dateData.endDate).format('YYYY-MM-DD')};
         }
         else{
             return null;

@@ -15,14 +15,14 @@ class Detail extends React.Component {
 
 	componentDidMount() {
         var data = this.refs.Filter.getData();
-		this.props.fetchDetailCategory(data.dataSources, data.beginDate, data.endDate);
-		this.props.fetchTotal(data.dataSources, data.beginDate, data.endDate);
+		this.props.fetchDetailCategory(data.dataSources, data.startDate, data.endDate);
+		this.props.fetchTotal(data.dataSources, data.startDate, data.endDate);
     }
 
 	handleClick(data){
 		var data = this.refs.Filter.getData();
-		this.props.fetchDetailCategory(data.dataSources, data.beginDate, data.endDate);
-		this.props.fetchTotal(data.dataSources, data.beginDate, data.endDate);
+		this.props.fetchDetailCategory(data.dataSources, data.startDate, data.endDate);
+		this.props.fetchTotal(data.dataSources, data.startDate, data.endDate);
 	}
 
 	render() {

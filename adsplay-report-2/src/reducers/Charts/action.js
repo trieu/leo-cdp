@@ -18,7 +18,7 @@ const CHART_TOP_VIEW_URL = '//api4report.adsplay.net/api/contentview';
 const CHART_TOP_CATEGORY_URL = '//api4report.adsplay.net/api/contentviewbycategory';
 
 
-export function fetchCategory(dataSources, beginDate, endDate, limit) {
+export function fetchCategory(dataSources, startDate, endDate, limit) {
 
     var limit = (limit) ? '&limit='+limit : '&limit=10';
     var nameMedia = "";
@@ -28,7 +28,7 @@ export function fetchCategory(dataSources, beginDate, endDate, limit) {
         bySource = "&source=" + dataSources;
     }
 
-    var url = CHART_CATEGORY_URL + nameMedia+'/report?startDate='+ beginDate + '&endDate='+ endDate + limit + bySource;
+    var url = CHART_CATEGORY_URL + nameMedia+'/report?startDate='+ startDate + '&endDate='+ endDate + limit + bySource;
     return function (dispatch) {
 
         dispatch({
@@ -65,7 +65,7 @@ export function fetchCategory(dataSources, beginDate, endDate, limit) {
 }
 
 
-export function fetchPlatform(dataSources, beginDate, endDate, limit) {
+export function fetchPlatform(dataSources, startDate, endDate, limit) {
 
     var limit = (limit) ? '&limit='+limit : '&limit=10';
     var nameMedia = "";
@@ -75,7 +75,7 @@ export function fetchPlatform(dataSources, beginDate, endDate, limit) {
         bySource = "&source=" + dataSources;
     }
 
-    var url = CHART_PLATFORM_URL + nameMedia+'/report?startDate='+ beginDate + '&endDate='+ endDate + limit + bySource;
+    var url = CHART_PLATFORM_URL + nameMedia+'/report?startDate='+ startDate + '&endDate='+ endDate + limit + bySource;
 
     return function (dispatch) {
 
@@ -108,7 +108,7 @@ export function fetchPlatform(dataSources, beginDate, endDate, limit) {
 }
 
 
-export function fetchTopView(dataSources, beginDate, endDate, limit) {
+export function fetchTopView(dataSources, startDate, endDate, limit) {
 
     var limit = (limit) ? '&limit='+limit : '&limit=20';
     var nameMedia = "";
@@ -118,7 +118,7 @@ export function fetchTopView(dataSources, beginDate, endDate, limit) {
         bySource = "&source=" + dataSources;
     }
 
-    var url = CHART_TOP_VIEW_URL + nameMedia+'/report?startDate='+ beginDate + '&endDate='+ endDate + limit + bySource;
+    var url = CHART_TOP_VIEW_URL + nameMedia+'/report?startDate='+ startDate + '&endDate='+ endDate + limit + bySource;
 
     return function (dispatch) {
 
@@ -149,7 +149,7 @@ export function fetchTopView(dataSources, beginDate, endDate, limit) {
     }
 }
 
-export function fetchTopCategory(dataSources, beginDate, endDate, limit) {
+export function fetchTopCategory(dataSources, startDate, endDate, limit) {
 
     var limit = (limit) ? '&limit='+limit : '&limit=10';
     var nameMedia = "";
@@ -159,7 +159,7 @@ export function fetchTopCategory(dataSources, beginDate, endDate, limit) {
         bySource = "&source=" + dataSources;
     }
 
-    var url = CHART_TOP_CATEGORY_URL + nameMedia+'/report?startDate='+ beginDate + '&endDate='+ endDate + limit + bySource;
+    var url = CHART_TOP_CATEGORY_URL + nameMedia+'/report?startDate='+ startDate + '&endDate='+ endDate + limit + bySource;
 
     return function (dispatch) {
 
@@ -199,7 +199,7 @@ export function fetchTopCategory(dataSources, beginDate, endDate, limit) {
                 });
     }
 }
-export function fetchDetailFilm(dataSources, beginDate, endDate, limit) {
+export function fetchDetailFilm(dataSources, startDate, endDate, limit) {
 
     var limit = (limit) ? '&limit='+limit : '&limit=10';
     var nameMedia = "";
@@ -209,7 +209,7 @@ export function fetchDetailFilm(dataSources, beginDate, endDate, limit) {
         bySource = "&source=" + dataSources;
     }
 
-    var url = CHART_PLATFORM_URL + nameMedia+'/report?startDate='+ beginDate + '&endDate='+ endDate + limit + bySource;
+    var url = CHART_PLATFORM_URL + nameMedia+'/report?startDate='+ startDate + '&endDate='+ endDate + limit + bySource;
 
     return function (dispatch) {
 

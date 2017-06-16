@@ -11,7 +11,7 @@ export const TOTALS = 'TOTALS';
 const TOTAL_URL = '//api4report.adsplay.net/api/rvnmedia/summingreport';
   // var url = '//360.adsplay.net/api/platformview/report?startDate=2017-04-03&endDate=2017-04-11&limit=10';
 
-export function fetchTotal(sourceMedia, beginDate, endDate) {
+export function fetchTotal(sourceMedia, startDate, endDate) {
 
     var bySource = "";
     if(sourceMedia == "admin" || sourceMedia == "superadmin"){
@@ -20,7 +20,7 @@ export function fetchTotal(sourceMedia, beginDate, endDate) {
     else{
         bySource = "&source=" + sourceMedia;
     }
-    var url = TOTAL_URL +'?startDate='+ beginDate + '&endDate='+ endDate + bySource;
+    var url = TOTAL_URL +'?startDate='+ startDate + '&endDate='+ endDate + bySource;
     return function (dispatch) {
 
         // dispatch({
