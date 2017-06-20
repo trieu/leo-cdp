@@ -180,6 +180,7 @@ var convert_data_api = function(doc){
 			id: doc[i].liveId,
 			name: doc[i].eventName,
 			view: doc[i].totalView.toLocaleString(),
+			completedView: doc[i].completedView.toLocaleString(),
 			status: statuses[doc[i].status],
 			begin: moment(doc[i].startTime).format('YYYY-MM-DD, hh:mm:ss A'),
 			end: moment(doc[i].endTime).format('YYYY-MM-DD, hh:mm:ss A')

@@ -156,7 +156,7 @@
 		                <tr> \
 		                    <th>ID</th> \
 		                    <th>Name</th> \
-		                    <th>View</th> \
+		                    <th>Completed View</th> \
 		                    <th>Status</th> \
 		                    <th>Scheduled Time</th> \
 		                </tr> \
@@ -236,16 +236,16 @@
 
         /* Done setting the chart up? Time to render it!*/
         var myData = [
-            {x:"11", y: 129469},
-            {x:"12", y: 404744},
-            {x:"13", y: 662035},
-            {x:"14", y: 1382493},
-            {x:"15", y: 1432139},
-            {x:"16", y: 1126019},
-            {x:"17", y: 2221553},
-            {x:"18", y: 1817339},
-            {x:"19", y: 1582995},
-            {x:"20", y: 1358878}
+            {x:"11", y: 517876},
+            {x:"12", y: 1799504},
+            {x:"13", y: 2854516},
+            {x:"14", y: 5928264},
+            {x:"15", y: 6184528},
+            {x:"16", y: 5126608},
+            {x:"17", y: 9819552},
+            {x:"18", y: 8056592},
+            {x:"19", y: 7174008},
+            {x:"20", y: 5775828}
         ];
 
         var renderChart = [
@@ -273,7 +273,7 @@
         <tr >
             <td>\{{id}}</td>
             <td><a href="/event/find/\{{id}}">\{{name}}</a></td>
-            <td>\{{view}}</td>
+            <td>\{{completedView}}</td>
             <td data-status="\{{status}}" data-order="\{{status}}"  data-search="\{{status}}">\{{status}}</td>
             <td class="td-max-400">\{{begin}} &#10145; \{{end}}</td>
             <!--
