@@ -48,7 +48,7 @@ export default class BarWithSelect extends React.Component {
         return (
             <div className="ui form">
                 <div className="field">
-                    <label>Đối tác nội dung</label>
+                    <label> {this.props.labelSelect || "Select box"}</label>
                     <Select
                         placeHolder={this.props.placeHolder}
                         data={this.state.select || []}

@@ -77,6 +77,7 @@ class Home extends React.Component {
 							header="Phim xem nhiều theo thể loại"
 							loading={this.props.loading_topcategory}
 							body={<BarWithSelect 
+									labelSelect="Thể loại phim"
 									placeHolder="Chọn thể loại"
 									data={this.props.topcategory}
 									horizontal={true}
