@@ -2,16 +2,24 @@ module.exports = {
     privateKey: '6789ifadop#@$!',
     server: {
         host: 'id.adsplay.net',
-        port: 4000
+        port: 8301
     },
+    //localhost
+    // database: {
+    //     host: 'localhost',
+    //     port: 27017,
+    //     db: 'adsplay_id',
+    //     url: 'mongodb://127.0.0.1:27017/adsplay_id'
+    // },
+    //server
     database: {
-        host: 'localhost',
-        port: 27017,
-        db: 'fptoauth',
-        url: 'mongodb://127.0.0.1:27017/fptoauth'
+        host: '118.69.190.46',
+        port: 11492,
+        db: 'adsplay_id',
+        url: 'mongodb://118.69.190.46:11492/adsplay_id'
     },
-    sessionExpiry: 1000 * 3600 * 24 * 2, //2 day
-    tokenExpiry: 3600 * 24 * 2, //2 day
+    sessionExpiry: 1000 * 60 * 60 * 24 * 2, //2 day
+    tokenExpiry: 60 * 60 * 2, //2h
     superuser:{
         _id: 0,
         roles: {"superadmin" : true},
@@ -24,7 +32,7 @@ module.exports = {
         secretKey: "6LfW_iUTAAAAAM_U5Ia77l2ifg9uI7OlZCOzEKMB",
         ssl: true
     },
-    domain:{
+   domain:{
         api: 'http://api.adsplay.net',
         api_ssl: 'https://api.adsplay.net',
     },
@@ -36,9 +44,9 @@ module.exports = {
         verifyEmailUrl: "verifyEmail"
     },
     oauth:{
-		facebook: {
-            clientID : 'your-secret-clientID-here', // your App ID
-            clientSecret: 'your-client-secret-here', // your App Secret
+	facebook: {
+            clientID : 'abcv', // your App ID
+            clientSecret: 'abc', // your App Secret
             callbackURL: 'http://localhost:8080/auth/facebook/callback'
         }
     },

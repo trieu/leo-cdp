@@ -1,150 +1,276 @@
-function AdsPlayID (server, authServerApp, authUrl, expiryDays) {
-    var URL_HOST = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':'+window.location.port: '');
-    var key = '.adsplay';
-    var loadingBase64 = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzgiIGhlaWdodD0iMzgiIHZpZXdCb3g9IjAgMCAzOCAzOCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBzdHJva2U9IiNmZmYiPiAgICA8ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMSAxKSIgc3Ryb2tlLXdpZHRoPSIyIj4gICAgICAgICAgICA8Y2lyY2xlIHN0cm9rZS1vcGFjaXR5PSIuNSIgY3g9IjE4IiBjeT0iMTgiIHI9IjE4Ii8+ICAgICAgICAgICAgPHBhdGggZD0iTTM2IDE4YzAtOS45NC04LjA2LTE4LTE4LTE4Ij4gICAgICAgICAgICAgICAgPGFuaW1hdGVUcmFuc2Zvcm0gICAgICAgICAgICAgICAgICAgIGF0dHJpYnV0ZU5hbWU9InRyYW5zZm9ybSIgICAgICAgICAgICAgICAgICAgIHR5cGU9InJvdGF0ZSIgICAgICAgICAgICAgICAgICAgIGZyb209IjAgMTggMTgiICAgICAgICAgICAgICAgICAgICB0bz0iMzYwIDE4IDE4IiAgICAgICAgICAgICAgICAgICAgZHVyPSIxcyIgICAgICAgICAgICAgICAgICAgIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIi8+ICAgICAgICAgICAgPC9wYXRoPiAgICAgICAgPC9nPiAgICA8L2c+PC9zdmc+";
-    var loadingCss = 'z-index: 9999; width: 100%; height: 100%;'+
-                    'position: fixed; top: 0; left: 0; right: 0; bottom: 0;'+
-                    'background-color: #3498DB; background-repeat: no-repeat; background-position: center;'+
-                    'background-image: url('+loadingBase64+'); background-size: auto 15%;';
-    document.body.innerHTML += '<div id="loading-AdsPlayID" style="'+loadingCss+'"></div>';
-
-    var that = this;
-    //config
-    that.server = server || "//id.adsplay.net/"; //sso server
-    that.redirect_uri = window.location.href;
-    that.attach = ''; //user_info
-    that.expiryDays = expiryDays || 2;
-    that.login_placement = "[data-login]";
-    that.logout_placement = "[data-logout]";
-
-    // test --> http://id.adsplay.net:4000/login?redirect_uri=http://localhost:3000
-    
-    if(!that.checkCookie("user_token")){
-        var user_token = that.getParameterByName('access_token');
-        //console.log(user_token)
-        if(user_token != null && user_token != ''){
-            that.setCookie('user_token', user_token, that.expiryDays);
-            that.redirect_uri = that.removeParameterURL('access_token', that.redirect_uri);
-            //if authServerApp true => set authorization from server webapp
-            if(typeof (authServerApp) !== "undefined" && authServerApp){
-                that.authUrl = authUrl || URL_HOST+'/callback';
-                var parameter = "access_token="+that.getParameterByName('access_token');
-                //console.log(that.authUrl, parameter);
-                that.request(that.authUrl, parameter);
-            }
-        }
-        var user_info = that.getParameterByName('user_info');
-        if(user_info != null && user_info != ''){
-            that.setCookie('user_info', user_info, that.expiryDays);
-            that.redirect_uri = that.removeParameterURL('user_info', that.redirect_uri);
-        }
-
-        if((user_token != null && user_token != '') && user_token.indexOf(key) != -1){
-            return window.location.href = that.redirect_uri;
-        }
-        
-        return window.location.href = that.server + "login?redirect_uri=" + that.redirect_uri;
+window.$$ = function(selector) {
+    var selectorType = 'querySelectorAll';
+    if (selector.indexOf('#') === 0) {
+        selectorType = 'getElementById';
+        selector = selector.substr(1, selector.length);
     }
-    else{
-        var loading = document.getElementById('loading-AdsPlayID');
-        that.fadeOut(loading);
+    return document[selectorType](selector);
+};
+/**
+ *  Copyright 2012-2013 (c) Pierre Duquesne <stackp@online.fr>
+ *  Licensed under the New BSD License.
+ *  https://github.com/stackp/promisejs
+ */
+(function(exports) {
+
+    function Promise() {
+        this._callbacks = [];
     }
 
-    window.onclick= function(e, b){
-        var attach = (that.attach == 'user_info') ? '&attach=' + that.user_info : "";
-        var dataLogin = document.querySelectorAll(that.login_placement);
-        for (var i in dataLogin){
-            if (dataLogin.hasOwnProperty(i)) {
-                dataLogin[i].addEventListener('click', function() {
-                    window.location.href = that.server + "login?redirect_uri=" + that.redirect_uri + attach;
-                }, false);
-            }
+    Promise.prototype.then = function(func, context) {
+        var p;
+        if (this._isdone) {
+            p = func.apply(context, this.result);
+        } else {
+            p = new Promise();
+            this._callbacks.push(function () {
+                var res = func.apply(context, arguments);
+                if (res && typeof res.then === 'function')
+                    res.then(p.done, p);
+            });
         }
-
-        var dataLogout = document.querySelectorAll(that.logout_placement);
-        for (var i in dataLogout){
-            if (dataLogout.hasOwnProperty(i)) {
-                dataLogout[i].addEventListener('click', function() {
-                    that.deleteCookie('user_token');
-                    that.deleteCookie('user_info');
-                    console.log(that.server + "logout?redirect_uri=" + that.redirect_uri + attach)
-                    window.location.href = that.server + "logout?redirect_uri=" + that.redirect_uri + attach;
-                }, false);
-            }
-        }
+        return p;
     };
 
-}
+    Promise.prototype.done = function() {
+        this.result = arguments;
+        this._isdone = true;
+        for (var i = 0; i < this._callbacks.length; i++) {
+            this._callbacks[i].apply(null, arguments);
+        }
+        this._callbacks = [];
+    };
 
-/**
- * set option
- */
-AdsPlayID.prototype.setAttach = function(value){
-    this.attach = value;
-}
-AdsPlayID.prototype.setLoginPlacement = function(value){
-    this.login_placement = value;
-}
-AdsPlayID.prototype.setLogoutPlacement = function(value){
-    this.logout_placement = value;
-}
+    function join(promises) {
+        var p = new Promise();
+        var results = [];
+
+        if (!promises || !promises.length) {
+            p.done(results);
+            return p;
+        }
+
+        var numdone = 0;
+        var total = promises.length;
+
+        function notifier(i) {
+            return function() {
+                numdone += 1;
+                results[i] = Array.prototype.slice.call(arguments);
+                if (numdone === total) {
+                    p.done(results);
+                }
+            };
+        }
+
+        for (var i = 0; i < total; i++) {
+            promises[i].then(notifier(i));
+        }
+
+        return p;
+    }
+
+    function chain(funcs, args) {
+        var p = new Promise();
+        if (funcs.length === 0) {
+            p.done.apply(p, args);
+        } else {
+            funcs[0].apply(null, args).then(function() {
+                funcs.splice(0, 1);
+                chain(funcs, arguments).then(function() {
+                    p.done.apply(p, arguments);
+                });
+            });
+        }
+        return p;
+    }
+
+    /*
+     * AJAX requests
+     */
+
+    function _encode(data) {
+        var payload = "";
+        if (typeof data === "string") {
+            payload = data;
+        } else {
+            var e = encodeURIComponent;
+            var params = [];
+
+            for (var k in data) {
+                if (data.hasOwnProperty(k)) {
+                    params.push(e(k) + '=' + e(data[k]));
+                }
+            }
+            payload = params.join('&')
+        }
+        return payload;
+    }
+
+    function new_xhr() {
+        var xhr;
+        if (window.XMLHttpRequest) {
+            xhr = new XMLHttpRequest();
+        } else if (window.ActiveXObject) {
+            try {
+                xhr = new ActiveXObject("Msxml2.XMLHTTP");
+            } catch (e) {
+                xhr = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+        }
+        return xhr;
+    }
+
+
+    function ajax(method, url, data, headers) {
+        var p = new Promise();
+        var xhr, payload;
+        data = data || {};
+        headers = headers || {};
+
+        try {
+            xhr = new_xhr();
+        } catch (e) {
+            p.done(promise.ENOXHR, "");
+            return p;
+        }
+
+        payload = _encode(data);
+        if (method === 'GET' && payload) {
+            url += '?' + payload;
+            payload = null;
+        }
+
+        xhr.open(method, url);
+
+        var content_type = 'application/x-www-form-urlencoded';
+        for (var h in headers) {
+            if (headers.hasOwnProperty(h)) {
+                if (h.toLowerCase() === 'content-type')
+                    content_type = headers[h];
+                else
+                    xhr.setRequestHeader(h, headers[h]);
+            }
+        }
+        xhr.setRequestHeader('Content-type', content_type);
+
+
+        function onTimeout() {
+            xhr.abort();
+            p.done(promise.ETIMEOUT, "", xhr);
+        }
+
+        var timeout = promise.ajaxTimeout;
+        if (timeout) {
+            var tid = setTimeout(onTimeout, timeout);
+        }
+
+        xhr.onreadystatechange = function() {
+            if (timeout) {
+                clearTimeout(tid);
+            }
+            if (xhr.readyState === 4) {
+                var err = (!xhr.status ||
+                           (xhr.status < 200 || xhr.status >= 300) &&
+                           xhr.status !== 304);
+                p.done(err, xhr.responseText, xhr);
+            }
+        };
+
+        xhr.send(payload);
+        return p;
+    }
+
+    function _ajaxer(method) {
+        return function(url, data, headers) {
+            return ajax(method, url, data, headers);
+        };
+    }
+
+    var promise = {
+        Promise: Promise,
+        join: join,
+        chain: chain,
+        ajax: ajax,
+        get: _ajaxer('GET'),
+        post: _ajaxer('POST'),
+        put: _ajaxer('PUT'),
+        del: _ajaxer('DELETE'),
+
+        /* Error codes */
+        ENOXHR: 1,
+        ETIMEOUT: 2,
+
+        /**
+         * Configuration parameter: time in milliseconds after which a
+         * pending AJAX request is considered unresponsive and is
+         * aborted. Useful to deal with bad connectivity (e.g. on a
+         * mobile network). A 0 value disables AJAX timeouts.
+         *
+         * Aborted requests resolve the promise with a ETIMEOUT error
+         * code.
+         */
+        ajaxTimeout: 0
+    };
+
+    if (typeof define === 'function' && define.amd) {
+        /* AMD support */
+        define(function() {
+            return promise;
+        });
+    } else {
+        exports.promise = promise;
+    }
+
+})(this);
 /**
  * cookie
  */
-AdsPlayID.prototype.setCookie = function(cname, cvalue, exdays) {
-    var d = new Date();
-    var exd = exdays || 2;
-    d.setTime(d.getTime() + (exd * 24 * 60 * 60 * 1000));
-    var expires = "expires="+d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-}
+var CookieToken = function(cookieName){
+    var that = this;
 
-AdsPlayID.prototype.getCookie = function(cname) {
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
-    for(var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
+    that.cname = cookieName || 'token_adsplayid';
+
+    that.set = function(cvalue, exdays) {
+        var d = new Date();
+        var exd = exdays || 2;
+        d.setTime(d.getTime() + (exd * 24 * 60 * 60 * 1000));
+        var expires = "expires="+d.toUTCString();
+        document.cookie = that.cname + "=" + cvalue + ";" + expires + ";path=/";
     }
-    return "";
-}
 
-AdsPlayID.prototype.deleteCookie = function(cname) {
-    document.cookie = cname+"=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-}
-
-AdsPlayID.prototype.checkCookie = function(cname) {
-    var user = this.getCookie(cname);
-    if (user != "") {
-        return true;
-    }
-    return false;
-}
-/**
- * helper
- */
-AdsPlayID.prototype.request = function(url, params) {
-    
-    var http = new XMLHttpRequest();
-    http.open("POST", url, true);
-    //Send the proper header information along with the request
-    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-    http.onreadystatechange = function() {//Call a function when the state changes.
-        if(http.readyState == 4 && http.status == 200) {
-            //console.log(http.responseText);
+    that.get = function() {
+        var name = that.cname + "=";
+        var ca = document.cookie.split(';');
+        for(var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
         }
+        return "";
     }
-    http.send(params);
+
+    that.delete = function() {
+        document.cookie = that.cname+"=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    }
+
+    that.check = function() {
+        var user = that.get();
+        if (user != "") {
+            return true;
+        }
+        return false;
+    }
+
 }
+
 // query string: ?foo=lorem&bar=&baz
 // var foo = getParameterByName('foo'); // "lorem"
-AdsPlayID.prototype.getParameterByName = function(name, url) {
+function getParameterByName(name, url) {
     if (!url) {
       url = window.location.href;
     }
@@ -156,7 +282,7 @@ AdsPlayID.prototype.getParameterByName = function(name, url) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 };
 
-AdsPlayID.prototype.removeParameterURL = function(parameter, url) {
+function removeParameterURL(parameter, url) {
     //prefer to use l.search if you have a location/link object
     if (!url) {
       url = window.location.href;
@@ -182,16 +308,117 @@ AdsPlayID.prototype.removeParameterURL = function(parameter, url) {
     }
 }
 
-AdsPlayID.prototype.fadeOut = function(element, millisecond) {
-    millisecond = millisecond || 80;
-    var op = 1;  // initial opacity
-    var timer = setInterval(function () {
-        if (op <= 0.1){
-            clearInterval(timer);
-            element.style.display = 'none';
+var AdsPlayID = function (SSO) {
+    if($$('[data-adsplayid]').length <= 0){
+        console.log("Can not find placement authentication");
+        return;
+    }
+    var that = this;
+    //static
+    var SSO_URL = '//id.adsplay.net';
+    var COOKIE_NAME = 'adsplayid';
+
+    var URL_HOST = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':'+window.location.port: '');
+    var URL_BASE = removeParameterURL('access_token', window.location.href);
+
+    //config
+    that.SSO = SSO || SSO_URL;
+    that.el = $$('[data-adsplayid]')[0];
+    that.key = that.el.getAttribute('data-key') || '.adsplay';
+    that.expiryDays = that.el.getAttribute('data-expiryDays') || 2; //2 day
+    that.refreshToken = that.el.getAttribute('data-refreshToken') || 1; //1 hour
+    that.serverVerify = that.el.getAttribute('data-serverVerify') || false;
+    that.serverVerifyUrl = that.el.getAttribute('data-serverVerifyUrl') || '/callback';
+
+    that.login_placement = "[data-adsplayid-login]";
+    that.logout_placement = "[data-adsplayid-logout]";
+
+
+    that.cookie = new CookieToken(COOKIE_NAME);
+
+    that.getCookie = function(){
+        return that.cookie.get();
+    }
+
+    function setToken(){
+        var location_token = window.location.href;
+        var access_token = getParameterByName('access_token');
+        if(location_token.indexOf(that.key) && (access_token != null && access_token != '')){
+            that.cookie.set(access_token, that.expiryDays);
+            var newUri = removeParameterURL('access_token', location_token);
+            history.pushState(null, null, newUri);
+            return true;
         }
-        element.style.opacity = op;
-        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
-        op -= op * 0.1;
-    }, millisecond);
+        return false;
+    }
+
+    function check(){
+        if(that.serverVerify){
+            //set cookie in server
+            promise.post(that.serverVerifyUrl,{name_token: COOKIE_NAME, access_token: text.access_token, expiryDays: that.expiryDays})
+            .then(function(error, text, xhr) {
+                if (error) {
+                    console.log('Error ' + xhr.status);
+                    return;
+                }
+            });
+        }
+        else{
+            if(that.cookie.get() == ""){
+                if(!setToken()){
+                    //authentication
+                    return window.location.href = that.SSO+"/authentication?redirect_uri=" + URL_BASE;
+                }
+            }
+            else{
+                if(!setToken()){
+                    //check valid token
+                    promise.get(that.SSO+'/check-token?access_token='+that.cookie.get())
+                    .then(function(error, text, xhr) {
+                        if (error) {
+                            console.log('Error ' + xhr.status);
+                            return;
+                        }
+                        text = JSON.parse(text);
+                        if(!text.success){
+                            if(text.message == "jwt expired"){
+                                return window.location.href = that.SSO+"/authentication?redirect_uri=" + URL_BASE;
+                            }
+                            return window.location.href = that.SSO+"/login?redirect_uri=" + URL_BASE;
+                        }
+                        
+                    });
+                }
+            }
+        }
+    }
+    check();
+
+    // //request refresh token
+    setTimeout(function(){
+        check();
+    }, that.refreshToken * 1000 * 60 * 60);
+    
+
+    window.onclick= function(e, b){
+        var dataLogin = document.querySelectorAll(that.login_placement);
+        for (var i in dataLogin){
+            if (dataLogin.hasOwnProperty(i)) {
+                dataLogin[i].addEventListener('click', function() {
+                    window.location.href = that.SSO + "/login?redirect_uri=" + URL_BASE;
+                }, false);
+            }
+        }
+
+        var dataLogout = document.querySelectorAll(that.logout_placement);
+        for (var i in dataLogout){
+            if (dataLogout.hasOwnProperty(i)) {
+                dataLogout[i].addEventListener('click', function() {
+                    that.cookie.delete();
+                    window.location.href = that.SSO + "/logout?redirect_uri=" + URL_BASE;
+                }, false);
+            }
+        }
+    };
+
 }

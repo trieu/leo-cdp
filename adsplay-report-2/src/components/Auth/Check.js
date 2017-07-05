@@ -1,23 +1,34 @@
 import React, { PropTypes } from 'react';
 import axios from 'axios';
+import AppData from '~/configs/AppData';
 
 const Auth = (WrappedComponent) => {
     return (
         class WithAuthorization extends React.Component {
             constructor(props) {
                 super(props);
-                this.state = {userInfo: null};
-                this.loggedIn().then((response) => {
-                    // console.log(response)
-                    this.setState({userInfo: response})
-                })
+                this.state = {userInfo:null};
+                //test
+                //this.state = {userInfo: {"_id":0,"username":"adsplayfpt","email":"adsplayfpt@gmail.com","roles":{"superadmin":true}} };
             }
 
-            loggedIn(){
+            componentDidMount(){
+                var adsplayid = new window.AdsPlayID();
+                var access_token = adsplayid.getCookie();
+                //console.log(access_token != "", access_token)
+                if(access_token && access_token != ""){
+                    this.loggedIn(access_token).then((response) => {
+                        // console.log(response)
+                        this.setState({userInfo: response})
+                    })
+                }
+            }
+
+            loggedIn(access_token){
                 return new Promise(function(resolve, reject){
                     axios({
-                        method: 'post',
-                        url: '/callback'
+                        method: 'get',
+                        url: AppData.SSO+'/userinfo?access_token='+access_token
                     }).then(function(response) {
                         //console.log(response.data)
                         if(response.data.success){
@@ -25,7 +36,6 @@ const Auth = (WrappedComponent) => {
                         }
                         else {
                             console.log('unauthorized !!!');
-                            window.location.href = response.data.redirect_uri;
                             reject();
                         }
                     });

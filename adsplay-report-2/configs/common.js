@@ -3,7 +3,7 @@ module.exports = {
     PORT: '9881',
     SALT: '$6*7&8^9mvc@#!AI',
 	SESSION: 1000*60*60*24*2, //2 day
-	VERSION: '20170330',
+	VERSION: '20170507',
 	META: {
 		AUTHOR: 'xemgiday.com',
 		TITLE: 'Tin tức hót nhất mạng xã hội',

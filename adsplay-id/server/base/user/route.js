@@ -26,8 +26,10 @@ module.exports = function(app){
     /**
      * user 
      */
+    app.get('/authentication', User.authenticationView); //authentication check login
+    app.post('/authentication', User.authentication); //authentication check login
+    app.get('/check-token', User.checkToken);
     app.get('/userinfo', User.userInfo); //get user info from token
-    app.get('/authentication', User.authentication); //authentication check login
 
     /**
      * create

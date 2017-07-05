@@ -11,21 +11,24 @@ export const ADS_DETAIL = 'ADS_DETAIL';
  * get detail category
  * @Mith
  */
-const access_token = getCookie('user_token');
-const ADS_LIST_URL = '//id.adsplay.net/ads/api-roles-ads/list?access_token='+access_token;
-const ADS_DETAIL_URL = '//id.adsplay.net/ads/api-roles-ads/detail?access_token='+access_token;
+
+let ADS_LIST_URL = '//id.adsplay.net/ads/api-roles-ads/list';
+let ADS_DETAIL_URL = '//id.adsplay.net/ads/api-roles-ads/detail';
 
 
 const statuses = {0: 'Không hợp lệ', 1: 'Chờ duyệt', 2: 'Đã duyệt', 3: 'Kết thúc', 4: 'Hết hạn'};
 /* Detail Category - Mith */
 export function fetchAdsList() {
 
+    const access_token = getCookie('adsplayid');
+    ADS_LIST_URL = ADS_LIST_URL + '?access_token='+access_token;
+
     return function (dispatch) {
 
         dispatch({
             type: ADS_LIST,
             payload: {data: [], loading: true}
-        })
+        });
 
         return axios.get(ADS_LIST_URL)
                 .then(function (response) {
@@ -51,12 +54,15 @@ export function fetchAdsList() {
 
 export function fetchAdsDetail(id) {
 
+    const access_token = getCookie('adsplayid');
+    ADS_DETAIL_URL = ADS_DETAIL_URL + '?access_token='+access_token;
+
     return function (dispatch) {
 
         dispatch({
             type: ADS_DETAIL,
             payload: {data: {}, loading: true}
-        })
+        });
 
         return axios.get(ADS_DETAIL_URL+'&id='+id)   
                 .then(function (response) {

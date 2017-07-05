@@ -21,4 +21,5 @@ module.exports = {
     { id: 'VOD', title: 'Xem doanh thu quảng cáo từ VOD' },
     { id: 'ADS', title: 'Quản lý quảng cáo' }
   ],
+  SSO: "//id.adsplay.net"
 };

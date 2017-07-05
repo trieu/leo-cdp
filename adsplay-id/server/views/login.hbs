@@ -9,14 +9,14 @@
     <form id="form-login" class="col s12" method="POST" action="/login">
         <div class="row">
             <div class="input-field col s12">
-                <input id="_name" type="text" name="_name">
-                <label for="_name">Username</label>
+                <input id="username" type="text" name="username">
+                <label for="username">Username</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12">
-                <input id="_pass" type="password" name="_pass">
-                <label for="_pass">Password</label>
+                <input id="password" type="password" name="password">
+                <label class="active" for="password">Password</label>
             </div>
         </div>
 
@@ -45,6 +45,9 @@
 </div>
 
 <script type="text/javascript">
+    $(window).on('load', function () {
+        $('.input-field label').addClass('active')
+    });
     $(function(){
         $('#form-login').submit(function(e){
             e.preventDefault();

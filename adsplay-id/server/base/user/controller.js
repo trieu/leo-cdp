@@ -242,15 +242,55 @@ exports.loginOnSite = function (req, res, next){
 
 
 // ---------------------------------------------------------
-// decode token => user info
+// authentication
 // ---------------------------------------------------------
-exports.authentication = function (req, res){
-    if(req.user){
-        var refreshToken = decodeTokencreateToken(req.user);
-        return res.json({ success: true, access_token: refreshToken });
+exports.checkToken = function (req, res, next){
+    var token = req.query.access_token || req.headers['x-access-token'];
+    var checkToken = Token.checkToken(token);// check token
+    if (checkToken.success) {
+        return res.json({success: true, message: "token good"})
     }
     else{
-        return res.json({ success: false, message: 'Not logged in !' });
+        return res.json({success: false, message: checkToken.message || "token not valid"});
+    }
+}
+
+exports.authenticationView = function (req, res, next){
+    var data = {};
+    data.pageTitle = "Authentication Page";
+    
+    res.render('authentication', data);
+}
+
+exports.authentication = function (req, res, next){
+    var redirect_uri = (req.query.redirect_uri.indexOf('id.adsplay') == -1) ? '?redirect_uri='+req.query.redirect_uri : "";
+    
+    if(req.isAuthenticated()){
+        req.body = req.user;
+        passport.authenticate('refresh-token', function(err, user, info) {
+            if (err) { return next(err); } 
+            if (!user) {
+                res.json({ success: false, status:401, message: info.message, redirect_uri: '/login'+redirect_uri }); //unauthorized
+            }
+            else{
+                
+                req.logIn(user, function(err) {
+                    if (err) { return next(err); }
+                    
+                    //create token with timers expires
+                    var refreshToken = Token.createToken(user);
+
+                    var redirect_format = redirect_uri.replace("?redirect_uri=", "");
+                        redirect_uri = Parameter.insert(redirect_format, 'access_token', refreshToken, false);
+                    
+                    return res.json({ success: true, redirect_uri: redirect_uri });
+
+                });
+            }
+        })(req, res, next);
+    }
+    else{
+        return res.json({ success: false, message: 'Not logged in !', redirect_uri: '/login'+redirect_uri });
     }
 }
 
@@ -271,7 +311,7 @@ exports.userInfo = function (req, res, next){
 		// return an error
 		return res.status(403).send({ 
 			success: false, 
-			message: 'No token provided.'
+			message: 'token not valid'
 		});
 		
 	}

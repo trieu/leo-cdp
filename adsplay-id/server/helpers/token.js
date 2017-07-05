@@ -11,7 +11,7 @@ var decodeToken = function(token){
         token = token.replace(".adsplay", "");
         var decoded = Jwt.verify(token, Common.privateKey);
         decoded = (decoded._doc) ? decoded._doc : decoded;
-        return { success: true, user_info: decoded };
+        return { success: true, message: 'token good', user_info: decoded };
     } catch(err) {
         //'Failed to authenticate token.'
         return { success: false, message: err.message };
@@ -22,9 +22,9 @@ exports.decodeToken = decodeToken;
 // ---------------------------------------------------------
 // create token
 // ---------------------------------------------------------
-exports.createToken = function(user){
+exports.createToken = function(user, tokenExpiry){
     var token = Jwt.sign(user, Common.privateKey, {
-        expiresIn: Common.tokenExpiry
+        expiresIn: tokenExpiry || Common.tokenExpiry
     });
     return token + lastToken;
 }
