@@ -14,7 +14,7 @@ const TOTAL_URL = '//api4report.adsplay.net/api/rvnmedia/summingreport';
 export function fetchTotal(sourceMedia, startDate, endDate) {
 
     var bySource = "";
-    if(sourceMedia == "admin" || sourceMedia == "superadmin"){
+    if(sourceMedia == "superadmin" || sourceMedia == "admin" || sourceMedia == "operator"){
         bySource = "&source=all";
     }
     else{

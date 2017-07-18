@@ -152,7 +152,7 @@ exports.apiRolesAdsList = function(req, res){
             request(url ,function (err, response, body) {
                 if(!err && response.statusCode == 200){
                     var result = JSON.parse(body);
-                    if(checkToken.user_info.roles['superadmin']){
+                    if(checkToken.user_info.roles['superadmin'] || checkToken.user_info.roles['admin'] || checkToken.user_info.roles['operator']){
                         return res.json(result);
                     }
                     else{

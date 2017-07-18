@@ -12,7 +12,10 @@ export default class Filter extends React.Component {
         var selectData = new Array();
         if(this.props.userInfo){
             for(var i in AppData.dataSources){
-                var disabled = (this.props.userInfo.roles['superadmin'] || this.props.userInfo.dataSources[i]) ? false : true;
+                var disabled = (this.props.userInfo.roles['superadmin'] 
+                                || this.props.userInfo.roles['admin'] 
+                                || this.props.userInfo.roles['operator'] 
+                                || this.props.userInfo.dataSources[i]) ? false : true;
                 selectData.push({
                     key: i,
                     value: AppData.dataSources[i],

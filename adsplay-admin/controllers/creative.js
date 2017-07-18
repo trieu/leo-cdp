@@ -217,14 +217,10 @@ router.post('/:id/update', function (req, res) {
     var id = req.params.id || -1;
     var url = data.site.api_domain + '/api/creatives/' + id;
 
-    if (data.editable) {
-    	var body = req.body;
-		console.log('update')
-		loggerAds.info('update ads id ', req.params.adType, req.user)
-        creativeModel.update(url, body, res);
-    } else {
-        res.json({message: 'error'});
-    }
+    var body = req.body;
+	console.log('update')
+	loggerAds.info('update ads id ', req.params.adType, req.user)
+	creativeModel.update(url, body, res);
 });
 
 //--- delete
