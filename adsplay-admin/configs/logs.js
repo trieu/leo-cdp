@@ -17,6 +17,15 @@ module.exports = {
 			"backups": 5,
 			"level": "DEBUG",
 			"category": "adsplaylogdebug"
+		},
+		{
+			"type": "file",
+            "absolute": true,
+			"filename": "logs/ads.log",
+			"maxLogSize": 5*1024*1024, // = 5Mb
+			"backups": 5,
+			"level": "INFO",
+			"category": "ads"
 		}
 	]
 }

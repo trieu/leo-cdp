@@ -1,9 +1,10 @@
-module.exports = function(roles){
+module.exports = function(roles, session){
     return function(req, res, next) {
         var message = '<h1>403 Forbidden ! Permission denied</h1>';
-        //console.log('check role: ', req.user)
+        //console.log('check role: ', req.session.user)
         //check error
-        if(typeof (req.user) === 'undefined'){
+        var su = session || req.session.user;
+        if(typeof (su) === 'undefined'){
             return res.send(message);
         }
         if(typeof (roles) === 'undefined'){
@@ -16,7 +17,7 @@ module.exports = function(roles){
         //success
         for(var i in roles){
             //check user role
-            if(roles[i] == '*' || req.user.roles[roles[i]]){
+            if(roles[i] == '*' || su.roles[roles[i]]){
                 //console.log('next')
                 return next();
             }

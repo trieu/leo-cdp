@@ -15,7 +15,7 @@ exports.request = function (url, callback) {
 };
 
 exports.request_send_data = function (url, data, res){
-	console.log(url, data)
+	//console.log(url, data)
 	request.post({url: url, form: JSON.stringify(data)}, function (error, response, body) {
         if (!error && response.statusCode == 200) {
         	console.log(body)

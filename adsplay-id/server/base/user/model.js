@@ -25,6 +25,12 @@ var User = new Schema({
 
     rolesPlacement: { type: Schema.Types.Mixed, default: {} },
 
+    managedby: {
+        type: String,
+        unique: true,
+        required: true
+    },
+
     username: {
         type: String,
         unique: true,

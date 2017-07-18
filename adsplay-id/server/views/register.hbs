@@ -7,6 +7,7 @@
 <div class="row">
 
     <form  id="form-register" class="col s12" method="POST" action="/register" autocomplete="off">
+        <input id="managedby" type="hidden" name="managedby" autocomplete="new-managedby" readonly value={{USER.username}}>
         <div class="row">
             <div class="input-field col s12">
                 <input id="username" type="text" name="username" autocomplete="new-username" required>

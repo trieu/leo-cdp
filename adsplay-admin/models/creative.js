@@ -48,45 +48,25 @@ exports.list = function (url, data, callback) {
                 crt.status = constantUtils.getStatus(crt.status);
                 crt.ctr = (crt.ctr * 100).toFixed(2);
                 crt.tvr = (crt.tvr * 100).toFixed(2);
-                if (crt.totalRevenue == 0 || data.roles != 'admin') {
+                if (crt.totalRevenue == 0 || data.user.roles["superadmin"] || data.user.roles["admin"]) {
                     crt.totalRevenue = "-";
                 }
 
                 var adName = crt.name.toLowerCase();
-                if (data.isAdminGroup) {
+
+                //console.log(adName,  data.user.username, data.user.rolesAds, crt.id)
+                if (data.user.roles["superadmin"] || data.user.roles["admin"] || data.user.roles["operator"]) {
                     filteredList.push(crt);
                 }
-                else if (data.ssid === 1002 && adName.indexOf('vivid') >= 0) {
-                    filteredList.push(crt);
+                else if (data.user.roles["agency"] || data.user.roles["sale"] || data.user.roles["client"]) {
+                    //console.log(crt.id, data.user.rolesAds, data.user.rolesAds[crt.id])
+                    if(adName.indexOf(data.user.username) >= 0 || data.user.rolesAds[crt.id]){
+                        filteredList.push(crt);
+                    }
                 }
-                else if (data.ssid === 1003 && adName.indexOf('fptplay') >= 0) {
-                    filteredList.push(crt);
-                }
-                else if (data.ssid === 1004 && adName.indexOf('lava') >= 0) {
-                    filteredList.push(crt);
-                }
-                else if (data.ssid === 1005 && adName.indexOf('ambient') >= 0) {
-                    filteredList.push(crt);
-                }
-                else if (data.ssid === 1006 && adName.indexOf('itvad') >= 0) {
-                    filteredList.push(crt);
-                }
-                else if (data.ssid === 1007 && (adName.indexOf('paytv') >= 0 )) {
-                    filteredList.push(crt);
-                }
-                else if (data.ssid === 1008 && (adName.indexOf('startalk') >= 0 )) {
-                    filteredList.push(crt);
-                }
-                else if (data.ssid === 1012 && (adName.indexOf('sapporo-tvc-30s-fshare') >= 0 )) {
-                    filteredList.push(crt);
-                }
-                else if (data.ssid === 1011 && (adName.indexOf('vtc') >= 0 )) {
-                    filteredList.push(crt);
-                }
-                else if (data.ssid === 1013 && (adName.indexOf('danet') >= 0 )) {
-                    filteredList.push(crt);
-                }
+
             });
+            
 
 			callback(null, filteredList);
 		}
@@ -117,7 +97,7 @@ exports.detail = function (url, data, callback) {
                 var expiredDate = moment(crt.expDateL);
                 crt.expDate = expiredDate.format('YYYY-MM-DD, hh:mm a');
             }
-            if (crt.totalRevenue == 0 || data.roles != 'admin') {
+            if (crt.totalRevenue == 0 || data.user.roles!= 'admin') {
                 crt.totalRevenue = "-";
             }
             crt.status = constantUtils.getStatus(crt.status);
@@ -172,7 +152,7 @@ exports.edit = function (url, data, callback) {
             if (crt.expDateL && crt.expDateL > 0) {
                 crt.expDate = new Date(crt.expDateL).toISOString();
             }
-            if (crt.totalRevenue == 0 || data.roles != 'admin') {
+            if (crt.totalRevenue == 0 || data.user.roles!= 'admin') {
                 crt.totalRevenue = "-";
             }
             data.crt = crt;

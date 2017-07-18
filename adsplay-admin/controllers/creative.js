@@ -10,12 +10,14 @@ var ArrayUtils = require('../helpers/array_utils');
 var moment = require('moment');
 var formidable = require('formidable');
 var Vast = require('../models/vast.js');
+
+var loggerAds = require('../helpers/logger_utils.js').ads;
 // >->->->-> api
 
 //--- list json
 router.get('/api/list', function (req, res) {
 	var data = modelUtils.baseModel(req);
-
+	
 	data.begin = req.query.begin;
     data.end = req.query.end;
     if (!data.begin || !data.end) {
@@ -23,7 +25,7 @@ router.get('/api/list', function (req, res) {
         data.end = new moment().subtract(90, 'days').format("YYYY-MM-DD");
     }
 	var url = data.site.api_domain + '/api/creative/summary?begin='+data.begin+'&end='+data.end;
-
+	
 	Sync(function(){
 		try{
 			// result from callback
@@ -56,7 +58,6 @@ router.get('/list', function (req, res) {
         statuses.push({value: stt, label: constantUtils.getStatus(stt)});
     }
     data.statuses = statuses;
-    
     res.render('creative/list', data);
 
 });
@@ -181,28 +182,27 @@ router.post('/save/:adType', function (req, res) {
 
 		var form = new formidable.IncomingForm();
 		form.uploadDir = './upload-temp/';
+		console.log('new')
 		form.parse(req, function (err, fields, files) {
 			if (err) {
+				console.log('111')
 				console.error(err);
 			}
 			else {
-				// console.log(files);
-				// console.log(fields);
+				console.log(files);
+				console.log(fields);
 				// permission isAdminGroup {1000: 1, 1001: 1};
 				// permission editable {1000: 1, 1001: 1, 1007: 1, 1003: 1, 1006: 1};
-				if(data.editable){
-					var option = {
+				var option = {
 						url: url,
 						user: req.user,
 						adType: req.params.adType,
 						fields: fields,
 						files: files,
 					}
+					
+					loggerAds.info('new ads id ', req.params.adType, req.user)
 					creativeModel.save(option, res);
-				}
-				else{
-					res.render('common/permission');
-				}
 			}
 		});
 	}
@@ -219,6 +219,8 @@ router.post('/:id/update', function (req, res) {
 
     if (data.editable) {
     	var body = req.body;
+		console.log('update')
+		loggerAds.info('update ads id ', req.params.adType, req.user)
         creativeModel.update(url, body, res);
     } else {
         res.json({message: 'error'});

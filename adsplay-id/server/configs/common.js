@@ -4,28 +4,26 @@ module.exports = {
         host: 'id.adsplay.net',
         port: 8301
     },
-    //localhost
-    // database: {
-    //     host: 'localhost',
-    //     port: 27017,
-    //     db: 'adsplay_id',
-    //     url: 'mongodb://127.0.0.1:27017/adsplay_id'
-    // },
-    //server
-    database: {
-        host: '118.69.190.46',
-        port: 11492,
+    database: { //localhost
+        host: 'localhost',
+        port: 27017,
         db: 'adsplay_id',
-        url: 'mongodb://118.69.190.46:11492/adsplay_id'
+        url: 'mongodb://127.0.0.1:27017/adsplay_id'
     },
+    // database: { //server
+    //     host: '118.69.190.46',
+    //     port: 11492,
+    //     db: 'adsplay_id',
+    //     url: 'mongodb://118.69.190.46:11492/adsplay_id'
+    // },
     sessionExpiry: 1000 * 60 * 60 * 24 * 2, //2 day
     tokenExpiry: 60 * 60 * 2, //2h
     superuser:{
         _id: 0,
         roles: {"superadmin" : true},
-        username: "adsplayfpt",
-        email: "adsplayfpt@gmail.com",
-        password: "trieunguyen",
+        username: "adsplaysuper",
+        email: "adsplaysuper@gmail.com",
+        password: "789@adsplay",
     },
     recaptcha:{
         siteKey: "6LfW_iUTAAAAAEinX_Pe_RVqZryKrDI5D1Jy237-",
@@ -38,8 +36,8 @@ module.exports = {
     },
     //TODO
     email: {
-        email: "adsplayfpt@gmail.com",
-        password: "trieunguyen",
+        email: "adsplaysuper@gmail.com",
+        password: "789@fptplay",
         accountName: "gmail",
         verifyEmailUrl: "verifyEmail"
     },

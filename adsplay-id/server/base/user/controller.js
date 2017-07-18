@@ -21,9 +21,9 @@ exports.index = function (req, res){
     
     if(req.user){
         data.USER = req.user;
-        data.isSuperAdmin = data.USER.roles['superadmin'];
-        //console.log(data.USER, data.isSuperAdmin)
-        if(data.isSuperAdmin){
+        data.isRegister = data.USER.roles['superadmin'] || data.USER.roles['admin'];
+        
+        if(data.USER.roles['superadmin']){
             User.find({})
                 .exec(function(err, user){
                     //console.log(err, user)
@@ -35,8 +35,30 @@ exports.index = function (req, res){
                     res.render('index', data);
                 });
         }
+        else if(data.USER.roles['admin']){
+            User.find({})
+                .or({"username": data.USER.username})
+                .or({"managedby": data.USER.username})
+                .exec(function(err, user){
+                    if(!err && user){
+                        data.userInfo = user;
+                        return res.render('index', data);
+                    }
+
+                    res.render('index', data);
+                });
+        }
         else{
-            res.render('index', data);
+            User.find({"username": data.USER.username})
+                .exec(function(err, user){
+                    
+                    if(!err && user){
+                        data.userInfo = user;
+                        return res.render('index', data);
+                    }
+
+                    res.render('index', data);
+                });
         }
     }
     else{
@@ -56,9 +78,13 @@ exports.register = function (req, res){
 }
 
 exports.registerSave = function (req, res){
-    req.body.password = Encryption.hash(req.body.password);
+    var body = req.body;
+    var managedby = (req.body.managedby) ? req.body.managedby : Common.superuser.username;
+    body.managedby = managedby;
+    body.password = Encryption.hash(req.body.password);
+    
     //console.log(req.body.password)
-    User.saveUser(req.body, function(err, user) {
+    User.saveUser(body, function(err, user) {
         if (!err) {
             return res.json({success: true, message: "Success! register"});
         } else {
@@ -81,8 +107,10 @@ exports.edit = function (req, res){
             //console.log(err, user)
             if(!err && user){
                 data = {};
-                data.pageTitle = "update user";
+                data.pageTitle = "Update " + user.username;
                 data.USER = req.user;
+                data.notMe = (data.USER._id == user._id) ? false : true;
+                data.isSuperAdmin = (data.USER.roles['superadmin']) ? true : false;
                 data.userInfo = user;
                 data.userInfo.dataSources = JSON.stringify(user.dataSources);
                 data.userInfo.roles = JSON.stringify(user.roles);
@@ -98,7 +126,7 @@ exports.edit = function (req, res){
 
 exports.newPassword = function (req, res){
     data = {};
-    data.pageTitle = "update user";
+    data.pageTitle = "update password";
     data.USER = req.user;
     res.render('new-password', data);
 }
@@ -110,25 +138,32 @@ exports.save = function (req, res){
         req.body.password = Encryption.hash(req.body.password);
     }
 
-    if(req.body.dataSources){
-        req.body.dataSources = convertObjBoolean(req.body.dataSources);
-    }
-    if(req.body.roles){
-        req.body.roles = convertObjBoolean(req.body.roles);
-    }
+    if(req.user.roles['superadmin'] || req.user.roles['admin']){
 
-    if(req.body.rolesAds){
-        req.body.rolesAds = convertObjBoolean(req.body.rolesAds, true);
-    }
-    else{
-        req.body.rolesAds = {};
-    }
+        if(req.body.dataSources){
+            req.body.dataSources = convertObjBoolean(req.body.dataSources);
+        }
+        if(req.body.roles){
+            req.body.roles = convertObjBoolean(req.body.roles);
+            if(!req.user.roles['superadmin']){
+                delete req.body.roles['admin'];
+            }
+        }
 
-    if(req.body.rolesPlacement){
-        req.body.rolesPlacement = convertObjBoolean(req.body.rolesPlacement, true);
-    }
-    else{
-        req.body.rolesPlacement = {};
+        if(req.body.rolesAds){
+            req.body.rolesAds = convertObjBoolean(req.body.rolesAds, true);
+        }
+        else{
+            req.body.rolesAds = {};
+        }
+
+        if(req.body.rolesPlacement){
+            req.body.rolesPlacement = convertObjBoolean(req.body.rolesPlacement, true);
+        }
+        else{
+            req.body.rolesPlacement = {};
+        }
+
     }
 
     data = req.body;

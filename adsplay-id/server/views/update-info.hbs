@@ -1,0 +1,71 @@
+<div class="row" id="page-title">
+    <div class="col s12">
+        <h2 id="form-title">{{pageTitle}}</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col s12">
+        <a href="/">
+            <i class="material-icons" style="vertical-align: bottom;">replay</i> Back
+        </a>
+         | 
+        <a href="/new-password/{{userInfo._id}}">
+            <i class="material-icons" style="vertical-align: bottom;">https</i> Change password
+        </a>
+    </div>
+</div>
+
+<div class="row">
+
+    <form  id="form-edit" class="col s12" method="POST" action="/update" autocomplete="off">
+        <input id="_id" type="hidden" name="_id" value="{{userInfo._id}}" />
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="username" type="text" name="username" value="{{userInfo.username}}" autocomplete="new-username" readonly disabled/>
+                <label for="username">Username</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="email" type="email" name="email" value="{{userInfo.email}}" autocomplete="new-email" required/>
+                <label for="email">Email</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="managedby" type="text" name="text" value="{{userInfo.managedby}}" autocomplete="new-email" readonly disabled/>
+                <label for="managedby">managedby</label>
+            </div>
+        </div>
+
+        <button type="submit" class="waves-effect waves-light btn-large right">Ok</button>
+    </form>
+
+    <div  id="message" class="col s12"></div>
+
+</div>
+
+<script type="text/javascript">
+    
+        /*
+        *   Send form
+        */
+        $('#form-edit').submit(function(e){
+            e.preventDefault();
+            var url = $(this).attr('action');
+
+            data._id = $('#_id').val();
+            data.username = $('#username').val();
+            data.email = $('#email').val();
+
+            $.post(url, data,
+            function(data, status){
+                var alert = (data.success) ? 'alert-success' : 'alert-danger';
+                var $toastContent = $('<div class="alert '+alert+'">'+data.message+'</div>');
+                Materialize.toast($toastContent, 10000);
+            });
+        });
+
+    });
+</script>

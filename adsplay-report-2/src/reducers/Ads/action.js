@@ -12,18 +12,14 @@ export const ADS_DETAIL = 'ADS_DETAIL';
  * @Mith
  */
 
-let ADS_LIST_URL = '//id.adsplay.net/ads/api-roles-ads/list';
-let ADS_DETAIL_URL = '//id.adsplay.net/ads/api-roles-ads/detail';
-
-
 const statuses = {0: 'Không hợp lệ', 1: 'Chờ duyệt', 2: 'Đã duyệt', 3: 'Kết thúc', 4: 'Hết hạn'};
 /* Detail Category - Mith */
 export function fetchAdsList() {
 
-    const access_token = getCookie('adsplayid');
-    ADS_LIST_URL = ADS_LIST_URL + '?access_token='+access_token;
-
     return function (dispatch) {
+
+        var access_token = getCookie('adsplayid');
+        var ADS_LIST_URL = '//id.adsplay.net/ads/api-roles-ads/list?access_token='+access_token;
 
         dispatch({
             type: ADS_LIST,
@@ -54,10 +50,10 @@ export function fetchAdsList() {
 
 export function fetchAdsDetail(id) {
 
-    const access_token = getCookie('adsplayid');
-    ADS_DETAIL_URL = ADS_DETAIL_URL + '?access_token='+access_token;
-
     return function (dispatch) {
+
+        var access_token = getCookie('adsplayid');
+        var ADS_DETAIL_URL = '//id.adsplay.net/ads/api-roles-ads/detail?access_token='+access_token;
 
         dispatch({
             type: ADS_DETAIL,

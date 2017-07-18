@@ -12,7 +12,8 @@ var dataDemo = [
     {_id : '1006', username: 'itvad_sale', password: '123itvad456', roles: 'admin'},
     {_id : '1007', username: 'paytv_admin', password: '123@paytv#456', roles: 'admin'},
     {_id : '1008', username: 'startalk', password: '123startalk', roles: 'operator'},
-    {_id : '1009', username: 'innity', password: '123innity456', roles: 'operator'}
+    {_id : '1009', username: 'innity', password: '123innity456', roles: 'operator'},
+    {_id : '1018', username: 'monitor1', password: 'monitor1@admin', roles: 'admin'}
 ];
 
 module.exports = dataDemo;

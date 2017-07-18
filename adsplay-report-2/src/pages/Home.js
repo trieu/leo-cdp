@@ -14,6 +14,7 @@ class Home extends React.Component {
 
 	componentDidMount() {
 		var data = this.refs.Filter.getData();
+		console.log(data.dataSources)
 		this.props.fetchCategory(data.dataSources, data.startDate, data.endDate);
 		this.props.fetchPlatform(data.dataSources, data.startDate, data.endDate);
 		this.props.fetchTopView(data.dataSources, data.startDate, data.endDate);

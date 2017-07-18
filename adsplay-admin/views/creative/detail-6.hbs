@@ -17,13 +17,17 @@
                 <img style="max-width: 100%" src="{{site.static_domain}}/{{crt.media}}" class="">
             </div>
             <div class="panel-body margin-btn-5">
-                {{#if editable }}
+                {{#if actions.creative.edit.show }}
                     <a href="{{buildUrl editUrl}}" class="btn btn-primary">
                         <i class="fa fa-pencil-square-o fa-2" aria-hidden="true"></i> Edit
                     </a>
+                {{/if}}
+                {{#if actions.creative.copy.show }}    
                     <a href="{{buildUrl editUrl}}?copy=true" class="btn btn-default">
                         <i class="fa fa-files-o" aria-hidden="true"></i> Copy
                     </a>
+                {{/if}}    
+                {{#if actions.creative.delete.show }}    
                     <a href="{{site.base_domain}}/creative/delete/{{crt.id}}" onclick="return confirmDeleteCrt(this)" class="btn btn-danger">
                         <i class="fa fa-trash-o" aria-hidden="true"></i> Delete
                     </a>

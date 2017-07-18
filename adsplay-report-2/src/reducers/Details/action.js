@@ -24,6 +24,8 @@ export function fetchDetailCategory(dataSources, startDate, endDate, limit) {
 
                     var result = response.data;
                     var data = [];
+                    var csv = [];
+                    //csv.push(["name", "category", "playview", "impression", "trueview", "click", "revenue"]);
                     for(var i in result){
                         
                         data.push({
@@ -35,6 +37,8 @@ export function fetchDetailCategory(dataSources, startDate, endDate, limit) {
                             click: result[i].sumClick,
                             revenue: result[i].revenueValue
                         });
+
+                        //csv.push([result[i].video_title, result[i].category, result[i].sumPlayView, result[i].sumImpression, result[i].sumTrueView, result[i].sumClick, result[i].revenueValue]);
                     }
 
                     dispatch({

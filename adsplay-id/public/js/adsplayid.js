@@ -333,7 +333,6 @@ var AdsPlayID = function (SSO) {
     that.login_placement = "[data-adsplayid-login]";
     that.logout_placement = "[data-adsplayid-logout]";
 
-
     that.cookie = new CookieToken(COOKIE_NAME);
 
     that.getCookie = function(){
@@ -353,42 +352,32 @@ var AdsPlayID = function (SSO) {
     }
 
     function check(){
-        if(that.serverVerify){
-            //set cookie in server
-            promise.post(that.serverVerifyUrl,{name_token: COOKIE_NAME, access_token: text.access_token, expiryDays: that.expiryDays})
-            .then(function(error, text, xhr) {
-                if (error) {
-                    console.log('Error ' + xhr.status);
-                    return;
-                }
-            });
+        if(that.cookie.get() == ""){
+            if(!setToken()){
+                //authentication
+                return window.location.href = that.SSO+"/authentication?redirect_uri=" + URL_BASE;
+            }
         }
         else{
-            if(that.cookie.get() == ""){
-                if(!setToken()){
-                    //authentication
-                    return window.location.href = that.SSO+"/authentication?redirect_uri=" + URL_BASE;
-                }
-            }
-            else{
-                if(!setToken()){
-                    //check valid token
-                    promise.get(that.SSO+'/check-token?access_token='+that.cookie.get())
-                    .then(function(error, text, xhr) {
-                        if (error) {
-                            console.log('Error ' + xhr.status);
-                            return;
+            if(!setToken()){
+
+                //check valid token
+                promise.get(that.SSO+'/check-token?access_token='+that.cookie.get())
+                .then(function(error, text, xhr) {
+                    if (error) {
+                        console.log('Error ' + xhr.status);
+                        return;
+                    }
+                    text = JSON.parse(text);
+                    if(!text.success){
+                        if(text.message == "jwt expired"){
+                            return window.location.href = that.SSO+"/authentication?redirect_uri=" + URL_BASE;
                         }
-                        text = JSON.parse(text);
-                        if(!text.success){
-                            if(text.message == "jwt expired"){
-                                return window.location.href = that.SSO+"/authentication?redirect_uri=" + URL_BASE;
-                            }
-                            return window.location.href = that.SSO+"/login?redirect_uri=" + URL_BASE;
-                        }
-                        
-                    });
-                }
+                        return window.location.href = that.SSO+"/login?redirect_uri=" + URL_BASE;
+                    }
+                    
+                });
+
             }
         }
     }

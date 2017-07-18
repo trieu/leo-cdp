@@ -34,17 +34,17 @@ module.exports = function(app){
     /**
      * create
      */
-    app.get('/register', Roles(['superadmin']), User.register);
-	app.post('/register', User.registerSave);
+    app.get('/register', Roles(['superadmin', 'admin']), User.register);
+	app.post('/register', Roles(['superadmin', 'admin']), User.registerSave);
 
     /**
      * update
      */
-    app.get('/update/:id', Roles(['superadmin']), User.edit);
-    app.post('/update', User.save);
+    app.get('/update/:id', Roles(['*']), User.edit);
+    app.post('/update', Roles(['*']), User.save);
 
-    app.get('/new-password/:id', Roles(['superadmin']), User.newPassword);
-	app.post('/new-password', User.save);
+    app.get('/new-password/:id', Roles(['*']), User.newPassword);
+	app.post('/new-password', Roles(['*']), User.save);
 
 	// app.post('/forgotPassword', User.forgotPassword);
 	// app.post('/resendVerificationEmail', User.resendVerificationEmail);

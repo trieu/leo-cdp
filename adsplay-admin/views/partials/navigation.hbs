@@ -15,7 +15,7 @@
 
         <!-- Top Menu Items -->
         <ul class="nav navbar-right top-nav">
-            {{#if auth }}
+            {{#if user }}
                 <!--
                <li class="dropdown">
                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
@@ -40,7 +40,7 @@
                </li>
                -->
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{userName}} <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{user.username}} <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <!--
                         <li>
@@ -66,133 +66,24 @@
 
     <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
     <div id="main-navbar" class="collapse navbar-collapse navbar-ex1-collapse">
-        <ul class="nav navbar-nav side-nav">
-
+        <ul class="nav navbar-nav side-nav">            
             <li>
+            {{#each menus}}
                 <a href="javascript:;" data-toggle="collapse"
-                   data-target="#menuAdManagement"><i class="fa fa-fw fa-list"></i> Ad Management<i
+                   data-target="#{{@key}}">{{{icon}}} {{text}}<i
                         class="fa fa-fw fa-caret-down"></i></a>
-                <ul id="menuAdManagement" class="collapse in" aria-expanded="true" style="">
-
-                    <li class="">
-                        <a href="/creative/list" title="Ad Unit Management" ><i class="fa fa-fw fa-list"></i> Ad Units</a>
-                    </li>
-
-                    {{#if isSuperAdminGroup }}
-                        <li class="">
-                            <a href="/placement/list-all" title="Ad Placement Management"><i class="fa fa-fw fa-list"></i> Ad Placements</a>
+                <ul id="{{@key}}" class="collapse in" aria-expanded="true">
+                    {{#each menuChild}}
+                        <li>
+                            <a href="{{link}}" title="{{title}}" >{{{icon}}} {{text}}</a>
                         </li>
-                        <li class="">
-                            <a href="/campaign/" title="Campaign Management"><i class="fa fa-fw fa-list"></i> Ad Campaign</a>
-                        </li>
-                        <li class="">
-                            <a href="/flight/" title="Flight Management"><i class="fa fa-fw fa-list"></i> Ad Flight</a>
-                        </li>
-
-                    {{/if}}
-
-                    {{#if isliveEventGroup }}
-                        <li class="">
-                            <a href="/event/" title="Ad Live Event Management"><i class="fa fa-fw fa-list"></i> Ad Live Events</a>
-                        </li>
-                    {{/if}}
-
-                    {{#if editable }}
-                        <li class="">
-                            <a href="/creative/new"><i class="fa fa-fw fa-play"></i> New Ad Unit</a>
-                        </li>
-                        <li class="">
-                            <a href="/creative/new/video-paytv"><i class="fa fa-fw fa-play"></i> New PayTV Ad Unit</a>
-                        </li>
-
-                        <li style="display: none">
-                            <a href="/monitor/live-tv-ad-manager"><i class="fa fa-fw fa-exchange"></i> Live TV Ad
-                                Manager</a>
-                        </li>
-                    {{/if}}
-
-                    <li style="display: none" class="" style="display: ">
-                        <a href="/booking/list/all"><i class="fa fa-fw fa-list"></i> All Ad Bookings</a>
-                    </li>
+                    {{/each}}
                 </ul>
+            {{/each}}
+           
             </li>
-
-            {{#if editable }}
-            <li >
-                <a href="javascript:;" data-toggle="collapse"
-                   data-target="#menuAdReport"><i class="fa fa-fw fa-list"></i> Reports <i
-                        class="fa fa-fw fa-caret-down"></i></a>
-                <ul id="menuAdReport" class="collapse in" aria-expanded="true" style="">
-
-                    <li class="">
-                        <a href="/creative/visualize/metrics"><i class="fa fa-fw fa-line-chart"></i> Summary Ad KPI</a>
-                    </li>
-
-                    <li style="display: none" class="" >
-                        <a href="/monitor/inventory"><i class="fa fa-fw fa-signal"></i> Booking & Inventory</a>
-                    </li>
-                    <li class="">
-                        <a href="/monitor/inventory-paytv"><i class="fa fa-fw fa-signal"></i> PayTV Inventory </a>
-                    </li>
-
-                    <li>
-                        <a href="/monitor/inventory-report"><i class="fa fa-fw fa-signal"></i> FptPlay Inventory </a>
-                    </li>
-
-                    <li style="display: none">
-                        <a href="/monitor/inventory-predicted"><i class="fa fa-fw fa-signal"></i> Forecast Inventory </a>
-                    </li>
-                </ul>
-            </li>
-            {{/if}}
-
-
-            {{#if isAdminGroup }}
-                <li>
-                    <a href="javascript:;" data-toggle="collapse"
-                       data-target="#menuAnalytics"><i class="fa fa-fw fa-line-chart"></i> Analytics<i
-                            class="fa fa-fw fa-caret-down"></i></a>
-                    <ul id="menuAnalytics" class="collapse" aria-expanded="false">
-
-                        {{#if isSuperAdminGroup }}
-                        <li class="">
-                            <a href="/monitor"><i class="fa fa-fw fa-line-chart"></i> Ad Metrics</a>
-                        </li>
-                        {{/if}}
-
-                        <li class="">
-                            <a href="/monitor/user"><i class="fa fa-fw fa-bar-chart-o"></i> Audience Report</a>
-                        </li>
-
-                        <li class="">
-                            <a href="/monitor/live-event"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Live Event EPL</a>
-                        </li>
-
-                    </ul>
-                </li>
-            {{/if}}
-
-            {{#if isSuperAdminGroup }}
-                <li>
-                    <a href="javascript:;" data-toggle="collapse"
-                       data-target="#menuUsers"><i class="fa fa-users" aria-hidden="true"></i> Users Management<i
-                            class="fa fa-fw fa-caret-down"></i></a>
-                    <ul id="menuUsers" class="collapse" aria-expanded="false">
-                        <li class="">
-                            <a href="/user"><i class="fa fa-user" aria-hidden="true"></i> Users Tool</a>
-                        </li>
-                    </ul>
-                </li>
-            {{/if}}
-
-            <!--
-            <li class="">
-                <a href="/monitor/geolocation"><i class="fa fa-fw fa-map-marker"></i> GeoLocation Analytics</a>
-            </li>
-            -->
-
-
         </ul>
+            
     </div>
     <!-- /.navbar-collapse -->
 </nav>

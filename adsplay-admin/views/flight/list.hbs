@@ -6,7 +6,7 @@
     </div>
 </div>
 
-{{#if editable }}
+{{#if actions.flight.new.show }}
 <p>
     <a href="/flight/create" class="btn btn-primary" id="new-creative">
         <i class="fa fa-industry"></i> Ad Flight
@@ -100,7 +100,9 @@
                 </ul>
             </td>
             <td>
+                {{#if actions.flight.edit.show }}
                 <a title="Edit" href="/flight/edit/\{{_id}}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+                {{/if}}
             </td>
         </tr>
     \{{/each}}

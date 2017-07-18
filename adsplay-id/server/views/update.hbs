@@ -33,6 +33,15 @@
             </div>
         </div>
         <div class="row">
+            <div class="input-field col s12">
+                <input id="managedby" type="text" name="text" value="{{userInfo.managedby}}" autocomplete="new-managedby" readonly disabled/>
+                <label for="managedby">Managed by</label>
+            </div>
+        </div>
+
+        {{#if notMe}}
+
+        <div class="row">
             <div class="col s12">
                 <label class="chip-label">
                     Data Sources (ex: all, danet-mienphi, ...)
@@ -43,7 +52,7 @@
         <div class="row">
             <div class="col s12">
                 <label class="chip-label">
-                    Roles (ex: user, agency, sale, publisher, admin)
+                    Roles (ex: user, agency, sale, publisher, operator)
                 </label>
                 <div id="chip-roles" data-chip={{userInfo.roles}}></div>
             </div>
@@ -85,6 +94,7 @@
                 </table>
             </div>
         </div>
+
         <div class="row">
             <div class="col s12">
                 <label>Status</label>
@@ -98,6 +108,8 @@
                 </div>
             </div>
         </div>
+
+        {{/if}}
 
         <button type="submit" class="waves-effect waves-light btn-large right">Ok</button>
     </form>
@@ -121,34 +133,43 @@
         return html;
     }
 
-    $(window).on('load', function() {
+    function getChipRoles(el){
+        if(el.length <= 0){
+            return false;
+        }
 
-        /*
-        *   Setup Role
-        */
-        var chipRoles = $('#chip-roles');
+        var chipRoles = el;
         var chipRoles_data = new Array();
         var chipRoles_get = JSON.parse(chipRoles.attr('data-chip'));
         for(var i in chipRoles_get){
             chipRoles_data.push({tag: i});
         }
-        chipRoles.material_chip({
-            autocompleteOptions: {
-                data: {
+        var rolesDefault = {
                     'user': null,
                     'agency': null,
                     'sale': null,
                     'publisher': null,
-                    'admin': null
-                },
+                    'operator': null
+                };
+        chipRoles.material_chip({
+            autocompleteOptions: {
+                data: rolesDefault,
                 minLength: 1
             },
             data: chipRoles_data,
             secondaryPlaceholder: '+Role',
             placeholder: 'Enter a role'
         });
-        ///////////////
-        var chipDataSources = $('#chip-data-sources');
+
+        return chipRoles;
+    }
+
+    function getChipDataSources(el){
+        if(el.length <= 0){
+            return false;
+        }
+
+        var chipDataSources = el;
         var chipDataSources_data = new Array();
         var chipDataSources_get = JSON.parse(chipDataSources.attr('data-chip'));
         for(var i in chipDataSources_get){
@@ -163,16 +184,31 @@
                 minLength: 1
             },
             data: chipDataSources_data,
-            secondaryPlaceholder: '+ sources',
+            secondaryPlaceholder: '+Sources',
             placeholder: 'Enter a data sources'
         });
 
+        return chipDataSources;
+    }
+
+    $(window).on('load', function() {
+
+        /*
+        *   Setup Role
+        */
+        var chipRoles = getChipRoles($('#chip-roles'));
+        ///////////////
+        var chipDataSources = getChipDataSources($('#chip-data-sources'));
 
         /*
         *   Setup Role Ads
         */
         var tableRolesAds = $("#table-roles-ads");
-        var dataRolesAds = JSON.parse(tableRolesAds.attr('data-roles'));
+        var dataRolesAds = {};
+        if(tableRolesAds.length > 0){
+            dataRolesAds = JSON.parse(tableRolesAds.attr('data-roles'));
+        }
+
         tableRolesAds.on("click",".roles-checkbox", function(){
             var id = parseInt($(this).attr('data-id'));
             if($(this).is(':checked')){
@@ -184,7 +220,10 @@
         });
         //////////////
         var tableRolesPlacement = $("#table-roles-placement");
-        var dataRolesPlacement = JSON.parse(tableRolesPlacement.attr('data-roles'));
+        var dataRolesPlacement = {};
+        if(tableRolesPlacement.length > 0){
+            dataRolesPlacement = JSON.parse(tableRolesPlacement.attr('data-roles'));
+        }
         tableRolesPlacement.on("click",".roles-checkbox", function(){
             var id = parseInt($(this).attr('data-id'));
             if($(this).is(':checked')){
@@ -205,6 +244,10 @@
             contentType: 'application/json',
             dataType:'json',
             success: function(data){
+                if($('#table-roles-ads').length <= 0){
+                    return false;
+                }
+
                 var t = $('#table-roles-ads').DataTable({
                     "ordering": false,
                     "info":     false
@@ -227,6 +270,9 @@
             contentType: 'application/json',
             dataType:'json',
             success: function(data){
+                if($('#table-roles-placement').length <= 0){
+                    return false;
+                }
                 var t = $('#table-roles-placement').DataTable({
                     "ordering": false,
                     "info":     false
@@ -248,29 +294,43 @@
         */
         $('#form-edit').submit(function(e){
             e.preventDefault();
-            var url = $(this).attr('action');
 
-            var roles = {};
-            var roles_data = chipRoles.material_chip('data');
-            for(var i in roles_data){
-                roles[roles_data[i].tag] = true;
-            }
-            var dataSources = {};
-            var dataSources_data = chipDataSources.material_chip('data');
-            for(var i in dataSources_data){
-                dataSources[dataSources_data[i].tag] = true;
-            }
-            
             var data = {};
             data._id = $('#_id').val();
             data.username = $('#username').val();
             data.email = $('#email').val();
-            data.dataSources = dataSources;
-            data.roles = roles;
-            data.status = ( $('#status:checked').length == 1 ) ? true : false;
+
+            var url = $(this).attr('action');
+
+            //get roles
+            if(chipRoles){
+                var roles = {};
+                var roles_data = chipRoles.material_chip('data');
+                for(var i in roles_data){
+                    roles[roles_data[i].tag] = true;
+                }
+                data.roles = roles;
+            }
+            
+            
+            //get dataSources
+            if(chipDataSources){
+                var dataSources = {};
+                var dataSources_data = chipDataSources.material_chip('data');
+                for(var i in dataSources_data){
+                    dataSources[dataSources_data[i].tag] = true;
+                }
+                data.dataSources = dataSources;
+            }
+
+            //get dataRolesAds && dataRolesPlacement
             data.rolesAds = dataRolesAds || {};
             data.rolesPlacement = dataRolesPlacement || {};
-
+            
+            if($('#status').length > 0){
+                data.status = ( $('#status:checked').length == 1 ) ? true : false;
+            }
+            
             $.post(url, data,
             function(data, status){
                 var alert = (data.success) ? 'alert-success' : 'alert-danger';

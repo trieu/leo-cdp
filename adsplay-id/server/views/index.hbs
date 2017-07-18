@@ -4,14 +4,16 @@
     </div>
 </div>
 
-{{#if isSuperAdmin}}
+{{#if isRegister}}
 <div class="row">
     <div class="col s12">
         <a href="/register">
-            <i class="material-icons" style="vertical-align: bottom;">perm_identity</i> Register
+            <i class="material-icons" style="vertical-align: bottom;">perm_identity</i> Create user
         </a>
     </div>
 </div>
+{{/if}}
+
 {{#if userInfo}}
 <div class="row">
     <div class="col s12">
@@ -20,6 +22,7 @@
                 <tr>
                     <th>UserName</th>
                     <th>Roles</th>
+                    <th>Roles view report</th>
                     <th>Status</th>
                     <th>Update</th>
                 </tr>
@@ -35,6 +38,13 @@
                         </div>
                         {{/each}}
                     </td>
+                    <td>
+                        {{#each dataSources}}
+                        <div class="chip">
+                            {{@key}}
+                        </div>
+                        {{/each}}
+                    </td>
                     <td>{{status}}</td>
                     <td>
                         <a href="/update/{{_id}}"><i class="material-icons">mode_edit</i></a>
@@ -45,5 +55,4 @@
         </table>
     </div>
 </div>
-{{/if}}
 {{/if}}

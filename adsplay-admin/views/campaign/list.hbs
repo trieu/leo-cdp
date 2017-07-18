@@ -6,7 +6,7 @@
     </div>
 </div>
 
-{{#if editable }}
+{{#if actions.campaign.new.show }}
 <p>
     <a href="/campaign/create" class="btn btn-primary" id="new-creative">
         <i class="fa fa-industry"></i> Ad Campaign
@@ -98,7 +98,9 @@
                 </ul>
             </td>
             <td>
+                {{#if actions.campaign.edit.show }}
             	<a title="Edit" href="/campaign/edit/\{{_id}}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+                {{/if}}
             </td>
         </tr>
     \{{/each}}

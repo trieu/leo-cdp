@@ -2,6 +2,7 @@ import React from 'react';
 import Filter from '../components/Helpers/Filter';
 import TotalAll from '../components/Totals/TotalAll';
 import ReactTable from 'react-table';
+import {CSVLink, CSVDownload} from 'react-csv';
 
 import { connect } from 'react-redux';
 import { fetchDetailCategory } from '../reducers/Details/action';
@@ -43,6 +44,16 @@ class Detail extends React.Component {
 			<div>
 				<Filter ref="Filter" userInfo={this.props.userInfo} onClick={this.handleClick.bind(this)} />
 				<TotalAll sum={this.props.sum} bookingHide />
+				<div className="row">
+					<div className="col-xs-12 col-sm-3 col-md-2 padding-bottom-1rem">
+						<CSVLink data={ this.props.data }
+						filename={"detail-film.csv"}
+						className="ui button green"
+						target="_blank">
+							Export CSV
+						</CSVLink>
+					</div>
+				</div>
 				<div className="row">
 					<div className="col-xs-12 col-sm-12 col-md-12 padding-bottom-1rem">
 						<ReactTable className = '-striped -highlight'
