@@ -133,10 +133,6 @@ exports.newPassword = function (req, res){
 
 exports.save = function (req, res){
     var data = {};
-    
-    if(req.body.password){
-        req.body.password = Encryption.hash(req.body.password);
-    }
 
     if(req.user.roles['superadmin'] || req.user.roles['admin']){
 
@@ -164,6 +160,17 @@ exports.save = function (req, res){
             req.body.rolesPlacement = {};
         }
 
+        if(req.body.password){
+            req.body.password = Encryption.hash(req.body.password);
+        }
+
+    }
+    //người dùng thường
+    else{
+        //không thể cập nhật password của tài khoản khác
+        if(req.body.password && req.user._id == req.body._id){
+            req.body.password = Encryption.hash(req.body.password);
+        }
     }
 
     data = req.body;
