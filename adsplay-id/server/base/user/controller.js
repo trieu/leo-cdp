@@ -179,14 +179,8 @@ exports.save = function (req, res){
 
     if(req.user.roles['superadmin'] || req.user.roles['admin']){
 
-        if(req.body.dataSources){
-            req.body.dataSources = convertObjBoolean(req.body.dataSources);
-        }
-        if(req.body.roles){
-            req.body.roles = convertObjBoolean(req.body.roles);
-            if(!req.user.roles['superadmin']){
-                delete req.body.roles['admin'];
-            }
+        if(req.body.password){
+            req.body.password = Encryption.hash(req.body.password);
         }
 
         if(req.body.rolesAds){
@@ -203,8 +197,12 @@ exports.save = function (req, res){
             req.body.rolesPlacement = {};
         }
 
-        if(req.body.password){
-            req.body.password = Encryption.hash(req.body.password);
+        req.body.dataSources = (req.body.dataSources) ? convertObjBoolean(req.body.dataSources) : {};
+
+        req.body.roles = (req.body.roles) ? convertObjBoolean(req.body.roles) : {user: true};
+        
+        if(!req.user.roles['superadmin']){
+            delete req.body.roles['admin'];
         }
 
     }

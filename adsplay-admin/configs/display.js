@@ -18,9 +18,9 @@ exports.menus = {
         text: " Reports",
         icon: '<i class="fa fa-fw fa-list"></i>',
         menuChild: [
-            {title: '', text: ' Summary Ad KPI', icon: '<i class="fa fa-fw fa-line-chart"></i>', link: '/creative/visualize/metrics', roles: ["*"] },
-            {title: '', text: ' PayTV Inventory', icon: '<i class="fa fa-fw fa-signal"></i>', link: '/monitor/inventory-paytv', roles: ["*"] },
-            {title: '', text: ' FptPlay Inventory', icon: '<i class="fa fa-fw fa-signal"></i>', link: '/monitor/inventory-report', roles: ["*"] },
+            {title: '', text: ' Summary Ad KPI', icon: '<i class="fa fa-fw fa-line-chart"></i>', link: '/creative/visualize/metrics', roles: ["superadmin", "admin", "operator"] },
+            {title: '', text: ' PayTV Inventory', icon: '<i class="fa fa-fw fa-signal"></i>', link: '/monitor/inventory-paytv', roles: ["superadmin", "admin", "operator"] },
+            {title: '', text: ' FptPlay Inventory', icon: '<i class="fa fa-fw fa-signal"></i>', link: '/monitor/inventory-report', roles: ["superadmin", "admin", "operator"] },
             // {title: '', text: ' Booking & Inventory', icon: '<i class="fa fa-fw fa-line-signal"></i>', link: '/monitor/inventory', roles: ["superadmin", "admin", "operator"] },
             // {title: '', text: ' Forecast Inventory', icon: '<i class="fa fa-fw fa-signal"></i>', link: '/monitor/inventory-predicted', roles: ["superadmin", "admin", "operator"] },
         ]

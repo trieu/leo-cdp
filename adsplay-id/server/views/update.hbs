@@ -303,29 +303,32 @@
             var url = $(this).attr('action');
 
             //get roles
+            var roles = {};
             if(chipRoles){
-                var roles = {};
                 var roles_data = chipRoles.material_chip('data');
                 for(var i in roles_data){
                     roles[roles_data[i].tag] = true;
                 }
-                data.roles = roles;
             }
             
             
             //get dataSources
+            var dataSources = {};
             if(chipDataSources){
-                var dataSources = {};
                 var dataSources_data = chipDataSources.material_chip('data');
                 for(var i in dataSources_data){
                     dataSources[dataSources_data[i].tag] = true;
                 }
-                data.dataSources = dataSources;
             }
 
             //get dataRolesAds && dataRolesPlacement
             data.rolesAds = dataRolesAds || {};
             data.rolesPlacement = dataRolesPlacement || {};
+
+            data.roles = roles;
+            data.dataSources = dataSources;
+            
+            //console.log(data)
             
             if($('#status').length > 0){
                 data.status = ( $('#status:checked').length == 1 ) ? true : false;
