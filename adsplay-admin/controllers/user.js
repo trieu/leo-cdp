@@ -54,7 +54,7 @@ router.get('/find/:id', function (req, res, next) {
 
 router.get('/update/:id/:status', function (req, res, next) {
 	var data = modelUtils.baseModel(req);
-	if(data.isSuperAdminGroup){
+	if(data.isSuperAdmin){
 
 		User.findOne({ _id: req.params.id })
 		.exec(function(err, doc){

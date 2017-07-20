@@ -9,7 +9,13 @@ module.exports = {
     , static_domain: 'https://monitor.adsplay.net'
     , ads_cdn_domain: 'https://ads-cdn.fptplay.net/static/ads/instream'
 
-    , api_paytv: 'https://fbox-partners.fpt.vn'
+    , api_paytv: 'https://fbox-partners.fpt.vn',
+
+    sso: {
+        sso_url: "http://id.adsplay.net",
+        sso_url_ssl: "https://id.adsplay.net", 
+        callback_url: "/callback"
+    }
 
     , ftp_video: {
     	host: "118.69.184.35",

@@ -182,27 +182,27 @@ router.post('/save/:adType', function (req, res) {
 
 		var form = new formidable.IncomingForm();
 		form.uploadDir = './upload-temp/';
-		console.log('new')
+		
 		form.parse(req, function (err, fields, files) {
 			if (err) {
-				console.log('111')
 				console.error(err);
 			}
 			else {
-				console.log(files);
-				console.log(fields);
+				// console.log(files);
+				// console.log(fields);
 				// permission isAdminGroup {1000: 1, 1001: 1};
 				// permission editable {1000: 1, 1001: 1, 1007: 1, 1003: 1, 1006: 1};
+				var creative = JSON.parse(fields.creative);
 				var option = {
 						url: url,
-						user: req.user,
+						user: req.session.user,
 						adType: req.params.adType,
 						fields: fields,
 						files: files,
 					}
 					
-					loggerAds.info('new ads id ', req.params.adType, req.user)
-					creativeModel.save(option, res);
+				loggerAds.info(req.session.user.username + ' edit new ads id ', creative.id);
+				creativeModel.save(option, res);
 			}
 		});
 	}
@@ -219,7 +219,7 @@ router.post('/:id/update', function (req, res) {
 
     var body = req.body;
 	console.log('update')
-	loggerAds.info('update ads id ', req.params.adType, req.user)
+	loggerAds.info('update ads id ', req.params.adType, req.session.user)
 	creativeModel.update(url, body, res);
 });
 
@@ -228,8 +228,8 @@ router.get('/delete/:id', function (req, res) {
     var data = modelUtils.baseModel(req);
     var id = req.params.id || -1;
 
-    console.log("Super admin is " + data.isSuperAdminGroup);
-    if (data.isSuperAdminGroup) {
+    console.log("Super admin is " + data.isSuperAdmin);
+    if (data.isSuperAdmin) {
     	//FIXME
     	res.json({message: 'success'});
     } else {

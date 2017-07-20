@@ -21,11 +21,13 @@ exports.baseModel = function(req) {
     };
     data.dashboard_title = "Real-time Dashboard";
     data.user = display_utils.getUserGuest;
+    data.isSuperAdmin = false;
     if(req.session.user){
         data.user = req.session.user;
+        data.isSuperAdmin = (data.user.roles['superadmin']) ? true : false;
         data.menus = display_utils.getMenus(data.user.roles);
         data.actions = display_utils.getActions(data.user.roles);
     }
-    console.log(data.user.roles, data.actions)
+    
     return data;
 }

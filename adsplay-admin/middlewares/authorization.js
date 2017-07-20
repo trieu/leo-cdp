@@ -8,7 +8,7 @@ var check_roles = function(arr){
 		res.locals.roles = false;
 		if(!_.isEmpty(arr)){
 			for(var i in arr){
-				if(arr[i] == req.user.roles || arr[i] == '*'){
+				if(arr[i] == req.session.user.roles || arr[i] == '*'){
 					res.locals.roles = true;
 				}
 			}
@@ -58,7 +58,7 @@ var access = function(req, res, next){
 function check_auth(req, res, next){
 	var log = "not logged";
 	if (req.isAuthenticated()) {
-		var log = JSON.stringify(req.user)+ "\n Request:   "+ req.originalUrl+"\n Time:      "+new Date().toJSON();
+		var log = JSON.stringify(req.session.user)+ "\n Request:   "+ req.originalUrl+"\n Time:      "+new Date().toJSON();
 		console.log("\n"+ log);
 		next();
 	}

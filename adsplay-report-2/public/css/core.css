@@ -688,6 +688,7 @@ Sidebar
     text-align: left;
     border: none;
     padding: 1em;
+    font-size: 13px;
   }
   .no-touch .has-children ul a:hover {
     color: #1784c7;
@@ -713,6 +714,7 @@ Sidebar
     right: 1.8em;
   }
   .cd-top-nav .has-children ul {
+    min-width: 160px;
     background-color: #1c1f22;
     top: 100%;
     right: 0;

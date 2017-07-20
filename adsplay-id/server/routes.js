@@ -10,6 +10,10 @@ module.exports = function(app){
         res.send('PONG');
     });
 
+    app.get('/404', function(req, res){
+        res.send('<h1>404 Not Found</h1>');
+    });
+
     app.get('/file/adsplayid', function (req, res, next) {
         res.sendFile(pathRoot + '/public/js/adsplayid.js');
     });

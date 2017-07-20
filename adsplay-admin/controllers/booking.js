@@ -55,7 +55,7 @@ router.get('/list/all', function (req, res) {
             });
             data.bookings = filteredList;
         }
-        Booking.allByUser(req.user.id, data, function (err, data) {
+        Booking.allByUser(req.session.user.id, data, function (err, data) {
             res.render('ad-report/booking-list-all', data)
         });
 

@@ -4,6 +4,7 @@ module.exports = function(roles){
         //console.log('check role: ', req.user)
         //check error
         if(typeof (req.user) === 'undefined'){
+            message = '<h1>Expired session</h1>';
             return res.send(message);
         }
         if(typeof (roles) === 'undefined'){

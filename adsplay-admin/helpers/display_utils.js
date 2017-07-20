@@ -32,19 +32,19 @@ exports.getActions = function(roles){
         for(var j in actions[i]){
             
             var rolesArr = actions[i][j].roles;
-            console.log(roles, actions[i][j].roles)
+            //console.log(roles, actions[i][j].roles)
 
             temp[i][j].show = false;
             for(var r in rolesArr){
                 
                 if(roles[rolesArr[r]]){
-                    console.log(rolesArr[r])
+                    //console.log(rolesArr[r])
                     temp[i][j].show = true;
                 }
             }
         }
     }
-    console.log(temp)
+    //console.log(temp)
     return temp;
 }
 

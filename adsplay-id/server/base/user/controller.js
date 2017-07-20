@@ -128,7 +128,50 @@ exports.newPassword = function (req, res){
     data = {};
     data.pageTitle = "update password";
     data.USER = req.user;
-    res.render('new-password', data);
+    if(data.USER._id == req.params.id){
+        return res.render('change-password', data);
+    }
+    else{
+        if(req.user.roles['superadmin'] || req.user.roles['admin'] || req.user.roles['operator']){
+            data.userInfo = {_id: req.params.id};
+            return res.render('new-password', data);
+        }
+        return res.render('change-password', data);
+    }
+    
+}
+exports.changePasswordPage = function (req, res){
+    data = {};
+    data.pageTitle = "update password";
+    data.USER = req.user;
+    return res.render('change-password', data);
+}
+exports.changePassword = function (req, res){
+    var _id = req.user._id || req.body._id;
+
+    User.findOne({'_id': _id} , function(err, user) {
+        console.log(user)
+        if (err)
+            return res.json({success: false, message: err});
+
+        if (!user)
+            return res.json({success: false, message: "No user found."});
+            
+        if (!Encryption.compare(req.body.oldpassword, user.password))
+            return res.json({success: false, message: "Oops! Wrong password."});
+
+        // save pass
+        var data = {};
+            data.password = Encryption.hash(req.body.password);
+            User.findUserUpdate({"_id": _id}, data, function(err, user){
+                if(err){
+                    return res.json({success: false, message: err});
+                }
+
+                return res.json({success: true, message: "Changed password"});
+            });
+        
+    });
 }
 
 exports.save = function (req, res){
@@ -183,7 +226,6 @@ exports.save = function (req, res){
         return res.json({success: true, message: "Success! updated"});
     });
 }
-
 
 // ---------------------------------------------------------
 // logout

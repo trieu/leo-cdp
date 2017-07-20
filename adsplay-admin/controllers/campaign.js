@@ -220,7 +220,7 @@ router.get('/:id', function (req, res) {
                 });
             }
             var campaign = new Campaign();
-            campaign.allByUser(req.user.id, data, function (err, data) {
+            campaign.allByUser(req.session.user.id, data, function (err, data) {
                 res.render('ad-report/campaigns', data)
             })
         })

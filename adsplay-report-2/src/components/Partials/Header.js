@@ -1,6 +1,7 @@
 import React from 'react';
 import Search from './Search';
 import Logout from '../Auth/Logout';
+import ChangePassword from '../Auth/ChangePassword';
 import AppData from '~/configs/AppData';
 
 export default class Header extends React.Component {
@@ -22,6 +23,7 @@ export default class Header extends React.Component {
 							</a>
 
 							<ul>
+								<li><ChangePassword text="Thay đổi mật khẩu" /></li>
 								<li><Logout text="Đăng Xuất" /></li>
 							</ul>
 						</li>

@@ -5,6 +5,7 @@ var modelUtils = require('../helpers/model_utils');
 var svgCaptcha = require('svg-captcha');
 var fs = require('fs');
 var adsplayid = require('../middlewares/adsplayid');
+var site = require('../configs/site.js');
 
 module.exports = function (app) {
 
@@ -35,12 +36,8 @@ module.exports = function (app) {
 
     app.use('/vast', require('./vast'));
     //______________ middleware auth
-    var config = {
-        sso_url: "http://id.adsplay.net",
-        callback_url: "/callback"
-    }
-    app.use(adsplayid(config).authentication);
-    app.route('/user/logout').get(adsplayid(config).logout);
+    app.use(adsplayid(site.sso).authentication);
+    app.route('/user/logout').get(adsplayid(site.sso).logout);
 
     //______________ all router with authorization
     app.use('/creative', require('./creative'));

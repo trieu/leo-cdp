@@ -152,6 +152,8 @@ img{max-width: 100%}
 
 .top-nav>.open>.dropdown-menu>li>a {
     white-space: normal;
+    font-size: 13px;
+    padding: 5px 10px;
 }
 
 ul.message-dropdown {

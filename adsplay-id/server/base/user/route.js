@@ -44,7 +44,9 @@ module.exports = function(app){
     app.post('/update', Roles(['*']), User.save);
 
     app.get('/new-password/:id', Roles(['*']), User.newPassword);
-	app.post('/new-password', Roles(['*']), User.save);
+	app.post('/new-password', Roles(['superadmin', 'admin', 'operator']), User.save);
+    app.get('/change-password', Roles(['*']), User.changePasswordPage);
+    app.post('/change-password', Roles(['*']), User.changePassword);
 
 	// app.post('/forgotPassword', User.forgotPassword);
 	// app.post('/resendVerificationEmail', User.resendVerificationEmail);
