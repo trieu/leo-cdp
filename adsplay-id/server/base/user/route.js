@@ -34,8 +34,8 @@ module.exports = function(app){
     /**
      * create
      */
-    app.get('/register', Roles(['superadmin', 'admin']), User.register);
-	app.post('/register', Roles(['superadmin', 'admin']), User.registerSave);
+    app.get('/register', Roles(['superadmin', 'admin', 'admin-paytv']), User.register);
+	app.post('/register', Roles(['superadmin', 'admin', 'admin-paytv']), User.registerSave);
 
     /**
      * update
@@ -44,7 +44,7 @@ module.exports = function(app){
     app.post('/update', Roles(['*']), User.save);
 
     app.get('/new-password/:id', Roles(['*']), User.newPassword);
-	app.post('/new-password', Roles(['superadmin', 'admin', 'operator']), User.save);
+	app.post('/new-password', Roles(['superadmin', 'admin', 'operator', 'admin-paytv']), User.save);
     app.get('/change-password', Roles(['*']), User.changePasswordPage);
     app.post('/change-password', Roles(['*']), User.changePassword);
 

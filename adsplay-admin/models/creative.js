@@ -58,7 +58,7 @@ exports.list = function (url, data, callback) {
                 if (data.user.roles["superadmin"] || data.user.roles["admin"] || data.user.roles["operator"]) {
                     filteredList.push(crt);
                 }
-                else if (data.user.roles["agency"] || data.user.roles["sale"] || data.user.roles["client"]) {
+                else if (data.user.roles["agency"] || data.user.roles["sale"] || data.user.roles["client"] || data.user.roles["admin-paytv"]) {
                     //console.log(crt.id, data.user.rolesAds, data.user.rolesAds[crt.id])
                     if(adName.indexOf(data.user.username) >= 0 || data.user.rolesAds[crt.id]){
                         filteredList.push(crt);

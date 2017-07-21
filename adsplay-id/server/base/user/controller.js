@@ -21,7 +21,7 @@ exports.index = function (req, res){
     
     if(req.user){
         data.USER = req.user;
-        data.isRegister = data.USER.roles['superadmin'] || data.USER.roles['admin'];
+        data.isRegister = data.USER.roles['superadmin'] || data.USER.roles['admin'] || data.USER.roles['admin-paytv'];
         
         if(data.USER.roles['superadmin']){
             User.find({})
@@ -35,7 +35,7 @@ exports.index = function (req, res){
                     res.render('index', data);
                 });
         }
-        else if(data.USER.roles['admin']){
+        else if(data.USER.roles['admin'] || data.USER.roles['admin-paytv']){
             User.find({})
                 .or({"username": data.USER.username})
                 .or({"managedby": data.USER.username})
@@ -132,7 +132,7 @@ exports.newPassword = function (req, res){
         return res.render('change-password', data);
     }
     else{
-        if(req.user.roles['superadmin'] || req.user.roles['admin'] || req.user.roles['operator']){
+        if(req.user.roles['superadmin'] || req.user.roles['admin'] || req.user.roles['operator'] || req.user.roles['admin-paytv']){
             data.userInfo = {_id: req.params.id};
             return res.render('new-password', data);
         }
@@ -177,7 +177,7 @@ exports.changePassword = function (req, res){
 exports.save = function (req, res){
     var data = {};
 
-    if(req.user.roles['superadmin'] || req.user.roles['admin']){
+    if(req.user.roles['superadmin'] || req.user.roles['admin'] || req.user.roles['admin-paytv']){
 
         if(req.body.password){
             req.body.password = Encryption.hash(req.body.password);
@@ -203,6 +203,8 @@ exports.save = function (req, res){
         
         if(!req.user.roles['superadmin']){
             delete req.body.roles['admin'];
+
+            delete req.body.roles['admin-paytv'];
         }
 
     }

@@ -10,7 +10,7 @@ exports.menus = {
             {title: 'Flight Management', text: ' Ad Flight', icon: '<i class="fa fa-fw fa-list"></i>', link: '/flight', roles: ["superadmin", "admin", "operator"] },
             {title: 'Ad Live Event Management', text: ' Ad Live Events', icon: '<i class="fa fa-fw fa-list"></i>', link: '/event', roles: ["superadmin", "admin", "operator"] },
             {title: '', text: ' New Ad Unit', icon: '<i class="fa fa-fw fa-play"></i>', link: '/creative/new', roles: ["superadmin", "admin", "operator"] },
-            {title: '', text: ' New PayTV Ad Unit', icon: '<i class="fa fa-fw fa-play"></i>', link: '/creative/new/video-paytv', roles: ["superadmin", "admin", "operator"] },
+            {title: '', text: ' New PayTV Ad Unit', icon: '<i class="fa fa-fw fa-play"></i>', link: '/creative/new/video-paytv', roles: ["superadmin", "admin", "operator", "admin-paytv"] },
         ]
     },
     menuReport: {
@@ -19,7 +19,7 @@ exports.menus = {
         icon: '<i class="fa fa-fw fa-list"></i>',
         menuChild: [
             {title: '', text: ' Summary Ad KPI', icon: '<i class="fa fa-fw fa-line-chart"></i>', link: '/creative/visualize/metrics', roles: ["superadmin", "admin", "operator"] },
-            {title: '', text: ' PayTV Inventory', icon: '<i class="fa fa-fw fa-signal"></i>', link: '/monitor/inventory-paytv', roles: ["superadmin", "admin", "operator"] },
+            {title: '', text: ' PayTV Inventory', icon: '<i class="fa fa-fw fa-signal"></i>', link: '/monitor/inventory-paytv', roles: ["superadmin", "admin", "operator", "admin-paytv"] },
             {title: '', text: ' FptPlay Inventory', icon: '<i class="fa fa-fw fa-signal"></i>', link: '/monitor/inventory-report', roles: ["superadmin", "admin", "operator"] },
             // {title: '', text: ' Booking & Inventory', icon: '<i class="fa fa-fw fa-line-signal"></i>', link: '/monitor/inventory', roles: ["superadmin", "admin", "operator"] },
             // {title: '', text: ' Forecast Inventory', icon: '<i class="fa fa-fw fa-signal"></i>', link: '/monitor/inventory-predicted', roles: ["superadmin", "admin", "operator"] },
