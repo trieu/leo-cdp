@@ -4,7 +4,7 @@ exports.command = function(input, output, option, callback){
 
     //option = {videoCodec: 'libx264', audioCodec: 'libmp3lame', format: 'mp4', bitrate: '360p'}
 
-    var bitrate = {"240p": "426x240", "360p": "640x360", "480p": "854x480"};
+    var bitrate = {"240p": "426x240", "360p": "640x360", "480p": "854x480", "720p":"1280x720"};
 
     for(var i in bitrate){
         if (option.bitrate == i) {

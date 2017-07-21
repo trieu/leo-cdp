@@ -312,6 +312,7 @@ function youtubeValid(url) {
 
 var convert_video = function(obj, crtName, callback){
 
+    //console.log(obj)
     //convert and upload cdn
     var seedStr = stringUtils.removeUnicodeSpace(crtName) + (new Date()).getTime();
     var hash = crypto.createHash('md5').update(seedStr).digest('hex');
@@ -320,8 +321,8 @@ var convert_video = function(obj, crtName, callback){
     var input = obj.url;
     //output file convert with name = convert-video.mp4
     var output = obj.folder + "convert-video.mp4";
-    var option = {videoCodec: 'libx264', audioCodec: 'aac', format: 'mp4', bitrate: '360p'}; //h.264 = libx264
-
+    var option = {videoCodec: 'libx264', audioCodec: 'aac', format: 'mp4', bitrate: obj.bitrate || '360p'}; //h.264 = libx264
+    //console.log(option)
     convert.command(input, output, option, function () {
 
         // output push on cdn
@@ -332,10 +333,27 @@ var convert_video = function(obj, crtName, callback){
     });
 }
 
+var isPayTVPlacement = function(data){
+    //console.log(data)
+    for(var i in data){
+        console.log(data[i])
+        if(parseInt(data[i]) == 320){
+            return true;
+        }
+    }
+    return false;
+}
+
 var save_tvc = function(urlSave, crt, media, file, res){
     if(!_.isEmpty(file)){
         console.log('1 upload file');
         upload.video(file, function (obj) {
+            //check placement paytv convert 720p
+            var isPayTV = isPayTVPlacement(crt.tgpms);
+            if(isPayTV){
+                obj.bitrate = '720p';
+            }
+
             //convert and upload cdn
             convert_video(obj, crt.name, function(mediaName){
                 crt.media = mediaName;
@@ -346,12 +364,18 @@ var save_tvc = function(urlSave, crt, media, file, res){
     else if(media != '' && youtubeValid(media)){
         console.log('2 upload youtube');
         upload.youtube(media, function (obj) {
+            //check placement paytv convert 720p
+            var isPayTV = isPayTVPlacement(crt.tgpms);
+            if(isPayTV){
+                obj.bitrate = '720p';
+            }
+
             //convert and upload cdn
-                convert_video(obj, crt.name, function(mediaName){
-                    crt.media = mediaName;
-                    dataUtils.request_send_data(urlSave, crt, res);
-                });
+            convert_video(obj, crt.name, function(mediaName){
+                crt.media = mediaName;
+                dataUtils.request_send_data(urlSave, crt, res);
             });
+        });
         
     }
     else{
@@ -402,8 +426,6 @@ var save_display_html = function(urlSave, crt, media, file, res){
         dataUtils.request_send_data(urlSave, crt, res);
     }
 };
-
-
 
 
 

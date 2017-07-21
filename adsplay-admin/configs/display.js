@@ -30,8 +30,8 @@ exports.menus = {
         text: " Analytics",
         icon: '<i class="fa fa-fw fa-line-chart"></i>',
         menuChild: [
-            {title: '', text: ' Ad Metrics', icon: '<i class="fa fa-fw fa-line-chart"></i>', link: '/monitor', roles: ["*"] },
-            {title: '', text: ' Audience Report', icon: '<i class="fa fa-fw fa-bar-chart-o"></i>', link: '/monitor/user', roles: ["*"] },
+            {title: '', text: ' Ad Metrics', icon: '<i class="fa fa-fw fa-line-chart"></i>', link: '/monitor', roles: ["superadmin", "admin", "operator", "sale"] },
+            {title: '', text: ' Audience Report', icon: '<i class="fa fa-fw fa-bar-chart-o"></i>', link: '/monitor/user', roles: ["superadmin", "admin", "operator", "sale"] },
             // {title: '', text: ' Live Event EPL', icon: '<i class="fa fa-fw fa-file-excel-o"></i>', link: '/monitor/live-event', roles: ["superadmin", "admin", "operator"] },
             // {title: '', text: ' GeoLocation Analytics', icon: '<i class="fa fa-fw fa-map-marker"></i>', link: '/monitor/geolocation', roles: ["superadmin", "admin", "operator"] },
         ]
