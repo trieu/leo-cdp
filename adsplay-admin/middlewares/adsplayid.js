@@ -20,7 +20,8 @@ module.exports = function(config){
     
     var authentication = function(req, res, next) {
         console.log('authentication');
-        var URL_BASE = req.protocol + '://' + req.get('host');
+        var URL_BASE = 'https://' + req.get('host');
+        //var URL_BASE = req.protocol + '://' + req.get('host');
 
         if(req.session.user){
             next();
@@ -49,7 +50,8 @@ module.exports = function(config){
     };
 
     var logout = function(req, res, next) {
-        var URL_BASE = req.protocol + '://' + req.get('host');
+        var URL_BASE = 'https://' + req.get('host');
+        //var URL_BASE = req.protocol + '://' + req.get('host');
         console.log('logout');
         req.session.destroy();
         return res.redirect(sso_url_ssl+"/logout?redirect_uri=" + URL_BASE + callback_url);

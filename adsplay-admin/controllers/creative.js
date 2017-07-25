@@ -201,7 +201,7 @@ router.post('/save/:adType', function (req, res) {
 						files: files,
 					}
 					
-				loggerAds.info(req.session.user.username + ' edit new ads id ', creative.id);
+				loggerAds.info(req.session.user.username + ' edit ads id ', creative.id);
 				creativeModel.save(option, res);
 			}
 		});
@@ -218,8 +218,8 @@ router.post('/:id/update', function (req, res) {
     var url = data.site.api_domain + '/api/creatives/' + id;
 
     var body = req.body;
-	console.log('update')
-	loggerAds.info('update ads id ', req.params.adType, req.session.user)
+	//console.log('update status')
+	loggerAds.info(req.session.user.username + ' updated status = ' + body.status + ' with ads id ', id);
 	creativeModel.update(url, body, res);
 });
 

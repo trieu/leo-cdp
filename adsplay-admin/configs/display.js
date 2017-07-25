@@ -44,13 +44,13 @@ exports.actions = {
             roles: ["superadmin", "admin", "operator"]
         },
         edit: {
-            roles: ["superadmin", "admin", "operator"]
+            roles: ["superadmin", "admin", "operator", "admin-paytv"]
         },
         delete: {
             roles: ["superadmin", "admin", "operator"]
         },
         copy: {
-            roles: ["superadmin", "admin", "operator"]
+            roles: ["superadmin", "admin", "operator", "admin-paytv"]
         }
     },
     placement: {
