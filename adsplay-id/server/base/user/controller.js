@@ -186,21 +186,20 @@ exports.save = function (req, res){
         if(req.body.rolesAds){
             req.body.rolesAds = convertObjBoolean(req.body.rolesAds, true);
         }
-        else{
-            req.body.rolesAds = {};
-        }
 
         if(req.body.rolesPlacement){
             req.body.rolesPlacement = convertObjBoolean(req.body.rolesPlacement, true);
         }
-        else{
-            req.body.rolesPlacement = {};
+
+        if(req.body.dataSources){
+            req.body.dataSources = convertObjBoolean(req.body.dataSources);
         }
 
-        req.body.dataSources = (req.body.dataSources) ? convertObjBoolean(req.body.dataSources) : {};
-
-        req.body.roles = (req.body.roles) ? convertObjBoolean(req.body.roles) : {user: true};
+        if(req.body.roles){
+            req.body.roles = convertObjBoolean(req.body.roles);
+        }
         
+        //not superadmin not grant admin
         if(!req.user.roles['superadmin']){
             delete req.body.roles['admin'];
 
