@@ -349,10 +349,10 @@ var save_tvc = function(urlSave, crt, media, file, res){
         console.log('1 upload file');
         upload.video(file, function (obj) {
             //check placement paytv convert 720p
-            var isPayTV = isPayTVPlacement(crt.tgpms);
-            if(isPayTV){
-                obj.bitrate = '720p';
-            }
+            // var isPayTV = isPayTVPlacement(crt.tgpms);
+            // if(isPayTV){
+            //     obj.bitrate = '720p';
+            // }
 
             //convert and upload cdn
             convert_video(obj, crt.name, function(mediaName){
@@ -365,10 +365,10 @@ var save_tvc = function(urlSave, crt, media, file, res){
         console.log('2 upload youtube');
         upload.youtube(media, function (obj) {
             //check placement paytv convert 720p
-            var isPayTV = isPayTVPlacement(crt.tgpms);
-            if(isPayTV){
-                obj.bitrate = '720p';
-            }
+            // var isPayTV = isPayTVPlacement(crt.tgpms);
+            // if(isPayTV){
+            //     obj.bitrate = '720p';
+            // }
 
             //convert and upload cdn
             convert_video(obj, crt.name, function(mediaName){

@@ -404,7 +404,7 @@
         var url = '/creative/save/1'; //number is adType
         var media = $('#video_file')[0].files[0] || $("#video_url").val() || $("#media").val();
         var data = buildData($(this), media); //formdata
-        sendForm(url, data, 60000); //send ajax (url, data, timeout)
+        sendForm(url, data, 120000); //send ajax (url, data, timeout)
     })
 
         {{#if crt}}

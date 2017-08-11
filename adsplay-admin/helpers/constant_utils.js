@@ -32,7 +32,8 @@ var fptplay_placements = {
     307: 'TVC_LIVE_STREAM_ANDROID_SMART_TV',
     308: 'TVC_VOD_ANDROID_SMART_TV',
     446: 'TVC_LiveStream_Auto',
-    192458: 'DANET_SPOTX_WEB'
+    192458: 'DANET_SPOTX_WEB',
+    198475: 'DANET_SPOTX_APP'
 };
 
 var userNames = {1000: 'Admin', 1001: 'Manager', 1002: 'Customer', 1003: 'epl_fptplay',

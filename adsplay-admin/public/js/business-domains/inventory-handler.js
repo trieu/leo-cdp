@@ -109,12 +109,18 @@ $(document).ready(function(){
 				);
 
 				var pie_data = [];
+				var pie_data_imp = [];
 
 				for(var i in result){
 					var pf = check_device(result[i].pfId);
-					pie_data.push({key: pf.device, sum: result[i].totalPv, color: pf.color});
+
+					pie_data.push({key: pf.device, sum: (result[i].totalPv) ? result[i].totalPv : 1, color: pf.color});
+					
+					pie_data_imp.push({key: pf.device, sum: (result[i].totalImp) ? result[i].totalImp: 1, color: pf.color});
 				}
-				pie_chart(pie_data);
+				console.log(pie_data, pie_data_imp)
+				pie_chart("#piechart svg",pie_data);
+				pie_chart("#piechartImp svg",pie_data_imp);
 
 				table_data('#table-wrap', result, 
 					[	
@@ -164,7 +170,7 @@ $(document).ready(function(){
 
 	}
 
-	function pie_chart(data){
+	function pie_chart(el, data){
 		
 	    nv.addGraph(function() {
 			var chart = nv.models.pieChart()
@@ -179,7 +185,7 @@ $(document).ready(function(){
 			.labelThreshold(.03)
 			.labelType("percent");
 
-			d3.select("#piechart svg")
+			d3.select(el)
 			.datum(data)
 			.transition().duration(350)
 			.call(chart);
@@ -295,7 +301,8 @@ $(document).ready(function(){
 
 			var count = 0;
 			for(var j in arr_data){
-				count += arr_data[j][arr_sum[i].sum];
+				var number = (arr_data[j][arr_sum[i].sum]) ? arr_data[j][arr_sum[i].sum] : 0;
+				count += number;
 			}
 			if (isNaN(count)){
 				count = 0;
@@ -323,7 +330,8 @@ $(document).ready(function(){
 		for(var i in arr_sum){
 			var count = 0;
 			for(var j in arr_data){
-				count += arr_data[j][arr_sum[i].sum];
+				var number = (arr_data[j][arr_sum[i].sum]) ? arr_data[j][arr_sum[i].sum] : 0;
+				count += number;
 			}
 			result.push({key: arr_sum[i].key, sum: count});
 		}

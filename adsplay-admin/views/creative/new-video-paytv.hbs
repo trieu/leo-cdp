@@ -95,6 +95,10 @@
                     <label>Click-through URL</label>
                     <input type="url" class="form-control" name="cliThr" placeholder="Enter Click-through URL">
                 </div>
+                <div class="form-group" id="tracking-placement">
+                    <label>Third-party tracking URL</label>
+                    <input type="url" class="form-control" name="vastXml3rd" placeholder="Enter Third-party Ad URL">
+                </div>
                 <div class="form-group" id="crt-status">
                     <label>Ad Status</label>
                     <select class="form-control" id="ads_status" name="status">
@@ -317,7 +321,7 @@ $('#form_creative').submit(function(e){
     var url = '/creative/save/1'; //number is adType
     var media = $('#video_file')[0].files[0] || $("#video_url").val() || $("#media").val();
     var data = buildData($(this), media); //formdata
-    sendForm(url,data,60000); //send ajax (url, data, timeout)
+    sendForm(url, data, 120000); //send ajax (url, data, timeout)
 })
 
 {{#if crt}}
@@ -328,3 +332,4 @@ $('#form_creative').submit(function(e){
 
 </script>
 
+<script src="js/business-domains/vast-xml.js"></script>

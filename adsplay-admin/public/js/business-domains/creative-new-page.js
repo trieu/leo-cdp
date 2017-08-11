@@ -1,4 +1,5 @@
 $(window).load(function() {
+	console.log('run')
 	//validation
 	$form = $('#form_creative');	
 	$form.on('blur', 'input[required], input.optional, select.required', validator.checkField)
@@ -278,10 +279,10 @@ function getDataJson(url, method){
 function buildData(_this, media){
 	var data = getFormData(_this);
 
-	if(data['vastXml3rd'] === '' ){
-		data['is3rdAd'] = false;
-	} else {
+	if(data['vastXml3rd'] && data['vastXml3rd'] !== '' ){
 		data['is3rdAd'] = true;
+	} else {
+		data['is3rdAd'] = false;
 	}
 
 	// convert fields is array
@@ -387,9 +388,12 @@ function sendForm(url, data, timeout){
 
 	promise.fail(function(jqXHR, textStatus) {
 		console.log("@@report:  " + textStatus);
-		if( textStatus == "timeout" || textStatus == "error") {
-			$(".loader").remove();
+		$(".loader").remove();
+		if( jqXHR.status == 504) {
 			window.location = location.protocol+'//'+location.host+'/creative/list';
+		}
+		else if(jqXHR.status == 502){
+			return alert(jqXHR.statusText)
 		}
 	});
 }

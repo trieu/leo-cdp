@@ -534,7 +534,7 @@ span.impress-text {
 }
 /*monitor folder css*/
 
-#piechart,#linechart,#stackedchart{
+#piechart,#piechartImp,#linechart,#stackedchart{
     display: block;
     height: 400px;
     width: 100%;
