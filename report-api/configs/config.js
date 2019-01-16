@@ -1,4 +1,5 @@
+//account email for alert notofication 
 module.exports = {
-    email: 'tuananh.spktit09@gmail.com',
-    password: '@tuananh212@'
+    email: '',
+    password: ''
 };

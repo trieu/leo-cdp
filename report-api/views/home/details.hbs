@@ -143,35 +143,33 @@
 			success: function(data) {
 				var chart_1 = '#chart-1';
 				$(chart_1).next('.loader').remove();
-				chartApi("http://d1.adsplay.net/ping", chart_1, data);
+				chartApi("http://d1.blueseed.tv/ping", chart_1, data);
 
 				var chart_2 = '#chart-2';
 				$(chart_2).next('.loader').remove();
-				chartApi("http://d2.adsplay.net/ping", chart_2, data);
+				chartApi("http://d2.blueseed.tv/ping", chart_2, data);
 
 				var chart_3 = '#chart-3';
 				$(chart_3).next('.loader').remove();
-				chartApi("http://d3.adsplay.net/ping", chart_3, data);
+				chartApi("http://d3.blueseed.tv/ping", chart_3, data);
 
 				var chart_4 = '#chart-4';
 				$(chart_4).next('.loader').remove();
-				chartApi("http://d4.adsplay.net/ping", chart_4, data);
+				chartApi("http://d4.blueseed.tv/ping", chart_4, data);
 
 				var chart_5 = '#chart-5';
 				$(chart_5).next('.loader').remove();
-				chartApi("http://d5.adsplay.net/ping", chart_5, data);
+				chartApi("http://d5.blueseed.tv/ping", chart_5, data);
 
 				var chart_6 = '#chart-6';
 				$(chart_6).next('.loader').remove();
-				chartApi("http://d6.adsplay.net/ping", chart_6, data);
+				chartApi("https://admin.hadarone.com/ping", chart_6, data);
 
-				var chart_7 = '#chart-7';
-				$(chart_7).next('.loader').remove();
-				chartApi("http://monitor.adsplay.net/ping", chart_7, data);
+			
 
 				var chart_8 = '#chart-8';
 				$(chart_8).next('.loader').remove();
-				chartApi("http://api.adsplay.net/ping", chart_8, data);
+				chartApi("https://api.hadarone.com/ping", chart_8, data);
 
 			}
 		});

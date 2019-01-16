@@ -5,5 +5,5 @@
 
 
 module.exports = {
-    dataLocation : {host: "127.0.0.1", port: 6480}
+    dataLocation : {host: "127.0.0.1", port: 6379}
 };

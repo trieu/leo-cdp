@@ -3,10 +3,13 @@
  */
 
 
-var userNames = {1000:'Admin', 1001: 'Manager', 1002: 'Customer'};
-
-
-exports.getUserName = function(id) {
-    return userNames[id];
+var userNames = {
+    1000: 'Admin',
+    1001: 'Manager',
+    1002: 'Customer'
 };
 
+
+exports.getUserName = function (id) {
+    return userNames[id];
+};
