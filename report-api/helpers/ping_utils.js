@@ -11,6 +11,7 @@ var hosts = [
 	'http://d4.blueseed.tv/ping',
 	'http://d5.blueseed.tv/ping',
 	'https://admin.hadarone.com/ping',
+	'https://apiv2.hadarone.com/ping',
 	'https://api.hadarone.com/ping'
 ];
 
