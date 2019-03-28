@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/ace.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            height: 100%;
+        }
+
+        #wrap {
+            height: 100%;
+            position: relative;
+            padding: 0px 50px;
+            background: #ccc;
+        }
+
+        #coder {
+            display: block;
+            position: relative;
+            width: 100%;
+            height: 400px;
+            border: 3px solid red;
+        }
+
+        #preview {
+            display: block;
+            position: relative;
+            width: 100%;
+            height: 50%;
+            border: 3px solid blue;
+            background: #fff;
+        }
+
+        #preview iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        #status {
+            padding: 25px 0;
+            height: 50px;
+        }
+    </style>
+
+</head>
+
+<body>
+    
+    <div id="wrap">
+            <h1 style="text-align: center">Live Coding JavaScript with HTML</h1>
+        <div id="status">
+            <p>
+                <i class="fa fa-spinner fa-spin fa-fw"></i> generating preview</p>
+        </div>
+
+        <div id="coder">
+                &lt;!DOCTYPE html&gt;
+
+                &lt;html lang=&quot;en&quot;&gt;
+                
+                &lt;head&gt;
+                  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1&quot;&gt;
+                
+                  &lt;!-- Insert HadarOne VIDEO PLAYER CSS in the head tag  --&gt;
+                  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://static.hadarone.com/ajs/video-player/video-js.min.css&quot;&gt;
+                  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://static.hadarone.com/ajs/video-player/hadarone-player-skin.css&quot;&gt;
+                
+                &lt;/head&gt;
+                
+                &lt;body&gt;
+                
+                  &lt;ins class=&quot;hadarone-video-player&quot; data-vast-url=&quot;https://d2.hadarone.com/vast3?li=2082&quot;&gt;
+                    &lt;video class=&quot;video-js vjs-default-skin&quot; controls preload=&quot;auto&quot; width=&quot;640&quot; height=&quot;264&quot; data-setup=&#39;{}&#39;&gt;
+                      &lt;source src=&quot;https://clip.vietnamnetjsc.vn/media/2018/03/30/19/33/CNT7-30032018_vnn.mp4&quot; type=&#39;video/mp4&#39; /&gt;
+                    &lt;/video&gt;
+                  &lt;/ins&gt;
+                
+                  &lt;!-- Put HadarOne VIDEO PLAYER JS at the end of body tag --&gt;
+                  &lt;script src=&quot;https://static.hadarone.com/ajs/video-player/hadarone-video-player.min.js&quot;&gt;&lt;/script&gt;
+                
+                &lt;/body&gt;
+                
+                &lt;/html&gt;            	
+           
+        </div>
+
+        <div id="preview"></div>
+
+    </div>
+
+
+    <script>
+        var editor = ace.edit("coder");
+        // editor.setTheme("ace/theme/monokai");
+        editor.getSession().setMode("ace/mode/html");
+        editor.getSession().setUseWorker(false);
+
+        function myFunction() {
+
+            $("#status p").delay(500).fadeOut(200);
+
+            var code = editor.getValue();
+
+            var iframe = document.createElement('iframe');
+
+            var preview = document.getElementById('preview');
+            var content = '<!doctype html>' + code;
+
+            preview.appendChild(iframe);
+
+            iframe.contentWindow.document.open('text/htmlreplace');
+            iframe.contentWindow.document.write(content);
+            iframe.contentWindow.document.close();
+
+            // $("#preview").html(code);
+
+        }
+
+        myFunction();
+
+        var timeout;
+
+        $('#search-form .search-terms').on('keydown', function (e) {
+            // get keycode of current keypress event
+            var code = (e.keyCode || e.which);
+
+            // do nothing if it's an arrow key
+            if (code == 37 || code == 38 || code == 39 || code == 40) {
+                return;
+            }
+
+            // do normal behaviour for any other key
+            $('#search-items #autocom').fadeIn();
+        });
+
+        $("#coder").on('keyup', function () {
+
+            $("#status p").fadeIn(200);
+
+            console.log("yea");
+
+            if (timeout) {
+                clearTimeout(timeout);
+                timeout = null;
+            }
+
+            $("#preview").empty();
+            timeout = setTimeout(myFunction, 500)
+
+        });
+    </script>
+
+</body>
+
+</html>

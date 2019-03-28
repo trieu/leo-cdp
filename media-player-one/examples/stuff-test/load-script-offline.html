@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="">
+    <title> Offline Caching JS | HadarOne Ad Platform</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="https://static.hadarone.com/ajs/video-player/video-js.min.css">
+    <link rel="stylesheet" href="https://static.hadarone.com/ajs/video-player/hadarone-player-skin.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row m-sm">
+            <div class="col text-center">
+                <div> Load by API (MP4) </div>
+                <div id="videoPlaceholder" style="width: 80%;">
+                </div>
+            </div>
+        </div>
+
+        <div class="row m-sm">
+            <div class="col text-center">
+                <div> Load by API (YouTube) </div>
+                <div id="videoPlaceholder2" style="width: 80%;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="width: 100%; margin: 0 auto;">
+        <h1>Offline Caching JS</h1>
+
+        <script src="//localhost:8080/js/basket.js"></script>
+        <script>
+            function loadVideoMp4() {
+
+                var placeHolderId = 'videoPlaceholder';
+                var videoSource = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_vnn.mp4';
+                var posterUrl = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_1.png';
+                var adUrls = ['https://d2.hadarone.com/vast3?li=1531'];
+                var skipAdTime = 5; // show skip button after 5 seconds
+
+                var autoplay = location.hash.indexOf('autoplay') > 0;
+                var player = HadarOnePlayer.create(autoplay, placeHolderId, videoSource, posterUrl, adUrls, skipAdTime);
+                player.volume(0.4);
+            }
+
+            function loadVideoYoutube() {
+
+                var placeHolderId = 'videoPlaceholder2';
+                var videoSource = 'https://www.youtube.com/watch?v=L1Vbu-i01t0';
+                var adUrls = null;
+                // var adUrls = ['https://d2.hadarone.com/vast3?li=1531'];
+                var skipAdTime = 5; // show skip button after 5 seconds
+                var autoplay = location.hash.indexOf('autoplay') > 0;
+                var player = HadarOnePlayer.create(autoplay, placeHolderId, videoSource, '', adUrls, skipAdTime);
+                player.volume(0.4);
+            }
+
+            basket
+                .require({
+                    //url: '//static-org.hadarone.com/ajs/postscribe.min.js'
+                    url: '//static-org.hadarone.com/ajs/video-player/hadarone-video-player.min.js'
+                })
+                .then(function () {
+                    // Success
+                    console.log('ok');
+                    loadVideoMp4();
+                    loadVideoYoutube();
+                    //postscribe(document.body, "<script>document.write('<b>this is an ad <\/b>')<\/script>")
+                }, function (error) {
+                    // There was an error fetching the script
+                    console.log(error);
+                });
+        </script>
+    </div>
+
+</body>
+
+</html>

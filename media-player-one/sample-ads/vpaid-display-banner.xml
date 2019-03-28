@@ -1,0 +1,35 @@
+<VAST version="2.0">
+    <Ad>
+        <InLine>
+            <AdSystem>Hadarone</AdSystem>
+            <AdTitle>Display-banner in video player demo</AdTitle>
+            <Creatives>
+                <Creative>
+                    <Linear>
+                        <AdParameters>                                &lt;!-- InPlayerDisplayAd --&gt;                               
+                            &lt;script type="text/javascript"&gt;
+                                google_ad_client = "ca-pub-9034869050940123";
+                                google_ad_slot = "5374446615";
+                                google_ad_width = 300;
+                                google_ad_height = 250;
+                            &lt;/script&gt;
+                            &lt;!-- Banner in Video Player --&gt;
+                            &lt;script type="text/javascript" src="https://pagead2.googlesyndication.com/pagead/show_ads.js"&gt;
+                            &lt;/script&gt;
+                        </AdParameters>
+                        <MediaFiles>
+                            <!--
+                            <MediaFile type="application/javascript" apiFramework="VPAID" height="250" width="300" delivery="progressive">
+                            <![CDATA[https://vast.hadarone.com/js/v1-hadarone-vpaid.js?db=1]]>
+                            </MediaFile>               
+                             -->
+                        <MediaFile type="application/javascript" apiFramework="VPAID" height="250" width="300" delivery="progressive">
+                            <![CDATA[ https://vast.hadarone.com/sample-ads/vpaid-js/overlay-banner.js]]>
+                        </MediaFile>
+                        </MediaFiles>  
+                    </Linear>
+                </Creative>
+            </Creatives>
+        </InLine>
+    </Ad>
+</VAST>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <base href="https://static-org.hadarone.com/" />
+
+  <!--  bootstrap  -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+
+
+  <!-- HadarOne VIDEO PLAYER CSS   -->
+  <link rel="stylesheet" media="screen" href="/ajs/video-player/video-js.min.css">
+  <link rel="stylesheet" media="screen" href="/ajs/video-player/hadarone-player-skin.css">
+
+
+  <title>Demo HadarOne Video Player </title>
+
+
+  <link rel="icon" href="data:;base64,=">
+  <style>
+    .m-sm {
+      margin: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <h3 style="text-align: center"> Demo HadarOne Video Player</h3>
+
+  <div class="container">
+
+    <div class="row m-sm">
+      <div class="col-xs-1 text-center">
+        <div> VPAID demo: https://d2.hadarone.com/vast3?li=2082 </div>
+
+        <ins class="hadarone-video-player" data-vast-url="https://d2.hadarone.com/vast3?li=2082" data-skip-after="6">
+          <video  playsinline="true" class="video-js vjs-default-skin vjs-16-9" controls preload="auto" width="480" height="264" data-setup='{}'>
+            <source src="http://clip.vietnamnetjsc.vn/media//2018/04/02/17/05/chum_vnn.mp4" type='video/mp4' />
+          </video>
+        </ins>
+      </div>
+    </div>
+
+    <div class="row m-sm">
+      <div class="col-xs-1 text-center">
+        <div> VAST demo: https://d2.hadarone.com/vast3?li=1531 </div>
+        <ins class="hadarone-video-player" data-vast-url="https://d2.hadarone.com/vast3?li=1531">
+          <video playsinline="true" class="video-js vjs-default-skin vjs-16-9" controls preload="auto" width="480" height="264" data-setup='{}'>
+            <source src="https://clip.vietnamnetjsc.vn/media/2018/03/30/19/33/CNT7-30032018_vnn.mp4" type='video/mp4' />
+          </video>
+        </ins>
+      </div>
+    </div>
+
+    <div class="row m-sm">
+      <div class="col-xs-1 text-center">
+        <div> VAST demo: https://static-org.hadarone.com/ajs/vpaid/test-vpaid.xml?db=1 </div>
+
+        <ins class="hadarone-video-player" data-vast-url-1="https://d2.hadarone.com/vast3?li=0" data-vast-url-2="https://static-org.hadarone.com/ajs/vpaid/test-vpaid.xml?db=1">
+          <video playsinline="true" class="video-js vjs-default-skin vjs-16-9" controls preload="auto" width="480" height="264" data-setup='{}'>
+            <source src="https://clip.vietnamnetjsc.vn/media//2018/03/26/12/15/quidditch_vnn.mp4" type='video/mp4' />
+          </video>
+        </ins>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- HadarOne VIDEO PLAYER JS   -->
+  <script src="/ajs/video-player/hadarone-video-player.min.js"></script>
+
+
+
+</body>
+
+</html>

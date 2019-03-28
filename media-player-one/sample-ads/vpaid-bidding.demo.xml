@@ -1,0 +1,48 @@
+<VAST version="2.0">
+    <Ad >
+        <InLine>
+            <AdSystem>HadarOne</AdSystem>
+            <AdTitle></AdTitle>
+            <Description/>
+            <Survey/>
+            <Error></Error>
+            <Creatives>
+                <Creative sequence="1" AdID="">
+                    <Linear skipoffset="00:00:01" >
+                        <Duration>00:00:30</Duration>
+                        <AdParameters>
+                            &lt;VAST version=&quot;2.0&quot;&gt;
+                                &lt;Ad&gt;
+                                    &lt;Wrapper&gt;
+                                        &lt;AdSystem&gt;HeaderBidding&lt;/AdSystem&gt;
+                                        &lt;VASTAdTagURI&gt;
+                                            &lt;![CDATA[ $$VAST_URL$$ ]]&gt;
+                                        &lt;/VASTAdTagURI&gt;           
+                                        &lt;Creatives&gt;
+                                            &lt;Creative id=&quot;&quot;&gt;
+                                                &lt;Linear skipoffset=&quot;00:00:02&quot;&gt;
+                                                    &lt;Duration&gt;00:00:15&lt;/Duration&gt;
+                                                    &lt;TrackingEvents&gt;
+                                                    &lt;/TrackingEvents&gt;
+                                                    &lt;VideoClicks&gt;&lt;/VideoClicks&gt;
+                                                &lt;/Linear&gt;
+                                            &lt;/Creative&gt;
+                                            &lt;Creative id=&quot;&quot;&gt;
+                                                &lt;CompanionAds&gt;&lt;/CompanionAds&gt;
+                                            &lt;/Creative&gt;
+                                        &lt;/Creatives&gt;
+                                    &lt;/Wrapper&gt;
+                                &lt;/Ad&gt;
+                            &lt;/VAST&gt;
+                        </AdParameters>
+                        <MediaFiles>
+                            <MediaFile type="application/javascript" apiFramework="VPAID" height="360" width="640" delivery="progressive">
+                                <![CDATA[https://static.hadarone.com/ajs/vpaid/v1-hadarone-vpaid.min.js?gmwid=1517294862&gmzid=1517295325&hdpmid=1064&fb=https%3A%2F%2Fd2.hadarone.com%2Fvast3%3Fli%3D2082+]]>
+                            </MediaFile>
+                        </MediaFiles>
+                    </Linear>
+                </Creative>
+            </Creatives>
+        </InLine>
+    </Ad>
+</VAST>

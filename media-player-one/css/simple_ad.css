@@ -1,0 +1,283 @@
+.hd1_in_image {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    margin: 0 !important
+}
+
+.hd1_in_image * {
+    box-sizing: border-box
+}
+
+.hd1_in_image__bg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    margin: 0 !important;
+    background: linear-gradient(180deg, rgba(20, 106, 235, 0) 0%, #FFF 23.2%, #FF0 63.64%, #FF1 100%);
+    -webkit-animation: fadeIn24 1s .6s both;
+    animation: fadeIn24 1s .6s both
+}
+
+.hd1_in_image__close {
+    position: absolute;
+    bottom: 80px;
+    right: 5px;
+    background: url(http://static-org.hadarone.com/demo/in-picture/in-picture-ad-close.svg) no-repeat;
+    background-size: 100% 100%;
+    width: 22px;
+    height: 22px;
+    margin: 0 !important;
+    -webkit-animation: fadeIn24 1s .4s both;
+    animation: fadeIn24 1s .4s both;
+    cursor: pointer;
+    z-index: 1
+}
+
+@-webkit-keyframes fadeIn24 {
+    from {
+        opacity: 0
+    }
+    to {
+        opacity: 1
+    }
+}
+
+@keyframes fadeIn24 {
+    from {
+        opacity: 0
+    }
+    to {
+        opacity: 1
+    }
+}
+
+@-webkit-keyframes fadeInLeft24 {
+    from {
+        opacity: 0;
+        -webkit-transform: translate3d(-50%, 0, 0);
+        transform: translate3d(-50%, 0, 0)
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none
+    }
+}
+
+@keyframes fadeInLeft24 {
+    from {
+        opacity: 0;
+        -webkit-transform: translate3d(-50%, 0, 0);
+        transform: translate3d(-50%, 0, 0)
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none
+    }
+}
+
+@-webkit-keyframes fadeInRight24 {
+    from {
+        opacity: 0;
+        -webkit-transform: translate3d(50%, 0, 0);
+        transform: translate3d(50%, 0, 0)
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none
+    }
+}
+
+@keyframes fadeInRight24 {
+    from {
+        opacity: 0;
+        -webkit-transform: translate3d(50%, 0, 0);
+        transform: translate3d(50%, 0, 0)
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none
+    }
+}
+
+@-webkit-keyframes zoomIn24 {
+    from {
+        opacity: 0;
+        -webkit-transform: scale3d(.3, .3, .3);
+        transform: scale3d(.3, .3, .3)
+    }
+    50% {
+        opacity: 1
+    }
+    100% {
+        opacity: 0
+    }
+}
+
+@keyframes zoomIn24 {
+    from {
+        opacity: 0;
+        -webkit-transform: scale3d(.3, .3, .3);
+        transform: scale3d(.3, .3, .3)
+    }
+    50% {
+        opacity: 1
+    }
+    100% {
+        opacity: 0
+    }
+}
+
+@-webkit-keyframes zoomOut24 {
+    from {
+        opacity: 0;
+        -webkit-transform: scale3d(2, 2, 2) translateY(150px);
+        transform: scale3d(2, 2, 2) translateY(150px)
+    }
+    10% {
+        -webkit-transform: scale3d(2.5, 2.5, 2.5);
+        transform: scale3d(2.5, 2.5, 2.5)
+    }
+    50% {
+        opacity: 1
+    }
+}
+
+@keyframes zoomOut24 {
+    from {
+        opacity: 0;
+        -webkit-transform: scale3d(2, 2, 2) translateY(150px);
+        transform: scale3d(2, 2, 2) translateY(150px)
+    }
+    10% {
+        -webkit-transform: scale3d(2.5, 2.5, 2.5);
+        transform: scale3d(2.5, 2.5, 2.5)
+    }
+    50% {
+        opacity: 1
+    }
+}
+
+@-webkit-keyframes shake24 {
+    from,
+    50% {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0)
+    }
+    5%,
+    15%,
+    25%,
+    35%,
+    45% {
+        -webkit-transform: translate3d(-5px, 0, 0);
+        transform: translate3d(-5px, 0, 0)
+    }
+    10%,
+    20%,
+    30%,
+    40% {
+        -webkit-transform: translate3d(5px, 0, 0);
+        transform: translate3d(5px, 0, 0)
+    }
+}
+
+@keyframes shake24 {
+    from,
+    50% {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0)
+    }
+    5%,
+    15%,
+    25%,
+    35%,
+    45% {
+        -webkit-transform: translate3d(-5px, 0, 0);
+        transform: translate3d(-5px, 0, 0)
+    }
+    10%,
+    20%,
+    30%,
+    40% {
+        -webkit-transform: translate3d(5px, 0, 0);
+        transform: translate3d(5px, 0, 0)
+    }
+}
+
+@-webkit-keyframes spin24 {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg)
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg)
+    }
+}
+
+@keyframes spin24 {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg)
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg)
+    }
+}
+
+@-webkit-keyframes zoomIn25 {
+    from {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1)
+    }
+    25% {
+        -webkit-transform: scale3d(1.2, 1.2, 1.2);
+        transform: scale3d(1.2, 1.2, 1.2)
+    }
+    50% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1)
+    }
+    750% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1)
+    }
+    100% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1)
+    }
+}
+
+@keyframes zoomIn25 {
+    from {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1)
+    }
+    25% {
+        -webkit-transform: scale3d(1.2, 1.2, 1.2);
+        transform: scale3d(1.2, 1.2, 1.2)
+    }
+    50% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1)
+    }
+    750% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1)
+    }
+    100% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1)
+    }
+}

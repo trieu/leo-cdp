@@ -1,0 +1,53 @@
+<html>
+
+<head>
+    <!-- Load dependent stylesheets. -->
+    <link rel="stylesheet" href="https://googleads.github.io/videojs-ima/node_modules/video.js/dist/video-js.min.css" />
+    <link rel="stylesheet" href="https://googleads.github.io/videojs-ima/node_modules/videojs-contrib-ads/dist/videojs.ads.css"
+    />
+    <link rel="stylesheet" href="https://googleads.github.io/videojs-ima/dist/videojs.ima.css" />
+</head>
+
+<body>
+    <h1>VideoJS Google IMA Player: Preroll VPAID with Header Bidding</h1>
+    <br>
+    <video id="content_video" class="video-js vjs-default-skin" muted controls preload="auto" width="640" height="360">
+        <source src="http://rmcdn.2mdn.net/Demo/vast_inspector/android.mp4" type="video/mp4" />
+    </video>
+    <!-- Load dependent scripts -->
+    <script src="https://googleads.github.io/videojs-ima/node_modules/video.js/dist/video.min.js"></script>
+    <script src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
+    <script src="https://googleads.github.io/videojs-ima/node_modules/videojs-contrib-ads/dist/videojs.ads.min.js"></script>
+    <script src="https://googleads.github.io/videojs-ima/dist/videojs.ima.js"></script>
+
+    <script>
+        var player = videojs('content_video');
+
+      //var adUrls = ['https://vast.hadarone.com/sample-ads/vpaid-bidding.xml'];
+       var adUrls = ['https://vast.hadarone.com/sample-ads/simple-vpaid.xml'];
+        var options = {
+            id: 'content_video',
+            adTagUrl: adUrls[0]
+        };
+
+        player.ima(options);
+        var initEvent = 'click';
+
+        if (videojs.IS_IPHONE || videojs.IS_IPAD || videojs.IS_ANDROID) {
+            initEvent = 'tap';
+        }
+
+        player.one(initEvent, function () {
+
+            // Initialize videojs-ima
+
+        });
+        // On mobile devices, you must call initializeAdDisplayContainer as the result
+        // of a user action (e.g. button click). If you do not make this call, the SDK
+        // will make it for you, but not as the result of a user action. For more info
+        // see our examples, all of which are set up to work on mobile devices.
+        // player.ima.initializeAdDisplayContainer();
+    </script>
+</body>
+
+</html>

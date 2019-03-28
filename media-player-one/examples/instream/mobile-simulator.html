@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="">
+    <title> Mobile OnScreen Interactive Ad - DaHuong | HadarOne </title>
+
+    <link rel="stylesheet" href="https://adasiaholdings.com/demo/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <style>
+        #mobileview {
+            width: 100%;
+            height: 560px;
+            border: 0;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <!-- Heder -->
+        <header>
+            <div class="logo_wrapper">
+                <a href="http://adstudio.blueseed.tv" class="box_link"></a>
+                <img style="height: 35px" src="//static.hadarone.com/adstudio/assets/img/logo-blueseed-white.png">
+            </div>
+            <div class="ad_description">
+                <h1>Mobile OnScreen Interactive Ad - DaHuong </h1>
+                <p> - </p>
+                <br>
+            </div>
+        </header>
+
+        <!-- Main -->
+        <section class="content_wrapper">
+            <div class="sp_wrapper" style="width: 380px; height: 690px;">
+                <div class="sp_camera"></div>
+                <div class="sp_mic">
+                    <div></div>
+                    <div></div>
+                </div>
+                <section style="box-sizing: border-box; overflow: hidden; width: 382px;height: 560px; margin: 16px auto 0; padding: 6px; border: 2px solid #f0f0f0;">
+                    <div style="margin:10px;">
+                        <iframe id="mobileview" src="about:blank" style="visibility: hidden;;"></iframe>
+                    </div>
+                </section>
+                <div class="sp_btn"></div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>©HadarOne.com. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script id="view_template" type="text/x-handlebars-template">
+        <link rel="stylesheet" href="https://adasiaholdings.com/demo/style.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" >
+        <link rel="stylesheet" href="https://static.hadarone.com/ajs/video-player/video-js.min.css">
+        <link rel="stylesheet" href="https://static.hadarone.com/ajs/video-player/hadarone-player-skin.css">
+       
+        <div class="entry">
+            <h1>{{title}}</h1>
+            <div class="body">
+                {{body}}
+            </div>
+        </div>
+
+        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+
+        <div class="row m-sm">
+            <div class="col text-center">
+                <div> Load by Code and auto play </div>
+                <div></div>
+                <div id="videoPlaceholder" style="width: 100%;height: 250px">
+                </div>
+            </div>
+        </div>
+
+        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>     
+        <div class="thin_box" style="width: 100%; height: 24px; margin-bottom: 8px;"></div>
+        <div class="thin_box" style="width: 100%; height: 24px; margin-bottom: 8px;"></div>
+        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+        
+    </script>
+
+    <script id="ad_template"  type="text/x-handlebars-template">
+        window.mutedVideoAd = false;
+        jQuery(document).ready(function () {
+            var d = $('#videoPlaceholder');
+            var w = d.width();
+            var h = d.height();
+
+            var mp4 = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_vnn.mp4';
+            var webm = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_vnn.webm';
+            var img = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_1.png';
+            var adUrls = ['https://d5.hadarone.com/vast3?li=1531'];
+            var skipAdTime = 5; // show skip button after 5 seconds
+
+            var autoplay = location.hash.indexOf('autoplay') > 0;
+            var player = HadarOnePlayer.createVideo(autoplay, 'videoPlaceholder', mp4, webm, img, w, h, adUrls,
+            skipAdTime);
+            player.volume(0.2);
+        });
+        window.debugHadarOneVideoPlayer = true;
+    </script>
+
+    <script>
+        function loadAdTemplateInMobileSimulatedView() {
+            var ad_template = document.getElementById("ad_template").innerHTML;
+            var source = document.getElementById("view_template").innerHTML;
+            var template = Handlebars.compile(source);
+            var context = {
+                title: "My New Post",
+                body: "This is my content!"
+            };
+            var html = template(context);
+            var mobileview = document.querySelector('#mobileview');
+            var dstDoc = mobileview.contentDocument || mobileview.contentWindow.document;
+            dstDoc.write(html);
+            dstDoc.write(`<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"><\/script>`)
+            dstDoc.write(`<script src="https://static.hadarone.com/ajs/video-player/hadarone-video-player.min.js"><\/script>`);
+            dstDoc.write(`<script src="https://static.hadarone.com/ajs/video-player/videojs.youtube.src.js"><\/script>`);
+            dstDoc.write(`<script>` + ad_template + `<\/script>`);
+            dstDoc.close();     
+            mobileview.style.visibility = 'visible';  
+        }
+        loadAdTemplateInMobileSimulatedView();
+    </script>
+</body>
+
+</html>

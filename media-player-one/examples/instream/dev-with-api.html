@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediaPlayer DEV MODE with API</title>
+  <base href="http://127.0.0.1:8080/" />
+
+  <!-- HadarOne VIDEO PLAYER CSS   -->
+  <link rel="stylesheet" media="screen" href="https://devjs.hadarone.com/css/video-js.min.css">
+  <link rel="stylesheet" media="screen" href="https://devjs.hadarone.com/css/hadarone-player-skin.css">
+
+  <!-- HadarOne VIDEO PLAYER JS   -->
+  <script>
+    //window.mediaPlayerOneDoNotTrack = true;
+    window.mediaPlayer1Configs = {};
+    window.mediaPlayer1Configs.watermarkImage = 'https://static.hadarone.com/ajs/video-player/css/mediaplayer1logo.png';
+    window.mediaPlayer1Configs.watermarkUrl = 'https://mediaplayer.one';
+    window.mediaPlayer1Configs.watermarkPosition = 'top-right'; // or 'top-left'
+  </script>
+  <script src="https://devjs.hadarone.com/src/video.src.js"></script>
+
+  <script src="https://devjs.hadarone.com/src/videojs.vimeo.src.js"></script>
+  <script src="https://devjs.hadarone.com/src/videojs.youtube.src.js"></script>
+  <script src="https://devjs.hadarone.com/src/videojs.facebook.src.js"></script>
+  <script src="https://devjs.hadarone.com/src/videojs.watermark.src.js"></script>
+  <script src="https://devjs.hadarone.com/src/vast-player.js"></script>
+  <script src="https://devjs.hadarone.com/src/viewability.src.js"></script>
+  <script src="https://devjs.hadarone.com/src/videojs.ga.src.js"></script>
+
+  <script src="https://devjs.hadarone.com/src/mediaplayer.src.js"></script>
+
+
+  <style>
+    h1 {
+      margin: auto;
+      text-align: center;
+    }
+
+    h3 {
+      width: 90%;
+      margin: auto;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    .videoholder {
+      width: 50%;
+      margin: auto;
+    }
+
+    body {
+      padding: 12px;
+    }
+
+    @media only screen and (max-width: 768px) {
+
+      /* For mobile phones: */
+      [class="videoholder"] {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+
+<body onload="init()">
+  <h1>Demo MediaPlayer.ONE with VAST Ads</h1>
+
+
+  <hr>
+  <h3>Facebook video source </h3>
+  <div id="videoPlaceholder3" class="videoholder"></div>
+
+  <hr>
+  <h3>YouTube video source </h3>
+  <div id="videoPlaceholder2" class="videoholder"></div>
+
+  <hr>
+  <h3>Vimeo video source </h3>
+  <div id="videoPlaceholder5" class="videoholder"></div>
+
+  <hr>
+  <h3>Adaptive bitrate streaming source </h3>
+  <div id="videoPlaceholder4" class="videoholder"></div>
+
+  <hr>
+  <h3>MP4 video source </h3>
+  <div id="videoPlaceholder1" class="videoholder"></div>
+
+
+  <script>
+    window.debugMediaPlayerOne = true;
+    var autoplayVideo = false;
+
+    function loadVideoMp4() {
+      var placeHolderId = 'videoPlaceholder1';
+      var videoSource = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_vnn.mp4';
+      var posterUrl = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_1.png';
+      var adUrls = ['https://d2.hadarone.com/vast3?li=1531'];
+      var adConfigs = [{
+          // adUrl: 'https://tag.gammaplatform.com/adx/request/?wid=1427708470&zid=1474529463&content_page_url=__page-url__&cb=__random-number__&player_width=__player-width__&player_height=__player-height__&device_id=__device-id__',
+          adUrl: 'https://d2.hadarone.com/vast3?li=20820',
+          adType: 'preroll'
+        },
+        {
+          adUrl: 'https://d2.hadarone.com/vast3?li=2082',
+          adType: 'midproll',
+          timeAfter: 30 // show ads after 15 seconds
+        },
+        {
+          adUrl: 'https://d2.hadarone.com/vast3?li=1531',
+          adType: 'midproll',
+          timeAfter: 15 // show ads after 4 minutes (240 seconds)
+        },
+        {
+          adUrl: 'https://d2.hadarone.com/vast3?li=1531',
+          adType: 'midproll',
+          timeAfter: 35 // show ads after 8 minutes 
+        },
+        {
+          adUrl: 'https://d2.hadarone.com/vast3?li=2082',
+          adType: 'postroll', // seconds
+          skipAdTime: 5
+        }
+      ];
+      var skipAdTime = 2; // show skip button after 5 seconds
+      var autoplay = autoplayVideo;
+      var onReady = function (player) {
+        player.volume(0.6);
+      }
+      MediaPlayerOne.create(autoplay, placeHolderId, videoSource, posterUrl, [], skipAdTime, adConfigs, onReady);
+    }
+
+    function loadVideoYoutube() {
+      var placeHolderId = 'videoPlaceholder2';
+      var videoSource = 'https://www.youtube.com/embed/XRuDQ6aYeD0';
+      var adUrls = ['https://d2.hadarone.com/vast3?li=2082'];
+      var defaultSkipAdTime = 3; // show skip button after 3 seconds
+      var autoplay = autoplayVideo;
+      var onReady = function (player) {
+        //player.muted(true);
+        // player.play();
+      }
+      var adConfigs = [{
+          adUrl: 'https://d2.hadarone.com/vast3?li=1531',
+          adType: 'preroll',
+          skipAdTime: 1
+        },
+        {
+          adUrl: 'https://d2.hadarone.com/vast3?li=2082',
+          adType: 'midproll',
+          skipAdTime: 5,
+          timeAfter: 60 // show ads after 60 seconds
+        },
+        {
+          adUrl: 'https://d2.hadarone.com/vast3?li=2082',
+          adType: 'postroll', // seconds
+          skipAdTime: 5
+        }
+      ];
+      MediaPlayerOne.create(autoplay, placeHolderId, videoSource, '', adUrls, defaultSkipAdTime, adConfigs, onReady);
+    }
+
+    function loadVideoVimeo() {
+      var placeHolderId = 'videoPlaceholder5';
+      var videoSource = 'https://vimeo.com/322948147';
+      var adUrls = ['https://d2.hadarone.com/vast3?li=2082'];
+      var defaultSkipAdTime = 3; // show skip button after 3 seconds
+      var autoplay = autoplayVideo;
+      var onReady = function (player) {
+        //player.muted(true);
+        // player.play();
+      }
+      var adConfigs = [{
+          adUrl: 'https://d2.hadarone.com/vast3?li=1531',
+          adType: 'preroll',
+          skipAdTime: 5
+        },
+        {
+          adUrl: 'https://d2.hadarone.com/vast3?li=2082',
+          adType: 'midproll',
+          skipAdTime: 5,
+          timeAfter: 15 // show ads after 15 seconds
+        },
+        {
+          adUrl: 'https://d2.hadarone.com/vast3?li=2082',
+          adType: 'postroll', // seconds
+          skipAdTime: 5
+        }
+      ];
+      MediaPlayerOne.create(autoplay, placeHolderId, videoSource, '', adUrls, defaultSkipAdTime, adConfigs, onReady);
+    }
+
+    function loadVideoFacebook() {
+      var placeHolderId = 'videoPlaceholder3';
+      var videoSource = 'https://www.facebook.com/xemgiday.tv/videos/569952993466706/';
+      var adUrls = ['https://d2.hadarone.com/vast3?li=2082'];
+      var skipAdAfter = 2; // show skip button after 5 seconds
+      var autoplay = autoplayVideo;
+      var onReady = function (player) {
+        // player.volume(0.9);
+        // player.muted(true);
+        // player.play();
+      }
+      var adConfigs = [{
+          adUrl: 'https://d1.blueseed.tv/vast3?plm=1405&li=3635',
+          adType: 'midproll',
+          skipAdTime: skipAdAfter,
+          timeAfter: 4 // show ads after 4 seconds
+        },
+        {
+          adUrl: 'https://d2.hadarone.com/vast3?li=2082',
+          adType: 'midproll',
+          skipAdTime: skipAdAfter,
+          timeAfter: 20 // show ads after 10 seconds
+        },
+        {
+          adUrl: 'https://d2.hadarone.com/vast3?li=2082',
+          adType: 'postroll', // seconds
+          skipAdTime: skipAdAfter
+        }
+      ];
+      var v = viewability.vertical(document.getElementById(placeHolderId));
+      var inViewPercent = Math.floor(v.value * 100);
+      if (inViewPercent < 9) {
+        autoplay = false;
+      }
+      // adConfigs = [];
+      MediaPlayerOne.create(autoplay, placeHolderId, videoSource, '', [], skipAdAfter, adConfigs, onReady);
+    }
+
+    function loadVideoStreaming() {
+      var placeHolderId = 'videoPlaceholder4';
+      var videoSource =
+        'https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8';
+
+      var skipAdTime = 2; // show skip button after 5 seconds
+      var autoplay = autoplayVideo;
+      var onReady = function (player) {
+        // player.muted(false);
+        player.volume(0.7);
+        player.ga();
+      }
+      var adConfigs = [{
+          adUrl: 'https://d2.hadarone.com/vast3?li=1531',
+          adType: 'preroll',
+          skipAdTime: 5
+        },
+        {
+          adUrl: 'https://d2.hadarone.com/vast3?li=2082',
+          adType: 'midproll',
+          skipAdTime: 5,
+          timeAfter: 10 // show ads after 15 seconds
+        },
+        {
+          adUrl: 'https://d2.hadarone.com/vast3?li=2082',
+          adType: 'postroll', // seconds
+          skipAdTime: 5
+        }
+      ];
+      MediaPlayerOne.create(autoplay, placeHolderId, videoSource, '', [], skipAdTime, adConfigs, onReady);
+    }
+
+    var init = function () {
+      loadVideoMp4();
+      loadVideoYoutube();
+      loadVideoVimeo();
+      loadVideoFacebook();
+      loadVideoStreaming();
+    };
+
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-101171152-1');
+  </script>
+
+</body>
+
+</html>

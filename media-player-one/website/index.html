@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <base href="http://mediaplayer.one/">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="TrieuNT">
+
+  <title>Media Player One</title>
+
+  <meta content="article" property="og:type" />
+  <meta content="Media Player One" property="og:site_name" />
+  <meta property="og:url" itemprop="url" content="" />
+  <meta property="og:image" itemprop="thumbnailUrl" content="https://i.ytimg.com/vi/yx-HYerClEA/maxresdefault.jpg" />
+  <meta content="Media Player One for HTML5 Video and Embedded Video" itemprop="headline" property="og:title" />
+  <meta content="" itemprop="description" property="og:description" />
+
+  <!-- Bootstrap core CSS -->
+  <link href="https://blackrockdigital.github.io/startbootstrap-new-age/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="https://blackrockdigital.github.io/startbootstrap-new-age/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css">
+
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+
+  <!-- Plugin CSS -->
+  <link rel="stylesheet" href="https://blackrockdigital.github.io/startbootstrap-new-age/device-mockups/device-mockups.min.css">
+
+  <!-- Custom styles for this template -->
+  <link href="https://blackrockdigital.github.io/startbootstrap-new-age/css/new-age.min.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+  <style>
+    #mobileview {
+          width: 100%;
+          height: 560px;
+          border: 0;
+      }
+  </style>
+
+</head>
+
+<body id="page-top">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="#page-top">Media Player One</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto" style="display: none;">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#download">Download</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#features">Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="masthead">
+    <div class="container h-100">
+      <div class="row h-100">
+        <div class="col-lg-5 my-auto">
+          <div class="header-content mx-auto">
+            <h1 class="mb-5">An awesome HTML5 video player</h1>
+            <a href="/player-demo.html" target="_blank" class="btn btn-outline btn-xl js-scroll-trigger">Demo</a>
+          </div>
+        </div>
+        <div class="col-lg-7 my-auto">
+          <div id="videoPlaceholder1" class="videoholder" style="width: 100%;"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+  <section class="features" id="features">
+    <div class="container">
+      <div class="section-heading text-center">
+        <h2>A free HTML5 Video Player</h2>
+        <p class="text-muted">!</p>
+        <hr>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 my-auto">
+          <div class="device-container">
+            <div class="device-mockup iphone6_plus portrait white">
+              <div class="device">
+                <div class="screen">
+
+                  <iframe id="mobileview" src="about:blank" style="visibility: hidden;;"></iframe>
+                </div>
+                <div class="button">
+                  <!-- You can hook the "home button" to some JavaScript events or just remove it -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8 my-auto">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="feature-item">
+                  <i class="icon-screen-smartphone text-primary"></i>
+                  <h3>Mobile ready</h3>
+                  <p class="text-muted">Built on HTML5 and CSS3</p>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="feature-item">
+                  <i class="icon-control-play text-primary"></i>
+                  <h3>Flexible Use</h3>
+                  <p class="text-muted">Can play MP4 file, adaptive streaming source, YouTube video or Facebook video!</p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="feature-item">
+                  <i class="icon-diamond text-primary"></i>
+                  <h3>Ad-supported</h3>
+                  <p class="text-muted">Support VAST 3.0, VPAID 2.0</p>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="feature-item">
+                  <i class="icon-support text-primary"></i>
+                  <h3>Rich API support</h3>
+                  <p class="text-muted">Support API for customization!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features" id="#docs" style="display: none;">
+    <div class="container">
+      <div class="section-heading text-center">
+        <h2>Documentation</h2>
+        <p class="text-muted"></p>
+        <hr>
+      </div>
+      <div class="row">
+
+      </div>
+    </div>
+  </section>
+
+
+
+  <section class="contact bg-primary" id="contact">
+    <div class="container">
+      <h2>Built for video ecosystem</h2>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; Media Player One 2018. All Rights Reserved.</p>
+      <ul class="list-inline" style="display: none;">
+        <li class="list-inline-item">
+          <a href="#">Privacy</a>
+        </li>
+        <li class="list-inline-item">
+          <a href="#">Terms</a>
+        </li>
+        <li class="list-inline-item">
+          <a href="#">FAQ</a>
+        </li>
+      </ul>
+    </div>
+  </footer>
+
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://blackrockdigital.github.io/startbootstrap-new-age/vendor/jquery/jquery.min.js"></script>
+  <script src="https://blackrockdigital.github.io/startbootstrap-new-age/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="https://blackrockdigital.github.io/startbootstrap-new-age/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="https://blackrockdigital.github.io/startbootstrap-new-age/js/new-age.min.js"></script>
+
+
+  <script id="view_template" type="text/x-handlebars-template">
+    <link rel="stylesheet" href="https://adasiaholdings.com/demo/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" >
+   
+    <div class="entry">
+        <h1>{{title}}</h1>
+        <div class="body">
+            {{body}}
+        </div>
+    </div>
+
+    <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+    <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+    <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+
+    <div class="row m-sm">
+        <div class="col text-center">
+            <div id="videoPlaceholder" style="width: 100%;height: 250px">
+            </div>
+        </div>
+    </div>
+
+    <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+    <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>     
+    <div class="thin_box" style="width: 100%; height: 24px; margin-bottom: 8px;"></div>
+    <div class="thin_box" style="width: 100%; height: 24px; margin-bottom: 8px;"></div>
+    
+</script>
+  <script id="ad_template" type="text/x-handlebars-template">
+    window.mutedVideoAd = false;
+   
+    function loadVideoYoutube() {
+      var placeHolderId = 'videoPlaceholder';
+      var videoSource = 'https://www.youtube.com/watch?v=fmI_Ndrxy14';
+      var adUrls = ['https://d2.hadarone.com/vast3?li=3184'];
+      var skipAdTime = 3; // show skip button after 3 seconds
+      var autoplay = false;
+      var onReady = function (player) {
+        player.volume(0.6);
+      }
+      MediaPlayerOne.create(autoplay, placeHolderId, videoSource, '', adUrls, skipAdTime, 0, onReady);
+    }
+  
+    window.mediaPlayerOneReady = function(){
+      loadVideoYoutube();
+    }
+    var loadMediaPlayerOne = function (callback) {
+      var headNode = document.getElementsByTagName("head")[0];
+      var prefix = location.protocol === 'https:' ? 'https:' : 'http:';
+      var cssUrl = prefix + '//static.blueseed.tv/ajs/video-player/css/mediaplayer-one.css';
+      var link = document.createElement('link');
+      link.setAttribute('rel', 'stylesheet');
+      link.setAttribute('type', 'text/css');
+      link.setAttribute('href', cssUrl);
+      headNode.appendChild(link);
+
+      var jsUrl = prefix + '//static.blueseed.tv/ajs/video-player/mediaplayer.one.min.js';
+      var script = document.createElement("script")
+      script.type = "text/javascript";
+
+      if (script.readyState) { //IE
+        script.onreadystatechange = function () {
+          if (script.readyState == "loaded" ||
+            script.readyState == "complete") {
+            script.onreadystatechange = null;
+            if (callback) callback();
+          }
+        };
+      } else { //Others
+        script.onload = function () {
+          if (callback) callback();
+        };
+      }
+      script.src = jsUrl;
+      headNode.appendChild(script);
+    }
+    loadMediaPlayerOne();
+  </script>
+
+  <script>
+    window.playerOneAutoplay = true; // default autoplay for all videos
+
+    function loadVideoStreaming() {
+      var placeHolderId = 'videoPlaceholder1';
+      var videoSource =
+        'https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8';
+      var adUrls = ['https://d2.hadarone.com/vast3?li=3184'];
+      var skipAdTime = 3; // show skip button after 3 seconds
+      var autoplay = true;
+      var onReady = function (player) {
+        player.volume(0);
+      }
+      MediaPlayerOne.create(autoplay, placeHolderId, videoSource, '', adUrls, skipAdTime, 0, onReady);
+    }
+
+    function loadAdTemplateInMobileSimulatedView() {
+      var ad_template = document.getElementById("ad_template").innerHTML;
+      var source = document.getElementById("view_template").innerHTML;
+      var template = Handlebars.compile(source);
+      var context = {
+        title: "Music for you",
+        body: "by Imagine Dragons"
+      };
+      var html = template(context);
+      var mobileview = document.querySelector('#mobileview');
+      var dstDoc = mobileview.contentDocument || mobileview.contentWindow.document;
+      dstDoc.write(html);
+      dstDoc.write(`<script>` + ad_template + `<\/script>`);
+      dstDoc.close();
+      mobileview.style.visibility = 'visible';
+    }
+
+    window.mediaPlayerOneReady = function () {
+      loadVideoStreaming();
+      loadAdTemplateInMobileSimulatedView();
+    }
+
+    var loadMediaPlayerOne = function (callback) {
+      var headNode = document.getElementsByTagName("head")[0];
+      var prefix = location.protocol === 'https:' ? 'https:' : 'http:';
+      var cssUrl = prefix + '//static.blueseed.tv/ajs/video-player/css/mediaplayer-one.css';
+      var link = document.createElement('link');
+      link.setAttribute('rel', 'stylesheet');
+      link.setAttribute('type', 'text/css');
+      link.setAttribute('href', cssUrl);
+      headNode.appendChild(link);
+
+      var jsUrl = prefix + '//static.blueseed.tv/ajs/video-player/mediaplayer.one.min.js';
+      var script = document.createElement("script")
+      script.type = "text/javascript";
+
+      if (script.readyState) { //IE
+        script.onreadystatechange = function () {
+          if (script.readyState == "loaded" ||
+            script.readyState == "complete") {
+            script.onreadystatechange = null;
+            if (callback) callback();
+          }
+        };
+      } else { //Others
+        script.onload = function () {
+          if (callback) callback();
+        };
+      }
+      script.src = jsUrl;
+      headNode.appendChild(script);
+    }
+    setTimeout(loadMediaPlayerOne,100);
+    
+  </script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-101171152-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-101171152-2');
+  </script>
+
+</body>
+
+</html>

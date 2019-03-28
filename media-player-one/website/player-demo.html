@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    h1 {
+      margin: auto;
+      text-align: center;
+    }
+
+    h3 {
+      width: 90%;
+      margin: auto;
+      text-align: center;
+      font-size: 18px;
+    }
+
+
+
+    body {
+      padding: 12px;
+    }
+
+    .videoholder {
+      width: 40%;
+      margin: auto;
+    }
+
+    @media only screen and (max-width: 768px) {
+      /* For mobile phones: */
+      [class="videoholder"] {
+        width: 90%;
+      }
+    }
+  </style>
+
+
+
+</head>
+
+<body>
+  <h1>Demo Media Player One with VAST Ads</h1>
+  <hr>
+  <h3>MP4 video source </h3>
+  <div id="videoPlaceholder1" class="videoholder"></div>
+
+  <hr>
+  <h3>YouTube video source </h3>
+  <div id="videoPlaceholder2" class="videoholder"></div>
+
+  <hr>
+  <h3>Adaptive bitrate streaming source </h3>
+  <div id="videoPlaceholder3" class="videoholder"></div>
+
+  <hr>
+  <h3>Facebook video source </h3>
+  <div id="videoPlaceholder4" class="videoholder"></div>
+
+
+  <hr>
+  <div id="log"></div>
+
+  <hr>
+
+  <script>
+    window.onerror = function (msg, url, lineNo, columnNo, error) {
+      var string = msg.toLowerCase();
+      var substring = "script error";
+      if (string.indexOf(substring) > -1) {
+        alert('Script Error: See Browser Console for Detail');
+      } else {
+        var message = [
+          'Message: ' + msg,
+          'URL: ' + url,
+          'Line: ' + lineNo,
+          'Column: ' + columnNo,
+          'Error object: ' + JSON.stringify(error)
+        ].join(' - ');
+
+        alert(message);
+      }
+    }
+  </script>
+  <script>
+    ////////////////////////////////////////////////////////////////////////////////
+
+    function loadVideoMp4() {
+      var placeHolderId = 'videoPlaceholder1';
+      var videoSource = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_vnn.mp4';
+      var posterUrl = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_1.png';
+      var adUrls = ['https://d2.hadarone.com/vast3?li=1531'];
+      var skipAdTime = 2; // show skip button after 5 seconds
+      var autoplay = false;
+      var onReady = function (player) {
+        player.volume(0.6);
+      }
+      MediaPlayerOne.create(autoplay, placeHolderId, videoSource, posterUrl, adUrls, skipAdTime, 0, onReady);
+    }
+
+    function loadVideoYoutube() {
+      var placeHolderId = 'videoPlaceholder2';
+      var videoSource = 'https://www.youtube.com/watch?v=QKm-SOOMC4c';
+      var adUrls = ['https://showcase.blueseed.tv/lab/in-stream/static/showcase_AquariusVastVpaidfinal.php'];
+      var skipAdTime = 2; // show skip button after 5 seconds
+      var autoplay = false;
+      var onReady = function (player) {
+        player.volume(0.6);
+      }
+      MediaPlayerOne.create(autoplay, placeHolderId, videoSource, '', adUrls, skipAdTime, 0, onReady);
+    }
+
+    function loadVideoStreaming() {
+      var placeHolderId = 'videoPlaceholder3';
+      var videoSource =
+        'https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8';
+      var adUrls = ['https://d2.hadarone.com/vast3?li=2082'];
+      var skipAdTime = 2; // show skip button after 5 seconds
+      var autoplay = false;
+      var onReady = function (player) {
+        player.volume(0.6);
+      }
+      MediaPlayerOne.create(autoplay, placeHolderId, videoSource, '', adUrls, skipAdTime, 0, onReady);
+    }
+
+    function loadVideoFacebook() {
+      var placeHolderId = 'videoPlaceholder4';
+      var videoSource = 'https://www.facebook.com/OxalisAdventure/videos/2018160014883949/';
+
+      var defaultSkipAdTime = 3; // show skip button after 3 seconds
+      var autoplay = false;
+      var onReady = function (player) {
+        player.volume(0.6);
+        player.muted(false);
+      }
+      var adConfigs = [{
+          adUrl: 'https://d2.hadarone.com/vast3?li=1531',
+          adType: 'preproll',
+          skipAdTime: 5
+        },
+        {
+          adUrl: 'https://d2.hadarone.com/vast3?li=1531',
+          adType: 'midproll',
+          skipAdTime: 5,
+          timeAfter: 16 // show ads after 15 seconds
+        },
+        {
+          adUrl: 'https://d2.hadarone.com/vast3?li=1531',
+          adType: 'postroll', // seconds
+          skipAdTime: 5
+        }
+      ];
+      MediaPlayerOne.create(autoplay, placeHolderId, videoSource, '', [], defaultSkipAdTime, adConfigs, onReady);
+    }
+
+    //when everything is ready for calling API 
+    window.mediaPlayerOneReady = function () {
+      loadVideoMp4();
+      loadVideoYoutube();
+      loadVideoStreaming();
+      loadVideoFacebook();
+    }
+
+    var loadMediaPlayerOne = function (callback) {
+      var headNode = document.getElementsByTagName("head")[0];
+      var prefix = location.protocol === 'https:' ? 'https:' : 'http:';
+      var cssUrl = prefix + '//static.blueseed.tv/ajs/video-player/css/mediaplayer-one.css';
+      var link = document.createElement('link');
+      link.setAttribute('rel', 'stylesheet');
+      link.setAttribute('type', 'text/css');
+      link.setAttribute('href', cssUrl);
+      headNode.appendChild(link);
+
+      var jsUrl = prefix + '//static.blueseed.tv/ajs/video-player/mediaplayer.one.min.js';
+      var script = document.createElement("script")
+      script.type = "text/javascript";
+
+      if (script.readyState) { //IE
+        script.onreadystatechange = function () {
+          if (script.readyState == "loaded" ||
+            script.readyState == "complete") {
+            script.onreadystatechange = null;
+            if (callback) callback();
+          }
+        };
+      } else { //Others
+        script.onload = function () {
+          if (callback) callback();
+        };
+      }
+      script.src = jsUrl;
+      headNode.appendChild(script);
+    }
+    loadMediaPlayerOne();
+  </script>
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-101171152-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', 'UA-101171152-2');
+  </script>
+
+</body>
+
+</html>

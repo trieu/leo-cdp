@@ -1,0 +1,177 @@
+<html>
+
+<head>
+    <title>Fun test with AES and Twofish Algorithm</title>
+    <meta charset="utf-8">
+    
+    <meta name="author" content="TrieuNT">
+    <meta content="article" property="og:type" />
+    <meta content="Media Player One" property="og:site_name" />
+    <meta property="og:url" itemprop="url" content="" />
+    <meta property="og:image" itemprop="thumbnailUrl" content="https://cdn-images-1.medium.com/max/1600/1*mnyITCNnRdeLfauh3Psmlw.png" />
+    <meta content="Fun Encrytion Decryption Test with AES and TwoFish" itemprop="headline" property="og:title" />
+    <meta content="" itemprop="description" property="og:description" />
+  
+
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+    <script src="https://mediaplayer.one/static/aes.js"></script>
+    <script src="https://mediaplayer.one/static/twofish.js"></script>
+    <style>
+    textarea {display: block;margin: 5px;}
+    </style>
+</head>
+
+<body onload="run()" >
+    <h1>Fun Encrytion/Decryption Test with AES and TwoFish </h1>
+    <img style="max-height: 160px" src="https://i1.wp.com/www.hocviet.info/wp-content/uploads/2017/10/Vietnam-girls-in-ancient-costumes-7.jpg" />
+    <br>
+    <div>
+        <select id="algorithm">
+            <option value="aes" selected>Rijndael AES</option>
+            <option value="twofish">TwoFish</option>
+        </select>
+    </div>
+
+    <h3>Input Message</h3>
+    <label for="password">Password </label>
+    <input id="password" type="text" value="hoxuanhuong" placeholder="Password" >
+    <textarea id="text" rows="7" cols="120" ></textarea>
+    <br>
+    <label for="numTest">Number of Test Cases</label>
+    <input id="numTest" type="number" value="1">
+    <button onclick="run()">--- OK ---</button>
+    <hr>
+
+    <h3>Output Encrypted Message</h3>
+    <textarea id="outputSecret" rows="5" cols="120"></textarea>
+    <h3>Output Decrypted Message</h3>
+    <textarea id="outputPlainText" rows="7" cols="120"></textarea>
+    <hr>
+    <div id="doneTime"></div>
+
+    <code id="sampleText" style="display: none;">
+        THƠ NÔM HỒ XUÂN HƯƠNG – BÁNH TRÔI NƯỚC
+
+        Thân em thời trắng phận em tròn
+        Bảy nổi ba chìm mấy nước non
+        Rắn nát mặc dầu tay kẻ nặn
+        Nhưng em vẫn giữ tấm lòng son
+    </code>
+
+    <script>
+        var textNode = document.getElementById('text');
+        var passwordNode = document.getElementById('password');
+        var outputSecret = document.getElementById('outputSecret');
+        var outputPlainText = document.getElementById('outputPlainText');
+
+        textNode.value = document.getElementById('sampleText').innerHTML.trim();
+
+        String.prototype.toSecretKeyArray = function () {
+            var s = this;
+            var numbers = [];
+            var length = s.length;
+            for (var i = 0; i < 16; i++) {
+                if (i < length) {
+                    numbers.push(parseInt(s.charCodeAt(i).toString(16)));
+                } else if(length>3){
+                    numbers.push(parseInt(s.charCodeAt(length/2).toString(16)));
+                } else {
+                    numbers.push(0);
+                }
+            }
+            return numbers;
+        }
+
+
+        String.prototype.replaceAll = function (search, replacement) {
+            var target = this;
+            return target.replace(new RegExp(search, 'g'), replacement);
+        };
+
+        String.prototype.toStringForEncryption = function () {
+            var target = this.replace(/\n$/, "");
+            return target.trim().replace(/(\r\n\t|\n|\r\t)/gm, "!@!") + "!$!";
+        }
+
+        String.prototype.fromDecryptionToOutput = function () {
+            var tokens = this.split('!$!');
+            if (tokens.length > 0)
+                return tokens[0].replaceAll('!@!', '\n');
+            return this;
+        }
+
+
+        function runAES() {
+            // An example 128-bit key
+            //var key = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+            var key = passwordNode.value.toSecretKeyArray();
+            console.log(key)
+
+            // The initialization vector (must be 16 bytes)
+            var iv = [21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36];
+
+            // Convert text to bytes (must be a multiple of the segment size you choose below)
+            var text = textNode.value.toStringForEncryption();
+
+            var textBytes = aesjs.utils.utf8.toBytes(text);
+
+            // The segment size is optional, and defaults to 1
+            var aesCbc = new aesjs.ModeOfOperation.cbc(key, iv);
+            var encryptedBytes = aesCbc.encrypt(aesjs.padding.pkcs7.pad(textBytes));
+
+            // To print or store the binary data, you may convert it to hex
+            var encryptedHex = aesjs.utils.hex.fromBytes(encryptedBytes);
+            outputSecret.value = encryptedHex;
+            // "55e3af2638c560b4fdb9d26a630733ea60197ec23deb85b1f60f71f10409ce27"
+
+            // When ready to decrypt the hex string, convert it back to bytes
+            var encryptedBytes = aesjs.utils.hex.toBytes(encryptedHex);
+
+            // The cipher feedback mode of operation maintains internal state,
+            // so to decrypt a new instance must be instantiated.
+            var aesCfb = new aesjs.ModeOfOperation.cbc(key, iv);
+            var decryptedBytes = aesCfb.decrypt(encryptedBytes);
+
+            // Convert our bytes back into text
+            var decryptedText = aesjs.utils.utf8.fromBytes(decryptedBytes).trim();
+            outputPlainText.value = decryptedText.fromDecryptionToOutput();
+        }
+
+        function runTwoFish() {
+            //var key = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+            var key = passwordNode.value.toSecretKeyArray();
+
+            var twf = new twofish();
+
+            var text = textNode.value.toStringForEncryption();;
+            var encryptedText = twf.encryptCBC(key, twf.stringToByteArray(text));
+            outputSecret.value = (encryptedText);
+
+
+            var decryptedText = twf.decryptCBC(key, encryptedText);
+            outputPlainText.value = twf.byteArrayToString(decryptedText).fromDecryptionToOutput();
+        }
+
+        function run() {
+            // 
+            var numTest = document.getElementById('numTest').value;
+            var algorithm = document.getElementById('algorithm').value;
+            var bt = new Date().getTime();
+            for (var i = 0; i < numTest; i++) {
+
+                if (algorithm === 'aes') {
+                    runAES();
+                } else if (algorithm === 'twofish') {
+                    runTwoFish();
+                }
+
+            }
+            var dt = new Date().getTime() - bt;
+            document.getElementById('doneTime').innerHTML = '====== DONE TEST TIME ' + dt + ' miliseconds';
+        }
+    </script>
+
+</body>
+
+</html>

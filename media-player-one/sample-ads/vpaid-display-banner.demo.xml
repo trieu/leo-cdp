@@ -1,0 +1,23 @@
+<VAST version="2.0">
+    <Ad>
+        <InLine>
+            <AdSystem>Hadarone</AdSystem>
+            <AdTitle>Display-banner in video player demo</AdTitle>
+            <Creatives>
+                <Creative>
+                    <Linear>
+                        <AdParameters>  
+                            &lt;!-- InPlayerDisplayAd --&gt;                      
+                          %3C!--%20asynchronous%20code%20for%20placement%201109%20Hdo-Home-R1%20300x250%20--%3E%20%0A%3Cins%20class%3D%22hadar-placement%22%20data-hdpm%3D%221109%22%20%3E%3C%2Fins%3E%3Cscript%20async%20src%3D%22%2F%2Fstatic.hadarone.com%2Fajs%2Fdisplay.js%3Fv%3D1.6%22%3E%3C%2Fscript%3E  
+                        </AdParameters>
+                        <MediaFiles>
+                            <MediaFile type="application/javascript" apiFramework="VPAID" height="250" width="300" delivery="progressive">
+                                <![CDATA[https://static.hadarone.com/ajs/vpaid/v1-hadarone-vpaid.min.js]]>
+                            </MediaFile>
+                        </MediaFiles>
+                    </Linear>
+                </Creative>
+            </Creatives>
+        </InLine>
+    </Ad>
+</VAST>

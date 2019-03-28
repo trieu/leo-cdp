@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+  <!-- Insert HadarOne VIDEO PLAYER CSS in the head tag  -->
+  <link rel="stylesheet" href="https://vast.hadarone.com/css/video-js.min.css">
+  <link rel="stylesheet" href="https://vast.hadarone.com/css/hadarone-player-skin.css">
+
+
+  <!--for demo for get width and height of player holder tag -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+  <h1>HadarOne Vast Player VPAID demo</h1>
+  <hr>
+  <h2> Preroll VPAID wrapper </h2>
+  <div id="videoPlaceholder1" style="width: 40%; height: 300px;;"></div>
+  <hr>
+  <h2> Preroll VPAID direct </h2>
+  <div id="videoPlaceholder2" style="width: 40%; height: 300px;;"></div>
+  <hr>
+  <h2> Preroll VPAID bidding </h2>
+  <div id="videoPlaceholder3" style="width: 40%; height: 300px;;"></div>
+  <hr>
+  <h2> Preroll VPAID display banner </h2>
+  <div id="videoPlaceholder4" style="width: 40%; height: 300px;;"></div>
+  <hr>
+  <h2> Preroll VPAID with source YouTube </h2>
+  <div id="videoPlaceholder5" style="width: 40%; height: 300px;;"></div>
+  <br>
+  <br>
+  
+
+  <script>
+    jQuery(document).ready(function () {
+      var holderId = 'videoPlaceholder1';
+      var d = $('#' + holderId);
+      var w = d.width();
+      var h = d.height();
+
+      var autoplay = false;
+      var mp4 = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_vnn.mp4';
+      var webm = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_vnn.webm';
+      var img = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_1.png';
+
+      var skipAdTime = 2; // show skip button after 3 seconds
+      var adUrls = ['https://vast.hadarone.com/sample-ads/simple-vpaid.xml'];
+
+      var player = HadarOnePlayer.createVideo(autoplay, holderId, mp4, webm, img, w, h, adUrls, skipAdTime);
+      player.volume(0);
+    });
+  </script>
+
+  <script>
+    jQuery(document).ready(function () {
+      var holderId = 'videoPlaceholder2';
+      var d = $('#' + holderId);
+      var w = d.width();
+      var h = d.height();
+
+      var autoplay = false;
+
+      var mp4 = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_vnn.mp4';
+      var webm = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_vnn.webm';
+      var img = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_1.png';
+
+      var skipAdTime = 2; // show skip button after 3 seconds
+      var adUrls = ['https://d2.hadarone.com/vast3?li=2082'];
+      var player = HadarOnePlayer.createVideo(autoplay, holderId, mp4, webm, img, w, h, adUrls, skipAdTime);
+      //player.play();
+      setTimeout(function () {
+        // player.adUnitPlayer.pauseAd();
+      }, 3000);
+      player.volume(0);
+    });
+  </script>
+
+  <script>
+    jQuery(document).ready(function () {
+      var holderId = 'videoPlaceholder3';
+      var d = $('#' + holderId);
+      var w = d.width();
+      var h = d.height();
+
+      var autoplay = false;
+
+      var mp4 = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_vnn.mp4';
+      var webm = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_vnn.webm';
+      var img = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_1.png';
+
+      var skipAdTime = 2; // show skip button after 3 seconds
+      var adUrls = ['https://vast.hadarone.com/sample-ads/vpaid-bidding.xml'];
+
+      var player = HadarOnePlayer.createVideo(autoplay, holderId, mp4, webm, img, w, h, adUrls, skipAdTime);
+      player.volume(0);
+    });
+  </script>
+
+  <script>
+    jQuery(document).ready(function () {
+      var holderId = 'videoPlaceholder4';
+      var d = $('#' + holderId);
+      var w = d.width();
+      var h = d.height();
+
+      var autoplay = false;
+      var mp4 = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_vnn.mp4';
+      var webm = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_vnn.webm';
+      var img = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_1.png';
+
+      var skipAdTime = 2; // show skip button after 3 seconds
+      var adUrls = ['https://vast.hadarone.com/sample-ads/vpaid-display-banner.xml'];
+
+      var player = HadarOnePlayer.createVideo(autoplay, holderId, mp4, webm, img, w, h, adUrls, skipAdTime);
+      player.volume(0);
+    });
+  </script>
+
+<script>
+  jQuery(document).ready(function () {
+    var holderId = 'videoPlaceholder5';
+    var d = $('#' + holderId);
+    var w = d.width();
+    var h = d.height();
+
+    var autoplay = false;
+    var youtubeSrc = 'https://www.youtube.com/watch?v=ALzAusjHijw';
+  
+    var skipAdTime = 2; // show skip button after 3 seconds
+    var adUrls = ['https://vast.hadarone.com/sample-ads/vpaid-display-banner.xml'];
+
+    var player = HadarOnePlayer.createVideoFromYouTube(autoplay, holderId, youtubeSrc, w, h, adUrls, skipAdTime);
+    player.volume(1);
+  });
+</script>
+
+
+  <!-- HadarOne VIDEO PLAYER JS   -->
+  <script src="/js/video.src.js"></script>
+  <script src="/js/vast-player.js"></script>
+  <script src="/js/mediaplayer.src.js"></script>
+  <script src="/js/videojs.youtube.src.js"></script>
+</body>
+
+</html>

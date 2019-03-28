@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <link rel="stylesheet" href="https://revealjs.com/css/reveal.css">
+  <link rel="stylesheet" href="https://revealjs.com/css/theme/solarized.css" id="theme">
+
+  <!-- Theme used for syntax highlighting of code -->
+  <link rel="stylesheet" href="https://revealjs.com/lib/css/zenburn.css">
+
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi) ? 'https://revealjs.com/css/print/pdf.css' :
+      'https://revealjs.com/css/print/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  </script>
+
+  <!--[if lt IE 9]>
+  <script src="https://revealjs.com/lib/js/html5shiv.js"></script>
+  <![endif]-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+
+  <style>
+    .videoholder {
+      width: 100%;
+      margin: auto!important;
+    }
+
+    @media only screen and (max-width: 768px) {
+
+      /* For mobile phones: */
+      [class="videoholder"] {
+        width: 100%!important;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <div class="reveal">
+
+    <!-- Any section element inside of this container is displayed as a slide -->
+    <div class="slides">
+      <section>
+        <h1>MediaPlayer.One</h1>
+        <h3>An awesome HTML5 video player</h3>
+        <p>
+          <small>A product from <a href="http://blueseed.tv">Blueseed.TV</a> </small>
+        </p>
+      </section>
+
+      <section>
+        <h2>Hello There</h2>
+        <p>
+          reveal.js enables you to create beautiful interactive slide decks using HTML. This presentation will show you
+          examples of what it can do.
+        </p>
+      </section>
+
+
+
+      <section>
+        <h2>Point of View</h2>
+        <p>
+          Press <strong>ESC</strong> to enter the slide overview.
+        </p>
+        <p>
+          Hold down alt and click on any element to zoom in on it using <a href="http://lab.hakim.se/zoom-js">zoom.js</a>.
+          Alt + click anywhere to zoom back out.
+        </p>
+      </section>
+
+      <section>
+        <h2>Touch Optimized</h2>
+        <p>
+          Presentations look great on touch devices, like mobile phones and tablets. Simply swipe through your slides.
+        </p>
+      </section>
+
+
+      <section>
+        <section id="fragments">
+          <h2>Fragments</h2>
+          <p>Hit the next arrow...</p>
+          <p class="fragment">... to step through ...</p>
+          <p><span class="fragment">... a</span> <span class="fragment">fragmented</span> <span class="fragment">slide.</span></p>
+
+          <aside class="notes">
+            This slide has fragments which are also stepped through in the notes window.
+          </aside>
+        </section>
+        <section>
+          <h2>Fragment Styles</h2>
+          <p>There's different types of fragments, like:</p>
+          <p class="fragment grow">grow</p>
+          <p class="fragment shrink">shrink</p>
+          <p class="fragment fade-out">fade-out</p>
+          <p class="fragment fade-up">fade-up (also down, left and right!)</p>
+          <p class="fragment current-visible">current-visible</p>
+          <p>Highlight <span class="fragment highlight-red">red</span> <span class="fragment highlight-blue">blue</span>
+            <span class="fragment highlight-green">green</span></p>
+        </section>
+      </section>
+
+
+      <section>
+        <h2>Pretty Code</h2>
+        <pre><code class="hljs" data-trim contenteditable>
+          function loadMediaPlayerOne() {
+            var headNode = document.getElementsByTagName("head")[0];
+            var prefix = location.protocol === 'https:' ? 'https:' : 'http:';
+            var cssUrl = prefix + '//static.hadarone.com/ajs/video-player/css/mediaplayer-one.css';
+            var jsUrl = prefix + '//static.hadarone.com/ajs/video-player/hadarone-video-player.min.js';
+      
+            var link = document.createElement('link');
+            link.setAttribute('rel', 'stylesheet');
+            link.setAttribute('type', 'text/css');
+            link.setAttribute('href', cssUrl);
+            headNode.appendChild(link);
+            
+            var script = document.createElement("script")
+            script.type = "text/javascript";     
+            script.src = jsUrl;
+            headNode.appendChild(script);
+          };
+          loadMediaPlayerOne();
+        </code></pre>
+        <p>Code syntax highlighting courtesy of <a href="http://softwaremaniacs.org/soft/highlight/en/description/">highlight.js</a>.</p>
+      </section>
+
+      <section>
+        <h2>Marvelous List</h2>
+        <ul>
+          <li>No order here</li>
+          <li>Or here</li>
+          <li>Or here</li>
+          <li>Or here</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>YouTube Video Source</h2>
+        <p>
+          <div id="videoPlaceholder2" class="videoholder"></div>.
+        </p>
+      </section>
+
+      <section>
+       
+          <iframe id="mobileview" src="about:blank" style="visibility: hidden;;"></iframe>
+          <div id="videoPlaceholder4" class="videoholder"></div>
+        
+      </section>
+
+
+      <section>
+        <h2>Fantastic Ordered List</h2>
+        <ol>
+          <li>One is smaller than...</li>
+          <li>Two is smaller than...</li>
+          <li>Three!</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Tabular Tables</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Value</th>
+              <th>Quantity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Apples</td>
+              <td>$1</td>
+              <td>7</td>
+            </tr>
+            <tr>
+              <td>Lemonade</td>
+              <td>$2</td>
+              <td>18</td>
+            </tr>
+            <tr>
+              <td>Bread</td>
+              <td>$3</td>
+              <td>2</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Clever Quotes</h2>
+        <p>
+          These guys come in two forms, inline: <q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">The
+            nice thing about standards is that there are so many to choose from</q> and block:
+        </p>
+        <blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
+          &ldquo;For years there has been a theory that millions of monkeys typing at random on millions of typewriters
+          would
+          reproduce the entire works of Shakespeare. The Internet has proven this theory to be untrue.&rdquo;
+        </blockquote>
+      </section>
+
+
+      <section>
+        <h2>Speaker View</h2>
+        <p>There's a <a href="https://github.com/hakimel/reveal.js#speaker-notes">speaker view</a>. It includes a
+          timer, preview of the upcoming slide as well as your speaker notes.</p>
+        <p>Press the <em>S</em> key to try it out.</p>
+
+        <aside class="notes">
+          Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the
+          speaker notes window (hit 's' on your keyboard).
+        </aside>
+      </section>
+
+
+      <section data-state="customevent">
+        <h2>State Events</h2>
+        <p>
+          Additionally custom events can be triggered on a per slide basis by binding to the <code>data-state</code>
+          name.
+        </p>
+        <pre><code class="javascript" data-trim contenteditable style="font-size: 18px;">
+Reveal.addEventListener( 'customevent', function() {
+console.log( '"customevent" has fired' );
+} );
+        </code></pre>
+      </section>
+
+      <section>
+        <h2>Much more</h2>
+        <ul>
+          <li>Right-to-left support</li>
+          <li><a href="https://github.com/hakimel/reveal.js#api">Extensive JavaScript API</a></li>
+          <li><a href="https://github.com/hakimel/reveal.js#auto-sliding">Auto-progression</a></li>
+          <li><a href="https://github.com/hakimel/reveal.js#parallax-background">Parallax backgrounds</a></li>
+          <li><a href="https://github.com/hakimel/reveal.js#keyboard-bindings">Custom keyboard bindings</a></li>
+        </ul>
+      </section>
+
+      <section style="text-align: left;">
+        <h1>THE END</h1>
+        <p>
+          - <a href="https://slides.com">Try the online editor</a> <br>
+          - <a href="https://github.com/hakimel/reveal.js">Source code &amp; documentation</a>
+        </p>
+      </section>
+
+    </div>
+
+  </div>
+
+  <script src="https://revealjs.com/lib/js/head.min.js"></script>
+  <script src="https://revealjs.com/js/reveal.js"></script>
+
+  <script>
+    // More info https://github.com/hakimel/reveal.js#configuration
+    var baseURL = 'https://revealjs.com/';
+    Reveal.initialize({
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+
+      transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+      // More info https://github.com/hakimel/reveal.js#dependencies
+      dependencies: [{
+          src: baseURL + 'lib/js/classList.js',
+          condition: function () {
+            return !document.body.classList;
+          }
+        },
+        {
+          src: baseURL + 'plugin/markdown/marked.js',
+          condition: function () {
+            return !!document.querySelector('[data-markdown]');
+          }
+        },
+        {
+          src: baseURL + 'plugin/markdown/markdown.js',
+          condition: function () {
+            return !!document.querySelector('[data-markdown]');
+          }
+        },
+        {
+          src: baseURL + 'plugin/highlight/highlight.js',
+          async: true,
+          callback: function () {
+            hljs.initHighlightingOnLoad();
+          }
+        },
+        {
+          src: baseURL + 'plugin/search/search.js',
+          async: true
+        },
+        {
+          src: baseURL + 'plugin/zoom-js/zoom.js',
+          async: true
+        },
+        {
+          src: baseURL + 'plugin/notes/notes.js',
+          async: true
+        }
+      ]
+    });
+  </script>
+
+  <!-- Everything below this point is only used for the reveal.js demo page -->
+
+  <a class="fork-reveal" target="_blank" style="display: none;" href="https://github.com/trieu/mediaplayer-one"><img
+      style="position: absolute; top: 0; right: 0; border: 0;" src="https://github-camo.global.ssl.fastly.net/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67"
+      alt="Fork mediaplayer-one on GitHub"></a>
+
+  <div class="share-reveal" style="display: none; position: absolute; bottom: 16px; left: 50%; margin-left: -139px; z-index: 20;">
+    <a class="share-reveal-editor" href="http://mediaplayer.one/player-demo.html" target="_blank">Try the demo</a>
+
+    <a class="share-reveal-facebook" href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Frevealjs.com">
+      <svg viewBox="-8 -8 48 48" width="20" height="20" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#FFFFFF" d="M25.613-4.557c0,0-3.707,0-6.166,0c-3.662,0-7.732,1.535-7.732,6.835c0.019,1.845,0,3.613,0,5.603H7.481 v6.728h4.366v19.37h8.021V14.48h5.295l0.479-6.618h-5.913c0,0,0.016-2.946,0-3.8c0-2.093,2.184-1.974,2.312-1.974 c1.042,0,3.059,0.003,3.578,0v-6.646H25.613z" />
+      </svg>
+    </a>
+
+    <a class="share-reveal-twitter" href="http://twitter.com/share?url=http%3A%2F%2Frevealjs.com&text=reveal.js%20-%20The%20HTML%20presentation%20framework&via=revealjs&related=revealjs">
+      <svg viewbox="0 0 2000 1625.36" width="20" height="20" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <path d="m 1999.9999,192.4 c -73.58,32.64 -152.67,54.69 -235.66,64.61 84.7,-50.78 149.77,-131.19 180.41,-227.01 -79.29,47.03 -167.1,81.17 -260.57,99.57 C 1609.3399,49.82 1502.6999,0 1384.6799,0 c -226.6,0 -410.328,183.71 -410.328,410.31 0,32.16 3.628,63.48 10.625,93.51 -341.016,-17.11 -643.368,-180.47 -845.739,-428.72 -35.324,60.6 -55.5583,131.09 -55.5583,206.29 0,142.36 72.4373,267.95 182.5433,341.53 -67.262,-2.13 -130.535,-20.59 -185.8519,-51.32 -0.039,1.71 -0.039,3.42 -0.039,5.16 0,198.803 141.441,364.635 329.145,402.342 -34.426,9.375 -70.676,14.395 -108.098,14.395 -26.441,0 -52.145,-2.578 -77.203,-7.364 52.215,163.008 203.75,281.649 383.304,284.946 -140.429,110.062 -317.351,175.66 -509.5972,175.66 -33.1211,0 -65.7851,-1.949 -97.8828,-5.738 181.586,116.4176 397.27,184.359 628.988,184.359 754.732,0 1167.462,-625.238 1167.462,-1167.47 0,-17.79 -0.41,-35.48 -1.2,-53.08 80.1799,-57.86 149.7399,-130.12 204.7499,-212.41"
+          style="fill:#ffffff" />
+      </svg>
+    </a>
+  </div>
+
+  <style>
+    /* Social sharing */
+    .share-reveal a {
+      display: inline-block;
+      height: 34px;
+      line-height: 32px;
+      padding: 0 10px;
+      color: #fff;
+      font-family: Helvetica, sans-serif;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 12px;
+      vertical-align: top;
+      text-transform: uppercase;
+      box-sizing: border-box;
+    }
+
+    .share-reveal .share-reveal-editor {
+      line-height: 30px;
+    }
+
+    .share-reveal svg {
+      vertical-align: middle;
+    }
+
+    .share-reveal a+a {
+      margin-left: 10px;
+    }
+
+    .share-reveal-editor {
+      border: 2px solid #fff;
+    }
+
+    .share-reveal-twitter,
+    .share-reveal-follow {
+      background-color: #00aced;
+    }
+
+    .share-reveal-facebook {
+      background-color: #4B71B8;
+    }
+
+    /* Advertising */
+    #carbonads {
+      width: 370px;
+      min-height: 100px;
+      font-size: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 10px;
+      margin: 40px auto 0 auto;
+      font-size: 16px;
+      z-index: 10;
+      text-align: left;
+    }
+
+    #carbonads .carbon-img img {
+      float: left;
+      margin: 0 10px 0 0;
+      border: 0;
+      box-shadow: none;
+    }
+
+    #carbonads .carbon-poweredby {
+      display: block;
+      margin-top: 10px;
+      color: #aaa;
+    }
+  </style>
+
+  <script>
+
+  </script>
+
+  <script>
+    [].slice.call(document.querySelectorAll('.share-reveal-facebook, .share-reveal-twitter')).forEach(function (element) {
+      element.addEventListener('click', function (event) {
+        event.preventDefault();
+        var width = 500,
+          height = 300;
+        var winTop = window.screenY + (window.screen.height / 2) - (height / 2);
+        var winLeft = window.screenX + (window.screen.width / 2) - (width / 2);
+        window.open(this.href, 'shre', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' +
+          width + ',height=' + height);
+      });
+    });
+
+    if (!navigator.userAgent.match(/(iphone|android)/gi) && !!document.querySelector) {
+      document.querySelector('.share-reveal').style.display = 'block';
+      document.querySelector('.fork-reveal').style.display = 'block';
+    }
+  </script>
+
+  <!-- /////////////////////////////////////////////////////////////////// -->
+  <script>
+    window.onerror = function (msg, url, lineNo, columnNo, error) {
+      var string = msg.toLowerCase();
+      var substring = "script error";
+      if (string.indexOf(substring) > -1) {
+        alert('Script Error: See Browser Console for Detail');
+      } else {
+        var message = [
+          'Message: ' + msg,
+          'URL: ' + url,
+          'Line: ' + lineNo,
+          'Column: ' + columnNo,
+          'Error object: ' + JSON.stringify(error)
+        ].join(' - ');
+
+        alert(message);
+      }
+    }
+  </script>
+  <script>
+    ////////////////////////////////////////////////////////////////////////////////
+
+    function loadVideoMp4() {
+      var placeHolderId = 'videoPlaceholder1';
+      var videoSource = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_vnn.mp4';
+      var posterUrl = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_1.png';
+      var adUrls = ['https://d2.hadarone.com/vast3?li=1531'];
+      var skipAdTime = 2; // show skip button after 5 seconds
+      var autoplay = true;
+      var onReady = function (player) {
+        player.volume(0.6);
+      }
+      HadarOnePlayer.create(autoplay, placeHolderId, videoSource, posterUrl, adUrls, skipAdTime, 0, onReady);
+    }
+
+    function loadVideoYoutube() {
+      var placeHolderId = 'videoPlaceholder2';
+      var videoSource = 'https://www.youtube.com/watch?v=VvHh8s2HHSk';
+      var adUrls = ['https://d2.hadarone.com/vast3?li=2082'];
+      var skipAdTime = 2; // show skip button after 5 seconds
+      var autoplay = false;
+      var onReady = function (player) {
+        player.volume(0.6);
+      }
+      HadarOnePlayer.create(autoplay, placeHolderId, videoSource, '', adUrls, skipAdTime, 0, onReady);
+    }
+
+    function loadVideoStreaming() {
+      var placeHolderId = 'videoPlaceholder3';
+      var videoSource =
+        'https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8';
+      var adUrls = ['https://d2.hadarone.com/vast3?li=2082'];
+      var skipAdTime = 2; // show skip button after 5 seconds
+      var autoplay = false;
+      var onReady = function (player) {
+        player.volume(0.6);
+      }
+      HadarOnePlayer.create(autoplay, placeHolderId, videoSource, '', adUrls, skipAdTime, 0, onReady);
+    }
+
+    function loadVideoFacebook() {
+      var placeHolderId = 'videoPlaceholder4';
+      var videoSource = 'https://www.facebook.com/OxalisAdventure/videos/2018160014883949/';
+
+      var defaultSkipAdTime = 3; // show skip button after 3 seconds
+      var autoplay = false;
+      var onReady = function (player) {
+        player.volume(0.6);
+        player.muted(false);
+      }
+      var adConfigs = [{
+          adUrl: 'https://d2.hadarone.com/vast3?li=1531',
+          adType: 'preproll',
+          skipAdTime: 5
+        },
+        {
+          adUrl: 'https://d2.hadarone.com/vast3?li=1531',
+          adType: 'midproll',
+          skipAdTime: 5,
+          timeAfter: 16 // show ads after 15 seconds
+        },
+        {
+          adUrl: 'https://d2.hadarone.com/vast3?li=1531',
+          adType: 'postroll', // seconds
+          skipAdTime: 5
+        }
+      ];
+      HadarOnePlayer.create(autoplay, placeHolderId, videoSource, '', [], defaultSkipAdTime, adConfigs, onReady);
+    }
+
+    //when everything is ready for calling API 
+    var time = new Date().getTime();
+    window.mediaPlayerOneReady = function () {
+      //loadVideoMp4();
+      loadVideoYoutube();
+      //loadVideoStreaming();
+      loadVideoFacebook();
+      console.log('mediaPlayerOneReady, loadtime:' + (new Date().getTime() - time));
+    }
+
+
+    function loadMediaPlayerOne() {
+      var headNode = document.getElementsByTagName("head")[0];
+      var prefix = location.protocol === 'https:' ? 'https:' : 'http:';
+      var cssUrl = prefix + '//static.hadarone.com/ajs/video-player/css/mediaplayer-one.css';
+      var jsUrl = prefix + '//static.hadarone.com/ajs/video-player/hadarone-video-player.min.js';
+
+      var link = document.createElement('link');
+      link.setAttribute('rel', 'stylesheet');
+      link.setAttribute('type', 'text/css');
+      link.setAttribute('href', cssUrl);
+      headNode.appendChild(link);
+
+      var script = document.createElement("script")
+      script.type = "text/javascript";
+      script.src = jsUrl;
+      headNode.appendChild(script);
+    };
+    loadMediaPlayerOne();
+  </script>
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-101171152-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', 'UA-101171152-2');
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+  <title>Media Player One - Demo</title>
+  <link rel="stylesheet" href="https://static-org.hadarone.com/ajs/video-player/css/video-js.min.css">
+  <link rel="stylesheet" href="https://static-org.hadarone.com/ajs/video-player/css/hadarone-player-skin.css">
+
+
+</head>
+
+<body>
+  <a href="javascript:location.reload(true)">Reload</a>
+  <ins class="hadarone-video-player" data-vast-url="https://d2.hadarone.com/vast3?plm=1064">
+    <video class="video-js vjs-default-skin" controls preload="auto" width="440" height="264" data-setup='{}'>
+      <source src="https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
+        type="application/x-mpegURL">
+    </video>
+  </ins>
+  <hr>
+  <div id="videoPlaceholder1" class="videoholder" style="width: 100%;"></div>
+  <script>
+    window.onerror = function (msg, url, lineNo, columnNo, error) {
+      var string = msg.toLowerCase();
+      var substring = "script error";
+      if (string.indexOf(substring) > -1) {
+        alert('Script Error: See Browser Console for Detail');
+      } else {
+        var message = [
+          'Message: ' + msg,
+          'URL: ' + url,
+          'Line: ' + lineNo,
+          'Column: ' + columnNo,
+          'Error object: ' + JSON.stringify(error)
+        ].join(' - ');
+
+        alert(message);
+      }
+    }
+  </script>
+
+  <script type="text/javascript">
+    function loadSingleScript(src, callback) {
+      var s, r, t;
+      r = false;
+      s = document.createElement('script');
+      s.type = 'text/javascript';
+      s.src = src;
+      s.onload = s.onreadystatechange = function () {
+        if (!r && (!this.readyState || this.readyState == 'complete')) {
+          r = true;
+          if (callback) callback();
+        }
+      };
+      t = document.getElementsByTagName('head')[0];
+      t.parentNode.insertBefore(s, t);
+    }
+
+    var jsSrc = 'http://static.hadarone.com/ajs/video-player/hadarone-video-player.min.js?v=27092018';
+    loadSingleScript(jsSrc, function () {
+      //alert('load OK' + typeof HadarOnePlayer)
+      loadVideoStreaming();
+    });
+
+    function loadVideoStreaming() {
+      var placeHolderId = 'videoPlaceholder1';
+      var videoSource =
+        'https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8';
+      var adUrls = ['https://d2.hadarone.com/vast3?li=3184'];
+      var skipAdTime = 3; // show skip button after 3 seconds
+      var autoplay = true;
+      var onReady = function (player) {
+        player.volume(0);
+      }
+      HadarOnePlayer.create(autoplay, placeHolderId, videoSource, '', adUrls, skipAdTime, 0, onReady);
+    }
+
+    setTimeout(function () {
+      //alert('load OK' + typeof HadarOnePlayer)
+     
+    }, 1000);
+  </script>
+
+
+</body>
+
+</html>

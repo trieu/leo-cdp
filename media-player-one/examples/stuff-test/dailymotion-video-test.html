@@ -1,0 +1,41 @@
+<html>
+
+<head>
+    <title>Your Website Title</title>
+    <script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://api.dmcdn.net/all.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'dailymotion-jssdk'));
+    </script>
+</head>
+
+<body onload="">
+
+    <!-- Blueseed - Asynchronous Code for Ad Placement 1001 TestOnly-Masthead Desktop --> 
+<ins class="hadar-placement" data-hdpm="1001" ></ins><script id="jshd1pm_1001" async src="https://static.blueseed.tv/ajs/display.js"></script>
+
+    <div id="player"></div>
+
+    <script>
+        function loadVideo() {
+            var player = DM.player(document.getElementById("player"), {
+                video: "xz3zmo",
+                width: "100%",
+                height: "100%",
+                params: {
+                    autoplay: true,
+                    mute: true
+                }
+            });
+        }
+    </script>
+
+
+
+</body>
+
+</html>

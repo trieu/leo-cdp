@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <base href="http://127.0.0.1:8080/" />
+
+  <!--  bootstrap  -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+
+
+  <!-- HadarOne VIDEO PLAYER CSS   -->
+  <link rel="stylesheet" media="screen" href="/css/video-js.min.css">
+  <link rel="stylesheet" media="screen" href="/css/hadarone-player-skin.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+  <title>Demo HadarOne Video Player </title>
+
+
+  <link rel="icon" href="data:;base64,=">
+  <style>
+    .m-sm {
+      margin: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <h3 style="text-align: center"> Demo HadarOne Video Player</h3>
+
+  <div class="container">
+
+    <div class="row m-sm">
+      <div class="col-xs-1 text-center">
+        <div> VPAID demo: https://d2.hadarone.com/vast3?li=2082 </div>
+
+        <div class="hadarone-video-player" data-vast-url="https://d2.hadarone.com/vast3?li=2082" data-skip-after="6">
+          <video playsinline="true" class="video-js vjs-default-skin vjs-16-9" controls preload="auto" width="480" height="264" data-setup='{}'>
+            <source src="http://clip.vietnamnetjsc.vn/media//2018/04/02/17/05/chum_vnn.mp4" type='video/mp4' />
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <div class="row m-sm">
+      <div class="col text-center">
+        <div> VAST demo: https://d2.hadarone.com/vast3?li=1531 </div>
+        <div class="hadarone-video-player" data-vast-url="https://d2.hadarone.com/vast3?li=1531" data-skip-label="Skip ad">
+          <video playsinline="true" class="video-js vjs-default-skin vjs-16-9" controls preload="auto" width="480" height="264" data-setup='{}'>
+            <source src="https://clip.vietnamnetjsc.vn/media/2018/03/30/19/33/CNT7-30032018_vnn.mp4" type='video/mp4' />
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <div class="row m-sm">
+      <div class="col text-center">
+        <div> set VAST manually by JS code </div>
+        <div id="video1" class="hadarone-video-player">
+          <video playsinline="true" class="video-js vjs-default-skin" controls preload="auto" width="480" height="264" data-setup='{}'>
+            <source src="https://clip.vietnamnetjsc.vn/media/2018/03/30/19/33/CNT7-30032018_vnn.mp4" type='video/mp4' />
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <div class="row m-sm">
+      <div class="col text-center">
+        <div> VAST demo: https://d2.hadarone.com/vast3?li=1531 </div>
+
+        <ins class="hadarone-video-player" data-vast-url-1="https://d2.hadarone.com/vast3?li=0" data-vast-url-2="http://delivery.yomedia.vn/vast?pid=338453caf5c642d4857d063f530d6f36&ec=0">
+          <video playsinline="true" class="video-js vjs-default-skin vjs-16-9" controls preload="auto" width="480" height="264" data-setup='{}'>
+            <source src="https://clip.vietnamnetjsc.vn/media//2018/03/26/12/15/quidditch_vnn.mp4" type='video/mp4' />
+          </video>
+        </ins>
+      </div>
+    </div>
+
+    <div class="row m-sm">
+      <div class="col text-center">
+        <div> Load by Code </div>
+        <div id="videoPlaceholder1" style="width: 50%; height: 300px;;"></div>
+      </div>
+    </div>
+
+    <div class="row m-sm">
+      <div class="col text-center">
+        <div> Load by Code and auto play </div>
+        <div id="videoPlaceholder2" style="width: 100%"></div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+  <!-- HadarOne VIDEO PLAYER JS   -->
+  <script src="/js/video.src.js"></script>
+  <script src="/js/vast-player.js"></script>
+  <script src="/js/mediaplayer.src.js"></script>
+  <script src="/js/vast-vmap.js"></script>
+
+  <script>
+    jQuery(document).ready(function () {
+      var d = $('#videoPlaceholder1');
+      var w = d.width();
+      var h = d.height();
+
+      var mp4 = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_vnn.mp4';
+      var webm = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_vnn.webm';
+      var img = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_1.png';
+      var adUrls = ['https://d2.hadarone.com/vast3?li=1531'];
+      var skipAdTime = 5; // show skip button after 5 seconds
+
+      //HadarOnePlayer.createVideo = function (autoplay, placeHolderId, mp4Url, webmUrl, posterUrl, w, h, vastUrls, skipAdTime, skipAdLabel) 
+      HadarOnePlayer.createVideo(false, 'videoPlaceholder1', mp4, webm, img, w, h, adUrls, skipAdTime);
+
+      var autoplay = location.hash.indexOf('autoplay') > 0;
+
+
+      var vmapURL =
+        'https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/124319096/external/ad_rule_samples&ciu_szs=300x250&ad_rule=1&impl=s&gdfp_req=1&env=vp&output=vmap&unviewed_position_start=1&cust_params=deployment%3Ddevsite%26sample_ar%3Dpremidpostpod&cmsid=496&vid=short_onecue&correlator=' +
+        new Date().getTime();
+
+      // Fetch VMAP as XML
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', vmapURL);
+      xhr.send();
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === xhr.DONE) {
+          if (xhr.status === 200) {
+            // Get a parsed VMAP object
+            const vmap = new VMAP(xhr.responseXML);
+            var vastURL = vmap.adBreaks[0].adSource.adTagURI.uri;
+            console.log(vastURL);
+            var player = HadarOnePlayer.createVideo(autoplay, 'videoPlaceholder2', mp4, webm, img, w, h, [vastURL],
+              skipAdTime);
+            player.volume(0.2);
+          }
+        }
+      };
+    });
+
+    window.debugHadarOneVideoPlayer = true;
+    //window.isVastPlayerOnMobile = true;
+
+    HadarOnePlayer.setVideoAdsById('video1', ['https://d2.hadarone.com/vast3?li=1531']);
+  </script>
+
+
+</body>
+
+</html>

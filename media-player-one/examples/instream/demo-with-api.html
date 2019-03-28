@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+  <!-- Insert  VIDEO PLAYER CSS in the head tag  -->
+  <link rel="stylesheet" href="https://static.hadarone.com/ajs/video-player/video-js.min.css">
+  <link rel="stylesheet" href="https://static.hadarone.com/ajs/video-player/hadarone-player-skin.css">
+  <script src="https://static.hadarone.com/ajs/video-player/hadarone-video-player.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+  <h1>Demo HadarOne Video Player with Ads</h1>
+
+  <div id="videoPlaceholder1" style="width: 480px; height: 360px;"></div>
+  <hr>
+  <!-- Responsive video placement -->
+  <div id="videoPlaceholder2" style="width: 50%;"></div>
+
+  <script>
+    function loadVideoMp4() {
+      var placeHolderId = 'videoPlaceholder1';
+      var videoSource = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_vnn.mp4';
+      var posterUrl = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_1.png';
+      var adUrls = ['https://d2.hadarone.com/vast3?li=1531'];
+      var skipAdTime = 5; // show skip button after 5 seconds
+      var autoplay = true;
+      var player = HadarOnePlayer.create(autoplay, placeHolderId, videoSource, posterUrl, adUrls, skipAdTime);
+      player.volume(0.4);
+    }
+
+    function loadVideoYoutube() {
+      var placeHolderId = 'videoPlaceholder2';
+      var videoSource = 'https://www.youtube.com/watch?v=L1Vbu-i01t0';
+      var adUrls = ['https://d2.hadarone.com/vast3?li=2082'];
+      var skipAdTime = 5; // show skip button after 5 seconds
+      var autoplay = false;
+      var player = HadarOnePlayer.create(autoplay, placeHolderId, videoSource, '', adUrls, skipAdTime);
+      player.volume(0.4);
+    }
+
+    jQuery(document).ready(function () {
+      loadVideoMp4();
+      loadVideoYoutube();
+    });
+  </script>
+
+</body>
+
+</html>

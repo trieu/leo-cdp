@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediaPlayer DEV MODE with API</title>
+  <base href="http://127.0.0.1:8080/" />
+
+  <!-- HadarOne VIDEO PLAYER CSS   -->
+  <link rel="stylesheet" media="screen" href="https://devjs.hadarone.com/css/video-js.min.css">
+  <link rel="stylesheet" media="screen" href="https://devjs.hadarone.com/css/hadarone-player-skin.css">
+
+  <!-- HadarOne VIDEO PLAYER JS   -->
+  <script>
+    //window.mediaPlayerOneDoNotTrack = true;
+    window.mediaPlayer1Configs = {};
+    window.mediaPlayer1Configs.watermarkImage = 'https://static.hadarone.com/ajs/video-player/css/mediaplayer1logo.png';
+    window.mediaPlayer1Configs.watermarkUrl = 'https://mediaplayer.one';
+    window.mediaPlayer1Configs.watermarkPosition = 'top-right'; // or 'top-left'
+  </script>
+
+  <script src="https://devjs.hadarone.com/src/video.src.js"></script>
+  <script src="https://devjs.hadarone.com/src/videojs.youtube.src.js"></script>
+  <script src="https://devjs.hadarone.com/src/videojs.facebook.src.js"></script>
+  <script src="https://devjs.hadarone.com/src/videojs.dailymotion.src.js"></script>
+  <script src="https://devjs.hadarone.com/src/videojs.watermark.src.js"></script>
+  <script src="https://devjs.hadarone.com/src/vast-player.js"></script>
+  <script src="https://devjs.hadarone.com/src/mediaplayer.src.js"></script>
+  <script src="https://devjs.hadarone.com/src/viewability.src.js"></script>
+
+  <style>
+    h1 {
+      margin: auto;
+      text-align: center;
+    }
+
+    h3 {
+      width: 90%;
+      margin: auto;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    .videoholder {
+      width: 50%;
+      margin: auto;
+    }
+
+    body {
+      padding: 12px;
+    }
+
+    @media only screen and (max-width: 768px) {
+
+      /* For mobile phones: */
+      [class="videoholder"] {
+        width: 98%;
+      }
+    }
+  </style>
+</head>
+
+<body onload="init()">
+  <h1>MediaPlayerOne with Dailymotion Video Source and VAST, VPAID</h1>
+
+  <hr>
+  <div id="videoPlaceholder3" class="videoholder"></div>
+
+  <script>
+    var autoplayVideo = false;
+    window.debugMediaPlayerOne = false;
+
+    function loadVideoFacebook() {
+      var placeHolderId = 'videoPlaceholder3';
+      
+      var videoSource = 'https://www.dailymotion.com/video/k4UepybJQzRSIpt6Lfy';
+
+      var adUrls = ['https://d2.hadarone.com/vast3?li=2082'];
+      var skipAdAfter = 2; // show skip button after 5 seconds
+      var autoplay = autoplayVideo;
+      var onReady = function (player) {
+        player.volume(0.9);        
+      }
+
+      var prerollAds = ['https://d2.hadarone.com/vast3?li=1531'];
+      var adConfigs = [{
+          adUrl: 'https://d2.hadarone.com/vast3?li=2082',
+          adType: 'midproll',
+          skipAdTime: skipAdAfter,
+          timeAfter: 8 // show ads after 8 seconds
+        },
+        {
+          adUrl: 'https://d2.hadarone.com/vast3?li=2082',
+          adType: 'midproll',
+          skipAdTime: skipAdAfter,
+          timeAfter: 120 // show ads after 120 seconds
+        },
+        {
+          adUrl: 'https://d2.hadarone.com/vast3?li=2082',
+          adType: 'postroll', // seconds
+          skipAdTime: skipAdAfter
+        }
+      ];
+
+      var v = viewability.vertical(document.getElementById(placeHolderId));
+      var inViewPercent = Math.floor(v.value * 100);
+      if (inViewPercent < 9) {
+        autoplay = false;
+      }
+
+      //adConfigs = [];
+     //prerollAds = [];
+      MediaPlayerOne.create(false, placeHolderId, videoSource, '', prerollAds,
+        skipAdAfter, adConfigs, onReady);
+    }
+
+    var init = function () {
+      loadVideoFacebook();
+    };
+  </script>
+
+</body>
+
+</html>

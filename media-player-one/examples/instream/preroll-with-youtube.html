@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+
+  <!--  bootstrap  -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://static.hadarone.com/ajs/video-player/video-js.min.css">
+  <link rel="stylesheet" href="https://static.hadarone.com/ajs/video-player/hadarone-player-skin.css">
+  <script src="https://static.hadarone.com/ajs/video-player/hadarone-video-player.min.js"></script>
+  <script src="https://static.hadarone.com/ajs/video-player/videojs.youtube.src.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <title>Demo V-2 Video Player for Preroll TVC Ads</title>
+
+
+  <link rel="icon" href="data:;base64,=">
+
+</head>
+
+<body>
+  <h1 style="text-align: center"> Demo V-2 Video Player for Preroll TVC Ads</h1>
+  <h3 style="text-align: center">support play VAST 3.0, VPAID 2.0 from Live Stream, HTML5 Video and YouTube source </h3>
+
+  <div class="container">
+    <div class="row m-sm">
+      <div class="col-xs-1 text-center">
+        <ins class="hadarone-video-player" data-vast-url="https://d2.hadarone.com/vast3?li=2082" data-skip-after="2">
+          <video class="video-js vjs-default-skin" controls width="800" height="500" data-setup='{ "techOrder": ["youtube", "html5"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=izsjRpcgfmk"}] }'>
+          </video>
+        </ins>
+      </div>
+    </div>
+  </div>
+  
+</body>
+
+</html>

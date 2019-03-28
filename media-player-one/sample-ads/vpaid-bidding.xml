@@ -1,0 +1,35 @@
+<VAST version="2.0">
+    <Ad id="edb9f10a021748a7ac8656b71a3439a5">
+        <InLine>
+            <AdSystem>Hadarone</AdSystem>
+            <AdTitle></AdTitle>
+            <Description/>
+            <Survey/>
+            <Error></Error>
+            <Creatives>
+                <Creative sequence="1" AdID="">
+                    <Linear skipoffset="00:00:01" >
+                        <Duration>00:00:30</Duration>
+                        <AdParameters>
+                            &lt;VAST version=&quot;2.0&quot;&gt;
+                                &lt;Ad&gt;
+                                    &lt;Wrapper&gt;
+                                        &lt;AdSystem&gt;HeaderBidding&lt;/AdSystem&gt;
+                                        &lt;VASTAdTagURI&gt;
+                                            &lt;![CDATA[ $$VAST_URL$$ ]]&gt;
+                                        &lt;/VASTAdTagURI&gt;       
+                                    &lt;/Wrapper&gt;
+                                &lt;/Ad&gt;
+                            &lt;/VAST&gt;
+                        </AdParameters>
+                        <MediaFiles>
+                            <MediaFile type="application/javascript" apiFramework="VPAID" height="360" width="640" delivery="progressive">
+                                <![CDATA[https://vast.hadarone.com/js/v1-hadarone-vpaid.js?db=1&gmwid=1517294862&gmzid=1517295325&hdpmid=1064&fb=https%3A%2F%2Fd2.hadarone.com%2Fvast3%3Fli%3D2082+]]>
+                            </MediaFile>
+                        </MediaFiles>
+                    </Linear>
+                </Creative>
+            </Creatives>
+        </InLine>
+    </Ad>
+</VAST>

@@ -1,0 +1,98 @@
+<html>
+
+<head>
+    <title>Your Website Title</title>
+</head>
+
+<body>
+    <iframe id="mobileview" width="500" height="500" src="about:blank" style="visibility: visible; border:0;"></iframe>
+
+    <!-- Load Facebook SDK for JavaScript -->
+
+    <script>
+        var jsFbVideoStr =
+            `
+        var loadFacebookLibs = function () {
+            if (window.fbAsyncInit) return;
+            window.fbAsyncInit = function () {
+                FB.init({ appId: '', xfbml: true,version: 'v2.8'});
+                FB.Event.subscribe('xfbml.ready', function (msg) {
+                    if (msg.type === 'video') {
+                        console.log('load video facebook Ok')                        
+                        parent.processFbPlayer(msg.instance);
+                    }
+                });
+            };
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];                
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "https://connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        }
+        loadFacebookLibs();
+        `;
+
+        var w = 500, h = 500;
+        var fbvid = '';
+        var placeHolderId = '#mobileview';
+        var fbVideoSrc = 'https://www.facebook.com/facebook/videos/2179999532289307' + fbvid;
+
+
+        var iframeV = document.querySelector(placeHolderId);
+
+        var divId = 'fb' + fbvid;
+        var div = document.createElement("div");
+        var attrs = {
+            'id': divId,
+            'data-href': fbVideoSrc,
+            'class': 'fb-video',
+            'data-show-captions': 'false',
+            'data-show-text': 'false',
+            'data-allowfullscreen': 'false',
+            'data-controls': 'false',
+            'data-width': w
+        };
+        for (var k in attrs) {
+            div.setAttribute(k, attrs[k]);
+        }
+
+        iframeV.setAttribute('width', w);
+        iframeV.setAttribute('height', h);
+        var dstDoc = iframeV.contentDocument || iframeV.contentWindow.document;
+        dstDoc.write('<div id="fb-root"></div>');
+        dstDoc.body.append(div);
+        dstDoc.write(`<script>` + jsFbVideoStr + `<\/script>`);
+        dstDoc.close();
+
+
+        var processFbPlayer = function (fbVideoPlayer) {
+            fbVideoPlayer.unmute();
+            fbVideoPlayer.subscribe('startedBuffering', function (e) {
+                console.log('load video startedBuffering Ok')
+            });
+            fbVideoPlayer.subscribe('startedPlaying', function (e) {
+                console.log('load video startedPlaying Ok')
+            });
+            fbVideoPlayer.subscribe('paused', function (e) {
+                console.log('load video paused Ok')
+            });
+
+            fbVideoPlayer.subscribe('error', function (e) {
+                console.log('load video error')
+            });
+            fbVideoPlayer.subscribe('finishedPlaying', function (e) {
+                console.log('load video finishedPlaying Ok')
+            });
+            fbVideoPlayer.subscribe('finishedBuffering', function (e) {
+                console.log('load video finishedBuffering Ok')
+            });
+        }
+    </script>
+
+
+
+</body>
+
+</html>

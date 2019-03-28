@@ -1,0 +1,51 @@
+<VAST xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.0" xsi:noNamespaceSchemaLocation="vast3_draft.xsd">
+    <Ad id="693457f1910444228a19a373e2c4f92f">
+        <InLine>
+            <AdSystem>Yomedia</AdSystem>
+            <AdTitle></AdTitle>
+            <Description/>
+            <Survey/>
+            <Creatives>
+                <Creative sequence="1" AdID="">
+                    <Linear skipoffset="00:00:07">
+                        <Duration>00:01:00</Duration>
+                        <AdParameters>
+                        &lt;VAST xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;3.0&quot; xsi:noNamespaceSchemaLocation=&quot;vast3_draft.xsd&quot;&gt;
+                    &lt;Ad id=&quot;693457f1910444228a19a373e2c4f92f&quot;&gt;
+                        &lt;Wrapper&gt;
+                            &lt;AdSystem&gt;Yomedia&lt;/AdSystem&gt; &lt;VASTAdTagURI&gt;&lt;![CDATA[https://direct.adsrvr.org/bid/bidder/publisherdirect/?video.inline=1&amp;maxdur=60&amp;did=ttdd-2837u75-68v8493&amp;ord=1542254430874&amp;video.ft=vpaid&amp;video.ft=mp4&amp;video.ft=flv&amp;video.ft=webm&amp;video.ft=jsvpaid]]&gt;&lt;/VASTAdTagURI&gt; &lt;Impression&gt;&lt;![CDATA[https://analytics.yomedia.vn/collect?ref=https%3A%2F%2Ftest.netlife.vn%2Fpreview%2F20181010142238658.html&amp;ord=1542254430874]]&gt;&lt;/Impression&gt; &lt;Impression&gt;&lt;![CDATA[//analytics.yomedia.vn/aud?coid=1&amp;ord=1542254430874]]&gt;&lt;/Impression&gt; &lt;Impression&gt;&lt;![CDATA[https://sb.scorecardresearch.com/p?c1=8&amp;c2=18889311&amp;c3=2016070110000000012&amp;c15=&amp;cv=2.0&amp;cj=1]]&gt;&lt;/Impression&gt; &lt;Impression&gt;&lt;![CDATA[https://sb.scorecardresearch.com/p?c1=8&amp;c2=18889311&amp;c3=2016070110000000001&amp;c15=&amp;cv=2.0&amp;cj=1]]&gt;&lt;/Impression&gt; &lt;Impression&gt;&lt;![CDATA[https://sb.scorecardresearch.com/p?c1=8&amp;c2=18889311&amp;c3=2016090700000000011&amp;c15=&amp;cv=2.0&amp;cj=1]]&gt;&lt;/Impression&gt; &lt;Impression&gt;&lt;![CDATA[https://sb.scorecardresearch.com/p?c1=8&amp;c2=18889311&amp;c3=2016090700000000011&amp;c15=&amp;cv=2.0&amp;cj=1]]&gt;&lt;/Impression&gt; &lt;Impression&gt;&lt;![CDATA[https://sb.scorecardresearch.com/p?c1=8&amp;c2=18889311&amp;c3=2016070110000000012&amp;c15=&amp;cv=2.0&amp;cj=1]]&gt;&lt;/Impression&gt; &lt;Impression&gt;&lt;![CDATA[https://sb.scorecardresearch.com/p?c1=8&amp;c2=18889311&amp;c3=2016070110000000006&amp;c15=&amp;cv=2.0&amp;cj=1]]&gt;&lt;/Impression&gt; &lt;Impression&gt;&lt;![CDATA[https://tracking.yomedia.vn/video?evt=002&amp;token=7fa80632e1fe341df8c14cfa0e264d8138087d8644&amp;ord=1542254430874]]&gt;&lt;/Impression&gt; &lt;Impression&gt;&lt;![CDATA[//dmp-log.yomedia.vn/api/log/dmp-event?cid=523000012&amp;ev=impression&amp;uuid=89186aa4236741709567f83d2fb53440&amp;rd=1542254430874]]&gt;&lt;/Impression&gt; &lt;Impression&gt;&lt;![CDATA[https://tracking.yomedia.vn/ias?cpid=7996776f4089412e9bdf63b73e84ae81&amp;pid=693457f1910444228a19a373e2c4f92f&amp;advid=da05952f02e0494cb9c0bfa45846bd75&amp;chid=9db6a615476647dd9db20e9bac722e2f&amp;wid=0db8f12d71c14e3fa3f63287faabf4b2&amp;ord=1542254430874]]&gt;&lt;/Impression&gt;
+                            &lt;Creatives&gt;
+                                &lt;Creative id=&quot;&quot;&gt;
+                                    &lt;Linear skipoffset=&quot;00:00:07&quot;&gt;
+                                        &lt;Duration&gt;00:01:00&lt;/Duration&gt;
+                                        &lt;TrackingEvents&gt;
+                                            &lt;Tracking event=&quot;start&quot;&gt;&lt;![CDATA[https://tracking.yomedia.vn/video?evt=003&amp;token=7fa80632e1fe341df8c14cfa0e264d81380856125a&amp;ord=1542254430874]]&gt;&lt;/Tracking&gt;
+                                            &lt;Tracking event=&quot;firstQuartile&quot;&gt;&lt;![CDATA[https://tracking.yomedia.vn/video?evt=004&amp;token=7fa80632e1fe341df8c14cfa0e264d813808936399&amp;ord=1542254430874]]&gt;&lt;/Tracking&gt;
+                                            &lt;Tracking event=&quot;midpoint&quot;&gt;&lt;![CDATA[https://tracking.yomedia.vn/video?evt=005&amp;token=7fa80632e1fe341df8c14cfa0e264d813808f249d9&amp;ord=1542254430874]]&gt;&lt;/Tracking&gt;
+                                            &lt;Tracking event=&quot;thirdQuartile&quot;&gt;&lt;![CDATA[https://tracking.yomedia.vn/video?evt=006&amp;token=7fa80632e1fe341df8c14cfa0e264d81380822f20b&amp;ord=1542254430874]]&gt;&lt;/Tracking&gt;
+                                            &lt;Tracking event=&quot;complete&quot;&gt;&lt;![CDATA[https://tracking.yomedia.vn/video?evt=007&amp;token=7fa80632e1fe341df8c14cfa0e264d813808156cb0&amp;ord=1542254430874]]&gt;&lt;/Tracking&gt;
+                                            &lt;Tracking event=&quot;mute&quot;&gt;&lt;![CDATA[https://tracking.yomedia.vn/video?evt=010&amp;token=7fa80632e1fe341df8c14cfa0e264d813808d23398&amp;ord=1542254430874]]&gt;&lt;/Tracking&gt;
+                                            &lt;Tracking event=&quot;unmute&quot;&gt;&lt;![CDATA[https://tracking.yomedia.vn/video?evt=011&amp;token=7fa80632e1fe341df8c14cfa0e264d8138086c5cf8&amp;ord=1542254430874]]&gt;&lt;/Tracking&gt;
+                                            &lt;Tracking event=&quot;pause&quot;&gt;&lt;![CDATA[https://tracking.yomedia.vn/video?evt=012&amp;token=7fa80632e1fe341df8c14cfa0e264d81380898ea27&amp;ord=1542254430874]]&gt;&lt;/Tracking&gt;
+                                            &lt;Tracking event=&quot;resume&quot;&gt;&lt;![CDATA[https://tracking.yomedia.vn/video?evt=014&amp;token=7fa80632e1fe341df8c14cfa0e264d81380820c15a&amp;ord=1542254430874]]&gt;&lt;/Tracking&gt;
+                                        &lt;/TrackingEvents&gt;                        &lt;VideoClicks&gt; &lt;ClickTracking&gt;&lt;![CDATA[https://tracking.yomedia.vn/video?evt=009&amp;token=7fa80632e1fe341df8c14cfa0e264d813808af1e1c&amp;ord=1542254430874]]&gt;&lt;/ClickTracking&gt; &lt;ClickTracking&gt;&lt;![CDATA[//dmp-log.yomedia.vn/api/log/dmp-event?cid=523000012&amp;ev=click&amp;uuid=89186aa4236741709567f83d2fb53440&amp;rd=1542254430874]]&gt;&lt;/ClickTracking&gt;
+                                        &lt;/VideoClicks&gt;
+                                    &lt;/Linear&gt;
+                                &lt;/Creative&gt; 
+                                &lt;Creative id=&quot;&quot;&gt;
+                                    &lt;CompanionAds&gt;&lt;/CompanionAds&gt;
+                                &lt;/Creative&gt;
+                            &lt;/Creatives&gt;
+                        &lt;/Wrapper&gt;
+                    &lt;/Ad&gt;
+                &lt;/VAST&gt;
+                </AdParameters>
+                        <MediaFiles>
+                            <MediaFile type="application/javascript" apiFramework="VPAID" height="360" width="640" delivery="progressive"><![CDATA[https://media.yomedia.vn/2017/backup/V22-YomediaVpaid.js?skip=5&loop=3&tms=3000&fb=%2F%2Fdelivery.yomedia.vn%2Fvfb%3Fadun%3D1f1589cb492948d8950dd06cfa6c7164%26advi%3Dvideo%26yw%3D1%26yh%3D1]]></MediaFile>
+                        </MediaFiles>
+                    </Linear>
+                </Creative>
+            </Creatives>
+        </InLine>
+    </Ad>
+</VAST>

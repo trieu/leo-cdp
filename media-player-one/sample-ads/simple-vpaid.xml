@@ -1,0 +1,43 @@
+<VAST version="2.0">
+    <Ad >
+        <InLine>
+            <AdSystem>HadarOne</AdSystem>
+            <AdTitle></AdTitle>
+            <Description/>
+            <Survey/>
+            <Error></Error>
+            <Creatives>
+                <Creative>
+                    <Linear>
+                        <AdParameters>
+                            &lt;VAST version=&quot;2.0&quot;&gt;
+                                &lt;Ad&gt;
+                                    &lt;VASTWrapper&gt;
+                                        &lt;VASTAdTagURI&gt;
+                                            &lt;![CDATA[https://d4.hadarone.com/vast3?plm=1064]]&gt;
+                                        &lt;/VASTAdTagURI&gt;           
+                                        &lt;Creatives&gt;
+                                            &lt;Creative&gt;
+                                                &lt;Linear skipoffset=&quot;00:00:05&quot;&gt;
+                                                    &lt;Duration&gt;00:00:15&lt;/Duration&gt;
+                                                    &lt;TrackingEvents&gt;
+                                                    &lt;/TrackingEvents&gt;
+                                                    &lt;VideoClicks&gt;&lt;/VideoClicks&gt;
+                                                &lt;/Linear&gt;
+                                            &lt;/Creative&gt;
+                                        &lt;/Creatives&gt;
+                                    &lt;/Wrapper&gt;
+                                &lt;/Ad&gt;
+                            &lt;/VAST&gt;
+                        </AdParameters>
+                        <MediaFiles>
+                            <MediaFile type="application/javascript" apiFramework="VPAID" height="360" width="640" delivery="progressive">
+                                <![CDATA[https://static.hadarone.com/ajs/vpaid/v1-hadarone-vpaid.min.js]]>
+                            </MediaFile>
+                        </MediaFiles>
+                    </Linear>
+                </Creative>
+            </Creatives>
+        </InLine>
+    </Ad>
+</VAST>

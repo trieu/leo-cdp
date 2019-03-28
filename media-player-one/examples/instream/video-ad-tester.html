@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <title> HadarOne | Video Ad Tester Tool </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <link rel="shortcut icon" href="https://generic-demos.adludio.com/img/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="//static.hadarone.com/ajs/video-player/css/mainall.css">
+
+  <!-- Insert HadarOne VIDEO PLAYER CSS in the head tag  -->
+  <link rel="stylesheet" href="https://static.hadarone.com/ajs/video-player/video-js.min.css">
+  <link rel="stylesheet" href="https://static.hadarone.com/ajs/video-player/hadarone-player-skin.css">
+  <link rel="stylesheet" href="https://googleads.github.io/videojs-ima/node_modules/videojs-contrib-ads/dist/videojs.ads.css"
+  />
+
+  <!-- SCRIPTS -->
+
+  <!-- Put HadarOne VIDEO PLAYER JS at the end of body tag -->
+  <script src="https://static.hadarone.com/ajs/video-player/hadarone-video-player.min.js"></script>
+
+  <!--for demo for get width and height of player holder tag -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
+  <script src="https://googleads.github.io/videojs-ima/node_modules/videojs-contrib-ads/dist/videojs.ads.min.js"></script>
+  <script src="https://googleads.github.io/videojs-ima/dist/videojs.ima.js"></script>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-default navbar-luke">
+    <div class="container-fluid">
+      <div class="nav-luke-container">
+        <div class="nav-luke nav-luke-elements-1">
+          <a class="navbar-brand glyphicon glyphicon-home" href="#"></a>
+          <img src="https://static.hadarone.com/css/images/logo.png" class="nav-logo">
+          <div class="nav-text">
+            <p class="nav-heading">Gallery</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- INFOBAR BELOW NAVBAR -->
+  <div class="infobar">
+    <div class="infobar-inner">
+      <span class="span1" id="infobar1"> HadarOne Video Player with Ad Tester Tool</span>
+      <span class="span2">VAST 2.0 / VAST 3.0 / VPAID 2.0</span>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-container top-padding22">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="col-sm-9">
+          <input id="ad_url" style="width: 100%;" type="url" placeholder="Enter VAST/VPAID URL" value="https://d5.hadarone.com/vast3?plm=1064"
+          />
+        </div>
+        <div class="col-sm-1">
+          <input id="ad_url_ok" type="button" value=" OK " onclick="handleAdLoader()" />
+        </div>
+        <div class="col-sm-1">
+          <input id="ad_url_play" type="button" value=" Play " onclick="javascript: player.play()" />
+        </div>
+        <div class="col-sm-1">
+          <input id="ad_url_reset" type="button" value=" Reset " onclick="javascript: $('#ad_url').val('')" />
+        </div>
+
+      </div>
+    </div>
+
+    <div id="video">
+      <div class="row">
+        <div class="col-sm-12">
+
+          <div class="inner-page">
+
+            <div class="row">
+              <div class="col-sm-9">
+                <div class="mid-grey head" style="margin-bottom: 26px;"></div>
+
+                <div class="row" id="hadarone_video" style="width: 100%; height: 300px;">
+                </div>
+
+                <div class="unlock-intext inview-margin">
+                  <p class="text-justify">Lorem ipsum dolor sit amet, sea nonumy evertitur maiestatis an.</p>
+                </div>
+
+                <div class="mid-grey head" style="margin-bottom: 26px;"></div>
+
+                <div class="row" id="videojs_video" style="width: 100%; height: 300px;display: block">
+
+                </div>
+                <br>
+
+                <div class="mid-grey head" style="margin: 100px 0;"></div>
+
+              </div>
+              <div class="col-sm-3 right">
+                <div class="mid-grey">&nbsp;</div>
+                <div class="mid-grey m1">&nbsp;</div>
+                <div class="mid-grey m1">&nbsp;</div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+  <script>
+    var adUrls = [];
+    var player;
+    var handleAdLoader = function () {
+      var holderId = 'hadarone_video';
+      var d = $('#' + holderId);
+      var w = d.width();
+      var h = d.height();
+      var autoplay = false;
+      var mp4 = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_vnn.mp4';
+      var webm = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_vnn.webm';
+      var img = 'https://clip.vietnamnetjsc.vn/media/2018/03/02/23/12/CNT7-02032018-ok_1.png';
+      var skipAdTime = 3; // show skip button after 3 seconds
+
+      // the ad URL input
+      var ad_url = $('#ad_url').val().trim();
+      var iUrl = location.hash.length > 0 ? location.hash.substring(1) : ad_url;
+      ad_url = iUrl;
+      $('#ad_url').val(ad_url);
+
+      if (ad_url !== '') {
+
+        adUrls.push(ad_url + '&cb=' + new Date().getTime());
+        setTimeout(function () {
+          var vid = 'videojs_video' + new Date().getTime();
+          var tpl = `<video id="` + vid +
+            `" class="video-js vjs-default-skin"  controls preload="auto" >
+              <source src="http://rmcdn.2mdn.net/Demo/vast_inspector/android.mp4" type="video/mp4" />
+            </video>`;
+          $('#videojs_video').empty().html(tpl);
+          videojs(vid).ima({
+            id: vid,
+            adTagUrl: ad_url + '&cb=' + new Date().getTime()
+          });
+        }, 100);
+      }
+
+      player = HadarOnePlayer.createVideo(autoplay, holderId, mp4, webm, img, w, h, adUrls, skipAdTime);
+      player.volume(0.2);
+      if (location.hash.length > 0) {
+        setTimeout(function () {
+          player.play();
+        }, 1000);
+      }
+
+
+    };
+
+    jQuery(document).ready(handleAdLoader);
+  </script>
+
+
+
+
+</body>
+
+</html>

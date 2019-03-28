@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="">
+    <title>Pose Video Player in mobile with Preroll TVC</title>
+    <base href="http://127.0.0.1:8080/" />
+
+    <link rel="icon" type="image/png" href="https://adasiaholdings.com/wp-content/themes/adasia/images/favicon.png">
+    <link rel="stylesheet" type="text/css" href="https://adasiaholdings.com/wp-content/themes/adasia/css/yui.yahooapis.css">
+    <link rel="stylesheet" href="https://adasiaholdings.com/demo/style.css">
+
+
+    <style>
+        .mobile_video {
+            background-color: rgb(51, 51, 51);
+            height: 202.5px;
+            transition: 2s;
+            position: relative;
+            width: 100%;
+            border: none;
+            max-width: 800px;
+        }
+    </style>
+    <script>
+        var vdata =
+            'JTdCJTIyc291cmNlJTIyJTNBJTVCJTdCJTIyc3JjJTIyJTNBJTIyaHR0cHMlM0ElNUMlMkYlNUMlMkZjZG4ucG9zZS5jb20udm4lNUMlMkZhc3NldHMlNUMlMkYyMDE4JTVDJTJGMDclNUMlMkZWdSU1Q3UwMzAzLU5nbyU1Q3UwMzIzYy1BbmgtbXA0Lm1wNCUyMiUyQyUyMnR5cGUlMjIlM0ElMjJ2aWRlbyU1QyUyRm1wNCUyMiU3RCU1RCUyQyUyMnBvc3RlciUyMiUzQSUyMiUyMiUyQyUyMmF1dG9wbGF5JTIyJTNBdHJ1ZSU3RA==';
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Heder -->
+        <header>
+            <div class="logo_wrapper">
+                <a href="http://hadarone.com" class="box_link"></a>
+                <img src="https://static.hadarone.com/css/images/logo.png">
+            </div>
+            <div class="ad_description">
+                <h1>Video Player</h1>
+                <p>
+                    Demo Video Player in mobile with Preroll TVC
+                </p>
+            </div>
+        </header>
+
+        <!-- Main -->
+        <section class="content_wrapper">
+            <div class="sp_wrapper" style="width: 380px; height: 690px;">
+                <div class="sp_camera"></div>
+                <div class="sp_mic">
+                    <div></div>
+                    <div></div>
+                </div>
+                <section style="box-sizing: border-box; overflow: auto; width: 360px ;height: 560px; margin: 16px auto 0; padding: 6px; border: 2px solid #f0f0f0;">
+                    <div style="margin:10px;" class="block-content-body">
+                        <div class="thin_box" style="width: 100%; height: 24px; margin-bottom: 12px;"></div>
+                        <div class="thin_box" style="width: 60%; height: 24px; margin-bottom: 16px;"></div>
+                        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+                        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+                        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+                        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+                        <div class="thin_box" style="width: 20%; height: 14px; margin-bottom: 16px;"></div>
+
+                        <div style="width: 90%;  margin: 16px;">
+
+                            <!-- example video 1 -->
+                            <div class="playerholder" 
+                                data-video="JTdCJTIyc291cmNlJTIyJTNBJTVCJTdCJTIyc3JjJTIyJTNBJTIyaHR0cHMlM0ElNUMlMkYlNUMlMkZjZG4ucG9zZS5jb20udm4lNUMlMkZhc3NldHMlNUMlMkYyMDE4JTVDJTJGMDglNUMlMkZOb28tUGglNUN1MDFiMCU1Q3UxZWRiYy1UaCU1Q3UxZWNibmgtbmglNUN1MWViN3QtciU1Q3UwMGUxYy5tcDQlMjIlMkMlMjJ0eXBlJTIyJTNBJTIydmlkZW8lNUMlMkZtcDQlMjIlN0QlNUQlMkMlMjJwb3N0ZXIlMjIlM0ElMjIlMjIlMkMlMjJhdXRvcGxheSUyMiUzQXRydWUlN0Q="></div>
+
+                            <br><br>
+
+                            <!-- example video 2 -->
+                            <div class="playerholder" 
+                                data-video="JTdCJTIyc291cmNlJTIyJTNBJTVCJTdCJTIyc3JjJTIyJTNBJTIyaHR0cHMlM0ElNUMlMkYlNUMlMkZjZG4ucG9zZS5jb20udm4lNUMlMkZhc3NldHMlNUMlMkYyMDE4JTVDJTJGMDglNUMlMkZHZW9yZ2VfTGFtYmVyaXNfaW5zdGFncmFtLmNvbV9Ca3ZEZjN4SDc3ai5tcDQlMjIlMkMlMjJ0eXBlJTIyJTNBJTIydmlkZW8lNUMlMkZtcDQlMjIlN0QlNUQlMkMlMjJwb3N0ZXIlMjIlM0ElMjIlMjIlMkMlMjJhdXRvcGxheSUyMiUzQXRydWUlN0Q="></div>
+
+                        </div>
+
+
+                        <!-- Put this script tag at the end of HTML page -->
+                        <script src="https://static.hadarone.com/ajs/video-player/videoloader.js"></script>
+
+
+                        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+                        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+                        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+                        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+                        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+                        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+                        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+                        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+                        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+                        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+                        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+                        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+                        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+                        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+                        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+                        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+                        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+                        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+                        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+                        <div class="thin_box" style="width: 100%; height: 14px; margin-bottom: 8px;"></div>
+                    </div>
+                </section>
+                <div class="sp_btn"></div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>©HadarOne.</p>
+        </footer>
+    </div>
+    <script>
+        var vdata =
+            'JTdCJTIyc291cmNlJTIyJTNBJTVCJTdCJTIyc3JjJTIyJTNBJTIyaHR0cHMlM0ElNUMlMkYlNUMlMkZjZG4ucG9zZS5jb20udm4lNUMlMkZhc3NldHMlNUMlMkYyMDE4JTVDJTJGMDclNUMlMkZWdSU1Q3UwMzAzLU5nbyU1Q3UwMzIzYy1BbmgtbXA0Lm1wNCUyMiUyQyUyMnR5cGUlMjIlM0ElMjJ2aWRlbyU1QyUyRm1wNCUyMiU3RCU1RCUyQyUyMnBvc3RlciUyMiUzQSUyMiUyMiUyQyUyMmF1dG9wbGF5JTIyJTNBdHJ1ZSU3RA==';
+    </script>
+
+</body>
+
+</html>

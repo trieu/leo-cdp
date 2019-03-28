@@ -1,0 +1,51 @@
+<html>
+
+<head>
+    <title>Your Website Title</title>
+    <script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+</head>
+
+<body onclick="loadVideo()">
+    <div id="vd" class="fb-video" data-allowfullscreen="false" data-autoplay="false" data-href="https://www.facebook.com/baotuoitre/videos/2179999532289307/"></div>
+    <script>
+        var videoSource = 'https://www.facebook.com/baotuoitre/videos/2179999532289307/';
+
+        window.fbAsyncInit = function () {
+
+            console.log('fbAsyncInit Ok');
+            
+
+        };
+
+        function loadVideo() {
+            FB.init({
+                appId: '',
+                status: true,
+                xfbml: true,
+                version: 'v2.10'
+            });
+
+            //Re-parse the parent
+            FB.XFBML.parse(document.getElementById('vd'));
+            //Autoplay
+            FB.Event.subscribe('xfbml.ready', function (msg) {
+                if (msg.type === 'video') {
+                  //  msg.instance.play();
+                }
+            });
+        }
+    </script>
+
+
+
+</body>
+
+</html>

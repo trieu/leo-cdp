@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    h1 {
+      margin: auto;
+      text-align: center;
+    }
+
+    h3 {
+      width: 90%;
+      margin: auto;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    .videoholder {
+      width: 50%;
+      margin: auto;
+    }
+
+    body {
+      padding: 12px;
+    }
+
+    @media only screen and (max-width: 768px) {
+
+      /* For mobile phones: */
+      [class="videoholder"] {
+        width: 90%;
+      }
+    }
+  </style>
+
+
+
+</head>
+
+<body>
+  <h1>Demo Media Player One with VAST Ads</h1>
+
+  <h3>YouTube video source </h3>
+  <div id="videoPlaceholder1" class="videoholder"></div>
+
+  <hr>
+  <h3>Facebook video source </h3>
+  <div id="videoPlaceholder2" class="videoholder"></div>
+
+  <hr>
+  <div id="log"></div>
+
+  <hr>
+
+
+  <script>
+    ////////////////////////////////////////////////////////////////////////////////
+
+
+
+    function loadVideoYoutube() {
+      var placeHolderId = 'videoPlaceholder1';
+      var videoSource = 'https://www.youtube.com/watch?v=60ItHLz5WEA';
+
+      var defaultSkipAdTime = 3; // show skip button after 3 seconds
+      var autoplay = false;
+      var onReady = function (player) {
+        player.volume(0.6);
+        player.muted(false); 
+      }
+      var adConfigs = [{
+          adUrl: 'https://d2.hadarone.com/vast3?li=1531',
+          adType: 'preproll',
+          skipAdTime: 5
+        },
+        {
+          adUrl: 'https://d2.hadarone.com/vast3?li=1531',
+          adType: 'midproll',
+          skipAdTime: 5,
+          timeAfter: 15 // show ads after 15 seconds
+        },
+        {
+          adUrl: 'https://d2.hadarone.com/vast3?li=1531',
+          adType: 'postroll', // seconds
+          skipAdTime: 5
+        }
+      ];
+      HadarOnePlayer.create(autoplay, placeHolderId, videoSource, '', [], defaultSkipAdTime, adConfigs, onReady);
+    }
+
+    function loadVideoFacebook() {
+      var placeHolderId = 'videoPlaceholder2';
+      var videoSource = 'https://www.facebook.com/Netlifevietnam/videos/328698751230927/';
+
+      var defaultSkipAdTime = 3; // show skip button after 3 seconds
+      var autoplay = true;
+      var onReady = function (player) {
+        player.volume(0.6);
+        player.muted(false); 
+      }
+      var adConfigs = [{
+          adUrl: 'https://d2.hadarone.com/vast3?li=1531',
+          adType: 'preproll',
+          skipAdTime: 5
+        },
+        {
+          adUrl: 'https://d2.hadarone.com/vast3?li=1531',
+          adType: 'midproll',
+          skipAdTime: 5,
+          timeAfter: 15 // show ads after 15 seconds
+        },
+        {
+          adUrl: 'https://d2.hadarone.com/vast3?li=1531',
+          adType: 'postroll', // seconds
+          skipAdTime: 5
+        }
+      ];
+      HadarOnePlayer.create(autoplay, placeHolderId, videoSource, '', [], defaultSkipAdTime, adConfigs, onReady);
+    }
+
+    //when everything is ready for calling API 
+    window.mediaPlayerOneReady = function () {
+      loadVideoYoutube();
+      loadVideoFacebook();
+    }
+
+    var loadMediaPlayerOne = function (callback) {
+      var headNode = document.getElementsByTagName("head")[0];
+      var prefix = location.protocol === 'https:' ? 'https:' : 'http:';
+      var cssUrl = prefix + '//static.blueseed.tv/ajs/video-player/css/netlife-player.css';
+      var link = document.createElement('link');
+      link.setAttribute('rel', 'stylesheet');
+      link.setAttribute('type', 'text/css');
+      link.setAttribute('href', cssUrl);
+      headNode.appendChild(link);
+
+      var jsUrl = prefix + '//static.blueseed.tv/ajs/video-player/mediaplayer.one.min.js';
+      var script = document.createElement("script")
+      script.type = "text/javascript";
+
+      if (script.readyState) { //IE
+        script.onreadystatechange = function () {
+          if (script.readyState == "loaded" ||
+            script.readyState == "complete") {
+            script.onreadystatechange = null;
+            if (callback) callback();
+          }
+        };
+      } else { //Others
+        script.onload = function () {
+          if (callback) callback();
+        };
+      }
+      script.src = jsUrl;
+      headNode.appendChild(script);
+    }
+    loadMediaPlayerOne();
+  </script>
+
+</body>
+
+</html>
