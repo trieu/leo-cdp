@@ -1,0 +1,292 @@
+group 'leocms'
+version '1.0'
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'eclipse'
+
+eclipse {
+    project {
+        name = 'LeoTech-Core-System'
+    }
+}
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven {
+    	url = "https://oss.sonatype.org/content/repositories/snapshots"
+    }
+}
+
+dependencies {
+	
+	// AWS Java SDK for Amazon S3
+	compile group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.11.492'
+	
+	// Crawler4J
+	compile group: 'com.sleepycat', name: 'je', version: '18.3.1'
+	compile group: 'edu.uci.ics', name: 'crawler4j', version: '4.4.0'
+	
+	// Google OAuth
+	compile group: 'com.google.oauth-client', name: 'google-oauth-client-java6', version: '1.28.0'    
+	compile group: 'com.google.oauth-client', name: 'google-oauth-client-jetty', version: '1.28.0'
+	
+	// YouTube API	
+	compile group: 'com.google.apis', name: 'google-api-services-youtube', version: 'v3-rev206-1.25.0'
+	
+	// Facebook API
+	compile group: 'com.restfb', name: 'restfb', version: '2.16.0'
+	
+	// OpenSSP 
+	compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.1'
+	
+	// Boilerpipe Text Extraction library
+	compile group: 'net.htmlparser.jericho', name: 'jericho-html', version: '3.4'
+	compile group: 'xerces', name: 'xercesImpl', version: '2.11.0'
+	compile group: 'net.sourceforge.nekohtml', name: 'nekohtml', version: '1.9.22' 
+	
+	// library for document conversion of a docx file into a pdf file  
+	compile group: 'com.documents4j', name: 'documents4j-api', version: '1.0.3'
+	compile group: 'com.documents4j', name: 'documents4j-local', version: '1.0.3'
+	compile group: 'com.documents4j', name: 'documents4j-transformer-msoffice-base', version: '1.0.3'
+	compile group: 'com.documents4j', name: 'documents4j-transformer-msoffice-excel', version: '1.0.3'
+	compile group: 'com.documents4j', name: 'documents4j-transformer-msoffice-word', version: '1.0.3'
+	
+	// Apache Lucene full-text search 
+	compile group: 'org.apache.lucene', name: 'lucene-core', version: '7.6.0'
+	compile group: 'org.apache.lucene', name: 'lucene-analyzers-common', version: '7.6.0'
+	compile group: 'org.apache.lucene', name: 'lucene-queries', version: '7.6.0'
+	compile group: 'org.apache.lucene', name: 'lucene-queryparser', version: '7.6.0'
+	compile group: 'org.apache.lucene', name: 'lucene-spatial', version: '7.6.0'
+	
+	// TSV parser
+	compile group: 'com.univocity', name: 'univocity-parsers', version: '2.7.6'
+	
+	// PDF utils
+	compile group: 'org.apache.pdfbox', name: 'pdfbox', version: '2.0.13'
+	
+    compile (	   
+		fileTree(dir: 'ext-lib', include: '**/*.jar') 	
+    		    	
+    	// common	 	
+    	,'io.vertx:vertx-core:3.6.3'			
+		,'io.vertx:vertx-web:3.6.3'
+		,'io.vertx:vertx-codegen:3.6.3'
+		,'com.google.code.gson:gson:2.8.5'    		
+		,'log4j:log4j:1.2.17'
+		,'org.jsoup:jsoup:1.11.3'					
+		,'org.apache.commons:commons-lang3:3.3.2'
+		,'commons-net:commons-net:3.6'    		
+		,'commons-io:commons-io:2.5'
+		,'redis.clients:jedis:2.10.2'
+		,'org.apache.httpcomponents:httpclient:4.5.7'
+		,'com.google.guava:guava:22.0'
+		,'org.databene:contiperf:2.3.4'
+		,'com.google.javascript:closure-compiler:v20190121'
+		,'com.github.jknack:handlebars:4.1.2'
+		,'com.github.spullara.mustache.java:compiler:0.9.6'
+		,'org.yaml:snakeyaml:1.18' 
+		
+		// Friendly Content ID
+		,'com.devskiller.friendly-id:friendly-id:1.0.3'	
+						
+		// SEO util
+		,'com.github.slugify:slugify:2.3'
+		,'net.gcardone.junidecode:junidecode:0.4.1'   
+			
+		// Maxmind Geolocation
+		,'com.maxmind.geoip2:geoip2:2.12.0'	
+
+		// for targeting, user profile and url topic database, using ArangoDB driver
+		,'com.arangodb:arangodb-java-driver:5.0.4'
+            
+		// for Math library
+		,'org.apache.commons:commons-math3:3.6.1'			
+            
+		// for Embebded OpenSSP Ad Server
+		,'com.squareup.okhttp3:okhttp:3.11.0'
+		,'javax.servlet:javax.servlet-api:3.1.0'
+	
+		// for raw data tracking database
+		,'ru.yandex.clickhouse:clickhouse-jdbc:0.1.50'
+		
+		// Image Processing Libs: Headline + Watermark + Visual Image  Generator
+		,'org.docx4j.org.capaxit.textimage:TextImageGen:1.9'
+		,'com.github.jai-imageio:jai-imageio-core:1.4.0'
+		
+		// Video Media Generator
+    )
+    	
+    testCompile (
+    	'org.testng:testng:6.14.3'
+    	,'junit:junit:4.12'    	
+		,'com.rabriel:given-when-then:0.1.2' 
+		,'org.springframework:spring-test:4.3.14.RELEASE'	
+		,'org.assertj:assertj-core:3.10.0'
+		,'org.seleniumhq.selenium:selenium-java:3.141.59'
+		
+		// Performance Testing
+		,'org.databene:contiperf:2.3.4'
+    )
+}
+
+
+uploadArchives {
+    repositories {
+       flatDir {
+           dirs 'repos'
+       }
+    }
+}
+
+tasks.withType(Jar) {
+	destinationDir = file("$rootDir/BUILD-OUTPUT")
+}
+
+
+def getClasspathStringJars() {
+	def baseFolder = 'deps/'
+    def fileNames = []
+    configurations.compile.each { File file -> fileNames.add(baseFolder + file.name) }
+    
+    def classpath = fileNames.join(" ; ")    
+    return '. ; ' + classpath + ' ; '
+}
+
+/////////////////////////// EBGIN COPY TASKS ///////////////////////////////
+
+// copy dependency libs
+task CopyRuntimeLibsFolderToBUILD(type: Copy) {  
+  into "BUILD-OUTPUT/deps"  
+  from configurations.compile  
+}
+
+// copy configs
+task CopyConfigsFolderToBUILD(type: Copy) {  
+  into "BUILD-OUTPUT/configs"  
+  from files('configs')
+}
+
+// copy templates
+task CopyResourceTemplatesFolderToBUILD(type: Copy) {  
+  into "BUILD-OUTPUT/resources/tpl"  
+  from files('resources/app-templates')
+}
+
+// copy resources
+task CopyResourcesFolderToBUILD(type: Copy) {  
+  into "BUILD-OUTPUT/resources"  
+  from files('resources')
+}
+
+// copy public folder
+task CopyPublicFolderToBUILD(type: Copy) {  
+  into "BUILD-OUTPUT/public"  
+  from files('public')
+}
+
+// copy shell-scripts
+task CopyShellScripts(type: Copy) {  
+  into "BUILD-OUTPUT"  
+  from files('shell-scripts')
+}
+
+/////////////////////////// END COPY TASKS ///////////////////////////////
+
+/////////////////////////// BEGIN BUILD FOR DEPLOYED JAR ///////////////////////////////
+
+task BuildDeliveryHttpStarter(type: Jar) {	
+	dependsOn classes   
+    from(sourceSets.main.output) {
+        include "**"
+    }
+    version = '1.0'
+    baseName = 'leocms-delivery-starter'
+    manifest {
+   		attributes ('Implementation-Title': 'DeliveryHttpStarter', 
+        			'Implementation-Version': version ,
+        			'Main-Class': ' leotech.starter.DeliveryHttpStarter',
+        			'Class-Path' : getClasspathStringJars() 
+        			)
+	}
+}
+
+task BuildAdminApiHttpStarter(type: Jar) {	
+	dependsOn classes   
+    from(sourceSets.main.output) {
+        include "**"
+    }
+    version = '1.0'
+    baseName = 'leocms-admin-api-starter'
+    manifest {
+   		attributes ('Implementation-Title': 'AdminApiHttpStarter', 
+        			'Implementation-Version': version ,
+        			'Main-Class': ' leotech.starter.AdminApiHttpStarter',
+        			'Class-Path' : getClasspathStringJars() 
+        			)
+	}
+}
+
+task BuildEventLogHttpStarter(type: Jar) {	
+	dependsOn classes   
+    from(sourceSets.main.output) {
+        include "**"
+    }
+    version = '1.0'
+    baseName = 'leocms-collector-starter'
+    manifest {
+   		attributes ('Implementation-Title': 'EventLogHttpStarter', 
+        			'Implementation-Version': version ,
+        			'Main-Class': ' leotech.starter.EventLogHttpStarter',
+        			'Class-Path' : getClasspathStringJars() 
+        			)
+	}
+}
+
+task BuildMainHttpStarter(type: Jar) {	
+	dependsOn classes   
+    from(sourceSets.main.output) {
+        include "**"
+    }
+    version = '1.0'
+    baseName = 'leocms-main-starter'
+    manifest {
+   		attributes ('Implementation-Title': 'MainHttpStarter', 
+        			'Implementation-Version': version ,
+        			'Main-Class': ' leotech.starter.MainHttpStarter',
+        			'Class-Path' : getClasspathStringJars() 
+        			)
+	}
+} 
+
+task BuildUploadFileHttpStarter(type: Jar) {	
+	dependsOn classes   
+    from(sourceSets.main.output) {
+        include "**"
+    }
+    version = '1.0'
+    baseName = 'leocms-upload-file-starter'
+    manifest {
+   		attributes ('Implementation-Title': 'UploadFileHttpStarter', 
+        			'Implementation-Version': version ,
+        			'Main-Class': ' leotech.starter.UploadFileHttpStarter',
+        			'Class-Path' : getClasspathStringJars() 
+        			)
+	}
+}
+
+/////////////////////////// END BUILD FOR DEPLOYED JAR ///////////////////////////////
+
+// deploy jar to Remote Servers and restart all
+task AutoBuildAndDeployToRemoteServers(type: Exec) {    
+    commandLine 'sh', './shell-scripts/deploy-ad-server.sh'
+}
+
+// just restart all servers
+task RestartAllServers(type: Exec) {    
+    commandLine 'sh', './shell-scripts/restart-all-ad-servers.sh'
+}
+

@@ -1,3 +1,8 @@
-# adsplay-frontend projects:
-* AdsPlay Admin (PHP + MySQL): Ad Unit Management and tools
-* Adsplay Monitor (NodeJS + MongoDB): Real-time Data Monitoring
+# LeoCloudCMS systems
+* Content Render
+* Content Delivery
+* Content Editor 
+* Content Analytics
+* Content Media Player 
+* Iris A.I System
+* Infratructure Monitoring Tools

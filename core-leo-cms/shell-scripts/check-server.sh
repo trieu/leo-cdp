@@ -1,0 +1,3 @@
+#!/bin/sh
+
+wget -S -O - http://118.69.184.50:8080/ping | grep ...

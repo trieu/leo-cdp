@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> {{pageTitle}} </title>
+
+    <base href="{{baseStaticUrl}}">
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" type="image/png" href="{{baseStaticUrl}}/public/images/xemgiday-logo.png">
+
+    <style>
+        .header-logo {
+            background: url({{baseStaticUrl}}/public/images/xemgiday-logo.png) 50% no-repeat;
+            background-size: cover;
+            height: 150px;
+            width: 150px;
+            margin: auto auto 10px;
+        }
+    </style>
+
+    <!--  Material Design Lite -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.grey-pink.min.css" />
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!-- BotUI CSS   -->
+    <link rel="stylesheet" href="https://unpkg.com/botui/build/botui.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/botui/build/botui-theme-default.css" />
+
+    <!-- MAIN CSS   -->
+    <link rel="stylesheet" href="/view/resources/main.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vertx/3.6.3/vertx-eventbus.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/vue/latest/vue.min.js"></script>
+    <script src="https://unpkg.com/botui/build/botui.js"></script>
+
+    <!-- MediaPlayer.ONE  -->
+    <link rel="stylesheet" href="/view/resources/mediaplayer-one.css">
+    <script src="/view/resources/mediaplayer.one.min.js"></script>
+
+</head>
+
+<body>
+
+    <!-- THEME from https://getmdl.io/templates/portfolio/  -->
+
+    {{#renderHtmlView "default-web-template/layout" this }}{{/renderHtmlView}}
+
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+
+    <script>
+        //debug information print out to console
+        console.debug('host: {{host}}')
+        console.debug('templateFolder: {{templateFolder}}')
+        console.debug('templateName: {{templateName}}')
+    </script>
+
+</body>
+
+</html>

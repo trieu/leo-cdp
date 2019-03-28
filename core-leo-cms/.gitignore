@@ -1,0 +1,12 @@
+/build/
+/bin/
+/.gradle/
+/BUILD/
+/BUILD-OUTPUT/
+/public/video/
+/public/uploaded-files/
+/public/docs/
+/test-output/
+/file-uploads/
+/lucene-index/
+/LUCENE_INDEX/

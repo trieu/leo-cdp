@@ -1,0 +1,160 @@
+.filepond--drop-label {
+    color: hsl(223, 4%, 31%);
+    font-size: 1.7em;
+}
+
+.filepond--label-action {
+    text-decoration-color: #babdc0;
+}
+
+.filepond--panel-root {
+    border-radius: 2em;
+    background-color: #edf0f4;
+    height: 1em;
+}
+
+.filepond--item-panel {
+    background-color: #595e68;
+}
+
+.filepond--drip-blob {
+    background-color: #7f8a9a;
+}
+
+textarea {
+    min-width: 300px;
+    min-height: 50px;
+    max-width: 100%;
+    max-height: 300px;
+}
+
+.action-div {
+    width: 98%;
+    margin-top: 10px;
+}
+
+.modal-trigger {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: oblique;
+}
+
+.trix-content {
+    max-height: 800px !important;
+    min-height: 150px !important;
+    overflow-y: auto;
+}
+
+.thumbnail .caption {
+    max-height: 60px !important;
+    font-size: 12px;
+}
+
+.row-centered {
+    display: inline-block;
+    float: none;
+    text-align: center;
+}
+
+.dataTables_empty {
+    font-size: 20px;
+    font-weight: bold;
+    color: blue;
+}
+
+.text_wrapper {
+    font-size: 14px;
+}
+
+.img-wrap {
+    position: relative;
+    padding-top: 22px;
+    max-height: 222px;
+}
+
+.img-wrap img {
+    max-height: 200px;
+}
+
+.img-wrap .close {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    z-index: 1;
+    color: red;
+}
+
+#main_search {
+    position: fixed;
+    margin-top: 10px;
+    width: 40%;
+    height: 30px;
+    left: auto;
+    margin-left: 5%;
+    min-width: 100px;
+}
+
+.easy-autocomplete-container {
+    position: fixed !important;
+    width: 200px !important;
+    margin-left: 12% !important;
+    margin-top: 31px !important;
+}
+
+/* ajax loader  */
+.loader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid blue;
+    border-bottom: 16px solid blue;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+    margin: auto;
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.modal {
+    text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+    .modal:before {
+        display: inline-block;
+        vertical-align: middle;
+        content: " ";
+        height: 100%;
+    }
+}
+
+.modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+}
+
+#iris_chatbot {
+    width: 100%;
+    height: 400px;
+    overflow-y: scroll;
+}

@@ -1,0 +1,44 @@
+{
+	"map" : {
+		"dbConfigsPro" : {
+			"username" : "admin_bluescope"
+			,"password" : "MobilePortal#28112018"
+			,"database" : "bluescope_cms"
+			,"host" : "61.28.231.175"					
+			,"port" : 8090
+			,"dbdriver" : "arangodb"
+			,"dbdriverclasspath" : "com.arangodb.ArangoDB"
+			,"enabled" : true
+		},		
+		"dbConfigsBlueseed" : {
+			"username" : "blueseed"
+			,"password" : "Platform@123456"
+			,"database" : "bs_cms"
+			,"host" : "61.28.231.175"					
+			,"port" : 8090
+			,"dbdriver" : "arangodb"
+			,"dbdriverclasspath" : "com.arangodb.ArangoDB"
+			,"enabled" : true
+		},
+		"dbConfigsDevLeoCms" : {
+			"username" : "leodev"
+			,"password" : "LeoCms@2019"
+			,"database" : "leocms"
+			,"host" : "3.82.203.48"				
+			,"port" : 8529
+			,"dbdriver" : "arangodb"
+			,"dbdriverclasspath" : "com.arangodb.ArangoDB"
+			,"enabled" : true
+		},
+		"dbConfigsDev" : {
+			"username" : "leodev"
+			,"password" : "123456"
+			,"database" : "mportal"
+			,"host" : "127.0.0.1"				
+			,"port" : 8529
+			,"dbdriver" : "arangodb"
+			,"dbdriverclasspath" : "com.arangodb.ArangoDB"
+			,"enabled" : true
+		}
+	}
+}

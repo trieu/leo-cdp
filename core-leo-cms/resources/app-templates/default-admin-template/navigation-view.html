@@ -1,0 +1,139 @@
+<!-- Navigation -->
+<nav id="main_cms_navigation" class="navbar navbar-fixed-top" role="navigation" style="display: none;">
+
+	<div class="navbar-header">
+		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+			<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
+			<span class="icon-bar"></span> <span class="icon-bar"></span>
+		</button>
+
+		<a class="navbar-brand" href="/admin">
+			<img id="logo-img" src="" alt="MainLogo" style="display: none;" />
+		</a>
+
+		<div style="width: 100%;">
+			<input id="main_search" type="text" placeholder="Enter keywords for searching content">
+		</div>
+
+		<!-- Top Menu Items -->
+		<ul class="nav navbar-right top-nav">
+
+			<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
+					<i class="fa fa-user"></i> <span id="userDisplayName"></span> <b class="caret"></b>
+				</a>
+				<ul class="dropdown-menu">
+					<li><a href="#"> <i class="fa fa-fw fa-user"></i> Profile
+						</a></li>
+					<li><a href="#"> <i class="fa fa-fw fa-envelope"></i>
+							Inbox
+						</a></li>
+					<li><a href="#"> <i class="fa fa-fw fa-gear"></i> Settings
+						</a></li>
+					<li class="divider"></li>
+					<li>
+						<a href="javascript:LeoCmsApiUtil.logout()"> <i class="fa fa-fw fa-power-off"></i> Log Out</a>
+					</li>
+				</ul>
+			</li>
+
+		</ul>
+	</div>
+
+	<!-- Sidebar Menu Items -->
+	<div id="main-navbar" class="collapse navbar-collapse navbar-ex1-collapse">
+		<ul class="nav navbar-nav side-nav">
+
+			<li>
+				<a href="javascript:;" data-toggle="collapse" data-target="#categoryNavigation"> <i class="fa fa-fw fa-list"></i>
+					Content Category List<i class="fa fa-fw fa-caret-down"></i>
+				</a>
+				<ul id="categoryNavigation" class="collapse in" aria-expanded="true"></ul>
+			</li>
+
+			<li >
+				<a href="javascript:;" data-toggle="collapse" data-target="#menuAdReport"> <i class="fa fa-fw fa-line-chart"></i>
+					Analytics System  <i class="fa fa-fw fa-caret-down"></i>
+				</a>
+				<ul id="menuAdReport" class="collapse in" aria-expanded="true">
+					<li>
+						<a href="#calljs-loadMainDashboard()"> <i class="fa fa-fw fa-line-chart"></i> Dashboard </a>
+					</li>
+					<li>
+						<a href="#calljs-loadLeadReport()"> <i class="fa fa-fw fa-line-chart"></i> Lead Report </a>
+					</li>
+					<li>
+						<a href="#calljs-loadContentReport()"> <i class="fa fa-fw fa-line-chart"></i> Content Report</a>
+					</li>					
+				</ul>
+			</li>
+
+			<li >
+				<a href="javascript:;" data-toggle="collapse" data-target="#menuAdReport"> <i class="fa fa-fw fa-line-chart"></i>
+					Monetization System  <i class="fa fa-fw fa-caret-down"></i>
+				</a>
+				<ul id="menuAdReport" class="collapse in" aria-expanded="true">					
+					<li>
+						<a href="#calljs-"> <i class="fa fa-fw fa-list"></i> Ads Placement</a>
+					</li>				
+					<li>
+						<a href="#calljs-"> <i class="fa fa-fw fa-list"></i> Content Subscription</a>
+					</li>	
+				</ul>
+			</li>
+
+			<li>
+				<a href="javascript:;" data-toggle="collapse" data-target="#menuUsers"> <i class="fa fa-cogs" aria-hidden="true"></i>
+					System Management <i class="fa fa-fw fa-caret-down"></i>
+				</a>
+				<ul id="menuUsers" class="collapse in" aria-expanded="false">
+					<li>
+						<a href="#calljs-loadUserList()"> <i class="fa fa-users" aria-hidden="true"></i> User Management </a>
+					</li>
+					<li>
+						<a href="#calljs-loadCategoryList()"> <i class="fa fa-folder-open-o" aria-hidden="true"></i> Category Management</a>
+					</li>
+					<li>
+						<a href="#calljs-loadSystemManagement()"> <i class="fa fa-cog" aria-hidden="true"></i> System Configs</a>
+					</li>
+				</ul>
+			</li>
+
+		</ul>
+	</div>
+	<!-- /.navbar-collapse -->
+</nav>
+
+<div id="page-main-notification" style="display: none;">
+</div>
+
+<div id="page-wrapper" style="display: none">
+	<!-- page data here -->
+</div>
+
+
+<script id='category-navigation-tpl' type='text/template'>
+	<li>
+		<a class="capitalize" href="#calljs-loadPagesOfCategory('{{key}}','{{name}}')" >
+			<i class="fa fa-fw fa-folder-open-o"></i> {{name}} 
+		</a>
+	</li>
+</script>
+
+<script>
+	/////////////////////////////// READY //////////////////////////////////
+
+	function mainViewReady() {
+		if (isMobileDevice()) {
+			var notifiedMsg =
+				'<div class="alert alert-info"> <strong> CMS Admin</strong> is not supported on mobile browsers! </div>';
+			$('#page-main-notification').show().html(notifiedMsg);
+		} else {
+			loadCategoryNavigation();
+			loadCommonModalHtml();
+			loadUserInfoWidget();
+			initMainSeach();
+			$('#main_cms_navigation').show();
+			$('#logo-img').attr('src',window.pageHeaderLogo).show();
+		}
+	};
+</script>

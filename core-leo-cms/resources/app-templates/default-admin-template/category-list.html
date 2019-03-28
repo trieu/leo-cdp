@@ -1,0 +1,124 @@
+<div class="container-fluid">
+
+    <!-- MAIN BODY here -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="page-header">Category Management </h3>
+        </div>
+    </div>
+
+    <p>
+        <a href="#calljs-loadCategoryForm(false)" class="btn btn-primary" >
+            <i class="fa fa-fw fa-play"></i> New Category
+        </a>
+    </p>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-responsive">
+                <table id="category-list" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Privacy Status</th>
+                            <th>Creation Time</th>
+                            <th>Modification Time</th>
+                            <th>Navigation Order</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function loadDataCategoryList() {
+        var usersession = lscache.get('usersession');
+        if (usersession) {
+            $('#category-list').DataTable({
+                "order": [
+                    [5, "asc"]
+                ],
+                "ajax": {
+                    "url": baseAdminApi + '/category/list-all',
+                    "type": "POST",
+                    "contentType": 'application/x-www-form-urlencoded',
+                    "data": function (d) {
+                        d.usersession = usersession;
+                    }
+                },
+                "columnDefs": [{
+                        "render": function (data, type, row) {
+                            var callJsStr = "#calljs-loadPagesOfCategory('" + row.key + "','"+data+"')";
+                            return '<a title="' + data + '" href="' + callJsStr + '" >' + data + '</a>';
+                        },
+                        "targets": 1
+                    },
+                    {
+                        "render": function (data, type, row) {
+                            var num = parseInt(data);
+                            if (num === 1) {
+                                return '<i class="fa fa-envelope-open-o" style="font-size:16px">Protected</i>';
+                            } else if (num < 0) {
+                                return '<i class="fa fa-envelope-o" style="font-size:16px"> Private</i>';
+                            }
+                            return '<i class="fa fa-folder-o" style="font-size:16px"> Public</i>';
+                        },
+                        "targets": 3
+                    },
+                    {
+                        "render": function (data, type, row) {
+                            var date = LeoCmsApiUtil.formater.toDateString(data);
+                            return date;
+                        },
+                        "targets": 4
+                    },
+                    {
+                        "render": function (data, type, row) {
+                            var date = LeoCmsApiUtil.formater.toDateString(data);
+                            return date;
+                        },
+                        "targets": 5
+                    },
+                    {
+                        "render": function (data, type, row) {
+                            var callJsStr = "#calljs-loadCategoryForm('" + data + "')";
+                            return '<a title="' + row.title + '" href="' + callJsStr + '" >Edit</a>';
+                        },
+                        "targets": 7
+                    }
+                ],
+                "columns": [{
+                        "data": "key"
+                    },
+                    {
+                        "data": "name"
+                    },
+                    {
+                        "data": "description"
+                    },
+                    {
+                        "data": "privacyStatus"
+                    },
+                    {
+                        "data": "creationTime"
+                    },
+                    {
+                        "data": "modificationTime"
+                    },
+                    {
+                        "data": "navigationOrder"
+                    },
+                    {
+                        "data": "key"
+                    }
+                ]
+            });
+        }
+    }    
+</script>

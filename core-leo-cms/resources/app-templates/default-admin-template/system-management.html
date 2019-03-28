@@ -1,0 +1,40 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">
+            System Management
+        </h2>
+    </div>
+    <div class="panel-body">
+        <select id="systemCmd" data-placeholder="Choose a command..." class="select" tabindex="1">
+            <option value=""></option>
+            <option value="rebuildSearchIndex">rebuildSearchIndex</option>
+        </select>
+    </div>
+    <div class="panel-footer">
+        <button onclick="sendSytemCommand()"> OK </button>
+        <div id="system-cmd-result" class="alert alert-danger" style="display: none;"></div>
+    </div>
+    <br><br><br>
+</div>
+
+
+
+
+<script>
+    function systemManagementReady() {
+        $("#systemCmd").chosen();
+    }
+
+    function sendSytemCommand() {
+
+        var url = window.baseAdminApi + '/system/command';
+        var cmd = $('#systemCmd').val();
+        LeoCmsApiUtil.callPostAdminApi(url, {
+            'cmd': cmd
+        }, function (json) {
+            if (json.errorCode === 0 && json.errorMessage === '' && json.data) {
+                $('#system-cmd-result').html(json.data).show();
+            }
+        });
+    }
+</script>

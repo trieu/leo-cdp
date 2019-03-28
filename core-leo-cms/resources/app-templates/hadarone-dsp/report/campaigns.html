@@ -1,0 +1,18 @@
+campain report
+
+<script>
+    function loadDataCampaigns() {
+        var urlStr = baseStaticUrl + '/api-gateway';
+        LeoCmsApiUtil.getSecuredData(urlStr, {
+            'provider': 'api.hadarone.com',
+            'uri': '/line-item/report/3759'
+        }, function (json) {
+            if (json.errorCode === 0 && json.errorMessage === '') {
+                if (json.data) {
+                    var reportObj = JSON.parse(json.data);
+                   console.log(reportObj);
+                }
+            }
+        });
+    }
+</script>

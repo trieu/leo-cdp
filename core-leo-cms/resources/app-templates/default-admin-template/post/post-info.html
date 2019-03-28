@@ -1,0 +1,150 @@
+<div class="container-fluid" id="post_info_view">
+
+    <!-- MAIN BODY here -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header" data-field="title"></h1>
+        </div>
+
+    </div>
+
+    <!-- MAIN BODY here -->
+
+
+    <div class="row">
+        <div class="col-lg-9">
+            <!-- Headline Images -->
+            <div id="headline-images-div"></div>
+
+            <!-- Post Content -->
+            <hr>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <h3>Content</h3>
+                        </div>
+                        <div class="col-lg-3" style="text-align: right;" id="mediaInfoDowdloadUrl" style="display: none">
+                            <a href="javascript:" class="btn btn-primary" target="_blank">
+                                <i class="fa fa-fw fa-download"></i> Download
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div id="headlineVideo"></div>
+                    <div id="mediaInfoPreview"></div>
+                    <div id="mediaInfoUnits"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="row">
+                <a href="#calljs-" class="btn btn-primary" id="btn_edit_post">
+                    <i class="fa fa-fw fa-check"></i> Edit
+                </a>
+                <button type="button" class="btn btn-secondary" onclick="history.back()">Cancel</button>
+                <button type="button" class="btn btn-danger" onclick="deletePost()">Delete</button>
+                <button id="btn_preview_post" type="button" class="btn btn-success" data-slug="" onclick="previewPost(this)">Preview</button>
+            </div>
+            <hr>
+        </div>
+    </div>
+</div>
+
+<script>
+    var postModel = false;
+
+    function loadDataPostInfo(params) {
+        if (params) {
+            var postId = params.postId;
+            console.log('view post ' + postId);
+
+            var urlStr = baseAdminApi + '/post/get-info';
+            var params = {
+                'postId': postId
+            };
+            LeoCmsApiUtil.callPostAdminApi(urlStr, params, function (json) {
+                if (json.errorCode === 0 && json.errorMessage === '') {
+                    postModel = json.data;
+                    document.title = 'Post Information - ' + postModel.title;
+
+                    var pageId = postModel.pageIds[0] || '';
+                    var categoryKey = postModel.categoryKeys[0] || '';
+                    var editCmd = "#calljs-postEditor('" + postId + "','" + pageId + "','" + categoryKey + "')";
+                    $('#btn_edit_post').attr('href', editCmd);
+                    $('#btn_preview_post').data('slug',postModel.slug);
+
+                    var view = $('#post_info_view');
+                    for (var k in postModel) {
+                        var value = postModel[k];
+                        var fieldType = typeof value;
+
+                        if (fieldType === 'object') {
+                            if (k === 'headlineImages') {
+                                loadHeadLineImageObjectToView(postModel.headlineImages);
+                            } else if (k === 'mediaInfoUnits') {
+                                var container = $('#mediaInfoUnits');
+                                value.forEach(function (e) {
+                                    var tempNode = $('<div/>').html(e.content);
+                                    tempNode.find('img').each(function () {
+                                        $(this).attr('style',
+                                            'height:320px!important;max-width:100%!important;object-fit:contain!important'
+                                        );
+                                    });
+                                    container.append("<h3>" + e.headline + "</h3><br>" + tempNode.html() +
+                                        "<br>");
+                                });
+                                if (value.length > 0) {
+                                    $('#mediaInfoPreview').hide();
+                                }
+                            }
+                        } else if (fieldType === 'number' || fieldType === 'string') {
+                            if (k === 'mediaInfo') {
+                                loadMediaInfoView(value, postModel.type);
+                            } else if (k === 'headlineVideoUrl') {
+                                var mediaInfo = value;
+                                if (mediaInfo.indexOf('https://youtu.be') >= 0 || mediaInfo.indexOf(
+                                        'https://www.youtube.com') >= 0 ||
+                                    mediaInfo.indexOf('https://www.facebook.com') >= 0 || mediaInfo.indexOf(
+                                        'https://vimeo.com') >= 0) {
+                                    var placeHolderId = 'vh_' + new Date().getTime();
+                                    var html = '<div id="' + placeHolderId +
+                                        '" class="videoholder" style="width:70%;margin:15px auto;"></div>';
+                                    $('#headlineVideo').html(html);
+
+                                    var autoplay = false;
+                                    var onReady = function (player) {
+
+                                    }
+                                    if (mediaInfo.indexOf('http') != 0) {
+                                        mediaInfo = window.baseStaticUrl + mediaInfo;
+                                    }
+                                    MediaPlayerOne.create(autoplay, placeHolderId, mediaInfo, '', [], 0, 0,
+                                        onReady);
+
+                                } else {
+                                    $('#headlineVideo').html(value + "<hr>");
+                                }
+
+                            }
+                            view.find("*[data-field='" + k + "']").html(value);
+                        }
+                    }
+
+                } else {
+                    LeoCmsApiUtil.logErrorPayload(json);
+                }
+            });
+        }
+    }
+
+    function previewPost(aNode) {
+        var url = '//' + location.host + '/html/post/' + $(aNode).data('slug');
+        var win = window.open(url, '_blank');
+        win.focus();
+    }
+
+    loadView('/view/common-widgets/headline-images.html?admin=1', '#headline-images-div');
+</script>

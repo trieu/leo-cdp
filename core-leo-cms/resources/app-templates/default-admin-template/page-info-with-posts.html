@@ -1,0 +1,233 @@
+<div class="container-fluid" id="page_info_view">
+
+    <!-- MAIN BODY here -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header" id="pageTitle"></h1>
+        </div>
+
+    </div>
+
+    <!-- MAIN BODY here -->
+
+
+    <div class="row">
+        <div class="col-lg-9">
+            <!-- Posts of Page  -->
+            <div class="panel panel-default" id="posts_of_page_view">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <h4>Posts</h4>                            
+                        </div>
+                        <div class="col-lg-3" style="text-align: right;">
+                            <a href="javascript:" class="btn btn-primary" id='btn_new_post'>
+                                <i class="fa fa-fw fa-play"></i> New Post
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+
+                    <table id="page-list" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Privacy Status</th>
+                                <th>Content Type</th>
+                                <th>Creation Time</th>
+                                <th>Modification Time</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Headline Images -->
+            <hr>   
+            <div id="headline-images-div" style="max-height:300px;overflow-y:scroll;width:100%;overflow-x: hidden;"></div>
+
+            <!-- Page Info -->
+            <hr>
+            <div class="panel panel-default">
+                <div class="panel-heading"> <label>Content</label>  </div>
+                <div class="panel-body" data-field="mediaInfo" >
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="row">
+                <a href="#calljs-pageEditor('')" class="btn btn-primary" id="btn_edit_page">
+                    <i class="fa fa-fw fa-check"></i> Edit
+                </a>
+                <button type="button" class="btn btn-info" onclick="history.back()">Cancel</button>
+                <button type="button" class="btn btn-danger" onclick="deletePage()">Delete</button>
+                <button type="button" class="btn btn-success" onclick="callIrisBot('context-page')">Hi Iris</button>
+
+            </div>
+            <hr>
+        </div>
+    </div>
+</div>
+
+<script>
+    var pageId;
+    var categoryKey;
+    var pageModel;
+
+    function pageInfoCallback(pId, pageName, catKey) {
+        pageId = pId;
+        categoryKey = catKey;
+        $('#btn_edit_page').attr('href', "#calljs-pageEditor('" + pageId + "','" + categoryKey + "')");
+        $('#btn_new_post').attr('href', "#calljs-postEditor('','" + pageId + "','" + categoryKey + "')");
+
+        $('#pageTitle').html(decodeURIComponent(pageName));
+
+
+        var urlStr = baseAdminApi + '/page/get-info';
+        var params = {
+            'pageId': pageId
+        };
+        LeoCmsApiUtil.callPostAdminApi(urlStr, params, function (json) {
+            if (json.errorCode === 0 && json.errorMessage === '') {
+                pageModel = json.data;
+
+                var view = $('#page_info_view');
+                for (var k in pageModel) {
+                    var value = pageModel[k];
+                    var fieldType = typeof value;
+
+                    if (fieldType === 'object') {
+                        if (k === 'headlineImages') {
+                            loadHeadLineImageObjectToView(pageModel.headlineImages);
+                        }
+                    } else if (fieldType === 'number' || fieldType === 'string') {
+                        if (k === 'mediaInfo') {
+
+                        } else if (k === 'privacyStatus') {
+
+                        } else if (k === 'description') {
+
+                        }
+                        view.find("*[data-field='" + k + "']").html(value);
+
+                    }   
+                }
+            } else {
+                LeoCmsApiUtil.logErrorPayload(json);
+            }
+        });
+
+        //load all posts of page
+        loadPostList(pageId);
+    }
+
+    function loadPostList(pageId) {
+        var usersession = lscache.get('usersession');
+        if (usersession) {
+            $('#page-list').DataTable({
+                "order": [
+                    [5, "desc"]
+                ],
+                "ajax": {
+                    "url": baseAdminApi + '/post/recent-from-page',
+                    "type": "POST",
+                    "contentType": 'application/x-www-form-urlencoded',
+                    "data": function (d) {
+                        d.usersession = usersession;
+                        d.pageId = pageId;
+                    }
+                },
+                "columnDefs": [{
+                        "render": function (data, type, row) {
+                            var callJsStr = "#calljs-postInfo('" + row.id + "')";
+                            return '<a class="text_wrapper" title="' + data + '" href="' + callJsStr +
+                                '" >' + textTruncate(data, 50) + '</a>';
+                        },
+                        "targets": 0
+                    },
+                    {
+                        "render": function (data, type, row) {                           
+                            return '<span style="font-size:12px" title="' + data + '" >' + textTruncate(data, 30) + '</span>';
+                        },
+                        "targets": 1
+                    },
+                    {
+                        "render": function (data, type, row) {
+                            var num = parseInt(data);
+                            if (num === 1) {
+                                return '<i class="fa fa-envelope-open-o" style="font-size:16px">Protected</i>';
+                            } else if (num < 0) {
+                                return '<i class="fa fa-envelope-o" style="font-size:16px"> Private</i>';
+                            }
+                            return '<i class="fa fa-folder-o" style="font-size:16px"> Public</i>';
+                        },
+                        "targets": 2
+                    },
+                    {
+                        "render": function (data, type, row) {
+                            var style = 'style="font-size:16px;width:120px"';
+                            if (data === 1) {
+                                return '<i class="fa fa-file-text-o" '+style+' > TEXT POST</i>';
+                            } else if (data === 2) {
+                                return '<i class="fa fa-file-text-o" '+style+' > RICH MEDIA</i>';
+                            } else if (data === 3) {
+                                return '<i class="fa fa-file-word-o" '+style+' > OFFICE FILE</i>';
+                            } else if (data === 4) {
+                                return '<i class="fa fa-play-circle-o" '+style+' > VIDEO</i>';
+                            } else if (data === 5) {
+                                return '<i class="fa fa-file-text-o" '+style+' > AUDIO</i>';
+                            } else if (data === 6) {
+                                return '<i class="fa fa-file-picture-o" '+style+' > SLIDESHOW</i>';
+                            } else if (data === 7) {
+                                return '<i class="fa fa-file-text-o" '+style+' > EBOOK</i>';
+                            } else if (data === 8) {
+                                return '<i class="fa fa-file-text-o" '+style+' > PHOTO GALLERY</i>';
+                            }
+                            return '<i class="fa fa-file-text-o" '+style+' > TEXT POST</i>';
+                        },
+                        "targets": 3
+                    },
+                    {
+                        "render": function (data, type, row) {
+                            var date = LeoCmsApiUtil.formater.toDateString(data);
+                            return date;
+                        },
+                        "targets": 4
+                    },
+                    {
+                        "render": function (data, type, row) {
+                            var date = LeoCmsApiUtil.formater.toDateString(data);
+                            return date;
+                        },
+                        "targets": 5
+                    }
+                ],
+                "columns": [{
+                        "data": "title"
+                    },
+                    {
+                        "data": "description"
+                    },
+                    {
+                        "data": "privacyStatus"
+                    },
+                    {
+                        "data": "type"
+                    },
+                    {
+                        "data": "creationTime"
+                    },
+                    {
+                        "data": "modificationTime"
+                    }
+                ]
+            });
+        }
+    }
+
+
+    loadView('/view/common-widgets/headline-images.html?admin=1', '#headline-images-div');
+</script>
+

@@ -1,0 +1,111 @@
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header mdl-layout__header--waterfall portfolio-header">
+        <div class="mdl-layout__header-row portfolio-logo-row">
+            <span class="mdl-layout__title">
+                <a href="/"><div class="header-logo"></div></a>
+                <span class="mdl-layout__title">{{defaultPageTitle}}</span>
+            </span>
+        </div>
+        <div class="mdl-layout__header-row portfolio-navigation-row mdl-layout--large-screen-only">
+            <nav class="mdl-navigation mdl-typography--body-1-force-preferred-font">
+                <!-- main header pages -->               
+                {{#each topPageNavigators}}           
+                    <a class="mdl-navigation__link " href="{{uri}}">{{name}}</a>
+                {{/each}}
+            </nav>
+        </div>
+    </header>
+    <div class="mdl-layout__drawer mdl-layout--small-screen-only">
+        <nav class="mdl-navigation mdl-typography--body-1-force-preferred-font">
+            <!-- main header pages -->
+            {{#each topPageNavigators}}           
+                <a class="mdl-navigation__link " href="{{uri}}">{{name}}</a>
+            {{/each}}
+        </nav>
+    </div>
+    <main class="mdl-layout__content">
+
+        <div class="mdl-grid portfolio-max-width">
+            <!-- main content here -->
+            {{#doIf templateName '==' "index" }}
+                {{#each headlines}}
+                    {{#renderHtmlView "default-web-template/widgets/item-post" this }}{{/renderHtmlView}}
+                {{/each}}
+
+                {{#doIf customData.nextStartIndex '>' 0 }}
+                    <div id="loadMore" >
+                        <a href="/?startIndex={{customData.nextStartIndex}}&numberResult=9">Load More</a>
+                    </div>
+                {{/doIf}}
+            {{/doIf}}
+
+            <!-- ////////////// -->
+            {{#doIf templateName '==' "single-category" }}
+            {{#renderHtmlView "default-web-template/single-category" this }}{{/renderHtmlView}}
+            {{/doIf}}
+
+            {{#doIf templateName '==' "single-page" }}
+                {{#each pages}}
+                    {{#renderHtmlView "default-web-template/single-page" this }}{{/renderHtmlView}}
+                {{/each}}   
+
+                {{#doIf customData.nextStartIndex '>' 0 }}
+                    <div id="loadMore" >
+                        <a href="{{customData.currentPath}}?startIndex={{customData.nextStartIndex}}&numberResult=6">Load More</a>
+                    </div>
+                {{/doIf}}      
+            {{/doIf}}
+
+            {{#doIf templateName '==' "single-post" }}
+             <!-- the list has one item only -->
+                {{#each posts}}
+                    {{#renderHtmlView "default-web-template/single-post" this }}{{/renderHtmlView}}
+                {{/each}}
+            {{/doIf}}
+            <!-- ////////////// -->
+
+            {{#doIf templateName '==' "list-category" }}
+            {{#renderHtmlView "default-web-template/list-category" this }}{{/renderHtmlView}}
+            {{/doIf}}
+
+            {{#doIf templateName '==' "list-page" }}
+            {{#renderHtmlView "default-web-template/list-page" this }}{{/renderHtmlView}}
+            {{/doIf}}
+
+            {{#doIf templateName '==' "list-post" }}
+            {{#each posts}}
+            {{#renderHtmlView "default-web-template/list-post" this }}{{/renderHtmlView}}
+            {{/each}}
+            {{/doIf}}
+
+            <!-- ////////////// -->
+            {{#doIf templateName '==' "404" }}
+            {{#renderHtmlView "default-web-template/404" this }}{{/renderHtmlView}}
+            {{/doIf}}
+
+        </div>
+        <footer class="mdl-mini-footer">
+            <div class="mdl-mini-footer__left-section">
+                <div class="mdl-logo">{{pageTitle}}</div>
+            </div>
+            <div class="mdl-mini-footer__right-section">
+                <ul class="mdl-mini-footer__link-list">
+                    <!-- main bottom pages -->
+                    <li><a href="#">Help</a></li>                    
+                </ul>
+            </div>
+        </footer>
+    </main>
+</div>
+
+<script>
+    (function () {
+        var uri = location.href.split(location.host)[1] || '';
+        uri = uri.toLowerCase();
+        if (uri === '/') {
+            $('a[href="/"]').addClass('is-active');
+        } else {
+            $('a[href^="' + uri + '"]').addClass('is-active');
+        }
+    }());
+</script>

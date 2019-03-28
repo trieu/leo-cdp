@@ -1,0 +1,70 @@
+<div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp">
+    <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">{{title}}</h2>
+    </div>
+    <div class="mdl-card__media">
+        <img class="article-image" src="{{headlineImageUrl}}" border="0" alt="">
+    </div>
+
+    <div class="mdl-grid portfolio-copy">
+        <h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">{{description}}</h3>
+        <div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text no-padding ">
+            {{{mediaInfo}}}
+        </div>
+        <div id="videoPlaceholder" class="videoholder"></div>
+
+    </div>
+</div>
+
+<!-- List items with avatar and action -->
+<style>
+    .demo-list-action {
+        width: 100%;
+    }
+</style>
+
+<div class="demo-list-action mdl-list">
+    {{#each postsOfPage}}
+    <div class="mdl-list__item">
+        <span class="mdl-list__item-primary-content">
+            <a href="/html/post/{{slug}}">
+                <img style="max-width: 120px;max-height: 90px; margin:10px;" src="https://i.ytimg.com/vi/FAJbEQJpIKA/maxresdefault.jpg" border="0" alt="NO_IMAGE">
+            </a>
+            <a href="/html/post/{{slug}}">
+                <span>{{title}}</span>
+            </a>
+        </span>
+        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--accent" href="/html/post/{{slug}}">Read more</a>
+    </div>
+    {{/each}}
+
+</div>
+
+
+<script>
+    window.debugMediaPlayerOne = true;
+    var autoplayVideo = true;
+
+    function loadVideo() {
+        var placeHolderId = 'videoPlaceholder';
+        var videoSource = "{{{headlineVideoUrl}}}".trim();
+        if (videoSource === '') {
+            return;
+        }
+        var adUrls = [];
+        var defaultSkipAdTime = 3; // show skip button after 3 seconds
+        var autoplay = autoplayVideo;
+
+        var adConfigs = [];
+        adConfigs = [];
+        var player = MediaPlayerOne.create(autoplay, placeHolderId, videoSource, '', adUrls, defaultSkipAdTime,
+            adConfigs);
+        console.log(player);
+        player.volume(1);
+        // player.play();
+    }
+
+    window.mediaPlayerOneReady = function () {
+        loadVideo();
+    }
+</script>

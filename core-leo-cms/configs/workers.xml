@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<WorkerConfigs classpath="rfx.core.configs.WorkerConfigs"
+	type="object">
+
+	<!-- the shell-script for start workers -->
+	<startWorkerScriptPath></startWorkerScriptPath>
+
+	<!-- the allocated port for workers -->
+	<allocatedWorkers type="list"></allocatedWorkers>
+
+
+	<!-- where the debug/info/error logs store -->
+	<debugLogPath>
+		./logs
+	</debugLogPath>
+
+	<!-- the custom configs for workers -->
+	<customConfigs type="map">
+
+		<config name="defaultArangoDbConfig">
+			dbConfigsDevLeoCms
+		</config>
+
+		<config name="enableUsedCacheHandlebars">
+			false
+		</config>
+
+		<config name="pathGeoIP">
+			/home/platform/data/geoip-data/GeoIP2-City-Asia-Pacific.mmdb
+		</config>
+
+		<!-- Default Data Config for static resource handler -->
+
+		<!-- Admin CMS Logo -->
+		<config name="pageHeaderLogo">
+			/public/images/leotech-logo.png
+		</config>
+
+		<!-- Public Title -->
+		<config name="pageTitle">
+			XemGiDay.com - Real-time Video Recommendation Platform
+		</config>
+		<config name="baseStaticUrl">
+			//xemgiday.com
+		</config>
+
+		<config name="baseAdminApiUrl">
+			//xemgiday.com
+		</config>
+
+		<config name="baseDeliveryApiUrl">
+			//api.xemgiday.com
+		</config>
+
+		<config name="baseUploaderUrl">
+			//uploader.xemgiday.com
+		</config>
+
+		<config name="baseLogCollectorUrl">
+			//log.xemgiday.com
+		</config>
+
+		<config name="ADS_TXT_CONTENT">
+			google.com, pub-9034869050940123, DIRECT, f08c47fec0942fa0
+		</config>
+		
+		<config name="NUMBER_SIMILAR_POSTS_IN_LIST">6</config>
+		
+		
+
+
+	</customConfigs>
+
+</WorkerConfigs>

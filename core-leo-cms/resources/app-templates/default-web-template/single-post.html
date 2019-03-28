@@ -1,0 +1,60 @@
+<div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp">
+    <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">{{title}}</h2>
+    </div>
+    <div class="mdl-card__media">
+        <img class="article-image" src="{{headlineImageUrl}}" border="0" alt="">
+    </div>
+
+    <div class="mdl-grid portfolio-copy">
+        <h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">{{description}}</h3>
+        <div class="mdl-cell mdl-cell--8-col mdl-card__supporting-text no-padding ">
+            {{{mediaInfo}}}
+        </div>
+        <div id="videoPlaceholder" class="videoholder" data-video-source="{{{headlineVideoUrl}}}"></div>
+
+    </div>
+</div>
+
+<script>
+    window.debugMediaPlayerOne = true;
+    var autoplayVideo = true;
+
+    function loadVideo() {
+        var placeHolderId = 'videoPlaceholder';
+        var videoSource = $('#' + placeHolderId).attr('data-video-source').trim();
+        if (videoSource != '') {
+            var adUrls = [];
+            var defaultSkipAdTime = 3; // show skip button after 3 seconds
+            var autoplay = autoplayVideo;
+
+            var adConfigs = [{
+                    adUrl: 'https://d2.hadarone.com/vast3?li=1531',
+                    adType: 'preroll',
+                    skipAdTime: 1
+                },
+                {
+                    adUrl: 'https://d2.hadarone.com/vast3?li=2082',
+                    adType: 'midproll',
+                    skipAdTime: 1,
+                    timeAfter: 60 // show ads after 60 seconds
+                },
+                {
+                    adUrl: 'https://d2.hadarone.com/vast3?li=2082',
+                    adType: 'postroll', // seconds
+                    skipAdTime: 1
+                }
+            ];
+            adConfigs = [];
+            var player = MediaPlayerOne.create(autoplay, placeHolderId, videoSource, '', adUrls, defaultSkipAdTime,
+                adConfigs);
+            console.log(player);
+            player.volume(1);
+            // player.play();
+        }
+    }
+
+    window.mediaPlayerOneReady = function () {
+        setTimeout(loadVideo,1234);
+    }
+</script>

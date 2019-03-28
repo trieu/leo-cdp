@@ -1,0 +1,255 @@
+<div class="container-fluid">
+
+    <!-- MAIN BODY here -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="page-header"> <span id="catName"></span> </h3>
+        </div>
+    </div>
+
+    <p>
+        <a href="#calljs-pageEditor('')" class="btn btn-primary" id="btn_new_page" >
+            <i class="fa fa-fw fa-play"></i> New Page
+        </a>
+    </p>
+
+    <div class="row">
+
+        <div class='col-md-2 col-sm-6 col-xs-12' style="display: none">
+            <div class="form-group">
+                <select class="form-control" id="filter-status">
+                    <option value="-1">Filter by Status</option>
+                    <option value="0">Invalid</option>
+                    <option value="1">Pending</option>
+                    <option value="2">Running</option>
+                </select>
+            </div>
+        </div>
+
+        <div class='col-md-2 col-sm-6 col-xs-12' style="display: none">
+            <div class="form-group">
+                <select class="form-control" id="filter-adTypes">
+                    <option value="-1">Filter by Type</option>
+                    <option value="1"> Text</option>
+                </select>
+            </div>
+        </div>
+
+        <div class='col-md-3 col-sm-4 col-xs-12'>
+            <div class="form-group">
+                <div class='input-group date' id='begin'>
+                    <input type='text' class="form-control" autocomplete="off" /> <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class='col-md-3 col-sm-4 col-xs-12'>
+            <div class="form-group">
+                <div class='input-group date' id='end'>
+                    <input type='text' class="form-control" autocomplete="off" /> <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class='col-md-2 col-sm-2 col-xs-12'>
+            <p>
+                <a href="#calljs-filterPages()" class="btn btn-primary" id="ChangeDate">
+                    <i class="fa fa-fw fa-check"></i> OK
+                </a>
+            </p>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-responsive">
+                <table id="page-list" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Privacy Status</th>
+                            <th>Type</th>
+                            <th>Creation Time</th>
+                            <th>Modification Time</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Privacy Status</th>
+                            <th>Type</th>
+                            <th>Creation Time</th>
+                            <th>Modification Time</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    var categoryKey = '';
+
+    function filterPages() {
+        console.log('filter pages')
+    }
+
+    function loadPageList(catKey, catName) {
+        categoryKey = catKey;
+        $('#btn_new_page').attr('href', "#calljs-pageEditor('','"+categoryKey+"')");
+
+        $('#catName').html(decodeURI(catName));
+        var usersession = lscache.get('usersession');
+        if (usersession) {
+            $('#page-list').DataTable({
+                "order": [[ 5, "desc" ]],
+                "ajax": {
+                    "url": baseAdminApi + '/page/recent-from-category',
+                    "type": "POST",
+                    "contentType": 'application/x-www-form-urlencoded',
+                    "data": function (d) {
+                        d.usersession = usersession;
+                        d.categoryKey = catKey;
+                    }
+                },
+                "columnDefs": [{
+                        "render": function (data, type, row) {
+                            var callJsStr = "#calljs-pageInfo('" + row.id + "','" + encodeURIComponent(data) + "','"+categoryKey+"')";
+                            return '<a class="text_wrapper" title="' + data + '" href="' + callJsStr + '" >' + textTruncate(data,50) + '</a>';
+                        },
+                        "targets": 0
+                    },
+                    {
+                        "render": function (data, type, row) {
+                            var num = parseInt(data);
+                            if (num === 1) {
+                                return '<i class="fa fa-envelope-open-o" style="font-size:16px">Protected</i>';
+                            } else if (num < 0) {
+                                return '<i class="fa fa-envelope-o" style="font-size:16px"> Private</i>';
+                            }
+                            return '<i class="fa fa-folder-o" style="font-size:16px"> Public</i>';
+                        },
+                        "targets": 2
+                    },
+                    {
+                        "render": function (data, type, row) {
+                            return '<i class="fa fa-file-text-o" style="font-size:16px"> Content Page</i>';
+                        },
+                        "targets": 3
+                    },
+                    {
+                        "render": function (data, type, row) {
+                            var date = LeoCmsApiUtil.formater.toDateString(data);
+                            return date;
+                        },
+                        "targets": 4
+                    },
+                    {
+                        "render": function (data, type, row) {
+                            var date = LeoCmsApiUtil.formater.toDateString(data);
+                            return date;
+                        },
+                        "targets": 5
+                    }
+                ],
+                "columns": [{
+                        "data": "title"
+                    },
+                    {
+                        "data": "description"
+                    },
+                    {
+                        "data": "privacyStatus"
+                    },
+                    {
+                        "data": "type"
+                    },
+                    {
+                        "data": "creationTime"
+                    },
+                    {
+                        "data": "modificationTime"
+                    }
+                ]
+            });
+        }
+    }
+</script>
+
+
+<script>
+    //select date
+    var end = new moment().add(30, 'days').format("YYYY-MM-DD");
+    var begin = new moment().subtract(180, 'days').format("YYYY-MM-DD");
+    //TODO load here (begin, end);
+
+    var formatTime = function (x) {
+        return new moment(x).format("YYYY-MM-DD");
+    };
+
+    $('#begin').datetimepicker({
+        format: 'YYYY-MM-DD',
+        defaultDate: begin
+    });
+    $('#end').datetimepicker({
+        useCurrent: false, //Important! See issue #1075
+        format: 'YYYY-MM-DD',
+        defaultDate: end
+    });
+    $("#begin").on("dp.change", function (e) {
+        $('#end').data("DateTimePicker").minDate(e.date);
+    });
+    $("#end").on("dp.change", function (e) {
+        $('#begin').data("DateTimePicker").maxDate(e.date);
+    });
+
+    $('#filter-status').change(function () {
+        if ($(this).val() == -1) {
+            $('#tbl-creatives tbody tr').show();
+        } else if ($(this).val() == 0) {
+            $('.td-status').closest('tr').hide();
+            $('[data-status="Invalid"]').closest('tr').show();
+        } else if ($(this).val() == 1) {
+            $('.td-status').closest('tr').hide();
+            $('[data-status="Pending"]').closest('tr').show();
+        } else if ($(this).val() == 2) {
+            $('.td-status').closest('tr').hide();
+            $('[data-status="Running"]').closest('tr').show();
+        } else if ($(this).val() == 3) {
+            $('.td-status').closest('tr').hide();
+            $('[data-status="Finished"]').closest('tr').show();
+        } else if ($(this).val() == 4) {
+            $('.td-status').closest('tr').hide();
+            $('[data-status="Expired"]').closest('tr').show();
+        }
+    });
+
+    $('#filter-adTypes').change(function () {
+        var value = $(this).val();
+        if (value == -1) {
+            $('#tbl-creatives tbody tr').show();
+        } else {
+            $('.td-adType').each(function () {
+                if ($(this).text() == value) {
+                    $(this).closest('tr').show();
+                } else {
+                    $(this).closest('tr').hide();
+                }
+            });
+        }
+    });
+
+    $('#ChangeDate').click(function () {
+        var begin = $('#begin').data("DateTimePicker").date().format('YYYY-MM-DD');
+        var end = $('#end').data("DateTimePicker").date().format('YYYY-MM-DD');
+
+        console.log('ChangeDate', begin, end);
+    });
+</script>

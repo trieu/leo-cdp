@@ -1,0 +1,116 @@
+<div class="container-fluid">
+
+    <!-- MAIN BODY here -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <img id="logo-img" src="" alt="MainLogo" style="display: none;"  />
+                <hr>
+                <div>
+                    <fieldset>
+                        <div id="legend">
+                            <legend class="">CMS Login</legend>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" class="form-control" placeholder="Enter username" name="username" id="username"
+                                autocorrect="off" autocapitalize="off" autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" class="form-control" placeholder="Enter password" name="password" id="password"
+                                autocorrect="off" autocapitalize="off" autocomplete="off">
+                        </div>
+
+                        <div id="error-login" class="alert alert-danger" style="display: none;">
+                        </div>
+
+                        <div class="form-group">
+                            <input type="button" class="btn btn-info" value=" OK " style="width: 100px;" id="submitLogin">
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="col-lg-3"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#logo-img').attr('src',window.pageHeaderLogo).show();
+
+    var usersession = lscache.get('usersession');
+    var encryptionkey = lscache.get('encryptionkey');
+
+
+    function getLoginSession() {
+        var urlStr = baseAdminApi + '/user/login-session';
+        LeoCmsApiUtil.callPostApi(urlStr, {}, function (json) {
+            if (json.errorCode === 0 && json.errorMessage === '') {
+                usersession = json.data;
+                loginFormHandler(usersession);
+                console.log(usersession);
+            } else {
+                LeoCmsApiUtil.logErrorPayload(json);
+            }
+        });
+    }
+
+
+    function loginFormHandler(session) {
+        var apiLoginHandler = function () {
+            var urlStr = baseAdminApi + '/user/check-login';
+
+            var user = $('#username').val();
+            var pass = $('#password').val();
+
+            var data = {
+                'userlogin': user,
+                'userpass': pass,
+                'usersession': session
+            };
+            LeoCmsApiUtil.callPostApi(urlStr, data, function (json) {
+                if (json.errorCode === 0 && json.errorMessage === '') {
+                    encryptionkey = json.data;
+                    lscache.set('usersession', session, 10080);
+                    lscache.set('encryptionkey', encryptionkey, 10080);
+                    LeoCmsCookieUtil.set('leousersession', usersession, {
+                        expires: 10080
+                    }); //Expires in 7 days
+                    // console.log(encryptionkey);
+
+                    //OK
+                    setTimeout(function () {
+                        window.location = '/admin';
+                    }, 1222);
+                } else {
+                    LeoCmsApiUtil.logErrorPayload(json);
+                    $('#error-login').html(json.errorMessage).show();
+                }
+            });
+        };
+
+        $('#submitLogin').click(apiLoginHandler);
+
+        $("#username").on('keyup', function (e) {
+            if (e.keyCode == 13) {
+                $("#password").focus();
+            }
+        });
+        $("#password").on('keyup', function (e) {
+            if (e.keyCode == 13) {
+                apiLoginHandler();
+            }
+        });
+    }
+
+
+    if (usersession && encryptionkey) {
+        console.log("You login OK with session " + usersession);
+    } else {
+        getLoginSession();
+        console.log('getLoginSession is called ')
+    }
+</script>

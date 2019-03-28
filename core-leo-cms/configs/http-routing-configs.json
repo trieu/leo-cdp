@@ -1,0 +1,44 @@
+{
+	"map": {
+		"mainHttpWorker": {
+			"name": "MainHttpWorker",
+			"host": "127.0.0.1",
+			"port": 9898,
+			"classNameHttpRouter": "leotech.cms.router.MainHttpRouter",
+			"bodyHandlerEnabled": true,
+			"sockJsHandlerEnabled": true
+		},
+		"adminApiWorker": {
+			"name": "AdminApiWorker",
+			"host": "127.0.0.1",
+			"port": 9070,
+			"classNameHttpRouter": "leotech.cms.router.AdminApiRouter",
+			"bodyHandlerEnabled": true,
+			"sockJsHandlerEnabled": true
+		},
+		"deliveryApiWorker": {
+			"name": "DeliveryApiWorker",
+			"host": "127.0.0.1",
+			"port": 9090,
+			"classNameHttpRouter": "leotech.cms.router.DeliveryApiRouter",
+			"bodyHandlerEnabled": true,
+			"sockJsHandlerEnabled": true
+		},
+		"uploadFileWorker": {
+			"name": "UploadFileWorker",
+			"host": "127.0.0.1",
+			"port": 9071,
+			"classNameHttpRouter": "leotech.cms.router.UploadFileHttpRouter",
+			"bodyHandlerEnabled": true,
+			"sockJsHandlerEnabled": false
+		},
+		"eventLogWorker": {
+			"name": "EventLogWorker",
+			"host": "127.0.0.1",
+			"port": 9080,
+			"classNameHttpRouter": "leotech.cms.router.EventLogHttpRouter",
+			"bodyHandlerEnabled": false,
+			"sockJsHandlerEnabled": false
+		}
+	}
+}

@@ -1,0 +1,172 @@
+############# AQL POST COLLECTION ########################################################################################################;
+
+AQL_GET_POST_BY_ID =>
+	FOR p in post FILTER p.id == @id  
+	RETURN p
+;
+
+AQL_GET_POST_BY_SLUG =>
+	FOR p in post FILTER p.slug == @slug  
+	RETURN p
+;
+
+AQL_GET_POSTS_BY_NETWORK =>
+	FOR p in post FILTER p.networkId == @networkId 
+	SORT p.modificationTime DESC
+	LIMIT @startIndex,@numberResult 
+	RETURN p
+;
+
+AQL_GET_POSTS_BY_PAGE =>
+	FOR p in post FILTER @pageId IN p.pageIds[*]
+	SORT p.modificationTime DESC
+	LIMIT @startIndex,@numberResult 
+	RETURN p
+;
+
+AQL_GET_ALL_POSTS_BY_PAGE =>
+	FOR p in post FILTER @pageId IN p.pageIds[*]
+	SORT p.modificationTime DESC
+	RETURN p
+;
+
+AQL_GET_ALL_POSTS_BY_CATEGORY_OR_PAGE =>
+	FOR p in post FILTER @categoryKey IN p.categoryKeys[*] OR @pageId IN p.pageIds[*] 
+	SORT p.modificationTime DESC
+	RETURN p
+;
+
+AQL_GET_POSTS_BY_OWNER =>
+	FOR p in post FILTER p.ownerId == @ownerId
+	LIMIT @startIndex,@numberResult 
+	RETURN p
+;
+
+AQL_GET_VIEWABLE_POSTS_BY_PAGE =>
+	FOR p in post FILTER @pageId IN p.pageIds[*] AND (p.ownerId == @ownerId OR p.privacyStatus == 0)
+	LIMIT @startIndex,@numberResult 
+	RETURN p
+;
+
+AQL_GET_POSTS_OF_DEFAULT_HOME_PAGE =>
+	LET market_news = (FOR p in post FILTER ( "1329181" IN p.categoryKeys[*]) 
+	    AND (p.privacyStatus == 0 OR p.privacyStatus == 1 ) 
+	    AND (p.contentClass == "news")
+	    SORT p.modificationTime DESC 
+	    LIMIT 0,20
+	    RETURN {title : p.title, headlineImageUrl: p.headlineImageUrl, id : p.id, description: p.description, contentClass : p.contentClass, creationTime : p.creationTime, modificationTime : p.modificationTime, headlineImages: p.headlineImages , slug : p.slug } 
+	    )	
+	LET product_list = (FOR p in post FILTER ( "1329376" IN p.categoryKeys[*]) 
+	    AND (p.privacyStatus == 0 OR p.privacyStatus == 1 ) 
+	    AND (p.contentClass == "product")
+	    SORT p.modificationTime DESC 
+	    LIMIT 0,30
+	    RETURN {title : p.title, headlineImageUrl: p.headlineImageUrl, id : p.id, description: p.description, contentClass : p.contentClass, creationTime : p.creationTime, modificationTime : p.modificationTime, headlineImages: p.headlineImages , slug : p.slug } 
+	    )	    
+	LET project_list = (FOR p in post FILTER ( "1329482" IN p.categoryKeys[*]) 
+	    AND (p.privacyStatus == 0 OR p.privacyStatus == 1 ) 
+	    AND (p.contentClass == "project")
+	    SORT p.modificationTime DESC 
+	    LIMIT 0,8
+	    RETURN {title : p.title, headlineImageUrl: p.headlineImageUrl, id : p.id, description: p.description, contentClass : p.contentClass, creationTime : p.creationTime, modificationTime : p.modificationTime, headlineImages: p.headlineImages , slug : p.slug } 
+	    )
+	RETURN {market_news, product_list, project_list}
+;
+
+AQL_GET_KEYWORDS_OF_ALL_POSTS =>
+	LET list = (FOR doc IN post FILTER LENGTH( doc.keywords ) > 0 return doc.keywords)
+	RETURN {"keywords" : FLATTEN(list,3)}
+;
+
+########### AQL PAGE COLLECTION ########################################################################################################;
+
+AQL_GET_PAGE_BY_ID =>
+	FOR p in page FILTER p.id == @id  
+	RETURN p
+;
+
+AQL_GET_PAGE_BY_SLUG =>
+	FOR p in page FILTER p.slug == @slug  
+	RETURN p
+;
+
+AQL_GET_PAGES_BY_NETWORK =>
+	FOR p in page FILTER p.networkId == @networkId 
+	LIMIT @startIndex,@numberResult 
+	SORT p.modificationTime DESC
+	RETURN p
+;
+
+AQL_GET_ALL_PAGES_BY_CATEGORY =>
+	FOR p in page FILTER @categoryKey IN p.categoryKeys[*]
+	SORT p.modificationTime DESC
+	RETURN p
+;
+
+AQL_GET_PUBLIC_PAGES_BY_CATEGORY =>
+	FOR p in page FILTER p.privacyStatus == 0 AND @categoryKey IN p.categoryKeys[*]
+	SORT p.modificationTime DESC
+	RETURN p
+;
+
+########### AQL CATEGORY COLLECTION ########################################################################################################;
+
+AQL_FIND_KEY_BY_SLUG =>
+	FOR p in category FILTER p.slug == @slug  
+	RETURN p._key
+;
+
+AQL_GET_CATEGORY_BY_KEY =>
+	FOR p in category FILTER p._key == @_key  
+	RETURN p
+;
+
+AQL_GET_ALL_CATEGORIES_BY_NETWORK =>
+	FOR p in category FILTER p.networkId == @networkId 
+	RETURN p
+;
+
+########### AQL USER COLLECTION ########################################################################################################;
+AQL_FIND_KEY_BY_USERLOGIN => 
+	FOR u in user FILTER u.userLogin == @userLogin  
+	RETURN u._key
+;
+
+AQL_GET_USER_BY_USERLOGIN => 
+	FOR u in user FILTER u.userLogin == @userLogin  
+	RETURN u
+;
+
+AQL_GET_USER_BY_KEY => 
+	FOR u in user FILTER u._key == @key  
+	RETURN u
+;
+
+AQL_GET_ALL_USERS_IN_NETWORK => 
+	FOR u in user FILTER u.networkId == @networkId  
+	RETURN u
+;
+
+########### AQL FILE_METADATA COLLECTION ########################################################################################################;
+AQL_GET_FILE_METADATA_BY_PATH => 
+	FOR f in filemetadata FILTER f.path == @path  
+	RETURN f
+;
+
+AQL_GET_FILE_METADATA_BY_NETWORK_ID => 
+	FOR f in filemetadata FILTER f.networkId == @networkId  
+	RETURN f
+;
+
+AQL_GET_FILE_METADATA_BY_OWNER_ID => 
+	FOR f in filemetadata FILTER f.ownerLogin == @ownerLogin  
+	RETURN f
+;
+
+AQL_GET_FILE_METADATA_BY_OBJECT => 
+	FOR f in filemetadata FILTER f.refObjectClass == @refObjectClass AND f.refObjectKey == @refObjectKey  
+	RETURN f
+;
+
+
+############################################### END AQL  #####################################################################################
