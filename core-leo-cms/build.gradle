@@ -89,7 +89,7 @@ dependencies {
 		,'com.github.jknack:handlebars:4.1.2'
 		,'com.github.spullara.mustache.java:compiler:0.9.6'
 		,'org.yaml:snakeyaml:1.18' 
-		
+				
 		// Friendly Content ID
 		,'com.devskiller.friendly-id:friendly-id:1.0.3'	
 						
