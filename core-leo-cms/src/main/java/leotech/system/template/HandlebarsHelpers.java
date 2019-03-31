@@ -12,6 +12,8 @@ import com.github.jknack.handlebars.Helper;
 import com.github.jknack.handlebars.Options;
 import com.google.gson.Gson;
 
+import leotech.cms.model.User;
+import leotech.cms.service.UserDataService;
 import rfx.core.util.RandomUtil;
 import rfx.core.util.StringPool;
 import rfx.core.util.StringUtil;
@@ -36,6 +38,8 @@ public class HandlebarsHelpers {
 	handlebars.registerHelper("renderHtmlView", renderHtmlViewHelper);
 	handlebars.registerHelper("encodeUrl", encodeUrlHelper);
 	handlebars.registerHelper("toJson", toJsonHelper);
+	
+	handlebars.registerHelper("userDisplayName", userDisplayNameHelper);
     }
 
     public static final String OPERATOR_EQUALS = "==";
@@ -319,4 +323,23 @@ public class HandlebarsHelpers {
 	    return StringPool.BLANK;
 	}
     };
+    
+    
+    /**
+     * Sample: {{#userDisplayName userId }}{{/userDisplayName}}
+     */
+    static Helper<String> userDisplayNameHelper = new Helper<String>() {
+	@Override
+	public CharSequence apply(String userId, Options options) throws IOException {
+	    if (StringUtil.isNotEmpty(userId)) {
+		User user = UserDataService.getByUserId(userId);
+		if(user != null) {
+		    return user.getDisplayName();
+		}
+	    }
+	    return StringPool.BLANK;
+	}
+    };
+    
+    
 }

@@ -68,12 +68,12 @@
   <div id="videoPlaceholder3" class="videoholder"></div>
 
   <script>
-    var autoplayVideo = false;
+    var autoplayVideo = true;
     window.debugMediaPlayerOne = true;
 
     function loadVideo() {
       var placeHolderId = 'videoPlaceholder3';
-      var videoSource = 'https://www.youtube.com/watch?v=-tJYN-eG1zk';
+      var videoSource = 'https://www.youtube.com/watch?v=RggVAA_8J9k';
 
 
       var skipAdAfter = 6; // show skip button after N seconds
@@ -122,7 +122,7 @@
         autoplay = false;
       }
 
-      //adConfigs = [];
+      adConfigs = [];
       //  prerollAds = [];
       MediaPlayerOne.create(autoplay, placeHolderId, videoSource, '', [],
         skipAdAfter, adConfigs, onReady);

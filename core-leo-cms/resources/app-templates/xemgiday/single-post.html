@@ -2,7 +2,12 @@
     <h5 class="mdl-card__title-text mdl-typography--headline ">{{title}}</h5>
 </div>
 
+
+
 <div id="postMainContent" class="portfolio-copy">
+    <div class="mdl-cell mdl-cell--12-col mdl-typography--text-right" style="font-weight: bold" >
+        Posted by: {{#userDisplayName ownerId }}{{/userDisplayName}}
+    </div>
     <strong id="postMediaDescription" class="mdl-cell mdl-cell--12-col">{{description}}</strong>
 
     <div id="postMediaVideo" class="mdl-cell mdl-cell--12-col ">
@@ -41,6 +46,12 @@
             class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">fullscreen</i></button>
 
         <a style="float:right" href="javascript:"><i class="material-icons">arrow_forward</i></a>
+    </div>   
+
+    <div id="postMediaInfo"
+        style="line-height: 1.8em!important; font-size: 1.06em!important;font-family: 'Helvetica','Arial',sans-serif!important;"
+        class="mdl-cell mdl-cell--12-col mdl-card__supporting-text no-padding ">
+        {{{mediaInfo}}}
     </div>
 
     <div id="fbLikeBox" class="mdl-cell mdl-cell--12-col" style="display: none">
@@ -53,13 +64,6 @@
         </div>
     </div>
 
-    <div id="postMediaInfo"
-        style="line-height: 1.8em!important; font-size: 1.06em!important;font-family: 'Helvetica','Arial',sans-serif!important;"
-        class="mdl-cell mdl-cell--12-col mdl-card__supporting-text no-padding ">
-        {{{mediaInfo}}}
-    </div>
-
-
 </div>
 <script>
     window.debugMediaPlayerOne = false;
@@ -68,15 +72,13 @@
     var playerReadyCalled = false;
 
     function playerReady() {
-        playerReadyCalled = true;
-
-        $('#fbLikeBox').show();
+        playerReadyCalled = true;       
 
         if (!window.isMobile) {
             setTimeout(function () {
                 window.player.muted(false);
                 window.player.volume(0.6);
-            }, 3000);
+            }, 7000);
         }
     }
 
@@ -91,8 +93,7 @@
             var adConfigs = [];
 
             window.player = MediaPlayerOne.create(autoplayVideo, pmHolderId, videoSrc, '', adUrls, skipTime,
-                adConfigs,
-                playerReady);
+                adConfigs,playerReady);
 
             window.player.on("fullscreenchange", function () {
                 if (window.player.isFullscreen()) {
@@ -103,10 +104,7 @@
         } else {
             $('#postMediaVideo, #btnPlayerVolume, #btnPlayerFullscreen').hide();
             $('#fbLikeBox').show();
-        }
-        setTimeout(function () {
-            $('#videoProgressLoader').hide();
-        }, 6000);
+        }       
     }
 
     function showPlayerInFullscreen() {
@@ -121,8 +119,11 @@
     }
 
     window.mediaPlayerOneReady = function () {
-
-        setTimeout(loadVideo, 600);
+        $('#fbLikeBox').show();
+        setTimeout(loadVideo,3000);
+        setTimeout(function () {
+            $('#videoProgressLoader').hide();
+        }, 6000);
 
         var fbUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(location.href);
         $('#fbSharer').attr('href', fbUrl);

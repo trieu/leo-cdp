@@ -16,6 +16,9 @@ import leotech.cms.model.common.MediaNode;
  *
  */
 public class Post extends MediaNode {
+    
+    long viewCount = 0;
+    int likeCount = 0;
 
     public Post() {
 	// for JSON decode from ArangoDB
@@ -62,6 +65,22 @@ public class Post extends MediaNode {
 	    }
 	});
 	return list;
+    }
+
+    public long getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(long viewCount) {
+        this.viewCount = viewCount;
+    }
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
     }
 
   

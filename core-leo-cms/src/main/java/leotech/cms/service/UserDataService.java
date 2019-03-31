@@ -54,4 +54,9 @@ public class UserDataService {
 
 	return userId;
     }
+    
+    public static User getByUserId(String id) {
+	return UserDaoUtil.getByUserId(id);
+    }
+    
 }
