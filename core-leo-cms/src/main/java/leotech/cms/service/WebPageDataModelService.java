@@ -10,6 +10,7 @@ import leotech.cms.model.Category;
 import leotech.cms.model.MediaNetwork;
 import leotech.cms.model.Page;
 import leotech.cms.model.Post;
+import leotech.cms.model.User;
 import leotech.cms.model.renderable.CategoryDataModel;
 import leotech.cms.model.renderable.ContentMediaBox;
 import leotech.cms.model.renderable.MediaNetworkDataModel;
@@ -17,11 +18,12 @@ import leotech.cms.model.renderable.PageDataModel;
 import leotech.cms.model.renderable.PageNavigator;
 import leotech.cms.model.renderable.PostDataModel;
 import leotech.cms.model.renderable.WebPageDataModel;
+import leotech.core.api.BaseSecuredDataApi;
 import rfx.core.util.StringUtil;
 
 public class WebPageDataModelService {
 
-    // URL prefix for common 
+    // URL prefix for common
     static final String HOME = "/";
     static final String HTML_USER = "/html/user/";
     static final String HTML_GROUP = "/html/group/";
@@ -30,8 +32,8 @@ public class WebPageDataModelService {
     static final String HTML_TOPIC = "/html/topic/";
     static final String HTML_PAGE = "/html/page/";
     static final String HTML_POST = "/html/post/";
-    
-    //handler for listing content by speacial filters
+
+    // handler for listing content by speacial filters
     static final String HTML_SEARCH = "/html/search/";
     static final String HTML_MOST_FAVORITE = "/html/most-favorite/";
     static final String HTML_MOST_TRENDING = "/html/most-trending/";
@@ -47,7 +49,7 @@ public class WebPageDataModelService {
     static final String LIST_POST = "list-post";
     static final String SINGLE_POST = "single-post";
 
-    public static WebPageDataModel buildModel( String path, String networkDomain, MultiMap params) {
+    public static WebPageDataModel buildModel(String path, String networkDomain, MultiMap params, String userSession) {
 	MediaNetwork network = MediaNetworkDataService.getContentNetwork(networkDomain);
 	long networkId = network.getNetworkId();
 	String templateFolder = network.getWebTemplateFolder();
@@ -81,9 +83,9 @@ public class WebPageDataModelService {
 	    String slug = path.replace(HTML_POST, "");
 	    int startIndex = StringUtil.safeParseInt(params.get("startIndex"), 0);
 	    int numberResult = StringUtil.safeParseInt(params.get("numberResult"), 9);
-	    model = buildPostDataModel(networkDomain, network, networkId, templateFolder, slug, startIndex, numberResult);
+	    model = buildPostDataModel(userSession, networkDomain, network, networkId, templateFolder, slug, startIndex, numberResult);
 	}
-	// not found 404 
+	// not found 404
 	if (model == null) {
 	    model = WebPageDataModel.page404(networkDomain, templateFolder);
 	}
@@ -114,8 +116,8 @@ public class WebPageDataModelService {
 	return model;
     }
 
-    public static WebPageDataModel buildPostDataModel(String networkDomain, MediaNetwork network, long networkId, String templateFolder, String slug, int startIndex,
-	    int numberResult) {
+    public static WebPageDataModel buildPostDataModel(String userSession, String networkDomain, MediaNetwork network, long networkId, String templateFolder, String slug,
+	    int startIndex, int numberResult) {
 	PostDataModel model;
 	if (StringUtil.isNotEmpty(slug)) {
 	    // CrawledYouTubeVideo video =
@@ -146,6 +148,12 @@ public class WebPageDataModelService {
 		// TODO more abstract here for multipe ranking
 		List<Post> simlilarPosts = PostDataService.getSimilarPosts(contextPageIds, postId);
 		model.setRecommendedPosts(simlilarPosts);
+		User user = BaseSecuredDataApi.getUserFromSession(userSession);
+		System.out.println("userSession " + userSession + " " + user);
+		if (user != null) {
+		    model.setAdminRole(BaseSecuredDataApi.isAdminRole(user));	
+		    model.setSessionUserId(user.getKey());
+		}
 
 	    } else {
 		return WebPageDataModel.page404(networkDomain, templateFolder);
@@ -216,7 +224,7 @@ public class WebPageDataModelService {
 	return model;
     }
 
-    public static WebPageDataModel buildModel(String host, String tplFolderName, String tplName, MultiMap params) {
+    public static WebPageDataModel buildModel(String host, String tplFolderName, String tplName, MultiMap params, String userSession) {
 
 	// TODO mapping from host to category and content class
 	String contentClass = "standard";

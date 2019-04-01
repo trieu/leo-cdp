@@ -17,11 +17,13 @@ import leotech.cms.model.renderable.WebPageDataModel;
 import leotech.cms.service.MediaNetworkDataService;
 import leotech.cms.service.WebPageDataModelService;
 import leotech.core.api.BaseApiHandler;
+import leotech.core.api.BaseApiRouter;
 import leotech.core.api.BaseHttpRouter;
 import leotech.core.api.SecuredApiProxyHandler;
 import leotech.system.model.DeviceInfo;
 import leotech.system.template.HandlebarsTemplateUtil;
 import leotech.system.template.TemplateUtil;
+import leotech.system.util.CookieUserSessionUtil;
 import leotech.system.util.DeviceInfoUtil;
 import leotech.system.util.HttpTrackingUtil;
 import rfx.core.configs.WorkerConfigs;
@@ -53,8 +55,7 @@ public class MainHttpRouter extends BaseHttpRouter {
     static final String ADS_TXT_CONTENT = WorkerConfigs.load().getCustomConfig("ADS_TXT_CONTENT");
 
     public MainHttpRouter(RoutingContext context) {
-	super(context);
-	
+	super(context);	
 	boolean enableCaching = WorkerConfigs.load().getCustomConfig("enableUsedCacheHandlebars").trim().equals("true");
 	if(enableCaching) {
 	    HandlebarsTemplateUtil.enableUsedCache();    
@@ -73,8 +74,11 @@ public class MainHttpRouter extends BaseHttpRouter {
 	outHeaders.set(POWERED_BY, SERVER_VERSION);
 
 	// CORS Header
-	String origin = StringUtil.safeString(req.headers().get(BaseApiHandler.ORIGIN), "*");
+	MultiMap reqHeaders = req.headers();
+	String origin = StringUtil.safeString(reqHeaders.get(BaseApiHandler.ORIGIN), "*");
 	
+	// User Info 
+	String userSession = CookieUserSessionUtil.getUserSession(context, StringUtil.safeString(reqHeaders.get(BaseApiRouter.HEADER_SESSION)));
 
 	// ---------------------------------------------------------------------------------------------------
 	String url = req.absoluteURI();
@@ -94,14 +98,14 @@ public class MainHttpRouter extends BaseHttpRouter {
 
 	    
 	    boolean isSpiderBot = SPIDER.equals(device.deviceName);
-	    renderWebPage(params, isSpiderBot, resp, host);
+	    renderWebPage(params, isSpiderBot, resp, host, userSession);
 	}
 	// Progressive Web App in Mobile Hibrid App
 	else if (path.startsWith(APP_ROUTER)) {
 	    outHeaders.set(CONTENT_TYPE, MIME_TYPE_HTML);
 	    BaseHttpRouter.setCorsHeaders(outHeaders, origin);
 	    
-	    appRoutingHandler(params, resp, path, host);
+	    appRoutingHandler(params, resp, path, host, userSession);
 	}
 	// public files (Images, CSS, JS, JSON,...)
 	else if (path.startsWith(PUBLIC_FILE_ROUTER)) {
@@ -124,13 +128,13 @@ public class MainHttpRouter extends BaseHttpRouter {
 	    outHeaders.set(CONTENT_TYPE, MIME_TYPE_HTML);
 	    BaseHttpRouter.setCorsHeaders(outHeaders, origin);	    
 	    String tplFolder = MediaNetworkDataService.DEFAULT_ADMIN_TEMPLATE_FOLDER;
-	    handleWebPageRequest(params,false, host, tplFolder, "index", resp);
+	    handleWebPageRequest(params,false, host, tplFolder, "index", resp, userSession);
 	}
 	// render public data as normal HTML website for SEO
 	else if (path.startsWith(HTML_DIRECT_RENDER)) {
 	    // for SEO or Facebook BOT
 	    outHeaders.set(CONTENT_TYPE, MIME_TYPE_HTML);
-	    WebPageDataModel model = WebPageDataModelService.buildModel(path, host, params);
+	    WebPageDataModel model = WebPageDataModelService.buildModel(path, host, params, userSession);
 	    String html = WebPageDataModel.renderHtml(model);
 	    resp.setStatusCode(model.getHttpStatusCode());
 	    resp.end(html);
@@ -155,7 +159,7 @@ public class MainHttpRouter extends BaseHttpRouter {
     //////////////////////////////////////////////////////////////////////////////////////
     // utils //
 
-    void renderWebPage(MultiMap params,boolean isSearchEngineBot, HttpServerResponse resp, String networkDomain) {
+    void renderWebPage(MultiMap params,boolean isSearchEngineBot, HttpServerResponse resp, String networkDomain, String userSession) {
 	// detect template folder name from domain
 	String tplFolderName = MediaNetworkDataService.getWebTemplateFolder(networkDomain);
 	if (tplFolderName.isEmpty()) {
@@ -164,17 +168,17 @@ public class MainHttpRouter extends BaseHttpRouter {
 	    return;
 	}
 	// then handle app template for end-user
-	handleWebPageRequest(params,isSearchEngineBot, networkDomain, tplFolderName, "index", resp);
+	handleWebPageRequest(params,isSearchEngineBot, networkDomain, tplFolderName, "index", resp, userSession);
     }
 
-    void appRoutingHandler(MultiMap params,HttpServerResponse resp, String path, String host) {
+    void appRoutingHandler(MultiMap params,HttpServerResponse resp, String path, String host, String userSession) {
 	// handler as SPA app for end-user
 	// String appId = req.getParam("appid");
 	String[] toks = path.split(HOME_ROUTER);
 	int length = toks.length;
 	if (length > 1) {
 	    String appId = toks[length - 1];
-	    handleWebPageRequest(params, false, host, appId, "index", resp);
+	    handleWebPageRequest(params, false, host, appId, "index", resp, userSession);
 	}
     }
 
@@ -224,8 +228,8 @@ public class MainHttpRouter extends BaseHttpRouter {
 	}
     }
 
-    void handleWebPageRequest(MultiMap params, boolean isSearchEngineBot, String host, String tplFolderName, String tplName, HttpServerResponse resp) {
-	WebPageDataModel model = WebPageDataModelService.buildModel(host, tplFolderName, tplName, params);
+    void handleWebPageRequest(MultiMap params, boolean isSearchEngineBot, String host, String tplFolderName, String tplName, HttpServerResponse resp, String userSession) {
+	WebPageDataModel model = WebPageDataModelService.buildModel(host, tplFolderName, tplName, params, userSession);
 
 	String html = WebPageDataModel.renderHtml(model);
 	resp.setStatusCode(model.getHttpStatusCode());

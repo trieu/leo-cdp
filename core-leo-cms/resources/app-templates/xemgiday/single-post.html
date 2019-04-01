@@ -6,7 +6,8 @@
 
 <div id="postMainContent" class="portfolio-copy">
     <div class="mdl-cell mdl-cell--12-col mdl-typography--text-right" style="font-weight: bold" >
-        Posted by: {{#userDisplayName ownerId }}{{/userDisplayName}}
+        Posted by: {{#userDisplayName ownerId }}{{/userDisplayName}}       
+        <a id="btnEditPost" target="_blank" href="/admin#calljs-postInfo('{{id}}')" style="display: none" > Edit </a>
     </div>
     <strong id="postMediaDescription" class="mdl-cell mdl-cell--12-col">{{description}}</strong>
 
@@ -66,6 +67,8 @@
 
 </div>
 <script>
+
+    
     window.debugMediaPlayerOne = false;
     var autoplayVideo = true;
     var isYoutube = false;
@@ -73,7 +76,6 @@
 
     function playerReady() {
         playerReadyCalled = true;       
-
         if (!window.isMobile) {
             setTimeout(function () {
                 window.player.muted(false);
@@ -124,6 +126,13 @@
         setTimeout(function () {
             $('#videoProgressLoader').hide();
         }, 6000);
+
+        loadSessionUserInfo(function(){
+            var isEditable = canEditPost('{{ownerId}}');
+            if(isEditable){
+                $('#btnEditPost').show()
+            }
+        });       
 
         var fbUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(location.href);
         $('#fbSharer').attr('href', fbUrl);

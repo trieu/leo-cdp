@@ -27,19 +27,24 @@ public class HandlebarsHelpers {
     public static final String VALUE = "value";
 
     public static void register(Handlebars handlebars) {
+	//flow macros
 	handlebars.registerHelper("doIf", doIfHelper);
 	handlebars.registerHelper("ifCond", ifCondHelper);
 	handlebars.registerHelper("ifExist", ifExistHelper);
 	handlebars.registerHelper("ifHasData", ifHasDataHelper);
 	handlebars.registerHelper("ifListHasData", ifListHasDataHelper);
-	handlebars.registerHelper("randomInteger", randomIntegerHelper);
 	handlebars.registerHelper("eachInMap", eachInMapHelper);
+	
+	// utility macros
+	handlebars.registerHelper("randomInteger", randomIntegerHelper);
 	handlebars.registerHelper("base64Decode", base64DecodeHelper);
 	handlebars.registerHelper("renderHtmlView", renderHtmlViewHelper);
 	handlebars.registerHelper("encodeUrl", encodeUrlHelper);
 	handlebars.registerHelper("toJson", toJsonHelper);
 	
+	//user macros
 	handlebars.registerHelper("userDisplayName", userDisplayNameHelper);
+	handlebars.registerHelper("isEditorRole", isEditorRoleHelper);
     }
 
     public static final String OPERATOR_EQUALS = "==";
@@ -338,6 +343,23 @@ public class HandlebarsHelpers {
 		}
 	    }
 	    return StringPool.BLANK;
+	}
+    };
+    
+    /**
+     * sample: {{#isEditorRole contentOwnerId sessionUserId }} {{data}} {{/isEditorRole}}
+     */
+    static Helper<String> isEditorRoleHelper = new Helper<String>() {
+	@Override
+	public CharSequence apply(String contentOwnerId, Options options) throws IOException {
+	    if (StringUtil.isNotEmpty(contentOwnerId)) {
+		String sessionUserId = options.param(0, "");
+		User contentOwner = UserDataService.getByUserId(contentOwnerId);
+		if(contentOwner != null) {
+		    return contentOwner.getKey().equals(sessionUserId) ? options.fn(this) : options.inverse(this);
+		}		
+	    }
+	    return options.inverse(this);
 	}
     };
     
