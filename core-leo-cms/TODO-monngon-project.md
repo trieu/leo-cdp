@@ -3,6 +3,16 @@
 ##Server
 * ssh -p 234 adminsys@cloudcms1
 
+## Content Ideas
+* https://2sao.vn/an-ngon-c-aa6/
+* https://www.24h.com.vn/am-thuc/che-do-dinh-duong-dac-biet-giup-cau-thu-bong-da-luon-sung-man-ben-bi-c460a933989.html
+* https://www.metrip.vn/bai-viet/-hcm-top-8-mon-an-sang-trong-gia-cuc-re-cho-nhung-buoi-hen-ho-cap-doi_KwQCJJbCbn
+* https://www.elle.vn/quan-diem-cong-dong/top-50-mon-an-ngon-nhat-the-gioi
+* Feedy VN https://www.youtube.com/channel/UCdUzXg-HCL_8uFjIY7Be_KA/videos
+* Cach nau an: https://www.youtube.com/user/HuongNghiepAAU/videos
+* SỨC KHỎE TÂM SINH https://www.youtube.com/channel/UCcIfP3ugD4zFIpXub8x8HTQ/videos
+* Nấu Gì Hôm Nay https://www.youtube.com/channel/UCFX07pD4eBAwP6Cx-fQmOcg/videos
+ 
 ##Pages
 Món Việt 
 Món Á 

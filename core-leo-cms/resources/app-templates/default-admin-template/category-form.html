@@ -80,7 +80,7 @@
         var onSaveOk = function (data) {
             console.log('=====> saveCategoryInfo ', data);
             setTimeout(function () {
-                location.href = '/';
+                location.href = '/admin';
             }, 500);
         }
 
@@ -105,7 +105,7 @@
             var onSaveOk = function (data) {
                 console.log('=====> deleteCategoryInfo ', data);
                 setTimeout(function () {
-                    location.href = '/';
+                    location.href = '/admin';
                 }, 500);
             }
             var urlStr = baseAdminApi + '/category/delete';

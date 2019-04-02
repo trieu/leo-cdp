@@ -101,6 +101,9 @@ sudo certbot certonly --standalone -d xemgiday.com --non-interactive --agree-tos
 * https://medium.com/@mark_riedl/improvisational-storytelling-in-open-world-2359d7f649cf
 * https://medium.com/@mark_riedl/computational-narrative-intelligence-past-present-and-future-99e58cf25ffa
 
+## Competitor
+* https://www.conversant.tv/swiftcms/
+* https://vnetwork.vn/products/swiftcms
 
 #### Version 1.0
 1. Platform (a network of networks) -> AQL -> PlatformDaoUtil (list, save, get, list networks, list categories) -> TestPlatformDataUtil

@@ -18,7 +18,7 @@
 	<customConfigs type="map">
 
 		<config name="defaultArangoDbConfig">
-			dbConfigsDevLeoCms
+			dbConfigsDev
 		</config>
 
 		<config name="enableUsedCacheHandlebars">
@@ -41,11 +41,11 @@
 			XemGiDay.com - Real-time Video Recommendation Platform
 		</config>
 		<config name="baseStaticUrl">
-			//xemgiday.com
+			//monngon.tv
 		</config>
 
 		<config name="baseAdminApiUrl">
-			//xemgiday.com
+			//monngon.tv
 		</config>
 
 		<config name="baseDeliveryApiUrl">

@@ -20,7 +20,7 @@ $(document).ready(function () {
                         $('#page-wrapper').show();
                     } catch (error) {
                         alert(error);
-                        location.href = '/';
+                        location.href = '/admin';
                     }
                 }, 600);
             });
@@ -203,7 +203,7 @@ function deletePage() {
             LeoCmsApiUtil.callPostAdminApi(urlStr, params, function (json) {
                 if (json.errorCode === 0 && json.errorMessage === '') {
                     if (json.data) {
-                        location.href = '/';
+                        location.href = '/admin';
                     }
                 }
             });
@@ -253,7 +253,7 @@ function deletePost() {
             LeoCmsApiUtil.callPostAdminApi(urlStr, params, function (json) {
                 if (json.errorCode === 0 && json.errorMessage === '') {
                     if (json.data) {
-                        location.href = '/';
+                        location.href = '/admin';
                     }
                 }
             });

@@ -38,6 +38,7 @@ import rfx.core.util.StringUtil;
 public class MainHttpRouter extends BaseHttpRouter {
 
     private static final String ADS_TXT = "/ads.txt";
+    private static final String ADS_TXT_CONTENT = WorkerConfigs.load().getCustomConfig("ADS_TXT_CONTENT");
     private static final String MIME_TYPE_HTML = ContentType.TEXT_HTML.getMimeType();
     private static final String HTML_DIRECT_RENDER = "/html/";
 
@@ -52,7 +53,7 @@ public class MainHttpRouter extends BaseHttpRouter {
     public static final String PUBLIC_FILE_ROUTER = "/public";
     public static final String VIEW_ROUTER = "/view";
     public static final String HOME_ROUTER = "/";
-    static final String ADS_TXT_CONTENT = WorkerConfigs.load().getCustomConfig("ADS_TXT_CONTENT");
+    
 
     public MainHttpRouter(RoutingContext context) {
 	super(context);	

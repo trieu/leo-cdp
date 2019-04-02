@@ -1,0 +1,23 @@
+<!-- posts of the default filter "recently" -->
+
+<div class="mdl-cell mdl-card mdl-shadow--4dp portfolio-card">
+    <div class="center">
+        <a href="/html/post/{{slug}}">
+            <img class="article-image" src="{{headlineImageUrl}}" border="0" alt="" onerror="this.src='/public/images/icons/videoplayer.jpg'">
+        </a>
+    </div>
+    <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">{{title}}</h2>
+    </div>
+    <div class="mdl-card__supporting-text">
+        {{mediaInfo}}
+    </div>
+    <div class="mdl-card__actions mdl-card--border mdl-typography--text-right">
+        <button class="mdl-button mdl-button--icon mdl-button"><i class="material-icons">favorite</i></button>
+        <button class="mdl-button mdl-button--icon mdl-button">
+            <a href="/html/post/{{slug}}">
+                <i class="material-icons">play_arrow</i>
+            </a>
+        </button>
+    </div>
+</div>

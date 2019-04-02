@@ -1,0 +1,142 @@
+<div class="mdl-card__title " style="justify-content: center;">
+    <h5 class="mdl-card__title-text mdl-typography--headline ">{{title}}</h5>
+</div>
+
+
+
+<div id="postMainContent" class="portfolio-copy">
+    <div class="mdl-cell mdl-cell--12-col mdl-typography--text-right" style="font-weight: bold" >
+        Posted by: {{#userDisplayName ownerId }}{{/userDisplayName}}       
+        <a id="btnEditPost" target="_blank" href="/admin#calljs-postInfo('{{id}}')" style="display: none" > Edit </a>
+    </div>
+    <strong id="postMediaDescription" class="mdl-cell mdl-cell--12-col">{{description}}</strong>
+
+    <div id="postMediaVideo" class="mdl-cell mdl-cell--12-col ">
+        <!-- video loader -->
+        <div id="videoProgressLoader" style="margin: auto"
+            class="mdl-cell--6-col mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+
+        <!-- Video Holder -->
+        <div class="videoholder_outer">
+            <div id="videoPlaceholder" class="videoholder" data-video-thumbnail="{{headlineImageUrl}}"
+                data-video-source="{{{headlineVideoUrl}}}">
+            </div>
+        </div>
+    </div>
+
+    <!-- main actions -->
+    <div id="postMediaAction" class="mdl-card__actions mdl-card--border mdl-typography--text-center">
+        <a href="javascript:" style="float: left;"><i class="material-icons">arrow_back</i></a>
+
+        <!-- sharing menu -->
+        <button id="my-menu-bottom-right" class="mdl-button mdl-js-button mdl-button--icon">
+            <i class="material-icons">share</i>
+        </button>
+        <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="my-menu-bottom-right">
+            <a id="fbSharer" href="#" target="_blank">
+                <li class="mdl-menu__item">Facebook</li>
+            </a>
+            <li style="display: none" class="mdl-menu__item">Twitter</li>
+            <li style="display: none" class="mdl-menu__item">Bookmark</li>
+        </ul>
+
+        <button class="mdl-button mdl-button--icon mdl-button"><i class="material-icons">favorite</i></button>
+        <button id="btnPlayerVolume" onclick="volumePlayerUp()"
+            class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">volume_up</i></button>
+        <button id="btnPlayerFullscreen" title="Play in fullscreen" onclick="showPlayerInFullscreen()"
+            class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">fullscreen</i></button>
+
+        <a style="float:right" href="javascript:"><i class="material-icons">arrow_forward</i></a>
+    </div>   
+
+    <div id="postMediaInfo"
+        style="line-height: 1.8em!important; font-size: 1.06em!important;font-family: 'Helvetica','Arial',sans-serif!important;"
+        class="mdl-cell mdl-cell--12-col mdl-card__supporting-text no-padding ">
+        {{{mediaInfo}}}
+    </div>
+
+    <div id="fbLikeBox" class="mdl-cell mdl-cell--12-col" style="display: none">
+       <!-- Facebook Fanpage Like Box -->
+    </div>
+
+</div>
+<script>
+
+    
+    window.debugMediaPlayerOne = false;
+    var autoplayVideo = true;
+    var isYoutube = false;
+    var playerReadyCalled = false;
+
+    function playerReady() {
+        playerReadyCalled = true;       
+        if (!window.isMobile) {
+            setTimeout(function () {
+                window.player.muted(false);
+                window.player.volume(0.6);
+            }, 7000);
+        }
+    }
+
+    function loadVideo() {
+        var pmHolderId = 'videoPlaceholder';
+
+        var videoSrc = $('#' + pmHolderId).attr('data-video-source').trim();
+        if (videoSrc != '') {
+            isYoutube = videoSrc.indexOf('youtube.com') > 0;
+            var adUrls = [];
+            var skipTime = 2; // show skip button after 3 seconds            
+            var adConfigs = [];
+
+            window.player = MediaPlayerOne.create(autoplayVideo, pmHolderId, videoSrc, '', adUrls, skipTime,
+                adConfigs,playerReady);
+
+            window.player.on("fullscreenchange", function () {
+                if (window.player.isFullscreen()) {
+                    // do something
+                    window.player.muted(false);
+                }
+            });
+        } else {
+            $('#postMediaVideo, #btnPlayerVolume, #btnPlayerFullscreen').hide();
+            $('#fbLikeBox').show();
+        }       
+    }
+
+    function showPlayerInFullscreen() {
+        if (isYoutube) {
+            player.requestFullscreen()
+        }
+    }
+
+    function volumePlayerUp() {
+        window.player.muted(false);
+        window.player.volume(1);
+    }
+
+    window.mediaPlayerOneReady = function () {
+        $('#fbLikeBox').show();
+        setTimeout(loadVideo,3000);
+        setTimeout(function () {
+            $('#videoProgressLoader').hide();
+        }, 6000);
+
+        loadSessionUserInfo(function(){
+            var isEditable = canEditPost('{{ownerId}}');
+            if(isEditable){
+                $('#btnEditPost').show()
+            }
+        });       
+
+        var fbUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(location.href);
+        $('#fbSharer').attr('href', fbUrl);
+
+        var w = $(window).width();
+        if (w < 640) {
+            var newW = w - 55;
+            $('#postMediaInfo').css('width', newW + 'px');
+        } else {
+            $('#postMainContent').addClass('mdl-grid');
+        }
+    }
+</script>
