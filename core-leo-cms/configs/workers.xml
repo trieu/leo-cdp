@@ -37,8 +37,8 @@
 		</config>
 
 		<!-- Public Title -->
-		<config name="pageTitle">
-			XemGiDay.com - Real-time Video Recommendation Platform
+		<config name="pageTitle">			
+			Kênh video về công thức nấu ăn, món ngon và khoa học dinh dưỡng
 		</config>
 		<config name="baseStaticUrl">
 			//monngon.tv

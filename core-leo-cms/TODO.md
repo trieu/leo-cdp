@@ -75,6 +75,7 @@ sudo certbot certonly --standalone -d xemgiday.com --non-interactive --agree-tos
 ## Content Rendering Engine
 * https://flowchart.js.org/
 * https://github.com/webpro/reveal-md
+* https://github.com/jeromeetienne/AR.js
 
 ## NLP natural language processing toolkit
 * https://github.com/vncorenlp/VnCoreNLP
