@@ -15,6 +15,10 @@
 * Keyword data mining 
 * Topic generator
 * Chatbot https://aboullaite.me/my-first-java-bot/
+
+## Content Crawler
+* Text Summary https://towardsdatascience.com/text-summarization-in-python-76c0a41f0dc4
+* https://github.com/MojoJolo/textteaser
  
 ## Concept  
 * Data Mining hot keywords, clustering into trending topic, Topic Ranking
