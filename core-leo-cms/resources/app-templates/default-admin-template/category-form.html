@@ -47,7 +47,7 @@
         LeoCmsApiUtil.callPostAdminApi(urlStr, {
             'key': key || 'newcategory'
         }, function (json) {
-            if (json.errorCode === 0 && json.errorMessage === '') {
+            if (json.httpCode === 0 && json.errorMessage === '') {
                 if (json.data) {
                     categoryModel = json.data;
                     var date = LeoCmsApiUtil.formater.toDateString(categoryModel.creationTime);
@@ -85,7 +85,7 @@
         }
 
         LeoCmsApiUtil.callPostAdminApi(urlStr, categoryModel, function (json) {
-            if (json.errorCode === 0 && json.errorMessage === '') {
+            if (json.httpCode === 0 && json.errorMessage === '') {
                 if (json.data === '') {
                     $('#error-on-save').html('Data is not valid !').show().delay(6000).fadeOut('slow');
                 } else {
@@ -110,7 +110,7 @@
             }
             var urlStr = baseAdminApi + '/category/delete';
             LeoCmsApiUtil.callPostAdminApi(urlStr, categoryModel, function (json) {
-                if (json.errorCode === 0 && json.errorMessage === '') {
+                if (json.httpCode === 0 && json.errorMessage === '') {
                     if (json.data === '') {
                         $('#error-on-save').html('Data is not valid !').show().delay(6000).fadeOut('slow');
                     } else {

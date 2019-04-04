@@ -18,12 +18,12 @@ public class AdminApiRouter extends BaseApiRouter {
 	super(context);
     }
 
-    public void handle() throws Exception {
-	this.handle(this.context);
+    public boolean handle() throws Exception {
+	return this.handle(this.context);
     }
 
     @Override
-    protected String callHttpPostApiProcessor(String userSession, String uri, JsonObject paramJson) {
+    protected JsonDataPayload callHttpPostApiProcessor(String userSession, String uri, JsonObject paramJson) {
 	JsonDataPayload payload = null;
 	try {
 	    if (uri.startsWith(USER_PREFIX)) {
@@ -52,17 +52,13 @@ public class AdminApiRouter extends BaseApiRouter {
 		e.printStackTrace();
 		payload = JsonDataPayload.fail(e.getMessage(), 500);
 	    }
-	}
-	if (payload == null) {
-	    payload = JsonDataPayload.fail("Not handler found for uri:" + uri, 404);
-	}
-	return payload.toString();
+	}	
+	return payload;
     }
 
     @Override
-    protected String callHttpGetApiProcessor(String userSession, String uri, MultiMap params) {
+    protected JsonDataPayload callHttpGetApiProcessor(String userSession, String uri, MultiMap params) {
 	JsonDataPayload payload = null;
-
 	try {
 	    if (uri.startsWith(USER_PREFIX)) {
 		payload = new AdminUserApiHandler().httpGetApiHandler(userSession, uri, params);
@@ -87,11 +83,7 @@ public class AdminApiRouter extends BaseApiRouter {
 	    e.printStackTrace();
 	    payload = JsonDataPayload.fail(e.getMessage(), 500);
 	}
-
-	if (payload == null) {
-	    payload = JsonDataPayload.fail("Not handler found for uri:" + uri, 404);
-	}
-	return payload.toString();
+	return payload;
     }
 
 }

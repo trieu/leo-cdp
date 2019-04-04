@@ -90,7 +90,7 @@
             'pageId': pageId
         };
         LeoCmsApiUtil.callPostAdminApi(urlStr, params, function (json) {
-            if (json.errorCode === 0 && json.errorMessage === '') {
+            if (json.httpCode === 0 && json.errorMessage === '') {
                 pageModel = json.data;
 
                 var view = $('#page_info_view');

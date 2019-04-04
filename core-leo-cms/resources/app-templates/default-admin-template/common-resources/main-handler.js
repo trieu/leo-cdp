@@ -57,7 +57,7 @@ $(window).on('hashchange', function () {
 
 function loadCategoryNavigation() {
     LeoCmsApiUtil.callPostAdminApi(baseAdminApi + '/category/list-all', {}, function (rs) {
-        if (rs.data && rs.errorCode === 0) {
+        if (rs.data && rs.httpCode === 0) {
             var raw_template = $('#category-navigation-tpl').html();
             var template = Handlebars.compile(raw_template);
             var placeHolder = $('#categoryNavigation');
@@ -127,7 +127,7 @@ window.currentUserProfile = {'displayName':''};
 function loadUserInfoWidget() {
     var urlStr = baseAdminApi + '/user/get-info';
     LeoCmsApiUtil.callPostAdminApi(urlStr, {}, function (json) {
-        if (json.errorCode === 0 && json.errorMessage === '') {
+        if (json.httpCode === 0 && json.errorMessage === '') {
             if (json.data) {
                 var user = json.data;
                 $('#userDisplayName').html(user.displayName);
@@ -201,7 +201,7 @@ function deletePage() {
                 'pageId': pageModel.id
             };
             LeoCmsApiUtil.callPostAdminApi(urlStr, params, function (json) {
-                if (json.errorCode === 0 && json.errorMessage === '') {
+                if (json.httpCode === 0 && json.errorMessage === '') {
                     if (json.data) {
                         location.href = '/admin';
                     }
@@ -251,7 +251,7 @@ function deletePost() {
                 'postId': postModel.id
             };
             LeoCmsApiUtil.callPostAdminApi(urlStr, params, function (json) {
-                if (json.errorCode === 0 && json.errorMessage === '') {
+                if (json.httpCode === 0 && json.errorMessage === '') {
                     if (json.data) {
                         location.href = '/admin';
                     }

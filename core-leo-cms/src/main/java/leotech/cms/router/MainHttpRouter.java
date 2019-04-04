@@ -53,7 +53,6 @@ public class MainHttpRouter extends BaseHttpRouter {
     public static final String PUBLIC_FILE_ROUTER = "/public";
     public static final String VIEW_ROUTER = "/view";
     public static final String HOME_ROUTER = "/";
-    
 
     public MainHttpRouter(RoutingContext context) {
 	super(context);	
@@ -66,7 +65,7 @@ public class MainHttpRouter extends BaseHttpRouter {
     }
 
     @Override
-    public void handle() throws Exception {
+    public boolean handle() throws Exception {
 	HttpServerRequest req = context.request();
 	HttpServerResponse resp = context.response();
 
@@ -153,8 +152,12 @@ public class MainHttpRouter extends BaseHttpRouter {
 	    resp.end(PONG);
 	} else {
 	    // JSON data API handler for administrator web app
-	    new AdminApiRouter(context).handle();
+	    AdminApiRouter adminApiRouter = new AdminApiRouter(context);
+	    adminApiRouter.enableAutoRedirectToHomeIf404();
+	    boolean rs = adminApiRouter.handle();
+	    System.out.println("Admin Handler " + rs);
 	}
+	return true;
     }
 
     //////////////////////////////////////////////////////////////////////////////////////

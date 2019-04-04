@@ -397,7 +397,7 @@ if (LeoCmsApiUtil.isLoaded !== true) {
 					"uri": urlStr,
 					"data": "",
 					"errorMessage": "No Authentication",
-					"errorCode": 501
+					"httpCode": 501
 				});
 			}
 		}
@@ -453,7 +453,7 @@ if (LeoCmsApiUtil.isLoaded !== true) {
 					"uri": urlStr,
 					"data": "",
 					"errorMessage": "No Authentication",
-					"errorCode": 501
+					"httpCode": 501
 				});
 			}
 		}
@@ -468,7 +468,7 @@ if (LeoCmsApiUtil.isLoaded !== true) {
 			var urlStr = baseDeliveryApi + apiURI;
 			LeoCmsApiUtil.getSecuredData(urlStr, objParams, function (json) {
 				var stUrl = json.staticBaseUrl || '';
-				if (json.errorCode === 0 && json.errorMessage === '' && json.data) {
+				if (json.httpCode === 0 && json.errorMessage === '' && json.data) {
 					var data = json.data;
 
 					var template = getCompiledTemplate(tplIdSelector); //ID selector of template
@@ -525,7 +525,7 @@ if (LeoCmsApiUtil.isLoaded !== true) {
 
 		obj.logErrorPayload = function (json) {
 			console.log("caller context: ", obj.logErrorPayload.caller)
-			console.error(json.errorMessage + " errorCode: " + json.errorCode);
+			console.error(json.errorMessage + " httpCode: " + json.httpCode);
 		}
 
 		obj.isLoginSessionOK = function () {

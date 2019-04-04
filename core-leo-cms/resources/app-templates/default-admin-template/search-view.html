@@ -46,7 +46,7 @@
         };
         var url = window.baseAdminApi + '/post/search';
         LeoCmsApiUtil.getSecuredData(url, paramObj, function (json) {
-            if (json.errorCode === 0 && json.errorMessage === '' && json.data) {
+            if (json.httpCode === 0 && json.errorMessage === '' && json.data) {
                 
                 //set page metadata
                 $('#kw_total').text(json.data.length);

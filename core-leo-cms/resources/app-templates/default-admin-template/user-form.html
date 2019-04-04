@@ -111,7 +111,7 @@
         LeoCmsApiUtil.callPostAdminApi(urlStr, {
             'key': key || 'newuser'
         }, function (json) {
-            if (json.errorCode === 0 && json.errorMessage === '') {
+            if (json.httpCode === 0 && json.errorMessage === '') {
                 if (json.data) {
                     userModel = json.data;
                     var date = LeoCmsApiUtil.formater.toDateString(userModel.creationTime);
@@ -175,7 +175,7 @@
         }
 
         LeoCmsApiUtil.callPostAdminApi(urlStr, userModel, function (json) {
-            if (json.errorCode === 0 && json.errorMessage === '') {
+            if (json.httpCode === 0 && json.errorMessage === '') {
                 if (json.data === '') {
                     $('#error-on-save').html('Data is not valid !').show().delay(6000).fadeOut('slow');
                 } else {
@@ -200,7 +200,7 @@
             }
             var urlStr = baseAdminApi + '/user/delete';
             LeoCmsApiUtil.callPostAdminApi(urlStr, userModel, function (json) {
-                if (json.errorCode === 0 && json.errorMessage === '') {
+                if (json.httpCode === 0 && json.errorMessage === '') {
                     if (json.data === '') {
                         $('#error-on-save').html('Data is not valid !').show().delay(6000).fadeOut('slow');
                     } else {

@@ -25,7 +25,6 @@ public abstract class BaseApiRouter extends BaseHttpRouter {
     public static final String HEADER_SESSION = "leouss";
 
     ////////////
-
     public static final String START_DATE = "/start-date";
     public static final String REQ_INFO = "/req-info";
     public static final String GEOLOCATION = "/geolocation";
@@ -46,16 +45,24 @@ public abstract class BaseApiRouter extends BaseHttpRouter {
     public static final String BOOKMARK_PREFIX = "/bookmark";
     public static final String ADS_PREFIX = "/ads";
 
+    private JsonDataPayload defaultDataHttpGet = JsonDataPayload.fail("No HTTP GET handler found", 404);
+    private JsonDataPayload defaultDataHttpPost = JsonDataPayload.fail("No HTTP POST handler found", 404);
+
     ///////////
     public BaseApiRouter(RoutingContext context) {
 	super(context);
     }
 
-    abstract protected String callHttpPostApiProcessor(String userSession, String uri, JsonObject paramJson);
+    abstract protected JsonDataPayload callHttpPostApiProcessor(String userSession, String uri, JsonObject paramJson);
 
-    abstract protected String callHttpGetApiProcessor(String userSession, String uri, MultiMap params);
+    abstract protected JsonDataPayload callHttpGetApiProcessor(String userSession, String uri, MultiMap params);
 
-    protected void handle(RoutingContext context) {
+    public void enableAutoRedirectToHomeIf404() {
+	defaultDataHttpGet = JsonDataPayload.ok("/", "");
+	defaultDataHttpGet.setHttpCode(301);
+    }
+
+    protected boolean handle(RoutingContext context) {
 
 	HttpServerRequest request = context.request();
 	HttpServerResponse resp = context.response();
@@ -101,11 +108,14 @@ public abstract class BaseApiRouter extends BaseHttpRouter {
 
 	    String userSession = paramJson.getString(P_USER_SESSION, "");
 
-	    String jsonOutput = callHttpPostApiProcessor(userSession, uri, paramJson);
-	    if (StringUtil.isNotEmpty(jsonOutput)) {
-		resp.end(jsonOutput);
+	    JsonDataPayload out = callHttpPostApiProcessor(userSession, uri, paramJson);
+	    if (out != null) {
+		resp.end(out.toString());
+		return true;
 	    } else {
-		resp.end(JsonDataPayload.fail("Not handler found for uri:" + uri, 404).toString());
+		defaultDataHttpPost.setUri(uri);
+		resp.end(defaultDataHttpPost.toString());
+		return false;
 	    }
 
 	} else if (HTTP_GET_NAME.equals(httpMethod)) {
@@ -113,16 +123,27 @@ public abstract class BaseApiRouter extends BaseHttpRouter {
 	    String userSession = CookieUserSessionUtil.getUserSession(context, StringUtil.safeString(reqHeaders.get(HEADER_SESSION)));
 
 	    MultiMap params = request.params();
-	    String jsonOutput = callHttpGetApiProcessor(userSession, uri, params);
-	    if (StringUtil.isNotEmpty(jsonOutput)) {
-		resp.end(jsonOutput);
+	    JsonDataPayload out = callHttpGetApiProcessor(userSession, uri, params);
+	    if (out != null) {
+		resp.end(out.toString());
+		return true;
 	    } else {
-		resp.end(JsonDataPayload.fail("Not handler found for uri:" + uri, 404).toString());
+		if (defaultDataHttpGet.getHttpCode() == 301) {
+		    resp.putHeader("Location", defaultDataHttpGet.getUri());
+		    resp.setStatusCode(defaultDataHttpGet.getHttpCode());
+		    resp.end();
+		} else {
+		    defaultDataHttpGet.setUri(uri);
+		    resp.end(defaultDataHttpGet.toString());
+		}
+		return false;
 	    }
 	} else if (HTTP_GET_OPTIONS.equals(httpMethod)) {
 	    resp.end("");
+	    return true;
 	} else {
-	    resp.end(JsonDataPayload.fail("Not handler found for uri:" + uri, 404).toString());
+	    resp.end(JsonDataPayload.fail("Not HTTP handler found for uri:" + uri, 404).toString());
+	    return false;
 	}
     }
 }

@@ -23,7 +23,7 @@ public class JsonDataPayload {
     String errorMessage = "";
 
     @Expose
-    int errorCode = 0;
+    int httpCode = 0;
 
     @Expose
     String staticBaseUrl = STATIC_BASE_URL;
@@ -40,13 +40,13 @@ public class JsonDataPayload {
 	return new JsonDataPayload(uri, data, false);
     }
 
-    public static final JsonDataPayload fail(String errorMessage, int errorCode) {
-	return new JsonDataPayload(errorMessage, errorCode);
+    public static final JsonDataPayload fail(String errorMessage, int httpCode) {
+	return new JsonDataPayload(errorMessage, httpCode);
     }
 
-    public static final JsonDataPayload fail(Throwable e, int errorCode) {
+    public static final JsonDataPayload fail(Throwable e, int httpCode) {
 	e.printStackTrace();
-	return new JsonDataPayload(e.getMessage(), errorCode);
+	return new JsonDataPayload(e.getMessage(), httpCode);
     }
 
     public JsonDataPayload(String uri, Object data, boolean exposeAllData) {
@@ -60,11 +60,11 @@ public class JsonDataPayload {
 	}
     }
 
-    protected JsonDataPayload(String errorMessage, int errorCode) {
+    protected JsonDataPayload(String errorMessage, int httpCode) {
 	super();
 	this.data = "";
 	this.errorMessage = errorMessage;
-	this.errorCode = errorCode;
+	this.httpCode = httpCode;
 	this.gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
     }
 
@@ -92,12 +92,12 @@ public class JsonDataPayload {
 	this.errorMessage = errorMessage;
     }
 
-    public int getErrorCode() {
-	return errorCode;
+    public int getHttpCode() {
+	return httpCode;
     }
 
-    public void setErrorCode(int errorCode) {
-	this.errorCode = errorCode;
+    public void setHttpCode(int httpCode) {
+	this.httpCode = httpCode;
     }
 
     public boolean isReturnOnlyData() {

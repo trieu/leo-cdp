@@ -72,7 +72,7 @@ function loadMainDashboard() {
 function loadUserInfoWidget() {
     var urlStr = baseAdminApi + '/user/get-info';
     LeoCmsApiUtil.callPostAdminApi(urlStr, {}, function (json) {
-        if (json.errorCode === 0 && json.errorMessage === '') {
+        if (json.httpCode === 0 && json.errorMessage === '') {
             if (json.data) {
                 var user = json.data;
                 $('#userDisplayName').html(user.displayName);

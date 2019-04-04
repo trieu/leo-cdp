@@ -26,12 +26,12 @@ public class DeliveryApiRouter extends BaseApiRouter {
     }
 
     @Override
-    public void handle() throws Exception {
-	this.handle(this.context);
+    public boolean handle() throws Exception {
+	return this.handle(this.context);
     }
 
     @Override
-    protected String callHttpPostApiProcessor(String userSession, String uri, JsonObject paramJson) {
+    protected JsonDataPayload callHttpPostApiProcessor(String userSession, String uri, JsonObject paramJson) {
 	JsonDataPayload payload = null;
 	try {
 
@@ -78,11 +78,11 @@ public class DeliveryApiRouter extends BaseApiRouter {
 	if (payload == null) {
 	    payload = JsonDataPayload.fail("Not handler found for uri:" + uri, 404);
 	}
-	return payload.toString();
+	return payload;
     }
 
     @Override
-    protected String callHttpGetApiProcessor(String userSession, String uri, MultiMap params) {
+    protected JsonDataPayload callHttpGetApiProcessor(String userSession, String uri, MultiMap params) {
 	JsonDataPayload payload = null;
 
 	try {
@@ -121,6 +121,6 @@ public class DeliveryApiRouter extends BaseApiRouter {
 	if (payload == null) {
 	    payload = JsonDataPayload.fail("Not handler found for uri:" + uri, 404);
 	}
-	return payload.toString();
+	return payload;
     }
 }

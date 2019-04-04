@@ -55,13 +55,8 @@
             {{#doIf templateName '==' "index" }}
 
             <!-- Ads -->
-            <div id="headerAdPlacement" class="mdl-card__actions mdl-card--border mdl-typography--text-center">
-                <strong>Quảng cáo</strong>
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9034869050940123"
-                    data-ad-slot="1376192829" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
+            <div id="headerAdPlacement" class="mdl-shadow--4dp mdl-card__actions mdl-card--border mdl-typography--text-center">
+                <!-- AdsPlacement -->
             </div>
 
             {{#each headlines}}
@@ -70,7 +65,7 @@
 
             {{#doIf customData.nextStartIndex '>' 0 }}
             <div id="loadMore">
-                <a href="/?startIndex={{customData.nextStartIndex}}&numberResult=9">Load More</a>
+                <a href="/?startIndex={{customData.nextStartIndex}}&numberResult=9">Xem thêm</a>
             </div>
             {{/doIf}}
 
@@ -82,10 +77,9 @@
             {{/doIf}}
 
             {{#doIf templateName '==' "single-page" }}
-                 <!-- Ads -->
-                <div id="headerAdPlacement" class="mdl-card__actions mdl-card--border mdl-typography--text-center">
-                    <strong>Quảng cáo</strong>
-                   
+                <!-- Ads -->
+                <div id="headerAdPlacement" class="mdl-shadow--4dp mdl-card__actions mdl-card--border mdl-typography--text-center">
+                    <!-- AdsPlacement -->
                 </div>
 
                 {{#each pages}}
@@ -94,8 +88,7 @@
 
                 {{#doIf customData.nextStartIndex '>' 0 }}
                 <div id="loadMore">
-                    <a href="{{customData.currentPath}}?startIndex={{customData.nextStartIndex}}&numberResult=6">Load
-                        More</a>
+                    <a href="{{customData.currentPath}}?startIndex={{customData.nextStartIndex}}&numberResult=6">Xem thêm</a>
                 </div>
                 {{/doIf}}
             {{/doIf}}
@@ -104,8 +97,8 @@
             <!-- the list has one item only -->
             <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp">
                 <!-- Ads -->
-                <div style="display: none" id="articleAdPlacement" class="mdl-card__actions mdl-card--border mdl-typography--text-center">
-                    <strong>Quảng cáo</strong>                    
+                <div id="articleAdPlacement" class="mdl-shadow--4dp mdl-card__actions mdl-card--border mdl-typography--text-center">
+                    <!-- AdsPlacement -->
                 </div>
 
                 {{#each posts}}
@@ -122,15 +115,12 @@
                 </div>
 
                 <div id="bottomAdPlacement" class="mdl-card__actions mdl-card--border mdl-typography--text-center">
-                    <!-- BottomAds -->
-                    <strong>Quảng cáo</strong>
-                   
+                    <!-- AdsPlacement -->
                 </div>
             </div>
             <!-- ////////////// -->
             {{/doIf}}
 
-         
 
             <!-- ////////////// -->
             {{#doIf templateName '==' "404" }}
@@ -141,13 +131,13 @@
         </div>
 
         <footer class="mdl-mini-footer">
-            <div class="mdl-mini-footer__left-section">
+            <div class="mdl-mini-footer__left-section" style="margin: auto;">
                 <div class="mdl-logo"> Monngon.TV - Video các món ngon mỗi ngày </div>
             </div>
             <div class="mdl-mini-footer__right-section">
                 <ul class="mdl-mini-footer__link-list">
                     <!-- main bottom pages -->
-                    <li><a href="#">Help</a></li>
+                    <li><a href="#">Chính sách thông tin</a></li>
                 </ul>
             </div>
         </footer>
@@ -164,7 +154,7 @@
         if(window.usersession != ''){
             var urlStr = '/user/get-info';
             LeoCmsApiUtil.callPostAdminApi(urlStr, {}, function (json) {
-                if (json.errorCode === 0 && json.errorMessage === '') {
+                if (json.httpCode === 0 && json.errorMessage === '') {
                     if (json.data) {
                         var user = json.data;                    
                         window.currentUserProfile = user;                        

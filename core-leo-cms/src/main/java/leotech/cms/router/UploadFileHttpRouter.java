@@ -34,7 +34,7 @@ public class UploadFileHttpRouter extends BaseHttpRouter {
     }
 
     @Override
-    public void handle() throws Exception {
+    public boolean handle() throws Exception {
 
 	HttpServerRequest request = context.request();
 	HttpServerResponse response = context.response();
@@ -103,9 +103,9 @@ public class UploadFileHttpRouter extends BaseHttpRouter {
 		response.setStatusCode(504).end(JsonErrorPayload.NO_AUTHORIZATION.toString());
 		response.close();
 	    }
+	    return ok;
 	}
 	else {
-
 	    outHeaders.set(CONNECTION, HttpTrackingUtil.HEADER_CONNECTION_CLOSE);
 	    outHeaders.set(BaseApiRouter.POWERED_BY, BaseApiRouter.SERVER_VERSION);
 	    outHeaders.set(CONTENT_TYPE, BaseApiHandler.CONTENT_TYPE_JSON);
@@ -115,6 +115,6 @@ public class UploadFileHttpRouter extends BaseHttpRouter {
 		response.end("");
 	    }
 	}
-
+	return false;
     }
 }

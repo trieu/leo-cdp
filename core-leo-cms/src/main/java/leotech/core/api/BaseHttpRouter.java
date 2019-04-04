@@ -58,7 +58,7 @@ public abstract class BaseHttpRouter {
 	headers.set("Pragma", "no-cache");
     }
     
-    abstract public void handle() throws Exception;
+    abstract public boolean handle() throws Exception;
    
 
 }

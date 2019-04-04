@@ -66,7 +66,7 @@
                 'postId': postId
             };
             LeoCmsApiUtil.callPostAdminApi(urlStr, params, function (json) {
-                if (json.errorCode === 0 && json.errorMessage === '') {
+                if (json.httpCode === 0 && json.errorMessage === '') {
                     postModel = json.data;
                     document.title = 'Post Information - ' + postModel.title;
 

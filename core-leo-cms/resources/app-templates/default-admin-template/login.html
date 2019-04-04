@@ -48,7 +48,7 @@
     function getLoginSession() {
         var urlStr = baseAdminApi + '/user/login-session';
         LeoCmsApiUtil.callPostApi(urlStr, {}, function (json) {
-            if (json.errorCode === 0 && json.errorMessage === '') {
+            if (json.httpCode === 0 && json.errorMessage === '') {
                 usersession = json.data;
                 loginFormHandler(usersession);
                 console.log(usersession);
@@ -72,7 +72,7 @@
                 'usersession': session
             };
             LeoCmsApiUtil.callPostApi(urlStr, data, function (json) {
-                if (json.errorCode === 0 && json.errorMessage === '') {
+                if (json.httpCode === 0 && json.errorMessage === '') {
                     encryptionkey = json.data;
                     lscache.set('usersession', session, 10080);
                     lscache.set('encryptionkey', encryptionkey, 10080);

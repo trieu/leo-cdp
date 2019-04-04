@@ -83,7 +83,7 @@
             {{/doIf}}
 
             {{#doIf templateName '==' "single-page" }}
-                 <!-- Ads -->
+                <!-- Ads -->
                 <div id="headerAdPlacement" class="mdl-card__actions mdl-card--border mdl-typography--text-center">
                     <strong>Advertiment</strong>
                     <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9034869050940123"
@@ -186,7 +186,7 @@
         if(window.usersession != ''){
             var urlStr = '/user/get-info';
             LeoCmsApiUtil.callPostAdminApi(urlStr, {}, function (json) {
-                if (json.errorCode === 0 && json.errorMessage === '') {
+                if (json.httpCode === 0 && json.errorMessage === '') {
                     if (json.data) {
                         var user = json.data;                    
                         window.currentUserProfile = user;                        

@@ -32,7 +32,7 @@
         LeoCmsApiUtil.callPostAdminApi(url, {
             'cmd': cmd
         }, function (json) {
-            if (json.errorCode === 0 && json.errorMessage === '' && json.data) {
+            if (json.httpCode === 0 && json.errorMessage === '' && json.data) {
                 $('#system-cmd-result').html(json.data).show();
             }
         });

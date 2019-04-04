@@ -26,7 +26,7 @@ public class EventLogHttpRouter extends BaseHttpRouter {
     }
 
     @Override
-    public void handle() throws Exception {
+    public boolean handle() throws Exception {
 	HttpServerRequest req = context.request();
 
 	String uri = req.uri();
@@ -48,7 +48,7 @@ public class EventLogHttpRouter extends BaseHttpRouter {
 
 		// TODO write log
 		HttpTrackingUtil.trackingResponse(req);
-		return;
+		return true;
 	    }
 
 	    // click redirect
@@ -72,7 +72,7 @@ public class EventLogHttpRouter extends BaseHttpRouter {
 		    resp.setStatusCode(404);
 		    resp.end("url,adid, plm is INVALID");
 		}
-		return;
+		return true;
 	    }
 	    // ------ analytics handlers -----------
 	    else if (uri.startsWith("/metric/pageview")) {
@@ -86,7 +86,7 @@ public class EventLogHttpRouter extends BaseHttpRouter {
 		    RealtimeTrackingUtil.updatePageViewEvent(host, uuid, tag);
 		}
 		HttpTrackingUtil.trackingResponse(req);
-		return;
+		return true;
 	    } else if (uri.startsWith("/metric/event")) {
 		// https://[hostname]/metric/event?uuid=cdebc033538a4ea596ab21b6b1567ecf&referrer=&url=https%3A%2F%2Fwww.fshare.vn%2Ffile%2FOKLYRPW83HVQ&host=www.fshare.vn&t=1450609053690&event=tgrm2016-pv
 		String hostReferer = StringUtil.safeString(params.get("host")).toLowerCase();
@@ -97,7 +97,7 @@ public class EventLogHttpRouter extends BaseHttpRouter {
 		    RealtimeTrackingUtil.updatePageViewEvent(hostReferer, uuid, "epv");
 		}
 		HttpTrackingUtil.trackingResponse(req);
-		return;
+		return true;
 	    }
 	    // conversion tracking for 3rd party website
 	    else if (uri.startsWith("/metric/conversion")) {
@@ -106,21 +106,22 @@ public class EventLogHttpRouter extends BaseHttpRouter {
 		    RealtimeTrackingUtil.updateEvent(DateTimeUtil.currentUnixTimestamp(), "mcvs-" + host, true);
 		}
 		HttpTrackingUtil.trackingResponse(req);
-		return;
+		return true;
 	    } else if (uri.equalsIgnoreCase("/ping")) {
 		outHeaders.set(CONTENT_TYPE, "text/html");
 		resp.end("PONG");
-		return;
+		return true;
 	    }
 	    // no handler found
 	    else {
 		resp.end("Not handler found for uri:" + uri);
-		return;
+		return false;
 	    }
 	} catch (Exception e) {
 	    // resp.end();
 	    System.err.println("uri:" + uri + " error:" + e.getMessage());
 	    e.printStackTrace();
 	}
+	return false;
     }
 }
