@@ -2,6 +2,10 @@
     min-width:120px;text-transform: uppercase;font-weight: bold;
 }
 
+#postMediaInfo {
+    line-height: 1.8em!important; font-size: 1.06em!important;font-family: 'Helvetica','Arial',sans-serif!important;
+}
+
 #loadMore {
     padding-bottom: 30px;
     padding-top: 30px;

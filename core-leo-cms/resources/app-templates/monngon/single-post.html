@@ -49,10 +49,13 @@
         <a style="float:right" href="javascript:"><i class="material-icons">arrow_forward</i></a>
     </div>   
 
-    <div id="postMediaInfo"
-        style="line-height: 1.8em!important; font-size: 1.06em!important;font-family: 'Helvetica','Arial',sans-serif!important;"
-        class="mdl-cell mdl-cell--12-col mdl-card__supporting-text no-padding ">
+    <div id="postMediaInfo" class="mdl-cell mdl-cell--12-col mdl-card__supporting-text no-padding ">
         {{{mediaInfo}}}
+
+        <!-- Blueseed - Asynchronous Code for Ad Placement 1126 Monngon Inread Desktop --> 
+        <div id="inreadAdPlacement">
+            <script id="jshd1pm_1126" async src="https://d3.blueseed.tv/ads-sync.js?placement=1126"></script>
+        </div>
     </div>
 
     <div id="fbLikeBox" class="mdl-cell mdl-cell--12-col" style="display: none">
@@ -84,7 +87,7 @@
         var videoSrc = $('#' + pmHolderId).attr('data-video-source').trim();
         if (videoSrc != '') {
             isYoutube = videoSrc.indexOf('youtube.com') > 0;
-            var adUrls = [];
+            var adUrls = ['https://d2.blueseed.tv/vast3?plm=2322&li=3912'];
             var skipTime = 2; // show skip button after 3 seconds            
             var adConfigs = [];
 

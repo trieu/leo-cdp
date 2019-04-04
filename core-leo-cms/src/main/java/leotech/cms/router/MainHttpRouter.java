@@ -95,7 +95,6 @@ public class MainHttpRouter extends BaseHttpRouter {
 	if (path.equals(HOME_ROUTER)) {
 	    outHeaders.set(CONTENT_TYPE, MIME_TYPE_HTML);
 	    BaseHttpRouter.setCorsHeaders(outHeaders, origin);
-
 	    
 	    boolean isSpiderBot = SPIDER.equals(device.deviceName);
 	    renderWebPage(params, isSpiderBot, resp, host, userSession);
