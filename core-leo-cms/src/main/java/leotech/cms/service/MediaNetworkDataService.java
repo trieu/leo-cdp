@@ -34,7 +34,7 @@ public class MediaNetworkDataService {
 
 	// public web apps
 	mapHostToAppId.put("leocloudcms.com", new MediaNetwork("LeoCloudCMS", "leocloudcms", "leocloudcms.com", DEFAUFT_WEB_TEMPLATE_FOLDER));
-	mapHostToAppId.put("monngon.tv", new MediaNetwork("MonNgon.TV", "monngon", "monngon.tv", "monngon"));
+	mapHostToAppId.put("video.monngon.tv", new MediaNetwork("MonNgon.TV", "monngon", "video.monngon.tv", "monngon"));
 	mapHostToAppId.put("xemgiday.com", new MediaNetwork("XemGiDay.com", "xemgiday", "xemgiday.com", "xemgiday"));
     }
 

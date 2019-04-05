@@ -18,7 +18,7 @@
 	<customConfigs type="map">
 
 		<config name="defaultArangoDbConfig">
-			monngon_db
+			dbConfigsDevLeoCms
 		</config>
 
 		<config name="enableUsedCacheHandlebars">
@@ -38,14 +38,14 @@
 
 		<!-- Public Title -->
 		<config name="pageTitle">			
-			Kênh video về công thức nấu ăn, món ngon và khoa học dinh dưỡng
+			XemGiDay.com
 		</config>
 		<config name="baseStaticUrl">
-			//monngon.tv
+			//xemGiDay.com
 		</config>
 
 		<config name="baseAdminApiUrl">
-			//monngon.tv
+			//xemGiDay.com
 		</config>
 
 		<config name="baseDeliveryApiUrl">
@@ -65,9 +65,6 @@
 		</config>
 		
 		<config name="NUMBER_SIMILAR_POSTS_IN_LIST">6</config>
-		
-		
-
 
 	</customConfigs>
 

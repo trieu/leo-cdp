@@ -91,7 +91,7 @@ public class WebPageDataModelService {
 	}
 
 	// set data for Top Page
-	String category = "9295570";// TODO
+	String category = "81758";// TODO
 	setPageNavigators(model, category);
 
 	return model;
@@ -225,10 +225,9 @@ public class WebPageDataModelService {
     }
 
     public static WebPageDataModel buildModel(String host, String tplFolderName, String tplName, MultiMap params, String userSession) {
-
 	// TODO mapping from host to category and content class
 	String contentClass = "standard";
-	String category = "9295570";//"81758";
+	String category = "81758";
 
 	WebPageDataModel model = new WebPageDataModel(host, tplFolderName, tplName);
 	model.setCategoryNavigators(new ArrayList<>(0));
