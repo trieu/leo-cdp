@@ -211,7 +211,7 @@
         if (uri === '/') {
             $('a[href="/"]').addClass('is-active');
         } else {
-            if(uri.indexOf('/html/post/' && window.contextPageId) === 0){
+            if(uri.indexOf('/html/post/') === 0 && window.contextPageId ){
                 $('#page_'+ window.contextPageId).addClass('is-active');
             } else {
                 $('a[href^="' + uri + '"]').addClass('is-active');
