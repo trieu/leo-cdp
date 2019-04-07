@@ -116,6 +116,9 @@
                 {{#each posts}}
                 {{#renderHtmlView "xemgiday/single-post" this }}{{/renderHtmlView}}
                 {{/each}}
+                <script>
+                    window.contextPageId = '{{contextPageId}}';  
+                </script>
 
                 <div id="relatedPostsPlacement" class="mdl-cell mdl-cell--12-col">
                     <h5 style="text-transform:uppercase">Có thể bạn quan tâm</h5>
@@ -178,8 +181,7 @@
 
 <script>
     //data for personalization 
-    //window.topPageNavigators = {{#toJson topPageNavigators }}{{/toJson}};  
-    window.contextPageId = '{{contextPageId}}';  
+    //window.topPageNavigators = {{#toJson topPageNavigators }}{{/toJson}};      
     window.usersession = lscache.get('usersession') || '';
     window.currentUserProfile = false;
 
@@ -209,8 +211,8 @@
         if (uri === '/') {
             $('a[href="/"]').addClass('is-active');
         } else {
-            if(uri.indexOf('/html/post/') === 0){
-                $('#page_'+contextPageId).addClass('is-active');
+            if(uri.indexOf('/html/post/' && window.contextPageId) === 0){
+                $('#page_'+ window.contextPageId).addClass('is-active');
             } else {
                 $('a[href^="' + uri + '"]').addClass('is-active');
             }            
