@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.google.javascript.jscomp.RewriteGoogJsImports.Mode;
+
 import io.vertx.core.MultiMap;
 import leotech.cms.dao.PostDaoUtil;
 import leotech.cms.model.Category;
@@ -49,19 +51,15 @@ public class WebPageDataModelService {
     static final String LIST_POST = "list-post";
     static final String SINGLE_POST = "single-post";
 
-    public static WebPageDataModel buildModel(String path, String networkDomain, MultiMap params, String userSession) {
+    public static WebPageDataModel getDirectRenderModel(String path, String networkDomain, MultiMap params, String userSession) {
 	MediaNetwork network = MediaNetworkDataService.getContentNetwork(networkDomain);
 	long networkId = network.getNetworkId();
 	String templateFolder = network.getWebTemplateFolder();
 	String objectId;
 	WebPageDataModel model = null;
-
-	// home page, the genesis network (root network of all networks)
-	if (path.equals(HOME)) {
-	    model = new WebPageDataModel(networkDomain, templateFolder, "index", "");
-	}
+	
 	// media network
-	else if (path.startsWith(HTML_NETWORK)) {
+	if (path.startsWith(HTML_NETWORK)) {
 	    objectId = path.replace(HTML_NETWORK, "");
 	    model = buildMediaNetworkDataModel(networkDomain, network, templateFolder, objectId);
 	}
@@ -101,7 +99,11 @@ public class WebPageDataModelService {
 	List<PageNavigator> pageNavigators = new ArrayList<>();
 	List<Page> topPages = PageDataService.listByCategoryWithPublicPrivacy(category);
 	for (Page page : topPages) {
-	    pageNavigators.add(new PageNavigator("/html/page/" + page.getSlug(), page.getTitle(), page.getRankingScore()));
+	    String id = page.getId();
+	    String uri = "/html/page/" + page.getSlug();
+	    //TODO ranking by use profile here
+	    long rankingScore = page.getRankingScore();
+	    pageNavigators.add(new PageNavigator(id, uri, page.getTitle(), rankingScore));
 	}
 	model.setTopPageNavigators(pageNavigators);
     }
@@ -144,7 +146,8 @@ public class WebPageDataModelService {
 		model.setPageKeywords(keywords);
 		String pageUrl = model.getBaseStaticUrl() + HTML_POST + slug;
 		model.setPageUrl(pageUrl);
-
+		model.setContextPageId(contextPageIds.size()>0? contextPageIds.get(0):"");
+		
 		// TODO more abstract here for multipe ranking
 		List<Post> simlilarPosts = PostDataService.getSimilarPosts(contextPageIds, postId);
 		model.setRecommendedPosts(simlilarPosts);

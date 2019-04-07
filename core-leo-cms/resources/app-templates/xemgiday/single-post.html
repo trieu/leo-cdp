@@ -2,12 +2,16 @@
     <h5 class="mdl-card__title-text mdl-typography--headline ">{{title}}</h5>
 </div>
 
-
-
 <div id="postMainContent" class="portfolio-copy">
-    <div class="mdl-cell mdl-cell--12-col mdl-typography--text-right" style="font-weight: bold" >
-        Posted by: {{#userDisplayName ownerId }}{{/userDisplayName}}       
-        <a id="btnEditPost" target="_blank" href="/admin#calljs-postInfo('{{id}}')" style="display: none" > Edit </a>
+    
+    <div class="mdl-cell mdl-cell--12-col mdl-typography--text-right" style="font-weight: bold">
+        Posted by: {{#userDisplayName ownerId }}{{/userDisplayName}}
+        <a id="btnEditPost" target="_blank" href="/admin#calljs-postInfo('{{id}}')" style="display: none"> Edit </a>
+        <br>
+        Keywords: 
+        {{#each keywords}}
+        {{.}},
+        {{/each}}
     </div>
     <strong id="postMediaDescription" class="mdl-cell mdl-cell--12-col">{{description}}</strong>
 
@@ -23,6 +27,8 @@
             </div>
         </div>
     </div>
+
+
 
     <!-- main actions -->
     <div id="postMediaAction" class="mdl-card__actions mdl-card--border mdl-typography--text-center">
@@ -47,10 +53,9 @@
             class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">fullscreen</i></button>
 
         <a style="float:right" href="javascript:"><i class="material-icons">arrow_forward</i></a>
-    </div>   
+    </div>
 
-    <div id="postMediaInfo"        
-        class="mdl-cell mdl-cell--12-col mdl-card__supporting-text no-padding ">
+    <div id="postMediaInfo" class="mdl-cell mdl-cell--12-col mdl-card__supporting-text no-padding ">
         {{{mediaInfo}}}
     </div>
 
@@ -66,15 +71,13 @@
 
 </div>
 <script>
-
-    
     window.debugMediaPlayerOne = false;
     var autoplayVideo = true;
     var isYoutube = false;
     var playerReadyCalled = false;
 
     function playerReady() {
-        playerReadyCalled = true;       
+        playerReadyCalled = true;
         if (!window.isMobile) {
             setTimeout(function () {
                 window.player.muted(false);
@@ -94,7 +97,7 @@
             var adConfigs = [];
 
             window.player = MediaPlayerOne.create(autoplayVideo, pmHolderId, videoSrc, '', adUrls, skipTime,
-                adConfigs,playerReady);
+                adConfigs, playerReady);
 
             window.player.on("fullscreenchange", function () {
                 if (window.player.isFullscreen()) {
@@ -105,7 +108,7 @@
         } else {
             $('#postMediaVideo, #btnPlayerVolume, #btnPlayerFullscreen').hide();
             $('#fbLikeBox').show();
-        }       
+        }
     }
 
     function showPlayerInFullscreen() {
@@ -121,17 +124,17 @@
 
     window.mediaPlayerOneReady = function () {
         $('#fbLikeBox').show();
-        setTimeout(loadVideo,3000);
+        setTimeout(loadVideo, 3000);
         setTimeout(function () {
             $('#videoProgressLoader').hide();
         }, 6000);
 
-        loadSessionUserInfo(function(){
+        loadSessionUserInfo(function () {
             var isEditable = canEditPost('{{ownerId}}');
-            if(isEditable){
+            if (isEditable) {
                 $('#btnEditPost').show()
             }
-        });       
+        });
 
         var fbUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(location.href);
         $('#fbSharer').attr('href', fbUrl);

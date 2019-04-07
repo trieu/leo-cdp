@@ -103,6 +103,7 @@
 .portfolio-navigation-row .is-active {
     position: relative;
     font-weight: bold;
+    background-color: rgba(197, 197, 197, 0.44);
 }
 
 .portfolio-navigation-row .is-active:after {

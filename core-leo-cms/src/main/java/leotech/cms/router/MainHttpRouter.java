@@ -55,13 +55,13 @@ public class MainHttpRouter extends BaseHttpRouter {
     public static final String HOME_ROUTER = "/";
 
     public MainHttpRouter(RoutingContext context) {
-	super(context);	
+	super(context);
 	boolean enableCaching = WorkerConfigs.load().getCustomConfig("enableUsedCacheHandlebars").trim().equals("true");
-	if(enableCaching) {
-	    HandlebarsTemplateUtil.enableUsedCache();    
+	if (enableCaching) {
+	    HandlebarsTemplateUtil.enableUsedCache();
 	} else {
-	    HandlebarsTemplateUtil.disableUsedCache();    
-	}	
+	    HandlebarsTemplateUtil.disableUsedCache();
+	}
     }
 
     @Override
@@ -76,8 +76,8 @@ public class MainHttpRouter extends BaseHttpRouter {
 	// CORS Header
 	MultiMap reqHeaders = req.headers();
 	String origin = StringUtil.safeString(reqHeaders.get(BaseApiHandler.ORIGIN), "*");
-	
-	// User Info 
+
+	// User Info
 	String userSession = CookieUserSessionUtil.getUserSession(context, StringUtil.safeString(reqHeaders.get(BaseApiRouter.HEADER_SESSION)));
 
 	// ---------------------------------------------------------------------------------------------------
@@ -85,26 +85,41 @@ public class MainHttpRouter extends BaseHttpRouter {
 	String path = req.path();
 	String host = req.host().replace("www.", "");
 	MultiMap params = req.params();
-		
+
 	String userAgent = req.getHeader(HttpHeaderNames.USER_AGENT);
 	DeviceInfo device = DeviceInfoUtil.getDeviceInfo(userAgent);
-	
-	System.out.println("Full URL "+ url);
+
+	System.out.println("Full URL " + url);
 	System.out.println("==>>>> host: " + host + " path: " + path);
 
 	if (path.equals(HOME_ROUTER)) {
 	    outHeaders.set(CONTENT_TYPE, MIME_TYPE_HTML);
 	    BaseHttpRouter.setCorsHeaders(outHeaders, origin);
-	    
-	    boolean isSpiderBot = SPIDER.equals(device.deviceName);
-	    renderWebPage(params, isSpiderBot, resp, host, userSession);
+
+	    boolean isSearchEngineBot = SPIDER.equals(device.deviceName);
+	    // detect template folder name from domain
+	    String tplFolderName = MediaNetworkDataService.getWebTemplateFolder(host);
+	    if (tplFolderName.isEmpty()) {
+		resp.setStatusCode(HttpStatus.SC_NOT_FOUND);
+		resp.end(TemplateUtil._404);
+		return false;
+	    }
+	    // then handle app template for end-user
+	    handleWebPageRequest(params, isSearchEngineBot, host, tplFolderName, "index", resp, userSession);
 	}
 	// Progressive Web App in Mobile Hibrid App
 	else if (path.startsWith(APP_ROUTER)) {
 	    outHeaders.set(CONTENT_TYPE, MIME_TYPE_HTML);
 	    BaseHttpRouter.setCorsHeaders(outHeaders, origin);
-	    
-	    appRoutingHandler(params, resp, path, host, userSession);
+
+	    // handler as SPA app for end-user
+	    // String appId = req.getParam("appid");
+	    String[] toks = path.split(HOME_ROUTER);
+	    int length = toks.length;
+	    if (length > 1) {
+		String appId = toks[length - 1];
+		handleWebPageRequest(params, false, host, appId, "index", resp, userSession);
+	    }
 	}
 	// public files (Images, CSS, JS, JSON,...)
 	else if (path.startsWith(PUBLIC_FILE_ROUTER)) {
@@ -125,22 +140,22 @@ public class MainHttpRouter extends BaseHttpRouter {
 	// admin app
 	else if (path.equals(ADMIN_ROUTER)) {
 	    outHeaders.set(CONTENT_TYPE, MIME_TYPE_HTML);
-	    BaseHttpRouter.setCorsHeaders(outHeaders, origin);	    
+	    BaseHttpRouter.setCorsHeaders(outHeaders, origin);
 	    String tplFolder = MediaNetworkDataService.DEFAULT_ADMIN_TEMPLATE_FOLDER;
-	    handleWebPageRequest(params,false, host, tplFolder, "index", resp, userSession);
+	    handleWebPageRequest(params, false, host, tplFolder, "index", resp, userSession);
 	}
 	// render public data as normal HTML website for SEO
 	else if (path.startsWith(HTML_DIRECT_RENDER)) {
 	    // for SEO or Facebook BOT
 	    outHeaders.set(CONTENT_TYPE, MIME_TYPE_HTML);
-	    WebPageDataModel model = WebPageDataModelService.buildModel(path, host, params, userSession);
+	    WebPageDataModel model = WebPageDataModelService.getDirectRenderModel(path, host, params, userSession);
 	    String html = WebPageDataModel.renderHtml(model);
 	    resp.setStatusCode(model.getHttpStatusCode());
 	    resp.end(html);
 	}
-	
-	//Ads.TXT
-	else if(path.equalsIgnoreCase(ADS_TXT)) {	    
+
+	// Ads.TXT
+	else if (path.equalsIgnoreCase(ADS_TXT)) {
 	    resp.setStatusCode(HttpStatus.SC_OK);
 	    resp.end(ADS_TXT_CONTENT);
 	}
@@ -161,29 +176,6 @@ public class MainHttpRouter extends BaseHttpRouter {
 
     //////////////////////////////////////////////////////////////////////////////////////
     // utils //
-
-    void renderWebPage(MultiMap params,boolean isSearchEngineBot, HttpServerResponse resp, String networkDomain, String userSession) {
-	// detect template folder name from domain
-	String tplFolderName = MediaNetworkDataService.getWebTemplateFolder(networkDomain);
-	if (tplFolderName.isEmpty()) {
-	    resp.setStatusCode(HttpStatus.SC_NOT_FOUND);
-	    resp.end(TemplateUtil._404);
-	    return;
-	}
-	// then handle app template for end-user
-	handleWebPageRequest(params,isSearchEngineBot, networkDomain, tplFolderName, "index", resp, userSession);
-    }
-
-    void appRoutingHandler(MultiMap params,HttpServerResponse resp, String path, String host, String userSession) {
-	// handler as SPA app for end-user
-	// String appId = req.getParam("appid");
-	String[] toks = path.split(HOME_ROUTER);
-	int length = toks.length;
-	if (length > 1) {
-	    String appId = toks[length - 1];
-	    handleWebPageRequest(params, false, host, appId, "index", resp, userSession);
-	}
-    }
 
     void publicFileHandler(HttpServerResponse resp, MultiMap outHeaders, String path, MultiMap params) {
 	try {

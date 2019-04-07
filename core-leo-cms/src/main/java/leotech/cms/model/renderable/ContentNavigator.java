@@ -4,15 +4,21 @@ import com.google.gson.Gson;
 
 public abstract class ContentNavigator implements Comparable<ContentNavigator> {
 
+    protected final String id;
     protected final String uri;
     protected final String name;
     protected final long rankScore;
 
-    public ContentNavigator(String uri, String name, long rankScore) {
+    public ContentNavigator(String id,String uri, String name, long rankScore) {
 	super();
+	this.id = id;
 	this.uri = uri;
 	this.name = name;
 	this.rankScore = rankScore;
+    }
+    
+    public String getId() {
+	return id;
     }
 
     public String getUri() {

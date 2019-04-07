@@ -12,6 +12,8 @@ public class PostDataModel extends WebPageDataModel {
     private String sessionUserId = "";
     private final List<Post> posts;
     private List<Post> recommendedPosts;
+    private String contextPageId;
+    
 
     public PostDataModel(String host, String templateFolder, String templateName, String pageTitle, List<Post> posts) {
 	super(host, templateFolder, templateName, pageTitle);
@@ -52,7 +54,16 @@ public class PostDataModel extends WebPageDataModel {
 
     public void setSessionUserId(String sessionUserId) {
         this.sessionUserId = sessionUserId;
+    }   
+
+    public String getContextPageId() {
+        return contextPageId;
     }
 
+    public void setContextPageId(String contextPageId) {
+        this.contextPageId = contextPageId;
+    }
+
+    
     
 }

@@ -19,7 +19,7 @@
             <!-- main header pages -->
             <a class="mdl-navigation__link " href="/">Trang chủ</a>
             {{#each topPageNavigators}}
-            <a class="mdl-navigation__link " href="{{uri}}">{{name}}</a>
+            <a class="mdl-navigation__link " href="{{uri}}" id="page_{{id}}" >{{name}}</a>
             {{/each}}
         </nav>
     </div>
@@ -27,7 +27,7 @@
         <nav class="mdl-navigation mdl-typography--body-1-force-preferred-font">
             <!-- main header pages -->
             {{#each topPageNavigators}}               
-                <a class="mdl-navigation__link" href="{{uri}}">{{name}}</a>              
+                <a class="mdl-navigation__link" href="{{uri}}" id="page_{{id}}" >{{name}}</a>              
             {{/each}}           
         </nav>
     </div>   
@@ -178,7 +178,8 @@
 
 <script>
     //data for personalization 
-    window.topPageNavigators = {{#toJson topPageNavigators }}{{/toJson}};    
+    //window.topPageNavigators = {{#toJson topPageNavigators }}{{/toJson}};  
+    window.contextPageId = '{{contextPageId}}';  
     window.usersession = lscache.get('usersession') || '';
     window.currentUserProfile = false;
 
@@ -202,16 +203,17 @@
         return window.currentUserProfile && window.currentUserProfile.key === postOwnerId;
     }   
     
-</script>
-
-<script>
     (function () {
         var uri = location.href.split(location.host)[1] || '';
         uri = uri.toLowerCase();
         if (uri === '/') {
             $('a[href="/"]').addClass('is-active');
         } else {
-            $('a[href^="' + uri + '"]').addClass('is-active');
+            if(uri.indexOf('/html/post/') === 0){
+                $('#page_'+contextPageId).addClass('is-active');
+            } else {
+                $('a[href^="' + uri + '"]').addClass('is-active');
+            }            
         }
         $('#page_navigator_desktop').css('visibility', 'visible')
     }());
