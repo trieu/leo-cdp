@@ -66,8 +66,8 @@ public class FacebookDataCrawler {
 
     public static void main(String[] args) {
 	List<LinkShareStats> list = getLinkInfoOnFacebook(Arrays.asList(
-		"https://trithucvn.net/the-gioi/289-thanh-tuu-cua-trump-trong-gan-2-nam-lam-tong-thong-my.html",
-		"https://vnexpress.net/giai-tri/dieu-nhi-toi-mua-nha-cho-bo-me-duong-gia-roi-moi-lay-chong-3888419.html"));
+		"http://kenh14.vn/khoa-pug-len-tieng-sau-khi-nhan-duoc-mail-xin-loi-tu-resort-aroma-mong-cong-dong-ngung-danh-gia-1-sao-tiet-duong-song-cua-ho-20190407010015746.chn",
+		"http://kenh14.vn/cong-ty-dia-oc-hung-thinh-len-tieng-ve-thong-tin-youtuber-khoa-pug-la-con-trai-chu-tich-nguyen-dinh-hung-20190407151301402.chn"));
 	for (LinkShareStats stat : list) {
 	    System.out.println(stat.url);
 	    System.out.println("commentCount " + stat.commentCount);
