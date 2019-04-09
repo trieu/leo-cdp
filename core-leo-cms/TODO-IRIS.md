@@ -1,5 +1,27 @@
 
 ## IRIS Research 
 
+# UI/UX
+* https://demo.bootstrapious.com/creative/2-0-1/
+
 # Refer
 * https://chatbotsmagazine.com/the-ultimate-guide-to-designing-a-chatbot-tech-stack-333eceb431da
+
+#NLP tasks
+* https://github.com/stopwords/vietnamese-stopwords
+* https://kipalog.com/posts/Gioi-thieu-tien-xu-ly-trong-xu-ly-ngon-ngu-tu-nhien
+* https://viblo.asia/p/phan-loai-van-ban-tieng-viet-tu-dong-phan-1-yMnKM3bal7P
+* https://github.com/trieu/Machine-Learning-with-Python
+
+# Algorithms
+* https://blog.goodaudience.com/top-10-machine-learning-algorithms-2a9a3e1bdaff
+
+# Chatbot
+* https://github.com/wmeints/qna-bot
+
+# Research for System computational storytelling
+* Empathic Jason agents https://github.com/TimKam/empathic-jason
+* Plotmas is a system for generating narratives https://github.com/cartisan/plotmas
+* Graph Query https://medium.com/about-developer-blog/jedes-teil-dein-style-personalisierte-beratung-mit-arangodb-4d6f5b6f5525
+* https://medium.com/@mark_riedl/improvisational-storytelling-in-open-world-2359d7f649cf
+* https://medium.com/@mark_riedl/computational-narrative-intelligence-past-present-and-future-99e58cf25ffa

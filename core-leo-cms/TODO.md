@@ -83,6 +83,7 @@ sudo certbot certonly --standalone -d xemgiday.com --non-interactive --agree-tos
 * https://github.com/vncorenlp/VnCoreNLP
 * Topic Modelling https://github.com/RaRe-Technologies/gensim
 * https://medium.com/@ageitgey/text-classification-is-your-new-secret-weapon-7ca4fad15788
+* https://www.analyticsvidhya.com/blog/2018/01/faq-chatbots-the-future-of-information-searching/
 
 ## Kanban UI (for Content Post with type == Kanban)
 * https://github.com/riktar/jkanban
@@ -97,12 +98,6 @@ sudo certbot certonly --standalone -d xemgiday.com --non-interactive --agree-tos
 ## Marketing Materials 
 * https://www.fastcompany.com/3044995/to-take-on-hbo-and-netflix-youtube-had-to-rewire-itself
 
-## Iris System computational storytelling
-* Empathic Jason agents https://github.com/TimKam/empathic-jason
-* Plotmas is a system for generating narratives https://github.com/cartisan/plotmas
-* Graph Query https://medium.com/about-developer-blog/jedes-teil-dein-style-personalisierte-beratung-mit-arangodb-4d6f5b6f5525
-* https://medium.com/@mark_riedl/improvisational-storytelling-in-open-world-2359d7f649cf
-* https://medium.com/@mark_riedl/computational-narrative-intelligence-past-present-and-future-99e58cf25ffa
 
 ## Competitor
 * https://www.conversant.tv/swiftcms/

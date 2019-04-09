@@ -3,11 +3,7 @@
 ## Server
 * ssh -i .ssh/ec2-virginia-ssh.pem  ubuntu@3.82.203.48
 
-## Frontend
-* Make html template
-* blog theme: https://fezvrasta.github.io/bootstrap-material-design/docs/4.0/examples/blog/#
-* Version 1.0 template https://p.w3layouts.com/demos/videos/web/index.html
-* Version 2.0 template https://p.w3layouts.com/demos/june-2016/01-06-2016/mosaic/web/index.html
+## SEO & Template Engine
 * Meta Tags for public app UI: https://gist.github.com/kevinSuttle/1997924
 
 ## Backend

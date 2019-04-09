@@ -122,7 +122,7 @@
 
                 <div id="relatedPostsPlacement" class="mdl-cell mdl-cell--12-col">
                     <h5 style="text-transform:uppercase">Có thể bạn quan tâm</h5>
-                    <ul class="demo-list-three mdl-list">
+                    <ul id="recommended_posts" class="demo-list-three mdl-list">
                         {{#each recommendedPosts}}
                         {{#renderHtmlView "xemgiday/widgets/suggested-item-post" this }}{{/renderHtmlView}}
                         {{/each}}
@@ -203,7 +203,9 @@
     }
     function canEditPost(postOwnerId){
         return window.currentUserProfile && window.currentUserProfile.key === postOwnerId;
-    }   
+    }
+
+   
     
     (function () {
         var uri = location.href.split(location.host)[1] || '';
