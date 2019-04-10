@@ -16,6 +16,9 @@
     width: 318px!important;
     min-height: 210px!important;
     margin: auto;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
 }
 
 .mdl-layout--large-screen-only {

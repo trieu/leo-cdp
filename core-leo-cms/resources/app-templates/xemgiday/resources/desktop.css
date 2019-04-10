@@ -13,11 +13,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 790px!important;
-    min-height: 500px!important;
+    width: 790px !important;
+    min-height: 500px !important;
     margin: auto;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
 }
 
 .mdl-layout--large-screen-only {
-    display: flex!important;
+    display: flex !important;
 }

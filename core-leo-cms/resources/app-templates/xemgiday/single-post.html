@@ -21,8 +21,8 @@
             class="mdl-cell--6-col mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
 
         <!-- Video Holder -->
-        <div class="videoholder_outer">
-            <div id="videoPlaceholder" class="videoholder" data-video-thumbnail="{{headlineImageUrl}}"
+        <div id="videoholder_outer" class="videoholder_outer" style='background-image: url("{{headlineImageUrl}}");' >
+            <div id="videoPlaceholder" class="videoholder" data-video-thumbnail="{{headlineImageUrl}}"                
                 data-video-source="{{{headlineVideoUrl}}}">
             </div>
         </div>
@@ -32,7 +32,7 @@
 
     <!-- main actions -->
     <div id="postMediaAction" class="mdl-card__actions mdl-card--border mdl-typography--text-center">
-        <a href="javascript:gotoNextPost()" style="float: left;"><i class="material-icons">arrow_back</i></a>
+        <a id="arrow_back" href="#" style="float: left;"><i class="material-icons">arrow_back</i></a>
 
         <!-- sharing menu -->
         <button id="my-menu-bottom-right" class="mdl-button mdl-js-button mdl-button--icon">
@@ -52,7 +52,7 @@
         <button id="btnPlayerFullscreen" title="Play in fullscreen" onclick="showPlayerInFullscreen()"
             class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">fullscreen</i></button>
 
-        <a style="float:right" href="javascript:gotoNextPost()"><i class="material-icons">arrow_forward</i></a>
+        <a id="arrow_forward" style="float:right" href="#"><i class="material-icons">arrow_forward</i></a>
     </div>
 
     <div id="postMediaInfo" class="mdl-cell mdl-cell--12-col mdl-card__supporting-text no-padding ">
@@ -78,6 +78,7 @@
 
     function playerReady() {
         playerReadyCalled = true;
+        $('#videoholder_outer').css('background-image', 'none');
         if (!window.isMobile) {
             setTimeout(function () {
                 window.player.muted(false);
@@ -109,6 +110,7 @@
             $('#postMediaVideo, #btnPlayerVolume, #btnPlayerFullscreen').hide();
             $('#fbLikeBox').show();
         }
+        autoPlaylistSetup();
     }
 
     function showPlayerInFullscreen() {
@@ -122,20 +124,20 @@
         window.player.volume(1);
     }
 
-    function gotoNextPost(){
+    function autoPlaylistSetup(){
         var nodes = $('#recommended_posts a.suggested_item_post');
-        var index = Math.floor(Math.random() * (nodes.length + 1));
-        var item = nodes[index];
-        var url = $(item).attr('href');
-        location.href = url;
+        if(nodes.length>2){
+            $('#arrow_back').attr('href',$(nodes[0]).attr('href'));
+            $('#arrow_forward').attr('href',$(nodes[1]).attr('href'));
+        }
     }   
 
     window.mediaPlayerOneReady = function () {
         $('#fbLikeBox').show();
-        setTimeout(loadVideo, 3000);
+        setTimeout(loadVideo, 2500);
         setTimeout(function () {
             $('#videoProgressLoader').hide();
-        }, 6000);
+        }, 5000);
 
         loadSessionUserInfo(function () {
             var isEditable = canEditPost('{{ownerId}}');
