@@ -34,6 +34,12 @@
     <div id="postMediaAction" class="mdl-card__actions mdl-card--border mdl-typography--text-center">
         <a id="arrow_back" href="#" style="float: left;"><i class="material-icons">arrow_back</i></a>
 
+        <button class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">favorite</i></button>
+        <button id="btnPlayerVolume" onclick="volumePlayerUp()"
+            class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">volume_up</i></button>
+        <button id="btnPlayerFullscreen" title="Play in fullscreen" onclick="showPlayerInFullscreen()"
+            class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">fullscreen</i></button>
+
         <!-- sharing menu -->
         <button id="my-menu-bottom-right" class="mdl-button mdl-js-button mdl-button--icon">
             <i class="material-icons">share</i>
@@ -44,13 +50,7 @@
             </a>
             <li style="display: none" class="mdl-menu__item">Twitter</li>
             <li style="display: none" class="mdl-menu__item">Bookmark</li>
-        </ul>
-
-        <button class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">favorite</i></button>
-        <button id="btnPlayerVolume" onclick="volumePlayerUp()"
-            class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">volume_up</i></button>
-        <button id="btnPlayerFullscreen" title="Play in fullscreen" onclick="showPlayerInFullscreen()"
-            class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">fullscreen</i></button>
+        </ul>    
 
         <a id="arrow_forward" style="float:right" href="#"><i class="material-icons">arrow_forward</i></a>
     </div>

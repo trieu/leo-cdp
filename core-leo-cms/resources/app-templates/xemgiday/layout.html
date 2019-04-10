@@ -205,7 +205,14 @@
         return window.currentUserProfile && window.currentUserProfile.key === postOwnerId;
     }
 
-   
+    $(document).ready(function (){
+       
+    });
+
+    $(window).on('hashchange', function () {
+        var url = location.hash;
+        console.log("==> hashchange url " + url);
+    });
     
     (function () {
         var uri = location.href.split(location.host)[1] || '';
