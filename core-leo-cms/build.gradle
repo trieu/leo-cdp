@@ -24,7 +24,7 @@ repositories {
 dependencies {
 	
 	// AWS Java SDK for Amazon S3
-	compile group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.11.492'
+	compile group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.11.534'
 	
 	// Crawler4J
 	compile group: 'com.sleepycat', name: 'je', version: '18.3.1'
@@ -38,7 +38,7 @@ dependencies {
 	compile group: 'com.google.apis', name: 'google-api-services-youtube', version: 'v3-rev206-1.25.0'
 	
 	// Facebook API
-	compile group: 'com.restfb', name: 'restfb', version: '2.16.0'
+	compile group: 'com.restfb', name: 'restfb', version: '2.19.0'
 	
 	// OpenSSP 
 	compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.1'
@@ -56,17 +56,20 @@ dependencies {
 	compile group: 'com.documents4j', name: 'documents4j-transformer-msoffice-word', version: '1.0.3'
 	
 	// Apache Lucene full-text search 
-	compile group: 'org.apache.lucene', name: 'lucene-core', version: '7.6.0'
-	compile group: 'org.apache.lucene', name: 'lucene-analyzers-common', version: '7.6.0'
-	compile group: 'org.apache.lucene', name: 'lucene-queries', version: '7.6.0'
-	compile group: 'org.apache.lucene', name: 'lucene-queryparser', version: '7.6.0'
-	compile group: 'org.apache.lucene', name: 'lucene-spatial', version: '7.6.0'
+	compile group: 'org.apache.lucene', name: 'lucene-core', version: '7.7.1'
+	compile group: 'org.apache.lucene', name: 'lucene-analyzers-common', version: '7.7.1'
+	compile group: 'org.apache.lucene', name: 'lucene-queries', version: '7.7.1'
+	compile group: 'org.apache.lucene', name: 'lucene-queryparser', version: '7.7.1'
+	compile group: 'org.apache.lucene', name: 'lucene-spatial', version: '7.7.1'
 	
 	// TSV parser
 	compile group: 'com.univocity', name: 'univocity-parsers', version: '2.7.6'
 	
 	// PDF utils
 	compile group: 'org.apache.pdfbox', name: 'pdfbox', version: '2.0.13'
+	
+	// Stream summarizer and cardinality estimator (real-time analytics)
+	compile group: 'com.clearspring.analytics', name: 'stream', version: '2.9.6'
 	
     compile (	   
 		fileTree(dir: 'ext-lib', include: '**/*.jar') 	
@@ -91,7 +94,7 @@ dependencies {
 		,'org.yaml:snakeyaml:1.18' 
 				
 		// Friendly Content ID
-		,'com.devskiller.friendly-id:friendly-id:1.0.3'	
+		,'com.devskiller.friendly-id:friendly-id:1.1.0'	
 						
 		// SEO util
 		,'com.github.slugify:slugify:2.3'
@@ -107,11 +110,11 @@ dependencies {
 		,'org.apache.commons:commons-math3:3.6.1'			
             
 		// for Embebded OpenSSP Ad Server
-		,'com.squareup.okhttp3:okhttp:3.11.0'
+		,'com.squareup.okhttp3:okhttp:3.14.0'
 		,'javax.servlet:javax.servlet-api:3.1.0'
 	
 		// for raw data tracking database
-		,'ru.yandex.clickhouse:clickhouse-jdbc:0.1.50'
+		,'ru.yandex.clickhouse:clickhouse-jdbc:0.1.52'
 		
 		// Image Processing Libs: Headline + Watermark + Visual Image  Generator
 		,'org.docx4j.org.capaxit.textimage:TextImageGen:1.9'

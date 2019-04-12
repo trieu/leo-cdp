@@ -1,18 +1,13 @@
 package leotech.cms.dao;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.arangodb.ArangoCollection;
-import com.arangodb.ArangoCursor;
-import com.arangodb.ArangoDBException;
 import com.arangodb.ArangoDatabase;
 import com.google.gson.Gson;
 
-import leotech.cms.model.Page;
 import leotech.cms.model.User;
 import leotech.core.config.AqlTemplate;
 import leotech.system.util.Encryptor;

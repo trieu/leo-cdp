@@ -6,6 +6,7 @@
 
 # Refer
 * https://chatbotsmagazine.com/the-ultimate-guide-to-designing-a-chatbot-tech-stack-333eceb431da
+* https://towardsdatascience.com/training-a-goal-oriented-chatbot-with-deep-reinforcement-learning-part-i-introduction-and-dce3af21d383
 
 #NLP tasks
 * https://github.com/stopwords/vietnamese-stopwords
@@ -25,3 +26,8 @@
 * Graph Query https://medium.com/about-developer-blog/jedes-teil-dein-style-personalisierte-beratung-mit-arangodb-4d6f5b6f5525
 * https://medium.com/@mark_riedl/improvisational-storytelling-in-open-world-2359d7f649cf
 * https://medium.com/@mark_riedl/computational-narrative-intelligence-past-present-and-future-99e58cf25ffa
+
+# Data Structure for Stream Mining 
+* https://dzone.com/articles/introduction-probabilistic-0
+* https://pdsa.gakhov.com/#book
+* https://medium.com/@muppal/probabilistic-data-structures-in-the-big-data-world-code-b9387cff0c55

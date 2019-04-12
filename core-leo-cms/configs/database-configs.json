@@ -1,6 +1,6 @@
 {
 	"map" : {
-		"dbConfigsPro" : {
+		"dbConfigsBluescope" : {
 			"username" : "admin_bluescope"
 			,"password" : "MobilePortal#28112018"
 			,"database" : "bluescope_cms"

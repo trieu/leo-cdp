@@ -41,6 +41,7 @@ sudo certbot certonly --standalone -d xemgiday.com --non-interactive --agree-tos
 ## Login & Authentication Service
 * https://vertx.io/docs/vertx-auth-jwt/java/
 * https://medium.com/vandium-software/5-easy-steps-to-understanding-json-web-tokens-jwt-1164c0adfcec
+* https://medium.com/@adrianmihaila/single-sign-on-across-multiple-applications-part-ii-a8a48e4a7c11
 
 ## Messaging Service
 * Database schema: https://yoosuf.me/Messenger/

@@ -29,6 +29,7 @@
 
 ## Data Source
 * https://www.humanbrainfacts.org/hypothalamus.php
+* Tech https://www.youtube.com/channel/UCn1XnDWhsLS5URXTi5wtFTA/videos
 * News https://www.youtube.com/channel/UCPWqNpeq_QX0vdSlRj60rqw/videos
 * News https://www.youtube.com/channel/UCRjzfa1E0gA50lvDQipbDMg/videos
 * News https://www.youtube.com/channel/UCIg56SgvoZF8Qg0Jx_gh6Pg/videos
