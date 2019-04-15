@@ -64,6 +64,10 @@
 			google.com, pub-9034869050940123, DIRECT, f08c47fec0942fa0
 		</config>
 		
+		<config name="GOOGLE_ANALYTICS_TRACKING_ID">
+			UA-138351343-1
+		</config>
+		
 		<config name="NUMBER_SIMILAR_POSTS_IN_LIST">6</config>
 
 	</customConfigs>

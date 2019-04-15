@@ -23,6 +23,9 @@ public class JsonDataPayload {
     String errorMessage = "";
 
     @Expose
+    int errorCode = 0;
+    
+    @Expose
     int httpCode = 0;
 
     @Expose
@@ -65,6 +68,9 @@ public class JsonDataPayload {
 	this.data = "";
 	this.errorMessage = errorMessage;
 	this.httpCode = httpCode;
+	if (httpCode >= 400) {
+	    this.errorCode = httpCode;
+	}
 	this.gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
     }
 
@@ -98,6 +104,13 @@ public class JsonDataPayload {
 
     public void setHttpCode(int httpCode) {
 	this.httpCode = httpCode;
+	if (httpCode >= 400) {
+	    this.errorCode = httpCode;
+	}
+    }
+    
+    public int getErrorCode() {
+	return errorCode;
     }
 
     public boolean isReturnOnlyData() {

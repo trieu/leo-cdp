@@ -4,12 +4,14 @@ import java.util.List;
 
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
+import leotech.cms.analytics.GoogleTrackingUtil;
 import leotech.cms.dao.UserDaoUtil;
 import leotech.cms.model.MediaNetwork;
 import leotech.cms.model.User;
 import leotech.cms.service.UserDataService;
 import leotech.core.api.BaseSecuredDataApi;
 import leotech.system.model.JsonDataPayload;
+import rfx.core.util.StringUtil;
 
 public class AdminUserApiHandler extends BaseSecuredDataApi {
     // for Admin CMS, only for ROLE_ADMIN and ROLE_SUPER_ADMIN
@@ -44,6 +46,13 @@ public class AdminUserApiHandler extends BaseSecuredDataApi {
 		case API_UPDATE: {
 		    String userId = UserDataService.saveUserInfo(paramJson, false);
 		    System.out.println("API_UPDATE.saveUserInfo " + userId);
+
+		    // tracking with Google Analytics
+		    String userIp = "";
+		    String userAgent = "";
+		    String trackingTitle = "user-information-update";
+		    GoogleTrackingUtil.event("user-tracking", "username:" + loginUser.getUserLogin(), trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
+
 		    return JsonDataPayload.ok(uri, userId, true);
 		}
 		case API_GET_INFO: {
@@ -56,6 +65,13 @@ public class AdminUserApiHandler extends BaseSecuredDataApi {
 			    userInfo = UserDaoUtil.getByUserId(key);
 			}
 		    }
+		    
+		    // tracking with Google Analytics
+		    String userIp = "";
+		    String userAgent = "";
+		    String trackingTitle = "user-information-get";
+		    GoogleTrackingUtil.event("user-tracking", "username:" + loginUser.getUserLogin(), trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
+		    
 		    return JsonDataPayload.ok(uri, userInfo, false);
 		}
 		case API_ACTIVATE: {
@@ -102,5 +118,4 @@ public class AdminUserApiHandler extends BaseSecuredDataApi {
 	return JsonErrorPayload.NO_AUTHENTICATION;
     }
 
-   
 }

@@ -159,7 +159,7 @@ function loadLeadReport() {
 
 function loadUserReport() {
     loadView('/view/report/user-report.html?admin=1', pageDomSelector, function () {
-
+        loadDataUserAnalytics();
     });
 }
 

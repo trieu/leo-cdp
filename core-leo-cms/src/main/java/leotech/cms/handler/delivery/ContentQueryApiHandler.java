@@ -5,6 +5,7 @@ import java.util.Map;
 
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
+import leotech.cms.analytics.GoogleTrackingUtil;
 import leotech.cms.dao.ContentQueryDaoUtil;
 import leotech.cms.dao.PostDaoUtil;
 import leotech.cms.model.Page;
@@ -41,13 +42,13 @@ public class ContentQueryApiHandler extends BaseSecuredDataApi {
 
 	User loginUser = getUserFromSession(userSession);
 	if (loginUser != null) {
-	    includeProtected = true;	   
+	    includeProtected = true;
 	}
 
-	String k = StringUtil.safeString(params.get("keywords"), "");
+	String keywordsStr = StringUtil.safeString(params.get("keywords"), "");
 	String[] keywords;
-	if (!k.isEmpty()) {
-	    keywords = k.split(",");
+	if (!keywordsStr.isEmpty()) {
+	    keywords = keywordsStr.split(",");
 	} else {
 	    keywords = new String[] {};
 	}
@@ -57,9 +58,19 @@ public class ContentQueryApiHandler extends BaseSecuredDataApi {
 	case API_QUERY_DEFAULT_POSTS: {
 	    // TODO make a query category here
 	    // FIXME
-//	    String[] defCategoryKeys = new String[] { "1329181", "1329376", "1329482" };
-	    //Map<String, List<Post>> results = ContentQueryDaoUtil.listPostsByCategoriesAndKeywords(defCategoryKeys, keywords, includeProtected, includePrivate, true);
+	    // String[] defCategoryKeys = new String[] { "1329181", "1329376", "1329482" };
+	    // Map<String, List<Post>> results =
+	    // ContentQueryDaoUtil.listPostsByCategoriesAndKeywords(defCategoryKeys,
+	    // keywords, includeProtected, includePrivate, true);
 	    Map<String, Object> results = PostDaoUtil.getPostsOfDefaultHomepage();
+
+	    // tracking with Google Analytics
+	    String userIp = StringUtil.safeString(params.get("__userIp"));
+	    String userAgent = StringUtil.safeString(params.get("__userAgent"));
+	    String trackingTitle = "homepage";
+	    GoogleTrackingUtil.pageView(trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
+	    GoogleTrackingUtil.event("user-tracking", "username:" + loginUser.getUserLogin(), trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
+
 	    return JsonDataPayload.ok(uri, results);
 	}
 	// query for posts by filtering (get all related posts by keywords)
@@ -68,18 +79,35 @@ public class ContentQueryApiHandler extends BaseSecuredDataApi {
 		return JsonDataPayload.fail("keywords is empty", 500);
 	    } else {
 		String contentClass = StringUtil.safeString(params.get("contentClass"), "");
-		Map<String, List<Post>> results  = ContentQueryDaoUtil.listPostsByContentClassAndKeywords(contentClass, keywords, includeProtected, includePrivate, true);
+		Map<String, List<Post>> results = ContentQueryDaoUtil.listPostsByContentClassAndKeywords(contentClass, keywords, includeProtected, includePrivate, true);
+
+		// tracking with Google Analytics
+		String userIp = StringUtil.safeString(params.get("__userIp"));
+		String userAgent = StringUtil.safeString(params.get("__userAgent"));
+		String trackingTitle = "landing-page:contentClass:" + contentClass;
+		GoogleTrackingUtil.pageView(trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
+		GoogleTrackingUtil.event("user-tracking", "username:" + loginUser.getUserLogin(), trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
+
 		return JsonDataPayload.ok(uri, results);
 	    }
 	}
 	// query for posts by filtering (get all related posts by keywords at some
 	// specific categories)
 	case API_QUERY_POST_BY_CATEGORY_AND_KEYWORDS: {
-	    String[] categoryKeys = StringUtil.safeString(params.get("categories"), "").split(",");
+	    String categoryStr = StringUtil.safeString(params.get("categories"), "");
+	    String[] categoryKeys = categoryStr.split(",");
 	    if (categoryKeys.length == 0) {
 		return JsonDataPayload.fail("categoryKeys is empty", 500);
 	    } else {
 		Map<String, List<Post>> results = ContentQueryDaoUtil.listPostsByCategoriesAndKeywords(categoryKeys, keywords, includeProtected, includePrivate, true);
+
+		// tracking with Google Analytics
+		String userIp = StringUtil.safeString(params.get("__userIp"));
+		String userAgent = StringUtil.safeString(params.get("__userAgent"));
+		String trackingTitle = "landing-page:categories:" + categoryStr;
+		GoogleTrackingUtil.pageView(trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
+		GoogleTrackingUtil.event("user-tracking", "username:" + loginUser.getUserLogin(), trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
+
 		return JsonDataPayload.ok(uri, results);
 	    }
 	}
@@ -99,8 +127,17 @@ public class ContentQueryApiHandler extends BaseSecuredDataApi {
 	    if (keywords.length == 0) {
 		return JsonDataPayload.fail("keywords is empty", 500);
 	    } else {
-		//List<Post> results = ContentQueryDaoUtil.searchPost(keywords, includeProtected, includePrivate, true);
+		// List<Post> results = ContentQueryDaoUtil.searchPost(keywords,
+		// includeProtected, includePrivate, true);
 		List<Post> results = SearchPostUtil.searchPost(keywords, includeProtected, includePrivate, true);
+
+		// tracking with Google Analytics
+		String userIp = StringUtil.safeString(params.get("__userIp"));
+		String userAgent = StringUtil.safeString(params.get("__userAgent"));
+		String trackingTitle = "search-page:keywords:" + keywordsStr;
+		GoogleTrackingUtil.pageView(trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
+		GoogleTrackingUtil.event("user-tracking", "username:" + loginUser.getUserLogin(), trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
+
 		return JsonDataPayload.ok(uri, results);
 	    }
 	}

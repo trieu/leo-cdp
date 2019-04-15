@@ -3,6 +3,8 @@ package leotech.cms.handler.tracking;
 import io.vertx.core.MultiMap;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
+import leotech.cms.analytics.EventTrackingUtil;
+import leotech.cms.analytics.UserTrackingUtil;
 import leotech.core.api.BaseApiHandler;
 import leotech.system.model.DeviceInfo;
 import leotech.system.model.GeoLocation;
@@ -12,9 +14,7 @@ import leotech.system.util.CookieUUIDUtil;
 import leotech.system.util.DeviceInfoUtil;
 import leotech.system.util.GeoLocationUtil;
 import leotech.system.util.HttpTrackingUtil;
-import leotech.system.util.RealtimeTrackingUtil;
 import leotech.system.util.TrackingBeaconUtil;
-import leotech.system.util.UserRedisUtil;
 import rfx.core.util.HashUtil;
 import rfx.core.util.StringUtil;
 
@@ -81,9 +81,9 @@ public class EventLogHandler extends BaseApiHandler {
     public static void realtimeLogging(String metric, String cid, long loggedTime, int platformId, String uuid, String locationId, boolean countUserReach) {
 	String kNew = metric + "-" + cid + "-" + platformId + "-" + "-" + locationId;
 	String[] events = new String[] { metric, metric + "-" + cid, kNew };
-	RealtimeTrackingUtil.updateEvent(loggedTime, events, true);
+	EventTrackingUtil.updateEvent(loggedTime, events, true);
 	if (countUserReach) {
-	    UserRedisUtil.addPlayViewUser(loggedTime, cid, uuid);
+	    UserTrackingUtil.addPlayViewUser(loggedTime, cid, uuid);
 
 	}
     }

@@ -1,7 +1,7 @@
 package leotech.core.api;
 
-import leotech.system.util.RealtimeTrackingUtil;
-import leotech.system.util.UserRedisUtil;
+import leotech.cms.analytics.EventTrackingUtil;
+import leotech.cms.analytics.UserTrackingUtil;
 import rfx.core.util.DateTimeUtil;
 
 public abstract class BaseApiHandler {
@@ -27,9 +27,9 @@ public abstract class BaseApiHandler {
 
 	String[] events = new String[] { eventKey };
 	int unixTime = DateTimeUtil.currentUnixTimestamp();
-	RealtimeTrackingUtil.updateEvent(unixTime, events, true);
+	EventTrackingUtil.updateEvent(unixTime, events, true);
 
-	UserRedisUtil.addPlayViewUser(unixTime, contentId, userId);
+	UserTrackingUtil.addPlayViewUser(unixTime, contentId, userId);
 
     }
 

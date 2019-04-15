@@ -1,4 +1,4 @@
-package leotech.system.util;
+package leotech.cms.analytics;
 
 import java.util.Date;
 import java.util.Queue;
@@ -16,7 +16,7 @@ import rfx.core.util.DateTimeUtil;
 /**
  * Created by TrieuNT 
  */
-public class UserRedisUtil {
+public class UserTrackingUtil {
 
     final public static ShardedJedisPool redisAdDataStats = RedisConfigs.load().get("adDataStats")
 	    .getShardedJedisPool();
@@ -27,12 +27,9 @@ public class UserRedisUtil {
 	return addUser("up:", unixTime, contentId, userId);
     }
 
-  
     public static boolean addUser(String keyPrefix, long unixTime, String contentId, final String uuid) {
 	return queueLogsUser.add(new UserEventLog(keyPrefix, unixTime, contentId, uuid));
     }
-
-   
 
     final static class UserEventLog {
 	String keyPrefix;

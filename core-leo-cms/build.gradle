@@ -71,6 +71,9 @@ dependencies {
 	// Stream summarizer and cardinality estimator (real-time analytics)
 	compile group: 'com.clearspring.analytics', name: 'stream', version: '2.9.6'
 	
+	// Google Analytics API
+	compile group: 'com.brsanthu', name: 'google-analytics-java', version: '2.0.0'	
+	
     compile (	   
 		fileTree(dir: 'ext-lib', include: '**/*.jar') 	
     		    	

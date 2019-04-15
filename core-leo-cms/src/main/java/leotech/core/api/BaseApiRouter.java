@@ -5,12 +5,14 @@ import static io.netty.handler.codec.http.HttpHeaderNames.CONTENT_TYPE;
 
 import java.util.Set;
 
+import io.netty.handler.codec.http.HttpHeaderNames;
 import io.vertx.core.MultiMap;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 import leotech.system.model.JsonDataPayload;
+import leotech.system.util.CookieUUIDUtil;
 import leotech.system.util.CookieUserSessionUtil;
 import leotech.system.util.HttpTrackingUtil;
 import rfx.core.util.StringUtil;
@@ -82,6 +84,8 @@ public abstract class BaseApiRouter extends BaseHttpRouter {
 	String httpMethod = request.method().name().toLowerCase();
 	String uri = request.path();
 	String host = request.host();
+	String userAgent = request.getHeader(HttpHeaderNames.USER_AGENT);
+	String userIp = CookieUUIDUtil.getRemoteIP(request);
 	System.out.println(httpMethod + " ==>>>> host: " + host + " uri: " + uri);
 
 	if (HTTP_POST_NAME.equals(httpMethod)) {
@@ -123,6 +127,8 @@ public abstract class BaseApiRouter extends BaseHttpRouter {
 	    String userSession = CookieUserSessionUtil.getUserSession(context, StringUtil.safeString(reqHeaders.get(HEADER_SESSION)));
 
 	    MultiMap params = request.params();
+	    params.add("__userIp", userIp);
+	    params.add("__userAgent", userAgent);
 	    JsonDataPayload out = callHttpGetApiProcessor(userSession, uri, params);
 	    if (out != null) {
 		resp.end(out.toString());

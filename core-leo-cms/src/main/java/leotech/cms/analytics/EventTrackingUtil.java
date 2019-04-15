@@ -1,4 +1,4 @@
-package leotech.system.util;
+package leotech.cms.analytics;
 
 import java.util.Date;
 import java.util.Map;
@@ -17,7 +17,7 @@ import rfx.core.nosql.jedis.RedisCommand;
 import rfx.core.util.DateTimeUtil;
 import rfx.core.util.StringUtil;
 
-public class RealtimeTrackingUtil {
+public class EventTrackingUtil {
 
     private static final String EVUT = "evut-";
     private static final String EVENT_STATS = "event-stats";

@@ -7,13 +7,13 @@ import io.vertx.core.MultiMap;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.RoutingContext;
+import leotech.cms.analytics.EventTrackingUtil;
 import leotech.core.api.BaseApiHandler;
 import leotech.core.api.BaseApiRouter;
 import leotech.core.api.BaseHttpRouter;
 import leotech.system.model.DeviceInfo;
 import leotech.system.util.DeviceInfoUtil;
 import leotech.system.util.HttpTrackingUtil;
-import leotech.system.util.RealtimeTrackingUtil;
 import rfx.core.util.DateTimeUtil;
 import rfx.core.util.StringUtil;
 
@@ -83,7 +83,7 @@ public class EventLogHttpRouter extends BaseHttpRouter {
 		    // RealtimeTrackingUtil.updateEvent("pv:",DateTimeUtil.currentUnixTimestamp(),
 		    // "mpav-"+host, true);
 		    String uuid = StringUtil.safeString(params.get("uuid"));
-		    RealtimeTrackingUtil.updatePageViewEvent(host, uuid, tag);
+		    EventTrackingUtil.updatePageViewEvent(host, uuid, tag);
 		}
 		HttpTrackingUtil.trackingResponse(req);
 		return true;
@@ -94,7 +94,7 @@ public class EventLogHttpRouter extends BaseHttpRouter {
 
 		if (StringUtil.isNotEmpty(hostReferer) && StringUtil.isNotEmpty(event)) {
 		    String uuid = StringUtil.safeString(params.get("uuid"));
-		    RealtimeTrackingUtil.updatePageViewEvent(hostReferer, uuid, "epv");
+		    EventTrackingUtil.updatePageViewEvent(hostReferer, uuid, "epv");
 		}
 		HttpTrackingUtil.trackingResponse(req);
 		return true;
@@ -103,7 +103,7 @@ public class EventLogHttpRouter extends BaseHttpRouter {
 	    else if (uri.startsWith("/metric/conversion")) {
 		String host = StringUtil.safeString(params.get("host"));
 		if (StringUtil.isNotEmpty(host)) {
-		    RealtimeTrackingUtil.updateEvent(DateTimeUtil.currentUnixTimestamp(), "mcvs-" + host, true);
+		    EventTrackingUtil.updateEvent(DateTimeUtil.currentUnixTimestamp(), "mcvs-" + host, true);
 		}
 		HttpTrackingUtil.trackingResponse(req);
 		return true;
