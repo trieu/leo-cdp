@@ -13,6 +13,7 @@
 * https://kipalog.com/posts/Gioi-thieu-tien-xu-ly-trong-xu-ly-ngon-ngu-tu-nhien
 * https://viblo.asia/p/phan-loai-van-ban-tieng-viet-tu-dong-phan-1-yMnKM3bal7P
 * https://github.com/trieu/Machine-Learning-with-Python
+* An open-source NLP research library, built on PyTorch https://allennlp.org/tutorials
 
 # Algorithms
 * https://blog.goodaudience.com/top-10-machine-learning-algorithms-2a9a3e1bdaff
@@ -21,6 +22,7 @@
 * https://github.com/wmeints/qna-bot
 
 # Research for System computational storytelling
+* Reading Wikipedia to Answer Open-Domain Questions. https://github.com/facebookresearch/DrQA
 * Empathic Jason agents https://github.com/TimKam/empathic-jason
 * Plotmas is a system for generating narratives https://github.com/cartisan/plotmas
 * Graph Query https://medium.com/about-developer-blog/jedes-teil-dein-style-personalisierte-beratung-mit-arangodb-4d6f5b6f5525

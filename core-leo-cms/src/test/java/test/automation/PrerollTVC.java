@@ -32,10 +32,10 @@ public class PrerollTVC {
 
 	ExecutorService executor = Executors.newFixedThreadPool(NUM_THREAD);
 
-	for (int i = 0; i < 500; i++) {
+	for (int i = 0; i < 4; i++) {
 	    Utils.sleep(100);
 	    executor.submit(() -> {
-		for (int j = 0; j < 1000; j++) {
+		for (int j = 0; j < 1; j++) {
 		    test();
 		    Utils.sleep(50);
 		    // break;
@@ -61,8 +61,8 @@ public class PrerollTVC {
 	// chromeOptions.addArguments("window-size=1200x600");
 	chromeOptions = new ChromeOptions();
 	chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
-	chromeOptions.addArguments("headless");
-//	chromeOptions.addArguments("window-size=1200x600");	
+	//chromeOptions.addArguments("headless");
+	chromeOptions.addArguments("window-size=1200x600");	
 
     }
 
@@ -71,11 +71,16 @@ public class PrerollTVC {
 	try {
 
 	    ChromeDriver driver = new ChromeDriver(chromeOptions);
-	    String url = "http://bongda24h.vn/world-cup-2018/truoc-tran-bi-vs-anh-du-the-nao-premier-league-cung-thang-421-191175.html";
+	    String url = "http://video.monngon.tv/html/post/thuc-pham-tot-cho-nguoi-chay-bo-10000-9f63c8690d5aaa551dc392fb91067e8dddcef7f7";
+	    
+	    driver.get(url);	    
+	    Utils.sleep(20000);
+	    
 	    driver.get(url);
-
-	    // driver.get(url);
-	    Utils.sleep(2000);
+	    Utils.sleep(5000);
+	   
+	    driver.get(url);
+	    Utils.sleep(10000);
 
 	    // driver.executeScript("window.scrollBy(0,2300)", "");
 
@@ -84,7 +89,7 @@ public class PrerollTVC {
 	   // Utils.sleep(RandomUtil.randomNumber(3000, 5000));
 
 	    try {
-		WebElement btn = driver.findElement(By.className("hdo__box"));
+		WebElement btn = driver.findElement(By.id("videoPlaceholder"));
 		Dimension size = btn.getSize();
 		long imp = countImp.incrementAndGet();
 		System.out.println(imp + "==> Load OK Ad " + size.getWidth() + " " + size.getHeight());
@@ -100,7 +105,7 @@ public class PrerollTVC {
 		System.out.println("No ad, just Skip ..." + url);
 	    }
 
-	    driver.quit();
+	    //driver.quit();
 	} catch (Exception e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();

@@ -1,3 +1,6 @@
+main.mdl-layout__content {
+    -webkit-transform: translate3d(0,0,0)!important;
+}
 .page_title_text {
     min-width:120px;text-transform: uppercase;font-weight: bold;
 }

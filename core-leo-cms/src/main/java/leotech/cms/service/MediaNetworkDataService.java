@@ -30,8 +30,7 @@ public class MediaNetworkDataService {
 	mapHostToAppId.put(ADMIN_LEOCLOUDCMS_COM, new MediaNetwork("Leo CMS Admin", "admin", ADMIN_LEOCLOUDCMS_COM, DEFAULT_ADMIN_TEMPLATE_FOLDER));
 	mapHostToAppId.put("bluescope.leocloudcms.com", new MediaNetwork("Bluescope Admin", "admin", "bluescope.leocloudcms.com", DEFAULT_ADMIN_TEMPLATE_FOLDER));
 	mapHostToAppId.put("blueseed.leocloudcms.com", new MediaNetwork("Blueseed Admin", "admin", "blueseed.leocloudcms.com", DEFAULT_ADMIN_TEMPLATE_FOLDER));
-	mapHostToAppId.put("dsp.hadarone.com", new MediaNetwork("Admin", "admin", "dsp.hadarone.com", "hadarone-dsp"));
-
+	
 	// public web apps
 	mapHostToAppId.put("leocloudcms.com", new MediaNetwork("LeoCloudCMS", "leocloudcms", "leocloudcms.com", DEFAUFT_WEB_TEMPLATE_FOLDER));
 	mapHostToAppId.put("video.monngon.tv", new MediaNetwork("MonNgon.TV", "monngon", "video.monngon.tv", "monngon"));
@@ -40,6 +39,10 @@ public class MediaNetworkDataService {
 
     public static MediaNetwork getContentNetwork(String networkDomain) {
 	return mapHostToAppId.getOrDefault(networkDomain, DEFAULT_CONTENT_NETWORK);
+    }
+    
+    public static Map<String, MediaNetwork> getMapHostToAppId() {
+	return mapHostToAppId;
     }
 
     public static String getWebTemplateFolder(String networkDomain) {

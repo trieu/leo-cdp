@@ -2,8 +2,6 @@
     <h5 class="mdl-card__title-text mdl-typography--headline ">{{title}}</h5>
 </div>
 
-
-
 <div id="postMainContent" class="portfolio-copy">
     <div class="mdl-cell mdl-cell--12-col mdl-typography--text-right" style="font-weight: bold" >
         Posted by: {{#userDisplayName ownerId }}{{/userDisplayName}}       
@@ -87,9 +85,16 @@
         var videoSrc = $('#' + pmHolderId).attr('data-video-source').trim();
         if (videoSrc != '') {
             isYoutube = videoSrc.indexOf('youtube.com') > 0;
-            var adUrls = ['https://d2.blueseed.tv/vast3?plm=2322&li=3912'];
+            var adUrls = [];
             var skipTime = 2; // show skip button after 3 seconds            
-            var adConfigs = [];
+            var adConfigs = [
+                {
+                    adUrl: 'https://d3.blueseed.tv/vast3?plm=2347',
+                    adType: 'midproll',
+                    skipAdTime: 5,
+                    timeAfter: 2 // show ads after 2 seconds
+                }
+            ];
 
             window.player = MediaPlayerOne.create(autoplayVideo, pmHolderId, videoSrc, '', adUrls, skipTime,
                 adConfigs,playerReady);
