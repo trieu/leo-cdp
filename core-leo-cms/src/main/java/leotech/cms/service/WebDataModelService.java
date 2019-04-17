@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.google.javascript.jscomp.RewriteGoogJsImports.Mode;
-
 import io.vertx.core.MultiMap;
 import leotech.cms.dao.PostDaoUtil;
 import leotech.cms.model.Category;
@@ -19,11 +17,11 @@ import leotech.cms.model.renderable.MediaNetworkDataModel;
 import leotech.cms.model.renderable.PageDataModel;
 import leotech.cms.model.renderable.PageNavigator;
 import leotech.cms.model.renderable.PostDataModel;
-import leotech.cms.model.renderable.WebPageDataModel;
+import leotech.cms.model.renderable.WebDataModel;
 import leotech.core.api.BaseSecuredDataApi;
 import rfx.core.util.StringUtil;
 
-public class WebPageDataModelService {
+public class WebDataModelService {
 
     // URL prefix for common
     static final String HOME = "/";
@@ -51,12 +49,12 @@ public class WebPageDataModelService {
     static final String LIST_POST = "list-post";
     static final String SINGLE_POST = "single-post";
 
-    public static WebPageDataModel getDirectRenderModel(String path, String networkDomain, MultiMap params, String userSession) {
+    public static WebDataModel getDirectRenderModel(String path, String networkDomain, MultiMap params, String userSession) {
 	MediaNetwork network = MediaNetworkDataService.getContentNetwork(networkDomain);
 	long networkId = network.getNetworkId();
 	String templateFolder = network.getWebTemplateFolder();
 	String objectId;
-	WebPageDataModel model = null;
+	WebDataModel model = null;
 	
 	// media network
 	if (path.startsWith(HTML_NETWORK)) {
@@ -85,7 +83,7 @@ public class WebPageDataModelService {
 	}
 	// not found 404
 	if (model == null) {
-	    model = WebPageDataModel.page404(networkDomain, templateFolder);
+	    model = WebDataModel.page404(networkDomain, templateFolder);
 	}
 
 	// set data for Top Page
@@ -95,7 +93,7 @@ public class WebPageDataModelService {
 	return model;
     }
 
-    public static void setPageNavigators(WebPageDataModel model, String category) {
+    public static void setPageNavigators(WebDataModel model, String category) {
 	List<PageNavigator> pageNavigators = new ArrayList<>();
 	List<Page> topPages = PageDataService.listByCategoryWithPublicPrivacy(category);
 	for (Page page : topPages) {
@@ -108,8 +106,8 @@ public class WebPageDataModelService {
 	model.setTopPageNavigators(pageNavigators);
     }
 
-    public static WebPageDataModel buildMediaNetworkDataModel(String networkDomain, MediaNetwork network, String templateFolder, String objectId) {
-	WebPageDataModel model;
+    public static WebDataModel buildMediaNetworkDataModel(String networkDomain, MediaNetwork network, String templateFolder, String objectId) {
+	WebDataModel model;
 	if (StringUtil.isNotEmpty(objectId)) {
 	    model = new MediaNetworkDataModel(networkDomain, templateFolder, SINGLE_NETWORK, network.getName());
 	} else {
@@ -118,7 +116,7 @@ public class WebPageDataModelService {
 	return model;
     }
 
-    public static WebPageDataModel buildPostDataModel(String userSession, String networkDomain, MediaNetwork network, long networkId, String templateFolder, String slug,
+    public static WebDataModel buildPostDataModel(String userSession, String networkDomain, MediaNetwork network, long networkId, String templateFolder, String slug,
 	    int startIndex, int numberResult) {
 	PostDataModel model;
 	if (StringUtil.isNotEmpty(slug)) {
@@ -159,7 +157,7 @@ public class WebPageDataModelService {
 		}
 
 	    } else {
-		return WebPageDataModel.page404(networkDomain, templateFolder);
+		return WebDataModel.page404(networkDomain, templateFolder);
 	    }
 
 	} else {
@@ -175,9 +173,9 @@ public class WebPageDataModelService {
 	return model;
     }
 
-    public static WebPageDataModel buildPageDataModel(String path, String networkDomain, MediaNetwork network, long networkId, String templateFolder, String objectId,
+    public static WebDataModel buildPageDataModel(String path, String networkDomain, MediaNetwork network, long networkId, String templateFolder, String objectId,
 	    int startIndex, int numberResult) {
-	WebPageDataModel model;
+	WebDataModel model;
 	if (StringUtil.isNotEmpty(objectId)) {
 	    Page page = PageDataService.getPageWithPosts(objectId, startIndex, numberResult);
 	    if (page != null) {
@@ -193,7 +191,7 @@ public class WebPageDataModelService {
 		model.setCustomData("currentPath", path);
 
 	    } else {
-		model = WebPageDataModel.page404(networkDomain, templateFolder);
+		model = WebDataModel.page404(networkDomain, templateFolder);
 	    }
 
 	} else {
@@ -209,15 +207,15 @@ public class WebPageDataModelService {
 	return model;
     }
 
-    public static WebPageDataModel buildCategoryDataModel(String networkDomain, MediaNetwork network, long networkId, String templateFolder, String objectId) {
-	WebPageDataModel model;
+    public static WebDataModel buildCategoryDataModel(String networkDomain, MediaNetwork network, long networkId, String templateFolder, String objectId) {
+	WebDataModel model;
 	if (StringUtil.isNotEmpty(objectId)) {
 	    Category category = CategoryDataService.getCategory(objectId);
 	    if (category != null) {
 		String title = network.getName() + "-" + category.getName();
 		model = new CategoryDataModel(networkDomain, templateFolder, SINGLE_CATEGORY, title, Arrays.asList(category));
 	    } else {
-		model = WebPageDataModel.page404(networkDomain, templateFolder);
+		model = WebDataModel.page404(networkDomain, templateFolder);
 	    }
 	} else {
 	    String title = network.getName() + "- All categories";
@@ -227,12 +225,12 @@ public class WebPageDataModelService {
 	return model;
     }
 
-    public static WebPageDataModel buildModel(String host, String tplFolderName, String tplName, MultiMap params, String userSession) {
+    public static WebDataModel buildModel(String host, String tplFolderName, String tplName, MultiMap params, String userSession) {
 	// TODO mapping from host to category and content class
 	String contentClass = "standard";
 	String category = "81758";
 
-	WebPageDataModel model = new WebPageDataModel(host, tplFolderName, tplName);
+	WebDataModel model = new WebDataModel(host, tplFolderName, tplName);
 	model.setCategoryNavigators(new ArrayList<>(0));
 
 	setPageNavigators(model, category);

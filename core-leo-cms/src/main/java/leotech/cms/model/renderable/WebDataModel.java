@@ -12,7 +12,7 @@ import leotech.cms.model.Post;
 import leotech.system.template.TemplateUtil;
 import rfx.core.configs.WorkerConfigs;
 
-public class WebPageDataModel extends DefaultModel {
+public class WebDataModel extends DefaultModel {
 
     static final WorkerConfigs COMMON_WORKER_CONFIGS = WorkerConfigs.load();
 
@@ -51,7 +51,7 @@ public class WebPageDataModel extends DefaultModel {
     protected String pageDescription = "";
     protected String pageKeywords = "";
 
-    public WebPageDataModel(String host, String templateFolder, String templateName) {
+    public WebDataModel(String host, String templateFolder, String templateName) {
 	this.host = host;
 	this.templateFolder = templateFolder;
 	this.templateName = templateName;
@@ -59,7 +59,7 @@ public class WebPageDataModel extends DefaultModel {
 	this.setBaseStaticUrl("//" + host);
     }
 
-    public WebPageDataModel(String host, String templateFolder, String templateName, int statusCode) {
+    public WebDataModel(String host, String templateFolder, String templateName, int statusCode) {
 	this.host = host;
 	this.templateFolder = templateFolder;
 	this.templateName = templateName;
@@ -67,7 +67,7 @@ public class WebPageDataModel extends DefaultModel {
 	this.setBaseStaticUrl("//" + host);
     }
 
-    public WebPageDataModel(String host, String templateFolder, String templateName, String pageTitle) {
+    public WebDataModel(String host, String templateFolder, String templateName, String pageTitle) {
 	this.host = host;
 	this.templateFolder = templateFolder;
 	this.templateName = templateName;
@@ -75,7 +75,7 @@ public class WebPageDataModel extends DefaultModel {
 	this.setBaseStaticUrl("//" + host);
     }
 
-    public WebPageDataModel(String host, String templateFolder, String templateName, String pageTitle, String pageHeaderLogo, String baseStaticUrl) {
+    public WebDataModel(String host, String templateFolder, String templateName, String pageTitle, String pageHeaderLogo, String baseStaticUrl) {
 	super();
 	this.host = host;
 	this.templateFolder = templateFolder;
@@ -89,8 +89,8 @@ public class WebPageDataModel extends DefaultModel {
 
     /////////////////
 
-    public static WebPageDataModel page404(String host, String templateFolder) {
-	return new WebPageDataModel(host, templateFolder, "404", HttpStatus.SC_NOT_FOUND);
+    public static WebDataModel page404(String host, String templateFolder) {
+	return new WebDataModel(host, templateFolder, "404", HttpStatus.SC_NOT_FOUND);
     }
 
     /////////////
@@ -279,7 +279,7 @@ public class WebPageDataModel extends DefaultModel {
 	this.customData.put(key, value);
     }
 
-    public static String renderHtml(WebPageDataModel model) {
+    public static String renderHtml(WebDataModel model) {
 	StringBuilder tplPath = new StringBuilder();
 	tplPath.append(model.getTemplateFolder()).append("/index");
 	String html = TemplateUtil.process(tplPath.toString(), model);

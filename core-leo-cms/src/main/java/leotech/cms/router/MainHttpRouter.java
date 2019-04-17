@@ -13,9 +13,9 @@ import io.vertx.core.MultiMap;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.RoutingContext;
-import leotech.cms.model.renderable.WebPageDataModel;
+import leotech.cms.model.renderable.WebDataModel;
 import leotech.cms.service.MediaNetworkDataService;
-import leotech.cms.service.WebPageDataModelService;
+import leotech.cms.service.WebDataModelService;
 import leotech.core.api.BaseApiHandler;
 import leotech.core.api.BaseApiRouter;
 import leotech.core.api.BaseHttpRouter;
@@ -148,8 +148,8 @@ public class MainHttpRouter extends BaseHttpRouter {
 	else if (path.startsWith(HTML_DIRECT_RENDER)) {
 	    // for SEO or Facebook BOT
 	    outHeaders.set(CONTENT_TYPE, MIME_TYPE_HTML);
-	    WebPageDataModel model = WebPageDataModelService.getDirectRenderModel(path, host, params, userSession);
-	    String html = WebPageDataModel.renderHtml(model);
+	    WebDataModel model = WebDataModelService.getDirectRenderModel(path, host, params, userSession);
+	    String html = WebDataModel.renderHtml(model);
 	    resp.setStatusCode(model.getHttpStatusCode());
 	    resp.end(html);
 	}
@@ -224,9 +224,9 @@ public class MainHttpRouter extends BaseHttpRouter {
     }
 
     void handleWebPageRequest(MultiMap params, boolean isSearchEngineBot, String host, String tplFolderName, String tplName, HttpServerResponse resp, String userSession) {
-	WebPageDataModel model = WebPageDataModelService.buildModel(host, tplFolderName, tplName, params, userSession);
+	WebDataModel model = WebDataModelService.buildModel(host, tplFolderName, tplName, params, userSession);
 
-	String html = WebPageDataModel.renderHtml(model);
+	String html = WebDataModel.renderHtml(model);
 	resp.setStatusCode(model.getHttpStatusCode());
 	if (isSearchEngineBot) {
 	    // TODO, run headless Google Chrome to get full HTML, then caching into REDIS

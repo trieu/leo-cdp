@@ -1,10 +1,18 @@
 package leotech.cms.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+
 import io.vertx.core.json.JsonObject;
+import leotech.cms.dao.MediaNetworkDao;
+import leotech.cms.model.AdsPlacement;
 import leotech.cms.model.MediaNetwork;
 
 public class MediaNetworkDataService {
@@ -21,28 +29,27 @@ public class MediaNetworkDataService {
 
     final static MediaNetwork DEFAULT_CONTENT_NETWORK = new MediaNetwork("Genesis Network", "leocloudcms", "leocloudcms.com", DEFAUFT_WEB_TEMPLATE_FOLDER);
 
-    final static Map<String, MediaNetwork> mapHostToAppId = new HashMap<>();
+    final static Map<String, MediaNetwork> mapHostToMediaApp = new HashMap<>();
 
     static {
 	// TODO load from database
 
 	// admin CMS apps
-	mapHostToAppId.put(ADMIN_LEOCLOUDCMS_COM, new MediaNetwork("Leo CMS Admin", "admin", ADMIN_LEOCLOUDCMS_COM, DEFAULT_ADMIN_TEMPLATE_FOLDER));
-	mapHostToAppId.put("bluescope.leocloudcms.com", new MediaNetwork("Bluescope Admin", "admin", "bluescope.leocloudcms.com", DEFAULT_ADMIN_TEMPLATE_FOLDER));
-	mapHostToAppId.put("blueseed.leocloudcms.com", new MediaNetwork("Blueseed Admin", "admin", "blueseed.leocloudcms.com", DEFAULT_ADMIN_TEMPLATE_FOLDER));
-	
+	mapHostToMediaApp.put(ADMIN_LEOCLOUDCMS_COM, new MediaNetwork("Leo CMS Admin", "admin", ADMIN_LEOCLOUDCMS_COM, DEFAULT_ADMIN_TEMPLATE_FOLDER));
+	mapHostToMediaApp.put("bluescope.leocloudcms.com", new MediaNetwork("Bluescope Admin", "admin", "bluescope.leocloudcms.com", DEFAULT_ADMIN_TEMPLATE_FOLDER));
+	mapHostToMediaApp.put("blueseed.leocloudcms.com", new MediaNetwork("Blueseed Admin", "admin", "blueseed.leocloudcms.com", DEFAULT_ADMIN_TEMPLATE_FOLDER));
+
 	// public web apps
-	mapHostToAppId.put("leocloudcms.com", new MediaNetwork("LeoCloudCMS", "leocloudcms", "leocloudcms.com", DEFAUFT_WEB_TEMPLATE_FOLDER));
-	mapHostToAppId.put("video.monngon.tv", new MediaNetwork("MonNgon.TV", "monngon", "video.monngon.tv", "monngon"));
-	mapHostToAppId.put("xemgiday.com", new MediaNetwork("XemGiDay.com", "xemgiday", "xemgiday.com", "xemgiday"));
+	mapHostToMediaApp.put("leocloudcms.com", new MediaNetwork("LeoCloudCMS", "leocloudcms", "leocloudcms.com", DEFAUFT_WEB_TEMPLATE_FOLDER));
+	mapHostToMediaApp.put("video.monngon.tv", new MediaNetwork("MonNgon.TV", "monngon", "video.monngon.tv", "monngon"));
+	
+	MediaNetwork mediaNetwork = new MediaNetwork("XemGiDay.com", "xemgiday", "xemgiday.com", "xemgiday");
+	mediaNetwork.setAdsPlacements(Arrays.asList(new AdsPlacement("1", "aaa", false)));
+	mapHostToMediaApp.put("xemgiday.com", mediaNetwork);
     }
 
     public static MediaNetwork getContentNetwork(String networkDomain) {
-	return mapHostToAppId.getOrDefault(networkDomain, DEFAULT_CONTENT_NETWORK);
-    }
-    
-    public static Map<String, MediaNetwork> getMapHostToAppId() {
-	return mapHostToAppId;
+	return mapHostToMediaApp.getOrDefault(networkDomain, DEFAULT_CONTENT_NETWORK);
     }
 
     public static String getWebTemplateFolder(String networkDomain) {
@@ -63,9 +70,27 @@ public class MediaNetworkDataService {
     public static String save(JsonObject paramJson, boolean createNew) {
 	return "";
     }
-    
+
     public static String deleteByKey(String key) {
 	return "";
+    }
+
+    public static void main(String[] args) {
+	try {
+	    
+	    MediaNetworkDao mediaNetworkDao = new MediaNetworkDao();
+	    
+	    mediaNetworkDao.setMediaNetworks( new ArrayList<>(mapHostToMediaApp.values()));
+	    
+	    JAXBContext jc = JAXBContext.newInstance(MediaNetworkDao.class);
+	    Marshaller marshaller = jc.createMarshaller();
+	    marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+	    marshaller.marshal(mediaNetworkDao, System.out);
+
+	} catch (Exception e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
     }
 
 }

@@ -1,12 +1,17 @@
 package test.automation;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -32,7 +37,7 @@ public class PrerollTVC {
 
 	ExecutorService executor = Executors.newFixedThreadPool(NUM_THREAD);
 
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 1; i++) {
 	    Utils.sleep(100);
 	    executor.submit(() -> {
 		for (int j = 0; j < 1; j++) {
@@ -45,7 +50,6 @@ public class PrerollTVC {
 
     }
 
-     
     static ChromeOptions chromeOptions;
     static {
 	Map<String, Object> deviceMetrics = new HashMap<>();
@@ -54,15 +58,14 @@ public class PrerollTVC {
 	// deviceMetrics.put("pixelRatio", 3.0);
 
 	Map<String, Object> mobileEmulation = new HashMap<>();
-	//mobileEmulation.put("deviceMetrics", deviceMetrics);
-	mobileEmulation.put("userAgent",
-		"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246");
-	
+	// mobileEmulation.put("deviceMetrics", deviceMetrics);
+	mobileEmulation.put("userAgent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246");
+
 	// chromeOptions.addArguments("window-size=1200x600");
 	chromeOptions = new ChromeOptions();
 	chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
-	//chromeOptions.addArguments("headless");
-	chromeOptions.addArguments("window-size=1200x600");	
+	// chromeOptions.addArguments("headless");
+	chromeOptions.addArguments("window-size=1200x600");
 
     }
 
@@ -70,15 +73,25 @@ public class PrerollTVC {
 
 	try {
 
+	    
+	    DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.ENGLISH);
+	    Date expiry = df.parse( "Thu Sep 28 20:29:30 JST 2020");
+	    String path = "/";
+	    String domain = ".gammaplatform.com";
+
 	    ChromeDriver driver = new ChromeDriver(chromeOptions);
+
 	    String url = "http://video.monngon.tv/html/post/thuc-pham-tot-cho-nguoi-chay-bo-10000-9f63c8690d5aaa551dc392fb91067e8dddcef7f7";
-	    
-	    driver.get(url);	    
-	    Utils.sleep(20000);
-	    
+
 	    driver.get(url);
-	    Utils.sleep(5000);
-	   
+	    driver.manage().addCookie(new Cookie("_aGeoIp", "VN-Hanoi", domain, path, expiry));
+	    driver.manage().addCookie(new Cookie("_mq_lcm", "1555411292", domain, path, expiry));
+	    driver.manage().addCookie(new Cookie("_mq_id", "qhpl50nkwdw", domain, path, expiry));
+	    driver.manage().addCookie(new Cookie("_aUID", "ugxl0veeus8z", domain, path, expiry));
+	    driver.manage().addCookie(new Cookie("_mq_geo", "VN", domain, path, expiry));
+	    //driver.manage().addCookie(new Cookie("", "", domain, path, expiry));
+	    Utils.sleep(8000);
+
 	    driver.get(url);
 	    Utils.sleep(10000);
 
@@ -86,26 +99,25 @@ public class PrerollTVC {
 
 	    // WebElement adURLBox = driver.findElement(By.id("ad_url"));
 	    // adURLBox.sendKeys(testUrl);
-	   // Utils.sleep(RandomUtil.randomNumber(3000, 5000));
+	    // Utils.sleep(RandomUtil.randomNumber(3000, 5000));
 
 	    try {
 		WebElement btn = driver.findElement(By.id("videoPlaceholder"));
 		Dimension size = btn.getSize();
 		long imp = countImp.incrementAndGet();
 		System.out.println(imp + "==> Load OK Ad " + size.getWidth() + " " + size.getHeight());
-		if (RandomUtil.randomNumber(1, 100) < 5) {
+		// if (RandomUtil.randomNumber(1, 100) < 5)
+		{
 		    btn.click();
 		    long click = countClick.incrementAndGet();
 		    System.out.println(click + "==> Click Ad OK");
 		    Utils.sleep(RandomUtil.randomNumber(8000, 16000));
-		} else {
-		    Utils.sleep(RandomUtil.randomNumber(1000, 2000));
 		}
 	    } catch (NoSuchElementException e) {
 		System.out.println("No ad, just Skip ..." + url);
 	    }
 
-	    //driver.quit();
+	    driver.quit();
 	} catch (Exception e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
@@ -127,8 +139,7 @@ public class PrerollTVC {
 	    chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
 
 	    WebDriver driver = new ChromeDriver(chromeOptions);
-	    driver.get(
-		    "https://thethao.tuoitre.vn/1h-ngay-7-7-bi-manh-nhung-kho-thang-brazil-dong-deu-hon-20180706123905413.htm");
+	    driver.get("https://thethao.tuoitre.vn/1h-ngay-7-7-bi-manh-nhung-kho-thang-brazil-dong-deu-hon-20180706123905413.htm");
 
 	    // WebElement adURLBox = driver.findElement(By.id("ad_url"));
 	    // adURLBox.sendKeys(testUrl);
@@ -139,8 +150,6 @@ public class PrerollTVC {
 	    btn.click();
 
 	    Utils.sleep(5000);
-
-	   
 
 	    // Utils.sleep(20000);
 	    driver.quit();

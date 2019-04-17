@@ -1,10 +1,13 @@
 package leotech.cms.model;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.arangodb.ArangoCollection;
@@ -13,6 +16,7 @@ import leotech.cms.model.common.PersistentArangoObject;
 import rfx.core.util.HashUtil;
 
 @XmlRootElement(name = "MediaNetwork")
+@XmlAccessorType (XmlAccessType.FIELD)
 public class MediaNetwork implements PersistentArangoObject {
 
     public static final long DEFAULT_ID = 10000L;
@@ -30,20 +34,22 @@ public class MediaNetwork implements PersistentArangoObject {
     @XmlElement(name = "domain")
     String domain = ""; // bigdatavietnam.org
 
-    @XmlElement(name = "webTemplateFolder")
+    @XmlElement(name = "WebTemplateFolder")
     String webTemplateFolder = ""; // bigdatavietnam/web
 
     // data for native app on mobile devices (Android, iOS)
-    @XmlElement(name = "androidAppId")
+    @XmlElement(name = "AndroidAppId")
     String androidAppId = ""; // bigdatavietnam-org
     
-    @XmlElement(name = "iosAppId")
+    @XmlElement(name = "IosAppId")
     String iosAppId = "";
     
-    @XmlElement(name = "appTemplateFolder")
+    @XmlElement(name = "AppTemplateFolder")
     String appTemplateFolder = ""; // bigdatavietnam/app like web
 
-    protected Map<String, String> customData = new HashMap<>();// custom field for extending data
+    @XmlElementWrapper(name = "AdsPlacements") 
+    @XmlElement(name = "AdsPlacement")
+    List<AdsPlacement> adsPlacements;
 
     public MediaNetwork() {
     }
@@ -140,12 +146,13 @@ public class MediaNetwork implements PersistentArangoObject {
 	return false;
     }
 
-    public Map<String, String> getCustomData() {
-	return customData;
+    public List<AdsPlacement> getAdsPlacements() {
+        return adsPlacements;
     }
 
-    public void setCustomData(Map<String, String> customData) {
-	this.customData = customData;
+    public void setAdsPlacements(List<AdsPlacement> adsPlacements) {
+        this.adsPlacements = adsPlacements;
     }
 
+    
 }
