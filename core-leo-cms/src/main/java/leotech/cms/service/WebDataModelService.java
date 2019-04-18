@@ -96,7 +96,7 @@ public class WebDataModelService {
 	List<Page> topPages = PageDataService.listByCategoryWithPublicPrivacy(category);
 	for (Page page : topPages) {
 	    String id = page.getId();
-	    String uri = "/html/page/" + page.getSlug();
+	    String uri = HTML_PAGE + page.getSlug();
 	    // TODO ranking by use profile here
 	    long rankingScore = page.getRankingScore();
 	    pageNavigators.add(new PageNavigator(id, uri, page.getTitle(), rankingScore));
@@ -126,8 +126,7 @@ public class WebDataModelService {
 	    // Post post = new Post(video.getTitle(), video.getUrl(), 0, "");
 	    Post post = PostDataService.getBySlug(slug);
 	    if (post != null) {
-		// FIXME refactoring this code, FUCK
-
+		
 		List<String> contextPageIds = post.getPageIds();
 		List<String> listKeywords = post.getKeywords();
 
@@ -138,6 +137,7 @@ public class WebDataModelService {
 		String siteName = network.getName();
 		String keywords = StringUtil.joinFromList(", ", listKeywords);
 
+		// build model from database object
 		model = new PostDataModel(networkDomain, templateFolder, SINGLE_POST, title, post);
 		model.setPageDescription(des);
 		model.setPageImage(pageImage);
@@ -147,16 +147,14 @@ public class WebDataModelService {
 		model.setPageUrl(pageUrl);
 		model.setContextPageId(contextPageIds.size() > 0 ? contextPageIds.get(0) : "");
 
-		// TODO more abstract here for multipe ranking
+		// TODO implement recommendation engine here
 		List<Post> simlilarPosts = PostDataService.getSimilarPosts(contextPageIds, postId);
 		model.setRecommendedPosts(simlilarPosts);
-		User user = BaseSecuredDataApi.getUserFromSession(userSession);
-		System.out.println("userSession " + userSession + " " + user);
+		User user = BaseSecuredDataApi.getUserFromSession(userSession);		
 		if (user != null) {
 		    model.setAdminRole(BaseSecuredDataApi.isAdminRole(user));
 		    model.setSessionUserId(user.getKey());
 		}
-
 	    } else {
 		return WebDataModel.page404(networkDomain, templateFolder);
 	    }
@@ -252,11 +250,7 @@ public class WebDataModelService {
 	    nextStartIndex = 0;
 	}
 	model.setCustomData("nextStartIndex", nextStartIndex);
-
-	System.out.println("headlines " + headlines.size());
-
 	model.setHeadlines(headlines);
-
 	return model;
     }
 
