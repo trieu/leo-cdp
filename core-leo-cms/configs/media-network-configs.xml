@@ -10,7 +10,7 @@
         <AndroidAppId></AndroidAppId>
         <IosAppId></IosAppId>
         <AppTemplateFolder></AppTemplateFolder>      
-        <ContentCategoryId></ContentCategoryId>
+        <ContentCategoryId>81758</ContentCategoryId>
         <PageTitle>xemgiday.com</PageTitle>
         <PageHeaderLogo>/public/images/leotech-logo.png</PageHeaderLogo>
         <BaseStaticUrl>//xemgiday.com</BaseStaticUrl>
@@ -98,7 +98,7 @@
         <AndroidAppId></AndroidAppId>
         <IosAppId></IosAppId>
         <AppTemplateFolder></AppTemplateFolder>
-        <ContentCategoryId></ContentCategoryId>
+        <ContentCategoryId>9295570</ContentCategoryId>
         <PageTitle>video.monngon.tv</PageTitle>
         <PageHeaderLogo>/public/images/leotech-logo.png</PageHeaderLogo>
         <BaseStaticUrl>//video.monngon.tv</BaseStaticUrl>

@@ -86,8 +86,7 @@ public class WebDataModelService {
 	}
 
 	// set data for Top Page
-	String category = "81758";// TODO
-	setPageNavigators(model, category);
+	setPageNavigators(model, network.getContentCategoryId());
 
 	return model;
     }
@@ -232,14 +231,14 @@ public class WebDataModelService {
     }
 
     public static WebDataModel buildModel(String host, String tplFolderName, String tplName, MultiMap params, String userSession) {
-	// TODO mapping from host to category and content class
+	MediaNetwork network = MediaNetworkDataService.getContentNetwork(host);
 	String contentClass = "standard";
-	String category = "81758";
+	String categoryId = network.getContentCategoryId();
 
 	WebDataModel model = new WebDataModel(host, tplFolderName, tplName);
 	model.setCategoryNavigators(new ArrayList<>(0));
 
-	setPageNavigators(model, category);
+	setPageNavigators(model, categoryId);
 
 	List<ContentMediaBox> contentMediaBoxs = new ArrayList<>();
 	model.setContentMediaBoxs(contentMediaBoxs);
