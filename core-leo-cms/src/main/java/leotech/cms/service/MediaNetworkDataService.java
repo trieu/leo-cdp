@@ -15,11 +15,13 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamReader;
 
 import io.vertx.core.json.JsonObject;
-import leotech.cms.model.AdsPlacement;
+import leotech.cms.model.ContentClassPostQuery;
 import leotech.cms.model.MediaNetwork;
 import leotech.cms.model.MediaNetworkXml;
 
 public class MediaNetworkDataService {
+
+    private static final String CONFIGS_MEDIA_NETWORK_CONFIGS_XML = "./configs/media-network-configs.xml";
 
     // TODO add shared redis cache here, load MediaNetwork from database
 
@@ -36,25 +38,35 @@ public class MediaNetworkDataService {
     final static Map<String, MediaNetwork> mapHostToMediaApp = new HashMap<>();
 
     static {
-	// TODO load from database
+	try {
+	    JAXBContext jc = JAXBContext.newInstance(MediaNetworkXml.class);
+	    Unmarshaller unmarshaller = jc.createUnmarshaller();
+	    XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+	    XMLStreamReader reader = inputFactory.createXMLStreamReader(new FileInputStream(CONFIGS_MEDIA_NETWORK_CONFIGS_XML));
+	    MediaNetworkXml mediaNetworkXml = unmarshaller.unmarshal(reader, MediaNetworkXml.class).getValue();
 
-	// admin CMS apps
-	mapHostToMediaApp.put(ADMIN_LEOCLOUDCMS_COM, new MediaNetwork("Leo CMS Admin", "admin", ADMIN_LEOCLOUDCMS_COM, DEFAULT_ADMIN_TEMPLATE_FOLDER));
-	mapHostToMediaApp.put("bluescope.leocloudcms.com", new MediaNetwork("Bluescope Admin", "admin", "bluescope.leocloudcms.com", DEFAULT_ADMIN_TEMPLATE_FOLDER));
-	mapHostToMediaApp.put("blueseed.leocloudcms.com", new MediaNetwork("Blueseed Admin", "admin", "blueseed.leocloudcms.com", DEFAULT_ADMIN_TEMPLATE_FOLDER));
+	    List<MediaNetwork> networks = mediaNetworkXml.getMediaNetworks();
+	    for (MediaNetwork mediaNetwork : networks) {
+		String host = mediaNetwork.getDomain();
+		mapHostToMediaApp.put(host, mediaNetwork);
+	    }
 
-	// public web apps
-	mapHostToMediaApp.put("leocloudcms.com", new MediaNetwork("LeoCloudCMS", "leocloudcms", "leocloudcms.com", DEFAUFT_WEB_TEMPLATE_FOLDER));
-	mapHostToMediaApp.put("video.monngon.tv", new MediaNetwork("MonNgon.TV", "monngon", "video.monngon.tv", "monngon"));
+	    System.out.println(CONFIGS_MEDIA_NETWORK_CONFIGS_XML + " loaded OK with mapHostToMediaApp.size = " + mapHostToMediaApp.size());
 
-	MediaNetwork mediaNetwork = new MediaNetwork("XemGiDay.com", "xemgiday", "xemgiday.com", "xemgiday");
-	mediaNetwork.setAdsPlacements(Arrays.asList(new AdsPlacement("1", "aaa", false),new AdsPlacement("2", "bbb", true)));
-
-	mapHostToMediaApp.put("xemgiday.com", mediaNetwork);
+	} catch (Exception e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
     }
 
     public static MediaNetwork getContentNetwork(String networkDomain) {
-	return mapHostToMediaApp.getOrDefault(networkDomain, DEFAULT_CONTENT_NETWORK);
+	MediaNetwork network = mapHostToMediaApp.get(networkDomain);
+	
+	if (network == null) {
+	    System.err.println("NOT FOUND MediaNetwork for domain: " + networkDomain);
+	    return DEFAULT_CONTENT_NETWORK; 
+	}
+	return network;
     }
 
     public static String getWebTemplateFolder(String networkDomain) {
@@ -82,19 +94,20 @@ public class MediaNetworkDataService {
 
     public static void main(String[] args) {
 	try {
-	        	    
+
 	    JAXBContext jc = JAXBContext.newInstance(MediaNetworkXml.class);
-	   
-	    Marshaller marshaller = jc.createMarshaller();
-	    marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-	    marshaller.marshal( new MediaNetworkXml(new ArrayList<>(mapHostToMediaApp.values())), System.out);
-	    
-//	    Unmarshaller unmarshaller = jc.createUnmarshaller();
-//	    XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-//	    XMLStreamReader reader = inputFactory.createXMLStreamReader(new FileInputStream("./configs/media-network-configs.xml"));
-//	    MediaNetworkXml mediaNetworkXml = unmarshaller.unmarshal(reader, MediaNetworkXml.class).getValue();
-//	    
-//	    System.out.println(mediaNetworkXml.getMediaNetworks().get(0).getAdsPlacements().size());
+
+	    // Marshaller marshaller = jc.createMarshaller();
+	    // marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+	    // marshaller.marshal( new MediaNetworkXml(new
+	    // ArrayList<>(mapHostToMediaApp.values())), System.out);
+
+	    Unmarshaller unmarshaller = jc.createUnmarshaller();
+	    XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+	    XMLStreamReader reader = inputFactory.createXMLStreamReader(new FileInputStream(CONFIGS_MEDIA_NETWORK_CONFIGS_XML));
+	    MediaNetworkXml mediaNetworkXml = unmarshaller.unmarshal(reader, MediaNetworkXml.class).getValue();
+
+	    System.out.println(mediaNetworkXml.getMediaNetworks().get(0));
 
 	} catch (Exception e) {
 	    // TODO Auto-generated catch block

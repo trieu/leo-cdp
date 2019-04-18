@@ -20,8 +20,8 @@ public class MediaNetwork implements PersistentArangoObject {
     public static final long DEFAULT_ID = 10000L;
 
     @XmlElement(name = "networkId")
-    long networkId = DEFAULT_ID; // unique ID
-
+    long networkId = DEFAULT_ID; 
+    
     @XmlElement(name = "name")
     String name = ""; // Big Data Vietnam Content Network
     
@@ -45,12 +45,47 @@ public class MediaNetwork implements PersistentArangoObject {
     @XmlElement(name = "AppTemplateFolder")
     String appTemplateFolder = ""; // bigdatavietnam/app like web
 
-    @XmlElementWrapper(name = "AdsPlacements") 
-    @XmlElement(name = "AdsPlacement")
-    List<AdsPlacement> adsPlacements;
+   
+    
+    //--------------------------------------------
+    @XmlElement(name = "ContentCategoryId")
+    String contentCategoryId = "";
+    
+    @XmlElementWrapper(name = "ContentClassPostQueries") 
+    @XmlElement(name = "ContentClassPostQuery")
+    List<ContentClassPostQuery> contentClassPostQueries;
+    
+    @XmlElement(name = "PageTitle")
+    String pageTitle = "leocloudcms.com";
+    
+    @XmlElement(name = "PageHeaderLogo")
+    String pageHeaderLogo = "/public/images/leotech-logo.png";
+    
+    @XmlElement(name = "BaseStaticUrl")
+    String baseStaticUrl = "//leocloudcms.com";
+    
+    @XmlElement(name = "BaseAdminApiUrl")
+    String baseAdminApiUrl = "//leocloudcms.com";
+    
+    @XmlElement(name = "BaseDeliveryApiUrl")
+    String baseDeliveryApiUrl = "//api.leocloudcms.com";
+    
+    @XmlElement(name = "BaseUploaderUrl")
+    String baseUploaderUrl = "//uploader.leocloudcms.com";
+    
+    @XmlElement(name = "BaseLogCollectorUrl")
+    String baseLogCollectorUrl = "//log.leocloudcms.com";
+    
+    @XmlElement(name = "AdsTxtContent")
+    String adsTxtContent = "";
+    
+    @XmlElement(name = "GoogleTrackingId")
+    String googleTrackingId = "";
 
-    public MediaNetwork() {
-    }
+    @XmlElement(name = "NumberSimilarPostsInList")
+    int numberSimilarPostsInList = 7;
+
+    public MediaNetwork() {}
 
     public MediaNetwork(String name, String uri, String domain, String webTemplateFolder) {
 	super();
@@ -143,18 +178,106 @@ public class MediaNetwork implements PersistentArangoObject {
 	// TODO Auto-generated method stub
 	return false;
     }
-
-    public List<AdsPlacement> getAdsPlacements() {
-        return adsPlacements;
+    public List<ContentClassPostQuery> getContentClassPostQueries() {
+        return contentClassPostQueries;
     }
 
-    public void setAdsPlacements(List<AdsPlacement> adsPlacements) {
-        this.adsPlacements = adsPlacements;
+    public void setContentClassPostQueries(List<ContentClassPostQuery> contentClassPostQueries) {
+        this.contentClassPostQueries = contentClassPostQueries;
+    }
+
+    public String getContentCategoryId() {
+        return contentCategoryId;
+    }
+
+    public void setContentCategoryId(String contentCategoryId) {
+        this.contentCategoryId = contentCategoryId;
+    }
+       
+
+    public String getPageTitle() {
+        return pageTitle;
+    }
+
+    public void setPageTitle(String pageTitle) {
+        this.pageTitle = pageTitle;
+    }
+       
+
+    public String getPageHeaderLogo() {
+        return pageHeaderLogo;
+    }
+
+    public void setPageHeaderLogo(String pageHeaderLogo) {
+        this.pageHeaderLogo = pageHeaderLogo;
+    }
+
+    public String getBaseStaticUrl() {
+        return baseStaticUrl;
+    }
+
+    public void setBaseStaticUrl(String baseStaticUrl) {
+        this.baseStaticUrl = baseStaticUrl;
+    }
+
+    public String getBaseAdminApiUrl() {
+        return baseAdminApiUrl;
+    }
+
+    public void setBaseAdminApiUrl(String baseAdminApiUrl) {
+        this.baseAdminApiUrl = baseAdminApiUrl;
+    }
+
+    public String getBaseDeliveryApiUrl() {
+        return baseDeliveryApiUrl;
+    }
+
+    public void setBaseDeliveryApiUrl(String baseDeliveryApiUrl) {
+        this.baseDeliveryApiUrl = baseDeliveryApiUrl;
+    }
+
+    public String getBaseUploaderUrl() {
+        return baseUploaderUrl;
+    }
+
+    public void setBaseUploaderUrl(String baseUploaderUrl) {
+        this.baseUploaderUrl = baseUploaderUrl;
+    }
+
+    public String getBaseLogCollectorUrl() {
+        return baseLogCollectorUrl;
+    }
+
+    public void setBaseLogCollectorUrl(String baseLogCollectorUrl) {
+        this.baseLogCollectorUrl = baseLogCollectorUrl;
+    }
+
+    public String getAdsTxtContent() {
+        return adsTxtContent;
+    }
+
+    public void setAdsTxtContent(String adsTxtContent) {
+        this.adsTxtContent = adsTxtContent;
+    }
+
+    public String getGoogleTrackingId() {
+        return googleTrackingId;
+    }
+
+    public void setGoogleTrackingId(String googleTrackingId) {
+        this.googleTrackingId = googleTrackingId;
+    }
+
+    public int getNumberSimilarPostsInList() {
+        return numberSimilarPostsInList;
+    }
+
+    public void setNumberSimilarPostsInList(int numberSimilarPostsInList) {
+        this.numberSimilarPostsInList = numberSimilarPostsInList;
     }
 
     @Override
     public String toString() {
-        // TODO Auto-generated method stub
         return new Gson().toJson(this);
     }
     

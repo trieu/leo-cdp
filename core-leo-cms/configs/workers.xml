@@ -31,35 +31,7 @@
 
 		<!-- Default Data Config for static resource handler -->
 
-		<!-- Admin CMS Logo -->
-		<config name="pageHeaderLogo">
-			/public/images/leotech-logo.png
-		</config>
-
-		<!-- Public Title -->
-		<config name="pageTitle">			
-			XemGiDay.com
-		</config>
-		<config name="baseStaticUrl">
-			//xemGiDay.com
-		</config>
-
-		<config name="baseAdminApiUrl">
-			//xemGiDay.com
-		</config>
-
-		<config name="baseDeliveryApiUrl">
-			//api.xemgiday.com
-		</config>
-
-		<config name="baseUploaderUrl">
-			//uploader.xemgiday.com
-		</config>
-
-		<config name="baseLogCollectorUrl">
-			//log.xemgiday.com
-		</config>
-
+	
 		<config name="ADS_TXT_CONTENT">
 			google.com, pub-9034869050940123, DIRECT, f08c47fec0942fa0
 		</config>

@@ -8,25 +8,21 @@ import java.util.Map;
 
 import org.apache.http.HttpStatus;
 
+import leotech.cms.model.MediaNetwork;
 import leotech.cms.model.Post;
+import leotech.cms.service.MediaNetworkDataService;
 import leotech.system.template.TemplateUtil;
-import rfx.core.configs.WorkerConfigs;
 
 public class WebDataModel extends DefaultModel {
+    
+    protected String pageHeaderLogo;
+    protected String baseStaticUrl ;
 
-    static final WorkerConfigs COMMON_WORKER_CONFIGS = WorkerConfigs.load();
+    protected String baseAdminApiUrl;
+    protected String baseDeliveryApiUrl;
 
-    static final String BASE_STATIC_URL = COMMON_WORKER_CONFIGS.getCustomConfig("baseStaticUrl");
-
-    protected final String defaultPageTitle = COMMON_WORKER_CONFIGS.getCustomConfig("pageTitle");
-    protected String pageHeaderLogo = COMMON_WORKER_CONFIGS.getCustomConfig("pageHeaderLogo");
-    protected String baseStaticUrl = BASE_STATIC_URL;
-
-    protected String baseAdminApiUrl = COMMON_WORKER_CONFIGS.getCustomConfig("baseAdminApiUrl");
-    protected String baseDeliveryApiUrl = COMMON_WORKER_CONFIGS.getCustomConfig("baseDeliveryApiUrl");
-
-    protected String baseUploaderUrl = COMMON_WORKER_CONFIGS.getCustomConfig("baseUploaderUrl");
-    protected String baseLogCollectorUrl = COMMON_WORKER_CONFIGS.getCustomConfig("baseLogCollectorUrl");
+    protected String baseUploaderUrl;
+    protected String baseLogCollectorUrl;
 
     protected int httpStatusCode = HttpStatus.SC_OK;
 
@@ -45,7 +41,7 @@ public class WebDataModel extends DefaultModel {
     
     // data for meta tags in HTML
     protected String pageName = "";
-    protected String pageTitle = defaultPageTitle;
+    protected String pageTitle = "";
     protected String pageUrl = "";
     protected String pageImage = "";
     protected String pageDescription = "";
@@ -56,7 +52,7 @@ public class WebDataModel extends DefaultModel {
 	this.templateFolder = templateFolder;
 	this.templateName = templateName;
 	this.httpStatusCode = HttpStatus.SC_OK;
-	this.setBaseStaticUrl("//" + host);
+	this.setBaseData(host);
     }
 
     public WebDataModel(String host, String templateFolder, String templateName, int statusCode) {
@@ -64,7 +60,7 @@ public class WebDataModel extends DefaultModel {
 	this.templateFolder = templateFolder;
 	this.templateName = templateName;
 	this.httpStatusCode = statusCode;
-	this.setBaseStaticUrl("//" + host);
+	this.setBaseData(host);
     }
 
     public WebDataModel(String host, String templateFolder, String templateName, String pageTitle) {
@@ -72,20 +68,8 @@ public class WebDataModel extends DefaultModel {
 	this.templateFolder = templateFolder;
 	this.templateName = templateName;
 	this.pageTitle = pageTitle;
-	this.setBaseStaticUrl("//" + host);
-    }
-
-    public WebDataModel(String host, String templateFolder, String templateName, String pageTitle, String pageHeaderLogo, String baseStaticUrl) {
-	super();
-	this.host = host;
-	this.templateFolder = templateFolder;
-	this.templateName = templateName;
-	this.pageTitle = pageTitle;
-	this.pageHeaderLogo = pageHeaderLogo;
-	this.baseStaticUrl = baseStaticUrl;
-	this.httpStatusCode = HttpStatus.SC_OK;
-	this.setBaseStaticUrl("//" + host);
-    }
+	this.setBaseData(host);
+    }    
 
     /////////////////
 
@@ -217,10 +201,6 @@ public class WebDataModel extends DefaultModel {
 	return categoryNavigators;
     }
 
-    public String getDefaultPageTitle() {
-	return defaultPageTitle;
-    }
-
     public void setCategoryNavigators(List<CategoryNavigator> categoryNavigators) {
 	Collections.sort(categoryNavigators);
 	this.categoryNavigators = categoryNavigators;
@@ -277,6 +257,17 @@ public class WebDataModel extends DefaultModel {
 
     public void setCustomData(String key, Object value) {
 	this.customData.put(key, value);
+    }
+    
+    public void setBaseData(String host) {
+	MediaNetwork network = MediaNetworkDataService.getContentNetwork(host);
+	this.pageTitle = network.getPageTitle();
+	this.baseStaticUrl = network.getBaseStaticUrl();
+	this.baseDeliveryApiUrl = network.getBaseDeliveryApiUrl();
+	this.baseAdminApiUrl = network.getBaseAdminApiUrl();
+	this.baseUploaderUrl = network.getBaseUploaderUrl();
+	this.baseLogCollectorUrl = network.getBaseLogCollectorUrl();
+	this.pageHeaderLogo = network.getPageHeaderLogo();
     }
 
     public static String renderHtml(WebDataModel model) {

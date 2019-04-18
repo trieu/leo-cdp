@@ -9,23 +9,18 @@
         <WebTemplateFolder>xemgiday</WebTemplateFolder>
         <AndroidAppId></AndroidAppId>
         <IosAppId></IosAppId>
-        <AppTemplateFolder></AppTemplateFolder>
-        <AdsPlacements>
-            <AdsPlacement>
-                <code>
-                	<![CDATA[
-						<ins class="adsbygoogle" style="display:block"
-							data-ad-client="ca-pub-9034869050940123" data-ad-slot="1376192829"
-							data-ad-format="auto" data-full-width-responsive="true"></ins>
-						<script>
-							(adsbygoogle = window.adsbygoogle || []).push({});
-						</script>
-					]]>
-				</code>
-                <id>1</id>
-                <videoAd>false</videoAd>
-            </AdsPlacement>
-        </AdsPlacements>
+        <AppTemplateFolder></AppTemplateFolder>      
+        <ContentCategoryId></ContentCategoryId>
+        <PageTitle>xemgiday.com</PageTitle>
+        <PageHeaderLogo>/public/images/leotech-logo.png</PageHeaderLogo>
+        <BaseStaticUrl>//xemgiday.com</BaseStaticUrl>
+        <BaseAdminApiUrl>//xemgiday.com</BaseAdminApiUrl>
+        <BaseDeliveryApiUrl>//api.xemgiday.com</BaseDeliveryApiUrl>
+        <BaseUploaderUrl>//uploader.xemgiday.com</BaseUploaderUrl>
+        <BaseLogCollectorUrl>//log.xemgiday.com</BaseLogCollectorUrl>
+        <AdsTxtContent> google.com, pub-9034869050940123, DIRECT, f08c47fec0942fa0 </AdsTxtContent>
+        <GoogleTrackingId></GoogleTrackingId>
+        <NumberSimilarPostsInList>7</NumberSimilarPostsInList>
     </MediaNetwork>
     
     <MediaNetwork>
@@ -37,6 +32,17 @@
         <AndroidAppId></AndroidAppId>
         <IosAppId></IosAppId>
         <AppTemplateFolder></AppTemplateFolder>
+        <ContentCategoryId></ContentCategoryId>
+        <PageTitle>blueseed.leocloudcms.com</PageTitle>
+         <PageHeaderLogo>/public/images/leotech-logo.png</PageHeaderLogo>
+        <BaseStaticUrl>//blueseed.leocloudcms.com</BaseStaticUrl>
+        <BaseAdminApiUrl>//blueseed.leocloudcms.com</BaseAdminApiUrl>
+        <BaseDeliveryApiUrl> </BaseDeliveryApiUrl>
+        <BaseUploaderUrl> </BaseUploaderUrl>
+        <BaseLogCollectorUrl> </BaseLogCollectorUrl>
+        <AdsTxtContent></AdsTxtContent>
+        <GoogleTrackingId></GoogleTrackingId>
+        <NumberSimilarPostsInList>0</NumberSimilarPostsInList>
     </MediaNetwork>
     
     <MediaNetwork>
@@ -48,6 +54,17 @@
         <AndroidAppId></AndroidAppId>
         <IosAppId></IosAppId>
         <AppTemplateFolder></AppTemplateFolder>
+        <ContentCategoryId></ContentCategoryId>
+        <PageTitle>leocloudcms.com</PageTitle>
+        <PageHeaderLogo>/public/images/leotech-logo.png</PageHeaderLogo>
+        <BaseStaticUrl>//leocloudcms.com</BaseStaticUrl>
+        <BaseAdminApiUrl>//leocloudcms.com</BaseAdminApiUrl>
+        <BaseDeliveryApiUrl>//api.leocloudcms.com</BaseDeliveryApiUrl>
+        <BaseUploaderUrl>//uploader.leocloudcms.com</BaseUploaderUrl>
+        <BaseLogCollectorUrl>//log.leocloudcms.com</BaseLogCollectorUrl>
+        <PageTitle></PageTitle>
+        <GoogleTrackingId></GoogleTrackingId>
+        <NumberSimilarPostsInList>7</NumberSimilarPostsInList>
     </MediaNetwork>
     
     <MediaNetwork>
@@ -59,19 +76,19 @@
         <AndroidAppId></AndroidAppId>
         <IosAppId></IosAppId>
         <AppTemplateFolder></AppTemplateFolder>
-    </MediaNetwork>
-    
-    <MediaNetwork>
-        <networkId>10000</networkId>
-        <name>Bluescope Admin</name>
-        <uri>admin</uri>
-        <domain>bluescope.leocloudcms.com</domain>
-        <WebTemplateFolder>default-admin-template</WebTemplateFolder>
-        <AndroidAppId></AndroidAppId>
-        <IosAppId></IosAppId>
-        <AppTemplateFolder></AppTemplateFolder>
-    </MediaNetwork>
-    
+        <ContentCategoryId></ContentCategoryId>
+        <PageTitle>leocloudcms.com</PageTitle>
+        <PageHeaderLogo>/public/images/leotech-logo.png</PageHeaderLogo>
+        <BaseStaticUrl>//leocloudcms.com</BaseStaticUrl>
+        <BaseAdminApiUrl>//leocloudcms.com</BaseAdminApiUrl>
+        <BaseDeliveryApiUrl>//api.leocloudcms.com</BaseDeliveryApiUrl>
+        <BaseUploaderUrl>//uploader.leocloudcms.com</BaseUploaderUrl>
+        <BaseLogCollectorUrl>//log.leocloudcms.com</BaseLogCollectorUrl>
+        <AdsTxtContent></AdsTxtContent>
+        <GoogleTrackingId></GoogleTrackingId>
+        <NumberSimilarPostsInList>7</NumberSimilarPostsInList>
+    </MediaNetwork>    
+  
     <MediaNetwork>
         <networkId>8121298357381811926</networkId>
         <name>MonNgon.TV</name>
@@ -81,6 +98,17 @@
         <AndroidAppId></AndroidAppId>
         <IosAppId></IosAppId>
         <AppTemplateFolder></AppTemplateFolder>
+        <ContentCategoryId></ContentCategoryId>
+        <PageTitle>video.monngon.tv</PageTitle>
+        <PageHeaderLogo>/public/images/leotech-logo.png</PageHeaderLogo>
+        <BaseStaticUrl>//video.monngon.tv</BaseStaticUrl>
+        <BaseAdminApiUrl>//video.monngon.tv</BaseAdminApiUrl>
+        <BaseDeliveryApiUrl>//api.monngon.tv</BaseDeliveryApiUrl>
+        <BaseUploaderUrl>//uploader.monngon.tv</BaseUploaderUrl>
+        <BaseLogCollectorUrl>//log.monngon.tv</BaseLogCollectorUrl>
+        <AdsTxtContent></AdsTxtContent>
+        <GoogleTrackingId></GoogleTrackingId>
+        <NumberSimilarPostsInList>7</NumberSimilarPostsInList>
     </MediaNetwork>
     
 </MediaNetworkList>

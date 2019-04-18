@@ -53,7 +53,7 @@
 		"mainHttpVideoMonngon": {
 			"name": "MainHttpWorker",
 			"host": "127.0.0.1",
-			"port": 9192,
+			"port": 9191,
 			"classNameHttpRouter": "leotech.cms.router.MainHttpRouter",
 			"bodyHandlerEnabled": true,
 			"sockJsHandlerEnabled": true,
