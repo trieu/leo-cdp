@@ -11,6 +11,7 @@ import com.arangodb.ArangoCursor;
 import com.arangodb.ArangoDatabase;
 import com.arangodb.entity.BaseDocument;
 
+import leotech.cms.model.ContentClassPostQuery;
 import leotech.cms.model.Post;
 import leotech.core.config.AqlTemplate;
 import leotech.system.util.database.ArangoDbQuery;
@@ -19,8 +20,8 @@ import leotech.system.util.database.ArangoDbUtil;
 import rfx.core.util.StringUtil;
 
 public class PostDaoUtil {
-    
-    //for
+
+    // for
     static long limitTotalPosts = 9000;// free = 9000, $9 = 90000, $99 = 900000, $999 = 9000000, $9999 = no limit
 
     private static final String AQL_FIND_KEY_AQL = Post.contentFindKeyAql(Post.COLLECTION_NAME);
@@ -35,7 +36,7 @@ public class PostDaoUtil {
     static final String AQL_GET_POSTS_OF_DEFAULT_HOME_PAGE = AqlTemplate.get("AQL_GET_POSTS_OF_DEFAULT_HOME_PAGE");
     static final String AQL_GET_ALL_POSTS_BY_CATEGORY_OR_PAGE = AqlTemplate.get("AQL_GET_ALL_POSTS_BY_CATEGORY_OR_PAGE");
     static final String AQL_GET_KEYWORDS_OF_ALL_POSTS = AqlTemplate.get("AQL_GET_KEYWORDS_OF_ALL_POSTS");
-    
+
     public static boolean checkLimitOfLicense() {
 	return limitTotalPosts > 0 && countTotalOfPostCollection() < limitTotalPosts;
     }
@@ -245,6 +246,24 @@ public class PostDaoUtil {
 	    }
 	}).getResultsAsList();
 	return list;
+    }
+
+    public static String buildContentClassPostQuery(List<ContentClassPostQuery> ccpQueries) {
+	StringBuilder aql = new StringBuilder();
+
+	//TODO
+	
+	String returnSingle = " RETURN {title : p.title, headlineImageUrl: p.headlineImageUrl, id : p.id, description: p.description, contentClass : p.contentClass, creationTime : p.creationTime, modificationTime : p.modificationTime, headlineImages: p.headlineImages , slug : p.slug }  ) ";
+	for (ContentClassPostQuery query : ccpQueries) {
+	    String ccpQueryKey = "class_" + query.getContentClass();
+	    String categoryKey = query.getCategoryKey();
+	    int startIndex = query.getStartIndex();
+	    int limit = query.getLimit();
+	    aql.append("LET ").append(ccpQueryKey).append(" = (FOR p in post FILTER ( \"").append(categoryKey)
+		    .append("\" IN p.categoryKeys[*]) AND (p.privacyStatus == 0 OR p.privacyStatus == 1 ) ").append(" AND (p.contentClass == \"news\")")
+		    .append("SORT p.modificationTime DESC LIMIT  ").append(startIndex).append(",").append(limit).append(returnSingle);
+	}
+	return aql.toString();
     }
 
     public static Map<String, Object> getPostsOfDefaultHomepage() {

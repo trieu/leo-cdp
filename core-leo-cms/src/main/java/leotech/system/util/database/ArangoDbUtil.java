@@ -14,40 +14,43 @@ import rfx.core.util.Utils;
 
 public class ArangoDbUtil {
 
-    
-    private static final DbConfigs DB_CONFIG;
-    static {
-	String defaultArangoDbConfig = HttpWorker.getInstance().getDefaultDbConfig();
+    private static DbConfigs dbConfigs = null;
 
-	if (StringUtil.isNotEmpty(defaultArangoDbConfig)) {
-	    DB_CONFIG = DbConfigs.load(defaultArangoDbConfig.trim());
-	    if (DB_CONFIG == null) {
-		Utils.exitSystemAfterTimeout(2000);
-		throw new IllegalArgumentException("defaultArangoDbConfig in workers.xml is not valid");
-	    }
-	} else {
-	    Utils.exitSystemAfterTimeout(2000);
-	    throw new IllegalArgumentException("defaultArangoDbConfig in workers.xml is not valid");
-	}
-    }
-
-    private static final String PASSWORD = DB_CONFIG.getPassword();
-    private static final String USERNAME = DB_CONFIG.getUsername();
-    private static final String DB_NAME = DB_CONFIG.getDatabase();
-    private static final String HOST = DB_CONFIG.getHost();
-    private static final int PORT = DB_CONFIG.getPort();
-    private static final long connectionTtl = 5 * 60 * 1000;
+    private static long connectionTtl = 5 * 60 * 1000;
     static final int MAX_CONNECTIONS = 120;
 
     static ArangoDB arangoDB = null;
     static ArangoDatabase arangoDatabase = null;
     static Map<String, ArangoDatabase> arangoDatabaseInstances = new HashMap<>();
 
+    static void initDbConfigs() {
+	if (dbConfigs == null) {
+	    String defaultArangoDbConfig = HttpWorker.getInstance().getDefaultDbConfig();
+	    if (StringUtil.isNotEmpty(defaultArangoDbConfig)) {
+		dbConfigs = DbConfigs.load(defaultArangoDbConfig.trim());
+		if (dbConfigs == null) {
+		    Utils.exitSystemAfterTimeout(2000);
+		    throw new IllegalArgumentException("defaultArangoDbConfig in workers.xml is not valid");
+		}
+	    } else {
+		Utils.exitSystemAfterTimeout(2000);
+		throw new IllegalArgumentException("defaultArangoDbConfig in workers.xml is not valid");
+	    }
+	}
+    }
+    
+    public static void setDbConfigs(DbConfigs dbConfigs) {
+	if(dbConfigs != null) {
+	    ArangoDbUtil.dbConfigs = dbConfigs;    
+	}	
+    }
+
     public static ArangoDatabase getArangoDatabase() {
+	initDbConfigs();
 	if (arangoDatabase == null) {
-	    ArangoDB arangoDB = new ArangoDB.Builder().host(HOST, PORT).user(USERNAME).password(PASSWORD).chunksize(50000).connectionTtl(connectionTtl)
-		    .maxConnections(MAX_CONNECTIONS).build();
-	    arangoDatabase = arangoDB.db(DB_NAME);
+	    ArangoDB arangoDB = new ArangoDB.Builder().host(dbConfigs.getHost(), dbConfigs.getPort()).user(dbConfigs.getUsername()).password(dbConfigs.getPassword())
+		    .chunksize(50000).connectionTtl(connectionTtl).maxConnections(MAX_CONNECTIONS).build();
+	    arangoDatabase = arangoDB.db(dbConfigs.getDatabase());
 	}
 	return arangoDatabase;
     }

@@ -64,7 +64,7 @@ public class DbConfigs implements Serializable {
     static String sqlDbConfigsJson = null;
 
     public static DbConfigs load(String dbId) {
-        return loadFromFile(CommonUtil.getSqlDbConfigFile(), dbId);
+        return loadFromFile(CommonUtil.getSqlDbConfigFile(), dbId.trim());
     }
 
     public static DbConfigs loadConfigs(String sqlDbConfigsJson, String dbId) {
