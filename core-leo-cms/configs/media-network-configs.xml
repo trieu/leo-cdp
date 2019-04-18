@@ -1,11 +1,86 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<ads>
-	<placement id="headerAdPlacement">
-		<ins class="adsbygoogle" style="display:block"
-			data-ad-client="ca-pub-9034869050940123" data-ad-slot="1376192829"
-			data-ad-format="auto" data-full-width-responsive="true"></ins>
-		<script>
-			(adsbygoogle = window.adsbygoogle || []).push({});
-		</script>
-	</placement>
-</ads>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<MediaNetworkList>
+
+    <MediaNetwork>
+        <networkId>-3032901574009874613</networkId>
+        <name>XemGiDay.com</name>
+        <uri>xemgiday</uri>
+        <domain>xemgiday.com</domain>
+        <WebTemplateFolder>xemgiday</WebTemplateFolder>
+        <AndroidAppId></AndroidAppId>
+        <IosAppId></IosAppId>
+        <AppTemplateFolder></AppTemplateFolder>
+        <AdsPlacements>
+            <AdsPlacement>
+                <code>
+                	<![CDATA[
+						<ins class="adsbygoogle" style="display:block"
+							data-ad-client="ca-pub-9034869050940123" data-ad-slot="1376192829"
+							data-ad-format="auto" data-full-width-responsive="true"></ins>
+						<script>
+							(adsbygoogle = window.adsbygoogle || []).push({});
+						</script>
+					]]>
+				</code>
+                <id>1</id>
+                <videoAd>false</videoAd>
+            </AdsPlacement>
+        </AdsPlacements>
+    </MediaNetwork>
+    
+    <MediaNetwork>
+        <networkId>10000</networkId>
+        <name>Blueseed Admin</name>
+        <uri>admin</uri>
+        <domain>blueseed.leocloudcms.com</domain>
+        <WebTemplateFolder>default-admin-template</WebTemplateFolder>
+        <AndroidAppId></AndroidAppId>
+        <IosAppId></IosAppId>
+        <AppTemplateFolder></AppTemplateFolder>
+    </MediaNetwork>
+    
+    <MediaNetwork>
+        <networkId>10000</networkId>
+        <name>Leo CMS Admin</name>
+        <uri>admin</uri>
+        <domain>admin.leocloudcms.com</domain>
+        <WebTemplateFolder>default-admin-template</WebTemplateFolder>
+        <AndroidAppId></AndroidAppId>
+        <IosAppId></IosAppId>
+        <AppTemplateFolder></AppTemplateFolder>
+    </MediaNetwork>
+    
+    <MediaNetwork>
+        <networkId>5222157891479909862</networkId>
+        <name>LeoCloudCMS</name>
+        <uri>leocloudcms</uri>
+        <domain>leocloudcms.com</domain>
+        <WebTemplateFolder>default-web-template</WebTemplateFolder>
+        <AndroidAppId></AndroidAppId>
+        <IosAppId></IosAppId>
+        <AppTemplateFolder></AppTemplateFolder>
+    </MediaNetwork>
+    
+    <MediaNetwork>
+        <networkId>10000</networkId>
+        <name>Bluescope Admin</name>
+        <uri>admin</uri>
+        <domain>bluescope.leocloudcms.com</domain>
+        <WebTemplateFolder>default-admin-template</WebTemplateFolder>
+        <AndroidAppId></AndroidAppId>
+        <IosAppId></IosAppId>
+        <AppTemplateFolder></AppTemplateFolder>
+    </MediaNetwork>
+    
+    <MediaNetwork>
+        <networkId>8121298357381811926</networkId>
+        <name>MonNgon.TV</name>
+        <uri>monngon</uri>
+        <domain>video.monngon.tv</domain>
+        <WebTemplateFolder>monngon</WebTemplateFolder>
+        <AndroidAppId></AndroidAppId>
+        <IosAppId></IosAppId>
+        <AppTemplateFolder></AppTemplateFolder>
+    </MediaNetwork>
+    
+</MediaNetworkList>

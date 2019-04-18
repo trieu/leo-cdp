@@ -24,18 +24,24 @@ public class HttpWorker extends BaseWorker {
 
     private static final String EVENTBUS = "/eventbus/*";
 
-    static HttpWorker instance;
+    static HttpWorker instance = null;
 
     final HttpRoutingConfigs httpRoutingConfigs;
+    final String defaultDbConfig;
 
     public HttpRoutingConfigs getHttpRoutingConfigs() {
 	return httpRoutingConfigs;
     }
+    
+    public String getDefaultDbConfig() {
+	return defaultDbConfig;
+    }
 
     protected HttpWorker(String workerName) {
 	super(workerName);
-
 	httpRoutingConfigs = HttpRoutingConfigs.load(workerName);
+	defaultDbConfig = httpRoutingConfigs.getDefaultDbConfig();
+	System.out.println("...HttpWorker.defaultDbConfig " + defaultDbConfig);
 	if (httpRoutingConfigs == null) {
 	    throw new IllegalArgumentException("not valid workerName in " + HttpRoutingConfigs.CONFIGS_HTTP_ROUTING_CONFIGS_JSON);
 	} else {

@@ -1,27 +1,25 @@
 package leotech.cms.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import com.arangodb.ArangoCollection;
+import com.google.gson.Gson;
 
 import leotech.cms.model.common.PersistentArangoObject;
 import rfx.core.util.HashUtil;
 
-@XmlRootElement(name = "MediaNetwork")
-@XmlAccessorType (XmlAccessType.FIELD)
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class MediaNetwork implements PersistentArangoObject {
 
     public static final long DEFAULT_ID = 10000L;
 
-    @XmlAttribute(name = "networkId")
+    @XmlElement(name = "networkId")
     long networkId = DEFAULT_ID; // unique ID
 
     @XmlElement(name = "name")
@@ -154,5 +152,10 @@ public class MediaNetwork implements PersistentArangoObject {
         this.adsPlacements = adsPlacements;
     }
 
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        return new Gson().toJson(this);
+    }
     
 }

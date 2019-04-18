@@ -20,7 +20,7 @@
 			,"dbdriverclasspath" : "com.arangodb.ArangoDB"
 			,"enabled" : true
 		},
-		"dbConfigsDevLeoCms" : {
+		"dbConfigsXemGiDay" : {
 			"username" : "leodev"
 			,"password" : "LeoCms@2019"
 			,"database" : "leocms"
@@ -30,7 +30,7 @@
 			,"dbdriverclasspath" : "com.arangodb.ArangoDB"
 			,"enabled" : true
 		},
-		"monngon_db":{
+		"dbConfigsVideoMonngon":{
 			"username" : "monngon"
 			,"password" : "Platform@123456"
 			,"database" : "monngon_cms"

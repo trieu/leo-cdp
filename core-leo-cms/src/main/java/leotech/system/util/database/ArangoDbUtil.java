@@ -8,16 +8,16 @@ import com.arangodb.ArangoDB;
 import com.arangodb.ArangoDatabase;
 
 import leotech.core.config.DbConfigs;
-import rfx.core.configs.WorkerConfigs;
+import leotech.starter.HttpWorker;
 import rfx.core.util.StringUtil;
 import rfx.core.util.Utils;
 
 public class ArangoDbUtil {
 
-    private static final WorkerConfigs WORKER_CONFIGS = WorkerConfigs.load();
+    
     private static final DbConfigs DB_CONFIG;
     static {
-	String defaultArangoDbConfig = WORKER_CONFIGS.getCustomConfig("defaultArangoDbConfig");
+	String defaultArangoDbConfig = HttpWorker.getInstance().getDefaultDbConfig();
 
 	if (StringUtil.isNotEmpty(defaultArangoDbConfig)) {
 	    DB_CONFIG = DbConfigs.load(defaultArangoDbConfig.trim());

@@ -1,19 +1,23 @@
 package leotech.cms.service;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamReader;
 
 import io.vertx.core.json.JsonObject;
-import leotech.cms.dao.MediaNetworkDao;
 import leotech.cms.model.AdsPlacement;
 import leotech.cms.model.MediaNetwork;
+import leotech.cms.model.MediaNetworkXml;
 
 public class MediaNetworkDataService {
 
@@ -42,9 +46,10 @@ public class MediaNetworkDataService {
 	// public web apps
 	mapHostToMediaApp.put("leocloudcms.com", new MediaNetwork("LeoCloudCMS", "leocloudcms", "leocloudcms.com", DEFAUFT_WEB_TEMPLATE_FOLDER));
 	mapHostToMediaApp.put("video.monngon.tv", new MediaNetwork("MonNgon.TV", "monngon", "video.monngon.tv", "monngon"));
-	
+
 	MediaNetwork mediaNetwork = new MediaNetwork("XemGiDay.com", "xemgiday", "xemgiday.com", "xemgiday");
-	mediaNetwork.setAdsPlacements(Arrays.asList(new AdsPlacement("1", "aaa", false)));
+	mediaNetwork.setAdsPlacements(Arrays.asList(new AdsPlacement("1", "aaa", false),new AdsPlacement("2", "bbb", true)));
+
 	mapHostToMediaApp.put("xemgiday.com", mediaNetwork);
     }
 
@@ -77,15 +82,19 @@ public class MediaNetworkDataService {
 
     public static void main(String[] args) {
 	try {
-	    
-	    MediaNetworkDao mediaNetworkDao = new MediaNetworkDao();
-	    
-	    mediaNetworkDao.setMediaNetworks( new ArrayList<>(mapHostToMediaApp.values()));
-	    
-	    JAXBContext jc = JAXBContext.newInstance(MediaNetworkDao.class);
+	        	    
+	    JAXBContext jc = JAXBContext.newInstance(MediaNetworkXml.class);
+	   
 	    Marshaller marshaller = jc.createMarshaller();
 	    marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-	    marshaller.marshal(mediaNetworkDao, System.out);
+	    marshaller.marshal( new MediaNetworkXml(new ArrayList<>(mapHostToMediaApp.values())), System.out);
+	    
+//	    Unmarshaller unmarshaller = jc.createUnmarshaller();
+//	    XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+//	    XMLStreamReader reader = inputFactory.createXMLStreamReader(new FileInputStream("./configs/media-network-configs.xml"));
+//	    MediaNetworkXml mediaNetworkXml = unmarshaller.unmarshal(reader, MediaNetworkXml.class).getValue();
+//	    
+//	    System.out.println(mediaNetworkXml.getMediaNetworks().get(0).getAdsPlacements().size());
 
 	} catch (Exception e) {
 	    // TODO Auto-generated catch block

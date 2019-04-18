@@ -51,39 +51,38 @@ public class WebDataModelService {
 
     public static WebDataModel getDirectRenderModel(String path, String networkDomain, MultiMap params, String userSession) {
 	MediaNetwork network = MediaNetworkDataService.getContentNetwork(networkDomain);
-	long networkId = network.getNetworkId();
-	String templateFolder = network.getWebTemplateFolder();
+	
 	String objectId;
 	WebDataModel model = null;
-	
+
 	// media network
 	if (path.startsWith(HTML_NETWORK)) {
 	    objectId = path.replace(HTML_NETWORK, "");
-	    model = buildMediaNetworkDataModel(networkDomain, network, templateFolder, objectId);
+	    model = buildMediaNetworkDataModel(network, objectId);
 	}
 	// media category:
 	// https://www.iab.com/guidelines/iab-quality-assurance-guidelines-qag-taxonomy/
 	else if (path.startsWith(HTML_CATEGORY)) {
 	    objectId = path.replace(HTML_CATEGORY, "");
-	    model = buildCategoryDataModel(networkDomain, network, networkId, templateFolder, objectId);
+	    model = buildCategoryDataModel(network, objectId);
 	}
 	// page/playlist, master node of sorted posts by specific ranking algorithms
 	else if (path.startsWith(HTML_PAGE)) {
 	    objectId = path.replace(HTML_PAGE, "");
 	    int startIndex = StringUtil.safeParseInt(params.get("startIndex"), 0);
 	    int numberResult = StringUtil.safeParseInt(params.get("numberResult"), 6);
-	    model = buildPageDataModel(path, networkDomain, network, networkId, templateFolder, objectId, startIndex, numberResult);
+	    model = buildPageDataModel(path, network, objectId, startIndex, numberResult);
 	}
 	// post: renderable content for end-user (video, text, slide, images,...)
 	else if (path.startsWith(HTML_POST)) {
 	    String slug = path.replace(HTML_POST, "");
 	    int startIndex = StringUtil.safeParseInt(params.get("startIndex"), 0);
 	    int numberResult = StringUtil.safeParseInt(params.get("numberResult"), 9);
-	    model = buildPostDataModel(userSession, networkDomain, network, networkId, templateFolder, slug, startIndex, numberResult);
+	    model = buildPostDataModel(userSession, network, slug, startIndex, numberResult);
 	}
 	// not found 404
 	if (model == null) {
-	    model = WebDataModel.page404(networkDomain, templateFolder);
+	    model = WebDataModel.page404(networkDomain, network.getWebTemplateFolder());
 	}
 
 	// set data for Top Page
@@ -99,15 +98,17 @@ public class WebDataModelService {
 	for (Page page : topPages) {
 	    String id = page.getId();
 	    String uri = "/html/page/" + page.getSlug();
-	    //TODO ranking by use profile here
+	    // TODO ranking by use profile here
 	    long rankingScore = page.getRankingScore();
 	    pageNavigators.add(new PageNavigator(id, uri, page.getTitle(), rankingScore));
 	}
 	model.setTopPageNavigators(pageNavigators);
     }
 
-    public static WebDataModel buildMediaNetworkDataModel(String networkDomain, MediaNetwork network, String templateFolder, String objectId) {
+    public static WebDataModel buildMediaNetworkDataModel(MediaNetwork network, String objectId) {
 	WebDataModel model;
+	String networkDomain = network.getDomain();
+	String templateFolder = network.getWebTemplateFolder();
 	if (StringUtil.isNotEmpty(objectId)) {
 	    model = new MediaNetworkDataModel(networkDomain, templateFolder, SINGLE_NETWORK, network.getName());
 	} else {
@@ -116,9 +117,10 @@ public class WebDataModelService {
 	return model;
     }
 
-    public static WebDataModel buildPostDataModel(String userSession, String networkDomain, MediaNetwork network, long networkId, String templateFolder, String slug,
-	    int startIndex, int numberResult) {
+    public static WebDataModel buildPostDataModel(String userSession, MediaNetwork network, String slug, int startIndex, int numberResult) {
 	PostDataModel model;
+	String networkDomain = network.getDomain();
+	String templateFolder = network.getWebTemplateFolder();
 	if (StringUtil.isNotEmpty(slug)) {
 	    // CrawledYouTubeVideo video =
 	    // CrawledYouTubeVideoDaoUtil.getByVideoID(objectId);
@@ -144,15 +146,15 @@ public class WebDataModelService {
 		model.setPageKeywords(keywords);
 		String pageUrl = model.getBaseStaticUrl() + HTML_POST + slug;
 		model.setPageUrl(pageUrl);
-		model.setContextPageId(contextPageIds.size()>0? contextPageIds.get(0):"");
-		
+		model.setContextPageId(contextPageIds.size() > 0 ? contextPageIds.get(0) : "");
+
 		// TODO more abstract here for multipe ranking
 		List<Post> simlilarPosts = PostDataService.getSimilarPosts(contextPageIds, postId);
 		model.setRecommendedPosts(simlilarPosts);
 		User user = BaseSecuredDataApi.getUserFromSession(userSession);
 		System.out.println("userSession " + userSession + " " + user);
 		if (user != null) {
-		    model.setAdminRole(BaseSecuredDataApi.isAdminRole(user));	
+		    model.setAdminRole(BaseSecuredDataApi.isAdminRole(user));
 		    model.setSessionUserId(user.getKey());
 		}
 
@@ -161,7 +163,7 @@ public class WebDataModelService {
 	    }
 
 	} else {
-	    List<Post> posts = PostDaoUtil.listByNetwork(networkId, startIndex, numberResult);
+	    List<Post> posts = PostDaoUtil.listByNetwork(network.getNetworkId(), startIndex, numberResult);
 	    String title = network.getName() + " - Top Posts";
 	    model = new PostDataModel(networkDomain, templateFolder, LIST_POST, title, posts);
 	    int nextStartIndex = startIndex + numberResult;
@@ -173,9 +175,11 @@ public class WebDataModelService {
 	return model;
     }
 
-    public static WebDataModel buildPageDataModel(String path, String networkDomain, MediaNetwork network, long networkId, String templateFolder, String objectId,
-	    int startIndex, int numberResult) {
+    public static WebDataModel buildPageDataModel(String path, MediaNetwork network, String objectId, int startIndex,
+	    int numberResult) {
 	WebDataModel model;
+	String networkDomain = network.getDomain();
+	String templateFolder = network.getWebTemplateFolder();
 	if (StringUtil.isNotEmpty(objectId)) {
 	    Page page = PageDataService.getPageWithPosts(objectId, startIndex, numberResult);
 	    if (page != null) {
@@ -196,7 +200,7 @@ public class WebDataModelService {
 
 	} else {
 	    String title = network.getName() + " - Top Pages";
-	    List<Page> pages = PageDataService.getPagesByNetwork(networkId, startIndex, numberResult);
+	    List<Page> pages = PageDataService.getPagesByNetwork(network.getNetworkId(), startIndex, numberResult);
 	    model = new PageDataModel(networkDomain, templateFolder, LIST_PAGE, title, pages);
 	    int nextStartIndex = startIndex + numberResult;
 	    if (pages.size() < numberResult) {
@@ -207,8 +211,10 @@ public class WebDataModelService {
 	return model;
     }
 
-    public static WebDataModel buildCategoryDataModel(String networkDomain, MediaNetwork network, long networkId, String templateFolder, String objectId) {
+    public static WebDataModel buildCategoryDataModel(MediaNetwork network, String objectId) {
 	WebDataModel model;
+	String networkDomain = network.getDomain();
+	String templateFolder = network.getWebTemplateFolder();
 	if (StringUtil.isNotEmpty(objectId)) {
 	    Category category = CategoryDataService.getCategory(objectId);
 	    if (category != null) {
@@ -219,7 +225,7 @@ public class WebDataModelService {
 	    }
 	} else {
 	    String title = network.getName() + "- All categories";
-	    List<Category> cats = CategoryDataService.getCategoriesByNetwork(networkId);
+	    List<Category> cats = CategoryDataService.getCategoriesByNetwork(network.getNetworkId());
 	    model = new CategoryDataModel(networkDomain, templateFolder, LIST_CATEGORY, title, cats);
 	}
 	return model;

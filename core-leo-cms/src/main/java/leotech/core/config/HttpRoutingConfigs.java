@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com.google.gson.Gson;
 
+import rfx.core.configs.WorkerConfigs;
 import rfx.core.util.FileUtils;
 
 public class HttpRoutingConfigs {
@@ -15,6 +16,7 @@ public class HttpRoutingConfigs {
     String classNameHttpRouter;
     boolean bodyHandlerEnabled = false;
     boolean sockJsHandlerEnabled = false;
+    String defaultDbConfig;
 
     public static final class HttpRoutingConfigsMap {
 
@@ -103,4 +105,17 @@ public class HttpRoutingConfigs {
 	this.sockJsHandlerEnabled = sockJsHandlerEnabled;
     }
 
+    public String getDefaultDbConfig() {
+	if(defaultDbConfig == null) {
+	    defaultDbConfig = WorkerConfigs.load().getCustomConfig("defaultArangoDbConfig");
+	}
+        return defaultDbConfig;
+    }
+
+    public void setDefaultDbConfig(String defaultDbConfig) {
+        this.defaultDbConfig = defaultDbConfig;
+    }
+
+    
+    
 }
