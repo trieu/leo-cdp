@@ -12,11 +12,15 @@ import com.univocity.parsers.tsv.TsvParserSettings;
 import leotech.cms.dao.UserDaoUtil;
 import leotech.cms.model.MediaNetwork;
 import leotech.cms.model.User;
+import leotech.core.config.DbConfigs;
+import leotech.system.util.database.ArangoDbUtil;
 
 public class UserProfileImporter {
 
     public static void main(String[] args) {
 	try {
+	    ArangoDbUtil.setDbConfigs(DbConfigs.load("dbConfigsBluescope"));
+	    
 	    TsvParserSettings settings = new TsvParserSettings();
 	    TsvParser parser = new TsvParser(settings);
 
@@ -35,6 +39,8 @@ public class UserProfileImporter {
 		user.addCustomData("department", department);
 		user.setStatus(User.STATUS_ACTIVE);
 		user.setRole(User.ROLE_STANDARD_USER);
+		UserDaoUtil.deleteByUserLogin(userLogin);
+		user.setUserLogin(userLogin.toLowerCase());
 		UserDaoUtil.createNew(user);
 		System.out.println(new Gson().toJson(user));
 	    });

@@ -2,18 +2,26 @@ package leotech.cms.model;
 
 public class ContentClassPostQuery {
 
+    String key;
     String contentClass;
     String categoryKey;
 
     int startIndex = 0;
     int limit = 10;
-    
-    
 
-    public ContentClassPostQuery(String contentClass, String categoryKey) {
+    public ContentClassPostQuery(String key, String contentClass, String categoryKey) {
 	super();
+	this.key = key;
 	this.contentClass = contentClass;
 	this.categoryKey = categoryKey;
+    }
+
+    public String getKey() {
+	return key;
+    }
+
+    public void setKey(String key) {
+	this.key = key;
     }
 
     public String getContentClass() {

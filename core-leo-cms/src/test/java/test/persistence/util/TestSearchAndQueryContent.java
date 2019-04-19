@@ -77,11 +77,11 @@ public class TestSearchAndQueryContent {
 
     public static void main(String[] args) {
 	ArangoDbUtil.setDbConfigs(DbConfigs.load("dbConfigsBluescope"));
-
-	//TODO
+	
 	List<ContentClassPostQuery> ccpQueries = new ArrayList<>();
-	ccpQueries.add(new ContentClassPostQuery("news", "123"));
-	ccpQueries.add(new ContentClassPostQuery("demo", "123333"));
+	ccpQueries.add(new ContentClassPostQuery("market_news","news", "1329181"));
+	ccpQueries.add(new ContentClassPostQuery("product_list","product", "1329376"));
+	ccpQueries.add(new ContentClassPostQuery("project_list","project", "1329482"));
 
 	System.out.println(PostDaoUtil.buildContentClassPostQuery(ccpQueries));
 	System.out.println(PostDaoUtil.checkLimitOfLicense());
@@ -90,9 +90,12 @@ public class TestSearchAndQueryContent {
 
     public static void testQueryPostsForHomepage() {
 	CmsLogUtil.setLogLevelToInfo();
-
+	List<ContentClassPostQuery> ccpQueries = new ArrayList<>();
+	ccpQueries.add(new ContentClassPostQuery("market_news","news", "1329181"));
+	ccpQueries.add(new ContentClassPostQuery("product_list","product", "1329376"));
+	ccpQueries.add(new ContentClassPostQuery("project_list","project", "1329482"));
 	// new TestSearchAndQueryContent().listPostsByCategoriesAndKeywords();
-	Map<String, Object> map = PostDaoUtil.getPostsOfDefaultHomepage();
+	Map<String, Object> map = PostDaoUtil.getPostsOfDefaultHomepage(ccpQueries);
 	System.out.println(JsonDataPayload.ok("", map));
 	rfx.core.util.Utils.exitSystemAfterTimeout(1000);
     }

@@ -48,30 +48,6 @@ AQL_GET_VIEWABLE_POSTS_BY_PAGE =>
 	RETURN p
 ;
 
-AQL_GET_POSTS_OF_DEFAULT_HOME_PAGE =>
-	LET market_news = (FOR p in post FILTER ( "1329181" IN p.categoryKeys[*]) 
-	    AND (p.privacyStatus == 0 OR p.privacyStatus == 1 ) 
-	    AND (p.contentClass == "news")
-	    SORT p.modificationTime DESC 
-	    LIMIT 0,20
-	    RETURN {title : p.title, headlineImageUrl: p.headlineImageUrl, id : p.id, description: p.description, contentClass : p.contentClass, creationTime : p.creationTime, modificationTime : p.modificationTime, headlineImages: p.headlineImages , slug : p.slug } 
-	    )	
-	LET product_list = (FOR p in post FILTER ( "1329376" IN p.categoryKeys[*]) 
-	    AND (p.privacyStatus == 0 OR p.privacyStatus == 1 ) 
-	    AND (p.contentClass == "product")
-	    SORT p.modificationTime DESC 
-	    LIMIT 0,30
-	    RETURN {title : p.title, headlineImageUrl: p.headlineImageUrl, id : p.id, description: p.description, contentClass : p.contentClass, creationTime : p.creationTime, modificationTime : p.modificationTime, headlineImages: p.headlineImages , slug : p.slug } 
-	    )	    
-	LET project_list = (FOR p in post FILTER ( "1329482" IN p.categoryKeys[*]) 
-	    AND (p.privacyStatus == 0 OR p.privacyStatus == 1 ) 
-	    AND (p.contentClass == "project")
-	    SORT p.modificationTime DESC 
-	    LIMIT 0,8
-	    RETURN {title : p.title, headlineImageUrl: p.headlineImageUrl, id : p.id, description: p.description, contentClass : p.contentClass, creationTime : p.creationTime, modificationTime : p.modificationTime, headlineImages: p.headlineImages , slug : p.slug } 
-	    )
-	RETURN {market_news, product_list, project_list}
-;
 
 AQL_GET_KEYWORDS_OF_ALL_POSTS =>
 	LET list = (FOR doc IN post FILTER LENGTH( doc.keywords ) > 0 return doc.keywords)

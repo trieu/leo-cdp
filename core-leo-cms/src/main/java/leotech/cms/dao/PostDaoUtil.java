@@ -34,7 +34,7 @@ public class PostDaoUtil {
 
     static final String AQL_GET_ALL_POSTS_BY_PAGE = AqlTemplate.get("AQL_GET_ALL_POSTS_BY_PAGE");
 
-    static final String AQL_GET_POSTS_OF_DEFAULT_HOME_PAGE = AqlTemplate.get("AQL_GET_POSTS_OF_DEFAULT_HOME_PAGE");
+    
     static final String AQL_GET_ALL_POSTS_BY_CATEGORY_OR_PAGE = AqlTemplate.get("AQL_GET_ALL_POSTS_BY_CATEGORY_OR_PAGE");
     static final String AQL_GET_KEYWORDS_OF_ALL_POSTS = AqlTemplate.get("AQL_GET_KEYWORDS_OF_ALL_POSTS");
 
@@ -127,20 +127,22 @@ public class PostDaoUtil {
 	}).getResultsAsList();
 	return list;
     }
-    
-    public static List<Post> listPostsByMediaNetwork(MediaNetwork mediaNetwork, boolean includeProtected, boolean includePrivate, int startIndex, int numberResult) {
-   	return listAllByContentClassAndKeywords(mediaNetwork.getContentCategoryId(), mediaNetwork.getPublicContentClass(), new String[] {}, includeProtected, includePrivate, false, startIndex, numberResult);
-       }
 
-    public static List<Post> listAllByContentClass(String contentCategoryId, String contentClass, boolean includeProtected, boolean includePrivate, int startIndex, int numberResult) {
+    public static List<Post> listPostsByMediaNetwork(MediaNetwork mediaNetwork, boolean includeProtected, boolean includePrivate, int startIndex, int numberResult) {
+	return listAllByContentClassAndKeywords(mediaNetwork.getContentCategoryId(), mediaNetwork.getPublicContentClass(), new String[] {}, includeProtected, includePrivate, false,
+		startIndex, numberResult);
+    }
+
+    public static List<Post> listAllByContentClass(String contentCategoryId, String contentClass, boolean includeProtected, boolean includePrivate, int startIndex,
+	    int numberResult) {
 	return listAllByContentClassAndKeywords(contentCategoryId, contentClass, new String[] {}, includeProtected, includePrivate, false, startIndex, numberResult);
     }
 
-    public static List<Post> listAllByContentClassAndKeywords(String contentCategoryId, String contentClass, String[] keywords, boolean includeProtected, boolean includePrivate, boolean joinResultByAnd,
-	    int startIndex, int numberResult) {
-	
+    public static List<Post> listAllByContentClassAndKeywords(String contentCategoryId, String contentClass, String[] keywords, boolean includeProtected, boolean includePrivate,
+	    boolean joinResultByAnd, int startIndex, int numberResult) {
+
 	System.out.println("listAllByContentClassAndKeywords ");
-	
+
 	if (StringUtil.isEmpty(contentClass)) {
 	    System.out.println("contentClass is empty");
 	    return new ArrayList<Post>(0);
@@ -149,9 +151,9 @@ public class PostDaoUtil {
 	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
 	Map<String, Object> bindVars = new HashMap<>(1);
 	bindVars.put("contentClass", contentClass);
-	
+
 	System.out.println("contentCategoryId " + contentCategoryId);
-	if(StringUtil.isNotEmpty(contentCategoryId)) {	  
+	if (StringUtil.isNotEmpty(contentCategoryId)) {
 	    aql.append(" AND @contentCategoryId IN p.categoryKeys[*] ");
 	    bindVars.put("contentCategoryId", contentCategoryId);
 	}
@@ -265,27 +267,29 @@ public class PostDaoUtil {
 
     public static String buildContentClassPostQuery(List<ContentClassPostQuery> ccpQueries) {
 	StringBuilder aql = new StringBuilder();
-
-	//TODO
-	
-	String returnSingle = " RETURN {title : p.title, headlineImageUrl: p.headlineImageUrl, id : p.id, description: p.description, contentClass : p.contentClass, creationTime : p.creationTime, modificationTime : p.modificationTime, headlineImages: p.headlineImages , slug : p.slug }  ) ";
+	String returnSingle = " RETURN {title: p.title, headlineImageUrl: p.headlineImageUrl, id: p.id, description: p.description, contentClass: p.contentClass, creationTime: p.creationTime, modificationTime : p.modificationTime, headlineImages: p.headlineImages , slug : p.slug }  ) ";
+	List<String> keys = new ArrayList<>(ccpQueries.size());
 	for (ContentClassPostQuery query : ccpQueries) {
-	    String ccpQueryKey = "class_" + query.getContentClass();
+	    String ccpQueryKey = query.getKey();
+	    keys.add(ccpQueryKey);
 	    String categoryKey = query.getCategoryKey();
 	    int startIndex = query.getStartIndex();
 	    int limit = query.getLimit();
 	    aql.append("LET ").append(ccpQueryKey).append(" = (FOR p in post FILTER ( \"").append(categoryKey)
 		    .append("\" IN p.categoryKeys[*]) AND (p.privacyStatus == 0 OR p.privacyStatus == 1 ) ").append(" AND (p.contentClass == \"news\")")
-		    .append("SORT p.modificationTime DESC LIMIT  ").append(startIndex).append(",").append(limit).append(returnSingle);
+		    .append("SORT p.modificationTime DESC LIMIT  ").append(startIndex).append(",").append(limit).append(returnSingle).append("\n");
+
 	}
+	aql.append(" RETURN {").append(StringUtil.joinFromList(",", keys)).append("}");
 	return aql.toString();
     }
 
-    public static Map<String, Object> getPostsOfDefaultHomepage() {
+    public static Map<String, Object> getPostsOfDefaultHomepage(List<ContentClassPostQuery> ccpQueries) {
 	Map<String, Object> map = new HashMap<>();
 	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
 	ArangoCursor<BaseDocument> cursor = null;
-	cursor = db.query(AQL_GET_POSTS_OF_DEFAULT_HOME_PAGE, new HashMap<>(0), null, BaseDocument.class);
+	String aql = buildContentClassPostQuery(ccpQueries);
+	cursor = db.query(aql, new HashMap<>(0), null, BaseDocument.class);
 	while (cursor.hasNext()) {
 	    BaseDocument doc = cursor.next();
 	    map = doc.getProperties();

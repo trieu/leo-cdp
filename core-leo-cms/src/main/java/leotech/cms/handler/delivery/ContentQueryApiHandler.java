@@ -1,5 +1,6 @@
 package leotech.cms.handler.delivery;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import io.vertx.core.json.JsonObject;
 import leotech.cms.analytics.GoogleTrackingUtil;
 import leotech.cms.dao.ContentQueryDaoUtil;
 import leotech.cms.dao.PostDaoUtil;
+import leotech.cms.model.ContentClassPostQuery;
 import leotech.cms.model.Page;
 import leotech.cms.model.Post;
 import leotech.cms.model.User;
@@ -56,13 +58,12 @@ public class ContentQueryApiHandler extends BaseSecuredDataApi {
 	switch (uri) {
 	// query for posts by filtering (get all related posts by keywords)
 	case API_QUERY_DEFAULT_POSTS: {
-	    // TODO make a query category here
-	    // FIXME
-	    // String[] defCategoryKeys = new String[] { "1329181", "1329376", "1329482" };
-	    // Map<String, List<Post>> results =
-	    // ContentQueryDaoUtil.listPostsByCategoriesAndKeywords(defCategoryKeys,
-	    // keywords, includeProtected, includePrivate, true);
-	    Map<String, Object> results = PostDaoUtil.getPostsOfDefaultHomepage();
+	   
+	    List<ContentClassPostQuery> ccpQueries = new ArrayList<>();
+	    ccpQueries.add(new ContentClassPostQuery("market_news", "news", "1329181"));
+	    ccpQueries.add(new ContentClassPostQuery("product_list", "product", "1329376"));
+	    ccpQueries.add(new ContentClassPostQuery("project_list", "project", "1329482"));
+	    Map<String, Object> results = PostDaoUtil.getPostsOfDefaultHomepage(ccpQueries);
 
 	    // tracking with Google Analytics
 	    String userIp = StringUtil.safeString(params.get("__userIp"));
