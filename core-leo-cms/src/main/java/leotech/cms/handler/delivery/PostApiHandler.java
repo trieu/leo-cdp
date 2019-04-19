@@ -78,7 +78,7 @@ public class PostApiHandler extends BaseSecuredDataApi {
 		} else {
 		    keywords = new String[] {};
 		}
-		List<Post> list = PostDaoUtil.listAllByContentClassAndKeywords(contentClass,keywords, includeProtected, includePrivate,operatorAnd, 0 , 1000);
+		List<Post> list = PostDaoUtil.listAllByContentClassAndKeywords(null,contentClass,keywords, includeProtected, includePrivate,operatorAnd, 0 , 1000);
 		
 		//TODO tracking 
 		//tracking with Google Analytics

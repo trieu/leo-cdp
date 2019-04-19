@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 
 import leotech.cms.model.common.PersistentArangoObject;
 import rfx.core.util.HashUtil;
+import rfx.core.util.StringUtil;
 
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -44,12 +45,14 @@ public class MediaNetwork implements PersistentArangoObject {
     
     @XmlElement(name = "AppTemplateFolder")
     String appTemplateFolder = ""; // bigdatavietnam/app like web
-
    
     
     //--------------------------------------------
     @XmlElement(name = "ContentCategoryId")
     String contentCategoryId = "";
+    
+    @XmlElement(name = "PublicContentClass")
+    String publicContentClass = "";
     
     @XmlElementWrapper(name = "ContentClassPostQueries") 
     @XmlElement(name = "ContentClassPostQuery")
@@ -274,6 +277,18 @@ public class MediaNetwork implements PersistentArangoObject {
 
     public void setNumberSimilarPostsInList(int numberSimilarPostsInList) {
         this.numberSimilarPostsInList = numberSimilarPostsInList;
+    }   
+    
+
+    public String getPublicContentClass() {
+	if (StringUtil.isEmpty(publicContentClass)) {
+	    publicContentClass = "standard";
+	}
+        return publicContentClass;
+    }
+
+    public void setPublicContentClass(String publicContentClass) {
+        this.publicContentClass = publicContentClass;
     }
 
     @Override

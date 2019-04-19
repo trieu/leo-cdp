@@ -12,6 +12,7 @@ import com.arangodb.ArangoDatabase;
 import com.arangodb.entity.BaseDocument;
 
 import leotech.cms.model.ContentClassPostQuery;
+import leotech.cms.model.MediaNetwork;
 import leotech.cms.model.Post;
 import leotech.core.config.AqlTemplate;
 import leotech.system.util.database.ArangoDbQuery;
@@ -126,20 +127,34 @@ public class PostDaoUtil {
 	}).getResultsAsList();
 	return list;
     }
+    
+    public static List<Post> listPostsByMediaNetwork(MediaNetwork mediaNetwork, boolean includeProtected, boolean includePrivate, int startIndex, int numberResult) {
+   	return listAllByContentClassAndKeywords(mediaNetwork.getContentCategoryId(), mediaNetwork.getPublicContentClass(), new String[] {}, includeProtected, includePrivate, false, startIndex, numberResult);
+       }
 
-    public static List<Post> listAllByContentClass(String contentClass, boolean includeProtected, boolean includePrivate, int startIndex, int numberResult) {
-	return listAllByContentClassAndKeywords(contentClass, new String[] {}, includeProtected, includePrivate, false, startIndex, numberResult);
+    public static List<Post> listAllByContentClass(String contentCategoryId, String contentClass, boolean includeProtected, boolean includePrivate, int startIndex, int numberResult) {
+	return listAllByContentClassAndKeywords(contentCategoryId, contentClass, new String[] {}, includeProtected, includePrivate, false, startIndex, numberResult);
     }
 
-    public static List<Post> listAllByContentClassAndKeywords(String contentClass, String[] keywords, boolean includeProtected, boolean includePrivate, boolean joinResultByAnd,
+    public static List<Post> listAllByContentClassAndKeywords(String contentCategoryId, String contentClass, String[] keywords, boolean includeProtected, boolean includePrivate, boolean joinResultByAnd,
 	    int startIndex, int numberResult) {
+	
+	System.out.println("listAllByContentClassAndKeywords ");
+	
 	if (StringUtil.isEmpty(contentClass)) {
+	    System.out.println("contentClass is empty");
 	    return new ArrayList<Post>(0);
 	}
 	StringBuilder aql = new StringBuilder("FOR p in post FILTER p.contentClass == @contentClass AND p.privacyStatus == 0 ");
 	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
 	Map<String, Object> bindVars = new HashMap<>(1);
 	bindVars.put("contentClass", contentClass);
+	
+	System.out.println("contentCategoryId " + contentCategoryId);
+	if(StringUtil.isNotEmpty(contentCategoryId)) {	  
+	    aql.append(" AND @contentCategoryId IN p.categoryKeys[*] ");
+	    bindVars.put("contentCategoryId", contentCategoryId);
+	}
 
 	// keyword filter
 	if (keywords.length > 0) {

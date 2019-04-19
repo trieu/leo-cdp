@@ -11,6 +11,7 @@
         <IosAppId></IosAppId>
         <AppTemplateFolder></AppTemplateFolder>      
         <ContentCategoryId>81758</ContentCategoryId>
+        <PublicContentClass>standard</PublicContentClass>
         <PageTitle>xemgiday.com</PageTitle>
         <PageHeaderLogo>/public/images/leotech-logo.png</PageHeaderLogo>
         <BaseStaticUrl>//xemgiday.com</BaseStaticUrl>
@@ -33,6 +34,7 @@
         <IosAppId></IosAppId>
         <AppTemplateFolder></AppTemplateFolder>
         <ContentCategoryId></ContentCategoryId>
+        <PublicContentClass>standard</PublicContentClass>
         <PageTitle>blueseed.leocloudcms.com</PageTitle>
          <PageHeaderLogo>/public/images/leotech-logo.png</PageHeaderLogo>
         <BaseStaticUrl>//blueseed.leocloudcms.com</BaseStaticUrl>
@@ -55,6 +57,7 @@
         <IosAppId></IosAppId>
         <AppTemplateFolder></AppTemplateFolder>
         <ContentCategoryId></ContentCategoryId>
+        <PublicContentClass>standard</PublicContentClass>
         <PageTitle>leocloudcms.com</PageTitle>
         <PageHeaderLogo>/public/images/leotech-logo.png</PageHeaderLogo>
         <BaseStaticUrl>//leocloudcms.com</BaseStaticUrl>
@@ -77,6 +80,7 @@
         <IosAppId></IosAppId>
         <AppTemplateFolder></AppTemplateFolder>
         <ContentCategoryId></ContentCategoryId>
+        <PublicContentClass>standard</PublicContentClass>
         <PageTitle>leocloudcms.com</PageTitle>
         <PageHeaderLogo>/public/images/leotech-logo.png</PageHeaderLogo>
         <BaseStaticUrl>//leocloudcms.com</BaseStaticUrl>
@@ -99,6 +103,7 @@
         <IosAppId></IosAppId>
         <AppTemplateFolder></AppTemplateFolder>
         <ContentCategoryId>9295570</ContentCategoryId>
+        <PublicContentClass>standard</PublicContentClass>
         <PageTitle>video.monngon.tv</PageTitle>
         <PageHeaderLogo>/public/images/leotech-logo.png</PageHeaderLogo>
         <BaseStaticUrl>//video.monngon.tv</BaseStaticUrl>

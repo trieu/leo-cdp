@@ -96,7 +96,7 @@ public class AdminPostApiHandler extends BaseSecuredDataApi {
 		    keywords = new String[] {};
 		}
 		//FIXME
-		List<Post> list = PostDaoUtil.listAllByContentClassAndKeywords(contentClass, keywords, true, false, false, 0, 1000);
+		List<Post> list = PostDaoUtil.listAllByContentClassAndKeywords(null,contentClass, keywords, true, false, false, 0, 1000);
 		return JsonDataPayload.ok(uri, list, true);
 	    } else if (uri.equalsIgnoreCase("/post/search")) {
 		String k = StringUtil.safeString(params.get("keywords"), "");

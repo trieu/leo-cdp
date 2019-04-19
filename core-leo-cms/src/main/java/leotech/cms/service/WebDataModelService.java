@@ -230,7 +230,6 @@ public class WebDataModelService {
 
     public static WebDataModel buildModel(String host, String tplFolderName, String tplName, MultiMap params, String userSession) {
 	MediaNetwork network = MediaNetworkDataService.getContentNetwork(host);
-	String contentClass = "standard";
 	String categoryId = network.getContentCategoryId();
 
 	WebDataModel model = new WebDataModel(host, tplFolderName, tplName);
@@ -244,7 +243,7 @@ public class WebDataModelService {
 	int startIndex = StringUtil.safeParseInt(params.get("startIndex"), 0);
 	int numberResult = StringUtil.safeParseInt(params.get("numberResult"), 9);
 
-	List<Post> headlines = PostDaoUtil.listAllByContentClass(contentClass, false, false, startIndex, numberResult);
+	List<Post> headlines = PostDaoUtil.listPostsByMediaNetwork(network, false, false, startIndex, numberResult);
 	int nextStartIndex = startIndex + numberResult;
 	if (headlines.size() < numberResult) {
 	    nextStartIndex = 0;
