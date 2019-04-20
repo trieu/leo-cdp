@@ -170,6 +170,10 @@ public class YouTubeVideoCrawler {
 	}
 	return null;
     }
+    
+    public static List<CrawledYouTubeVideo> query(String keyword, int maxResultsPerQuery, int totalResults) {
+	return query(keyword, maxResultsPerQuery, totalResults, null);
+    }
 
     public static List<CrawledYouTubeVideo> query(String keyword, int maxResultsPerQuery, int totalResults, String channelId) {
 	List<CrawledYouTubeVideo> results = new ArrayList<>(totalResults);

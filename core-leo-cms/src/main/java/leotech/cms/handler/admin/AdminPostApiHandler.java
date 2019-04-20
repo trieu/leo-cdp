@@ -82,9 +82,7 @@ public class AdminPostApiHandler extends BaseSecuredDataApi {
 
     @Override
     public JsonDataPayload httpGetApiHandler(String userSession, String uri, MultiMap params) throws Exception {
-	// TODO Auto-generated method stub
 	User user = getUserFromSession(userSession);
-	System.out.println(API_GET_BY_CONTENT_CLASS_AND_KEYWORDS.equalsIgnoreCase(uri));
 	if (user != null) {
 	    if (uri.equalsIgnoreCase(API_GET_BY_CONTENT_CLASS_AND_KEYWORDS)) {
 		String contentClass = StringUtil.safeString(params.get("contentClass"));

@@ -3,7 +3,6 @@ package leotech.cms.model.bot;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import leotech.cms.dao.PostDaoUtil;
@@ -40,7 +39,6 @@ public class IrisBot extends ReactiveBot {
 
     protected void findSimilarPostsFromPage() {
 	for (String pageId : subscribedPageIds) {
-	    final AtomicInteger counter = new AtomicInteger(0);
 	    List<Post> posts = PostDaoUtil.listAllByPage(pageId).stream().filter(post -> {
 		return !post.getId().equals(currentPostId);
 	    }).collect(Collectors.toList());

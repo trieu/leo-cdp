@@ -41,6 +41,7 @@ public abstract class BaseApiRouter extends BaseHttpRouter {
     public static final String SEARCH_PREFIX = "/search";
     public static final String QUERY_PREFIX = "/query";
 
+    public static final String BOT_PREFIX = "/bot";
     public static final String SYSTEM_PREFIX = "/system";
 
     public static final String COMMENT_PREFIX = "/comment";

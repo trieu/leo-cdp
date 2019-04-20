@@ -107,6 +107,9 @@ public class MainHttpRouter extends BaseHttpRouter {
 	    // then handle app template for end-user
 	    handleWebPageRequest(params, isSearchEngineBot, host, tplFolderName, "index", resp, userSession);
 	}
+	else if(path.equalsIgnoreCase("/favicon.ico")) {
+	    resp.end("");
+	}
 	// Progressive Web App in Mobile Hibrid App
 	else if (path.startsWith(APP_ROUTER)) {
 	    outHeaders.set(CONTENT_TYPE, MIME_TYPE_HTML);

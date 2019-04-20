@@ -8,11 +8,14 @@ import leotech.cms.handler.admin.AdminPageApiHandler;
 import leotech.cms.handler.admin.AdminPostApiHandler;
 import leotech.cms.handler.admin.AdminSystemApiHandler;
 import leotech.cms.handler.admin.AdminUserApiHandler;
+import leotech.cms.handler.admin.BotApiHandler;
 import leotech.cms.handler.delivery.ContentQueryApiHandler;
 import leotech.core.api.BaseApiRouter;
 import leotech.system.model.JsonDataPayload;
 
 public class AdminApiRouter extends BaseApiRouter {
+
+    
 
     public AdminApiRouter(RoutingContext context) {
 	super(context);
@@ -44,6 +47,9 @@ public class AdminApiRouter extends BaseApiRouter {
 	    //
 	    else if (uri.startsWith(SYSTEM_PREFIX)) {
 		payload = new AdminSystemApiHandler().httpPostApiHandler(userSession, uri, paramJson);
+	    }
+	    else if(uri.startsWith(BOT_PREFIX)) {
+		payload = new BotApiHandler().httpPostApiHandler(userSession, uri, paramJson);
 	    }
 	} catch (Throwable e) {
 	    if (e instanceof IllegalArgumentException) {
@@ -78,6 +84,9 @@ public class AdminApiRouter extends BaseApiRouter {
 	    //
 	    else if (uri.startsWith(QUERY_PREFIX) || uri.startsWith(SEARCH_PREFIX)) {
 		payload = new ContentQueryApiHandler().httpGetApiHandler(userSession, uri, params);
+	    }
+	    else if(uri.startsWith(BOT_PREFIX)) {
+		payload = new BotApiHandler().httpGetApiHandler(userSession, uri, params);
 	    }
 	} catch (Throwable e) {
 	    e.printStackTrace();
