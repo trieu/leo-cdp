@@ -107,7 +107,7 @@ public class PostDataService {
 	post.clearKeywords();
 	JsonArray jsonKeywords = paramJson.getJsonArray("keywords", new JsonArray());
 	jsonKeywords.forEach(e -> {
-	    String keyword = e.toString().trim();
+	    String keyword = e.toString().trim().toLowerCase();
 	    if (!keyword.isEmpty()) {
 		post.setKeyword(keyword);
 	    }

@@ -151,7 +151,7 @@ public class MainHttpRouter extends BaseHttpRouter {
 	else if (path.startsWith(HTML_DIRECT_RENDER)) {
 	    // for SEO or Facebook BOT
 	    outHeaders.set(CONTENT_TYPE, MIME_TYPE_HTML);
-	    WebDataModel model = WebDataModelService.getDirectRenderModel(path, host, params, userSession);
+	    WebDataModel model = WebDataModelService.buildWebDataModel(path, host, params, userSession);
 	    String html = WebDataModel.renderHtml(model);
 	    resp.setStatusCode(model.getHttpStatusCode());
 	    resp.end(html);

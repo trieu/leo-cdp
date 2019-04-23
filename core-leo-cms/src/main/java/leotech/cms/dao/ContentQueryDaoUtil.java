@@ -19,6 +19,9 @@ public class ContentQueryDaoUtil {
 
     //////// Data Query for Post ///////////////////////////////////
     ///////////////////////////////////////////////////////////////////
+
+ 
+
     public static Map<String, List<Post>> listPostsByContentClassAndKeywords(String contentClass, String[] keywords, boolean includeProtected, boolean includePrivate,
 	    boolean headlineOnly) {
 	if (keywords.length == 0) {
@@ -65,7 +68,8 @@ public class ContentQueryDaoUtil {
 	return results;
     }
 
-    public static Map<String, List<Post>> listPostsByCategoriesAndKeywords(String[] categoryKeys, String[] keywords, boolean includeProtected, boolean includePrivate, boolean headlineOnly) {
+    public static Map<String, List<Post>> listPostsByCategoriesAndKeywords(String[] categoryKeys, String[] keywords, boolean includeProtected, boolean includePrivate,
+	    boolean headlineOnly) {
 	Map<String, List<Post>> results = new HashMap<>(categoryKeys.length);
 	if (categoryKeys.length == 0) {
 	    return results;
@@ -129,6 +133,7 @@ public class ContentQueryDaoUtil {
 	    aql.append(" ) SORT p.modificationTime DESC RETURN p");
 
 	    System.out.println(aql.toString());
+	    System.out.println(bindVars);
 	    cursor = db.query(aql.toString(), bindVars, null, Post.class);
 	    while (cursor.hasNext()) {
 		Post p = cursor.next();
@@ -244,7 +249,7 @@ public class ContentQueryDaoUtil {
 	if (includePrivate) {
 	    aql.append(" OR p.privacyStatus == -1 ");
 	}
-	aql.append(" ) SORT p.modificationTime DESC RETURN p");
+	aql.append(" ) SORT p.modificationTime DESC  LIMIT @startIndex,@numberResult RETURN p");	
 
 	System.out.println(aql.toString());
 	ArangoDbQuery.CallbackQuery<Page> callback = new ArangoDbQuery.CallbackQuery<Page>() {

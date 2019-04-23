@@ -3,8 +3,10 @@ package leotech.cms.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import io.vertx.core.MultiMap;
+import leotech.cms.dao.ContentQueryDaoUtil;
 import leotech.cms.dao.PostDaoUtil;
 import leotech.cms.model.Category;
 import leotech.cms.model.MediaNetwork;
@@ -35,9 +37,9 @@ public class WebDataModelService {
 
     // handler for listing content by speacial filters
     static final String HTML_SEARCH = "/html/search/";
-    static final String HTML_MOST_FAVORITE = "/html/most-favorite/";
+    static final String HTML_MY_FAVORITES_LIST = "/html/my-favorites-list/";
     static final String HTML_MOST_TRENDING = "/html/most-trending/";
-    static final String HTML_MUSIC_PLAYLIST = "/html/music-playlist/";
+    static final String HTML_TOP_POSTS_BY_KEYWORDS = "/html/top-posts-by-keywords/";
 
     // template name
     static final String LIST_NETWORK = "list-network";
@@ -49,13 +51,17 @@ public class WebDataModelService {
     static final String LIST_POST = "list-post";
     static final String SINGLE_POST = "single-post";
 
-    public static WebDataModel getDirectRenderModel(String path, String networkDomain, MultiMap params, String userSession) {
+    public static WebDataModel buildWebDataModel(String path, String networkDomain, MultiMap params, String userSession) {
 	MediaNetwork network = MediaNetworkDataService.getContentNetwork(networkDomain);
-	
+	String publicContentClass = network.getPublicContentClass();
+	String contentCategoryId = network.getContentCategoryId();
+	String webTemplateFolder = network.getWebTemplateFolder();
+
 	String objectId;
 	WebDataModel model = null;
 
 	// media network
+
 	if (path.startsWith(HTML_NETWORK)) {
 	    objectId = path.replace(HTML_NETWORK, "");
 	    model = buildMediaNetworkDataModel(network, objectId);
@@ -80,13 +86,43 @@ public class WebDataModelService {
 	    int numberResult = StringUtil.safeParseInt(params.get("numberResult"), 9);
 	    model = buildPostDataModel(userSession, network, slug, startIndex, numberResult);
 	}
+	// listing posts by filtering keywords
+	else if (path.startsWith(HTML_TOP_POSTS_BY_KEYWORDS)) {
+
+	    int startIndex = StringUtil.safeParseInt(params.get("startIndex"), 0);
+	    int numberResult = StringUtil.safeParseInt(params.get("numberResult"), 9);
+	    String keywordsStr = StringUtil.safeString(params.get("keywords"), "");
+	    String[] keywords;
+	    if (!keywordsStr.isEmpty()) {
+		keywords = keywordsStr.split(",");
+	    } else {
+		keywords = new String[] {};
+	    }
+
+	    List<Post> posts = PostDaoUtil.listPublicPostsByKeywords(new String[] { contentCategoryId }, publicContentClass, keywords, startIndex, numberResult);
+
+	    String title = network.getName() + " - " + keywordsStr;
+
+	    
+	    if (posts != null) {
+		model = new PostDataModel(networkDomain, webTemplateFolder, LIST_POST, title, posts);
+		int nextStartIndex = startIndex + numberResult;
+		if (posts.size() < numberResult) {
+		    nextStartIndex = 0;
+		}
+		model.setCustomData("nextStartIndex", nextStartIndex);
+		model.setPageKeywords(keywordsStr);
+	    }
+
+	}
+
 	// not found 404
 	if (model == null) {
-	    model = WebDataModel.page404(networkDomain, network.getWebTemplateFolder());
+	    model = WebDataModel.page404(networkDomain, webTemplateFolder);
 	}
 
 	// set data for Top Page
-	setPageNavigators(model, network.getContentCategoryId());
+	setPageNavigators(model, contentCategoryId);
 
 	return model;
     }
@@ -116,8 +152,8 @@ public class WebDataModelService {
 	return model;
     }
 
-    public static WebDataModel buildPostDataModel(String userSession, MediaNetwork network, String slug, int startIndex, int numberResult) {
-	PostDataModel model;
+    static WebDataModel buildPostDataModel(String userSession, MediaNetwork network, String slug, int startIndex, int numberResult) {
+	PostDataModel model = null;
 	String networkDomain = network.getDomain();
 	String templateFolder = network.getWebTemplateFolder();
 	if (StringUtil.isNotEmpty(slug)) {
@@ -126,7 +162,7 @@ public class WebDataModelService {
 	    // Post post = new Post(video.getTitle(), video.getUrl(), 0, "");
 	    Post post = PostDataService.getBySlug(slug);
 	    if (post != null) {
-		
+
 		List<String> contextPageIds = post.getPageIds();
 		List<String> listKeywords = post.getKeywords();
 
@@ -150,7 +186,7 @@ public class WebDataModelService {
 		// TODO implement recommendation engine here
 		List<Post> simlilarPosts = PostDataService.getSimilarPosts(contextPageIds, postId);
 		model.setRecommendedPosts(simlilarPosts);
-		User user = BaseSecuredDataApi.getUserFromSession(userSession);		
+		User user = BaseSecuredDataApi.getUserFromSession(userSession);
 		if (user != null) {
 		    model.setAdminRole(BaseSecuredDataApi.isAdminRole(user));
 		    model.setSessionUserId(user.getKey());
@@ -158,22 +194,11 @@ public class WebDataModelService {
 	    } else {
 		return WebDataModel.page404(networkDomain, templateFolder);
 	    }
-
-	} else {
-	    List<Post> posts = PostDaoUtil.listByNetwork(network.getNetworkId(), startIndex, numberResult);
-	    String title = network.getName() + " - Top Posts";
-	    model = new PostDataModel(networkDomain, templateFolder, LIST_POST, title, posts);
-	    int nextStartIndex = startIndex + numberResult;
-	    if (posts.size() < numberResult) {
-		nextStartIndex = 0;
-	    }
-	    model.setCustomData("nextStartIndex", nextStartIndex);
 	}
 	return model;
     }
 
-    public static WebDataModel buildPageDataModel(String path, MediaNetwork network, String objectId, int startIndex,
-	    int numberResult) {
+    public static WebDataModel buildPageDataModel(String path, MediaNetwork network, String objectId, int startIndex, int numberResult) {
 	WebDataModel model;
 	String networkDomain = network.getDomain();
 	String templateFolder = network.getWebTemplateFolder();

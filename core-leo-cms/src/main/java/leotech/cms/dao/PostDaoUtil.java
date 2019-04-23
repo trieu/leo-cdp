@@ -313,9 +313,79 @@ public class PostDaoUtil {
 	}
 	return list == null ? new ArrayList<>(0) : list;
     }
+    
+    public static List<Post> listPublicPostsByKeywords(String[] categoryKeys, String contentClass, String[] keywords, int startIndex, int numberResult) {
+ 	if (keywords.length == 0 || categoryKeys.length == 0) {
+ 	    return new ArrayList<>(0);
+ 	}
+
+ 	List<Post> list = new ArrayList<>();
+ 	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+ 	Map<String, Object> bindVars = new HashMap<>();
+
+ 	StringBuilder aql = new StringBuilder("FOR p in post FILTER ");
+
+ 	//content class
+ 	if (!contentClass.isEmpty()) {
+ 	    bindVars.put("contentClass", contentClass);
+ 	    aql.append(" p.contentClass == @contentClass ");
+ 	}
+
+ 	//contegory filter
+ 	aql.append(" AND ( ");
+ 	int c = 0;
+ 	for (String categoryKey : categoryKeys) {
+ 	    categoryKey = categoryKey.trim();
+ 	    if (!categoryKey.isEmpty()) {
+
+ 		bindVars.put("categoryKey" + c, categoryKey);
+ 		aql.append("@categoryKey").append(c).append(" IN p.categoryKeys[*] ");
+ 		c++;
+ 		if (c + 1 <= categoryKeys.length) {
+ 		    aql.append(" OR ");
+ 		}
+ 	    }
+ 	}
+ 	aql.append(") AND ( ");
+
+ 	//keywords filter
+ 	int i = 0;
+ 	for (String keyword : keywords) {
+ 	    keyword = keyword.trim();
+ 	    if (!keyword.isEmpty()) {		
+ 		String key = "keyword" + i;
+		bindVars.put(key, keyword);		
+ 		aql.append("@").append(key).append(" IN p.keywords[*] ");
+ 		i++;
+ 	    }
+ 	    int lastIndex = keywords.length;
+ 	    if(i<lastIndex) {
+ 		aql.append(" OR ");
+ 	    }
+ 	    else {
+ 		aql.append(" ) ");
+ 	    }
+ 	}
+
+ 	aql.append(" AND p.privacyStatus == 0 SORT p.modificationTime DESC LIMIT @startIndex,@numberResult RETURN p ");
+ 	bindVars.put("startIndex", startIndex);
+ 	bindVars.put("numberResult", numberResult);
+
+ 	ArangoDbQuery.CallbackQuery<Post> callback = new ArangoDbQuery.CallbackQuery<Post>() {
+ 	    @Override
+ 	    public Post apply(Post obj) {
+ 		obj.compactDataForList(true);
+ 		return obj;
+ 	    }
+ 	};
+ 	System.out.println("listPublicPostsByKeywords " +  aql.toString());
+ 	list.addAll(new ArangoDbQuery<Post>(db, aql.toString(), bindVars, Post.class, callback).getResultsAsList());
+
+ 	// System.out.println(aql.toString());
+ 	return list;
+     }
 
     public static long countTotalOfPostCollection() {
-
 	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
 	long c = db.collection("post").count().getCount();
 	return c;
