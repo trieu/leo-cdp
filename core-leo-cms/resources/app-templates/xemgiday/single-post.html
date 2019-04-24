@@ -9,8 +9,8 @@
         <a id="btnEditPost" target="_blank" href="/admin#calljs-postInfo('{{id}}')" style="display: none"> Edit </a>
         <br>
         Keywords: 
-        {{#each keywords}}
-        {{.}},
+        {{#each keywords}}        
+            <a href="/html/top-posts-by-keywords/?keywords={{.}}">{{.}}</a> &nbsp;
         {{/each}}
     </div>
     <strong id="postMediaDescription" class="mdl-cell mdl-cell--12-col">{{description}}</strong>
