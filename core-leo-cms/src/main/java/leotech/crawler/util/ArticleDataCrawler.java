@@ -1,55 +1,96 @@
 package leotech.crawler.util;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.xml.sax.SAXException;
+
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 
 import de.l3s.boilerpipe.BoilerpipeExtractor;
-import de.l3s.boilerpipe.BoilerpipeProcessingException;
 import de.l3s.boilerpipe.extractors.CommonExtractors;
 import de.l3s.boilerpipe.sax.HTMLDocument;
 import de.l3s.boilerpipe.sax.HTMLHighlighter;
-import leotech.crawler.util.FacebookDataCrawler.FacebookEngagementData;
+import leotech.crawler.model.ArticleData;
 import rfx.core.util.FileUtils;
 import rfx.core.util.HttpClientUtil;
 
 public class ArticleDataCrawler {
 
-    public static String process(String url) throws Exception {
-	String html = HttpClientUtil.executeGet(url);
-	String extractedHtml = processWithRules(html);
-	if (extractedHtml == null) {
-	    extractedHtml = processDefault(html);
-	}
-	return extractedHtml;
+    static final LoadingCache<String, ArticleData> cache = CacheBuilder.newBuilder().maximumSize(100000).expireAfterWrite(2, TimeUnit.HOURS)
+	    .build(new CacheLoader<String, ArticleData>() {
+		public ArticleData load(String url) {
+		    ArticleData a = null;
+		    try {
+			a = processWithRules(url);
+		    } catch (Exception e) {
+			e.printStackTrace();
+		    }
+		    return a;
+		}
+	    });
+
+  
+
+    public static ArticleData process(String url) throws Exception {
+
+	ArticleData articleData = cache.get(url);
+
+	return articleData;
     }
 
-    protected static String processWithRules(String html) {
+    protected static ArticleData processWithRules(String url) {
+
+	String html = HttpClientUtil.executeGet(url);
+	Document doc = Jsoup.parse(html);
 
 	// TODO load from database here
-	String patternIf = "medium-com";
-	String contentSelector = "article";
-	String cssHref = "<link href=\"https://cdn-static-1.medium.com/_/fp/css/main-branding-base.sMRbh_65n82B91860QdvTg.css\" rel=\"stylesheet\" type=\"text/css\" >";
+	
+	
 
-	if (html.contains(patternIf)) {
-	    Document doc = Jsoup.parse(html);
-	    Element ele = doc.selectFirst(contentSelector);
-	    if (ele != null) {
-		return cssHref + ele.outerHtml();
-	    }
+	String title = "";
+	Element metaOgTitle = doc.selectFirst("meta[property=\"og:title\"]");
+	if (metaOgTitle != null) {
+	    title = metaOgTitle.attr("content");
+	}
+	
+	String headlineImage = "";
+	Element headlineImageNode = doc.selectFirst("meta[property=\"og:image\"]");
+	if (headlineImageNode != null) {
+	    headlineImage = headlineImageNode.attr("content");
+	}
+	
+	Element titleNode = doc.selectFirst("title");
+	if (titleNode != null) {
+	    title = titleNode.text();
 	}
 
-	return null;
+	String patternIf = "medium-com";
+	String contentSelector = "article";
+	String content = "";
+	if (html.contains(patternIf)) {
+	    Element ele = doc.selectFirst(contentSelector);
+	    if (ele != null) {
+		String cssHref = "<link href=\"https://cdn-static-1.medium.com/_/fp/css/main-branding-base.sMRbh_65n82B91860QdvTg.css\" rel=\"stylesheet\" type=\"text/css\" >";
+		content = cssHref + ele.outerHtml();
+	    } else {
+		content = extractContent(html);
+	    }
+	}
+	
+	String jsonLinkedData = "";
+	Element jsonLinkedDataNode = doc.selectFirst("script[type='application/ld+json']");
+	if (jsonLinkedDataNode != null) {
+	    jsonLinkedData = jsonLinkedDataNode.html();
+	}
+
+	return new ArticleData(title, headlineImage, content, url, jsonLinkedData);
     }
 
-    protected static String processDefault(String html) {
+    protected static String extractContent(String html) {
 	try {
 	    BoilerpipeExtractor extractor = CommonExtractors.ARTICLE_EXTRACTOR;
 	    boolean includeImages = true;
@@ -65,15 +106,22 @@ public class ArticleDataCrawler {
     }
 
     public static void main(String[] args) throws Exception {
-	String urlStr = "https://medium.com/the-mission/why-building-your-own-deep-learning-computer-is-10x-cheaper-than-aws-b1c91b55ce8c";
+	String urlStr = "https://productcoalition.com/a-product-managers-approach-to-building-integrations-for-saas-software-b4d5b8c2e9c6";
 
-	String extractedHtml = ArticleDataCrawler.process(urlStr);
+	ArticleData articleData = ArticleDataCrawler.process(urlStr);
+	 articleData = ArticleDataCrawler.process(urlStr);
 
-	FileUtils.writeStringToFile("./BUILD-OUTPUT/test2.html", extractedHtml);
+	System.out.println(articleData.title);
+	System.out.println(articleData.url);
+	System.out.println(articleData.jsonLinkedData);
+	System.out.println(articleData.headlineImage);
+	
+	FileUtils.writeStringToFile("./BUILD-OUTPUT/test2.html", articleData.content);
 
-//	List<FacebookEngagementData> list = FacebookDataCrawler.getLinkShareStats(Arrays.asList(urlStr));
-//
-//	System.out.println(list);
+	// List<FacebookEngagementData> list =
+	// FacebookDataCrawler.getLinkShareStats(Arrays.asList(urlStr));
+	//
+	// System.out.println(list);
 
     }
 }

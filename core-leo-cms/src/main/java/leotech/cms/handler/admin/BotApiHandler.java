@@ -6,6 +6,7 @@ import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import leotech.cms.model.User;
 import leotech.core.api.BaseSecuredDataApi;
+import leotech.crawler.model.ArticleData;
 import leotech.crawler.model.CrawledYouTubeVideo;
 import leotech.crawler.util.ArticleDataCrawler;
 import leotech.crawler.util.YouTubeVideoCrawler;
@@ -27,18 +28,18 @@ public class BotApiHandler extends BaseSecuredDataApi {
     public JsonDataPayload httpGetApiHandler(String userSession, String uri, MultiMap params) throws Exception {
 
 	User user = getUserFromSession(userSession);
-	//if (user != null) 
+	// if (user != null)
 	{
 	    if (uri.equalsIgnoreCase(API_VIDEO_CRAWLER)) {
 		String keyword = StringUtil.safeString(params.get("keyword"));
 		int maxResultsPerQuery = 25;
 		int totalResults = 25;
-		List<CrawledYouTubeVideo> results = YouTubeVideoCrawler.query(keyword, maxResultsPerQuery , totalResults);
+		List<CrawledYouTubeVideo> results = YouTubeVideoCrawler.query(keyword, maxResultsPerQuery, totalResults);
 		return JsonDataPayload.ok(uri, results, true);
 	    } else if (uri.equalsIgnoreCase(API_ARTICLE_CRAWLER)) {
 		String url = StringUtil.safeString(params.get("url"));
-		String extractedHtml = ArticleDataCrawler.process(url);
-		return JsonDataPayload.ok(uri, extractedHtml, true);
+		ArticleData articleData = ArticleDataCrawler.process(url);
+		return JsonDataPayload.ok(uri, articleData, true);
 	    }
 	}
 	return JsonErrorPayload.NO_AUTHENTICATION;
