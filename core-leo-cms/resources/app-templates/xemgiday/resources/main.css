@@ -6,6 +6,10 @@ main.mdl-layout__content {
     min-width:120px;text-transform: uppercase;font-weight: bold;
 }
 
+.mdl-layout-title img {
+    height: 60px;margin-left:100px;margin: auto;
+}
+
 #postMediaInfo {
     line-height: 1.8em!important; font-size: 1.06em!important;font-family: 'Helvetica','Arial',sans-serif!important;
 }

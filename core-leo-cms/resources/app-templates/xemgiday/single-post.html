@@ -77,7 +77,8 @@
     function playerReady() {
         playerReadyCalled = true;
         $('#videoholder_outer').css('background-image', 'none');
-        if (!window.isMobile) {
+        //if (!window.isMobile) 
+        {
             setTimeout(function () {
                 window.player.muted(false);
                 window.player.volume(0.6);
@@ -132,7 +133,7 @@
 
     window.mediaPlayerOneReady = function () {
         $('#fbLikeBox').show();
-        setTimeout(loadVideo, 2500);
+        setTimeout(loadVideo, 3678);
         setTimeout(function () {
             $('#videoProgressLoader').hide();
         }, 5000);

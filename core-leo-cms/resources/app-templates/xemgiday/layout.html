@@ -1,56 +1,65 @@
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+<div id="main_layout" class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
-    <header class="mdl-layout__header mdl-layout__header--waterfall portfolio-header">
-
-        <div class="mdl-layout__header-row portfolio-logo-row">
-            <span class="mdl-layout__title">
-                <a href="/">
-                    <div class="header-logo"></div>
+    <header id="main_header" class="mdl-layout__header mdl-layout__header--waterfall portfolio-header">
+        <div class="mdl-layout__header-row">
+            <!-- LOGO -->
+            <div class="mdl-layout-title">
+                <a href="/" title="Home" >
+                    <img src="/public/images/icon-xemgiday.png" />
                 </a>
-                <span class="mdl-layout__title">{{pageTitle}}</span>
-            </span>
+            </div>
+            
+            <div id="ds_search_wrapper" class="mdl-textfield mdl-js-textfield" style="margin-left: 40px; width: 50%;">
+                <input class="mdl-textfield__input" type="text" id="ds_search_textbox">
+                <label class="mdl-textfield__label" for="ds_search_textbox">Search</label>
+            </div>
         </div>
 
-    </header>
+        <div id="mb_search_wrapper" class="mdl-textfield mdl-js-textfield" style="margin: auto;; width: 90%;display: none">
+            <input class="mdl-textfield__input" type="text" id="mb_search_textbox">
+            <label class="mdl-textfield__label" for="mb_search_textbox">Search</label>
+        </div>
 
-    <div id="page_navigator_desktop" style="visibility: hidden;"
-        class="mdl-layout__header-row portfolio-navigation-row mdl-layout--large-screen-only">
+    </header>   
+
+
+    <div id="page_navigator_desktop" class="mdl-layout__header-row portfolio-navigation-row mdl-layout--large-screen-only">
         <nav class="mdl-navigation mdl-typography--body-1-force-preferred-font">
             <!-- main header pages -->
             <a class="mdl-navigation__link " href="/">Trang chủ</a>
             {{#each topPageNavigators}}
-            <a class="mdl-navigation__link " href="{{uri}}" id="page_{{id}}" >{{name}}</a>
+            <a class="mdl-navigation__link " href="{{uri}}" id="page_{{id}}">{{name}}</a>
             {{/each}}
         </nav>
     </div>
     <div id="page_navigator_mobile" class="mdl-layout__drawer mdl-layout--small-screen-only">
         <nav class="mdl-navigation mdl-typography--body-1-force-preferred-font">
             <!-- main header pages -->
-            {{#each topPageNavigators}}               
-                <a class="mdl-navigation__link" href="{{uri}}" id="page_{{id}}" >{{name}}</a>              
-            {{/each}}           
+            {{#each topPageNavigators}}
+            <a class="mdl-navigation__link" href="{{uri}}" id="page_{{id}}">{{name}}</a>
+            {{/each}}
         </nav>
-    </div>   
+    </div>
 
 
     <main class="mdl-layout__content">
 
         <!-- TODO -->
-        <div class="mdl-tabs__tab-bar" >
+        <div class="mdl-tabs__tab-bar">
             <a href="/" title="Home" class="mdl-tabs__tab is-active"><i class="material-icons">home</i></a>
             <a href="/html/most-favorite" title="Favorite" class="mdl-tabs__tab"><i class="material-icons">favorite</i></a>
             <a href="/html/most-trending" class="mdl-tabs__tab"><i class="material-icons">trending_up</i></a>
             <a href="/html/music-playlist" class="mdl-tabs__tab"><i class="material-icons">music_video</i></a>
-            <a id="user-menu" href="#" class="mdl-tabs__tab" style="display: none;" ><i class="material-icons">account_box</i></a>
+            <a id="search_tab" href="javascript: $('#mb_search_wrapper').show()" class="mdl-tabs__tab"><i class="material-icons">search</i></a>
+            <a id="user-menu" href="#" class="mdl-tabs__tab" ><i class="material-icons">account_box</i></a>
 
             <!-- Menu items List , mdl-menu--bottom-right -->
             <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="user-menu">
                 <li class="mdl-menu__item">Profile</li>
                 <li class="mdl-menu__item">My Bookmarks</li>
                 <li disabled class="mdl-menu__item">Log out</li>
-            </ul>
-        </div>
-
+            </ul>        
+        </div>      
         <div class="mdl-grid portfolio-max-width">
             <!-- main content here -->
             {{#doIf templateName '==' "index" }}
@@ -83,41 +92,42 @@
             {{/doIf}}
 
             {{#doIf templateName '==' "single-page" }}
-                <!-- Ads -->
-                <div id="headerAdPlacement" class="mdl-card__actions mdl-card--border mdl-typography--text-center">
-                    <strong>Advertiment</strong>
-                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9034869050940123"
-                        data-ad-slot="1376192829" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                    <script>
-                        (adsbygoogle = window.adsbygoogle || []).push({});
-                    </script>
-                </div>
+            <!-- Ads -->
+            <div id="headerAdPlacement" class="mdl-card__actions mdl-card--border mdl-typography--text-center">
+                <strong>Advertiment</strong>
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9034869050940123"
+                    data-ad-slot="1376192829" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
 
-                {{#each pages}}
-                {{#renderHtmlView "xemgiday/single-page" this }}{{/renderHtmlView}}
-                {{/each}}
+            {{#each pages}}
+            {{#renderHtmlView "xemgiday/single-page" this }}{{/renderHtmlView}}
+            {{/each}}
 
-                {{#doIf customData.nextStartIndex '>' 0 }}
-                <div id="loadMore">
-                    <a href="{{customData.currentPath}}?startIndex={{customData.nextStartIndex}}&numberResult=6">Load
-                        More</a>
-                </div>
-                {{/doIf}}
+            {{#doIf customData.nextStartIndex '>' 0 }}
+            <div id="loadMore">
+                <a href="{{customData.currentPath}}?startIndex={{customData.nextStartIndex}}&numberResult=6">Load
+                    More</a>
+            </div>
+            {{/doIf}}
             {{/doIf}}
 
             {{#doIf templateName '==' "single-post" }}
             <!-- the list has one item only -->
             <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp">
                 <!-- Ads -->
-                <div style="display: none" id="articleAdPlacement" class="mdl-card__actions mdl-card--border mdl-typography--text-center">
-                    <strong>Advertiment</strong>                    
+                <div style="display: none" id="articleAdPlacement"
+                    class="mdl-card__actions mdl-card--border mdl-typography--text-center">
+                    <strong>Advertiment</strong>
                 </div>
 
                 {{#each posts}}
                 {{#renderHtmlView "xemgiday/single-post" this }}{{/renderHtmlView}}
                 {{/each}}
                 <script>
-                    window.contextPageId = '{{contextPageId}}';  
+                    window.contextPageId = '{{contextPageId}}';
                 </script>
 
                 <div id="relatedPostsPlacement" class="mdl-cell mdl-cell--12-col">
@@ -152,24 +162,26 @@
             {{/doIf}}
 
             {{#doIf templateName '==' "list-post" }}
-                <!-- Ads -->
-                <div id="headerAdPlacement" class="mdl-card__actions mdl-card--border mdl-typography--text-center">
-                    <strong>Advertiment</strong>
-                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9034869050940123"
-                        data-ad-slot="1376192829" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                    <script>
-                        (adsbygoogle = window.adsbygoogle || []).push({});
-                    </script>
-                </div>
+            <!-- Ads -->
+            <div id="headerAdPlacement" class="mdl-card__actions mdl-card--border mdl-typography--text-center">
+                <strong>Advertiment</strong>
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9034869050940123"
+                    data-ad-slot="1376192829" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
 
-                {{#each posts}}
-                    {{#renderHtmlView "xemgiday/widgets/item-post" this }}{{/renderHtmlView}}
-                {{/each}}
+            {{#each posts}}
+            {{#renderHtmlView "xemgiday/widgets/item-post" this }}{{/renderHtmlView}}
+            {{/each}}
 
-                {{#doIf customData.nextStartIndex '>' 0 }}
-                <div id="loadMore">
-                    <a href="/html/top-posts-by-keywords/?keywords={{pageKeywords}}&startIndex={{customData.nextStartIndex}}&numberResult=9">Load More</a>
-                </div>
+            {{#doIf customData.nextStartIndex '>' 0 }}
+            <div id="loadMore">
+                <a
+                    href="/html/top-posts-by-keywords/?keywords={{pageKeywords}}&startIndex={{customData.nextStartIndex}}&numberResult=9">Load
+                    More</a>
+            </div>
 
             {{/doIf}}
 
@@ -203,46 +215,52 @@
     window.usersession = lscache.get('usersession') || '';
     window.currentUserProfile = false;
 
-    function loadSessionUserInfo(callback){
-        if(window.usersession != ''){
+    function loadSessionUserInfo(callback) {
+        if (window.usersession != '') {
             var urlStr = '/user/get-info';
             LeoCmsApiUtil.callPostAdminApi(urlStr, {}, function (json) {
                 if (json.httpCode === 0 && json.errorMessage === '') {
                     if (json.data) {
-                        var user = json.data;                    
-                        window.currentUserProfile = user;                        
+                        var user = json.data;
+                        window.currentUserProfile = user;
                     }
-                    if(typeof callback === 'function') callback(); 
+                    if (typeof callback === 'function') callback();
                 }
-            }); 
+            });
         } else {
-            if(typeof callback === 'function') callback();
-        }      
+            if (typeof callback === 'function') callback();
+        }
     }
-    function canEditPost(postOwnerId){
+
+    function canEditPost(postOwnerId) {
         return window.currentUserProfile && window.currentUserProfile.key === postOwnerId;
     }
 
-    $(document).ready(function (){
-       
+    $(document).ready(function () {
+        var isSmallScreen = $(window).width() < 640;
+        if(isSmallScreen){
+            $('#ds_search_wrapper').hide();                                
+        } else {
+            $('#search_tab').hide();
+        }
     });
 
     $(window).on('hashchange', function () {
         var url = location.hash;
         console.log("==> hashchange url " + url);
     });
-    
+
     (function () {
         var uri = location.href.split(location.host)[1] || '';
         uri = uri.toLowerCase();
         if (uri === '/') {
             $('a[href="/"]').addClass('is-active');
         } else {
-            if(uri.indexOf('/html/post/') === 0 && window.contextPageId ){
-                $('#page_'+ window.contextPageId).addClass('is-active');
+            if (uri.indexOf('/html/post/') === 0 && window.contextPageId) {
+                $('#page_' + window.contextPageId).addClass('is-active');
             } else {
                 $('a[href^="' + uri + '"]').addClass('is-active');
-            }            
+            }
         }
         $('#page_navigator_desktop').css('visibility', 'visible')
     }());
