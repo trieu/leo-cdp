@@ -11,9 +11,16 @@
 #NLP tasks
 * https://github.com/stopwords/vietnamese-stopwords
 * https://kipalog.com/posts/Gioi-thieu-tien-xu-ly-trong-xu-ly-ngon-ngu-tu-nhien
-* https://viblo.asia/p/phan-loai-van-ban-tieng-viet-tu-dong-phan-1-yMnKM3bal7P
 * https://github.com/trieu/Machine-Learning-with-Python
 * An open-source NLP research library, built on PyTorch https://allennlp.org/tutorials
+* Text Classification Algorithms: A Survey https://github.com/kk7nc/Text_Classification
+* Document classification with PyTorch https://github.com/GokuMohandas/document-classification
+
+#Vietnamese NLP
+* https://github.com/vncorenlp/VnCoreNLP
+* https://github.com/undertheseanlp/classification
+* https://viblo.asia/p/phan-loai-van-ban-tieng-viet-tu-dong-phan-1-yMnKM3bal7P
+* find Opinion for Vietnamese text https://github.com/sonvx/VietSentiWordNet
 
 # Algorithms
 * https://blog.goodaudience.com/top-10-machine-learning-algorithms-2a9a3e1bdaff

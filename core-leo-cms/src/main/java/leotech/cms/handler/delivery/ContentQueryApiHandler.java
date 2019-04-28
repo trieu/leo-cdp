@@ -130,7 +130,8 @@ public class ContentQueryApiHandler extends BaseSecuredDataApi {
 	    } else {
 		// List<Post> results = ContentQueryDaoUtil.searchPost(keywords,
 		// includeProtected, includePrivate, true);
-		List<Post> results = SearchPostUtil.searchPost(keywords, includeProtected, includePrivate, true);
+		//TODO
+		List<Post> results = SearchPostUtil.searchPost(keywords, includeProtected, includePrivate, true, 1, 100);
 
 		// tracking with Google Analytics
 		String userIp = StringUtil.safeString(params.get("__userIp"));

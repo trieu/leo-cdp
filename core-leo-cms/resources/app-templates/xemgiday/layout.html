@@ -9,16 +9,22 @@
                 </a>
             </div>
             
-            <div id="ds_search_wrapper" class="mdl-textfield mdl-js-textfield" style="margin-left: 40px; width: 50%;">
-                <input class="mdl-textfield__input" type="text" id="ds_search_textbox">
+            <div id="ds_search_box_wrapper" class="mdl-textfield mdl-js-textfield" style="margin-left: 40px; width: 50%;display: none;">
+                <input class="mdl-textfield__input" type="text" id="ds_search_textbox" style="background-color: rgba(0,0,0,0.04);" >
                 <label class="mdl-textfield__label" for="ds_search_textbox">Search</label>
             </div>
+            <div id="ds_search_btn_wrapper" style="width: 10%;display: none;">
+                <button class="mdl-button mdl-js-button mdl-button--icon" style="background-color: rgba(0,0,0,0.42);" >
+                    <i class="material-icons">search</i>
+                </button>
+            </div>
+            
         </div>
 
-        <div id="mb_search_wrapper" class="mdl-textfield mdl-js-textfield" style="margin: auto;; width: 90%;display: none">
-            <input class="mdl-textfield__input" type="text" id="mb_search_textbox">
-            <label class="mdl-textfield__label" for="mb_search_textbox">Search</label>
-        </div>
+        <div id="mb_search_wrapper" class="mdl-textfield mdl-js-textfield" style="margin: auto; width: 80%;display: none">
+            <input class="mdl-textfield__input" type="text" id="mb_search_textbox" style="background-color: rgba(0,0,0,0.04);" >
+            <label class="mdl-textfield__label" for="mb_search_textbox">Search</label>          
+        </div>       
 
     </header>   
 
@@ -46,19 +52,21 @@
 
         <!-- TODO -->
         <div class="mdl-tabs__tab-bar">
-            <a href="/" title="Home" class="mdl-tabs__tab is-active"><i class="material-icons">home</i></a>
-            <a href="/html/most-favorite" title="Favorite" class="mdl-tabs__tab"><i class="material-icons">favorite</i></a>
-            <a href="/html/most-trending" class="mdl-tabs__tab"><i class="material-icons">trending_up</i></a>
-            <a href="/html/music-playlist" class="mdl-tabs__tab"><i class="material-icons">music_video</i></a>
-            <a id="search_tab" href="javascript: $('#mb_search_wrapper').show()" class="mdl-tabs__tab"><i class="material-icons">search</i></a>
             <a id="user-menu" href="#" class="mdl-tabs__tab" ><i class="material-icons">account_box</i></a>
-
             <!-- Menu items List , mdl-menu--bottom-right -->
             <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="user-menu">
                 <li class="mdl-menu__item">Profile</li>
                 <li class="mdl-menu__item">My Bookmarks</li>
                 <li disabled class="mdl-menu__item">Log out</li>
-            </ul>        
+            </ul>    
+
+            <a href="/" title="Home" class="mdl-tabs__tab is-active"><i class="material-icons">home</i></a>
+            <a href="/html/most-trending" class="mdl-tabs__tab"><i class="material-icons">trending_up</i></a>
+            <a href="/html/music-playlist" class="mdl-tabs__tab"><i class="material-icons">music_video</i></a>
+            <a id="search_tab" style="display:none" href="javascript:showSearchBox(this)" data-status="hide" class="mdl-tabs__tab"><i class="material-icons">search</i></a>
+            
+
+                
         </div>      
         <div class="mdl-grid portfolio-max-width">
             <!-- main content here -->
@@ -239,11 +247,26 @@
     $(document).ready(function () {
         var isSmallScreen = $(window).width() < 640;
         if(isSmallScreen){
-            $('#ds_search_wrapper').hide();                                
-        } else {
-            $('#search_tab').hide();
+            $('#search_tab').show();
+            $('#search_filter_wrapper > div').addClass('w100');
+        } else {            
+            $('#ds_search_box_wrapper, #ds_search_btn_wrapper').show();
         }
     });
+
+    function showSearchBox(node){
+        var status = $(node).data('status');
+        if(status === 'hide'){
+            $('#mb_search_wrapper').show();
+            $(node).data('status','show');
+            $('#search_filter_wrapper').show();
+        } else {
+            $('#mb_search_wrapper').hide();
+            $(node).data('status','hide');
+            $('#search_filter_wrapper').hide();
+        }
+        
+    }
 
     $(window).on('hashchange', function () {
         var url = location.hash;

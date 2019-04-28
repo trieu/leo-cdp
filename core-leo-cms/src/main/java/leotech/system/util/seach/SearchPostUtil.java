@@ -34,10 +34,14 @@ import com.google.gson.Gson;
 import leotech.cms.model.MediaInfoUnit;
 import leotech.cms.model.Post;
 import leotech.system.util.KeywordUtil;
+import rfx.core.util.StringUtil;
 
 public class SearchPostUtil {
+    private static final String KEYWORDS = "keywords";
+    private static final String CATEGORY_KEY = "cat_key";
     private static final String DATA = "data";
     private static final String TITLE = "title";
+    private static final String PRIVACY = "privacy";
     private static final String INDEXED = "indexed";
     private static final String INDEXED_TITLE = "indexedTitle";
     private static final String CONTENT_ID = "ctid";
@@ -76,6 +80,9 @@ public class SearchPostUtil {
 	String indexedTitle = KeywordUtil.normalizeForSearchIndex(post.getTitle());
 
 	document.add(new TextField(TITLE, post.getTitle(), Field.Store.YES));
+	document.add(new TextField(CATEGORY_KEY, post.getCategoryKeys().get(0), Field.Store.YES));
+	document.add(new TextField(PRIVACY, post.getPrivacyStatus()+"", Field.Store.YES));
+	document.add(new TextField(KEYWORDS, StringUtil.joinFromList(",", post.getKeywords()), Field.Store.YES));
 	document.add(new TextField(INDEXED_TITLE, indexedTitle, Field.Store.YES));
 	String indexedData = KeywordUtil.normalizeForSearchIndex(indexed.toString());
 
@@ -135,8 +142,12 @@ public class SearchPostUtil {
 	    e.printStackTrace();
 	}
     }
+    
+    public static List<Post> searchPublicPost(String[] keywords,  int pageNumber, int pageResults) {
+	return searchPost(keywords, false, false, true, pageNumber, pageResults);
+    }
 
-    public static List<Post> searchPost(String[] keywords, boolean includeProtected, boolean includePrivate, boolean headlineOnly) {
+    public static List<Post> searchPost(String[] keywords, boolean includeProtected, boolean includePrivate, boolean headlineOnly, int pageNumber, int pageResults) {
 	List<Post> list = new ArrayList<>();
 	try {
 
@@ -155,6 +166,9 @@ public class SearchPostUtil {
 			mainQuery.add(new TermQuery(new Term(CONTENT_ID, id)), BooleanClause.Occur.MUST);
 		    } else {
 			for (String tok : toks) {
+//			    Query title2Query = new TermQuery(new Term(INDEXED, tok));
+//			    mainQuery.add(title2Query, BooleanClause.Occur.SHOULD);
+			    
 			    Query title2Query = new TermQuery(new Term(INDEXED_TITLE, tok));
 			    mainQuery.add(title2Query, BooleanClause.Occur.SHOULD);
 
@@ -169,9 +183,9 @@ public class SearchPostUtil {
 
 		    TopScoreDocCollector collector = TopScoreDocCollector.create(1000);
 		    searcher.search(searchQuery, collector);
-		    int pageNumber = 1;
-		    int startIndex = (pageNumber - 1) * SEARCH_RESULT_PAGE_SIZE;
-		    TopDocs topDocs = collector.topDocs(startIndex, SEARCH_RESULT_PAGE_SIZE);
+		
+		    int startIndex = (pageNumber - 1) * pageResults;
+		    TopDocs topDocs = collector.topDocs(startIndex, pageResults);
 
 		    ScoreDoc[] scoreDocs = topDocs.scoreDocs;
 

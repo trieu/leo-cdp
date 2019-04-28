@@ -216,7 +216,7 @@ footer {
     cursor: text;
     padding-bottom: 0;
     margin-bottom: 20px;
-    border-bottom: 1px solid lightgrey;
+    border-bottom: 1px solid lightgrey;    
 }
 
 .mdl-chipfield .inputs {
@@ -283,4 +283,8 @@ footer {
 .mdl-chipfield .results li:hover,
 .mdl-chipfield .results li.is-selected {
     background-color: #eeeeee;
+}
+
+.w100 {
+    width: 100% !important;
 }

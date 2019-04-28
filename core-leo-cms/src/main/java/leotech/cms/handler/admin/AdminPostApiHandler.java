@@ -105,7 +105,7 @@ public class AdminPostApiHandler extends BaseSecuredDataApi {
 		    keywords = new String[] {};
 		}
 		// FIXME check authorization
-		List<Post> results = SearchPostUtil.searchPost(keywords, true, true, true);
+		List<Post> results = SearchPostUtil.searchPost(keywords, true, true, true, 1, 100);
 		return JsonDataPayload.ok(uri, results);
 	    }
 	} else {
