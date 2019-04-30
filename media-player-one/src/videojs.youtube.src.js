@@ -713,15 +713,16 @@
     return result;
   };
 
-  function apiLoaded() {
+  
+  window.onYouTubeIframeAPIReady = window.onYouTubeIframeAPIReady || function(){
     YT.ready(function() {
       Youtube.isApiReady = true;
-
       for (var i = 0; i < Youtube.apiReadyQueue.length; ++i) {
         Youtube.apiReadyQueue[i].initYTPlayer();
       }
     });
-  }
+  }    
+  
 
   function loadScript(src, callback) {
     var loaded = false;
@@ -731,13 +732,13 @@
     tag.onload = function () {
       if (!loaded) {
         loaded = true;
-        callback();
+        if( typeof callback === 'function') callback();
       }
     };
     tag.onreadystatechange = function () {
       if (!loaded && (this.readyState === 'complete' || this.readyState === 'loaded')) {
         loaded = true;
-        callback();
+        if( typeof callback === 'function') callback();
       }
     };
     tag.src = src;
@@ -767,7 +768,7 @@
   Youtube.apiReadyQueue = [];
 
   if (typeof document !== 'undefined'){
-    loadScript('https://www.youtube.com/iframe_api', apiLoaded);
+    loadScript('https://www.youtube.com/iframe_api');
     injectCss();
   }
 
@@ -778,3 +779,4 @@
     videojs.registerComponent('Youtube', Youtube);
   }
 }));
+

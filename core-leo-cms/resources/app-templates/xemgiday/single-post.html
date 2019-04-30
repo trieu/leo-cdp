@@ -1,5 +1,5 @@
-<div class="mdl-card__title " style="justify-content: center;">
-    <h5 class="mdl-card__title-text mdl-typography--headline ">{{title}}</h5>
+<div id="post_title" class="mdl-card__title mdl-typography--display-1" style="justify-content: center;">
+    {{title}}
 </div>
 
 <div id="postMainContent" class="portfolio-copy">
@@ -7,14 +7,8 @@
     <div class="mdl-cell mdl-cell--12-col mdl-typography--text-right" style="font-weight: bold">
         Posted by: {{#userDisplayName ownerId }}{{/userDisplayName}}
         <a id="btnEditPost" target="_blank" href="/admin#calljs-postInfo('{{id}}')" style="display: none"> Edit </a>
-        <br>
-        Keywords: 
-        {{#each keywords}}        
-            <a href="/html/top-posts-by-keywords/?keywords={{.}}">{{.}}</a> &nbsp;
-        {{/each}}
     </div>
-    <strong id="postMediaDescription" class="mdl-cell mdl-cell--12-col">{{description}}</strong>
-
+    
     <div id="postMediaVideo" class="mdl-cell mdl-cell--12-col ">
         <!-- video loader -->
         <div id="videoProgressLoader" style="margin: auto"
@@ -53,6 +47,15 @@
         <a id="arrow_forward" style="float:right" href="#"><i class="material-icons">arrow_forward</i></a>
     </div>
 
+    <strong id="postMediaDescription" class="mdl-cell mdl-cell--12-col">{{description}}</strong>
+
+    <div class="mdl-card__actions mdl-card--border mdl-typography--text-left" >
+        <b>Keywords:</b>
+        {{#each keywords}}        
+            <a href="/html/top-posts-by-keywords/?keywords={{.}}">{{.}}</a> &nbsp;
+        {{/each}}
+    </div>
+
     <div id="postMediaInfo" class="mdl-cell mdl-cell--12-col mdl-card__supporting-text no-padding ">
         {{{mediaInfo}}}
     </div>
@@ -82,7 +85,7 @@
             setTimeout(function () {
                 window.player.muted(false);
                 window.player.volume(0.6);
-            }, 7000);
+            }, 6000);
         }
     }
 

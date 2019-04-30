@@ -65,15 +65,15 @@
   <h1>MediaPlayerOne with Youtube Video Source and VAST, VPAID</h1>
 
   <hr>
-  <div id="videoPlaceholder3" class="videoholder"></div>
+  <div id="videoPlaceholder1" class="videoholder"></div>
+  <hr>
+  <div id="videoPlaceholder2" class="videoholder"></div>
 
   <script>
     var autoplayVideo = true;
     window.debugMediaPlayerOne = true;
-
-    function loadVideo() {
-      var placeHolderId = 'videoPlaceholder3';
-      var videoSource = 'https://www.youtube.com/watch?v=RggVAA_8J9k';
+  
+    function loadVideo(placeHolderId, videoSource ) {     
 
 
       var skipAdAfter = 6; // show skip button after N seconds
@@ -129,7 +129,8 @@
     }
 
     var init = function () {
-      loadVideo();
+      loadVideo( 'videoPlaceholder1','https://www.youtube.com/watch?v=swt9bQJoEOs');
+      loadVideo( 'videoPlaceholder2','https://www.youtube.com/watch?v=qmN4jzEr7TE');
     };
   </script>
 

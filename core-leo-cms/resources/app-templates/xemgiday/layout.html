@@ -246,9 +246,11 @@
 
     $(document).ready(function () {
         var isSmallScreen = $(window).width() < 640;
+
         if(isSmallScreen){
             $('#search_tab').show();
-            $('#search_filter_wrapper > div').addClass('w100');
+            $('#search_filter_wrapper > div').addClass('w100'); 
+            $('#post_title').addClass('mdl-typography--title');           
         } else {            
             $('#ds_search_box_wrapper, #ds_search_btn_wrapper').show();
         }
