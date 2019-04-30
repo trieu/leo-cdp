@@ -14,6 +14,20 @@ main.mdl-layout__content {
     line-height: 1.8em!important; font-size: 1.06em!important;font-family: 'Helvetica','Arial',sans-serif!important;
 }
 
+#ds_search_box_wrapper {
+    margin-left: 40px; width: 50%;
+}
+#ds_search_textbox {
+    background-color: rgba(0,0,0,0.04);color: #000!important;
+}
+
+#mb_search_wrapper {
+    margin: auto; width: 80%;
+}
+#mb_search_textbox {
+    background-color: rgba(0,0,0,0.04);color: #000!important;
+}
+
 #loadMore {
     padding-bottom: 30px;
     padding-top: 30px;
