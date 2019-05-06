@@ -191,7 +191,7 @@ public class SearchPostUtil {
 
 		    for (ScoreDoc scoreDoc : scoreDocs) {
 			Document document = searcher.doc(scoreDoc.doc);
-			System.out.println("searchPost " + document.get(CONTENT_ID));
+//			System.out.println("searchPost " + document.get(CONTENT_ID));
 			String json = document.get(DATA);
 			Post post = new Gson().fromJson(json, Post.class);
 			list.add(post);

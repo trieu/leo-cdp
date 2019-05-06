@@ -21,6 +21,7 @@ import leotech.cms.model.renderable.PageNavigator;
 import leotech.cms.model.renderable.PostDataModel;
 import leotech.cms.model.renderable.WebDataModel;
 import leotech.core.api.BaseSecuredDataApi;
+import leotech.system.util.seach.SearchPostUtil;
 import rfx.core.util.StringUtil;
 
 public class WebDataModelService {
@@ -98,12 +99,8 @@ public class WebDataModelService {
 	    } else {
 		keywords = new String[] {};
 	    }
-
 	    List<Post> posts = PostDaoUtil.listPublicPostsByKeywords(new String[] { contentCategoryId }, publicContentClass, keywords, startIndex, numberResult);
-
 	    String title = network.getName() + " - " + keywordsStr;
-
-	    
 	    if (posts != null) {
 		model = new PostDataModel(networkDomain, webTemplateFolder, LIST_POST, title, posts);
 		int nextStartIndex = startIndex + numberResult;
@@ -113,7 +110,25 @@ public class WebDataModelService {
 		model.setCustomData("nextStartIndex", nextStartIndex);
 		model.setPageKeywords(keywordsStr);
 	    }
+	}
+	// searching posts by keywords
+	else if (path.startsWith(HTML_SEARCH)) {
 
+	    int pageNumber = StringUtil.safeParseInt(params.get("p"), 1);
+	    int numberResult = StringUtil.safeParseInt(params.get("n"), 9);
+	    String keywordsStr = StringUtil.safeString(params.get("q"), "");
+	    String[] keywords;
+	    if (!keywordsStr.isEmpty()) {
+		keywords = keywordsStr.split(",");
+	    } else {
+		keywords = new String[] {};
+	    }
+	    List<Post> posts = SearchPostUtil.searchPublicPost(keywords, pageNumber, numberResult);
+	    String title = network.getName() + " - " + keywordsStr;
+	    if (posts != null) {
+		model = new PostDataModel(networkDomain, webTemplateFolder, LIST_POST, title, posts);
+		model.setPageKeywords(keywordsStr);
+	    }
 	}
 
 	// not found 404

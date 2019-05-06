@@ -23,6 +23,7 @@
 * https://stackoverflow.com/questions/27957766/how-do-i-render-a-word-document-doc-docx-in-the-browser-using-javascript
 * https://stackoverflow.com/questions/44128397/how-to-convert-pptx-to-pdf-document-using-java-code
 * SSL https://serversforhackers.com/c/letsencrypt-with-haproxy
+* Logging framework https://github.com/google/flogger
 
 sudo certbot certonly --standalone -d xemgiday.com --non-interactive --agree-tos --email tantrieuf31.database@gmail.com --http-01-port=8888
 

@@ -544,7 +544,7 @@
         readyCallback
       );
     } else {
-      if (videoSource.indexOf(".mp4") > 0) {
+      if (videoSource.lastIndexOf(".mp4") > 0) {
         player = createVideo(
           autoplay,
           placeHolderId,
@@ -560,7 +560,7 @@
           adConfigs,
           readyCallback
         );
-      } else if (videoSource.indexOf(".webm") > 0) {
+      } else if (videoSource.lastIndexOf(".webm") > 0) {
         player = createVideo(
           autoplay,
           placeHolderId,
@@ -576,7 +576,7 @@
           adConfigs,
           readyCallback
         );
-      } else if (videoSource.indexOf(".m3u8") > 0) {
+      } else if (videoSource.lastIndexOf(".m3u8") > 0) {
         player = createVideo(
           autoplay,
           placeHolderId,
