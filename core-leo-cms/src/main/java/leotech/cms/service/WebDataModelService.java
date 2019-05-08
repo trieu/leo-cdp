@@ -3,10 +3,8 @@ package leotech.cms.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import io.vertx.core.MultiMap;
-import leotech.cms.dao.ContentQueryDaoUtil;
 import leotech.cms.dao.PostDaoUtil;
 import leotech.cms.model.Category;
 import leotech.cms.model.MediaNetwork;
@@ -37,10 +35,10 @@ public class WebDataModelService {
     static final String HTML_POST = "/html/post/";
 
     // handler for listing content by speacial filters
-    static final String HTML_SEARCH = "/html/search/";
-    static final String HTML_MY_FAVORITES_LIST = "/html/my-favorites-list/";
-    static final String HTML_MOST_TRENDING = "/html/most-trending/";
-    static final String HTML_TOP_POSTS_BY_KEYWORDS = "/html/top-posts-by-keywords/";
+    static final String HTML_SEARCH = "/html/search";
+    static final String HTML_MY_FAVORITES_LIST = "/html/my-favorites-list";
+    static final String HTML_MOST_TRENDING = "/html/most-trending";
+    static final String HTML_TOP_POSTS_BY_KEYWORDS = "/html/top-posts-by-keywords";
 
     // template name
     static final String LIST_NETWORK = "list-network";

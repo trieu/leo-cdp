@@ -72,17 +72,22 @@ public class PostDaoUtil {
 	return false;
     }
 
-    public static Post getById(String id) {
+    public static Post getById(String id, boolean headlineOnly) {
 	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
 	Map<String, Object> bindVars = new HashMap<>(1);
 	bindVars.put("id", id);
 	Post p = new ArangoDbQuery<Post>(db, AQL_GET_POST_BY_ID, bindVars, Post.class, new CallbackQuery<Post>() {
 	    public Post apply(Post obj) {
 		obj.buildDefaultHeadlineImage();
+		obj.compactDataForList(headlineOnly);
 		return obj;
 	    }
 	}).getResultsAsObject();
 	return p;
+    }
+    
+    public static Post getById(String id) {
+	return getById(id, false);
     }
 
     public static Post getBySlug(String slug) {

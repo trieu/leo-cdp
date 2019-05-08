@@ -160,6 +160,11 @@ public class PostDataService {
 	Post p = PostDaoUtil.getBySlug(slug);
 	return p;
     }
+    
+    public static Post getById(String id, boolean headlineOnly) {
+  	Post p = PostDaoUtil.getById(id, headlineOnly);  	
+  	return p;
+      }
 
     public static List<Post> getSimilarPosts(List<String> contextPageIds, String postId) {
 	IrisBot bot = new IrisBot(contextPageIds, postId);

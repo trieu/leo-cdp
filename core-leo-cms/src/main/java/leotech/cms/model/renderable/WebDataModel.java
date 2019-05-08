@@ -48,27 +48,28 @@ public class WebDataModel extends DefaultModel {
     protected String pageKeywords = "";
 
     public WebDataModel(String host, String templateFolder, String templateName) {
+	this.setBaseData(host);
 	this.host = host;
 	this.templateFolder = templateFolder;
 	this.templateName = templateName;
 	this.httpStatusCode = HttpStatus.SC_OK;
-	this.setBaseData(host);
+	
     }
 
     public WebDataModel(String host, String templateFolder, String templateName, int statusCode) {
+	this.setBaseData(host);
 	this.host = host;
 	this.templateFolder = templateFolder;
 	this.templateName = templateName;
-	this.httpStatusCode = statusCode;
-	this.setBaseData(host);
+	this.httpStatusCode = statusCode;	
     }
 
     public WebDataModel(String host, String templateFolder, String templateName, String pageTitle) {
+	this.setBaseData(host);
 	this.host = host;
 	this.templateFolder = templateFolder;
 	this.templateName = templateName;
-	this.pageTitle = pageTitle;
-	this.setBaseData(host);
+	this.pageTitle = pageTitle;	
     }    
 
     /////////////////

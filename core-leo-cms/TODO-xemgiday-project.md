@@ -35,3 +35,4 @@
 * News https://www.youtube.com/channel/UCIg56SgvoZF8Qg0Jx_gh6Pg/videos
 * News http://vnews.gov.vn/tin-trong-nuoc
 * https://www.typetalk.com/blog/10-proven-ways-get-focused-stay-focused/
+* Socialolgy https://www.youtube.com/channel/UCnUl4-oOxarjwmIl_oxxmlA
