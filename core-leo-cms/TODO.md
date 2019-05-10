@@ -100,6 +100,10 @@ sudo certbot certonly --standalone -d xemgiday.com --non-interactive --agree-tos
 ## Marketing Materials 
 * https://www.fastcompany.com/3044995/to-take-on-hbo-and-netflix-youtube-had-to-rewire-itself
 
+## DevOps 
+* Docker For Beginners https://www.youtube.com/watch?v=sRIxHHZFwBA
+* https://medium.com/the-andela-way/docker-for-beginners-61e8e0ce6a19
+* https://dzone.com/articles/9-reasons-why-devops-is-better-with-docker-amp-kub
 
 ## Competitor
 * https://www.conversant.tv/swiftcms/
