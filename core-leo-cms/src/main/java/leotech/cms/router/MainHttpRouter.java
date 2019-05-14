@@ -32,7 +32,7 @@ import rfx.core.util.StringUtil;
 /**
  * @author trieu
  * 
- *         Main Ad Delivery Handler for Display, Instream and Outstream
+ *  Main Ad Delivery Handler for Display, Instream and Outstream
  *
  */
 public class MainHttpRouter extends BaseHttpRouter {
@@ -92,6 +92,7 @@ public class MainHttpRouter extends BaseHttpRouter {
 	System.out.println("Full URL " + url);
 	System.out.println("==>>>> host: " + host + " path: " + path);
 
+	// HOME page
 	if (path.equals(HOME_ROUTER)) {
 	    outHeaders.set(CONTENT_TYPE, MIME_TYPE_HTML);
 	    BaseHttpRouter.setCorsHeaders(outHeaders, origin);
@@ -107,9 +108,7 @@ public class MainHttpRouter extends BaseHttpRouter {
 	    // then handle app template for end-user
 	    handleWebPageRequest(params, isSearchEngineBot, host, tplFolderName, "index", resp, userSession);
 	}
-	else if(path.equalsIgnoreCase("/favicon.ico")) {
-	    resp.end("");
-	}
+	
 	// Progressive Web App in Mobile Hibrid App
 	else if (path.startsWith(APP_ROUTER)) {
 	    outHeaders.set(CONTENT_TYPE, MIME_TYPE_HTML);
@@ -124,30 +123,35 @@ public class MainHttpRouter extends BaseHttpRouter {
 		handleWebPageRequest(params, false, host, appId, "index", resp, userSession);
 	    }
 	}
-	// public files (Images, CSS, JS, JSON,...)
+	
+	// Files handler with CDN (Images, CSS, JS, JSON,...)
 	else if (path.startsWith(PUBLIC_FILE_ROUTER)) {
 	    publicFileHandler(resp, outHeaders, path, params);
 	}
-	// small HTML view loader
+	
+	// HTML view ajax loader
 	else if (path.startsWith(VIEW_ROUTER)) {
 	    BaseHttpRouter.setCorsHeaders(outHeaders, origin);
 	    viewRoutingHandler(req, resp, path, host);
 	}
-	// secured API gateway to protected data with ACL
+	
+	// API gateway to protected data with ACL
 	else if (path.equals(API_GATEWAY_ROUTER)) {
 	    outHeaders.set(CONTENT_TYPE, ContentType.APPLICATION_JSON.getMimeType());
 	    BaseHttpRouter.setCorsHeaders(outHeaders, origin);
 	    String json = SecuredApiProxyHandler.process(context, req);
 	    resp.end(json);
 	}
-	// admin app
+	
+	// Admin app
 	else if (path.equals(ADMIN_ROUTER)) {
 	    outHeaders.set(CONTENT_TYPE, MIME_TYPE_HTML);
 	    BaseHttpRouter.setCorsHeaders(outHeaders, origin);
 	    String tplFolder = MediaNetworkDataService.DEFAULT_ADMIN_TEMPLATE_FOLDER;
 	    handleWebPageRequest(params, false, host, tplFolder, "index", resp, userSession);
 	}
-	// render public data as normal HTML website for SEO
+	
+	// HTML render public data as website for SEO
 	else if (path.startsWith(HTML_DIRECT_RENDER)) {
 	    // for SEO or Facebook BOT
 	    outHeaders.set(CONTENT_TYPE, MIME_TYPE_HTML);
@@ -161,6 +165,11 @@ public class MainHttpRouter extends BaseHttpRouter {
 	else if (path.equalsIgnoreCase(ADS_TXT)) {
 	    resp.setStatusCode(HttpStatus.SC_OK);
 	    resp.end(ADS_TXT_CONTENT);
+	}
+	
+	// Favicon
+	else if(path.equalsIgnoreCase("/favicon.ico")) {
+	    resp.end("");
 	}
 
 	// ---------------------------------------------------------------------------------------------------

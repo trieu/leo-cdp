@@ -40,7 +40,7 @@ import rfx.core.util.StringUtil;
 public class SearchPostUtil {
     private static final String KEYWORDS = "keywords";
     private static final String CATEGORY_KEY = "cat_key";
-    private static final String DATA = "data";
+    private static final String JSON_DATA = "json_data";
     private static final String TITLE = "title";
     private static final String PRIVACY = "privacy";
     private static final String INDEXED = "indexed";
@@ -48,7 +48,6 @@ public class SearchPostUtil {
     private static final String CONTENT_ID = "ctid";
     private static final String CONTENT_ID_PREFIX = "ctid:";
     public static final String LUCENE_INDEX_FOLDER_NAME = "./LUCENE_INDEX/";
-    private static final int SEARCH_RESULT_PAGE_SIZE = 10;
 
     protected static Directory getIndexDir() throws IOException {
 	File dir = new File(LUCENE_INDEX_FOLDER_NAME);
@@ -89,8 +88,10 @@ public class SearchPostUtil {
 
 	document.add(new TextField(INDEXED, indexedData, Field.Store.NO));
 
+	// store json as cached data
+	post.compactDataForList(true);
 	String json = new Gson().toJson(post);
-	document.add(new StoredField(DATA, json));
+	document.add(new StoredField(JSON_DATA, json));
 	return document;
     }
 
@@ -144,11 +145,11 @@ public class SearchPostUtil {
 	}
     }
 
-    public static List<Post> searchPublicPost(String[] keywords, int pageNumber, int pageResults) {
-	return searchPost(keywords, false, false, true, pageNumber, pageResults);
+    public static List<Post> searchPublicPost(String[] keywords, int startIndex, int numberResult) {
+	return searchPost(keywords, false, false, true, startIndex, numberResult);
     }
 
-    public static List<Post> searchPost(String[] keywords, boolean includeProtected, boolean includePrivate, boolean headlineOnly, int pageNumber, int pageResults) {
+    public static List<Post> searchPost(String[] keywords, boolean includeProtected, boolean includePrivate, boolean headlineOnly, int startIndex, int numberResult) {
 	List<Post> list = null;
 	try {
 
@@ -185,8 +186,8 @@ public class SearchPostUtil {
 		    TopScoreDocCollector collector = TopScoreDocCollector.create(1000);
 		    searcher.search(searchQuery, collector);
 
-		    int startIndex = (pageNumber - 1) * pageResults;
-		    TopDocs topDocs = collector.topDocs(startIndex, pageResults);
+		    //int startIndex = (pageNumber - 1) * pageResults;
+		    TopDocs topDocs = collector.topDocs(startIndex, numberResult);
 
 		    ScoreDoc[] scoreDocs = topDocs.scoreDocs;
 		    list = new ArrayList<>(scoreDocs.length);
@@ -195,10 +196,11 @@ public class SearchPostUtil {
 			// System.out.println("searchPost " + document.get(CONTENT_ID));
 			String id = document.get(CONTENT_ID);
 			if (id != null) {
-			    Post post = PostDataService.getById(id, true);
-			    if(post != null) {				
+			    String json = document.get(JSON_DATA);
+			    Post post = new Gson().fromJson(json, Post.class);// PostDataService.getById(id, true);
+			    if (post != null) {
 				list.add(post);
-			    }			    
+			    }
 			}
 		    }
 		    indexReader.close();

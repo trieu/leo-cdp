@@ -67,6 +67,7 @@ public class WebDataModel extends DefaultModel {
     public WebDataModel(String host, String templateFolder, String templateName, String pageTitle) {
 	this.setBaseData(host);
 	this.host = host;
+	this.pageName = host;
 	this.templateFolder = templateFolder;
 	this.templateName = templateName;
 	this.pageTitle = pageTitle;	

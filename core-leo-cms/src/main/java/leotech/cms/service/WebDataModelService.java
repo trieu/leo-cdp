@@ -48,6 +48,7 @@ public class WebDataModelService {
     static final String LIST_PAGE = "list-page";
     static final String SINGLE_PAGE = "single-page";
     static final String LIST_POST = "list-post";
+    static final String SEARCH_POST = "search-post";
     static final String SINGLE_POST = "single-post";
 
     public static WebDataModel buildWebDataModel(String path, String networkDomain, MultiMap params, String userSession) {
@@ -60,7 +61,6 @@ public class WebDataModelService {
 	WebDataModel model = null;
 
 	// media network
-
 	if (path.startsWith(HTML_NETWORK)) {
 	    objectId = path.replace(HTML_NETWORK, "");
 	    model = buildMediaNetworkDataModel(network, objectId);
@@ -98,7 +98,7 @@ public class WebDataModelService {
 		keywords = new String[] {};
 	    }
 	    List<Post> posts = PostDaoUtil.listPublicPostsByKeywords(new String[] { contentCategoryId }, publicContentClass, keywords, startIndex, numberResult);
-	    String title = network.getName() + " - " + keywordsStr;
+	    String title = " Top posts about \"" + keywordsStr + "\"";
 	    if (posts != null) {
 		model = new PostDataModel(networkDomain, webTemplateFolder, LIST_POST, title, posts);
 		int nextStartIndex = startIndex + numberResult;
@@ -112,19 +112,24 @@ public class WebDataModelService {
 	// searching posts by keywords
 	else if (path.startsWith(HTML_SEARCH)) {
 
-	    int pageNumber = StringUtil.safeParseInt(params.get("p"), 1);
-	    int numberResult = StringUtil.safeParseInt(params.get("n"), 9);
-	    String keywordsStr = StringUtil.safeString(params.get("q"), "");
+	    int startIndex = StringUtil.safeParseInt(params.get("startIndex"), 0);
+	    int numberResult = StringUtil.safeParseInt(params.get("numberResult"), 6);
+	    String keywordsStr = StringUtil.safeString(params.get("keywords"), "");
 	    String[] keywords;
 	    if (!keywordsStr.isEmpty()) {
 		keywords = keywordsStr.split(",");
 	    } else {
 		keywords = new String[] {};
 	    }
-	    List<Post> posts = SearchPostUtil.searchPublicPost(keywords, pageNumber, numberResult);
-	    String title = network.getName() + " - " + keywordsStr;
+	    List<Post> posts = SearchPostUtil.searchPublicPost(keywords, startIndex, numberResult);
+	    String title = keywordsStr + " - Content Search";
 	    if (posts != null) {
-		model = new PostDataModel(networkDomain, webTemplateFolder, LIST_POST, title, posts);
+		model = new PostDataModel(networkDomain, webTemplateFolder, SEARCH_POST, title, posts);
+		int nextStartIndex = startIndex + numberResult;
+		if (posts.size() < numberResult) {
+		    nextStartIndex = 0;
+		}
+		model.setCustomData("nextStartIndex", nextStartIndex);
 		model.setPageKeywords(keywordsStr);
 	    }
 	}
