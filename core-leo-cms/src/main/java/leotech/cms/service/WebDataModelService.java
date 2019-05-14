@@ -50,6 +50,8 @@ public class WebDataModelService {
     static final String LIST_POST = "list-post";
     static final String SEARCH_POST = "search-post";
     static final String SINGLE_POST = "single-post";
+    
+    static final int NUMBER_RESULTS = 6;
 
     public static WebDataModel buildWebDataModel(String path, String networkDomain, MultiMap params, String userSession) {
 	MediaNetwork network = MediaNetworkDataService.getContentNetwork(networkDomain);
@@ -75,21 +77,21 @@ public class WebDataModelService {
 	else if (path.startsWith(HTML_PAGE)) {
 	    objectId = path.replace(HTML_PAGE, "");
 	    int startIndex = StringUtil.safeParseInt(params.get("startIndex"), 0);
-	    int numberResult = StringUtil.safeParseInt(params.get("numberResult"), 6);
+	    int numberResult = StringUtil.safeParseInt(params.get("numberResult"), NUMBER_RESULTS);
 	    model = buildPageDataModel(path, network, objectId, startIndex, numberResult);
 	}
 	// post: renderable content for end-user (video, text, slide, images,...)
 	else if (path.startsWith(HTML_POST)) {
 	    String slug = path.replace(HTML_POST, "");
 	    int startIndex = StringUtil.safeParseInt(params.get("startIndex"), 0);
-	    int numberResult = StringUtil.safeParseInt(params.get("numberResult"), 9);
+	    int numberResult = StringUtil.safeParseInt(params.get("numberResult"), NUMBER_RESULTS);
 	    model = buildPostDataModel(userSession, network, slug, startIndex, numberResult);
 	}
 	// listing posts by filtering keywords
 	else if (path.startsWith(HTML_TOP_POSTS_BY_KEYWORDS)) {
 
 	    int startIndex = StringUtil.safeParseInt(params.get("startIndex"), 0);
-	    int numberResult = StringUtil.safeParseInt(params.get("numberResult"), 9);
+	    int numberResult = StringUtil.safeParseInt(params.get("numberResult"), NUMBER_RESULTS);
 	    String keywordsStr = StringUtil.safeString(params.get("keywords"), "");
 	    String[] keywords;
 	    if (!keywordsStr.isEmpty()) {
@@ -101,10 +103,15 @@ public class WebDataModelService {
 	    String title = " Top posts about \"" + keywordsStr + "\"";
 	    if (posts != null) {
 		model = new PostDataModel(networkDomain, webTemplateFolder, LIST_POST, title, posts);
+		int prevStartIndex = startIndex - numberResult;
 		int nextStartIndex = startIndex + numberResult;
+		if(prevStartIndex < 0) {
+		    prevStartIndex = 0;
+		}
 		if (posts.size() < numberResult) {
 		    nextStartIndex = 0;
 		}
+		model.setCustomData("prevStartIndex", prevStartIndex);
 		model.setCustomData("nextStartIndex", nextStartIndex);
 		model.setPageKeywords(keywordsStr);
 	    }
@@ -113,7 +120,7 @@ public class WebDataModelService {
 	else if (path.startsWith(HTML_SEARCH)) {
 
 	    int startIndex = StringUtil.safeParseInt(params.get("startIndex"), 0);
-	    int numberResult = StringUtil.safeParseInt(params.get("numberResult"), 6);
+	    int numberResult = StringUtil.safeParseInt(params.get("numberResult"), NUMBER_RESULTS);
 	    String keywordsStr = StringUtil.safeString(params.get("keywords"), "");
 	    String[] keywords;
 	    if (!keywordsStr.isEmpty()) {
@@ -125,11 +132,16 @@ public class WebDataModelService {
 	    String title = keywordsStr + " - Content Search";
 	    if (posts != null) {
 		model = new PostDataModel(networkDomain, webTemplateFolder, SEARCH_POST, title, posts);
+		int prevStartIndex = startIndex - numberResult;
 		int nextStartIndex = startIndex + numberResult;
+		if(prevStartIndex < 0) {
+		    prevStartIndex = 0;
+		}
 		if (posts.size() < numberResult) {
 		    nextStartIndex = 0;
 		}
-		model.setCustomData("nextStartIndex", nextStartIndex);
+		model.setCustomData("prevStartIndex", prevStartIndex);
+		model.setCustomData("nextStartIndex", nextStartIndex);		
 		model.setPageKeywords(keywordsStr);
 	    }
 	}
@@ -284,13 +296,18 @@ public class WebDataModelService {
 	model.setContentMediaBoxs(contentMediaBoxs);
 
 	int startIndex = StringUtil.safeParseInt(params.get("startIndex"), 0);
-	int numberResult = StringUtil.safeParseInt(params.get("numberResult"), 9);
+	int numberResult = StringUtil.safeParseInt(params.get("numberResult"), NUMBER_RESULTS);
 
 	List<Post> headlines = PostDaoUtil.listPostsByMediaNetwork(network, false, false, startIndex, numberResult);
+	int prevStartIndex = startIndex - numberResult;
 	int nextStartIndex = startIndex + numberResult;
+	if(prevStartIndex < 0) {
+	    prevStartIndex = 0;
+	}
 	if (headlines.size() < numberResult) {
 	    nextStartIndex = 0;
 	}
+	model.setCustomData("prevStartIndex", prevStartIndex);
 	model.setCustomData("nextStartIndex", nextStartIndex);
 	model.setHeadlines(headlines);
 	return model;

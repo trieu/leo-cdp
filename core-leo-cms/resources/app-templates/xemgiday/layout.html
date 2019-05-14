@@ -68,25 +68,33 @@
             <!-- main content here -->
             {{#doIf templateName '==' "index" }}
 
-            <!-- Ads -->
-            <div id="headerAdPlacement" class="mdl-card__actions mdl-card--border mdl-typography--text-center">
-                <strong>Advertiment</strong>
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9034869050940123"
-                    data-ad-slot="1376192829" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-            </div>
+                <!-- Ads -->
+                <div id="headerAdPlacement" class="mdl-card__actions mdl-card--border mdl-typography--text-center">
+                    <strong>Advertiment</strong>
+                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9034869050940123"
+                        data-ad-slot="1376192829" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
 
-            {{#each headlines}}
-            {{#renderHtmlView "xemgiday/widgets/item-post" this }}{{/renderHtmlView}}
-            {{/each}}
+                {{#each headlines}}
+                {{#renderHtmlView "xemgiday/widgets/item-post" this }}{{/renderHtmlView}}
+                {{/each}}
 
-            {{#doIf customData.nextStartIndex '>' 0 }}
-            <div id="loadMore">
-                <a href="/?startIndex={{customData.nextStartIndex}}&numberResult=9">Load More</a>
-            </div>
-            {{/doIf}}
+                <div style="width: 100%;">
+                    {{#doIf customData.prevStartIndex '>=' 0 }}
+                        <div class="text_btn" >
+                            <a href="/?startIndex={{customData.prevStartIndex}}&numberResult=6">Previous</a>
+                        </div>
+                    {{/doIf}}
+
+                    {{#doIf customData.nextStartIndex '>' 0 }}
+                        <div class="text_btn" style="float: right;" >
+                            <a href="/?startIndex={{customData.nextStartIndex}}&numberResult=6">Next</a>
+                        </div>
+                    {{/doIf}}
+                </div>              
 
             {{/doIf}}
 
@@ -96,26 +104,33 @@
             {{/doIf}}
 
             {{#doIf templateName '==' "single-page" }}
-            <!-- Ads -->
-            <div id="headerAdPlacement" class="mdl-card__actions mdl-card--border mdl-typography--text-center">
-                <strong>Advertiment</strong>
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9034869050940123"
-                    data-ad-slot="1376192829" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-            </div>
+                <!-- Ads -->
+                <div id="headerAdPlacement" class="mdl-card__actions mdl-card--border mdl-typography--text-center">
+                    <strong>Advertiment</strong>
+                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9034869050940123"
+                        data-ad-slot="1376192829" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
 
-            {{#each pages}}
-            {{#renderHtmlView "xemgiday/single-page" this }}{{/renderHtmlView}}
-            {{/each}}
+                {{#each pages}}
+                {{#renderHtmlView "xemgiday/single-page" this }}{{/renderHtmlView}}
+                {{/each}}
 
-            {{#doIf customData.nextStartIndex '>' 0 }}
-            <div id="loadMore">
-                <a href="{{customData.currentPath}}?startIndex={{customData.nextStartIndex}}&numberResult=6">Load
-                    More</a>
-            </div>
-            {{/doIf}}
+                <div style="width: 100%;">
+                    {{#doIf customData.prevStartIndex '>=' 0 }}
+                        <div class="text_btn" >
+                            <a href="{{customData.currentPath}}?startIndex={{customData.prevStartIndex}}&numberResult=6">Previous</a>
+                        </div>
+                    {{/doIf}}
+
+                    {{#doIf customData.nextStartIndex '>' 0 }}
+                        <div class="text_btn" style="float: right;" >
+                            <a href="{{customData.currentPath}}?startIndex={{customData.nextStartIndex}}&numberResult=6">Next</a>
+                        </div>
+                    {{/doIf}}
+                </div>        
             {{/doIf}}
 
             {{#doIf templateName '==' "single-post" }}
@@ -184,24 +199,22 @@
                     </div>
                 {{/each}}
 
-                {{#doIf customData.nextStartIndex '>' 0 }}
-                <div id="loadMore">
-                    <a href="/html/top-posts-by-keywords/?keywords={{pageKeywords}}&startIndex={{customData.nextStartIndex}}&numberResult=9">Load
-                        More</a>
-                </div>
-                {{/doIf}}
+                <div style="width: 100%;">
+                    {{#doIf customData.prevStartIndex '>=' 0 }}
+                        <div class="text_btn" >
+                            <a href="/html/top-posts-by-keywords?keywords={{pageKeywords}}&startIndex={{customData.prevStartIndex}}&numberResult=6">Previous</a>
+                        </div>
+                    {{/doIf}}
+
+                    {{#doIf customData.nextStartIndex '>' 0 }}
+                        <div class="text_btn" style="float: right;" >
+                            <a href="/html/top-posts-by-keywords?keywords={{pageKeywords}}&startIndex={{customData.nextStartIndex}}&numberResult=6">Next</a>
+                        </div>
+                    {{/doIf}}
+                </div>       
             {{/doIf}}
 
-            {{#doIf templateName '==' "search-post" }}
-                <!-- Ads -->
-                <div id="headerAdPlacement" class="mdl-card__actions mdl-card--border mdl-typography--text-center">
-                    <strong>Advertiment</strong>
-                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9034869050940123"
-                        data-ad-slot="1376192829" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                    <script>
-                        (adsbygoogle = window.adsbygoogle || []).push({});
-                    </script>
-                </div>
+            {{#doIf templateName '==' "search-post" }}               
 
                 <div class="mdl-card__actions mdl-typography--text-center">
                     <h5>Search for "<strong>{{pageKeywords}}</strong>" </h5>
@@ -212,12 +225,29 @@
                     <strong> No results found </strong>                     
                 {{/each}}
 
-                {{#doIf customData.nextStartIndex '>' 0 }}
-                <div id="loadMore">
-                    <a href="/html/search?keywords={{pageKeywords}}&startIndex={{customData.nextStartIndex}}&numberResult=6">Load
-                        More</a>
+                <div style="width: 100%;">
+                    {{#doIf customData.prevStartIndex '>=' 0 }}
+                        <div class="text_btn" >
+                            <a href="/html/search?keywords={{pageKeywords}}&startIndex={{customData.prevStartIndex}}&numberResult=6">Previous</a>
+                        </div>
+                    {{/doIf}}
+
+                    {{#doIf customData.nextStartIndex '>' 0 }}
+                        <div class="text_btn" style="float: right;" >
+                            <a href="/html/search?keywords={{pageKeywords}}&startIndex={{customData.nextStartIndex}}&numberResult=6">Next</a>
+                        </div>
+                    {{/doIf}}
+                </div> 
+                
+                <!-- Ads -->
+                <div id="headerAdPlacement" class="mdl-card__actions mdl-card--border mdl-typography--text-center">
+                    <strong>Advertiment</strong>
+                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9034869050940123"
+                        data-ad-slot="1376192829" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
                 </div>
-                {{/doIf}}
             {{/doIf}}
 
 

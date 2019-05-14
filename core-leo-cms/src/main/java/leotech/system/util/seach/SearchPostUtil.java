@@ -38,6 +38,7 @@ import leotech.system.util.KeywordUtil;
 import rfx.core.util.StringUtil;
 
 public class SearchPostUtil {
+    private static final String SPACE_STR = " ";
     private static final String KEYWORDS = "keywords";
     private static final String CATEGORY_KEY = "cat_key";
     private static final String JSON_DATA = "json_data";
@@ -64,28 +65,32 @@ public class SearchPostUtil {
     protected static Document documentBuilder(Post post) {
 	Document document = new Document();
 	StringBuilder indexed = new StringBuilder();
+	
+	List<String> keywords = post.getKeywords();
+	for (String keyword : keywords) {
+	    indexed.append(keyword).append(SPACE_STR);
+	}
 
-	indexed.append(post.getTitle()).append(" ");
-	indexed.append(post.getDescription()).append(" ");
-	indexed.append(post.getMediaInfo()).append(" ");
+	indexed.append(post.getTitle()).append(SPACE_STR);
+	indexed.append(post.getDescription()).append(SPACE_STR);
+	indexed.append(post.getMediaInfo()).append(SPACE_STR);
 
 	List<MediaInfoUnit> mediaUnits = post.getMediaInfoUnits();
 	for (MediaInfoUnit mediaInfoUnit : mediaUnits) {
-	    indexed.append(mediaInfoUnit.getHeadline()).append(" ");
-	    indexed.append(mediaInfoUnit.getContent()).append(" ");
+	    indexed.append(mediaInfoUnit.getHeadline()).append(SPACE_STR);
+	    indexed.append(mediaInfoUnit.getContent()).append(SPACE_STR);
 	}
 
 	document.add(new StringField(CONTENT_ID, post.getId(), Field.Store.YES));
 
 	String indexedTitle = KeywordUtil.normalizeForSearchIndex(post.getTitle());
+	String indexedData = KeywordUtil.normalizeForSearchIndex(indexed.toString());
 
 	document.add(new TextField(TITLE, post.getTitle(), Field.Store.YES));
 	document.add(new TextField(CATEGORY_KEY, post.getCategoryKeys().get(0), Field.Store.YES));
 	document.add(new TextField(PRIVACY, post.getPrivacyStatus() + "", Field.Store.YES));
 	document.add(new TextField(KEYWORDS, StringUtil.joinFromList(",", post.getKeywords()), Field.Store.YES));
 	document.add(new TextField(INDEXED_TITLE, indexedTitle, Field.Store.YES));
-	String indexedData = KeywordUtil.normalizeForSearchIndex(indexed.toString());
-
 	document.add(new TextField(INDEXED, indexedData, Field.Store.NO));
 
 	// store json as cached data
@@ -158,7 +163,7 @@ public class SearchPostUtil {
 		if (!keyword.isEmpty()) {
 
 		    String normalizedKeyword = KeywordUtil.normalizeForSearchIndex(keyword);
-		    String[] toks = normalizedKeyword.split(" ");
+		    String[] toks = normalizedKeyword.split(SPACE_STR);
 		    System.out.println("SearchPostUtil.searchPost " + keyword);
 
 		    Builder mainQuery = new BooleanQuery.Builder();
@@ -177,7 +182,6 @@ public class SearchPostUtil {
 			    Query fulltextQuery2 = new TermQuery(new Term(INDEXED, tok));
 			    mainQuery.add(fulltextQuery2, BooleanClause.Occur.SHOULD);
 			}
-
 		    }
 		    Query searchQuery = mainQuery.build();
 		    IndexReader indexReader = DirectoryReader.open(getIndexDir());

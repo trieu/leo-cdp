@@ -28,16 +28,18 @@ main.mdl-layout__content {
     background-color: rgba(0,0,0,0.04);color: #000!important;
 }
 
-#loadMore {
+.text_btn {
     padding-bottom: 30px;
     padding-top: 30px;
     text-align: center;
-    width: 100%;
+    width: 120px;
+    display: inline-block;
+    margin: 0 auto;
 }
 
-#loadMore a {
+.text_btn a {
     background: #042a63;
-    border-radius: 3px;
+    border-radius: 5px;
     color: white;
     display: inline-block;
     padding: 10px 30px;
@@ -45,7 +47,7 @@ main.mdl-layout__content {
     -webkit-font-smoothing: antialiased;
 }
 
-#loadMore a:hover {
+.text_btn a:hover {
     background-color: rgb(93, 179, 236);
     color: #33739E;
 }
