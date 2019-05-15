@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -33,7 +34,6 @@ import com.google.gson.Gson;
 
 import leotech.cms.model.MediaInfoUnit;
 import leotech.cms.model.Post;
-import leotech.cms.service.PostDataService;
 import leotech.system.util.KeywordUtil;
 import rfx.core.util.StringUtil;
 
@@ -65,7 +65,7 @@ public class SearchPostUtil {
     protected static Document documentBuilder(Post post) {
 	Document document = new Document();
 	StringBuilder indexed = new StringBuilder();
-	
+
 	List<String> keywords = post.getKeywords();
 	for (String keyword : keywords) {
 	    indexed.append(keyword).append(SPACE_STR);
@@ -81,11 +81,11 @@ public class SearchPostUtil {
 	    indexed.append(mediaInfoUnit.getContent()).append(SPACE_STR);
 	}
 
-	document.add(new StringField(CONTENT_ID, post.getId(), Field.Store.YES));
-
+	String ctid = post.getId();
 	String indexedTitle = KeywordUtil.normalizeForSearchIndex(post.getTitle());
 	String indexedData = KeywordUtil.normalizeForSearchIndex(indexed.toString());
-
+	
+	document.add(new StringField(CONTENT_ID, ctid, Field.Store.YES));
 	document.add(new TextField(TITLE, post.getTitle(), Field.Store.YES));
 	document.add(new TextField(CATEGORY_KEY, post.getCategoryKeys().get(0), Field.Store.YES));
 	document.add(new TextField(PRIVACY, post.getPrivacyStatus() + "", Field.Store.YES));
@@ -101,9 +101,27 @@ public class SearchPostUtil {
     }
 
     ///////////////////////////////////////////////////////////////////
+    
+    public static void doPostIndexing(Post post) {
+	String ctid = post.getId();
+	try {
+	    IndexWriter writter = getIndexWriter();
 
-    public static void doIndexingPost(Post post) {
-	doIndexingPosts(Arrays.asList(post));
+	    Term docId = new Term(CONTENT_ID, ctid);
+	    writter.deleteDocuments(docId);
+	    
+	    Document document = documentBuilder(post);
+	    writter.addDocument(document);
+
+	    writter.flush();
+	    writter.close();
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
+    }
+
+    public static void insertPostIndex(Post post) {
+	insertPostIndex(Arrays.asList(post));
     }
 
     public static void updateIndexedPost(Post post) {
@@ -121,7 +139,7 @@ public class SearchPostUtil {
 	}
     }
 
-    public static void deleteIndexedPost(String ctid) {
+    public static void deletePostIndex(String ctid) {
 	try {
 	    IndexWriter writter = getIndexWriter();
 
@@ -135,14 +153,15 @@ public class SearchPostUtil {
 	}
     }
 
-    public static void doIndexingPosts(List<Post> posts) {
+    public static void insertPostIndex(List<Post> posts) {
 	try {
 	    IndexWriter writter = getIndexWriter();
-
-	    for (Post post : posts) {
-		Document document = documentBuilder(post);
-		writter.addDocument(document);
-	    }
+	    
+	    List<Document> docs = posts.stream().map(p -> {
+		return documentBuilder(p);
+	    }).collect(Collectors.toList());
+	    writter.addDocuments(docs);
+	    
 	    writter.flush();
 	    writter.close();
 	} catch (Exception e) {
@@ -190,7 +209,7 @@ public class SearchPostUtil {
 		    TopScoreDocCollector collector = TopScoreDocCollector.create(1000);
 		    searcher.search(searchQuery, collector);
 
-		    //int startIndex = (pageNumber - 1) * pageResults;
+		    // int startIndex = (pageNumber - 1) * pageResults;
 		    TopDocs topDocs = collector.topDocs(startIndex, numberResult);
 
 		    ScoreDoc[] scoreDocs = topDocs.scoreDocs;

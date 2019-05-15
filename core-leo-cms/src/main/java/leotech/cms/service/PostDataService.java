@@ -19,6 +19,7 @@ import leotech.cms.model.Post;
 import leotech.cms.model.User;
 import leotech.cms.model.bot.IrisBot;
 import leotech.cms.model.common.ContentType;
+import leotech.crawler.model.CrawledYouTubeVideo;
 import leotech.system.util.seach.SearchPostUtil;
 
 public class PostDataService {
@@ -31,8 +32,32 @@ public class PostDataService {
 	    FileUtils.deleteDirectory(dir);
 	}
 	List<Post> posts = PostDaoUtil.listByNetwork(MediaNetwork.DEFAULT_ID, 0, Integer.MAX_VALUE);
-	SearchPostUtil.doIndexingPosts(posts);
+	SearchPostUtil.insertPostIndex(posts);
 	return posts.size();
+    }
+
+    public static String savePostInfo(CrawledYouTubeVideo tubeVideo, String ownerId, String pageId, String categoryKey) {
+	String title = tubeVideo.getTitle();
+	String mediaInfo = tubeVideo.getDescription();
+	String videoUrl = "https://www.youtube.com/watch?v=" + tubeVideo.getVideoID();
+	long networkId = MediaNetwork.DEFAULT_ID;
+	int type = ContentType.HTML_TEXT;
+	String contentClass = "standard";
+	int privacyStatus = -1;//private
+	List<String> keywords = tubeVideo.getKeywords();
+	
+	Post post = new Post(title, mediaInfo, networkId, type, pageId, categoryKey, ownerId);
+	post.setHeadlineVideoUrl(videoUrl);
+	post.setHeadlineImageUrl(tubeVideo.getThumbnailUrl());
+	post.setContentClass(contentClass);
+	post.setPrivacyStatus(privacyStatus);	
+	post.setKeywords(keywords );
+	
+	String saveId = PostDaoUtil.save(post);
+	if (saveId != null) {
+	    SearchPostUtil.doPostIndexing(post);
+	}
+	return saveId;
     }
 
     public static String savePostInfo(JsonObject paramJson, User loginUser) {
@@ -62,6 +87,7 @@ public class PostDataService {
 		post.setMediaInfo(mediaInfo);
 		post.setType(type);
 		post.setPageIds(Arrays.asList(pageId));
+		post.setCategoryKeys(Arrays.asList(categoryKey));
 
 		// update slug Content URI for SEO or user-friendly ID of content
 		String slug = paramJson.getString("slug", "");
@@ -72,8 +98,6 @@ public class PostDataService {
 		throw new IllegalAccessError("You do not have permission to edit the page");
 	    }
 	}
-
-	post.setCategoryKeys(Arrays.asList(categoryKey));
 
 	// privacyStatus for authorization check
 	int privacyStatus = paramJson.getInteger("privacyStatus", 0);
@@ -141,9 +165,8 @@ public class PostDataService {
 	    if (updateData) {
 		SearchPostUtil.updateIndexedPost(post);
 	    } else {
-		SearchPostUtil.doIndexingPost(post);
+		SearchPostUtil.insertPostIndex(post);
 	    }
-
 	}
 	return saveId;
     }
@@ -151,7 +174,7 @@ public class PostDataService {
     public static boolean deletePost(String postId) {
 	boolean ok = PostDaoUtil.deletePost(postId);
 	if (ok) {
-	    SearchPostUtil.deleteIndexedPost(postId);
+	    SearchPostUtil.deletePostIndex(postId);
 	}
 	return ok;
     }
@@ -160,11 +183,11 @@ public class PostDataService {
 	Post p = PostDaoUtil.getBySlug(slug);
 	return p;
     }
-    
+
     public static Post getById(String id, boolean headlineOnly) {
-  	Post p = PostDaoUtil.getById(id, headlineOnly);  	
-  	return p;
-      }
+	Post p = PostDaoUtil.getById(id, headlineOnly);
+	return p;
+    }
 
     public static List<Post> getSimilarPosts(List<String> contextPageIds, String postId) {
 	IrisBot bot = new IrisBot(contextPageIds, postId);

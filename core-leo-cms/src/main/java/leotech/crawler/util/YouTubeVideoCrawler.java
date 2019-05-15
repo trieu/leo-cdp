@@ -146,7 +146,7 @@ public class YouTubeVideoCrawler {
 		    String fullUrl = YOUTUBE_BASE_URL + videoID;
 
 		    CrawledYouTubeVideo v = new CrawledYouTubeVideo(videoID, vdSnippet.getTitle(), vdSnippet.getDescription(), publishedAt, thumbnail.getUrl(), fullUrl,
-			    vdSnippet.getChannelId(), vdSnippet.getChannelTitle(), new ArrayList<>(0));
+			    vdSnippet.getChannelId(), vdSnippet.getChannelTitle());
 		    VideoTopicDetails topicDetails = singleVideo.getTopicDetails();
 		    if (topicDetails != null) {
 			v.setTopicCategories(topicDetails.getTopicCategories());
@@ -200,12 +200,13 @@ public class YouTubeVideoCrawler {
 		    if (rId.getKind().equals(YOUTUBE_VIDEO)) {
 			SearchResultSnippet vdSnippet = singleVideo.getSnippet();
 			long publishedAt = vdSnippet.getPublishedAt().getValue();
-			Thumbnail thumbnail = vdSnippet.getThumbnails().getMedium();
+			Thumbnail thumbnail = vdSnippet.getThumbnails().getHigh();
 			String videoId = rId.getVideoId();
 			String fullUrl = YOUTUBE_BASE_URL + videoId;
 
+			
 			CrawledYouTubeVideo v = new CrawledYouTubeVideo(videoId, vdSnippet.getTitle(), vdSnippet.getDescription(), publishedAt, thumbnail.getUrl(), fullUrl,
-				vdSnippet.getChannelId(), vdSnippet.getChannelTitle(), Arrays.asList(keyword));
+				vdSnippet.getChannelId(), vdSnippet.getChannelTitle());
 
 			YouTube.Videos.List list = youtube.videos().list("statistics,topicDetails");
 			list.setId(videoId);
@@ -213,10 +214,19 @@ public class YouTubeVideoCrawler {
 			list.setKey(apiKey);
 			Video youtubeVideo = list.execute().getItems().get(0);
 
+			//set keywords and topicDetails
+			List<String> keywords = new ArrayList<>();
+			keywords.add(keyword);
 			VideoTopicDetails topicDetails = youtubeVideo.getTopicDetails();
 			if (topicDetails != null) {
-			    v.setTopicCategories(topicDetails.getTopicCategories());
+			    List<String> topicCategories = topicDetails.getTopicCategories();
+			    v.setTopicCategories(topicCategories);			    
+			    for (String topic : topicCategories) {
+				String name = topic.substring(topic.lastIndexOf("/")+1).toLowerCase().trim();
+				keywords.add(name);
+			    }
 			}
+			v.setKeywords(keywords);
 
 			VideoStatistics statistics = youtubeVideo.getStatistics();
 			long view = statistics.getViewCount() != null ? statistics.getViewCount().longValue() : 0;
@@ -247,9 +257,10 @@ public class YouTubeVideoCrawler {
 		}
 		searchResponse = buildSearchQuery(keyword, maxResultsPerQuery, nextPageToken, channelId).execute();
 
-		System.out.println("nextPageToken " + nextPageToken);
-		System.out.println("counter " + counter);
-		System.out.println("searchResponse " + searchResponse);
+		//TODO debug log here
+//		System.out.println("nextPageToken " + nextPageToken);
+//		System.out.println("counter " + counter);
+//		System.out.println("searchResponse " + searchResponse);
 	    }
 
 	} catch (Exception e) {

@@ -30,19 +30,29 @@ main.mdl-layout__content {
 
 .text_btn {
     padding-bottom: 30px;
-    padding-top: 30px;
-    text-align: center;
+    padding-top: 30px;    
     width: 120px;
     display: inline-block;
     margin: 0 auto;
 }
 
+.on_left {
+    text-align: left;
+    float: left;
+}
+
+.on_right {
+    text-align: right;
+    float: right;
+}
+
 .text_btn a {
+    text-align: center;
     background: #042a63;
-    border-radius: 5px;
+    border-radius: 6px;
     color: white;
     display: inline-block;
-    padding: 10px 30px;
+    padding: 10px 24px;
     transition: all 0.25s ease-out;
     -webkit-font-smoothing: antialiased;
 }

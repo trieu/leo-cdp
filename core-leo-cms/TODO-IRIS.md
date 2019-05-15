@@ -7,6 +7,7 @@
 # Refer
 * https://chatbotsmagazine.com/the-ultimate-guide-to-designing-a-chatbot-tech-stack-333eceb431da
 * https://towardsdatascience.com/training-a-goal-oriented-chatbot-with-deep-reinforcement-learning-part-i-introduction-and-dce3af21d383
+* In-Article Bot https://www.niemanlab.org/2018/02/with-in-article-chat-bots-bbc-is-experimenting-with-new-ways-to-introduce-readers-to-complex-topics/
 
 #NLP tasks
 * https://github.com/stopwords/vietnamese-stopwords

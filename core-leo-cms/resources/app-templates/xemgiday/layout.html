@@ -84,13 +84,13 @@
 
                 <div style="width: 100%;">
                     {{#doIf customData.prevStartIndex '>=' 0 }}
-                        <div class="text_btn" >
+                        <div class="text_btn on_left" >
                             <a href="/?startIndex={{customData.prevStartIndex}}&numberResult=6">Previous</a>
                         </div>
                     {{/doIf}}
 
                     {{#doIf customData.nextStartIndex '>' 0 }}
-                        <div class="text_btn" style="float: right;" >
+                        <div class="text_btn on_right" >
                             <a href="/?startIndex={{customData.nextStartIndex}}&numberResult=6">Next</a>
                         </div>
                     {{/doIf}}
@@ -120,13 +120,13 @@
 
                 <div style="width: 100%;">
                     {{#doIf customData.prevStartIndex '>=' 0 }}
-                        <div class="text_btn" >
+                        <div class="text_btn on_left" >
                             <a href="{{customData.currentPath}}?startIndex={{customData.prevStartIndex}}&numberResult=6">Previous</a>
                         </div>
                     {{/doIf}}
 
                     {{#doIf customData.nextStartIndex '>' 0 }}
-                        <div class="text_btn" style="float: right;" >
+                        <div class="text_btn on_right" >
                             <a href="{{customData.currentPath}}?startIndex={{customData.nextStartIndex}}&numberResult=6">Next</a>
                         </div>
                     {{/doIf}}
@@ -201,13 +201,13 @@
 
                 <div style="width: 100%;">
                     {{#doIf customData.prevStartIndex '>=' 0 }}
-                        <div class="text_btn" >
+                        <div class="text_btn on_left" >
                             <a href="/html/top-posts-by-keywords?keywords={{pageKeywords}}&startIndex={{customData.prevStartIndex}}&numberResult=6">Previous</a>
                         </div>
                     {{/doIf}}
 
                     {{#doIf customData.nextStartIndex '>' 0 }}
-                        <div class="text_btn" style="float: right;" >
+                        <div class="text_btn on_right" >
                             <a href="/html/top-posts-by-keywords?keywords={{pageKeywords}}&startIndex={{customData.nextStartIndex}}&numberResult=6">Next</a>
                         </div>
                     {{/doIf}}
@@ -227,13 +227,13 @@
 
                 <div style="width: 100%;">
                     {{#doIf customData.prevStartIndex '>=' 0 }}
-                        <div class="text_btn" >
+                        <div class="text_btn on_left" >
                             <a href="/html/search?keywords={{pageKeywords}}&startIndex={{customData.prevStartIndex}}&numberResult=6">Previous</a>
                         </div>
                     {{/doIf}}
 
                     {{#doIf customData.nextStartIndex '>' 0 }}
-                        <div class="text_btn" style="float: right;" >
+                        <div class="text_btn on_right" >
                             <a href="/html/search?keywords={{pageKeywords}}&startIndex={{customData.nextStartIndex}}&numberResult=6">Next</a>
                         </div>
                     {{/doIf}}

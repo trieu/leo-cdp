@@ -40,7 +40,7 @@ public class CrawledYouTubeVideo implements Comparable<CrawledYouTubeVideo>, Per
     public CrawledYouTubeVideo() {
     }
 
-    public CrawledYouTubeVideo(String videoID, String title, String description, long publishedAt, String thumbnailUrl, String url, String channelId, String channelTitle, List<String> keywords) {
+    public CrawledYouTubeVideo(String videoID, String title, String description, long publishedAt, String thumbnailUrl, String url, String channelId, String channelTitle) {
 	super();
 	this.videoID = videoID;
 	this.title = title;
@@ -50,7 +50,6 @@ public class CrawledYouTubeVideo implements Comparable<CrawledYouTubeVideo>, Per
 	this.url = url;
 	this.channelId = channelId;
 	this.channelTitle = channelTitle;
-	this.keywords = keywords;
     }
     
     public String getKey() {
