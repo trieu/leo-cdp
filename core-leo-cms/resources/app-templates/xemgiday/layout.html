@@ -17,8 +17,7 @@
                 <button id="ds_search_btn" class="mdl-button mdl-js-button mdl-button--icon" style="background-color: rgba(0,0,0,0.42);" >
                     <i class="material-icons">search</i>
                 </button>
-            </div>
-            
+            </div>            
         </div>
 
         <div id="mb_search_wrapper" class="mdl-textfield mdl-js-textfield" style="display: none">
@@ -52,17 +51,18 @@
 
         <!-- TODO -->
         <div class="mdl-tabs__tab-bar">
-            <a id="user-menu" href="#" class="mdl-tabs__tab" ><i class="material-icons">account_box</i></a>
-            <!-- Menu items List , mdl-menu--bottom-right -->
-            <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="user-menu">
-                <li class="mdl-menu__item">Profile</li>
-                <li class="mdl-menu__item">My Bookmarks</li>
-                <li disabled class="mdl-menu__item">Log out</li>
-            </ul>    
-
-            <a href="/" title="Home" class="mdl-tabs__tab is-active"><i class="material-icons">home</i></a>
+            <a href="/" title="Home" class="mdl-tabs__tab is-active"><i class="material-icons">home</i></a>            
             <a href="/html/most-trending" class="mdl-tabs__tab"><i class="material-icons">trending_up</i></a>
             <a href="/html/top-posts-by-keywords?keywords=music" class="mdl-tabs__tab"><i class="material-icons">music_video</i></a>
+
+            <a style="display: none" id="account-menu" href="javascript:" class="mdl-tabs__tab" ><i class="material-icons">account_box</i></a>
+            <!-- Menu items List , mdl-menu--bottom-right -->
+            <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="account-menu">
+                <li class="mdl-menu__item" onclick="doUserProfile()" >Profile</li>            
+                <li class="mdl-menu__item" onclick="doUserLogout()" >Log out</li>
+            </ul>    
+            <a id="user-login" href="javascript:doUserLogin()" title="Login" class="mdl-tabs__tab"><i class="material-icons">account_box</i></a>
+            
         </div>      
         <div class="mdl-grid portfolio-max-width">
             <!-- main content here -->
@@ -143,7 +143,7 @@
                 </div>
 
                 {{#each posts}}
-                {{#renderHtmlView "xemgiday/single-post" this }}{{/renderHtmlView}}
+                    {{#renderHtmlView "xemgiday/single-post" this }}{{/renderHtmlView}}
                 {{/each}}
                 <script>
                     window.contextPageId = '{{contextPageId}}';

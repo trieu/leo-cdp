@@ -106,7 +106,7 @@ public class ArticleDataCrawler {
     }
 
     public static void main(String[] args) throws Exception {
-	String urlStr = "https://productcoalition.com/a-product-managers-approach-to-building-integrations-for-saas-software-b4d5b8c2e9c6";
+	String urlStr = "https://medium.com/swlh/the-3-biggest-mistakes-on-learning-data-science-f782e1a8abec";
 
 	ArticleData articleData = ArticleDataCrawler.process(urlStr);
 	 articleData = ArticleDataCrawler.process(urlStr);
@@ -116,7 +116,7 @@ public class ArticleDataCrawler {
 	System.out.println(articleData.jsonLinkedData);
 	System.out.println(articleData.headlineImage);
 	
-	FileUtils.writeStringToFile("./BUILD-OUTPUT/test2.html", articleData.content);
+	FileUtils.writeStringToFile("./BUILD-OUTPUT/test3.html", articleData.content);
 
 	// List<FacebookEngagementData> list =
 	// FacebookDataCrawler.getLinkShareStats(Arrays.asList(urlStr));

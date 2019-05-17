@@ -1,3 +1,8 @@
+img.user_profile_s {
+    width: 42px; height: 42px;
+    border: solid 1px #000;
+}
+
 main.mdl-layout__content {
     -webkit-transform: translate3d(0,0,0)!important;
 }

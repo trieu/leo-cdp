@@ -81,13 +81,14 @@
                 {{mediaInfo}}
             </div>
             <div class="mdl-card__actions mdl-card--border mdl-typography--text-right">
-                <button class="mdl-button mdl-button--icon mdl-button--colored"><i
-                        class="material-icons">favorite</i></button>
-                <button class="mdl-button mdl-button--icon mdl-button--colored">
-                    <a href="/html/post/{{slug}}">
-                        <i class="material-icons">play_arrow</i>
-                    </a>
-                </button>
+                <div class="fb-like" 
+                    data-href="https://xemgiday.com/html/post/{{{slug}}}" 
+                    data-layout="button_count" data-action="like" data-size="small" >
+                </div>
+                <div class="fb-share-button" 
+                    data-href="https://xemgiday.com/html/post/{{{slug}}}" 
+                    data-layout="button_count" data-size="small">
+                </div>     
             </div>
         </div>
         {{/each}}

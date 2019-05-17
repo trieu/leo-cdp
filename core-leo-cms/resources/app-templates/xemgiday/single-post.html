@@ -24,27 +24,29 @@
 
     <!-- main actions -->
     <div id="postMediaAction" class="mdl-card__actions mdl-card--border mdl-typography--text-center">
-        <a id="arrow_back" href="#" style="float: left;"><i class="material-icons">arrow_back</i></a>
+        <a id="arrow_back" href="#" style="float:left;"><i class="material-icons">skip_previous</i></a>
+        <a id="fast_rewind" href="#" style="float:left;"><i class="material-icons">fast_rewind</i></a>
 
         <button class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">favorite</i></button>
         <button id="btnPlayerVolume" onclick="volumePlayerUp()"
             class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">volume_up</i></button>
         <button id="btnPlayerFullscreen" title="Play in fullscreen" onclick="showPlayerInFullscreen()"
             class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">fullscreen</i></button>
+        
+        <a id="arrow_forward" style="float:right" href="#"><i class="material-icons">skip_next</i></a>
+        <a id="fast_forward" href="#" style="float:right;"><i class="material-icons">fast_forward</i></a>        
+    </div>
 
-        <!-- sharing menu -->
-        <button id="my-menu-bottom-right" class="mdl-button mdl-js-button mdl-button--icon">
-            <i class="material-icons">share</i>
-        </button>
-        <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="my-menu-bottom-right">
-            <a id="fbSharer" href="#" target="_blank">
-                <li class="mdl-menu__item">Facebook</li>
-            </a>
-            <li style="display: none" class="mdl-menu__item">Twitter</li>
-            <li style="display: none" class="mdl-menu__item">Bookmark</li>
-        </ul>    
-
-        <a id="arrow_forward" style="float:right" href="#"><i class="material-icons">arrow_forward</i></a>
+    <!-- Your like button code -->
+    <div class="mdl-card__actions mdl-typography--text-center" >
+        <div class="fb-like" 
+            data-href="https://xemgiday.com/html/post/{{{slug}}}" 
+            data-layout="button_count" data-action="like" data-size="large" >
+        </div>
+        <div class="fb-share-button" 
+            data-href="https://xemgiday.com/html/post/{{{slug}}}" 
+            data-layout="button_count" data-size="large">
+        </div>
     </div>
 
     <strong id="postMediaDescription" class="mdl-cell mdl-cell--12-col">{{description}}</strong>
@@ -139,10 +141,11 @@
     }   
 
     window.mediaPlayerOneReady = function () {
-        $('#fbLikeBox').show();
+       
         setTimeout(loadVideo, 3678);
         setTimeout(function () {
             $('#videoProgressLoader').hide();
+            $('#fbLikeBox').show();
         }, 5000);
 
         loadSessionUserInfo(function () {

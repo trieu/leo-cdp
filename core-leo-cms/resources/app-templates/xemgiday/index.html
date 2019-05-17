@@ -36,8 +36,10 @@
     </style>
 
     <!--  Material Design Lite -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.deep_purple-indigo.min.css" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.deep_purple-indigo.min.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <!-- MAIN CSS   -->
@@ -54,7 +56,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lscache/1.3.0/lscache.min.js"></script>
     <script src="{{baseStaticUrl}}/public/js/utils/mdl-chips-input.js"></script>
     <script src="{{baseStaticUrl}}/public/js/utils/handlebars.min.js"></script>
-    <script src="{{baseStaticUrl}}/public/js/utils/core.leocms.common.js"></script>    
+    <script src="{{baseStaticUrl}}/public/js/utils/core.leocms.common.js"></script>
 
     <!-- BotUI -->
     <link rel="stylesheet" href="https://unpkg.com/botui/build/botui.min.css" />
@@ -63,7 +65,8 @@
 
     <!-- Carousel UI -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
-    <script async type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script async type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js">
+    </script>
 
     <!-- MediaPlayer.ONE  -->
     <link rel="stylesheet" href="//static.xemgiday.com/public/mediaplayer/mediaplayer.one.css">
@@ -96,12 +99,84 @@
 
 <body>
 
+
     <!-- Google AdSense  -->
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
     <!-- Facebook plugins  -->
     <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2&appId=226121614085370&autoLogAppEvents=1"></script>
+    <script>
+        // Facebook login with JavaScript SDK
+        function doUserLogin() {
+            FB.login(function (response) {
+                if (response.authResponse) {
+                    statusChangeCallback(response);
+                } else {
+                    console.log('User cancelled login or did not fully authorize.');
+                }
+            }, {scope: 'public_profile,email'});
+        }
+
+        function doUserLogout(){
+            FB.logout(function(response) {
+                location.reload();
+            });
+        }
+
+        // This is called with the results from from FB.getLoginStatus().
+        function statusChangeCallback(response) {
+            console.log('statusChangeCallback');
+            console.log(response);
+            if (response.status === 'connected') {
+                // Logged into your app and Facebook.
+                facebookReadyAPI();
+            } else {
+                // The person is not logged into your app or we are unable to tell.              
+            }
+        }
+
+        // This function is called when someone finishes with the Login Button
+        function checkLoginState() {
+            FB.getLoginStatus(function (response) {
+                statusChangeCallback(response);
+            });
+        }
+
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '473520689340615',
+                cookie: true, // enable cookies to allow the server to access the session
+                xfbml: true, // parse social plugins on this page
+                version: 'v3.3' // The Graph API version to use for the call
+            });
+            FB.getLoginStatus(function (response) {
+                statusChangeCallback(response);
+            });
+        };
+
+        // Load the SDK asynchronously
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        function facebookReadyAPI() {
+            console.log('Welcome!  Fetching your information.... ');
+            FB.api('/me', {
+                locale: 'en_US',
+                fields: 'id, name, email, picture'
+            }, function (response) {
+                console.log('Successful login for: ' + response.name);
+                var profileImgSrc = 'https://graph.facebook.com/' + response.id + '/picture?width=45';
+                console.log(profileImgSrc);
+                $('#account-menu').html('<img class="user_profile_s" src="' +profileImgSrc + '" />').show();
+                $('#user-login').hide();
+            });
+        }
+    </script>
 
     {{#renderHtmlView "xemgiday/layout" this }}{{/renderHtmlView}}
 

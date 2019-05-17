@@ -98,7 +98,7 @@
         <name>MonNgon.TV</name>
         <uri>monngon</uri>
         <domain>video.monngon.tv</domain>
-        <WebTemplateFolder>monngon-old</WebTemplateFolder>
+        <WebTemplateFolder>monngon</WebTemplateFolder>
         <AndroidAppId></AndroidAppId>
         <IosAppId></IosAppId>
         <AppTemplateFolder></AppTemplateFolder>
