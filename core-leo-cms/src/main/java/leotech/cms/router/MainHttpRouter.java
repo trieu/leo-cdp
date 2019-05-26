@@ -82,9 +82,11 @@ public class MainHttpRouter extends BaseHttpRouter {
 
 	// ---------------------------------------------------------------------------------------------------
 	String url = req.absoluteURI();
-	String path = req.path();
-	String host = req.host().replace("www.", "");
+	String path = req.path();	
 	MultiMap params = req.params();
+	
+	//allow set host from query params or get default from Http-Host
+	String host = StringUtil.safeString(params.get("host"),req.host().replace("www.", ""));
 
 	String userAgent = req.getHeader(HttpHeaderNames.USER_AGENT);
 	DeviceInfo device = DeviceInfoUtil.getDeviceInfo(userAgent);
