@@ -107,7 +107,9 @@
         autoplay: this.options_.autoplay ? 1 : 0,
         mute: this.options_.autoplay ? 1 : 0,
         loop: this.options_.loop ? 1 : 0,
-        cc_load_policy : 0,
+        cc_load_policy : 1,
+        cc_lang_pref : 'en',
+        hl : 'en',
         iv_load_policy: 3,
         playsinline : 1
       };
@@ -123,6 +125,10 @@
 
       if (typeof this.options_['cc_load_policy'] !== 'undefined') {
         playerVars['cc_load_policy'] = this.options_['cc_load_policy'];
+      }
+
+      if (typeof this.options_['cc_lang_pref'] !== 'undefined') {
+        playerVars['cc_lang_pref'] = this.options_['cc_lang_pref'];
       }
 
       if (typeof this.options_.ytControls !== 'undefined') {

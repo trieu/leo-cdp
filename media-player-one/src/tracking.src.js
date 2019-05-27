@@ -1,7 +1,7 @@
 /**
  * @license MediaPlayer.ONE
- * Version 2.2.5
- * Updated Time: May 06, 2019 18h
+ * Version 2.2.6
+ * Updated Time: May 26, 2019 17h
  */
 window.mediaPlayerTracking = function () {
     var allowTracking = true;
