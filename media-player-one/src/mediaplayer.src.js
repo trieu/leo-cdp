@@ -598,7 +598,7 @@
       var configs = window.mediaPlayer1Configs;
 
       //video watermark
-      if (configs.watermarkImage && configs.watermarkUrl && configs.watermarkPosition) {
+      if (configs.watermarkImage && configs.watermarkUrl && configs.watermarkPosition && player.watermark) {
         player.watermark({
           image: configs.watermarkImage,
           url: configs.watermarkUrl,

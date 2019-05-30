@@ -19,6 +19,8 @@
   var _isOnMobile = videojs.browser.IS_IOS || videojs.browser.IS_NATIVE_ANDROID;
   var Tech = videojs.getTech('Tech');
 
+  var PlayerState = {ENDED:false,PLAYING:false,PAUSED:false,BUFFERING:false};
+
   var Facebook = videojs.extend(Tech, {
 
     constructor: function (options, ready) {
@@ -212,12 +214,16 @@
         vjsThis.iframeFbVideo.setAttribute("height", fbvH);
 
         fbVideoPlayer.subscribe("startedBuffering", function (e) {
+          PlayerState.BUFFERING = true;
           mpl1DebugLog("fbVideoPlayer startedBuffering Ok");
           vjsThis.onPlayerStateChange({
             data: -1
           })
         });
         fbVideoPlayer.subscribe("startedPlaying", function (e) {
+          PlayerState.PLAYING = true;
+          PlayerState.ENDED = false;          
+          PlayerState.PAUSED = false;
           mpl1DebugLog("fbVideoPlayer startedPlaying Ok");
           vjsThis.onPlayerStateChange({
             data: 2
@@ -225,6 +231,8 @@
         });
 
         fbVideoPlayer.subscribe("paused", function (e) {
+          PlayerState.PAUSED = true;
+          PlayerState.PLAYING = false;
           vjsThis.onPlayerStateChange({
             data: 1
           })
@@ -239,6 +247,7 @@
           console.error(e);
         });
         fbVideoPlayer.subscribe("finishedPlaying", function (e) {
+          PlayerState.ENDED = true;
           vjsThis.onPlayerStateChange({
             data: 4
           })
@@ -473,6 +482,7 @@
       }
     },
 
+   
     paused: function () {
       return (this.fbPlayer) ?
         (this.lastState !== 2 && this.lastState !== 3) :
@@ -484,7 +494,7 @@
     },
 
     setCurrentTime: function (seconds) {
-      if (this.lastState === YT.PlayerState.PAUSED) {
+      if (this.paused()) {
         this.timeBeforeSeek = this.currentTime();
       }
 
@@ -557,7 +567,7 @@
     },
 
     ended: function () {
-      return this.fbPlayer ? (this.lastState === YT.PlayerState.ENDED) : false;
+      return this.fbPlayer ? (this.lastState === PlayerState.ENDED) : false;
     },
 
     volume: function () {

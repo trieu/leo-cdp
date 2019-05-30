@@ -80,6 +80,9 @@ sudo certbot certonly --standalone -d xemgiday.com --non-interactive --agree-tos
 * https://github.com/jeromeetienne/AR.js
 * Video Processing https://superuser.com/questions/556029/how-do-i-convert-a-video-to-gif-using-ffmpeg-with-reasonable-quality
 * Video to GIF https://davidwalsh.name/convert-video-gif
+* https://modeling-languages.com/javascript-drawing-libraries-diagrams/
+* https://github.com/bramp/js-sequence-diagrams
+* https://flowchart.js.org/
 
 ## NLP natural language processing toolkit
 * https://github.com/vncorenlp/VnCoreNLP

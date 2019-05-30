@@ -21,11 +21,12 @@
     window.mediaPlayer1Configs.watermarkPosition = 'top-right'; // or 'top-left'
   </script>
   <script src="https://devjs.hadarone.com/src/video.src.js"></script>
+  <script src="https://devjs.hadarone.com/src/videojs.watermark.src.js"></script>
 
   <script src="https://devjs.hadarone.com/src/videojs.vimeo.src.js"></script>
   <script src="https://devjs.hadarone.com/src/videojs.youtube.src.js"></script>
   <script src="https://devjs.hadarone.com/src/videojs.facebook.src.js"></script>
-  <script src="https://devjs.hadarone.com/src/videojs.watermark.src.js"></script>
+  
   <script src="https://devjs.hadarone.com/src/vast-player.js"></script>
   <script src="https://devjs.hadarone.com/src/viewability.src.js"></script>
   <script src="https://devjs.hadarone.com/src/videojs.ga.src.js"></script>
@@ -235,6 +236,7 @@
       var placeHolderId = 'videoPlaceholder4';
       var videoSource =
         'https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8';
+      videoSource = 'http://1107942067.rsc.cdn77.org/UpFiles/2019/5/29/152/98748/0.m3u8';
 
       var skipAdTime = 2; // show skip button after 5 seconds
       var autoplay = autoplayVideo;
@@ -260,7 +262,7 @@
           skipAdTime: 5
         }
       ];
-      MediaPlayerOne.create(autoplay, placeHolderId, videoSource, '', [], skipAdTime, adConfigs, onReady);
+      MediaPlayerOne.create(autoplay, placeHolderId, videoSource, '', [], skipAdTime, [], onReady);
     }
 
     var init = function () {
