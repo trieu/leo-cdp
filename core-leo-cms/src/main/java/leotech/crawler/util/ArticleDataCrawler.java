@@ -106,7 +106,7 @@ public class ArticleDataCrawler {
     }
 
     public static void main(String[] args) throws Exception {
-	String urlStr = "https://medium.com/swlh/the-3-biggest-mistakes-on-learning-data-science-f782e1a8abec";
+	String urlStr = "https://towardsdatascience.com/becoming-a-level-3-0-data-scientist-52641ff73cb3";
 
 	ArticleData articleData = ArticleDataCrawler.process(urlStr);
 	 articleData = ArticleDataCrawler.process(urlStr);
