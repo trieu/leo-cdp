@@ -33,7 +33,7 @@ public class MediaNetworkDataService {
     public static final String DEFAULT_ADMIN_TEMPLATE_FOLDER = "default-admin-template";
     public static final String DEFAUFT_WEB_TEMPLATE_FOLDER = "default-web-template";
 
-    final static MediaNetwork DEFAULT_CONTENT_NETWORK = new MediaNetwork("Genesis Network", "leocloudcms", "leocloudcms.com", DEFAUFT_WEB_TEMPLATE_FOLDER);
+    final static MediaNetwork DEFAULT_CONTENT_NETWORK = new MediaNetwork("Genesis Network", "localhost", "localhost:9190", DEFAUFT_WEB_TEMPLATE_FOLDER);
 
     final static Map<String, MediaNetwork> mapHostToMediaApp = new HashMap<>();
 

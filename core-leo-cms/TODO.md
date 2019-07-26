@@ -73,6 +73,8 @@ sudo certbot certonly --standalone -d xemgiday.com --non-interactive --agree-tos
 * Real-time Report https://epochjs.github.io/epoch/real-time/#area
 * Source Performance Analysis https://gist.github.com/kerryrodden/766f8f6d31f645c39f488a0befa1e3c8 
 * Sequences sunburst https://bl.ocks.org/kerryrodden/7090426 
+* Dynamic Customer Journey Map https://codepen.io/kristinawagner/pen/bRmWeP
+* Sankey diagrams https://github.com/d3/d3-sankey
 
 ## Content Rendering Engine
 * https://flowchart.js.org/
@@ -99,6 +101,7 @@ sudo certbot certonly --standalone -d xemgiday.com --non-interactive --agree-tos
 
 ## Content Editor
 * Refer https://app.contentstudio.io/discovery/articles
+* New Rich Text Editor https://github.com/quilljs/quill
 
 ## Marketing Materials 
 * https://www.fastcompany.com/3044995/to-take-on-hbo-and-netflix-youtube-had-to-rewire-itself
@@ -107,6 +110,7 @@ sudo certbot certonly --standalone -d xemgiday.com --non-interactive --agree-tos
 * Docker For Beginners https://www.youtube.com/watch?v=sRIxHHZFwBA
 * https://medium.com/the-andela-way/docker-for-beginners-61e8e0ce6a19
 * https://dzone.com/articles/9-reasons-why-devops-is-better-with-docker-amp-kub
+* https://blog.john-pfeiffer.com/haproxy-in-docker/
 
 ## Competitor
 * https://www.conversant.tv/swiftcms/

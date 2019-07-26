@@ -41,6 +41,15 @@
 			"sockJsHandlerEnabled": false
 		},
 		
+		"mainHttpCdpDashboard": {
+			"name": "MainHttpWorker",
+			"host": "127.0.0.1",
+			"port": 9190,
+			"classNameHttpRouter": "leotech.cms.router.MainHttpRouter",
+			"bodyHandlerEnabled": true,
+			"sockJsHandlerEnabled": true,
+			"defaultDbConfig" : "dbConfigsXemGiDay"
+		},
 		"mainHttpWorkerXemGiDay": {
 			"name": "MainHttpWorker",
 			"host": "127.0.0.1",

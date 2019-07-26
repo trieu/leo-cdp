@@ -116,4 +116,27 @@
         <NumberSimilarPostsInList>7</NumberSimilarPostsInList>
     </MediaNetwork>
     
+     <MediaNetwork>
+        <networkId>9999</networkId>
+        <name>CDP Dashboard</name>
+        <uri>cdp</uri>
+        <domain>localhost:9190</domain>
+        <WebTemplateFolder>default-admin-template</WebTemplateFolder>
+        <AndroidAppId></AndroidAppId>
+        <IosAppId></IosAppId>
+        <AppTemplateFolder></AppTemplateFolder>
+        <ContentCategoryId>9295570</ContentCategoryId>
+        <PublicContentClass>standard</PublicContentClass>
+        <PageTitle>video.monngon.tv</PageTitle>
+        <PageHeaderLogo>/public/images/leotech-logo.png</PageHeaderLogo>
+        <BaseStaticUrl>//video.monngon.tv</BaseStaticUrl>
+        <BaseAdminApiUrl>//video.monngon.tv</BaseAdminApiUrl>
+        <BaseDeliveryApiUrl>//api.monngon.tv</BaseDeliveryApiUrl>
+        <BaseUploaderUrl>//uploader.monngon.tv</BaseUploaderUrl>
+        <BaseLogCollectorUrl>//log.monngon.tv</BaseLogCollectorUrl>
+        <AdsTxtContent></AdsTxtContent>
+        <GoogleTrackingId></GoogleTrackingId>
+        <NumberSimilarPostsInList>7</NumberSimilarPostsInList>
+    </MediaNetwork>
+    
 </MediaNetworkList>

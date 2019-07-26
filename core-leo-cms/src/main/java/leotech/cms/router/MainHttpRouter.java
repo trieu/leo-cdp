@@ -91,8 +91,8 @@ public class MainHttpRouter extends BaseHttpRouter {
 	String userAgent = req.getHeader(HttpHeaderNames.USER_AGENT);
 	DeviceInfo device = DeviceInfoUtil.getDeviceInfo(userAgent);
 
-	System.out.println("Full URL " + url);
-	System.out.println("==>>>> host: " + host + " path: " + path);
+//	System.out.println("Full URL " + url);
+//	System.out.println("==>>>> host: " + host + " path: " + path);
 
 	// HOME page
 	if (path.equals(HOME_ROUTER)) {
