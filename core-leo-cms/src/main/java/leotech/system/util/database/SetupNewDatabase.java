@@ -15,6 +15,7 @@ import leotech.cms.model.Category;
 import leotech.cms.model.MediaNetwork;
 import leotech.cms.model.Page;
 import leotech.cms.model.User;
+import leotech.starter.HttpWorker;
 
 public class SetupNewDatabase {
 
@@ -46,7 +47,7 @@ public class SetupNewDatabase {
 	    return col.getName();
 	}).collect(Collectors.toList());
 	List<String> cols = new ArrayList<>();
-	boolean importDefaultData = false;
+	boolean importDefaultData = true;
 	for (String name : coreLeoCmsCollectionNames) {
 	    boolean isExisted = dbCOllections.contains(name);
 	    if (!isExisted) {
@@ -79,6 +80,7 @@ public class SetupNewDatabase {
     }
     
     public static void main(String[] args) {
+	HttpWorker.start("mainHttpWorkerXemGiDay");
 	SetupNewDatabase.setupCoreLeoCmsCollections();
     }
 

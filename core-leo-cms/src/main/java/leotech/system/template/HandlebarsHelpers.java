@@ -285,7 +285,7 @@ public class HandlebarsHelpers {
     };
     
     /**
-     * Sample: {{#encodeUrl "http://xemgiday.com/html/post/test-video-10000-43debcac22c9705ea4733bbab0d1d3f281461c93"}}{{/encodeUrl}}
+     * Sample: {{#encodeUrl "http://domain.com/html/post/test-video-10000-43debcac22c9705ea4733bbab0d1d3f281461c93"}}{{/encodeUrl}}
      */
     static Helper<String> encodeUrlHelper = new Helper<String>() {
 	@Override

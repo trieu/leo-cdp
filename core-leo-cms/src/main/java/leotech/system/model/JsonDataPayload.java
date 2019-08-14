@@ -11,7 +11,7 @@ import rfx.core.configs.WorkerConfigs;
 import rfx.core.util.StringUtil;
 
 public class JsonDataPayload {
-    protected static final String STATIC_BASE_URL = StringUtil.safeString(WorkerConfigs.load().getCustomConfig("STATIC_BASE_URL"), "http://leocloudcms.com");
+    protected static final String STATIC_BASE_URL = StringUtil.safeString(WorkerConfigs.load().getCustomConfig("STATIC_BASE_URL"), "");
 
     @Expose
     String uri = "";

@@ -27,7 +27,7 @@ public class MediaNetwork implements PersistentArangoObject {
     String name = ""; // Big Data Vietnam Content Network
     
     @XmlElement(name = "uri")
-    String uri = ""; // http://leocloudcms.com/bigdatavietnam-org
+    String uri = ""; //
 
     // data for website and progressive web app
     @XmlElement(name = "domain")

@@ -36,3 +36,26 @@
 * News http://vnews.gov.vn/tin-trong-nuoc
 * https://www.typetalk.com/blog/10-proven-ways-get-focused-stay-focused/
 * Socialolgy https://www.youtube.com/channel/UCnUl4-oOxarjwmIl_oxxmlA
+
+
+server {
+        listen 80;
+        listen [::]:80;
+        listen 443 ssl http2;
+        listen [::]:443 ssl http2;
+
+        server_name xemgiday.com www.xemgiday.com;
+
+        ssl_certificate      /usr/local/etc/nginx/ssl/xemgiday_fullchain.pem;
+        ssl_certificate_key  /usr/local/etc/nginx/ssl/xemgiday_privkey.pem;
+
+        location / {
+             proxy_pass http://localhost:9190/;
+             #proxy_pass http://localhost:3000/;
+             #proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+             proxy_set_header X-Forwarded-Proto $scheme;
+             proxy_set_header X-Forwarded-Port $server_port;
+             proxy_set_header Host            $host;
+             proxy_set_header X-Forwarded-For $remote_addr;
+        }
+}

@@ -359,7 +359,7 @@ public abstract class MediaNode implements PersistentArangoObject, Comparable<Me
 	}
 	if(headlineImageUrl.startsWith("/public/uploaded-files/")) {
 	    //FIXME move to configs
-	    headlineImageUrl = "//static.xemgiday.com" + headlineImageUrl;
+	    headlineImageUrl = "//xemgiday.com" + headlineImageUrl;
 	}
 	return headlineImageUrl;
     }

@@ -91,8 +91,8 @@ public class MainHttpRouter extends BaseHttpRouter {
 	String userAgent = req.getHeader(HttpHeaderNames.USER_AGENT);
 	DeviceInfo device = DeviceInfoUtil.getDeviceInfo(userAgent);
 
-//	System.out.println("Full URL " + url);
-//	System.out.println("==>>>> host: " + host + " path: " + path);
+	System.out.println("Full URL " + url);
+	System.out.println("==>>>> host: " + host + " path: " + path);
 
 	// HOME page
 	if (path.equals(HOME_ROUTER)) {
@@ -192,9 +192,11 @@ public class MainHttpRouter extends BaseHttpRouter {
     // utils //
 
     void publicFileHandler(HttpServerResponse resp, MultiMap outHeaders, String path, MultiMap params) {
+	
 	try {
 	    String pathname = path.replace(PUBLIC_FILE_ROUTER, "./public").replaceAll("%20", " ");
 
+	    System.out.println("publicFileHandler " + pathname);
 	    File file = new File(pathname);
 	    if (file.isFile()) {
 		outHeaders.set(HttpHeaderNames.CACHE_CONTROL, MAX_AGE_CACHING_PUBLIC);
