@@ -40,7 +40,7 @@
 			,"dbdriverclasspath" : "com.arangodb.ArangoDB"
 			,"enabled" : true
 		},
-		"dbConfigsDev" : {
+		"defaultDbConfigs" : {
 			"username" : "leodev"
 			,"password" : "123456"
 			,"database" : "xemgiday"

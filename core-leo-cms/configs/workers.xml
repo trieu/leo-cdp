@@ -18,7 +18,7 @@
 	<customConfigs type="map">
 
 		<config name="defaultArangoDbConfig">
-			dbConfigsBluescope
+			dbConfigsDev
 		</config>
 
 		<config name="enableUsedCacheHandlebars">

@@ -16,6 +16,7 @@ import leotech.cms.model.MediaNetwork;
 import leotech.cms.model.Page;
 import leotech.cms.model.User;
 import leotech.starter.HttpWorker;
+import rfx.core.util.Utils;
 
 public class SetupNewDatabase {
 
@@ -63,14 +64,17 @@ public class SetupNewDatabase {
 
 	// default data importing
 	if (importDefaultData) {
-	    User user = new User("cms_admin", "123456abc", "cms_admin", "cms_admin@", MediaNetwork.DEFAULT_ID);
-	    UserDaoUtil.createNew(user);
-	    boolean ok = UserDaoUtil.activateAsSuperAdmin(user.getUserLogin());
+	    User firstUser = UserDaoUtil.getByUserLogin("cms_admin");
+	    if(firstUser == null) {
+		firstUser = new User("cms_admin", "123456abc", "cms_admin", "cms_admin@", MediaNetwork.DEFAULT_ID);
+		UserDaoUtil.createNew(firstUser);
+	    }
+	    boolean ok = UserDaoUtil.activateAsSuperAdmin(firstUser.getUserLogin());
 	    if (ok) {
 		System.out.println("activateAsSuperAdmin OK");
 		String categoryKey = CategoryDaoUtil.save(new Category("Document", MediaNetwork.DEFAULT_ID));
 		if (categoryKey != null) {
-		    Page page = new Page("Introduction to Leo CMS", MediaNetwork.DEFAULT_ID, categoryKey, user.getKey());
+		    Page page = new Page("Introduction to Leo CMS", MediaNetwork.DEFAULT_ID, categoryKey, firstUser.getKey());
 		    page.setMediaInfo("TODO");
 		    PageDaoUtil.save(page);
 		}
@@ -80,8 +84,9 @@ public class SetupNewDatabase {
     }
     
     public static void main(String[] args) {
-	HttpWorker.start("mainHttpWorkerXemGiDay");
+	
 	SetupNewDatabase.setupCoreLeoCmsCollections();
+	Utils.exitSystemAfterTimeout(6000);
     }
 
 }

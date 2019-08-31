@@ -8,7 +8,6 @@ import com.arangodb.ArangoDB;
 import com.arangodb.ArangoDatabase;
 
 import leotech.core.config.DbConfigs;
-import leotech.starter.HttpWorker;
 import rfx.core.util.StringUtil;
 import rfx.core.util.Utils;
 
@@ -19,13 +18,14 @@ public class ArangoDbUtil {
     private static long connectionTtl = 5 * 60 * 1000;
     static final int MAX_CONNECTIONS = 120;
 
+    private static final String defaultArangoDbConfig = "defaultDbConfigs";
+
     static ArangoDB arangoDB = null;
     static ArangoDatabase arangoDatabase = null;
     static Map<String, ArangoDatabase> arangoDatabaseInstances = new HashMap<>();
 
     static void initDbConfigs() {
 	if (dbConfigs == null) {
-	    String defaultArangoDbConfig = HttpWorker.getInstance().getDefaultDbConfig();
 	    if (StringUtil.isNotEmpty(defaultArangoDbConfig)) {
 		dbConfigs = DbConfigs.load(defaultArangoDbConfig.trim());
 		if (dbConfigs == null) {
