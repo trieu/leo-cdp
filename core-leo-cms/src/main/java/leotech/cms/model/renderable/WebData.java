@@ -13,7 +13,7 @@ import leotech.cms.model.Post;
 import leotech.cms.service.MediaNetworkDataService;
 import leotech.system.template.TemplateUtil;
 
-public class WebDataModel extends DefaultModel {
+public class WebData extends DefaultModel {
     
     protected String pageHeaderLogo;
     protected String baseStaticUrl ;
@@ -47,7 +47,7 @@ public class WebDataModel extends DefaultModel {
     protected String pageDescription = "";
     protected String pageKeywords = "";
 
-    public WebDataModel(String host, String templateFolder, String templateName) {
+    public WebData(String host, String templateFolder, String templateName) {
 	this.setBaseData(host);
 	this.host = host;
 	this.templateFolder = templateFolder;
@@ -56,7 +56,7 @@ public class WebDataModel extends DefaultModel {
 	
     }
 
-    public WebDataModel(String host, String templateFolder, String templateName, int statusCode) {
+    public WebData(String host, String templateFolder, String templateName, int statusCode) {
 	this.setBaseData(host);
 	this.host = host;
 	this.templateFolder = templateFolder;
@@ -64,7 +64,7 @@ public class WebDataModel extends DefaultModel {
 	this.httpStatusCode = statusCode;	
     }
 
-    public WebDataModel(String host, String templateFolder, String templateName, String pageTitle) {
+    public WebData(String host, String templateFolder, String templateName, String pageTitle) {
 	this.setBaseData(host);
 	this.host = host;
 	this.pageName = host;
@@ -75,8 +75,8 @@ public class WebDataModel extends DefaultModel {
 
     /////////////////
 
-    public static WebDataModel page404(String host, String templateFolder) {
-	return new WebDataModel(host, templateFolder, "404", HttpStatus.SC_NOT_FOUND);
+    public static WebData page404(String host, String templateFolder) {
+	return new WebData(host, templateFolder, "404", HttpStatus.SC_NOT_FOUND);
     }
 
     /////////////
@@ -272,7 +272,7 @@ public class WebDataModel extends DefaultModel {
 	this.pageHeaderLogo = network.getPageHeaderLogo();
     }
 
-    public static String renderHtml(WebDataModel model) {
+    public static String renderHtml(WebData model) {
 	StringBuilder tplPath = new StringBuilder();
 	tplPath.append(model.getTemplateFolder()).append("/index");
 	String html = TemplateUtil.process(tplPath.toString(), model);

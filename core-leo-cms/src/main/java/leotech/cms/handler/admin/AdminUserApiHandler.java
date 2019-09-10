@@ -4,7 +4,7 @@ import java.util.List;
 
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
-import leotech.cms.analytics.GoogleTrackingUtil;
+import leotech.cms.analytics.ThirdPartyTrackingUtil;
 import leotech.cms.dao.UserDaoUtil;
 import leotech.cms.model.MediaNetwork;
 import leotech.cms.model.User;
@@ -51,7 +51,7 @@ public class AdminUserApiHandler extends BaseSecuredDataApi {
 		    String userIp = "";
 		    String userAgent = "";
 		    String trackingTitle = "user-information-update";
-		    GoogleTrackingUtil.event("user-tracking", "username:" + loginUser.getUserLogin(), trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
+		    ThirdPartyTrackingUtil.event("user-tracking", "username:" + loginUser.getUserLogin(), trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
 
 		    return JsonDataPayload.ok(uri, userId, true);
 		}
@@ -70,7 +70,7 @@ public class AdminUserApiHandler extends BaseSecuredDataApi {
 		    String userIp = "";
 		    String userAgent = "";
 		    String trackingTitle = "user-information-get";
-		    GoogleTrackingUtil.event("user-tracking", "username:" + loginUser.getUserLogin(), trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
+		    ThirdPartyTrackingUtil.event("user-tracking", "username:" + loginUser.getUserLogin(), trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
 		    
 		    return JsonDataPayload.ok(uri, userInfo, false);
 		}

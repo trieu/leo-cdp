@@ -6,7 +6,7 @@ import java.util.List;
 
 import leotech.cms.model.Post;
 
-public class PostDataModel extends WebDataModel {
+public class PostDataModel extends WebData {
 
     private boolean isAdminRole = false;
     private String sessionUserId = "";

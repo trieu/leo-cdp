@@ -5,7 +5,7 @@ import java.util.List;
 
 import leotech.cms.model.Page;
 
-public class PageDataModel extends WebDataModel {
+public class PageDataModel extends WebData {
 
     private final List<Page> pages;
 

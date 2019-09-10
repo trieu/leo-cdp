@@ -6,10 +6,14 @@ import java.util.List;
 
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
-import leotech.cms.analytics.GoogleTrackingUtil;
+import leotech.cms.analytics.ThirdPartyTrackingUtil;
 import leotech.cms.dao.PostDaoUtil;
+import leotech.cms.model.MediaNetwork;
 import leotech.cms.model.Post;
 import leotech.cms.model.User;
+import leotech.cms.model.renderable.PostDataModel;
+import leotech.cms.model.renderable.WebData;
+import leotech.cms.service.PostDataService;
 import leotech.core.api.BaseSecuredDataApi;
 import leotech.system.model.JsonDataPayload;
 import rfx.core.util.StringUtil;
@@ -21,6 +25,9 @@ public class PostApiHandler extends BaseSecuredDataApi {
     static final String URI_GET_POST_INFO = "/post/get-info";
     static final String URI_GET_POSTS_LIST = "/post/get-list";
     static final String URI_GET_POSTS_LIST_BY = "/post/get-list-by";
+    
+    public static final String HTML_POST = "/html/post/";
+    public static final String SINGLE_POST = "single-post";
 
     @Override
     public JsonDataPayload httpPostApiHandler(String userSession, String uri, JsonObject paramJson) throws Exception {
@@ -85,8 +92,8 @@ public class PostApiHandler extends BaseSecuredDataApi {
 		String userIp = StringUtil.safeString(params.get("__userIp"));
 		String userAgent = StringUtil.safeString(params.get("__userAgent"));		 
 		String trackingTitle = "landing-page: "+contentClass + "-"+keywordStr;
-		GoogleTrackingUtil.pageView(trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
-		GoogleTrackingUtil.event("user-tracking", "username:"+loginUser.getUserLogin() , trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
+		ThirdPartyTrackingUtil.pageView(trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
+		ThirdPartyTrackingUtil.event("user-tracking", "username:"+loginUser.getUserLogin() , trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
 		
 		return JsonDataPayload.ok(uri, list, true);
 	    } 
@@ -114,8 +121,8 @@ public class PostApiHandler extends BaseSecuredDataApi {
 			String userIp = StringUtil.safeString(params.get("__userIp"));
 			String userAgent = StringUtil.safeString(params.get("__userAgent"));
 			String trackingTitle = "content-post: "+ post.getContentClass() + "-" +post.getTitle();
-			GoogleTrackingUtil.pageView(trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
-			GoogleTrackingUtil.event("user-tracking", "username:"+loginUser.getUserLogin() , trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
+			ThirdPartyTrackingUtil.pageView(trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
+			ThirdPartyTrackingUtil.event("user-tracking", "username:"+loginUser.getUserLogin() , trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
 			
 			return JsonDataPayload.ok(uri, Arrays.asList(post), true);
 		    } else {
@@ -132,5 +139,53 @@ public class PostApiHandler extends BaseSecuredDataApi {
 	}
 	return JsonErrorPayload.NO_HANDLER_FOUND;
     }
+    
+    public static WebData buildPostDataModel(String userSession, MediaNetwork network, String slug, int startIndex, int numberResult) {
+   	PostDataModel model = null;
+   	String networkDomain = network.getDomain();
+   	String templateFolder = network.getWebTemplateFolder();
+   	if (StringUtil.isNotEmpty(slug)) {
+   	    // CrawledYouTubeVideo video =
+   	    // CrawledYouTubeVideoDaoUtil.getByVideoID(objectId);
+   	    // Post post = new Post(video.getTitle(), video.getUrl(), 0, "");
+   	    Post post = PostDataService.getBySlug(slug);
+   	    if (post != null) {
+
+   		List<String> contextPageIds = post.getPageIds();
+   		List<String> listKeywords = post.getKeywords();
+
+   		String postId = post.getId();
+   		String title = post.getTitle();
+   		String des = post.getDescription();
+   		String pageImage = post.getHeadlineImageUrl();
+   		String siteName = network.getName();
+   		String keywords = StringUtil.joinFromList(", ", listKeywords);
+
+   		// build model from database object
+   		model = new PostDataModel(networkDomain, templateFolder, SINGLE_POST, title, post);
+   		model.setBaseStaticUrl(network.getBaseStaticUrl());
+   		model.setPageDescription(des);
+   		model.setPageImage(pageImage);
+   		model.setPageName(siteName);
+   		model.setPageKeywords(keywords);
+   		String pageUrl = model.getBaseStaticUrl() + HTML_POST + slug;
+   		model.setPageUrl(pageUrl);
+   		model.setContextPageId(contextPageIds.size() > 0 ? contextPageIds.get(0) : "");
+   		
+
+   		// TODO implement recommendation engine here
+   		List<Post> simlilarPosts = PostDataService.getSimilarPosts(contextPageIds, postId);
+   		model.setRecommendedPosts(simlilarPosts);
+   		User user = BaseSecuredDataApi.getUserFromSession(userSession);
+   		if (user != null) {
+   		    model.setAdminRole(BaseSecuredDataApi.isAdminRole(user));
+   		    model.setSessionUserId(user.getKey());
+   		}
+   	    } else {
+   		return WebData.page404(networkDomain, templateFolder);
+   	    }
+   	}
+   	return model;
+       }
 
 }

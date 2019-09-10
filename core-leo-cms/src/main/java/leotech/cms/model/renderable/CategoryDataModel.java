@@ -4,7 +4,7 @@ import java.util.List;
 
 import leotech.cms.model.Category;
 
-public class CategoryDataModel extends WebDataModel {
+public class CategoryDataModel extends WebData {
 
     
     final List<Category> categories;

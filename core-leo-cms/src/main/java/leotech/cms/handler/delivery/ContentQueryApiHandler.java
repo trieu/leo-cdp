@@ -6,7 +6,7 @@ import java.util.Map;
 
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
-import leotech.cms.analytics.GoogleTrackingUtil;
+import leotech.cms.analytics.ThirdPartyTrackingUtil;
 import leotech.cms.dao.ContentQueryDaoUtil;
 import leotech.cms.dao.PostDaoUtil;
 import leotech.cms.model.ContentClassPostQuery;
@@ -69,8 +69,8 @@ public class ContentQueryApiHandler extends BaseSecuredDataApi {
 	    String userIp = StringUtil.safeString(params.get("__userIp"));
 	    String userAgent = StringUtil.safeString(params.get("__userAgent"));
 	    String trackingTitle = "homepage";
-	    GoogleTrackingUtil.pageView(trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
-	    GoogleTrackingUtil.event("user-tracking", "username:" + loginUser.getUserLogin(), trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
+	    ThirdPartyTrackingUtil.pageView(trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
+	    ThirdPartyTrackingUtil.event("user-tracking", "username:" + loginUser.getUserLogin(), trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
 
 	    return JsonDataPayload.ok(uri, results);
 	}
@@ -86,8 +86,8 @@ public class ContentQueryApiHandler extends BaseSecuredDataApi {
 		String userIp = StringUtil.safeString(params.get("__userIp"));
 		String userAgent = StringUtil.safeString(params.get("__userAgent"));
 		String trackingTitle = "landing-page:contentClass:" + contentClass;
-		GoogleTrackingUtil.pageView(trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
-		GoogleTrackingUtil.event("user-tracking", "username:" + loginUser.getUserLogin(), trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
+		ThirdPartyTrackingUtil.pageView(trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
+		ThirdPartyTrackingUtil.event("user-tracking", "username:" + loginUser.getUserLogin(), trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
 
 		return JsonDataPayload.ok(uri, results);
 	    }
@@ -106,8 +106,8 @@ public class ContentQueryApiHandler extends BaseSecuredDataApi {
 		String userIp = StringUtil.safeString(params.get("__userIp"));
 		String userAgent = StringUtil.safeString(params.get("__userAgent"));
 		String trackingTitle = "landing-page:categories:" + categoryStr;
-		GoogleTrackingUtil.pageView(trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
-		GoogleTrackingUtil.event("user-tracking", "username:" + loginUser.getUserLogin(), trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
+		ThirdPartyTrackingUtil.pageView(trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
+		ThirdPartyTrackingUtil.event("user-tracking", "username:" + loginUser.getUserLogin(), trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
 
 		return JsonDataPayload.ok(uri, results);
 	    }
@@ -137,8 +137,8 @@ public class ContentQueryApiHandler extends BaseSecuredDataApi {
 		String userIp = StringUtil.safeString(params.get("__userIp"));
 		String userAgent = StringUtil.safeString(params.get("__userAgent"));
 		String trackingTitle = "search-page:keywords:" + keywordsStr;
-		GoogleTrackingUtil.pageView(trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
-		GoogleTrackingUtil.event("user-tracking", "username:" + loginUser.getUserLogin(), trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
+		ThirdPartyTrackingUtil.pageView(trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
+		ThirdPartyTrackingUtil.event("user-tracking", "username:" + loginUser.getUserLogin(), trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
 
 		return JsonDataPayload.ok(uri, results);
 	    }
