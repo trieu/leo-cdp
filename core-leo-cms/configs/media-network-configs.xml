@@ -10,7 +10,7 @@
         <AndroidAppId></AndroidAppId>
         <IosAppId></IosAppId>
         <AppTemplateFolder></AppTemplateFolder>      
-        <ContentCategoryId>81758</ContentCategoryId>
+        <ContentCategoryId>25893</ContentCategoryId>
         <PublicContentClass>standard</PublicContentClass>
         <PageTitle>xemgiday.com</PageTitle>
         <PageHeaderLogo>/public/images/leotech-logo.png</PageHeaderLogo>
@@ -71,25 +71,25 @@
         <NumberSimilarPostsInList>7</NumberSimilarPostsInList>
     </MediaNetwork>    
   
-     <MediaNetwork>
+    <MediaNetwork>
         <networkId>9999</networkId>
-        <name>CDP Dashboard</name>
-        <uri>cdp</uri>
-        <domain>localhost:9190</domain>
-        <WebTemplateFolder>default-admin-template</WebTemplateFolder>
+        <name>BigDataVietNam.org</name>
+        <uri>xemgiday</uri>
+        <domain>dev.bigdatavietnam.org</domain>
+        <WebTemplateFolder>xemgiday</WebTemplateFolder>
         <AndroidAppId></AndroidAppId>
         <IosAppId></IosAppId>
-        <AppTemplateFolder></AppTemplateFolder>
-        <ContentCategoryId>9295570</ContentCategoryId>
+        <AppTemplateFolder></AppTemplateFolder>      
+        <ContentCategoryId>81758</ContentCategoryId>
         <PublicContentClass>standard</PublicContentClass>
-        <PageTitle>video.monngon.tv</PageTitle>
+        <PageTitle>BigDataVietNam.org</PageTitle>
         <PageHeaderLogo>/public/images/leotech-logo.png</PageHeaderLogo>
-        <BaseStaticUrl>//video.monngon.tv</BaseStaticUrl>
-        <BaseAdminApiUrl>//video.monngon.tv</BaseAdminApiUrl>
-        <BaseDeliveryApiUrl>//api.monngon.tv</BaseDeliveryApiUrl>
-        <BaseUploaderUrl>//uploader.monngon.tv</BaseUploaderUrl>
-        <BaseLogCollectorUrl>//log.monngon.tv</BaseLogCollectorUrl>
-        <AdsTxtContent></AdsTxtContent>
+        <BaseStaticUrl>xemgiday.com</BaseStaticUrl>
+        <BaseAdminApiUrl>xemgiday.com</BaseAdminApiUrl>
+        <BaseDeliveryApiUrl>api.xemgiday.com</BaseDeliveryApiUrl>
+        <BaseUploaderUrl>uploader.xemgiday.com</BaseUploaderUrl>
+        <BaseLogCollectorUrl>log.xemgiday.com</BaseLogCollectorUrl>
+        <AdsTxtContent> google.com, pub-9034869050940123, DIRECT, f08c47fec0942fa0 </AdsTxtContent>
         <GoogleTrackingId></GoogleTrackingId>
         <NumberSimilarPostsInList>7</NumberSimilarPostsInList>
     </MediaNetwork>

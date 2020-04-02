@@ -17,7 +17,7 @@ import leotech.cms.model.MediaInfoUnit;
 import leotech.cms.model.MediaNetwork;
 import leotech.cms.model.Post;
 import leotech.cms.model.User;
-import leotech.cms.model.bot.IrisBot;
+import leotech.cms.model.bot.LeoBot;
 import leotech.cms.model.common.ContentType;
 import leotech.crawler.model.CrawledYouTubeVideo;
 import leotech.system.util.seach.SearchPostUtil;
@@ -190,7 +190,7 @@ public class PostDataService {
     }
 
     public static List<Post> getSimilarPosts(List<String> contextPageIds, String postId) {
-	IrisBot bot = new IrisBot(contextPageIds, postId);
+	LeoBot bot = new LeoBot(contextPageIds, postId);
 	bot.process();
 	return bot.getRecommendedPosts();
     }

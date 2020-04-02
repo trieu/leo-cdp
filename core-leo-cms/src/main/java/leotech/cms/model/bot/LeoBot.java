@@ -10,13 +10,13 @@ import leotech.cms.model.Post;
 import rfx.core.configs.WorkerConfigs;
 import rfx.core.util.StringUtil;
 
-public class IrisBot extends ReactiveBot {
+public class LeoBot extends ReactiveBot {
 
     private static final int NUMBER_SIMILAR_POSTS_IN_LIST = StringUtil.safeParseInt(WorkerConfigs.load().getCustomConfig("NUMBER_SIMILAR_POSTS_IN_LIST"), 10);
     List<Post> recommendedPosts = new ArrayList<>();
     String currentPostId = "";
 
-    public IrisBot(List<String> contextPageIds, String postId) {
+    public LeoBot(List<String> contextPageIds, String postId) {
 	super();
 	if (contextPageIds != null) {
 	    this.subscribedPageIds.addAll(contextPageIds);
