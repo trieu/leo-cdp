@@ -23,8 +23,8 @@ public class EventLogHandler extends BaseApiHandler {
     public static final String metricContent = "content";
 
     // for Ad log
-    public static final String logAdConversionKey = "_ad_conversion";
-    public static final String logAdClickKey = "_ad_click";
+    public static final String logConversionKey = "_conversion";
+    public static final String logClickKey = "_click";
 
     public static void handle(HttpServerRequest req, HttpServerResponse resp, MultiMap outHeaders) {
 	MultiMap params = req.params();

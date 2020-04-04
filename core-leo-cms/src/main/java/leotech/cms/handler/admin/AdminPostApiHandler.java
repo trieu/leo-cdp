@@ -14,7 +14,7 @@ import leotech.cms.model.User;
 import leotech.cms.service.PostDataService;
 import leotech.core.api.BaseSecuredDataApi;
 import leotech.system.model.JsonDataPayload;
-import leotech.system.util.seach.SearchPostUtil;
+import leotech.system.util.seach.LuceneSearchPostUtil;
 import rfx.core.util.StringUtil;
 
 public class AdminPostApiHandler extends BaseSecuredDataApi {
@@ -105,7 +105,7 @@ public class AdminPostApiHandler extends BaseSecuredDataApi {
 		    keywords = new String[] {};
 		}
 		// FIXME check authorization
-		List<Post> results = SearchPostUtil.searchPost(keywords, true, true, true, 1, 100);
+		List<Post> results = LuceneSearchPostUtil.searchPost(keywords, true, true, true, 1, 100);
 		return JsonDataPayload.ok(uri, results);
 	    }
 	} else {

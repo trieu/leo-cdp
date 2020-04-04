@@ -15,7 +15,7 @@ import leotech.cms.model.Post;
 import leotech.cms.model.User;
 import leotech.core.api.BaseSecuredDataApi;
 import leotech.system.model.JsonDataPayload;
-import leotech.system.util.seach.SearchPostUtil;
+import leotech.system.util.seach.LuceneSearchPostUtil;
 import rfx.core.util.StringUtil;
 
 public class ContentQueryApiHandler extends BaseSecuredDataApi {
@@ -131,7 +131,7 @@ public class ContentQueryApiHandler extends BaseSecuredDataApi {
 		// List<Post> results = ContentQueryDaoUtil.searchPost(keywords,
 		// includeProtected, includePrivate, true);
 		//TODO
-		List<Post> results = SearchPostUtil.searchPost(keywords, includeProtected, includePrivate, true, 1, 100);
+		List<Post> results = LuceneSearchPostUtil.searchPost(keywords, includeProtected, includePrivate, true, 1, 100);
 
 		// tracking with Google Analytics
 		String userIp = StringUtil.safeString(params.get("__userIp"));

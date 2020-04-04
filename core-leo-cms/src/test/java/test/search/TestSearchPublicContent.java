@@ -3,13 +3,13 @@ package test.search;
 import java.util.List;
 
 import leotech.cms.model.Post;
-import leotech.system.util.seach.SearchPostUtil;
+import leotech.system.util.seach.LuceneSearchPostUtil;
 
 public class TestSearchPublicContent {
 
     public static void main(String[] args) {
 	String[] keywords = new String[] {"OST"};
-	List<Post> results = SearchPostUtil.searchPublicPost(keywords, 1, 5);
+	List<Post> results = LuceneSearchPostUtil.searchPublicPost(keywords, 1, 5);
 	for (Post result : results) {
 	    System.out.println(result.getTitle());
 	}

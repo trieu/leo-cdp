@@ -37,7 +37,7 @@ import leotech.cms.model.Post;
 import leotech.system.util.KeywordUtil;
 import rfx.core.util.StringUtil;
 
-public class SearchPostUtil {
+public class LuceneSearchPostUtil {
     private static final String SPACE_STR = " ";
     private static final String KEYWORDS = "keywords";
     private static final String CATEGORY_KEY = "cat_key";
