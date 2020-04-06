@@ -1,4 +1,4 @@
-package uspa.cdp.model;
+package leotech.cdp.model;
 
 /**
  * @author Trieu Nguyen (Thomas)

@@ -12,6 +12,7 @@ import leotech.cms.model.MediaNetwork;
 import leotech.cms.model.Post;
 import leotech.cms.service.MediaNetworkDataService;
 import leotech.system.template.TemplateUtil;
+import rfx.core.util.StringUtil;
 
 public class WebData extends DefaultModel {
     
@@ -129,6 +130,10 @@ public class WebData extends DefaultModel {
 
     public void setPageKeywords(String pageKeywords) {
         this.pageKeywords = pageKeywords;
+    }
+    
+    public void setPageKeywords(List<String> listKeywords ) {
+        this.pageKeywords = StringUtil.joinFromList(", ", listKeywords);;
     }
 
     public String getPageHeaderLogo() {

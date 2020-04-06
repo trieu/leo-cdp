@@ -20,6 +20,7 @@ import rfx.core.util.StringUtil;
 public class EventLogHttpRouter extends BaseHttpRouter {
 
     private static final String CLICK_REDIRECT = "/click-redirect";
+    public static final String PREFIX_EVENT_TRACKING_V1 = "/cdp/v1";
 
     public EventLogHttpRouter(RoutingContext context) {
 	super(context);
@@ -44,7 +45,7 @@ public class EventLogHttpRouter extends BaseHttpRouter {
 	try {
 
 	    // event tracking
-	    if (uri.startsWith(PREFIX_EVENT_TRACKING)) {
+	    if (uri.startsWith(PREFIX_EVENT_TRACKING_V1)) {
 
 		// TODO write log
 		HttpTrackingUtil.trackingResponse(req);

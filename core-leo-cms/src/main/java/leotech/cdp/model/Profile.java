@@ -1,4 +1,4 @@
-package uspa.cdp.model;
+package leotech.cdp.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;

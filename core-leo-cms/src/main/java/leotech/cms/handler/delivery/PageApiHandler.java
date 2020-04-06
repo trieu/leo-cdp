@@ -73,10 +73,13 @@ public class PageApiHandler extends BaseSecuredDataApi {
 	if (StringUtil.isNotEmpty(objectId)) {
 	    Page page = PageDataService.getPageWithPosts(objectId, startIndex, numberResult);
 	    if (page != null) {
-		String title = page.getTitle() + " - " + page.getTitle();
-		System.out
-			.println(page.getPostsOfPage().size() + "=>>>>>>>>>>>>> ### getPageWithPosts " + numberResult);
+		String title = network.getDomain() + " - " + page.getTitle();
+		System.out.println(page.getPostsOfPage().size() + "=>>>>>>>>>>>>> ### getPageWithPosts " + numberResult);
+		
 		model = new PageDataModel(networkDomain, templateFolder, SINGLE_PAGE, title, page);
+		model.setBaseStaticUrl(network.getBaseStaticUrl());
+   		model.setPageDescription(page.getDescription());
+   		model.setPageKeywords(page.getKeywords());
 
 		int nextStartIndex = startIndex + numberResult;
 		if (page.getPostsOfPage().size() < numberResult) {
@@ -93,6 +96,8 @@ public class PageApiHandler extends BaseSecuredDataApi {
 	    String title = network.getName() + " - Top Pages";
 	    List<Page> pages = PageDataService.getPagesByNetwork(network.getNetworkId(), startIndex, numberResult);
 	    model = new PageDataModel(networkDomain, templateFolder, LIST_PAGE, title, pages);
+	    model.setBaseStaticUrl(network.getBaseStaticUrl());
+		
 	    int nextStartIndex = startIndex + numberResult;
 	    if (pages.size() < numberResult) {
 		nextStartIndex = 0;

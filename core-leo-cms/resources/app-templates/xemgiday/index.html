@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <title>{{pageTitle}} - {{pageName}}</title>
+    <title>{{pageTitle}} </title>
     <meta name="keywords" content="{{pageKeywords}}">
     <meta name="description" content="{{pageDescription}}">
 
@@ -184,6 +184,20 @@
         console.debug('host: {{host}}')
         console.debug('templateFolder: {{templateFolder}}')
         console.debug('templateName: {{templateName}}');
+        
+        (function () {
+            var src = '//xemgiday.com/public/js/uspa-tracker/tracking-event.src.js';
+            var jsNode = document.createElement('script');
+            jsNode.async = true;
+            jsNode.src = src;
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jsNode, s);
+        })();
+        
+
+        function USPA_Proxy_Ready() {
+            USPA_Proxy.trackEvent({ type: "pageview", context: "homepage" });
+        }
     </script>
 </body>
 

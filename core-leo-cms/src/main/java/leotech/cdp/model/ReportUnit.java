@@ -1,4 +1,4 @@
-package uspa.cdp.model;
+package leotech.cdp.model;
 
 
 /*id = PrimaryKey(str, 36)

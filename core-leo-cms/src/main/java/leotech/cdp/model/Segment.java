@@ -1,4 +1,4 @@
-package uspa.cdp.model;
+package leotech.cdp.model;
 
 import java.util.Arrays;
 
@@ -10,9 +10,9 @@ import com.arangodb.model.HashIndexOptions;
 import com.arangodb.model.PersistentIndexOptions;
 import com.google.gson.annotations.Expose;
 
+import leotech.cdp.model.Profile.ProfileType;
 import leotech.cms.model.common.PersistentArangoObject;
 import leotech.system.util.database.ArangoDbUtil;
-import uspa.cdp.model.Profile.ProfileType;
 
 
 //    size = Required(int, size=64, default=0)

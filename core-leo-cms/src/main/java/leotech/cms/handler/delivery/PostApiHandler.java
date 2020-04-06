@@ -152,14 +152,14 @@ public class PostApiHandler extends BaseSecuredDataApi {
    	    if (post != null) {
 
    		List<String> contextPageIds = post.getPageIds();
-   		List<String> listKeywords = post.getKeywords();
+   		
 
    		String postId = post.getId();
-   		String title = post.getTitle();
+   		String title = network.getDomain() + " - " + post.getTitle();
    		String des = post.getDescription();
    		String pageImage = post.getHeadlineImageUrl();
    		String siteName = network.getName();
-   		String keywords = StringUtil.joinFromList(", ", listKeywords);
+   		
 
    		// build model from database object
    		model = new PostDataModel(networkDomain, templateFolder, SINGLE_POST, title, post);
@@ -167,7 +167,7 @@ public class PostApiHandler extends BaseSecuredDataApi {
    		model.setPageDescription(des);
    		model.setPageImage(pageImage);
    		model.setPageName(siteName);
-   		model.setPageKeywords(keywords);
+   		model.setPageKeywords(post.getKeywords());
    		String pageUrl = model.getBaseStaticUrl() + HTML_POST + slug;
    		model.setPageUrl(pageUrl);
    		model.setContextPageId(contextPageIds.size() > 0 ? contextPageIds.get(0) : "");

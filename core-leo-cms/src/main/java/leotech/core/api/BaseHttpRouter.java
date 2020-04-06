@@ -14,7 +14,7 @@ public abstract class BaseHttpRouter {
 
     public final static String DEFAULT_PATH = "/";
 
-    public static final String PREFIX_EVENT_TRACKING = "/event";
+    
 
     public final String SPIDER = "Spider";
     
