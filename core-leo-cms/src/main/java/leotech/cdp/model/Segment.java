@@ -26,7 +26,7 @@ import leotech.system.util.database.ArangoDbUtil;
 //    segmenter_uri = Optional(str, 100, unique=True, index='segmenter_idx')
 //    ext_data = Optional(Json)
 //    has_campaigns = Set('Campaign')
-public class Segment extends UspaPersistentObject implements Comparable<Segment>{
+public class Segment extends CdpPersistentObject implements Comparable<Segment>{
     
     public static class SegmentationType {
 	// https://learn.g2.com/market-segmentation

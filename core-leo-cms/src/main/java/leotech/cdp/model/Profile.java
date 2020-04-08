@@ -15,7 +15,6 @@ import com.arangodb.model.HashIndexOptions;
 import com.arangodb.model.PersistentIndexOptions;
 import com.google.gson.annotations.Expose;
 
-import leotech.cms.model.common.PersistentArangoObject;
 import leotech.system.util.database.ArangoDbUtil;
 
 
@@ -25,7 +24,7 @@ import leotech.system.util.database.ArangoDbUtil;
  * the entity for storing human profile information
  *
  */
-public class Profile extends UspaPersistentObject implements Comparable<Profile> {
+public class Profile extends CdpPersistentObject implements Comparable<Profile> {
 
     public static class ProfileType {
 	public final static int ANONYMOUS = 0;
@@ -79,6 +78,9 @@ public class Profile extends UspaPersistentObject implements Comparable<Profile>
 
     @Expose
     List<String> inJourneyMaps = new ArrayList<String>(20);
+    
+    @Expose
+    List<String> atTouchpoints = new ArrayList<String>(100);
 
     @Expose
     int status = 1;
@@ -109,6 +111,12 @@ public class Profile extends UspaPersistentObject implements Comparable<Profile>
 
     @Expose
     String primaryAvatar = "";
+    
+    @Expose
+    int gender = 0;
+
+    @Expose
+    int age = 0;
 
     @Expose
     int genderProbability = 50;
@@ -117,28 +125,40 @@ public class Profile extends UspaPersistentObject implements Comparable<Profile>
     int ageGroup = 0;
 
     @Expose
-    List<String> usedDevices = new ArrayList<String>(5);
+    List<String> usedDevices = new ArrayList<String>(10);
 
     @Expose
-    Map<String, String> workingHistory = new HashMap<>(10);
+    List<String> workingHistory = new ArrayList<String>(20);
+    
+    @Expose
+    List<String> viewedContents = new ArrayList<String>(100);
+    
+    @Expose
+    Map<String, Integer> weeklyMobileUsage = new HashMap<>(7);
 
     @Expose
-    Map<String, Integer> mediaInterests = new HashMap<>(10);
+    Map<String, Integer> mediaInterests = new HashMap<>(20);
 
     @Expose
-    Map<String, String> personalAttributes = new HashMap<>(20);
-
+    Map<String, String> personalAttributes = new HashMap<>(30);
+    
     @Expose
-    Map<String, String> socialMediaProfiles = new HashMap<>(5);
+    Map<String, String> socialMediaProfiles = new HashMap<>(10);
 
     @Expose
     Map<String, String> personalContacts = new HashMap<>(10);
 
     @Expose
-    Map<String, Integer> personalInterests = new HashMap<>(10);
+    Map<String, Integer> personalInterests = new HashMap<>(20);
 
     @Expose
     Map<String, String> subscribedChannels = new HashMap<>(100);
+    
+    @Expose
+    List<String> businessTransactions = new ArrayList<String>();
+    
+    @Expose
+    List<String> supportHistory = new ArrayList<String>();
 
     @Expose
     int socialCreditScore = 0;
@@ -161,7 +181,7 @@ public class Profile extends UspaPersistentObject implements Comparable<Profile>
     @Expose
     String personaUri = "";
 
-    @Expose
+    
     int partitionId = 0;
 
    
@@ -225,6 +245,15 @@ public class Profile extends UspaPersistentObject implements Comparable<Profile>
 
     public void setInJourneyMaps(List<String> inJourneyMaps) {
         this.inJourneyMaps = inJourneyMaps;
+    }
+    
+
+    public List<String> getAtTouchpoints() {
+        return atTouchpoints;
+    }
+
+    public void setAtTouchpoints(List<String> atTouchpoints) {
+        this.atTouchpoints = atTouchpoints;
     }
 
     public int getStatus() {
@@ -331,13 +360,7 @@ public class Profile extends UspaPersistentObject implements Comparable<Profile>
         this.usedDevices = usedDevices;
     }
 
-    public Map<String, String> getWorkingHistory() {
-        return workingHistory;
-    }
-
-    public void setWorkingHistory(Map<String, String> workingHistory) {
-        this.workingHistory = workingHistory;
-    }
+   
 
     public Map<String, Integer> getMediaInterests() {
         return mediaInterests;
@@ -454,7 +477,61 @@ public class Profile extends UspaPersistentObject implements Comparable<Profile>
     public String getKey() {
         return key;
     }
-    
-    
 
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public List<String> getWorkingHistory() {
+        return workingHistory;
+    }
+
+    public void setWorkingHistory(List<String> workingHistory) {
+        this.workingHistory = workingHistory;
+    }
+
+    public List<String> getViewedContents() {
+        return viewedContents;
+    }
+
+    public void setViewedContents(List<String> viewedContents) {
+        this.viewedContents = viewedContents;
+    }
+
+    public Map<String, Integer> getWeeklyMobileUsage() {
+        return weeklyMobileUsage;
+    }
+
+    public void setWeeklyMobileUsage(Map<String, Integer> weeklyMobileUsage) {
+        this.weeklyMobileUsage = weeklyMobileUsage;
+    }
+
+    public List<String> getBusinessTransactions() {
+        return businessTransactions;
+    }
+
+    public void setBusinessTransactions(List<String> businessTransactions) {
+        this.businessTransactions = businessTransactions;
+    }
+
+    public List<String> getSupportHistory() {
+        return supportHistory;
+    }
+
+    public void setSupportHistory(List<String> supportHistory) {
+        this.supportHistory = supportHistory;
+    }
+    
 }

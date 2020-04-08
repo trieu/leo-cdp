@@ -1,30 +1,92 @@
 package leotech.cdp.model;
 
-/*id = PrimaryKey(str, 32)
-createdAt = Required(datetime, index='cvsion_time_idx')
-trackerId = Required(str, 32, index='cvsion_tracker_idx')
-metricName = Required(str, 42, index='cvsion_metric_idx')
-refTrackedEventId = Required(str, 32, index='cvsion_event_idx')
-refTouchpointId = Required(str, 32, index='cvsion_context_idx')
-refPostId = Required(str, 32, index='cvsion_post_idx')
-refChannelId = Required(str, 32, index='cvsion_channel_idx')
-refProfileId = Required(str, 32, index='cvsion_profile_idx')
-refProfileType = Optional(int, size=8, default=0, unsigned=True)
-refJourneyId = Optional(str, 32)
-refJourneyStage = Optional(int, size=8, unsigned=True)
-deviceId = Required(str, 36, index='cvsion_device_idx')
-deviceName = Required(str, 100)
-sourceIp = Required(str, 40)
-timeSpent = Required(int, size=32, unsigned=True)
-refCampaignId = Optional(str, 32, index='cvsion_campaign_idx')
-transactionCode = Optional(str, 50, default='_', index='cvsion_transaction_idx')
-transactionValue = Optional(float, default=0)
-currencyCode = Optional(str, 10, default='_')
-satisfactionScore = Optional(int, size=8, default=0, unsigned=True)
-fraudScore = Optional(int, size=8, default=0, unsigned=True)
-feedbackData = Optional(str, 1000)
-partitionId = Optional(int, size=16, default=1)*/
+import java.util.Arrays;
 
-public class ConversionEvent {
+import com.arangodb.ArangoCollection;
+import com.arangodb.ArangoDatabase;
+import com.arangodb.model.HashIndexOptions;
+import com.arangodb.model.PersistentIndexOptions;
+import com.google.gson.annotations.Expose;
 
+import leotech.system.util.database.ArangoDbUtil;
+
+public class ConversionEvent extends TrackingEvent {
+
+    public static final String COLLECTION_NAME = COLLECTION_PREFIX
+	    + ConversionEvent.class.getSimpleName().toLowerCase();
+    static ArangoCollection instance;
+
+    @Override
+    public ArangoCollection getCollection() {
+	if (instance == null) {
+	    ArangoDatabase arangoDatabase = ArangoDbUtil.getArangoDatabase();
+
+	    instance = arangoDatabase.collection(COLLECTION_NAME);
+
+	    // ensure indexing key fields for fast lookup
+	    instance.ensurePersistentIndex(Arrays.asList("refProfileId"), new PersistentIndexOptions().unique(false));
+	}
+	return instance;
+    }
+
+    @Expose
+    String transactionCode;
+    
+    @Expose
+    double transactionValue;
+    
+    @Expose
+    String currencyCode = "";
+    
+    @Expose
+    int satisfactionScore = 0;
+    
+    @Expose
+    int fraudScore;
+    
+    public ConversionEvent() {
+	// TODO Auto-generated constructor stub
+    }
+
+    public String getTransactionCode() {
+        return transactionCode;
+    }
+
+    public void setTransactionCode(String transactionCode) {
+        this.transactionCode = transactionCode;
+    }
+
+    public double getTransactionValue() {
+        return transactionValue;
+    }
+
+    public void setTransactionValue(double transactionValue) {
+        this.transactionValue = transactionValue;
+    }
+
+    public String getCurrencyCode() {
+        return currencyCode;
+    }
+
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
+    }
+
+    public int getSatisfactionScore() {
+        return satisfactionScore;
+    }
+
+    public void setSatisfactionScore(int satisfactionScore) {
+        this.satisfactionScore = satisfactionScore;
+    }
+
+    public int getFraudScore() {
+        return fraudScore;
+    }
+
+    public void setFraudScore(int fraudScore) {
+        this.fraudScore = fraudScore;
+    }
+    
+    
 }
