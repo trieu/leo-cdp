@@ -72,6 +72,9 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
     // the main ID after Identity Resolution process
     @Expose
     String rootProfileId = "";
+    
+    @Expose
+    List<String> inCollections = new ArrayList<String>(10);
 
     @Expose
     List<String> inSegments = new ArrayList<String>(20);
