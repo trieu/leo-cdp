@@ -19,6 +19,8 @@ import rfx.core.util.StringUtil;
 public class MediaNetwork implements PersistentArangoObject {
 
     public static final long DEFAULT_ID = 10000L;
+    
+    public static final String COLLECTION_NAME = MediaNetwork.class.getSimpleName().toLowerCase();
 
     @XmlElement(name = "networkId")
     long networkId = DEFAULT_ID; 

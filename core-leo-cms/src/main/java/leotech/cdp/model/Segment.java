@@ -1,6 +1,10 @@
 package leotech.cdp.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
@@ -10,22 +14,10 @@ import com.arangodb.model.HashIndexOptions;
 import com.arangodb.model.PersistentIndexOptions;
 import com.google.gson.annotations.Expose;
 
-import leotech.cdp.model.Profile.ProfileType;
-import leotech.cms.model.common.PersistentArangoObject;
 import leotech.system.util.database.ArangoDbUtil;
 
 
-//    size = Required(int, size=64, default=0)
-//    query_template = Required(str)
-//    query_parameter = Optional(Json)
-//    attribution_model = Optional(Json)
-//    is_public = Required(bool)
-//    keywords = Optional(Json)
-//    in_collection = Optional(Collection)
-//    index_score = Optional(int, size=32, default=0, unsigned=True)
-//    segmenter_uri = Optional(str, 100, unique=True, index='segmenter_idx')
-//    ext_data = Optional(Json)
-//    has_campaigns = Set('Campaign')
+
 public class Segment extends CdpPersistentObject implements Comparable<Segment>{
     
     public static class SegmentationType {
@@ -86,6 +78,24 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment>{
     @Expose
     String queryTemplate;
     
+    @Expose
+    Map<String,String> queryParameters = new HashMap<>();
+   
+    @Expose
+    boolean isPublic = false;
+    
+    @Expose
+    List<String> keywords = new ArrayList<String>();
+    
+    @Expose
+    int indexScore = 0;
+    
+    @Expose
+    String segmenterUri;
+    
+    @Expose
+    Map<String,String> extData = new HashMap<>();
+    
     
 
     @Override
@@ -99,5 +109,99 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment>{
 	// TODO Auto-generated method stub
 	return false;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public long getSize() {
+        return size;
+    }
+
+    public void setSize(long size) {
+        this.size = size;
+    }
+
+    public String getQueryTemplate() {
+        return queryTemplate;
+    }
+
+    public void setQueryTemplate(String queryTemplate) {
+        this.queryTemplate = queryTemplate;
+    }
+
+    public Map<String, String> getQueryParameters() {
+        return queryParameters;
+    }
+
+    public void setQueryParameters(Map<String, String> queryParameters) {
+        this.queryParameters = queryParameters;
+    }
+
+    public boolean isPublic() {
+        return isPublic;
+    }
+
+    public void setPublic(boolean isPublic) {
+        this.isPublic = isPublic;
+    }
+
+    public List<String> getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(List<String> keywords) {
+        this.keywords = keywords;
+    }
+
+    public int getIndexScore() {
+        return indexScore;
+    }
+
+    public void setIndexScore(int indexScore) {
+        this.indexScore = indexScore;
+    }
+
+    public String getSegmenterUri() {
+        return segmenterUri;
+    }
+
+    public void setSegmenterUri(String segmenterUri) {
+        this.segmenterUri = segmenterUri;
+    }
+
+    public Map<String, String> getExtData() {
+        return extData;
+    }
+
+    public void setExtData(Map<String, String> extData) {
+        this.extData = extData;
+    }
+
+    public String getKey() {
+        return key;
+    }
+    
+    
     
 }

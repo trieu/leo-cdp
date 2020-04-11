@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
-import com.arangodb.model.HashIndexOptions;
 import com.arangodb.model.PersistentIndexOptions;
 import com.google.gson.annotations.Expose;
 
@@ -12,8 +11,7 @@ import leotech.system.util.database.ArangoDbUtil;
 
 public class ConversionEvent extends TrackingEvent {
 
-    public static final String COLLECTION_NAME = COLLECTION_PREFIX
-	    + ConversionEvent.class.getSimpleName().toLowerCase();
+    public static final String COLLECTION_NAME = COLLECTION_PREFIX + ConversionEvent.class.getSimpleName().toLowerCase();
     static ArangoCollection instance;
 
     @Override

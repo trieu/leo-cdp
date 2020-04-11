@@ -7,7 +7,6 @@ import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
 import com.arangodb.entity.DocumentField;
 import com.arangodb.entity.DocumentField.Type;
-import com.arangodb.model.HashIndexOptions;
 import com.arangodb.model.PersistentIndexOptions;
 import com.google.gson.annotations.Expose;
 

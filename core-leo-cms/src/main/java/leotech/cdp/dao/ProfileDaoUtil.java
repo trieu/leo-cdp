@@ -1,4 +1,4 @@
-package leotech.cms.dao;
+package leotech.cdp.dao;
 
 import java.util.HashMap;
 import java.util.List;
@@ -7,14 +7,15 @@ import java.util.Map;
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
 
+import leotech.cdp.model.Profile;
 import leotech.cms.model.Page;
 import leotech.core.config.AqlTemplate;
 import leotech.system.util.database.ArangoDbQuery;
 import leotech.system.util.database.ArangoDbUtil;
 
-public class PageDaoUtil {
+public class ProfileDaoUtil {
 
-    private static final String AQL_FIND_KEY_AQL = ArangoDbUtil.contentFindKeyAql(Page.COLLECTION_NAME);
+    private static final String AQL_FIND_KEY_AQL = ArangoDbUtil.contentFindKeyAql(Profile.COLLECTION_NAME);
     static final String AQL_GET_PAGE_BY_ID = AqlTemplate.get("AQL_GET_PAGE_BY_ID");
     static final String AQL_GET_PAGE_BY_SLUG = AqlTemplate.get("AQL_GET_PAGE_BY_SLUG");
 
@@ -24,11 +25,11 @@ public class PageDaoUtil {
     
     
 
-    public static String save(Page page) {
-	if (page.isReadyForSave()) {
-	    ArangoCollection col = page.getCollection();
+    public static String save(Profile profile) {
+	if (profile.isReadyForSave()) {
+	    ArangoCollection col = profile.getCollection();
 	    if (col != null) {
-		String id = page.getId();
+		String k = profile.getKey();
 
 		String _key = ArangoDbUtil.findKey(AQL_FIND_KEY_AQL, "id", id);
 		System.out.println("findKey " + _key);

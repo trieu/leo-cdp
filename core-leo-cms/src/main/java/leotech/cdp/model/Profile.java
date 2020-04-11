@@ -128,20 +128,17 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
     int ageGroup = 0;
 
     @Expose
-    List<String> usedDevices = new ArrayList<String>(10);
+    List<String> usedDevices = new ArrayList<>(10);
 
     @Expose
-    List<String> workingHistory = new ArrayList<String>(20);
+    List<String> workingHistory = new ArrayList<>(20);
+    
+    @Expose
+    Map<String, Integer> acquisitionChannels = new HashMap<>(20);
     
     @Expose
     List<String> viewedContents = new ArrayList<String>(100);
     
-    @Expose
-    Map<String, Integer> weeklyMobileUsage = new HashMap<>(7);
-
-    @Expose
-    Map<String, Integer> mediaInterests = new HashMap<>(20);
-
     @Expose
     Map<String, String> personalAttributes = new HashMap<>(30);
     
@@ -150,7 +147,13 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
     @Expose
     Map<String, String> personalContacts = new HashMap<>(10);
+    
+    @Expose
+    Map<String, Integer> weeklyMobileUsage = new HashMap<>(7);
 
+    @Expose
+    Map<String, Integer> mediaInterests = new HashMap<>(20);
+    
     @Expose
     Map<String, Integer> personalInterests = new HashMap<>(20);
 
@@ -197,7 +200,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
     @Override
     public boolean isReadyForSave() {
 	// TODO Auto-generated method stub
-	return false;
+	return true;
     }
     
     // -- getter and setter methods --
@@ -536,5 +539,22 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
     public void setSupportHistory(List<String> supportHistory) {
         this.supportHistory = supportHistory;
     }
+
+    public List<String> getInCollections() {
+        return inCollections;
+    }
+
+    public void setInCollections(List<String> inCollections) {
+        this.inCollections = inCollections;
+    }
+
+    public Map<String, Integer> getAcquisitionChannels() {
+        return acquisitionChannels;
+    }
+
+    public void setAcquisitionChannels(Map<String, Integer> acquisitionChannels) {
+        this.acquisitionChannels = acquisitionChannels;
+    }
+    
     
 }

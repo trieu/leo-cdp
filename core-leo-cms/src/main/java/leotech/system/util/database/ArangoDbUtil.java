@@ -76,6 +76,10 @@ public class ArangoDbUtil {
 		.build();
 	return arangoDB;
     }
+    
+    public static String contentFindKeyAql(String collectionName) {
+  	return "FOR e in " + collectionName + " FILTER e.id == @id RETURN e._key";
+     }
 
     public static String findKey(String aql, String fieldName, Object indexedId) {
 	Map<String, Object> bindKeys = new HashMap<>();
@@ -86,6 +90,11 @@ public class ArangoDbUtil {
 	    return key;
 	}
 	return null;
+    }
+    
+    public static boolean isExistedDocument(String name) {
+	String aql = "RETURN LENGTH(FOR d IN tab FILTER d.name == 'abc' LIMIT 1 RETURN true) > 0";
+	return true;
     }
 
 }

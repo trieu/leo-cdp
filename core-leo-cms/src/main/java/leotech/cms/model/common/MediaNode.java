@@ -220,9 +220,7 @@ public abstract class MediaNode implements PersistentArangoObject, Comparable<Me
 	return collection;
     }
 
-    public static String contentFindKeyAql(String collectionName) {
-	return "FOR e in " + collectionName + " FILTER e.id == @id RETURN e._key";
-    }
+  
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public String getKey() {

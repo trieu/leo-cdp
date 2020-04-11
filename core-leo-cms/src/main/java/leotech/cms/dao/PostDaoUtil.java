@@ -25,7 +25,7 @@ public class PostDaoUtil {
     // for
     static long limitTotalPosts = 9000;// free = 9000, $9 = 90000, $99 = 900000, $999 = 9000000, $9999 = no limit
 
-    private static final String AQL_FIND_KEY_AQL = Post.contentFindKeyAql(Post.COLLECTION_NAME);
+    private static final String AQL_FIND_KEY_AQL = ArangoDbUtil.contentFindKeyAql(Post.COLLECTION_NAME);
     static final String AQL_GET_POSTS_BY_NETWORK = AqlTemplate.get("AQL_GET_POSTS_BY_NETWORK");
     static final String AQL_GET_POSTS_BY_PAGE = AqlTemplate.get("AQL_GET_POSTS_BY_PAGE");
     static final String AQL_GET_VIEWABLE_POSTS_BY_PAGE = AqlTemplate.get("AQL_GET_VIEWABLE_POSTS_BY_PAGE");
