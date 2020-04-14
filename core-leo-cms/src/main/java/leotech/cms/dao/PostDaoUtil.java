@@ -392,7 +392,7 @@ public class PostDaoUtil {
 
     public static long countTotalOfPostCollection() {
 	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
-	long c = db.collection("post").count().getCount();
+	long c = db.collection(Post.COLLECTION_NAME).count().getCount();
 	return c;
     }
 

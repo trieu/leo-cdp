@@ -113,12 +113,13 @@ public class TrackingEvent extends CdpPersistentObject {
     @Expose
     protected String feedbackData;
 
+    @Expose
     protected int partitionId = 0;
 
     @Override
     public boolean isReadyForSave() {
 	// TODO Auto-generated method stub
-	return false;
+	return true;
     }
     
     public TrackingEvent() {

@@ -46,6 +46,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	    instance = arangoDatabase.collection(COLLECTION_NAME);
 
 	    // ensure indexing key fields for fast lookup
+	    instance.ensurePersistentIndex(Arrays.asList("id"), new PersistentIndexOptions().unique(true));
 	    instance.ensurePersistentIndex(Arrays.asList("primaryEmail"), new PersistentIndexOptions().unique(false));
 	    instance.ensurePersistentIndex(Arrays.asList("primaryPhone"), new PersistentIndexOptions().unique(false));
 	    instance.ensurePersistentIndex(Arrays.asList("primaryAvatar"), new PersistentIndexOptions().unique(false));
@@ -59,6 +60,10 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
     @DocumentField(Type.KEY)
     @Expose
     private String key;
+    
+  
+    @Expose
+    String id;
 
     @Expose
     int type = ProfileType.ANONYMOUS;
@@ -187,7 +192,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
     @Expose
     String personaUri = "";
 
-    
+    @Expose
     int partitionId = 0;
 
    
@@ -204,9 +209,19 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
     }
     
     // -- getter and setter methods --
+    
+    
 
     public int getType() {
         return type;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setType(int type) {
@@ -366,7 +381,6 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
         this.usedDevices = usedDevices;
     }
 
-   
 
     public Map<String, Integer> getMediaInterests() {
         return mediaInterests;

@@ -92,9 +92,16 @@ public class ArangoDbUtil {
 	return null;
     }
     
-    public static boolean isExistedDocument(String name) {
-	String aql = "RETURN LENGTH(FOR d IN tab FILTER d.name == 'abc' LIMIT 1 RETURN true) > 0";
-	return true;
+    public static boolean isExistedDocument(String collectionName, String id) {
+	String aql = "RETURN LENGTH(FOR d IN " + collectionName + " FILTER e.id == @id LIMIT 1 RETURN true) > 0";
+	Map<String, Object> bindKeys = new HashMap<>(1);
+	bindKeys.put("id", id);
+	ArangoCursor<Boolean> cursor = ArangoDbUtil.getArangoDatabase().query(aql, bindKeys, null, Boolean.class);
+	while (cursor.hasNext()) {
+	    Boolean rs = cursor.next();
+	    return rs;
+	}
+	return false;
     }
 
 }

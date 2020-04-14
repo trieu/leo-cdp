@@ -1,11 +1,13 @@
 package leotech.cdp.dao;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
+import com.devskiller.friendly_id.FriendlyId;
 
 import leotech.cdp.model.Profile;
 import leotech.cms.model.Page;
@@ -15,94 +17,55 @@ import leotech.system.util.database.ArangoDbUtil;
 
 public class ProfileDaoUtil {
 
-    private static final String AQL_FIND_KEY_AQL = ArangoDbUtil.contentFindKeyAql(Profile.COLLECTION_NAME);
-    static final String AQL_GET_PAGE_BY_ID = AqlTemplate.get("AQL_GET_PAGE_BY_ID");
-    static final String AQL_GET_PAGE_BY_SLUG = AqlTemplate.get("AQL_GET_PAGE_BY_SLUG");
-
-    static final String AQL_GET_PAGES_BY_NETWORK = AqlTemplate.get("AQL_GET_PAGES_BY_NETWORK");
-    static final String AQL_GET_ALL_PAGES_BY_CATEGORY = AqlTemplate.get("AQL_GET_ALL_PAGES_BY_CATEGORY");
-    static final String AQL_GET_PUBLIC_PAGES_BY_CATEGORY = AqlTemplate.get("AQL_GET_PUBLIC_PAGES_BY_CATEGORY");
+    static long limitTotalProfiles = 7000;
+    static final String AQL_GET_PROFILE_BY_ID = AqlTemplate.get("AQL_GET_PROFILE_BY_ID");
     
-    
+    public static boolean checkLimitOfLicense() {
+	return limitTotalProfiles > 0 && countTotalOfProfiles() < limitTotalProfiles;
+    }
+   
 
-    public static String save(Profile profile) {
-	if (profile.isReadyForSave()) {
+    public static String create(Profile profile) {
+	if (profile.isReadyForSave() && checkLimitOfLicense()) {
 	    ArangoCollection col = profile.getCollection();
 	    if (col != null) {
-		String k = profile.getKey();
-
-		String _key = ArangoDbUtil.findKey(AQL_FIND_KEY_AQL, "id", id);
-		System.out.println("findKey " + _key);
-		if (_key == null) {
-		    col.insertDocument(page);
-		} else {
-		    page.setModificationTime(System.currentTimeMillis());
-		    col.updateDocument(_key, page);
-		}
+		String id = FriendlyId.createFriendlyId();
+		profile.setId(id);
+		col.insertDocument(profile);
 		return id;
 	    }
 	}
 	return null;
     }
 
-    public static boolean deletePage(String pageId) {
-	Page page = getById(pageId);
-	ArangoCollection col = page.getCollection();
-	if (col != null) {
-	    String _key = ArangoDbUtil.findKey(AQL_FIND_KEY_AQL, "id", pageId);
-	    col.deleteDocument(_key);
-	    return true;
+    public static String update(Profile profile) {
+	if (profile.isReadyForSave()) {
+	    ArangoCollection col = profile.getCollection();
+	    if (col != null) {
+		String k = profile.getKey();
+
+		if (k != null) {
+		    profile.setUpdatedAt(new Date());
+		    col.updateDocument(k, profile);
+		}
+		return profile.getId();
+	    }
 	}
-	return false;
+	return null;
     }
 
-    public static String saveMediaContent(String pageId, int type, String mediaContent) {
-	Page page = getById(pageId);
-	page.setType(type);
-	page.setMediaInfo(mediaContent);
-	return pageId;
-    }
-
-    public static Page getById(String id) {
+    public static Profile getById(String id) {
 	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
 	Map<String, Object> bindVars = new HashMap<>(1);
 	bindVars.put("id", id);
-	Page p = new ArangoDbQuery<Page>(db, AQL_GET_PAGE_BY_ID, bindVars, Page.class).getResultsAsObject();
+	Profile p = new ArangoDbQuery<Profile>(db, AQL_GET_PROFILE_BY_ID, bindVars, Profile.class).getResultsAsObject();
 	return p;
-    }
-
-    public static Page getBySlug(String slug) {
-	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
-	Map<String, Object> bindVars = new HashMap<>(1);
-	bindVars.put("slug", slug);
-	Page p = new ArangoDbQuery<Page>(db, AQL_GET_PAGE_BY_SLUG, bindVars, Page.class).getResultsAsObject();
-	return p;
-    }
-
-    public static List<Page> listByNetwork(long networkId, int startIndex, int numberResult) {
-	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
-	Map<String, Object> bindVars = new HashMap<>(3);
-	bindVars.put("networkId", networkId);
-	bindVars.put("startIndex", startIndex);
-	bindVars.put("numberResult", numberResult);
-	List<Page> list = new ArangoDbQuery<Page>(db, AQL_GET_PAGES_BY_NETWORK, bindVars, Page.class).getResultsAsList();
-	return list;
-    }
-
-    public static List<Page> listByCategory(String categoryKey) {
-	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
-	Map<String, Object> bindVars = new HashMap<>(1);
-	bindVars.put("categoryKey", categoryKey);
-	List<Page> list = new ArangoDbQuery<Page>(db, AQL_GET_ALL_PAGES_BY_CATEGORY, bindVars, Page.class).getResultsAsList();
-	return list;
     }
     
-    public static List<Page> listByCategoryWithPublicPrivacy(String categoryKey) {
-	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
-	Map<String, Object> bindVars = new HashMap<>(1);
-	bindVars.put("categoryKey", categoryKey);
-	List<Page> list = new ArangoDbQuery<Page>(db, AQL_GET_PUBLIC_PAGES_BY_CATEGORY, bindVars, Page.class).getResultsAsList();
-	return list;
-    }
+    public static long countTotalOfProfiles() {
+   	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+   	long c = db.collection(Profile.COLLECTION_NAME).count().getCount();
+   	return c;
+       }
 
 }

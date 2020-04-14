@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
@@ -80,6 +81,9 @@ public class Touchpoint extends CdpPersistentObject implements Comparable<Touchp
     @DocumentField(Type.KEY)
     @Expose
     private String key;
+    
+    @Expose
+    String id;
 
     @Expose
     String name;
@@ -155,8 +159,45 @@ public class Touchpoint extends CdpPersistentObject implements Comparable<Touchp
 
     ////////////////
     
+    
+    
     public Touchpoint() {
 	// TODO Auto-generated constructor stub
+    }
+    
+    
+
+    public Touchpoint(String name,int type, boolean isMediaSrc, String url, String collectionId) {
+	super();
+	this.name = name;
+	this.type = type;
+	this.isMediaSrc = isMediaSrc;
+	this.url = url;
+	this.collectionId = collectionId;
+	String keyHint = name + type + url;
+	this.id = UUID.nameUUIDFromBytes(keyHint.getBytes()).toString();
+    }
+    
+    
+
+    public Touchpoint(String name,int type, boolean isMediaSrc, String locationCode, String address, String collectionId) {
+	super();
+	this.name = name;
+	this.type = type;
+	this.isMediaSrc = isMediaSrc;
+	this.locationCode = locationCode;
+	this.address = address;
+	this.collectionId = collectionId;
+	String keyHint = name + type + locationCode + address;
+	this.id = UUID.nameUUIDFromBytes(keyHint.getBytes()).toString();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
