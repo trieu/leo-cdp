@@ -7,7 +7,7 @@ import io.vertx.core.MultiMap;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.RoutingContext;
-import leotech.cms.analytics.EventTrackingUtil;
+import leotech.cdp.utils.EventTrackingUtil;
 import leotech.core.api.BaseApiHandler;
 import leotech.core.api.BaseApiRouter;
 import leotech.core.api.BaseHttpRouter;

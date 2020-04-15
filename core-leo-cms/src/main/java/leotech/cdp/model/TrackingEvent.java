@@ -11,6 +11,7 @@ import com.arangodb.model.PersistentIndexOptions;
 import com.google.gson.annotations.Expose;
 
 import leotech.system.util.database.ArangoDbUtil;
+import rfx.core.util.DateTimeUtil;
 
 public class TrackingEvent extends CdpPersistentObject {
 
@@ -36,13 +37,16 @@ public class TrackingEvent extends CdpPersistentObject {
     protected String key;
 
     @Expose
-    protected Date createdAt = new Date();
+    protected Date createdAt;
+    
+    @Expose
+    protected int timestamp;
 
     @Expose
     protected String sessionKey;
 
     @Expose
-    protected String trackerId;
+    protected String observerId;
 
     @Expose
     protected String collectionId;
@@ -90,9 +94,6 @@ public class TrackingEvent extends CdpPersistentObject {
     protected int refJourneyStage = 0;
 
     @Expose
-    protected int timeSpent;
-
-    @Expose
     protected String browserName;
 
     @Expose
@@ -125,6 +126,29 @@ public class TrackingEvent extends CdpPersistentObject {
     public TrackingEvent() {
 	// TODO Auto-generated constructor stub
     }
+    
+    
+    public TrackingEvent(String observerId, String sessionKey, String metricName, long metricValue, String refProfileId, int refProfileType,
+	    String srcTouchpointId, String refTouchpointId, String browserName, String webCookies, String deviceId,
+	    String deviceOS, String deviceName, String sourceIP) {
+	super();
+	this.observerId = observerId;
+	this.sessionKey = sessionKey;
+	this.metricName = metricName;
+	this.metricValue = metricValue;
+	this.refProfileId = refProfileId;
+	this.refProfileType = refProfileType;
+	this.srcTouchpointId = srcTouchpointId;
+	this.refTouchpointId = refTouchpointId;
+	this.browserName = browserName;
+	this.webCookies = webCookies;
+	this.deviceId = deviceId;
+	this.deviceOS = deviceOS;
+	this.deviceName = deviceName;
+	this.sourceIP = sourceIP;
+	this.createdAt = new Date();
+	this.timestamp = DateTimeUtil.currentUnixTimestamp();
+    }
 
     /////////////////////
 
@@ -144,12 +168,12 @@ public class TrackingEvent extends CdpPersistentObject {
 	this.sessionKey = sessionKey;
     }
 
-    public String getTrackerId() {
-	return trackerId;
+    public String getObserverId() {
+	return observerId;
     }
 
-    public void setTrackerId(String trackerId) {
-	this.trackerId = trackerId;
+    public void setObserverId(String observerId) {
+	this.observerId = observerId;
     }
 
     public String getCollectionId() {
@@ -272,12 +296,14 @@ public class TrackingEvent extends CdpPersistentObject {
 	this.refJourneyStage = refJourneyStage;
     }
 
-    public int getTimeSpent() {
-	return timeSpent;
+   
+
+    public int getTimestamp() {
+        return timestamp;
     }
 
-    public void setTimeSpent(int timeSpent) {
-	this.timeSpent = timeSpent;
+    public void setTimestamp(int timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getBrowserName() {

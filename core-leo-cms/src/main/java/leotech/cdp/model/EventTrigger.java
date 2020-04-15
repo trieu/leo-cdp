@@ -5,9 +5,16 @@ import com.arangodb.ArangoDatabase;
 
 import leotech.system.util.database.ArangoDbUtil;
 
-public class EventTracker extends CdpPersistentObject{
+/**
+ * @author Trieu Nguyen (Thomas)
+ * 
+ * A trigger event is any occurence that creates an opening for a marketing or sales opportunity. 
+ * Sales and marketing automation workflows use trigger events to enable small organizations to scale customer interactions.
+ *
+ */
+public class EventTrigger extends CdpPersistentObject{
     
-    public static final String COLLECTION_NAME = COLLECTION_PREFIX + EventTracker.class.getSimpleName().toLowerCase();
+    public static final String COLLECTION_NAME = COLLECTION_PREFIX + EventTrigger.class.getSimpleName().toLowerCase();
     static ArangoCollection instance;
 
     @Override

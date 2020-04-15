@@ -11,7 +11,8 @@ import leotech.system.util.database.ArangoDbUtil;
 
 public class ConversionEvent extends TrackingEvent {
 
-    public static final String COLLECTION_NAME = COLLECTION_PREFIX + ConversionEvent.class.getSimpleName().toLowerCase();
+    public static final String COLLECTION_NAME = COLLECTION_PREFIX
+	    + ConversionEvent.class.getSimpleName().toLowerCase();
     static ArangoCollection instance;
 
     @Override
@@ -26,65 +27,91 @@ public class ConversionEvent extends TrackingEvent {
 	}
 	return instance;
     }
+    
+    
 
     @Expose
-    String transactionCode;
+    int timeSpent;
     
     @Expose
-    double transactionValue;
-    
+    String srcEventKey;
+
+    @Expose
+    String transactionCode = "";
+
+    @Expose
+    double transactionValue = 0;
+
     @Expose
     String currencyCode = "";
-    
+
     @Expose
     int satisfactionScore = 0;
-    
+
     @Expose
-    int fraudScore;
-    
+    int fraudScore = 0;
+
     public ConversionEvent() {
-	// TODO Auto-generated constructor stub
+	
+    }
+    
+
+    public ConversionEvent(String observerId, String sessionKey, String metricName, long metricValue, String refProfileId, int refProfileType,
+	    String srcTouchpointId, String refTouchpointId, String browserName, String webCookies, String deviceId,
+	    String deviceOS, String deviceName, String sourceIP,int timeSpent, String srcEventKey) {
+	super(observerId, sessionKey, metricName, metricValue, refProfileId, refProfileType, srcTouchpointId, refTouchpointId, browserName, webCookies, deviceId, deviceOS, deviceName, sourceIP);
+	this.timeSpent = timeSpent;
+	this.srcEventKey = srcEventKey;
+    }
+
+
+
+    public int getTimeSpent() {
+	return timeSpent;
+    }
+
+    public void setTimeSpent(int timeSpent) {
+	this.timeSpent = timeSpent;
     }
 
     public String getTransactionCode() {
-        return transactionCode;
+	return transactionCode;
     }
 
     public void setTransactionCode(String transactionCode) {
-        this.transactionCode = transactionCode;
+	this.transactionCode = transactionCode;
     }
 
     public double getTransactionValue() {
-        return transactionValue;
+	return transactionValue;
     }
 
     public void setTransactionValue(double transactionValue) {
-        this.transactionValue = transactionValue;
+	this.transactionValue = transactionValue;
     }
 
     public String getCurrencyCode() {
-        return currencyCode;
+	return currencyCode;
     }
 
     public void setCurrencyCode(String currencyCode) {
-        this.currencyCode = currencyCode;
+	this.currencyCode = currencyCode;
     }
 
     public int getSatisfactionScore() {
-        return satisfactionScore;
+	return satisfactionScore;
     }
 
     public void setSatisfactionScore(int satisfactionScore) {
-        this.satisfactionScore = satisfactionScore;
+	this.satisfactionScore = satisfactionScore;
     }
 
     public int getFraudScore() {
-        return fraudScore;
+	return fraudScore;
     }
 
     public void setFraudScore(int fraudScore) {
-        this.fraudScore = fraudScore;
+	this.fraudScore = fraudScore;
     }
-    
-    
+
 }

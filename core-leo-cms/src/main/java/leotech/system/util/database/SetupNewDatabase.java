@@ -9,14 +9,14 @@ import com.arangodb.ArangoDatabase;
 import com.arangodb.model.CollectionCreateOptions;
 
 import leotech.cdp.model.ConversionEvent;
-import leotech.cdp.model.EventTracker;
-import leotech.cdp.model.JourneyMap;
+import leotech.cdp.model.EventTrigger;
+import leotech.cdp.model.ScheduledJob;
 import leotech.cdp.model.Profile;
 import leotech.cdp.model.ReportUnit;
 import leotech.cdp.model.Segment;
 import leotech.cdp.model.Touchpoint;
 import leotech.cdp.model.TrackingEvent;
-import leotech.cdp.model.TriggerEventRule;
+import leotech.cdp.model.EventObserver;
 import leotech.cms.dao.CategoryDaoUtil;
 import leotech.cms.dao.PageDaoUtil;
 import leotech.cms.dao.UserDaoUtil;
@@ -40,14 +40,14 @@ public class SetupNewDatabase {
 	leoPlatformCollectionNames.add(Post.COLLECTION_NAME);
 	leoPlatformCollectionNames.add(User.COLLECTION_NAME);
 	leoPlatformCollectionNames.add(FileMetadata.COLLECTION_NAME);
-	leoPlatformCollectionNames.add(EventTracker.COLLECTION_NAME);
+	leoPlatformCollectionNames.add(EventTrigger.COLLECTION_NAME);
 	leoPlatformCollectionNames.add(Profile.COLLECTION_NAME);
 	leoPlatformCollectionNames.add(Touchpoint.COLLECTION_NAME);
 	leoPlatformCollectionNames.add(TrackingEvent.COLLECTION_NAME);
 	leoPlatformCollectionNames.add(ConversionEvent.COLLECTION_NAME);
-	leoPlatformCollectionNames.add(TriggerEventRule.COLLECTION_NAME);
+	leoPlatformCollectionNames.add(EventObserver.COLLECTION_NAME);
 	leoPlatformCollectionNames.add(Segment.COLLECTION_NAME);
-	leoPlatformCollectionNames.add(JourneyMap.COLLECTION_NAME);
+	leoPlatformCollectionNames.add(ScheduledJob.COLLECTION_NAME);
 	leoPlatformCollectionNames.add(ReportUnit.COLLECTION_NAME);
 	
     }

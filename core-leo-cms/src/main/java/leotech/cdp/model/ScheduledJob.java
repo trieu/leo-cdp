@@ -5,9 +5,9 @@ import com.arangodb.ArangoDatabase;
 
 import leotech.system.util.database.ArangoDbUtil;
 
-public class JourneyMap extends CdpPersistentObject{
+public class ScheduledJob extends CdpPersistentObject{
 
-    public static final String COLLECTION_NAME = COLLECTION_PREFIX + JourneyMap.class.getSimpleName().toLowerCase();
+    public static final String COLLECTION_NAME = COLLECTION_PREFIX + ScheduledJob.class.getSimpleName().toLowerCase();
     static ArangoCollection instance;
 
     @Override

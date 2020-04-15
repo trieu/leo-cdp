@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <script src="//xemgiday.com/public/js/uspa-tracker/uuid.min.js" ></script>
+    <script src="//xemgiday.com/public/js/uspa-event-observer/uuid.min.js" ></script>
     <script>
         var __uspaBaseLogUrl = '//log.xemgiday.com/cdp/v1';
     </script>
@@ -9,10 +9,10 @@
 
 <body>
    
-    <script src="//xemgiday.com/public/js/uspa-tracker/tracking.src.js" ></script>
+    <script src="//xemgiday.com/public/js/uspa-event-observer/tracking.src.js" ></script>
     <script>
         if (location.hash.length > 0) {
-            USPA_Tracker.doTracking('event', location.hash.substring(1));
+            USPA_EventObserver.doTracking('event', location.hash.substring(1));
         }
     </script>
 

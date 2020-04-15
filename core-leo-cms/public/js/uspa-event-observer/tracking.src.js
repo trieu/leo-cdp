@@ -1,5 +1,5 @@
 /**
- * USPA_Tracker 1.0 - built on 22/01/2020
+ * USPA_EventObserver 1.0 - built on 22/01/2020
  */
 (function (global, undefined) {
     'use strict';
@@ -208,8 +208,8 @@
         document.body.appendChild(imgTracking);
     }
 
-    var USPA_Tracker = {};
-    USPA_Tracker.doTracking = doTracking;
-    global.USPA_Tracker = USPA_Tracker;
+    var USPA_EventObserver = {};
+    USPA_EventObserver.doTracking = doTracking;
+    global.USPA_EventObserver = USPA_EventObserver;
 
 })(typeof window === 'undefined' ? this : window);

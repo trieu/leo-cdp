@@ -4,7 +4,7 @@ import java.util.List;
 
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
-import leotech.cms.analytics.ThirdPartyTrackingUtil;
+import leotech.cdp.utils.ThirdPartyTrackingUtil;
 import leotech.cms.dao.UserDaoUtil;
 import leotech.cms.model.MediaNetwork;
 import leotech.cms.model.User;

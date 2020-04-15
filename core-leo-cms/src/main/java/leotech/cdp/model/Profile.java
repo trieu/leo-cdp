@@ -17,11 +17,10 @@ import com.google.gson.annotations.Expose;
 
 import leotech.system.util.database.ArangoDbUtil;
 
-
 /**
  * @author Trieu Nguyen (Thomas)
  * 
- * the entity for storing human profile information
+ *         the entity for storing human profile information
  *
  */
 public class Profile extends CdpPersistentObject implements Comparable<Profile> {
@@ -37,7 +36,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
     public static final String COLLECTION_NAME = COLLECTION_PREFIX + Profile.class.getSimpleName().toLowerCase();
     static ArangoCollection instance;
-    
+
     @Override
     public ArangoCollection getCollection() {
 	if (instance == null) {
@@ -60,8 +59,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
     @DocumentField(Type.KEY)
     @Expose
     private String key;
-    
-  
+
     @Expose
     String id;
 
@@ -77,7 +75,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
     // the main ID after Identity Resolution process
     @Expose
     String rootProfileId = "";
-    
+
     @Expose
     List<String> inCollections = new ArrayList<String>(10);
 
@@ -86,7 +84,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
     @Expose
     List<String> inJourneyMaps = new ArrayList<String>(20);
-    
+
     @Expose
     List<String> atTouchpoints = new ArrayList<String>(100);
 
@@ -94,7 +92,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
     int status = 1;
 
     @Expose
-    String trackerId = "unknown";
+    String observerId = "unknown";
 
     @Expose
     String lastTouchpointId = "";
@@ -106,20 +104,23 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
     String lastSeenIp = "";
 
     @Expose
-    String lastUsedDeviceId = "";
-    
+    String lastUsedDevice = "";
+
+    @Expose
+    String lastWebCookies = "";
+
     @Expose
     Map<String, String> identityAttributes = new HashMap<>(10);
-    
+
     @Expose
     String primaryEmail = "";
-    
+
     @Expose
     String primaryPhone = "";
 
     @Expose
     String primaryAvatar = "";
-    
+
     @Expose
     int gender = 0;
 
@@ -137,37 +138,37 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
     @Expose
     List<String> workingHistory = new ArrayList<>(20);
-    
+
     @Expose
     Map<String, Integer> acquisitionChannels = new HashMap<>(20);
-    
+
     @Expose
     List<String> viewedContents = new ArrayList<String>(100);
-    
+
     @Expose
     Map<String, String> personalAttributes = new HashMap<>(30);
-    
+
     @Expose
     Map<String, String> socialMediaProfiles = new HashMap<>(10);
 
     @Expose
     Map<String, String> personalContacts = new HashMap<>(10);
-    
+
     @Expose
     Map<String, Integer> weeklyMobileUsage = new HashMap<>(7);
 
     @Expose
     Map<String, Integer> mediaInterests = new HashMap<>(20);
-    
+
     @Expose
     Map<String, Integer> personalInterests = new HashMap<>(20);
 
     @Expose
     Map<String, String> subscribedChannels = new HashMap<>(100);
-    
+
     @Expose
     List<String> businessTransactions = new ArrayList<String>();
-    
+
     @Expose
     List<String> supportHistory = new ArrayList<String>();
 
@@ -195,7 +196,6 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
     @Expose
     int partitionId = 0;
 
-   
     @Override
     public int compareTo(Profile o) {
 	// TODO Auto-generated method stub
@@ -207,368 +207,391 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	// TODO Auto-generated method stub
 	return true;
     }
-    
+
+    public Profile(int type, String observerId, String lastTouchpointId, String lastSeenIp, String usedDevice) {
+	super();
+	this.type = type;
+	this.observerId = observerId;
+	this.lastTouchpointId = lastTouchpointId;
+	this.lastSeenIp = lastSeenIp;
+	this.lastUsedDevice = usedDevice;
+	this.usedDevices.add(usedDevice);
+    }
+
+    public Profile(String observerId, String lastTouchpointId, String lastSeenIp, String usedDevice) {
+	super();
+	this.type = ProfileType.ANONYMOUS;
+	this.observerId = observerId;
+	this.lastTouchpointId = lastTouchpointId;
+	this.lastSeenIp = lastSeenIp;
+	this.lastUsedDevice = usedDevice;
+	this.usedDevices.add(usedDevice);
+    }
+
     // -- getter and setter methods --
-    
-    
 
     public int getType() {
-        return type;
+	return type;
     }
 
     public String getId() {
-        return id;
+	return id;
     }
 
     public void setId(String id) {
-        this.id = id;
+	this.id = id;
     }
 
     public void setType(int type) {
-        this.type = type;
+	this.type = type;
     }
 
     public Date getCreatedAt() {
-        return createdAt;
+	return createdAt;
     }
 
     public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+	this.createdAt = createdAt;
     }
 
     public String getCollectionId() {
-        return collectionId;
+	return collectionId;
     }
 
     public void setCollectionId(String collectionId) {
-        this.collectionId = collectionId;
+	this.collectionId = collectionId;
     }
 
     public String getRootProfileId() {
-        return rootProfileId;
+	return rootProfileId;
     }
 
     public void setRootProfileId(String rootProfileId) {
-        this.rootProfileId = rootProfileId;
+	this.rootProfileId = rootProfileId;
     }
 
     public List<String> getInSegments() {
-        return inSegments;
+	return inSegments;
     }
 
     public void setInSegments(List<String> inSegments) {
-        this.inSegments = inSegments;
+	this.inSegments = inSegments;
     }
 
     public List<String> getInJourneyMaps() {
-        return inJourneyMaps;
+	return inJourneyMaps;
     }
 
     public void setInJourneyMaps(List<String> inJourneyMaps) {
-        this.inJourneyMaps = inJourneyMaps;
+	this.inJourneyMaps = inJourneyMaps;
     }
-    
 
     public List<String> getAtTouchpoints() {
-        return atTouchpoints;
+	return atTouchpoints;
     }
 
     public void setAtTouchpoints(List<String> atTouchpoints) {
-        this.atTouchpoints = atTouchpoints;
+	this.atTouchpoints = atTouchpoints;
     }
 
     public int getStatus() {
-        return status;
+	return status;
     }
 
     public void setStatus(int status) {
-        this.status = status;
+	this.status = status;
     }
 
-    public String getTrackerId() {
-        return trackerId;
+    public String getObserverId() {
+	return observerId;
     }
 
-    public void setTrackerId(String trackerId) {
-        this.trackerId = trackerId;
+    public void setObserverId(String observerId) {
+	this.observerId = observerId;
     }
 
     public String getLastTouchpointId() {
-        return lastTouchpointId;
+	return lastTouchpointId;
     }
 
     public void setLastTouchpointId(String lastTouchpointId) {
-        this.lastTouchpointId = lastTouchpointId;
+	this.lastTouchpointId = lastTouchpointId;
     }
 
     public String getLastChannelId() {
-        return lastChannelId;
+	return lastChannelId;
     }
 
     public void setLastChannelId(String lastChannelId) {
-        this.lastChannelId = lastChannelId;
+	this.lastChannelId = lastChannelId;
     }
 
     public String getLastSeenIp() {
-        return lastSeenIp;
+	return lastSeenIp;
     }
 
     public void setLastSeenIp(String lastSeenIp) {
-        this.lastSeenIp = lastSeenIp;
+	this.lastSeenIp = lastSeenIp;
     }
 
-    public String getLastUsedDeviceId() {
-        return lastUsedDeviceId;
+    public String getLastUsedDevice() {
+	return lastUsedDevice;
     }
 
-    public void setLastUsedDeviceId(String lastUsedDeviceId) {
-        this.lastUsedDeviceId = lastUsedDeviceId;
+    public void setLastUsedDevice(String lastUsedDevice) {
+	this.lastUsedDevice = lastUsedDevice;
     }
 
     public Map<String, String> getIdentityAttributes() {
-        return identityAttributes;
+	return identityAttributes;
     }
 
     public void setIdentityAttributes(Map<String, String> identityAttributes) {
-        this.identityAttributes = identityAttributes;
+	this.identityAttributes = identityAttributes;
     }
 
     public String getPrimaryEmail() {
-        return primaryEmail;
+	return primaryEmail;
     }
 
     public void setPrimaryEmail(String primaryEmail) {
-        this.primaryEmail = primaryEmail;
+	this.primaryEmail = primaryEmail;
     }
 
     public String getPrimaryPhone() {
-        return primaryPhone;
+	return primaryPhone;
     }
 
     public void setPrimaryPhone(String primaryPhone) {
-        this.primaryPhone = primaryPhone;
+	this.primaryPhone = primaryPhone;
     }
 
     public String getPrimaryAvatar() {
-        return primaryAvatar;
+	return primaryAvatar;
     }
 
     public void setPrimaryAvatar(String primaryAvatar) {
-        this.primaryAvatar = primaryAvatar;
+	this.primaryAvatar = primaryAvatar;
     }
 
     public int getGenderProbability() {
-        return genderProbability;
+	return genderProbability;
     }
 
     public void setGenderProbability(int genderProbability) {
-        this.genderProbability = genderProbability;
+	this.genderProbability = genderProbability;
     }
 
     public int getAgeGroup() {
-        return ageGroup;
+	return ageGroup;
     }
 
     public void setAgeGroup(int ageGroup) {
-        this.ageGroup = ageGroup;
+	this.ageGroup = ageGroup;
     }
 
     public List<String> getUsedDevices() {
-        return usedDevices;
+	return usedDevices;
     }
 
     public void setUsedDevices(List<String> usedDevices) {
-        this.usedDevices = usedDevices;
+	this.usedDevices = usedDevices;
     }
 
-
     public Map<String, Integer> getMediaInterests() {
-        return mediaInterests;
+	return mediaInterests;
     }
 
     public void setMediaInterests(Map<String, Integer> mediaInterests) {
-        this.mediaInterests = mediaInterests;
+	this.mediaInterests = mediaInterests;
     }
 
     public Map<String, String> getPersonalAttributes() {
-        return personalAttributes;
+	return personalAttributes;
     }
 
     public void setPersonalAttributes(Map<String, String> personalAttributes) {
-        this.personalAttributes = personalAttributes;
+	this.personalAttributes = personalAttributes;
     }
 
     public Map<String, String> getSocialMediaProfiles() {
-        return socialMediaProfiles;
+	return socialMediaProfiles;
     }
 
     public void setSocialMediaProfiles(Map<String, String> socialMediaProfiles) {
-        this.socialMediaProfiles = socialMediaProfiles;
+	this.socialMediaProfiles = socialMediaProfiles;
     }
 
     public Map<String, String> getPersonalContacts() {
-        return personalContacts;
+	return personalContacts;
     }
 
     public void setPersonalContacts(Map<String, String> personalContacts) {
-        this.personalContacts = personalContacts;
+	this.personalContacts = personalContacts;
     }
 
     public Map<String, Integer> getPersonalInterests() {
-        return personalInterests;
+	return personalInterests;
     }
 
     public void setPersonalInterests(Map<String, Integer> personalInterests) {
-        this.personalInterests = personalInterests;
+	this.personalInterests = personalInterests;
     }
 
     public Map<String, String> getSubscribedChannels() {
-        return subscribedChannels;
+	return subscribedChannels;
     }
 
     public void setSubscribedChannels(Map<String, String> subscribedChannels) {
-        this.subscribedChannels = subscribedChannels;
+	this.subscribedChannels = subscribedChannels;
     }
 
     public int getSocialCreditScore() {
-        return socialCreditScore;
+	return socialCreditScore;
     }
 
     public void setSocialCreditScore(int socialCreditScore) {
-        this.socialCreditScore = socialCreditScore;
+	this.socialCreditScore = socialCreditScore;
     }
 
     public int getSatisfactionScore() {
-        return satisfactionScore;
+	return satisfactionScore;
     }
 
     public void setSatisfactionScore(int satisfactionScore) {
-        this.satisfactionScore = satisfactionScore;
+	this.satisfactionScore = satisfactionScore;
     }
 
     public int getTotalCAC() {
-        return totalCAC;
+	return totalCAC;
     }
 
     public void setTotalCAC(int totalCAC) {
-        this.totalCAC = totalCAC;
+	this.totalCAC = totalCAC;
     }
 
     public int getTotalCLV() {
-        return totalCLV;
+	return totalCLV;
     }
 
     public void setTotalCLV(int totalCLV) {
-        this.totalCLV = totalCLV;
+	this.totalCLV = totalCLV;
     }
 
     public Date getUpdatedAt() {
-        return updatedAt;
+	return updatedAt;
     }
 
     public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
+	this.updatedAt = updatedAt;
     }
 
     public int getMergeCode() {
-        return mergeCode;
+	return mergeCode;
     }
 
     public void setMergeCode(int mergeCode) {
-        this.mergeCode = mergeCode;
+	this.mergeCode = mergeCode;
     }
 
     public String getPersonaUri() {
-        return personaUri;
+	return personaUri;
     }
 
     public void setPersonaUri(String personaUri) {
-        this.personaUri = personaUri;
+	this.personaUri = personaUri;
     }
 
     public int getPartitionId() {
-        return partitionId;
+	return partitionId;
     }
 
     public void setPartitionId(int partitionId) {
-        this.partitionId = partitionId;
+	this.partitionId = partitionId;
     }
 
     public String getKey() {
-        return key;
+	return key;
     }
 
     public int getGender() {
-        return gender;
+	return gender;
     }
 
     public void setGender(int gender) {
-        this.gender = gender;
+	this.gender = gender;
     }
 
     public int getAge() {
-        return age;
+	return age;
     }
 
     public void setAge(int age) {
-        this.age = age;
+	this.age = age;
     }
 
     public List<String> getWorkingHistory() {
-        return workingHistory;
+	return workingHistory;
     }
 
     public void setWorkingHistory(List<String> workingHistory) {
-        this.workingHistory = workingHistory;
+	this.workingHistory = workingHistory;
     }
 
     public List<String> getViewedContents() {
-        return viewedContents;
+	return viewedContents;
     }
 
     public void setViewedContents(List<String> viewedContents) {
-        this.viewedContents = viewedContents;
+	this.viewedContents = viewedContents;
     }
 
     public Map<String, Integer> getWeeklyMobileUsage() {
-        return weeklyMobileUsage;
+	return weeklyMobileUsage;
     }
 
     public void setWeeklyMobileUsage(Map<String, Integer> weeklyMobileUsage) {
-        this.weeklyMobileUsage = weeklyMobileUsage;
+	this.weeklyMobileUsage = weeklyMobileUsage;
     }
 
     public List<String> getBusinessTransactions() {
-        return businessTransactions;
+	return businessTransactions;
     }
 
     public void setBusinessTransactions(List<String> businessTransactions) {
-        this.businessTransactions = businessTransactions;
+	this.businessTransactions = businessTransactions;
     }
 
     public List<String> getSupportHistory() {
-        return supportHistory;
+	return supportHistory;
     }
 
     public void setSupportHistory(List<String> supportHistory) {
-        this.supportHistory = supportHistory;
+	this.supportHistory = supportHistory;
     }
 
     public List<String> getInCollections() {
-        return inCollections;
+	return inCollections;
     }
 
     public void setInCollections(List<String> inCollections) {
-        this.inCollections = inCollections;
+	this.inCollections = inCollections;
     }
 
     public Map<String, Integer> getAcquisitionChannels() {
-        return acquisitionChannels;
+	return acquisitionChannels;
     }
 
     public void setAcquisitionChannels(Map<String, Integer> acquisitionChannels) {
-        this.acquisitionChannels = acquisitionChannels;
+	this.acquisitionChannels = acquisitionChannels;
     }
-    
-    
+
+    public String getLastWebCookies() {
+	return lastWebCookies;
+    }
+
+    public void setLastWebCookies(String lastWebCookies) {
+	this.lastWebCookies = lastWebCookies;
+    }
+
 }

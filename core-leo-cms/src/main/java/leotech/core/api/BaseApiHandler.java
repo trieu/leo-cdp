@@ -1,7 +1,7 @@
 package leotech.core.api;
 
-import leotech.cms.analytics.EventTrackingUtil;
-import leotech.cms.analytics.UserTrackingUtil;
+import leotech.cdp.utils.EventTrackingUtil;
+import leotech.cdp.utils.UserTrackingUtil;
 import rfx.core.util.DateTimeUtil;
 
 public abstract class BaseApiHandler {

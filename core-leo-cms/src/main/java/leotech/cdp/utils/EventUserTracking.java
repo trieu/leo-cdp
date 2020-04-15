@@ -1,4 +1,4 @@
-package leotech.cms.analytics;
+package leotech.cdp.utils;
 
 public class EventUserTracking {
 
