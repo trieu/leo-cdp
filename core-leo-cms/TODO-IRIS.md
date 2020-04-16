@@ -16,6 +16,7 @@
 * An open-source NLP research library, built on PyTorch https://allennlp.org/tutorials
 * Text Classification Algorithms: A Survey https://github.com/kk7nc/Text_Classification
 * Document classification with PyTorch https://github.com/GokuMohandas/document-classification
+* https://towardsdatascience.com/topic-modeling-articles-with-nmf-8c6b2a227a45
 
 #Vietnamese NLP
 * https://github.com/vncorenlp/VnCoreNLP

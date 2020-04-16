@@ -32,7 +32,6 @@ public class TrackingEventDaoUtil {
 	}
 	return false;
     }
-
  
 
     public static List<TrackingEvent> getEventsByProfileId(String refProfileId) {

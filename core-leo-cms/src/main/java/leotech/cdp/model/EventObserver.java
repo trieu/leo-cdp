@@ -1,6 +1,8 @@
 package leotech.cdp.model;
 
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
@@ -32,6 +34,9 @@ public class EventObserver extends CdpPersistentObject{
 	// TODO Auto-generated method stub
 	return false;
     }
+    
+    @Expose
+    String id;
     
     @Expose
     String name;
@@ -68,6 +73,12 @@ public class EventObserver extends CdpPersistentObject{
     
     @Expose
     String mobileAppId;
+    
+    @Expose
+    Date createdAt;
+    
+    @Expose
+    Date updatedAt;
 
     /**
      * @param name
@@ -76,9 +87,22 @@ public class EventObserver extends CdpPersistentObject{
      */
     public EventObserver(String name, int type, String touchpointId) {
 	super();
+	String keyHint = name + type + touchpointId;
+	this.id = UUID.nameUUIDFromBytes(keyHint.getBytes()).toString();
 	this.name = name;
 	this.type = type;
 	this.touchpointId = touchpointId;
+	this.createdAt = new Date();
+    }
+    
+    
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -175,6 +199,22 @@ public class EventObserver extends CdpPersistentObject{
 
     public void setMobileAppId(String mobileAppId) {
         this.mobileAppId = mobileAppId;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     

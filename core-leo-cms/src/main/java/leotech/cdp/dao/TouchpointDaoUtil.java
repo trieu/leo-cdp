@@ -8,13 +8,10 @@ import java.util.Map;
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
 
-import leotech.cdp.model.Profile;
 import leotech.cdp.model.Touchpoint;
-import leotech.cms.model.Post;
 import leotech.core.config.AqlTemplate;
 import leotech.system.util.database.ArangoDbQuery;
 import leotech.system.util.database.ArangoDbUtil;
-import leotech.system.util.database.ArangoDbQuery.CallbackQuery;
 
 public class TouchpointDaoUtil {
 
