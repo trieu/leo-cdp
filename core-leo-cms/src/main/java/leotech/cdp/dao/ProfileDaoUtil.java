@@ -19,11 +19,10 @@ public class ProfileDaoUtil {
 
     static long limitTotalProfiles = 7000;
     static final String AQL_GET_PROFILE_BY_ID = AqlTemplate.get("AQL_GET_PROFILE_BY_ID");
-    
+
     public static boolean checkLimitOfLicense() {
 	return limitTotalProfiles > 0 && countTotalOfProfiles() < limitTotalProfiles;
     }
-   
 
     public static String create(Profile profile) {
 	if (profile.isReadyForSave() && checkLimitOfLicense()) {
@@ -61,11 +60,11 @@ public class ProfileDaoUtil {
 	Profile p = new ArangoDbQuery<Profile>(db, AQL_GET_PROFILE_BY_ID, bindVars, Profile.class).getResultsAsObject();
 	return p;
     }
-    
+
     public static long countTotalOfProfiles() {
-   	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
-   	long c = db.collection(Profile.COLLECTION_NAME).count().getCount();
-   	return c;
-       }
+	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+	long c = db.collection(Profile.COLLECTION_NAME).count().getCount();
+	return c;
+    }
 
 }

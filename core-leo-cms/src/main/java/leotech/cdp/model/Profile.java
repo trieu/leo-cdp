@@ -20,7 +20,7 @@ import leotech.system.util.database.ArangoDbUtil;
 /**
  * @author Trieu Nguyen (Thomas)
  * 
- *         the entity for storing human profile information
+ *  the entity for storing human profile information
  *
  */
 public class Profile extends CdpPersistentObject implements Comparable<Profile> {
@@ -70,7 +70,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
     Date createdAt = new Date();
 
     @Expose
-    String collectionId;
+    String collectionId = "";
 
     // the main ID after Identity Resolution process
     @Expose
@@ -204,8 +204,8 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
     @Override
     public boolean isReadyForSave() {
-	// TODO Auto-generated method stub
-	return true;
+	
+	return this.observerId != null && this.lastUsedDevice != null && this.lastTouchpointId != null;
     }
 
     public Profile(int type, String observerId, String lastTouchpointId, String lastSeenIp, String usedDevice) {
@@ -220,14 +220,14 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
     public Profile(String observerId, String lastTouchpointId, String lastSeenIp, String usedDevice) {
 	super();
-	this.type = ProfileType.ANONYMOUS;
 	this.observerId = observerId;
 	this.lastTouchpointId = lastTouchpointId;
 	this.lastSeenIp = lastSeenIp;
 	this.lastUsedDevice = usedDevice;
 	this.usedDevices.add(usedDevice);
     }
-
+    
+    
     // -- getter and setter methods --
 
     public int getType() {
@@ -356,6 +356,9 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
     public void setPrimaryEmail(String primaryEmail) {
 	this.primaryEmail = primaryEmail;
+	if(this.type == ProfileType.ANONYMOUS) {
+	    this.type = ProfileType.IDENTIFIED;
+	}
     }
 
     public String getPrimaryPhone() {
@@ -364,6 +367,9 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
     public void setPrimaryPhone(String primaryPhone) {
 	this.primaryPhone = primaryPhone;
+	if(this.type == ProfileType.ANONYMOUS) {
+	    this.type = ProfileType.IDENTIFIED;
+	}
     }
 
     public String getPrimaryAvatar() {

@@ -23,7 +23,7 @@ import rfx.core.util.StringUtil;
 public class PostDaoUtil {
 
     // for
-    static long limitTotalPosts = 9000;// free = 9000, $9 = 90000, $99 = 900000, $999 = 9000000, $9999 = no limit
+    static long limitTotalPosts = 1000;// free = 1000, $9 = 90000, $99 = 900000, $999 = 9000000, $9999 = no limit
 
     private static final String AQL_FIND_KEY_AQL = ArangoDbUtil.contentFindKeyAql(Post.COLLECTION_NAME);
     static final String AQL_GET_POSTS_BY_NETWORK = AqlTemplate.get("AQL_GET_POSTS_BY_NETWORK");
@@ -303,6 +303,7 @@ public class PostDaoUtil {
 	return map;
     }
 
+    @SuppressWarnings("unchecked")
     public static List<String> getAllKeywords() {
 	List<String> list = null;
 	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
@@ -310,7 +311,7 @@ public class PostDaoUtil {
 	while (cursor.hasNext()) {
 	    BaseDocument doc = cursor.next();
 	    System.out.println(doc.getProperties());
-	    list = (List<String>) doc.getProperties().getOrDefault("keywords", new ArrayList<>(0));
+	    list = (List<String>) doc.getProperties().getOrDefault("keywords", new ArrayList<String>(0));
 	    list = list.stream().distinct().filter(s -> {
 		return !s.isEmpty();
 	    }).collect(Collectors.toList());
@@ -336,7 +337,7 @@ public class PostDaoUtil {
  	    aql.append(" p.contentClass == @contentClass ");
  	}
 
- 	//contegory filter
+ 	//category filter
  	aql.append(" AND ( ");
  	int c = 0;
  	for (String categoryKey : categoryKeys) {

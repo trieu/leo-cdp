@@ -203,5 +203,4 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment>{
     }
     
     
-    
 }

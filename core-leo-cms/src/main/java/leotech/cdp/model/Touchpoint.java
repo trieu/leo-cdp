@@ -81,7 +81,7 @@ public class Touchpoint extends CdpPersistentObject implements Comparable<Touchp
     @DocumentField(Type.KEY)
     @Expose
     private String key;
-    
+
     @Expose
     String id;
 
@@ -95,10 +95,10 @@ public class Touchpoint extends CdpPersistentObject implements Comparable<Touchp
     boolean isMediaSrc = false;
 
     @Expose
-    Date createdAt = new Date();
+    Date createdAt;
 
     @Expose
-    int status;
+    int status = 0;
 
     @Expose
     String url;
@@ -131,7 +131,7 @@ public class Touchpoint extends CdpPersistentObject implements Comparable<Touchp
     List<String> keywords = new ArrayList<>();
 
     @Expose
-    String collectionId;
+    String collectionId = "";
 
     @Expose
     String parentId;
@@ -158,46 +158,58 @@ public class Touchpoint extends CdpPersistentObject implements Comparable<Touchp
     }
 
     ////////////////
-    
-    
-    
+
     public Touchpoint() {
 	// TODO Auto-generated constructor stub
+	this.createdAt = new Date();
     }
-    
-    
 
-    public Touchpoint(String name,int type, boolean isMediaSrc, String url, String collectionId) {
+    /**
+     * for online touch-point
+     * 
+     * @param name
+     * @param type
+     * @param isMediaSrc
+     * @param url
+     * @param collectionId
+     */
+    public Touchpoint(String name, int type, String url) {
 	super();
+	this.createdAt = new Date();
 	this.name = name;
 	this.type = type;
-	this.isMediaSrc = isMediaSrc;
 	this.url = url;
-	this.collectionId = collectionId;
 	String keyHint = name + type + url;
 	this.id = UUID.nameUUIDFromBytes(keyHint.getBytes()).toString();
     }
-    
-    
 
-    public Touchpoint(String name,int type, boolean isMediaSrc, String locationCode, String address, String collectionId) {
+    /**
+     * for offline touch-point
+     * 
+     * @param name
+     * @param type
+     * @param isMediaSrc
+     * @param locationCode
+     * @param address
+     * @param collectionId
+     */
+    public Touchpoint(String name, int type, String locationCode, String address) {
 	super();
+	this.createdAt = new Date();
 	this.name = name;
 	this.type = type;
-	this.isMediaSrc = isMediaSrc;
 	this.locationCode = locationCode;
 	this.address = address;
-	this.collectionId = collectionId;
 	String keyHint = name + type + locationCode + address;
 	this.id = UUID.nameUUIDFromBytes(keyHint.getBytes()).toString();
     }
 
     public String getId() {
-        return id;
+	return id;
     }
 
     public void setId(String id) {
-        this.id = id;
+	this.id = id;
     }
 
     public String getName() {
