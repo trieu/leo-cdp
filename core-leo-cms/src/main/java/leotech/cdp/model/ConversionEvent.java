@@ -28,7 +28,6 @@ public class ConversionEvent extends TrackingEvent {
 	return instance;
     }
     
-    
 
     @Expose
     int timeSpent;
@@ -52,8 +51,10 @@ public class ConversionEvent extends TrackingEvent {
     int fraudScore = 0;
 
     public ConversionEvent() {
-	
+	// TODO Auto-generated constructor stub
     }
+    
+    
     
 
     public ConversionEvent(String observerId, String sessionKey, String metricName, long metricValue, String refProfileId, int refProfileType,
@@ -61,6 +62,13 @@ public class ConversionEvent extends TrackingEvent {
 	    String deviceOS, String deviceName, String sourceIP,int timeSpent, String srcEventKey) {
 	super(observerId, sessionKey, metricName, metricValue, refProfileId, refProfileType, srcTouchpointId, refTouchpointId, browserName, webCookies, deviceId, deviceOS, deviceName, sourceIP);
 	this.timeSpent = timeSpent;
+	this.srcEventKey = srcEventKey;
+    }
+    
+    public ConversionEvent(String observerId, String sessionKey, String metricName, long metricValue, String refProfileId, int refProfileType,
+	    String srcTouchpointId, String refTouchpointId, String browserName, String webCookies, String deviceId,
+	    String deviceOS, String deviceName, String sourceIP, String srcEventKey) {
+	super(observerId, sessionKey, metricName, metricValue, refProfileId, refProfileType, srcTouchpointId, refTouchpointId, browserName, webCookies, deviceId, deviceOS, deviceName, sourceIP);
 	this.srcEventKey = srcEventKey;
     }
 

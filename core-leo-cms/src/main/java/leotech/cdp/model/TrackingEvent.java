@@ -12,6 +12,8 @@ import com.google.gson.annotations.Expose;
 
 import leotech.system.util.database.ArangoDbUtil;
 import rfx.core.util.DateTimeUtil;
+import rfx.core.util.StringUtil;
+import rfx.core.util.Utils;
 
 public class TrackingEvent extends CdpPersistentObject {
 
@@ -44,6 +46,9 @@ public class TrackingEvent extends CdpPersistentObject {
 
     @Expose
     protected String sessionKey;
+    
+    @Expose
+    protected boolean isActiveTracked = true;
 
     @Expose
     protected String observerId;
@@ -119,8 +124,8 @@ public class TrackingEvent extends CdpPersistentObject {
 
     @Override
     public boolean isReadyForSave() {
-	// TODO Auto-generated method stub
-	return true;
+	return StringUtil.isNotEmpty(this.metricName) && StringUtil.isNotEmpty(this.observerId)
+		&& StringUtil.isNotEmpty(this.srcTouchpointId) && this.timestamp > 0;
     }
     
     public TrackingEvent() {
@@ -128,6 +133,45 @@ public class TrackingEvent extends CdpPersistentObject {
     }
     
     
+    
+    /**
+     * passive tracking by a data crawler from social media (e.g: Facebook, YouTube,...)
+     * 
+     * @param observerId
+     * @param metricName
+     * @param metricValue
+     * @param srcTouchpointId
+     */
+    public TrackingEvent(String observerId, String metricName, long metricValue, String srcTouchpointId) {
+	super();
+	this.observerId = observerId;
+	this.metricName = metricName;
+	this.metricValue = metricValue;
+	this.srcTouchpointId = srcTouchpointId;
+	this.isActiveTracked = false;
+	this.createdAt = new Date();
+	this.timestamp = DateTimeUtil.currentUnixTimestamp();
+    }
+
+    /**
+     * 
+     * direct tracking from JavaScript or Mobile SDK
+     * 
+     * @param observerId
+     * @param sessionKey
+     * @param metricName
+     * @param metricValue
+     * @param refProfileId
+     * @param refProfileType
+     * @param srcTouchpointId
+     * @param refTouchpointId
+     * @param browserName
+     * @param webCookies
+     * @param deviceId
+     * @param deviceOS
+     * @param deviceName
+     * @param sourceIP
+     */
     public TrackingEvent(String observerId, String sessionKey, String metricName, long metricValue, String refProfileId, int refProfileType,
 	    String srcTouchpointId, String refTouchpointId, String browserName, String webCookies, String deviceId,
 	    String deviceOS, String deviceName, String sourceIP) {
@@ -151,9 +195,19 @@ public class TrackingEvent extends CdpPersistentObject {
     }
 
     /////////////////////
+    
+    
 
     public Date getCreatedAt() {
 	return createdAt;
+    }
+
+    public boolean isActiveTracked() {
+        return isActiveTracked;
+    }
+
+    public void setActiveTracked(boolean isActiveTracked) {
+        this.isActiveTracked = isActiveTracked;
     }
 
     public void setCreatedAt(Date createdAt) {

@@ -56,8 +56,6 @@ public class EventObserver extends CdpPersistentObject{
     @Expose
     String touchpointId;
     
-    @Expose
-    boolean isCamera;
     
     @Expose
     String deviceId;
@@ -153,13 +151,7 @@ public class EventObserver extends CdpPersistentObject{
         this.touchpointId = touchpointId;
     }
 
-    public boolean isCamera() {
-        return isCamera;
-    }
-
-    public void setCamera(boolean isCamera) {
-        this.isCamera = isCamera;
-    }
+    
 
     public String getDeviceId() {
         return deviceId;

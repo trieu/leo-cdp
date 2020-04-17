@@ -10,3 +10,7 @@
 
 1. Touchpoint => TouchpointDaoUtil (list, save, getById) => TestTouchpointDaoUtil
 1. EventObserver => EventObserverDaoUtil (list, save, getById) => TestEventObserverDaoUtil
+
+## Security
+
+* https://howtodoinjava.com/security/aes-256-encryption-decryption/
