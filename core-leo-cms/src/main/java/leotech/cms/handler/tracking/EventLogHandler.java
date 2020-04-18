@@ -18,6 +18,8 @@ import leotech.system.util.TrackingBeaconUtil;
 import rfx.core.util.HashUtil;
 import rfx.core.util.StringUtil;
 
+// for referrence only
+@Deprecated
 public class EventLogHandler extends BaseApiHandler {
 
     public static final String metricContent = "content";
@@ -83,7 +85,7 @@ public class EventLogHandler extends BaseApiHandler {
 	String[] events = new String[] { metric, metric + "-" + cid, kNew };
 	EventTrackingUtil.updateEvent(loggedTime, events, true);
 	if (countUserReach) {
-	    UserTrackingUtil.addPlayViewUser(loggedTime, cid, uuid);
+	    UserTrackingUtil.trackContentViewFromUser(loggedTime, cid, uuid);
 
 	}
     }

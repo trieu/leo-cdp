@@ -23,7 +23,7 @@ public class UserTrackingUtil {
     public static final int AFTER_3_DAYS = 60 * 60 * 24 * 3;
     public static final int AFTER_7_DAYS = 60 * 60 * 24 * 7;
 
-    public static boolean addPlayViewUser(long unixTime, String contentId, String userId) {
+    public static boolean trackContentViewFromUser(long unixTime, String contentId, String userId) {
 	return addUser("up:", unixTime, contentId, userId);
     }
 

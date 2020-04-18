@@ -46,7 +46,7 @@ public class UploadFileHttpRouter extends BaseHttpRouter {
 
 	MultiMap reqHeaders = request.headers();
 	String origin = StringUtil.safeString(reqHeaders.get(BaseApiHandler.ORIGIN), "*");
-	String contentType = StringUtil.safeString(reqHeaders.get(BaseApiHandler.CONTENT_TYPE), BaseApiHandler.CONTENT_TYPE_JSON);
+	//String contentType = StringUtil.safeString(reqHeaders.get(BaseApiHandler.CONTENT_TYPE), BaseApiHandler.CONTENT_TYPE_JSON);
 	String userSession = StringUtil.safeString(reqHeaders.get(BaseApiRouter.HEADER_SESSION));
 	String refObjectClass = StringUtil.safeString(reqHeaders.get("refObjectClass"));
 	String refObjectKey = StringUtil.safeString(reqHeaders.get("refObjectKey"));

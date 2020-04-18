@@ -29,7 +29,7 @@ public abstract class BaseApiHandler {
 	int unixTime = DateTimeUtil.currentUnixTimestamp();
 	EventTrackingUtil.updateEvent(unixTime, events, true);
 
-	UserTrackingUtil.addPlayViewUser(unixTime, contentId, userId);
+	UserTrackingUtil.trackContentViewFromUser(unixTime, contentId, userId);
 
     }
 

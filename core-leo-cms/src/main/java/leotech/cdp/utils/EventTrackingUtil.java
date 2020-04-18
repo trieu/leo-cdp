@@ -23,7 +23,7 @@ public class EventTrackingUtil {
     private static final String EVENT_STATS = "event-stats";
     private static final String SUMMARY = "summary";
     private static final String PREFIX_MONITOR = "m:";
-    private static final String PREFIX_PAGEVIEW = "pv:";
+    private static final String PREFIX_VIEW = "v:";
 
     public static final String DATE_HOUR_MINUTE_FORMAT_PATTERN = "yyyy-MM-dd-HH-mm";
     public static final String DATE_HOUR_MINUTE_SECOND_FORMAT_PATTERN = "yyyy-MM-dd-HH-mm-ss";
@@ -60,8 +60,7 @@ public class EventTrackingUtil {
 	return commited;
     }
 
-    public static boolean updateEventPageView(final String uuid, final String event, final String hostReferer,
-	    long delta) {
+    public static boolean updateEventPageView(final String uuid, final String event, final String hostReferer, long delta) {
 	boolean commited = false;
 	try {
 	    Date date = new Date();
@@ -76,30 +75,30 @@ public class EventTrackingUtil {
 		    p.hincrBy(EVENT_STATS, event, delta);
 		    p.pfadd(EVUT + event, uuid);
 
-		    String keyH = PREFIX_PAGEVIEW + dateHourStr;
+		    String keyH = PREFIX_VIEW + dateHourStr;
 		    p.hincrBy(keyH, event, delta);
 		    p.expire(keyH, AFTER_7_DAYS);
 
-		    String keyD = PREFIX_PAGEVIEW + dateStr;
+		    String keyD = PREFIX_VIEW + dateStr;
 		    p.hincrBy(keyD, event, delta);
 		    p.expire(keyD, AFTER_15_DAYS);
 
 		    if (StringUtil.isNotEmpty(uuid)) {
-			String keyHU = PREFIX_PAGEVIEW + dateHourStr + ":u";
+			String keyHU = PREFIX_VIEW + dateHourStr + ":u";
 			p.pfadd(keyHU, uuid);
 			p.expire(keyHU, AFTER_3_DAYS);
 
-			String keyDU = PREFIX_PAGEVIEW + dateStr + ":u";
+			String keyDU = PREFIX_VIEW + dateStr + ":u";
 			p.pfadd(keyDU, uuid);
 			p.expire(keyDU, AFTER_15_DAYS);
 		    }
 
 		    if (StringUtil.isNotEmpty(event)) {
-			String keyHUT = PREFIX_PAGEVIEW + dateHourStr + ":u:" + event + ":" + hostReferer;
+			String keyHUT = PREFIX_VIEW + dateHourStr + ":u:" + event + ":" + hostReferer;
 			p.pfadd(keyHUT, uuid);
 			p.expire(keyHUT, AFTER_3_DAYS);
 
-			String keyDUT = PREFIX_PAGEVIEW + dateStr + ":u:" + event + ":" + hostReferer;
+			String keyDUT = PREFIX_VIEW + dateStr + ":u:" + event + ":" + hostReferer;
 			p.pfadd(keyDUT, uuid);
 			p.expire(keyDUT, AFTER_15_DAYS);
 		    }
@@ -117,7 +116,7 @@ public class EventTrackingUtil {
 	return commited;
     }
 
-    public static boolean updatePageViewEvent(final String host, final String uuid, final String tag) {
+    public static boolean recordTrackingEvent(final String host, final String uuid, final String tag) {
 	boolean commited = false;
 	try {
 	    Date date = new Date();
@@ -128,30 +127,30 @@ public class EventTrackingUtil {
 		protected Boolean build() throws JedisException {
 		    Pipeline p = jedis.pipelined();
 
-		    String keyH = PREFIX_PAGEVIEW + dateHourStr;
+		    String keyH = PREFIX_VIEW + dateHourStr;
 		    p.hincrBy(keyH, host, 1L);
 		    p.expire(keyH, AFTER_15_DAYS);
 
-		    String keyD = PREFIX_PAGEVIEW + dateStr;
+		    String keyD = PREFIX_VIEW + dateStr;
 		    p.hincrBy(keyD, host, 1L);
 		    p.expire(keyD, AFTER_60_DAYS);
 
 		    if (StringUtil.isNotEmpty(uuid)) {
-			String keyHU = PREFIX_PAGEVIEW + dateHourStr + ":u";
+			String keyHU = PREFIX_VIEW + dateHourStr + ":u";
 			p.pfadd(keyHU, uuid);
 			p.expire(keyHU, AFTER_3_DAYS);
 
-			String keyDU = PREFIX_PAGEVIEW + dateStr + ":u";
+			String keyDU = PREFIX_VIEW + dateStr + ":u";
 			p.pfadd(keyDU, uuid);
 			p.expire(keyDU, AFTER_7_DAYS);
 		    }
 
 		    if (StringUtil.isNotEmpty(tag)) {
-			String keyHUT = PREFIX_PAGEVIEW + dateHourStr + ":u:" + host + ":" + tag;
+			String keyHUT = PREFIX_VIEW + dateHourStr + ":u:" + host + ":" + tag;
 			p.pfadd(keyHUT, uuid);
 			p.expire(keyHUT, AFTER_3_DAYS);
 
-			String keyDUT = PREFIX_PAGEVIEW + dateStr + ":u:" + host + ":" + tag;
+			String keyDUT = PREFIX_VIEW + dateStr + ":u:" + host + ":" + tag;
 			p.pfadd(keyDUT, uuid);
 			p.expire(keyDUT, AFTER_7_DAYS);
 		    }

@@ -1,4 +1,4 @@
-package leotech.cms.router;
+package leotech.cdp.router;
 
 import static io.netty.handler.codec.http.HttpHeaderNames.CONNECTION;
 import static io.netty.handler.codec.http.HttpHeaderNames.CONTENT_TYPE;
@@ -8,11 +8,7 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.RoutingContext;
 import leotech.cdp.utils.EventTrackingUtil;
-import leotech.core.api.BaseApiHandler;
-import leotech.core.api.BaseApiRouter;
 import leotech.core.api.BaseHttpRouter;
-import leotech.system.model.DeviceInfo;
-import leotech.system.util.DeviceInfoUtil;
 import leotech.system.util.HttpTrackingUtil;
 import rfx.core.util.DateTimeUtil;
 import rfx.core.util.StringUtil;
@@ -38,9 +34,9 @@ public class EventLogHttpRouter extends BaseHttpRouter {
 	MultiMap outHeaders = resp.headers();
 	outHeaders.set(CONNECTION, HttpTrackingUtil.HEADER_CONNECTION_CLOSE);
 	outHeaders.set(POWERED_BY, SERVER_VERSION);
-	String useragent = StringUtil.safeString(req.getHeader(BaseApiHandler.USER_AGENT));
-	DeviceInfo dv = DeviceInfoUtil.getDeviceInfo(useragent);
-	int platformId = dv.platformType;
+	//String useragent = StringUtil.safeString(req.getHeader(BaseApiHandler.USER_AGENT));
+	//DeviceInfo dv = DeviceInfoUtil.getDeviceInfo(useragent);
+	//int platformId = dv.platformType;
 
 	try {
 
@@ -77,25 +73,25 @@ public class EventLogHttpRouter extends BaseHttpRouter {
 	    }
 	    // ------ analytics handlers -----------
 	    else if (uri.startsWith("/metric/pageview")) {
-		// https://log1.adsplay.net/metric/pageview?uuid=cdebc033538a4ea596ab21b6b1567ecf&referrer=&url=https%3A%2F%2Fwww.fshare.vn%2Ffile%2FOKLYRPW83HVQ&host=www.fshare.vn&t=1450609053690&sid=7&tag=download%2Findex
+		// https://log.[hostname]/metric/pageview?uuid=cdebc033538a4ea596ab21b6b1567ecf&referrer=&url=https%3A%2F%2Fwww.fshare.vn%2Ffile%2FOKLYRPW83HVQ&host=www.fshare.vn&t=1450609053690&sid=7&tag=download%2Findex
 		String host = StringUtil.safeString(params.get("host")).toLowerCase();
 		String tag = StringUtil.safeString(params.get("tag")).toLowerCase();
 		if (StringUtil.isNotEmpty(host) && StringUtil.isNotEmpty(tag)) {
 		    // RealtimeTrackingUtil.updateEvent("pv:",DateTimeUtil.currentUnixTimestamp(),
 		    // "mpav-"+host, true);
 		    String uuid = StringUtil.safeString(params.get("uuid"));
-		    EventTrackingUtil.updatePageViewEvent(host, uuid, tag);
+		    EventTrackingUtil.recordTrackingEvent(host, uuid, tag);
 		}
 		HttpTrackingUtil.trackingResponse(req);
 		return true;
 	    } else if (uri.startsWith("/metric/event")) {
-		// https://[hostname]/metric/event?uuid=cdebc033538a4ea596ab21b6b1567ecf&referrer=&url=https%3A%2F%2Fwww.fshare.vn%2Ffile%2FOKLYRPW83HVQ&host=www.fshare.vn&t=1450609053690&event=tgrm2016-pv
+		// https://log.[hostname]/metric/event?uuid=cdebc033538a4ea596ab21b6b1567ecf&referrer=&url=https%3A%2F%2Fwww.fshare.vn%2Ffile%2FOKLYRPW83HVQ&host=www.fshare.vn&t=1450609053690&event=tgrm2016-pv
 		String hostReferer = StringUtil.safeString(params.get("host")).toLowerCase();
 		String event = StringUtil.safeString(params.get("event")).toLowerCase();
 
 		if (StringUtil.isNotEmpty(hostReferer) && StringUtil.isNotEmpty(event)) {
 		    String uuid = StringUtil.safeString(params.get("uuid"));
-		    EventTrackingUtil.updatePageViewEvent(hostReferer, uuid, "epv");
+		    EventTrackingUtil.recordTrackingEvent(hostReferer, uuid, "epv");
 		}
 		HttpTrackingUtil.trackingResponse(req);
 		return true;

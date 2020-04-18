@@ -9,9 +9,8 @@ import io.vertx.ext.web.RoutingContext;
 public abstract class BaseHttpRouter {
 
     public static final String POWERED_BY = "PoweredBy";
-    public static final String SERVER_VERSION = "LeoCMSTech";
+    public static final String SERVER_VERSION = "LeoTech";
     public static final String HTTP = "http://";
-
     public final static String DEFAULT_PATH = "/";
 
     
