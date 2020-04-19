@@ -128,7 +128,8 @@ public class HttpWorker extends BaseWorker {
 	RealtimeDataHandler counterHandler = new RealtimeDataHandler(eventBus, repository);
 
 	SockJSHandler sockJSHandler = SockJSHandler.create(vertxInstance);
-	return sockJSHandler.bridge(options, counterHandler);
+	sockJSHandler.bridge(options, counterHandler);
+	return sockJSHandler;
     }
 
 }

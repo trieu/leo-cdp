@@ -71,8 +71,8 @@ public class Touchpoint extends CdpPersistentObject implements Comparable<Touchp
 	    instance.ensurePersistentIndex(Arrays.asList("primaryPhone"), new PersistentIndexOptions().unique(false));
 	    instance.ensurePersistentIndex(Arrays.asList("collectionId"), new PersistentIndexOptions().unique(false));
 	    instance.ensurePersistentIndex(Arrays.asList("parentId"), new PersistentIndexOptions().unique(false));
+	    instance.ensurePersistentIndex(Arrays.asList("locationCode"), new PersistentIndexOptions().unique(false));
 	    instance.ensureHashIndex(Arrays.asList("keywords[*]"), new HashIndexOptions());
-	    instance.ensureHashIndex(Arrays.asList("locationCode"), new HashIndexOptions());
 	    instance.ensureGeoIndex(Arrays.asList("latitude", "longitude"), new GeoIndexOptions());
 	}
 	return instance;
@@ -116,16 +116,16 @@ public class Touchpoint extends CdpPersistentObject implements Comparable<Touchp
     String address;
 
     @Expose
-    float latitude = 0;
+    double latitude = 0;
 
     @Expose
-    float longitude = 0;
+    double longitude = 0;
 
     @Expose
-    float radius = 0;
+    double radius = 0;
 
     @Expose
-    float reachableArea = 0;
+    double reachableArea = 0;
 
     @Expose
     List<String> keywords = new ArrayList<>();
@@ -193,14 +193,16 @@ public class Touchpoint extends CdpPersistentObject implements Comparable<Touchp
      * @param address
      * @param collectionId
      */
-    public Touchpoint(String name, int type, String locationCode, String address) {
+    public Touchpoint(String name, int type, String locationCode, String address, double latitude, double longitude) {
 	super();
 	this.createdAt = new Date();
 	this.name = name;
 	this.type = type;
 	this.locationCode = locationCode;
 	this.address = address;
-	String keyHint = name + type + locationCode + address;
+	this.latitude = latitude;
+	this.longitude = longitude;
+	String keyHint = name + type + locationCode;
 	this.id = UUID.nameUUIDFromBytes(keyHint.getBytes()).toString();
     }
 
@@ -292,35 +294,35 @@ public class Touchpoint extends CdpPersistentObject implements Comparable<Touchp
 	this.address = address;
     }
 
-    public float getLatitude() {
+    public double getLatitude() {
 	return latitude;
     }
 
-    public void setLatitude(float latitude) {
+    public void setLatitude(double latitude) {
 	this.latitude = latitude;
     }
 
-    public float getLongitude() {
+    public double getLongitude() {
 	return longitude;
     }
 
-    public void setLongitude(float longitude) {
+    public void setLongitude(double longitude) {
 	this.longitude = longitude;
     }
 
-    public float getRadius() {
+    public double getRadius() {
 	return radius;
     }
 
-    public void setRadius(float radius) {
+    public void setRadius(double radius) {
 	this.radius = radius;
     }
 
-    public float getReachableArea() {
+    public double getReachableArea() {
 	return reachableArea;
     }
 
-    public void setReachableArea(float reachableArea) {
+    public void setReachableArea(double reachableArea) {
 	this.reachableArea = reachableArea;
     }
 
