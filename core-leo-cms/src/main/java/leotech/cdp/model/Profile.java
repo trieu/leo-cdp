@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
@@ -104,7 +105,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
     String lastSeenIp = "";
 
     @Expose
-    String lastUsedDevice = "";
+    String lastUsedDeviceId = "";
 
     @Expose
     String lastWebCookies = "";
@@ -134,13 +135,13 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
     int ageGroup = 0;
 
     @Expose
-    List<String> usedDevices = new ArrayList<>(10);
+    List<String> usedDeviceIds = new ArrayList<>(10);
 
     @Expose
     List<String> workingHistory = new ArrayList<>(20);
 
     @Expose
-    Map<String, Integer> acquisitionChannels = new HashMap<>(20);
+    Map<String, Integer> acquisitionChannels;
 
     @Expose
     List<String> viewedContents = new ArrayList<String>(100);
@@ -204,27 +205,29 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
     @Override
     public boolean isReadyForSave() {
-	
-	return this.observerId != null && this.lastUsedDevice != null && this.lastTouchpointId != null;
+	return this.observerId != null && this.lastUsedDeviceId != null && this.lastTouchpointId != null;
     }
-
-    public Profile(int type, String observerId, String lastTouchpointId, String lastSeenIp, String usedDevice) {
-	super();
+    
+    protected void initBaseInformation(int type, String observerId, String lastTouchpointId, String lastSeenIp, String usedDeviceId) {
 	this.type = type;
 	this.observerId = observerId;
 	this.lastTouchpointId = lastTouchpointId;
 	this.lastSeenIp = lastSeenIp;
-	this.lastUsedDevice = usedDevice;
-	this.usedDevices.add(usedDevice);
+	this.lastUsedDeviceId = usedDeviceId;
+	this.usedDeviceIds.add(usedDeviceId);
+	String keyHint = type + observerId + lastTouchpointId + lastSeenIp + usedDeviceId;
+	this.id = UUID.nameUUIDFromBytes(keyHint.getBytes()).toString();
     }
 
-    public Profile(String observerId, String lastTouchpointId, String lastSeenIp, String usedDevice) {
+    public Profile(int type, String observerId, String lastTouchpointId, String lastSeenIp, String usedDeviceId) {
 	super();
-	this.observerId = observerId;
-	this.lastTouchpointId = lastTouchpointId;
-	this.lastSeenIp = lastSeenIp;
-	this.lastUsedDevice = usedDevice;
-	this.usedDevices.add(usedDevice);
+	initBaseInformation(type, observerId, lastTouchpointId, lastSeenIp, usedDeviceId);
+    }
+
+
+    public Profile(String observerId, String lastTouchpointId, String lastSeenIp, String usedDeviceId) {
+	super();
+	initBaseInformation(ProfileType.ANONYMOUS, observerId, lastTouchpointId, lastSeenIp, usedDeviceId);
     }
     
     
@@ -334,15 +337,18 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	this.lastSeenIp = lastSeenIp;
     }
 
-    public String getLastUsedDevice() {
-	return lastUsedDevice;
+    public String getLastUsedDeviceId() {
+	return lastUsedDeviceId;
     }
 
-    public void setLastUsedDevice(String lastUsedDevice) {
-	this.lastUsedDevice = lastUsedDevice;
+    public void setLastUsedDeviceId(String lastUsedDeviceId) {
+	this.lastUsedDeviceId = lastUsedDeviceId;
     }
 
     public Map<String, String> getIdentityAttributes() {
+	if(this.identityAttributes == null) {
+	    this.identityAttributes = new HashMap<>(10);
+	}
 	return identityAttributes;
     }
 
@@ -396,12 +402,12 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	this.ageGroup = ageGroup;
     }
 
-    public List<String> getUsedDevices() {
-	return usedDevices;
+    public List<String> getUsedDeviceIds() {
+	return usedDeviceIds;
     }
 
-    public void setUsedDevices(List<String> usedDevices) {
-	this.usedDevices = usedDevices;
+    public void setUsedDeviceIds(List<String> usedDeviceIds) {
+	this.usedDeviceIds = usedDeviceIds;
     }
 
     public Map<String, Integer> getMediaInterests() {
@@ -585,6 +591,9 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
     }
 
     public Map<String, Integer> getAcquisitionChannels() {
+	if(acquisitionChannels == null) {
+	    acquisitionChannels = new HashMap<>(20);
+	}
 	return acquisitionChannels;
     }
 

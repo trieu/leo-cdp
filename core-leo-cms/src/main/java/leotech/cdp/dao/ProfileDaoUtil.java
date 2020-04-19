@@ -28,10 +28,8 @@ public class ProfileDaoUtil {
 	if (profile.isReadyForSave() && checkLimitOfLicense()) {
 	    ArangoCollection col = profile.getCollection();
 	    if (col != null) {
-		String id = FriendlyId.createFriendlyId();
-		profile.setId(id);
 		col.insertDocument(profile);
-		return id;
+		return profile.getId();
 	    }
 	}
 	return null;
