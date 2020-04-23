@@ -8,19 +8,19 @@ import java.util.Map;
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
 
-import leotech.cdp.model.EventObserver;
+import leotech.cdp.model.DataObserver;
 import leotech.core.config.AqlTemplate;
 import leotech.system.util.database.ArangoDbQuery;
 import leotech.system.util.database.ArangoDbUtil;
 
-public class EventObserverDaoUtil {
+public class ObserverDaoUtil {
 
     static final String AQL_GET_OBSERVER_BY_ID = AqlTemplate.get("AQL_GET_OBSERVER_BY_ID");
     static final String AQL_GET_OBSERVERS = AqlTemplate.get("AQL_GET_OBSERVERS");
 
-    private static final String AQL_FIND_KEY_AQL = ArangoDbUtil.contentFindKeyAql(EventObserver.COLLECTION_NAME);
+    private static final String AQL_FIND_KEY_AQL = ArangoDbUtil.contentFindKeyAql(DataObserver.COLLECTION_NAME);
 
-    public static String save(EventObserver e) {
+    public static String save(DataObserver e) {
 	if (e.isReadyForSave()) {
 	    ArangoCollection col = e.getCollection();
 	    if (col != null) {
@@ -38,20 +38,20 @@ public class EventObserverDaoUtil {
 	return "";
     }
 
-    public static EventObserver getById(String id) {
+    public static DataObserver getById(String id) {
 	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
 	Map<String, Object> bindVars = new HashMap<>(1);
 	bindVars.put("id", id);
-	EventObserver p = new ArangoDbQuery<EventObserver>(db, AQL_GET_OBSERVER_BY_ID, bindVars, EventObserver.class).getResultsAsObject();
+	DataObserver p = new ArangoDbQuery<DataObserver>(db, AQL_GET_OBSERVER_BY_ID, bindVars, DataObserver.class).getResultsAsObject();
 	return p;
     }
 
-    public static List<EventObserver> list(int startIndex, int numberResult) {
+    public static List<DataObserver> list(int startIndex, int numberResult) {
 	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
 	Map<String, Object> bindVars = new HashMap<>(2);
 	bindVars.put("startIndex", startIndex);
 	bindVars.put("numberResult", numberResult);
-	List<EventObserver> list = new ArangoDbQuery<EventObserver>(db, AQL_GET_OBSERVERS, bindVars, EventObserver.class).getResultsAsList();
+	List<DataObserver> list = new ArangoDbQuery<DataObserver>(db, AQL_GET_OBSERVERS, bindVars, DataObserver.class).getResultsAsList();
 	return list;
     }
 

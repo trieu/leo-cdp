@@ -27,9 +27,9 @@
     
     <MediaNetwork>
         <networkId>10000</networkId>
-        <name>Leo CMS Admin</name>
+        <name>Leo CDP Admin</name>
         <uri>admin</uri>
-        <domain>admin.leocloudcms.com</domain>
+        <domain>admin.leoplatform.net</domain>
         <WebTemplateFolder>default-admin-template</WebTemplateFolder>
         <AndroidAppId></AndroidAppId>
         <IosAppId></IosAppId>

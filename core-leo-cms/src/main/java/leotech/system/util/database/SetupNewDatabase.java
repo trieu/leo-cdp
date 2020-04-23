@@ -16,7 +16,7 @@ import leotech.cdp.model.ReportUnit;
 import leotech.cdp.model.Segment;
 import leotech.cdp.model.Touchpoint;
 import leotech.cdp.model.TrackingEvent;
-import leotech.cdp.model.EventObserver;
+import leotech.cdp.model.DataObserver;
 import leotech.cms.dao.CategoryDaoUtil;
 import leotech.cms.dao.PageDaoUtil;
 import leotech.cms.dao.UserDaoUtil;
@@ -45,7 +45,7 @@ public class SetupNewDatabase {
 	leoPlatformCollectionNames.add(Touchpoint.COLLECTION_NAME);
 	leoPlatformCollectionNames.add(TrackingEvent.COLLECTION_NAME);
 	leoPlatformCollectionNames.add(ConversionEvent.COLLECTION_NAME);
-	leoPlatformCollectionNames.add(EventObserver.COLLECTION_NAME);
+	leoPlatformCollectionNames.add(DataObserver.COLLECTION_NAME);
 	leoPlatformCollectionNames.add(Segment.COLLECTION_NAME);
 	leoPlatformCollectionNames.add(ScheduledJob.COLLECTION_NAME);
 	leoPlatformCollectionNames.add(ReportUnit.COLLECTION_NAME);

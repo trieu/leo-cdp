@@ -18,6 +18,10 @@ import leotech.system.util.database.ArangoDbUtil;
 
 
 
+/**
+ * @author Trieu Nguyen
+ *
+ */
 public class Segment extends CdpPersistentObject implements Comparable<Segment>{
     
     public static class SegmentationType {

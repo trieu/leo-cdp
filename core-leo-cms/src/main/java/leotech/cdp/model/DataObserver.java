@@ -11,9 +11,13 @@ import com.google.gson.annotations.Expose;
 import leotech.system.util.database.ArangoDbUtil;
 
 
-public class EventObserver extends CdpPersistentObject{
+/**
+ * @author Trieu Nguyen
+ *
+ */
+public class DataObserver extends CdpPersistentObject{
 
-    public static final String COLLECTION_NAME = COLLECTION_PREFIX + EventObserver.class.getSimpleName().toLowerCase();
+    public static final String COLLECTION_NAME = COLLECTION_PREFIX + DataObserver.class.getSimpleName().toLowerCase();
     static ArangoCollection instance;
 
     @Override
@@ -67,7 +71,10 @@ public class EventObserver extends CdpPersistentObject{
     String securityCode;
     
     @Expose
-    List<String> javascript3rdTags;
+    List<String> javascriptTags;
+    
+    @Expose
+    List<String> webApiHooks;
     
     @Expose
     String mobileAppId;
@@ -83,7 +90,7 @@ public class EventObserver extends CdpPersistentObject{
      * @param type
      * @param touchpointId
      */
-    public EventObserver(String name, int type, String touchpointId) {
+    public DataObserver(String name, int type, String touchpointId) {
 	super();
 	String keyHint = name + type + touchpointId;
 	this.id = UUID.nameUUIDFromBytes(keyHint.getBytes()).toString();
@@ -177,12 +184,20 @@ public class EventObserver extends CdpPersistentObject{
         this.securityCode = securityCode;
     }
 
-    public List<String> getJavascript3rdTags() {
-        return javascript3rdTags;
+    public List<String> getJavascriptTags() {
+        return javascriptTags;
     }
 
-    public void setJavascript3rdTags(List<String> javascript3rdTags) {
-        this.javascript3rdTags = javascript3rdTags;
+    public void setJavascriptTags(List<String> javascriptTags) {
+        this.javascriptTags = javascriptTags;
+    }
+    
+    public List<String> getWebApiHooks() {
+        return webApiHooks;
+    }
+
+    public void setWebApiHooks(List<String> webApiHooks) {
+        this.webApiHooks = webApiHooks;
     }
 
     public String getMobileAppId() {

@@ -5,6 +5,10 @@ import com.arangodb.ArangoDatabase;
 
 import leotech.system.util.database.ArangoDbUtil;
 
+/**
+ * @author Trieu Nguyen
+ *
+ */
 public class ScheduledJob extends CdpPersistentObject{
 
     public static final String COLLECTION_NAME = COLLECTION_PREFIX + ScheduledJob.class.getSimpleName().toLowerCase();

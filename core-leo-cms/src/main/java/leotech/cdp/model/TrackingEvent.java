@@ -15,6 +15,10 @@ import rfx.core.util.DateTimeUtil;
 import rfx.core.util.StringUtil;
 import rfx.core.util.Utils;
 
+/**
+ * @author Trieu Nguyen
+ *
+ */
 public class TrackingEvent extends CdpPersistentObject {
 
     public static final String COLLECTION_NAME = COLLECTION_PREFIX + TrackingEvent.class.getSimpleName().toLowerCase();
@@ -28,8 +32,30 @@ public class TrackingEvent extends CdpPersistentObject {
 	    instance = arangoDatabase.collection(COLLECTION_NAME);
 
 	    // ensure indexing key fields for fast lookup
-	    instance.ensurePersistentIndex(Arrays.asList("refProfileId"), new PersistentIndexOptions().unique(false));
-	   
+	    instance.ensurePersistentIndex(Arrays.asList("refJourneyId", "timestamp"),
+		    new PersistentIndexOptions().unique(false));
+	    instance.ensurePersistentIndex(Arrays.asList("refProfileId", "timestamp"),
+		    new PersistentIndexOptions().unique(false));
+	    instance.ensurePersistentIndex(Arrays.asList("sessionKey", "timestamp"),
+		    new PersistentIndexOptions().unique(false));
+	    instance.ensurePersistentIndex(Arrays.asList("observerId", "timestamp"),
+		    new PersistentIndexOptions().unique(false));
+	    instance.ensurePersistentIndex(Arrays.asList("collectionId", "timestamp"),
+		    new PersistentIndexOptions().unique(false));
+	    instance.ensurePersistentIndex(Arrays.asList("srcTouchpointId", "timestamp"),
+		    new PersistentIndexOptions().unique(false));
+	    instance.ensurePersistentIndex(Arrays.asList("refTouchpointId", "timestamp"),
+		    new PersistentIndexOptions().unique(false));
+	    instance.ensurePersistentIndex(Arrays.asList("refPostId", "timestamp"),
+		    new PersistentIndexOptions().unique(false));
+	    instance.ensurePersistentIndex(Arrays.asList("refMessageId", "timestamp"),
+		    new PersistentIndexOptions().unique(false));
+	    instance.ensurePersistentIndex(Arrays.asList("refItemId", "timestamp"),
+		    new PersistentIndexOptions().unique(false));
+	    instance.ensurePersistentIndex(Arrays.asList("refServiceId", "timestamp"),
+		    new PersistentIndexOptions().unique(false));
+	    instance.ensurePersistentIndex(Arrays.asList("refCampaignId", "timestamp"),
+		    new PersistentIndexOptions().unique(false));
 	}
 	return instance;
     }
@@ -40,13 +66,13 @@ public class TrackingEvent extends CdpPersistentObject {
 
     @Expose
     protected Date createdAt;
-    
+
     @Expose
     protected int timestamp;
 
     @Expose
     protected String sessionKey;
-    
+
     @Expose
     protected boolean isActiveTracked = true;
 
@@ -127,15 +153,14 @@ public class TrackingEvent extends CdpPersistentObject {
 	return StringUtil.isNotEmpty(this.metricName) && StringUtil.isNotEmpty(this.observerId)
 		&& StringUtil.isNotEmpty(this.srcTouchpointId) && this.timestamp > 0;
     }
-    
+
     public TrackingEvent() {
 	// TODO Auto-generated constructor stub
     }
-    
-    
-    
+
     /**
-     * passive tracking by a data crawler from social media (e.g: Facebook, YouTube,...)
+     * passive tracking by a data crawler from social media (e.g: Facebook,
+     * YouTube,...)
      * 
      * @param observerId
      * @param metricName
@@ -172,9 +197,9 @@ public class TrackingEvent extends CdpPersistentObject {
      * @param deviceName
      * @param sourceIP
      */
-    public TrackingEvent(String observerId, String sessionKey, String metricName, long metricValue, String refProfileId, int refProfileType,
-	    String srcTouchpointId, String refTouchpointId, String browserName, String webCookies, String deviceId,
-	    String deviceOS, String deviceName, String sourceIP) {
+    public TrackingEvent(String observerId, String sessionKey, String metricName, long metricValue, String refProfileId,
+	    int refProfileType, String srcTouchpointId, String refTouchpointId, String browserName, String webCookies,
+	    String deviceId, String deviceOS, String deviceName, String sourceIP) {
 	super();
 	this.observerId = observerId;
 	this.sessionKey = sessionKey;
@@ -195,19 +220,17 @@ public class TrackingEvent extends CdpPersistentObject {
     }
 
     /////////////////////
-    
-    
 
     public Date getCreatedAt() {
 	return createdAt;
     }
 
     public boolean isActiveTracked() {
-        return isActiveTracked;
+	return isActiveTracked;
     }
 
     public void setActiveTracked(boolean isActiveTracked) {
-        this.isActiveTracked = isActiveTracked;
+	this.isActiveTracked = isActiveTracked;
     }
 
     public void setCreatedAt(Date createdAt) {
@@ -350,14 +373,12 @@ public class TrackingEvent extends CdpPersistentObject {
 	this.refJourneyStage = refJourneyStage;
     }
 
-   
-
     public int getTimestamp() {
-        return timestamp;
+	return timestamp;
     }
 
     public void setTimestamp(int timestamp) {
-        this.timestamp = timestamp;
+	this.timestamp = timestamp;
     }
 
     public String getBrowserName() {
