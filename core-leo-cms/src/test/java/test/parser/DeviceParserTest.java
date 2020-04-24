@@ -71,19 +71,18 @@ public class DeviceParserTest {
 	DeviceInfo d16 = DeviceInfoUtil.getDeviceInfo(
 		"Mozilla/5.0 (Linux; Android 7.0; SAMSUNG SM-G950F Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/5.2 Chrome/51.0.2704.106 Mobile Safari/537.36");
 	System.out.println(d16);
-	
-	DeviceInfo d17 = DeviceInfoUtil.getDeviceInfo(
-		"Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)");
+
+	DeviceInfo d17 = DeviceInfoUtil
+		.getDeviceInfo("Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)");
 	System.out.println(d17);
-	
+
 	DeviceInfo d18 = DeviceInfoUtil.getDeviceInfo(
 		"Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)");
 	System.out.println(d18);
-	
-	DeviceInfo d19 = DeviceInfoUtil.getDeviceInfo(
-		"facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)");
+
+	DeviceInfo d19 = DeviceInfoUtil
+		.getDeviceInfo("facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)");
 	System.out.println(d19);
-	
-	
+
     }
 }

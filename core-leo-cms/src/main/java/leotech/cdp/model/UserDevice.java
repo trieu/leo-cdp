@@ -2,11 +2,7 @@ package leotech.cdp.model;
 
 import com.arangodb.ArangoCollection;
 
-/**
- * @author Trieu Nguyen
- *
- */
-public class UserSession extends CdpPersistentObject {
+public class UserDevice extends CdpPersistentObject{
 
     @Override
     public ArangoCollection getCollection() {

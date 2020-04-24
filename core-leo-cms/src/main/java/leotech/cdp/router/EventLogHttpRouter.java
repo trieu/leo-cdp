@@ -8,7 +8,10 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.RoutingContext;
 import leotech.cdp.utils.EventTrackingUtil;
+import leotech.core.api.BaseApiHandler;
 import leotech.core.api.BaseHttpRouter;
+import leotech.system.model.DeviceInfo;
+import leotech.system.util.DeviceInfoUtil;
 import leotech.system.util.HttpTrackingUtil;
 import rfx.core.util.DateTimeUtil;
 import rfx.core.util.StringUtil;
@@ -34,8 +37,8 @@ public class EventLogHttpRouter extends BaseHttpRouter {
 	MultiMap outHeaders = resp.headers();
 	outHeaders.set(CONNECTION, HttpTrackingUtil.HEADER_CONNECTION_CLOSE);
 	outHeaders.set(POWERED_BY, SERVER_VERSION);
-	//String useragent = StringUtil.safeString(req.getHeader(BaseApiHandler.USER_AGENT));
-	//DeviceInfo dv = DeviceInfoUtil.getDeviceInfo(useragent);
+	String useragent = StringUtil.safeString(req.getHeader(BaseApiHandler.USER_AGENT));
+	DeviceInfo dv = DeviceInfoUtil.getDeviceInfo(useragent);
 	//int platformId = dv.platformType;
 
 	try {

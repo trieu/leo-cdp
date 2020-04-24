@@ -51,7 +51,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	    instance.ensurePersistentIndex(Arrays.asList("primaryPhone"), new PersistentIndexOptions().unique(false));
 	    instance.ensurePersistentIndex(Arrays.asList("primaryAvatar"), new PersistentIndexOptions().unique(false));
 	    instance.ensureHashIndex(Arrays.asList("rootProfileId"), new HashIndexOptions());
-	    instance.ensureHashIndex(Arrays.asList("identityAttributes[*]"), new HashIndexOptions());
+	    instance.ensurePersistentIndex(Arrays.asList("identityAttributes[*]"), new PersistentIndexOptions().unique(false));
 	    instance.ensureHashIndex(Arrays.asList("personaUri"), new HashIndexOptions());
 	}
 	return instance;
