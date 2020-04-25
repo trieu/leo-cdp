@@ -19,9 +19,7 @@ public class ContextSessionDaoUtil {
     static final String AQL_GET_USER_SESSIONS_BY_VISITOR_ID = AqlTemplate.get("AQL_GET_USER_SESSIONS_BY_VISITOR_ID");
     static final String AQL_GET_USER_SESSIONS_BY_PROFILE_ID = AqlTemplate.get("AQL_GET_USER_SESSIONS_BY_PROFILE_ID");
 
-    public static ContextSession create(String locationCode, String userDeviceId, String ip, String host,
-	    String appId, String touchpointId, String visitorId, String profileId, String fingerprintId) {
-	ContextSession s = new ContextSession(locationCode, userDeviceId, ip, host, appId, touchpointId, visitorId, profileId, fingerprintId);
+    public static ContextSession create(ContextSession s) {
 	if (s.isReadyForSave()) {
 	    ArangoCollection col = s.getCollection();
 	    if (col != null) {

@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import com.google.openlocationcode.OpenLocationCode;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.model.CityResponse;
 import com.maxmind.geoip2.record.City;
@@ -162,6 +163,9 @@ public class GeoLocationUtil {
 		    Location location = response.getLocation();
 		    geoLoc.setLatitude(location.getLatitude());
 		    geoLoc.setLongitude(location.getLongitude());
+		    
+		    String locationCode = OpenLocationCode.encode(location.getLatitude(), location.getLongitude());
+		    geoLoc.setLocationCode(locationCode);
 
 		    geoLoc.setCountry(response.getCountry().getName());
 		}

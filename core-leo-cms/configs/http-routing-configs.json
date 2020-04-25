@@ -32,11 +32,11 @@
 			"bodyHandlerEnabled": true,
 			"sockJsHandlerEnabled": false
 		},
-		"eventLogWorker": {
-			"name": "EventLogWorker",
+		"eventObserverWorker": {
+			"name": "eventObserverWorker",
 			"host": "127.0.0.1",
 			"port": 9080,
-			"classNameHttpRouter": "leotech.cdp.router.EventLogHttpRouter",
+			"classNameHttpRouter": "leotech.cdp.router.EventObserverHttpRouter",
 			"bodyHandlerEnabled": false,
 			"sockJsHandlerEnabled": false
 		},
