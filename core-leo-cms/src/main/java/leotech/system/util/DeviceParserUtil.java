@@ -33,6 +33,8 @@ public class DeviceParserUtil {
 	}
 	return getDeviceType(client);
     }
+    
+ 
 
     public static int getDeviceType(Client client) {
 	String p = client.device.deviceType();
@@ -73,15 +75,16 @@ public class DeviceParserUtil {
     public static DeviceInfo parse(DeviceUserContext deviceUserContext) {
 	String useragent = deviceUserContext.useragent;
 	Client uaClient = Parser.load().parse(useragent);
-	int deviceType = PC;
+	int platformType = PC;
 	String deviceName = "PC";
 	String deviceOs = uaClient.os.family;
+	String deviceType =uaClient.device.deviceType();
 
-	deviceType = getDeviceType(uaClient);
+	platformType = getDeviceType(uaClient);
 	deviceName = uaClient.device.family.split(" ")[0];
 	String browserName = uaClient.userAgent.family;
 
-	return new DeviceInfo(deviceType, deviceName, deviceOs, browserName);
+	return new DeviceInfo(deviceType, platformType, deviceName, deviceOs, browserName);
     }
 
     public static DeviceInfo parseWithCache(String useragent) throws ExecutionException {

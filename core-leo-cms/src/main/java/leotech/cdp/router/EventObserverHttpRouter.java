@@ -85,13 +85,13 @@ public class EventObserverHttpRouter extends BaseHttpRouter {
 		if (contextSession != null) {
 		    // event-view(pageview|screenview|storeview|trueview,contentId,sessionKey,profileId)
 		    if (uri.startsWith(PREFIX_EVENT_VIEW)) {
-			ok = TrackingApi.record(contextSession, eventName);
+			//ok = TrackingApi.record(contextSession, eventName);
 
 		    }
 		    // event-action(click|play|touch|contact,sessionKey,profileId)
 		    else if (uri.startsWith(PREFIX_EVENT_ACTION)) {
 			int eventValue = StringUtil.safeParseInt(params.get(EVENT_VALUE));
-			ok = TrackingApi.record(contextSession, eventName, eventValue);
+			//ok = TrackingApi.record(contextSession, eventName, eventValue);
 		    }
 
 		    // event-conversion(add_to_cart|submit_form|checkout,sessionKey,profileId)
@@ -99,7 +99,7 @@ public class EventObserverHttpRouter extends BaseHttpRouter {
 			int eventValue = StringUtil.safeParseInt(params.get(EVENT_VALUE));
 			String transactionCode = StringUtil.safeString(params.get(TRANSACTION_CODE));
 			// TODO for ext conversion data
-			ok = TrackingApi.record(contextSession, eventName, eventValue, transactionCode);
+			//ok = TrackingApi.record(contextSession, eventName, eventValue, transactionCode);
 		    }
 		}
 

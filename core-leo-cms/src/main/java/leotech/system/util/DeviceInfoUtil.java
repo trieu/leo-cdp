@@ -17,7 +17,7 @@ public class DeviceInfoUtil {
 	    e.printStackTrace();
 	}
 	if (device == null) {
-	    device = new DeviceInfo(1, "Unknown_Device", "Unknown_OS", "Unknown");
+	    device = new DeviceInfo("Unknown",0, "Unknown_Device", "Unknown_OS", "Unknown");
 	}
 	return device;
     }

@@ -7,14 +7,16 @@ import rfx.core.util.StringUtil;
 public class DeviceInfo {
     public final int platformType;
     public final String deviceName;
+    public final String deviceType;
     public final String deviceOs;
     public final String browserName;
 
     public final int id;
 
-    public DeviceInfo(int deviceType, String deviceName, String deviceOs, String browserName) {
+    public DeviceInfo(String deviceType, int platformType, String deviceName, String deviceOs, String browserName) {
 	super();
-	this.platformType = deviceType;
+	this.deviceType = deviceType;
+	this.platformType = platformType;
 	this.deviceName = deviceName;
 	this.deviceOs = deviceOs;
 	this.browserName = browserName;

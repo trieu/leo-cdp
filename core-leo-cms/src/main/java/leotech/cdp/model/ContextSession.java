@@ -85,6 +85,7 @@ public class ContextSession extends CdpPersistentObject {
     String mediaHost;
     String appId;
     String refTouchpointId;
+    String observerId;
 
     String visitorId;
     String profileId;
@@ -93,21 +94,22 @@ public class ContextSession extends CdpPersistentObject {
     Date createAt;
     Date autoDeleteAt;
 
-    public ContextSession(DateTime dateTime,String dateTimeKey,String locationCode, String userDeviceId, String ip, String host, String appId,
+    public ContextSession(String observerId,DateTime dateTime,String dateTimeKey,String locationCode, String userDeviceId, String ip, String host, String appId,
 	    String touchpointId, String visitorId, String profileId, String fingerprintId, int hoursToDelete) {
 	super();
-	init(dateTime,dateTimeKey,locationCode, userDeviceId, ip, host, appId, touchpointId, visitorId, profileId, fingerprintId,
+	init(observerId, dateTime,dateTimeKey,locationCode, userDeviceId, ip, host, appId, touchpointId, visitorId, profileId, fingerprintId,
 		hoursToDelete);
     }
 
-    public ContextSession(DateTime dateTime,String dateTimeKey,String locationCode, String userDeviceId, String ip, String host, String appId,
+    public ContextSession(String observerId,DateTime dateTime,String dateTimeKey,String locationCode, String userDeviceId, String ip, String host, String appId,
 	    String touchpointId, String visitorId, String profileId, String fingerprintId) {
 	super();
-	init(dateTime,dateTimeKey,locationCode, userDeviceId, ip, host, appId, touchpointId, visitorId, profileId, fingerprintId, 0);
+	init(observerId, dateTime,dateTimeKey,locationCode, userDeviceId, ip, host, appId, touchpointId, visitorId, profileId, fingerprintId, 0);
     }
 
-    private void init(DateTime dateTime,String dateTimeKey, String locationCode, String userDeviceId, String ip, String mediaHost, String appId,
+    private void init(String observerId, DateTime dateTime,String dateTimeKey, String locationCode, String userDeviceId, String ip, String mediaHost, String appId,
 	    String refTouchpointId, String visitorId, String profileId, String fingerprintId, int hoursToDelete) {
+	this.observerId = observerId;
 	this.locationCode = locationCode;
 	this.userDeviceId = userDeviceId;
 	this.ip = ip;
@@ -223,6 +225,14 @@ public class ContextSession extends CdpPersistentObject {
 
     public String getLocationCode() {
 	return locationCode;
+    }
+
+    public String getObserverId() {
+        return observerId;
+    }
+
+    public void setObserverId(String observerId) {
+        this.observerId = observerId;
     }
 
 }

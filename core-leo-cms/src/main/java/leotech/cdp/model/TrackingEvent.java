@@ -135,7 +135,9 @@ public class TrackingEvent extends CdpPersistentObject {
 
     @Expose
     protected String deviceOS;
-
+    
+    protected String deviceType;
+    
     @Expose
     protected String deviceName;
 
@@ -199,7 +201,7 @@ public class TrackingEvent extends CdpPersistentObject {
      */
     public TrackingEvent(String observerId, String sessionKey, String metricName, long metricValue, String refProfileId,
 	    int refProfileType, String srcTouchpointId, String refTouchpointId, String browserName, String webCookies,
-	    String deviceId, String deviceOS, String deviceName, String sourceIP) {
+	    String deviceId, String deviceOS, String deviceName,String deviceType, String sourceIP) {
 	super();
 	this.observerId = observerId;
 	this.sessionKey = sessionKey;
@@ -214,6 +216,7 @@ public class TrackingEvent extends CdpPersistentObject {
 	this.deviceId = deviceId;
 	this.deviceOS = deviceOS;
 	this.deviceName = deviceName;
+	this.deviceType = deviceType;
 	this.sourceIP = sourceIP;
 	this.createdAt = new Date();
 	this.timestamp = DateTimeUtil.currentUnixTimestamp();

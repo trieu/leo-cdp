@@ -21,11 +21,11 @@ public class ContextSessionService {
     public static final int AFTER_30_MINUTES = 1800;
     static ShardedJedisPool jedisPool = RedisConfigs.load().get("realtimeDataStats").getShardedJedisPool();
 
-    public static ContextSession synchDataForNewSession(DateTime dateTime, String dateTimeKey, String locationCode,
+    public static ContextSession synchDataForNewSession(String observerId,DateTime dateTime, String dateTimeKey, String locationCode,
 	    String userDeviceId, String ip, String mediaHost, String appId, String touchpointId, String visitorId,
 	    String profileId, String fingerprintId) {
 
-	ContextSession s = new ContextSession(dateTime, dateTimeKey, locationCode, userDeviceId, ip, mediaHost, appId,
+	ContextSession s = new ContextSession(observerId,dateTime, dateTimeKey, locationCode, userDeviceId, ip, mediaHost, appId,
 		touchpointId, visitorId, profileId, fingerprintId);
 
 	// FIXME run async
@@ -73,15 +73,19 @@ public class ContextSessionService {
 	String ip = RequestInfoUtil.getRemoteIP(req);
 	GeoLocation loc = GeoLocationUtil.getGeoLocation(ip);
 
-	String userDeviceId = StringUtil.safeString(params.get("dvid"));
+	String observerId = StringUtil.safeString(params.get("observerId"));
+	String userDeviceId = StringUtil.safeString(params.get("userDeviceId"));
 	String mediaHost = StringUtil.safeString(params.get("mediaHost"));
-	String appId = StringUtil.safeString(params.get("appid"));
-	String touchpointId = StringUtil.safeString(params.get("tpid"));
-	String visitorId = StringUtil.safeString(params.get("vsid"));
-	String profileId = StringUtil.safeString(params.get("pfid"));
-	String fingerprintId = StringUtil.safeString(params.get("fgp"));
+	String appId = StringUtil.safeString(params.get("appId"));
+	String touchpointId = StringUtil.safeString(params.get("touchpointId"));
+	String visitorId = StringUtil.safeString(params.get("visitorId"));
+	String profileId = StringUtil.safeString(params.get("profileId"));
+	String fingerprintId = StringUtil.safeString(params.get("fingerprintId"));
 	String locationCode = loc.getLocationCode();
-	return synchDataForNewSession(dateTime, locationCode, dateTimeKey, userDeviceId, ip, mediaHost, appId,
+	
+	//TODO verify data
+	
+	return synchDataForNewSession(observerId,dateTime, locationCode, dateTimeKey, userDeviceId, ip, mediaHost, appId,
 		touchpointId, visitorId, profileId, fingerprintId);
     }
 }
