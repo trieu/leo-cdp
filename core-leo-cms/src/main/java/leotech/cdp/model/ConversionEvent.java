@@ -54,8 +54,6 @@ public class ConversionEvent extends TrackingEvent {
 	// TODO Auto-generated constructor stub
     }
     
-    
-    
 
     public ConversionEvent(String observerId, String sessionKey, String metricName, long metricValue, String refProfileId, int refProfileType,
 	    String srcTouchpointId, String refTouchpointId, String browserName,  String deviceId,

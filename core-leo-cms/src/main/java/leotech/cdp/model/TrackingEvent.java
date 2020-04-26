@@ -145,6 +145,9 @@ public class TrackingEvent extends CdpPersistentObject {
     @Expose
     protected String feedbackData;
     
+    protected String environment;
+    
+    @Expose
     protected Map<String,String> extAttributes;
 
     @Expose
@@ -461,5 +464,15 @@ public class TrackingEvent extends CdpPersistentObject {
     public String getKey() {
 	return key;
     }
+
+    public String getEnvironment() {
+        return environment;
+    }
+
+    public void setEnvironment(String environment) {
+        this.environment = environment;
+    }
+    
+    
 
 }

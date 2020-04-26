@@ -21,7 +21,7 @@ import leotech.system.util.database.ArangoDbUtil;
 /**
  * @author Trieu Nguyen (Thomas)
  * 
- *  the entity for storing human profile information
+ *         the entity for storing human profile information
  *
  */
 public class Profile extends CdpPersistentObject implements Comparable<Profile> {
@@ -51,7 +51,8 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	    instance.ensurePersistentIndex(Arrays.asList("primaryPhone"), new PersistentIndexOptions().unique(false));
 	    instance.ensurePersistentIndex(Arrays.asList("primaryAvatar"), new PersistentIndexOptions().unique(false));
 	    instance.ensureHashIndex(Arrays.asList("rootProfileId"), new HashIndexOptions());
-	    instance.ensurePersistentIndex(Arrays.asList("identityAttributes[*]"), new PersistentIndexOptions().unique(false));
+	    instance.ensurePersistentIndex(Arrays.asList("identityAttributes[*]"),
+		    new PersistentIndexOptions().unique(false));
 	    instance.ensureHashIndex(Arrays.asList("personaUri"), new HashIndexOptions());
 	}
 	return instance;
@@ -111,7 +112,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
     String lastWebCookies = "";
 
     @Expose
-    Map<String, String> identityAttributes = new HashMap<>(10);
+    Map<String, String> identityMap = new HashMap<>(100);
 
     @Expose
     String primaryEmail = "";
@@ -141,7 +142,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
     List<String> workingHistory = new ArrayList<>(20);
 
     @Expose
-    Map<String, Integer> acquisitionChannels;
+    Map<String, Integer> acquisitionChannels = new HashMap<>(20);
 
     @Expose
     List<String> viewedContents = new ArrayList<String>(100);
@@ -207,30 +208,51 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
     public boolean isReadyForSave() {
 	return this.observerId != null && this.lastUsedDeviceId != null && this.lastTouchpointId != null;
     }
-    
-    protected void initBaseInformation(int type, String observerId, String lastTouchpointId, String lastSeenIp, String usedDeviceId) {
+
+    protected void initBaseInformation(String sessionKey, String visitorId, int type, String observerId,
+	    String lastTouchpointId, String lastSeenIp, String usedDeviceId, String email, String phone) {
+	this.identityMap.put(sessionKey, visitorId);
 	this.type = type;
 	this.observerId = observerId;
 	this.lastTouchpointId = lastTouchpointId;
 	this.lastSeenIp = lastSeenIp;
 	this.lastUsedDeviceId = usedDeviceId;
 	this.usedDeviceIds.add(usedDeviceId);
+	this.primaryEmail = email;
+	this.primaryPhone = phone;
 	String keyHint = type + observerId + lastTouchpointId + lastSeenIp + usedDeviceId;
 	this.id = UUID.nameUUIDFromBytes(keyHint.getBytes()).toString();
     }
 
-    public Profile(int type, String observerId, String lastTouchpointId, String lastSeenIp, String usedDeviceId) {
+    public Profile(String sessionKey, String visitorId, int type, String observerId, String lastTouchpointId,
+	    String lastSeenIp, String usedDeviceId, String email) {
 	super();
-	initBaseInformation(type, observerId, lastTouchpointId, lastSeenIp, usedDeviceId);
+	initBaseInformation(sessionKey, visitorId, type, observerId, lastTouchpointId, lastSeenIp, usedDeviceId, email,
+		"");
     }
 
-
-    public Profile(String observerId, String lastTouchpointId, String lastSeenIp, String usedDeviceId) {
+    public Profile(String sessionKey, String visitorId, int type, String observerId, String lastTouchpointId,
+	    String lastSeenIp, String usedDeviceId, String email, String phone) {
 	super();
-	initBaseInformation(ProfileType.ANONYMOUS, observerId, lastTouchpointId, lastSeenIp, usedDeviceId);
+	initBaseInformation(sessionKey, visitorId, type, observerId, lastTouchpointId, lastSeenIp, usedDeviceId, email,
+		phone);
     }
-    
-    
+
+    /**
+     * new ANONYMOUS profile
+     * 
+     * @param observerId
+     * @param lastTouchpointId
+     * @param lastSeenIp
+     * @param usedDeviceId
+     */
+    public Profile(String sessionKey, String visitorId, String observerId, String lastTouchpointId, String lastSeenIp,
+	    String usedDeviceId) {
+	super();
+	initBaseInformation(sessionKey, visitorId, ProfileType.ANONYMOUS, observerId, lastTouchpointId, lastSeenIp,
+		usedDeviceId, "", "");
+    }
+
     // -- getter and setter methods --
 
     public int getType() {
@@ -345,15 +367,13 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	this.lastUsedDeviceId = lastUsedDeviceId;
     }
 
-    public Map<String, String> getIdentityAttributes() {
-	if(this.identityAttributes == null) {
-	    this.identityAttributes = new HashMap<>(10);
-	}
-	return identityAttributes;
+  
+    public Map<String, String> getIdentityMap() {
+        return identityMap;
     }
 
-    public void setIdentityAttributes(Map<String, String> identityAttributes) {
-	this.identityAttributes = identityAttributes;
+    public void setIdentityMap(Map<String, String> identityMap) {
+        this.identityMap = identityMap;
     }
 
     public String getPrimaryEmail() {
@@ -362,7 +382,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
     public void setPrimaryEmail(String primaryEmail) {
 	this.primaryEmail = primaryEmail;
-	if(this.type == ProfileType.ANONYMOUS) {
+	if (this.type == ProfileType.ANONYMOUS) {
 	    this.type = ProfileType.IDENTIFIED;
 	}
     }
@@ -373,7 +393,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
     public void setPrimaryPhone(String primaryPhone) {
 	this.primaryPhone = primaryPhone;
-	if(this.type == ProfileType.ANONYMOUS) {
+	if (this.type == ProfileType.ANONYMOUS) {
 	    this.type = ProfileType.IDENTIFIED;
 	}
     }
@@ -591,9 +611,6 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
     }
 
     public Map<String, Integer> getAcquisitionChannels() {
-	if(acquisitionChannels == null) {
-	    acquisitionChannels = new HashMap<>(20);
-	}
 	return acquisitionChannels;
     }
 
