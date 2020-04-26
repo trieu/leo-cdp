@@ -1,6 +1,6 @@
 package leotech.cdp.service;
 
-import com.google.openlocationcode.OpenLocationCode;
+import org.joda.time.DateTime;
 
 import io.vertx.core.MultiMap;
 import io.vertx.core.http.HttpServerRequest;
@@ -10,35 +10,78 @@ import leotech.system.model.DeviceInfo;
 import leotech.system.model.GeoLocation;
 import leotech.system.util.GeoLocationUtil;
 import leotech.system.util.RequestInfoUtil;
+import redis.clients.jedis.Pipeline;
+import redis.clients.jedis.ShardedJedisPool;
+import redis.clients.jedis.exceptions.JedisException;
+import rfx.core.configs.RedisConfigs;
+import rfx.core.nosql.jedis.RedisCommand;
 import rfx.core.util.StringUtil;
 
 public class ContextSessionService {
+    public static final int AFTER_30_MINUTES = 1800;
+    static ShardedJedisPool jedisPool = RedisConfigs.load().get("realtimeDataStats").getShardedJedisPool();
 
-    public static ContextSession synchData(String locationCode, String userDeviceId, String ip, String host,
-	    String appId, String touchpointId, String visitorId, String profileId, String fingerprintId) {
+    public static ContextSession synchDataForNewSession(DateTime dateTime, String dateTimeKey, String locationCode,
+	    String userDeviceId, String ip, String mediaHost, String appId, String touchpointId, String visitorId,
+	    String profileId, String fingerprintId) {
 
-	ContextSession s = new ContextSession(locationCode, userDeviceId, ip, host, appId, touchpointId, visitorId,
-		profileId, fingerprintId);
+	ContextSession s = new ContextSession(dateTime, dateTimeKey, locationCode, userDeviceId, ip, mediaHost, appId,
+		touchpointId, visitorId, profileId, fingerprintId);
 
 	// FIXME run async
-	//ContextSessionDaoUtil.create(s);
+	ContextSessionDaoUtil.create(s);
 
 	return s;
     }
 
-    public static ContextSession synchData(HttpServerRequest req, MultiMap params, DeviceInfo dv) {
+    public static ContextSession synchData(final String clientSessionKey, HttpServerRequest req, MultiMap params, DeviceInfo dv) {
+	RedisCommand<ContextSession> cmd = new RedisCommand<ContextSession>(jedisPool) {
+	    @Override
+	    protected ContextSession build() throws JedisException {
+		String dateTimeKey = null;
+		if(StringUtil.isNotEmpty(clientSessionKey)) {
+		    dateTimeKey = jedis.get(clientSessionKey);
+		}
+		ContextSession currentSession = null;
+		if (dateTimeKey == null) {
+		    
+		    // the session is expired, so create a new one and commit to database
+		    DateTime dateTime = new DateTime();
+		    currentSession = synchDataForNewSession(req, params, dv, dateTime, dateTimeKey);
+		    dateTimeKey = ContextSession.getSessionDateTimeKey(dateTime);
+		    String newSessionKey = currentSession.getSessionKey();
+
+		    Pipeline p = jedis.pipelined();
+		    p.set(newSessionKey, dateTimeKey);
+		    p.expire(newSessionKey, AFTER_30_MINUTES);
+		    p.sync();
+
+		} else {
+		    
+		    // get from database for event recording
+		    currentSession = ContextSessionDaoUtil.getByKey(clientSessionKey);
+		}
+		return currentSession;
+	    }
+	};
+
+	return cmd.execute();
+    }
+
+    public static ContextSession synchDataForNewSession(HttpServerRequest req, MultiMap params, DeviceInfo dv,
+	    DateTime dateTime, String dateTimeKey) {
 	String ip = RequestInfoUtil.getRemoteIP(req);
 	GeoLocation loc = GeoLocationUtil.getGeoLocation(ip);
 
 	String userDeviceId = StringUtil.safeString(params.get("dvid"));
-	String host = req.host();
+	String mediaHost = StringUtil.safeString(params.get("mediaHost"));
 	String appId = StringUtil.safeString(params.get("appid"));
 	String touchpointId = StringUtil.safeString(params.get("tpid"));
 	String visitorId = StringUtil.safeString(params.get("vsid"));
 	String profileId = StringUtil.safeString(params.get("pfid"));
 	String fingerprintId = StringUtil.safeString(params.get("fgp"));
 	String locationCode = loc.getLocationCode();
-	return synchData(locationCode, userDeviceId, ip, host, appId, touchpointId, visitorId, profileId,
-		fingerprintId);
+	return synchDataForNewSession(dateTime, locationCode, dateTimeKey, userDeviceId, ip, mediaHost, appId,
+		touchpointId, visitorId, profileId, fingerprintId);
     }
 }

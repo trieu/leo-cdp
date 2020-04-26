@@ -59,6 +59,7 @@ public class EventTrackingUtil {
 	boolean commited = eventBufferQueue.add(new EventLog(prefix, unixtime, events, withSummary));
 	return commited;
     }
+    
 
     public static boolean updateEventPageView(final String uuid, final String event, final String hostReferer, long delta) {
 	boolean commited = false;

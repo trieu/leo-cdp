@@ -1,10 +1,12 @@
 package leotech.cdp.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.UUID;
 
-import org.apache.commons.lang3.time.DateUtils;
+import org.joda.time.DateTime;
 
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
@@ -12,9 +14,9 @@ import com.arangodb.entity.DocumentField;
 import com.arangodb.entity.DocumentField.Type;
 import com.arangodb.model.PersistentIndexOptions;
 import com.arangodb.model.TtlIndexOptions;
+import com.devskiller.friendly_id.FriendlyId;
 
 import leotech.system.util.database.ArangoDbUtil;
-import rfx.core.util.DateTimeUtil;
 import rfx.core.util.StringUtil;
 
 /**
@@ -23,6 +25,8 @@ import rfx.core.util.StringUtil;
  */
 public class ContextSession extends CdpPersistentObject {
 
+    public static final String DATE_HOUR_FORMAT_PATTERN = "yyyy-MM-dd-HH";
+    static final DateFormat DATEHOUR_FORMAT = new SimpleDateFormat(DATE_HOUR_FORMAT_PATTERN);
     private static final int HOURS_OF_A_WEEK = 168;
 
     public static final String COLLECTION_NAME = COLLECTION_PREFIX + ContextSession.class.getSimpleName().toLowerCase();
@@ -36,32 +40,49 @@ public class ContextSession extends CdpPersistentObject {
 	    instance = arangoDatabase.collection(COLLECTION_NAME);
 
 	    // ensure indexing key fields for fast lookup
-	    
+
 	    instance.ensurePersistentIndex(Arrays.asList("userDeviceId"), new PersistentIndexOptions().unique(false));
 	    instance.ensurePersistentIndex(Arrays.asList("locationCode"), new PersistentIndexOptions().unique(false));
 	    instance.ensurePersistentIndex(Arrays.asList("appId"), new PersistentIndexOptions().unique(false));
 	    instance.ensurePersistentIndex(Arrays.asList("host"), new PersistentIndexOptions().unique(false));
-	    instance.ensurePersistentIndex(Arrays.asList("refTouchpointId"), new PersistentIndexOptions().unique(false));
+	    instance.ensurePersistentIndex(Arrays.asList("refTouchpointId"),
+		    new PersistentIndexOptions().unique(false));
 	    instance.ensurePersistentIndex(Arrays.asList("visitorId"), new PersistentIndexOptions().unique(false));
 	    instance.ensurePersistentIndex(Arrays.asList("profileId"), new PersistentIndexOptions().unique(false));
 	    instance.ensureTtlIndex(Arrays.asList("autoDeleteAt"), new TtlIndexOptions().expireAfter(0));
-	    
+
 	}
 	return instance;
     }
 
     @Override
     public boolean isReadyForSave() {
-	return StringUtil.isNotEmpty(ip) && StringUtil.isNotEmpty(sessionKey)&& StringUtil.isNotEmpty(refTouchpointId);
+	return StringUtil.isNotEmpty(ip) && StringUtil.isNotEmpty(sessionKey) && StringUtil.isNotEmpty(refTouchpointId);
+    }
+
+    /**
+     * @param Date
+     * @return date string in format "yyyy-MM-dd-HH"
+     */
+    public static String getSessionDateTimeKey(DateTime dt) {
+	String tk = DATEHOUR_FORMAT.format(dt.toDate());
+	int m = dt.getMinuteOfHour();
+	if (m < 30) {
+	    tk += "-00";
+	} else {
+	    tk += "-30";
+	}
+	return tk;
     }
 
     @DocumentField(Type.KEY)
     String sessionKey;
 
+    String dateTimeKey;
     String userDeviceId;
     String ip;
     String locationCode;
-    String host;
+    String mediaHost;
     String appId;
     String refTouchpointId;
 
@@ -72,42 +93,44 @@ public class ContextSession extends CdpPersistentObject {
     Date createAt;
     Date autoDeleteAt;
 
-    public ContextSession(String locationCode,String userDeviceId, String ip, String host, String appId, String touchpointId, String visitorId,
-	    String profileId, String fingerprintId, int hoursToDelete) {
+    public ContextSession(DateTime dateTime,String dateTimeKey,String locationCode, String userDeviceId, String ip, String host, String appId,
+	    String touchpointId, String visitorId, String profileId, String fingerprintId, int hoursToDelete) {
 	super();
-	init(locationCode,userDeviceId, ip, host, appId, touchpointId, visitorId, profileId, fingerprintId, hoursToDelete);
+	init(dateTime,dateTimeKey,locationCode, userDeviceId, ip, host, appId, touchpointId, visitorId, profileId, fingerprintId,
+		hoursToDelete);
     }
 
-    public ContextSession(String locationCode,String userDeviceId, String ip, String host, String appId, String touchpointId, String visitorId,
-	    String profileId, String fingerprintId) {
+    public ContextSession(DateTime dateTime,String dateTimeKey,String locationCode, String userDeviceId, String ip, String host, String appId,
+	    String touchpointId, String visitorId, String profileId, String fingerprintId) {
 	super();
-	init(locationCode,userDeviceId, ip, host, appId, touchpointId, visitorId, profileId, fingerprintId, HOURS_OF_A_WEEK);
+	init(dateTime,dateTimeKey,locationCode, userDeviceId, ip, host, appId, touchpointId, visitorId, profileId, fingerprintId, 0);
     }
 
-    private void init(String locationCode,String userDeviceId, String ip, String host, String appId, String refTouchpointId, String visitorId,
-	    String profileId, String fingerprintId, int hoursToDelete) {
+    private void init(DateTime dateTime,String dateTimeKey, String locationCode, String userDeviceId, String ip, String mediaHost, String appId,
+	    String refTouchpointId, String visitorId, String profileId, String fingerprintId, int hoursToDelete) {
 	this.locationCode = locationCode;
 	this.userDeviceId = userDeviceId;
 	this.ip = ip;
-	this.host = host;
+	this.mediaHost = mediaHost;
 	this.appId = appId;
 	this.refTouchpointId = refTouchpointId;
 	this.visitorId = visitorId;
 	this.profileId = profileId;
 	this.fingerprintId = fingerprintId;
 
-	Date d = new Date();
-	this.createAt = d;
-	if (hoursToDelete > HOURS_OF_A_WEEK) {
-	    this.autoDeleteAt = DateUtils.addHours(d, hoursToDelete);
-	} else {
-	    this.autoDeleteAt = DateUtils.addHours(d, HOURS_OF_A_WEEK);
-	}
-
-	String nowMinuteStr = DateTimeUtil.formatDateHourMinute(d);
+	
+	this.createAt = dateTime.toDate();
+	this.dateTimeKey = dateTimeKey;
+	
 	String userId = StringUtil.isEmpty(profileId) ? visitorId : profileId;
-	String keyHint = locationCode + userDeviceId + ip + host + appId + userId + fingerprintId + nowMinuteStr;
-	this.sessionKey = UUID.nameUUIDFromBytes(keyHint.getBytes()).toString();
+	String keyHint = locationCode + userDeviceId + ip + mediaHost + appId + userId + fingerprintId + dateTime.getMillis();
+	this.sessionKey = FriendlyId.toFriendlyId(UUID.nameUUIDFromBytes(keyHint.getBytes()));
+	
+	if (hoursToDelete > HOURS_OF_A_WEEK) {
+	    this.autoDeleteAt = dateTime.plusHours(hoursToDelete).toDate();
+	} else {
+	    this.autoDeleteAt = dateTime.plusHours(HOURS_OF_A_WEEK).toDate();
+	}
     }
 
     public String getUserDeviceId() {
@@ -126,12 +149,12 @@ public class ContextSession extends CdpPersistentObject {
 	this.ip = ip;
     }
 
-    public String getHost() {
-	return host;
+    public String getMediaHost() {
+	return mediaHost;
     }
 
-    public void setHost(String host) {
-	this.host = host;
+    public void setMediaHost(String mediaHost) {
+	this.mediaHost = mediaHost;
     }
 
     public String getAppId() {
@@ -143,11 +166,11 @@ public class ContextSession extends CdpPersistentObject {
     }
 
     public String getRefTouchpointId() {
-        return refTouchpointId;
+	return refTouchpointId;
     }
 
     public void setRefTouchpointId(String refTouchpointId) {
-        this.refTouchpointId = refTouchpointId;
+	this.refTouchpointId = refTouchpointId;
     }
 
     public String getVisitorId() {
@@ -192,6 +215,14 @@ public class ContextSession extends CdpPersistentObject {
 
     public String getSessionKey() {
 	return sessionKey;
+    }
+
+    public String getDateTimeKey() {
+	return dateTimeKey;
+    }
+
+    public String getLocationCode() {
+	return locationCode;
     }
 
 }

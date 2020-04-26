@@ -18,6 +18,8 @@ public abstract class BaseApiHandler {
     public static final String CONTENT_TYPE_XML = "application/xml";
     public static final String CONTENT_TYPE_JAVASCRIPT = "text/javascript;charset=UTF-8";
     public static final String CONTENT_TYPE_MULTIPART = "multipart/form-data";
+    public static final String CONTENT_TYPE_TEXT = "text/plain";
+    public static final String CONTENT_TYPE_HTML = "text/html;charset=UTF-8";
     
 
     protected static void updateRealtimeEvent(String userId, String contentId, String categoryId, String pageId,

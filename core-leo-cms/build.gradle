@@ -26,6 +26,9 @@ dependencies {
 	// AWS Java SDK for Amazon S3
 	// compile group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.11.534'
 	
+	// Joda Time https://www.joda.org/joda-time/index.html
+	compile group: 'joda-time', name: 'joda-time', version: '2.10.6'
+	
 	// Crawler4J
 	compile group: 'com.sleepycat', name: 'je', version: '18.3.1'
 	compile group: 'edu.uci.ics', name: 'crawler4j', version: '4.4.0'
