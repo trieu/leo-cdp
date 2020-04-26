@@ -2,6 +2,7 @@ package leotech.cdp.model;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Map;
 
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
@@ -13,7 +14,6 @@ import com.google.gson.annotations.Expose;
 import leotech.system.util.database.ArangoDbUtil;
 import rfx.core.util.DateTimeUtil;
 import rfx.core.util.StringUtil;
-import rfx.core.util.Utils;
 
 /**
  * @author Trieu Nguyen
@@ -127,8 +127,6 @@ public class TrackingEvent extends CdpPersistentObject {
     @Expose
     protected String browserName;
 
-    @Expose
-    protected String webCookies;
 
     @Expose
     protected String deviceId;
@@ -146,6 +144,8 @@ public class TrackingEvent extends CdpPersistentObject {
 
     @Expose
     protected String feedbackData;
+    
+    protected Map<String,String> extAttributes;
 
     @Expose
     protected int partitionId = 0;
@@ -200,7 +200,7 @@ public class TrackingEvent extends CdpPersistentObject {
      * @param sourceIP
      */
     public TrackingEvent(String observerId, String sessionKey, String metricName, long metricValue, String refProfileId,
-	    int refProfileType, String srcTouchpointId, String refTouchpointId, String browserName, String webCookies,
+	    int refProfileType, String srcTouchpointId, String refTouchpointId, String browserName,
 	    String deviceId, String deviceOS, String deviceName,String deviceType, String sourceIP) {
 	super();
 	this.observerId = observerId;
@@ -212,7 +212,7 @@ public class TrackingEvent extends CdpPersistentObject {
 	this.srcTouchpointId = srcTouchpointId;
 	this.refTouchpointId = refTouchpointId;
 	this.browserName = browserName;
-	this.webCookies = webCookies;
+	
 	this.deviceId = deviceId;
 	this.deviceOS = deviceOS;
 	this.deviceName = deviceName;
@@ -392,12 +392,22 @@ public class TrackingEvent extends CdpPersistentObject {
 	this.browserName = browserName;
     }
 
-    public String getWebCookies() {
-	return webCookies;
+    
+
+    public String getDeviceType() {
+        return deviceType;
     }
 
-    public void setWebCookies(String webCookies) {
-	this.webCookies = webCookies;
+    public void setDeviceType(String deviceType) {
+        this.deviceType = deviceType;
+    }
+
+    public Map<String, String> getExtAttributes() {
+        return extAttributes;
+    }
+
+    public void setExtAttributes(Map<String, String> extAttributes) {
+        this.extAttributes = extAttributes;
     }
 
     public String getDeviceId() {

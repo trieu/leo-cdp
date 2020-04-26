@@ -26,7 +26,7 @@
 		</config>
 
 		<config name="pathGeoIP">
-			/home/platform/data/geoip-data/GeoIP2-City-Asia-Pacific.mmdb
+			/Users/mac/projects/leo-cms-framework/core-leo-cms/data/GeoIP2-City-Asia-Pacific.mmdb
 		</config>
 
 		<!-- Default Data Config for static resource handler -->

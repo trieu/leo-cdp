@@ -27,7 +27,6 @@ import io.vertx.core.http.HttpServerResponse;
 import leotech.cms.router.DeliveryApiRouter;
 import leotech.system.model.GeoLocation;
 import rfx.core.configs.WorkerConfigs;
-import rfx.core.util.HttpRequestUtil;
 import rfx.core.util.StringUtil;
 
 public class GeoLocationUtil {
@@ -158,6 +157,7 @@ public class GeoLocationUtil {
 	    if (response != null) {
 		City city = response.getCity();
 		if (city.getGeoNameId() != null) {
+		    geoLoc.setIp(ip);
 		    geoLoc.setCityName(city.getName());
 		    geoLoc.setGeoNameId(city.getGeoNameId());
 		    Location location = response.getLocation();
@@ -178,6 +178,6 @@ public class GeoLocationUtil {
 
     public static void main(String[] args) throws Exception {
 
-	System.out.println(getGeoLocation("14.161.21.142"));
+	System.out.println("test "+getGeoLocation("116.99.55.34"));
     }
 }

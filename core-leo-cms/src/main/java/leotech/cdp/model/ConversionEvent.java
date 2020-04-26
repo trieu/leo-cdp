@@ -58,17 +58,17 @@ public class ConversionEvent extends TrackingEvent {
     
 
     public ConversionEvent(String observerId, String sessionKey, String metricName, long metricValue, String refProfileId, int refProfileType,
-	    String srcTouchpointId, String refTouchpointId, String browserName, String webCookies, String deviceId,
+	    String srcTouchpointId, String refTouchpointId, String browserName,  String deviceId,
 	    String deviceOS, String deviceName,String deviceType, String sourceIP,int timeSpent, String srcEventKey) {
-	super(observerId, sessionKey, metricName, metricValue, refProfileId, refProfileType, srcTouchpointId, refTouchpointId, browserName, webCookies, deviceId, deviceOS, deviceName, deviceType, sourceIP);
+	super(observerId, sessionKey, metricName, metricValue, refProfileId, refProfileType, srcTouchpointId, refTouchpointId, browserName,  deviceId, deviceOS, deviceName, deviceType, sourceIP);
 	this.timeSpent = timeSpent;
 	this.srcEventKey = srcEventKey;
     }
     
     public ConversionEvent(String observerId, String sessionKey, String metricName, long metricValue, String refProfileId, int refProfileType,
-	    String srcTouchpointId, String refTouchpointId, String browserName, String webCookies, String deviceId,
+	    String srcTouchpointId, String refTouchpointId, String browserName,  String deviceId,
 	    String deviceOS, String deviceName,String deviceType, String sourceIP, String srcEventKey) {
-	super(observerId, sessionKey, metricName, metricValue, refProfileId, refProfileType, srcTouchpointId, refTouchpointId, browserName, webCookies, deviceId, deviceOS, deviceName,deviceType, sourceIP);
+	super(observerId, sessionKey, metricName, metricValue, refProfileId, refProfileType, srcTouchpointId, refTouchpointId, browserName, deviceId, deviceOS, deviceName,deviceType, sourceIP);
 	this.srcEventKey = srcEventKey;
     }
 

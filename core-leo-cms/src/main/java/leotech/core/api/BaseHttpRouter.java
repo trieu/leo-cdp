@@ -1,7 +1,6 @@
 package leotech.core.api;
 
-import io.netty.handler.codec.http.cookie.Cookie;
-import io.netty.handler.codec.http.cookie.DefaultCookie;
+import io.vertx.core.http.Cookie;
 import io.vertx.core.MultiMap;
 import io.vertx.core.http.HttpHeaders;
 import io.vertx.ext.web.RoutingContext;
@@ -33,7 +32,7 @@ public abstract class BaseHttpRouter {
     }
 
     public static Cookie createCookie(String name, String value, String domain, String path) {
-	Cookie cookie = new DefaultCookie(name, value);
+	Cookie cookie = Cookie.cookie(name, value);
 	cookie.setDomain(domain);
 	cookie.setPath(path);
 	return cookie;

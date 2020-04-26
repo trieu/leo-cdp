@@ -21,7 +21,7 @@ public class ContextSessionService {
     public static final int AFTER_30_MINUTES = 1800;
     static ShardedJedisPool jedisPool = RedisConfigs.load().get("realtimeDataStats").getShardedJedisPool();
 
-    public static ContextSession synchDataForNewSession(String observerId,DateTime dateTime, String dateTimeKey, String locationCode,
+    public static ContextSession createContextSession(String observerId,DateTime dateTime, String dateTimeKey, String locationCode,
 	    String userDeviceId, String ip, String mediaHost, String appId, String touchpointId, String visitorId,
 	    String profileId, String fingerprintId) {
 
@@ -33,42 +33,8 @@ public class ContextSessionService {
 
 	return s;
     }
-
-    public static ContextSession synchData(final String clientSessionKey, HttpServerRequest req, MultiMap params, DeviceInfo dv) {
-	RedisCommand<ContextSession> cmd = new RedisCommand<ContextSession>(jedisPool) {
-	    @Override
-	    protected ContextSession build() throws JedisException {
-		String dateTimeKey = null;
-		if(StringUtil.isNotEmpty(clientSessionKey)) {
-		    dateTimeKey = jedis.get(clientSessionKey);
-		}
-		ContextSession currentSession = null;
-		if (dateTimeKey == null) {
-		    
-		    // the session is expired, so create a new one and commit to database
-		    DateTime dateTime = new DateTime();
-		    currentSession = synchDataForNewSession(req, params, dv, dateTime, dateTimeKey);
-		    dateTimeKey = ContextSession.getSessionDateTimeKey(dateTime);
-		    String newSessionKey = currentSession.getSessionKey();
-
-		    Pipeline p = jedis.pipelined();
-		    p.set(newSessionKey, dateTimeKey);
-		    p.expire(newSessionKey, AFTER_30_MINUTES);
-		    p.sync();
-
-		} else {
-		    
-		    // get from database for event recording
-		    currentSession = ContextSessionDaoUtil.getByKey(clientSessionKey);
-		}
-		return currentSession;
-	    }
-	};
-
-	return cmd.execute();
-    }
-
-    public static ContextSession synchDataForNewSession(HttpServerRequest req, MultiMap params, DeviceInfo dv,
+    
+    public static ContextSession createContextSession(HttpServerRequest req, MultiMap params, DeviceInfo dv,
 	    DateTime dateTime, String dateTimeKey) {
 	String ip = RequestInfoUtil.getRemoteIP(req);
 	GeoLocation loc = GeoLocationUtil.getGeoLocation(ip);
@@ -85,7 +51,43 @@ public class ContextSessionService {
 	
 	//TODO verify data
 	
-	return synchDataForNewSession(observerId,dateTime, locationCode, dateTimeKey, userDeviceId, ip, mediaHost, appId,
+	return createContextSession(observerId,dateTime, locationCode, dateTimeKey, userDeviceId, ip, mediaHost, appId,
 		touchpointId, visitorId, profileId, fingerprintId);
     }
+
+    public static ContextSession synchData(final String clientSessionKey, HttpServerRequest req, MultiMap params, DeviceInfo dv) {
+	RedisCommand<ContextSession> cmd = new RedisCommand<ContextSession>(jedisPool) {
+	    @Override
+	    protected ContextSession build() throws JedisException {
+		String dateTimeKey = null;
+		if(StringUtil.isNotEmpty(clientSessionKey)) {
+		    dateTimeKey = jedis.get(clientSessionKey);
+		}
+		ContextSession ctxSession = null;
+		if (dateTimeKey == null) {
+		    
+		    // the session is expired, so create a new one and commit to database
+		    DateTime dateTime = new DateTime();
+		    ctxSession = createContextSession(req, params, dv, dateTime, dateTimeKey);
+		    dateTimeKey = ContextSession.getSessionDateTimeKey(dateTime);
+		    String newSessionKey = ctxSession.getSessionKey();
+
+		    Pipeline p = jedis.pipelined();
+		    p.set(newSessionKey, dateTimeKey);
+		    p.expire(newSessionKey, AFTER_30_MINUTES);
+		    p.sync();
+
+		} else {
+		    
+		    // get from database for event recording
+		    ctxSession = ContextSessionDaoUtil.getByKey(clientSessionKey);
+		}
+		return ctxSession;
+	    }
+	};
+
+	return cmd.execute();
+    }
+
+    
 }

@@ -8,6 +8,7 @@ public class GeoLocation {
     int geoNameId = 0;
     String country;
     double latitude, longitude;
+    String ip;
     String locationCode;
 
     public GeoLocation(String cityName, int geoNameId) {
@@ -68,6 +69,16 @@ public class GeoLocation {
 
     public void setLocationCode(String locationCode) {
         this.locationCode = locationCode;
+    }
+    
+    
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
     @Override

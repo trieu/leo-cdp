@@ -27,14 +27,11 @@ import rfx.core.util.StringUtil;
  */
 public class EventObserverHttpRouter extends BaseHttpRouter {
 
-    private static final String TRANSACTION_CODE = "tsc";
     public static final String PREFIX_CLICK_REDIRECT = "/clr/";
     public static final String PREFIX_CONTEXT_SESSION = "/cxs/";
     public static final String PREFIX_EVENT_VIEW = "/etv/";
     public static final String PREFIX_EVENT_ACTION = "/eta/";
     public static final String PREFIX_EVENT_CONVERSION = "/etc/";
-    public static final String EVENT_NAME = "en";
-    public static final String EVENT_VALUE = "ev";
 
     public EventObserverHttpRouter(RoutingContext context) {
 	super(context);
@@ -70,64 +67,60 @@ public class EventObserverHttpRouter extends BaseHttpRouter {
 	// int platformId = dv.platformType;
 
 	try {
-	    String sessionKey = StringUtil.safeString(params.get("sk"));
-	    ContextSession contextSession = ContextSessionService.synchData(sessionKey, req, params, dv);
+	    
 
+	    // set CORS Header
 	    String origin = StringUtil.safeString(reqHeaders.get(BaseApiHandler.ORIGIN), "*");
 	    BaseHttpRouter.setCorsHeaders(outHeaders, origin);
 	    outHeaders.set(CONTENT_TYPE, BaseApiHandler.CONTENT_TYPE_JSON);
 
-	    String eventName = StringUtil.safeString(params.get(EVENT_NAME)).toLowerCase();
+	    //init core params
+	    String eventName = StringUtil.safeString(params.get(TrackingApi.EVENT_NAME)).toLowerCase();
+	    String sessionKey = StringUtil.safeString(params.get("sk"));
+	    ContextSession contextSession = ContextSessionService.synchData(sessionKey, req, params, dv);
 
 	    if (StringUtil.isNotEmpty(sessionKey) && StringUtil.isNotEmpty(eventName)) {
 
-		boolean ok = false;
+		int status = 404;
 		if (contextSession != null) {
 		    // event-view(pageview|screenview|storeview|trueview,contentId,sessionKey,profileId)
 		    if (uri.startsWith(PREFIX_EVENT_VIEW)) {
-			//ok = TrackingApi.record(contextSession, eventName);
-
+			status = TrackingApi.recordViewEvent(req, params, dv, contextSession, eventName);
 		    }
+
 		    // event-action(click|play|touch|contact,sessionKey,profileId)
 		    else if (uri.startsWith(PREFIX_EVENT_ACTION)) {
-			int eventValue = StringUtil.safeParseInt(params.get(EVENT_VALUE));
-			//ok = TrackingApi.record(contextSession, eventName, eventValue);
+			status = TrackingApi.recordActionEvent(req, params, dv, contextSession, eventName);
 		    }
 
 		    // event-conversion(add_to_cart|submit_form|checkout,sessionKey,profileId)
 		    else if (uri.startsWith(PREFIX_EVENT_CONVERSION)) {
-			int eventValue = StringUtil.safeParseInt(params.get(EVENT_VALUE));
-			String transactionCode = StringUtil.safeString(params.get(TRANSACTION_CODE));
-			// TODO for ext conversion data
-			//ok = TrackingApi.record(contextSession, eventName, eventValue, transactionCode);
+			status = TrackingApi.recordConversionEvent(req, params, dv, contextSession, eventName);
+		    }
+
+		    // synchronize the device (how), touchpoint's context (where), session (when)
+		    // and profile (who) into one object for analytics (understand why)
+		    else if (uri.startsWith(PREFIX_CONTEXT_SESSION)) {
+			status = 101;
+
 		    }
 		}
 
-		if (ok) {
-		    resp.end(new Gson().toJson(new ObserverResponse("ok", 200)));
+		if (status == 200) {
+		    resp.end(new Gson().toJson(new ObserverResponse("ok", status)));
+		} else if (status == 500) {
+		    resp.end(new Gson().toJson(new ObserverResponse("failed", status)));
+		} else if (status == 101) {
+		    resp.end(new Gson().toJson(new ObserverResponse(contextSession.getSessionKey(), status)));
 		} else {
-		    resp.end(new Gson().toJson(new ObserverResponse("failed", 503)));
+		    resp.end(new Gson().toJson(new ObserverResponse("invalid", status)));
 		}
 		return true;
 
 	    }
 
-	    // synchronize the device (how), touchpoint's context (where), session (when)
-	    // and profile (who) into one object for analytics (understand why)
-	    else if (uri.startsWith(PREFIX_CONTEXT_SESSION)) {
-		// CORS Header
-
-		if (contextSession != null) {
-		    resp.end(new Gson().toJson(new ObserverResponse(contextSession.getSessionKey(), 101)));
-		}
-
-		// TODO write log to Apache Kafka
-
-		return true;
-	    }
-
-	    // click redirect for O2O synchronization . E.g:
-	    // https://domain/clr/5wbwf6yUxVBcr48AMbz9cb
+	    // click redirect for O2O synchronization
+	    // E.g: https://domain/clr/5wbwf6yUxVBcr48AMbz9cb
 	    else if (uri.startsWith(PREFIX_CLICK_REDIRECT)) {
 
 		String[] segments = uri.split("/");
@@ -150,31 +143,7 @@ public class EventObserverHttpRouter extends BaseHttpRouter {
 		return true;
 	    }
 
-	    // ------ analytics handlers -----------
-	    else if (uri.startsWith("/metric/pageview")) {
-		// https://log.[hostname]/metric/pageview?uuid=cdebc033538a4ea596ab21b6b1567ecf&referrer=&url=https%3A%2F%2Fwww.fshare.vn%2Ffile%2FOKLYRPW83HVQ&host=www.fshare.vn&t=1450609053690&sid=7&tag=download%2Findex
-		String host = StringUtil.safeString(params.get("host")).toLowerCase();
-		String tag = StringUtil.safeString(params.get("tag")).toLowerCase();
-		if (StringUtil.isNotEmpty(host) && StringUtil.isNotEmpty(tag)) {
-		    // RealtimeTrackingUtil.updateEvent("pv:",DateTimeUtil.currentUnixTimestamp(),
-		    // "mpav-"+host, true);
-		    String uuid = StringUtil.safeString(params.get("uuid"));
-		    EventTrackingUtil.recordTrackingEvent(host, uuid, tag);
-		}
-		HttpTrackingUtil.trackingResponse(req);
-		return true;
-	    } else if (uri.startsWith("/metric/event")) {
-		// https://log.[hostname]/metric/event?uuid=cdebc033538a4ea596ab21b6b1567ecf&referrer=&url=https%3A%2F%2Fwww.fshare.vn%2Ffile%2FOKLYRPW83HVQ&host=www.fshare.vn&t=1450609053690&event=tgrm2016-pv
-		String hostReferer = StringUtil.safeString(params.get("host")).toLowerCase();
-		String event = StringUtil.safeString(params.get("event")).toLowerCase();
-
-		if (StringUtil.isNotEmpty(hostReferer) && StringUtil.isNotEmpty(event)) {
-		    String uuid = StringUtil.safeString(params.get("uuid"));
-		    EventTrackingUtil.recordTrackingEvent(hostReferer, uuid, "epv");
-		}
-		HttpTrackingUtil.trackingResponse(req);
-		return true;
-	    } else if (uri.equalsIgnoreCase("/ping")) {
+	    else if (uri.equalsIgnoreCase("/ping")) {
 		outHeaders.set(CONTENT_TYPE, "text/html");
 		resp.end("PONG");
 		return true;

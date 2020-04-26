@@ -10,11 +10,12 @@ import rfx.core.util.StringUtil;
 
 public class RequestInfoUtil {
 
+    private static final String X_FORWARDED_FOR = "X-Forwarded-For";
     private static final String _127_0_0_1 = "127.0.0.1";
     static final String unknown = "unknown";
 
     public static String getRemoteIP(HttpServerRequest request) {
-	String ipAddress = request.headers().get("X-Forwarded-For");
+	String ipAddress = request.headers().get(X_FORWARDED_FOR);
 	if (!StringUtil.isNullOrEmpty(ipAddress) && !unknown.equalsIgnoreCase(ipAddress)) {
 	    // LogUtil.dumpToFileIpLog(ipAddress);
 	    String[] toks = ipAddress.split(",");
