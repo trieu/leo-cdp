@@ -49,6 +49,16 @@
 			,"dbdriver" : "arangodb"
 			,"dbdriverclasspath" : "com.arangodb.ArangoDB"
 			,"enabled" : true
+		},
+		"leoCdpDbConfigs" : {
+			"username" : "root"
+			,"password" : "123456"
+			,"database" : "bdvn_cms"
+			,"host" : "127.0.0.1"				
+			,"port" : 8529
+			,"dbdriver" : "arangodb"
+			,"dbdriverclasspath" : "com.arangodb.ArangoDB"
+			,"enabled" : true
 		}
 	}
 }

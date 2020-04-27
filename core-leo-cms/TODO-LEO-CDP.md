@@ -7,6 +7,20 @@
 
 ## Case study 
 
+## Public API for tracking
+
+getContextSession
+http://log.xemgiday.com/css-init?observer=tester&media=xemgiday.com&itouchid=homepage&visid=12234
+
+record-view-event
+http://log.xemgiday.com/etv?observer=tester&media=xemgiday.com&itouchid=homepage&visid=12234&ctxsk=1NlAlT5gPD4Oru3c8jVKZt&en=pageview&stouchid=homepage
+
+record-action-event
+http://log.xemgiday.com/eta?observer=tester&media=xemgiday.com&itouchid=homepage&visid=12234&ctxsk=1NlAlT5gPD4Oru3c8jVKZt&en=click&stouchid=homepage
+
+record-conversion-event
+http://log.xemgiday.com/eta?observer=tester&media=xemgiday.com&itouchid=homepage&visid=12234&ctxsk=1NlAlT5gPD4Oru3c8jVKZt&en=add_to_cart&stouchid=homepage
+
 ## Core data models
 ### Version 1.0
 
