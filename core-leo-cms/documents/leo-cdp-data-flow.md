@@ -3,22 +3,33 @@ sequenceDiagram
     Touchpoint->>+Observer: loadObserverCode
     Observer-->>Touchpoint: observerIsReady
     Observer->>+ContextSessionApi: getContextSession
-    ContextSessionApi->>+ContextSessionDao: createContextSession
-    ContextSessionDao->>+ContextSessionApi: ContextSessionData
-    ContextSessionApi-->>Observer: data(sessionKey,profileId)
-    Touchpoint->>+Observer:monitoring(pageview|screenview|storeview|trueview)
-    Observer->>+TrackingApi: event-view(pageview|screenview|storeview|trueview,contentId,sessionKey,profileId)
+    ContextSessionApi->>+SessionDataService: createContextSession
+    SessionDataService->>+ProfileDataService: getProfile(sessionKey,visitorId,observerId,initTouchpointId,ip,deviceId,email,phone)
+    ProfileDataService-->>SessionDataService: ProfileData-ANONYMOUS|IDENTIFIED|CRM_USER
+    SessionDataService->>+ContextSessionApi: ContextSessionData
+    ContextSessionApi-->>Observer: data(sessionKey,visitorId)
+    Touchpoint->>+Observer:seen(pageview|screenview|storeview|trueview|placeview)
+    Observer->>+TrackingApi: event-view(pageview|screenview|storeview|trueview|placeview,contentId,sessionKey,visitorId)
     TrackingApi->>+DataFilter:validateWithRules
-    DataFilter->>+TrackingEventDao: record-view-event
-    TrackingApi-->>Observer: Ok|Invalid|Failed
-    Touchpoint->>+Observer: monitoring(click|play|touch|contact)
-    Observer->>+TrackingApi: event-action(click|play|touch|contact,sessionKey,profileId)
+    DataFilter->>+ProfileDataService:validateWithProfileSchema
+    DataFilter->>+EventDataService: record-view-event
+    TrackingApi-->>Observer: ok|failed|invalid
+    Touchpoint->>+Observer: seen(click|play|touch|contact|watch|test)
+    Observer->>+TrackingApi: event-action(click|play|touch|contact|watch|test,sessionKey,visitorId)
     TrackingApi->>+DataFilter:validateWithRules
-    DataFilter->>+TrackingEventDao: record-action-event
-    TrackingApi-->>Observer: Ok|Invalid|Failed
-    Touchpoint->>+Observer: monitoring(add_to_cart|submit_form|checkout)
-    Observer->>+TrackingApi: event-conversion(add_to_cart|submit_form|checkout,sessionKey,profileId)
+    DataFilter->>+ProfileDataService:validateWithProfileSchema
+    DataFilter->>+EventDataService: record-action-event
+    TrackingApi-->>Observer: ok|failed|invalid
+    Touchpoint->>+Observer: seen(add_to_cart|submit_form|checkout|join)
+    Observer->>+TrackingApi: event-conversion(add_to_cart|submit_form|checkout|join,sessionKey,visitorId)
     TrackingApi->>+DataFilter:validateWithRules
-    DataFilter->>+TrackingEventDao: record-conversion-event
-    TrackingApi-->>Observer: Ok|Invalid|Failed
+    DataFilter->>+ProfileDataService:validateWithProfileSchema
+    DataFilter->>+EventDataService: record-conversion-event
+    TrackingApi-->>Observer: ok|failed|invalid
+    Analytics360Service->>+ProfileDataService:query(visitorId|profileId|email|touchpoint|observer)
+    ProfileDataService-->>Analytics360Service:listOfProfiles
+    Analytics360Service->>+EventDataService:query(visitorId|profileId)
+    EventDataService-->>Analytics360Service:listOfEvents
+    Analytics360Service->>+SessionDataService:query(visitorId|profileId)
+    SessionDataService-->>Analytics360Service:listOfContextSessions
 ```
