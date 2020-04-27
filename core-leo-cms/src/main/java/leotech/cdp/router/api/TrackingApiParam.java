@@ -1,7 +1,7 @@
 package leotech.cdp.router.api;
 
 public final class TrackingApiParam {
-    public static final String CTX_SESSION_KEY = "cssk";
+    public static final String CTX_SESSION_KEY = "ctxsk";
     public static final String FINGERPRINT_ID = "fgid";
     
     public static final String PROFILE_ID = "prfd";

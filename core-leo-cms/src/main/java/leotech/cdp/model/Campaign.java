@@ -3,6 +3,7 @@ package leotech.cdp.model;
 import com.arangodb.ArangoCollection;
 
 public class Campaign extends CdpPersistentObject implements Comparable<Campaign> {
+    public static final String COLLECTION_NAME = COLLECTION_PREFIX + Campaign.class.getSimpleName().toLowerCase();
 
     @Override
     public ArangoCollection getCollection() {

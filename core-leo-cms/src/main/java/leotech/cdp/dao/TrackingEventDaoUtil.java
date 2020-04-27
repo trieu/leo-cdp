@@ -1,24 +1,23 @@
 package leotech.cdp.dao;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
-import com.devskiller.friendly_id.FriendlyId;
+import com.google.gson.Gson;
 
-import leotech.cdp.model.Profile;
 import leotech.cdp.model.TrackingEvent;
-import leotech.cms.model.Page;
 import leotech.core.config.AqlTemplate;
 import leotech.system.util.database.ArangoDbQuery;
 import leotech.system.util.database.ArangoDbUtil;
+import rfx.core.util.LogUtil;
 
 public class TrackingEventDaoUtil {
 
    
+    private static final String CLASS_NAME = TrackingEventDaoUtil.class.getSimpleName();
     static final String AQL_GET_TRACKING_EVENTS_BY_PROFILE_ID = AqlTemplate.get("AQL_GET_TRACKING_EVENTS_BY_PROFILE_ID");
     
 
@@ -29,6 +28,10 @@ public class TrackingEventDaoUtil {
 		col.insertDocument(e);
 		return true;
 	    }
+	} else {
+	    String json = new Gson().toJson(e);
+	    LogUtil.e(CLASS_NAME, "invalid TrackingEvent \n" + json);
+	    
 	}
 	return false;
     }

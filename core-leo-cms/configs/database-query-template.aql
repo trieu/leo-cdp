@@ -144,11 +144,36 @@ AQL_GET_FILE_METADATA_BY_OBJECT =>
 	RETURN f
 ;
 
-########### AQL PROFILE COLLECTION ########################################################################################################;
+########### AQL CDP PROFILE COLLECTION ########################################################################################################;
 
-AQL_GET_PROFILE_BY_ID  =>
-	FOR p in profile FILTER p.id == @id  
-	RETURN p
+AQL_GET_PROFILE_BY_ID =>
+	FOR e in cdp_profile FILTER e.id == @id  
+	RETURN e
+;
+
+########### AQL CDP PROFILE COLLECTION ########################################################################################################;
+
+AQL_GET_CONTEXT_SESSION_BY_KEY =>
+	FOR e in cdp_contextsession FILTER e.sessionKey == @sessionKey  
+	RETURN e
+;
+
+AQL_GET_CONTEXT_SESSIONS_BY_VISITOR_ID =>
+	FOR e in cdp_contextsession FILTER e.visitorId == @visitorId  
+	RETURN e
+;
+
+AQL_GET_CONTEXT_SESSIONS_BY_PROFILE_ID =>
+	FOR e in cdp_contextsession FILTER e.profileId == @profileId  
+	RETURN e
+;
+
+########### AQL CDP TRACKING_EVENTS COLLECTION ########################################################################################################;
+
+AQL_GET_TRACKING_EVENTS_BY_PROFILE_ID =>
+	FOR e in cdp_trackingevent FILTER e.refProfileId == @refProfileId  
+	SORT e.timestamp DESC
+	RETURN e
 ;
 
 

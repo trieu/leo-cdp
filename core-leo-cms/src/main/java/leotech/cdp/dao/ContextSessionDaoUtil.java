@@ -16,9 +16,9 @@ import leotech.system.util.database.ArangoDbUtil;
 
 public class ContextSessionDaoUtil {
 
-    static final String AQL_GET_USER_SESSIONS_BY_VISITOR_ID = AqlTemplate.get("AQL_GET_USER_SESSIONS_BY_VISITOR_ID");
-    static final String AQL_GET_USER_SESSIONS_BY_PROFILE_ID = AqlTemplate.get("AQL_GET_USER_SESSIONS_BY_PROFILE_ID");
-    static final String AQL_GET_USER_SESSION_BY_KEY = AqlTemplate.get("AQL_GET_USER_SESSION_BY_KEY");
+    static final String AQL_GET_CONTEXT_SESSIONS_BY_VISITOR_ID = AqlTemplate.get("AQL_GET_CONTEXT_SESSIONS_BY_VISITOR_ID");
+    static final String AQL_GET_CONTEXT_SESSIONS_BY_PROFILE_ID = AqlTemplate.get("AQL_GET_CONTEXT_SESSIONS_BY_PROFILE_ID");
+    static final String AQL_GET_CONTEXT_SESSION_BY_KEY = AqlTemplate.get("AQL_GET_CONTEXT_SESSION_BY_KEY");
 
     public static ContextSession create(ContextSession s) {
 	if (s.isReadyForSave()) {
@@ -38,7 +38,7 @@ public class ContextSessionDaoUtil {
 	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
 	Map<String, Object> bindVars = new HashMap<>(1);
 	bindVars.put("sessionKey", sessionKey);
-	ContextSession s = new ArangoDbQuery<ContextSession>(db, AQL_GET_USER_SESSION_BY_KEY, bindVars,ContextSession.class).getResultsAsObject();
+	ContextSession s = new ArangoDbQuery<ContextSession>(db, AQL_GET_CONTEXT_SESSION_BY_KEY, bindVars,ContextSession.class).getResultsAsObject();
 	return s;
     }
 
@@ -46,7 +46,7 @@ public class ContextSessionDaoUtil {
 	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
 	Map<String, Object> bindVars = new HashMap<>(1);
 	bindVars.put("visitorId", visitorId);
-	List<ContextSession> list = new ArangoDbQuery<ContextSession>(db, AQL_GET_USER_SESSIONS_BY_VISITOR_ID, bindVars, ContextSession.class).getResultsAsList();
+	List<ContextSession> list = new ArangoDbQuery<ContextSession>(db, AQL_GET_CONTEXT_SESSIONS_BY_VISITOR_ID, bindVars, ContextSession.class).getResultsAsList();
 	return list;
     }
 
@@ -54,7 +54,7 @@ public class ContextSessionDaoUtil {
 	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
 	Map<String, Object> bindVars = new HashMap<>(1);
 	bindVars.put("profileId", profileId);
-	List<ContextSession> list = new ArangoDbQuery<ContextSession>(db, AQL_GET_USER_SESSIONS_BY_PROFILE_ID, bindVars,
+	List<ContextSession> list = new ArangoDbQuery<ContextSession>(db, AQL_GET_CONTEXT_SESSIONS_BY_PROFILE_ID, bindVars,
 		ContextSession.class).getResultsAsList();
 	return list;
     }

@@ -8,15 +8,19 @@ import java.util.stream.Collectors;
 import com.arangodb.ArangoDatabase;
 import com.arangodb.model.CollectionCreateOptions;
 
+import leotech.cdp.model.Campaign;
+import leotech.cdp.model.ContextSession;
 import leotech.cdp.model.ConversionEvent;
+import leotech.cdp.model.Creative;
+import leotech.cdp.model.DataObserver;
 import leotech.cdp.model.EventTrigger;
-import leotech.cdp.model.ScheduledJob;
 import leotech.cdp.model.Profile;
 import leotech.cdp.model.ReportUnit;
+import leotech.cdp.model.ScheduledJob;
 import leotech.cdp.model.Segment;
 import leotech.cdp.model.Touchpoint;
 import leotech.cdp.model.TrackingEvent;
-import leotech.cdp.model.DataObserver;
+import leotech.cdp.model.UserDevice;
 import leotech.cms.dao.CategoryDaoUtil;
 import leotech.cms.dao.PageDaoUtil;
 import leotech.cms.dao.UserDaoUtil;
@@ -33,6 +37,8 @@ public class SetupNewDatabase {
     static final List<String> leoPlatformCollectionNames = new ArrayList<>();
 
     static {
+	
+	// CMS - content management system
 	leoPlatformCollectionNames.add("systemconfigs");
 	leoPlatformCollectionNames.add(MediaNetwork.COLLECTION_NAME);
 	leoPlatformCollectionNames.add(Category.COLLECTION_NAME);
@@ -40,15 +46,23 @@ public class SetupNewDatabase {
 	leoPlatformCollectionNames.add(Post.COLLECTION_NAME);
 	leoPlatformCollectionNames.add(User.COLLECTION_NAME);
 	leoPlatformCollectionNames.add(FileMetadata.COLLECTION_NAME);
-	leoPlatformCollectionNames.add(EventTrigger.COLLECTION_NAME);
-	leoPlatformCollectionNames.add(Profile.COLLECTION_NAME);
+	
+	// CDP - customer data platform
+	leoPlatformCollectionNames.add(ContextSession.COLLECTION_NAME);
 	leoPlatformCollectionNames.add(Touchpoint.COLLECTION_NAME);
+	leoPlatformCollectionNames.add(DataObserver.COLLECTION_NAME);
+	leoPlatformCollectionNames.add(Profile.COLLECTION_NAME);
 	leoPlatformCollectionNames.add(TrackingEvent.COLLECTION_NAME);
 	leoPlatformCollectionNames.add(ConversionEvent.COLLECTION_NAME);
-	leoPlatformCollectionNames.add(DataObserver.COLLECTION_NAME);
-	leoPlatformCollectionNames.add(Segment.COLLECTION_NAME);
-	leoPlatformCollectionNames.add(ScheduledJob.COLLECTION_NAME);
+	leoPlatformCollectionNames.add(UserDevice.COLLECTION_NAME);
 	leoPlatformCollectionNames.add(ReportUnit.COLLECTION_NAME);
+	
+	// CAS - campaign activation system
+	leoPlatformCollectionNames.add(Segment.COLLECTION_NAME);
+	leoPlatformCollectionNames.add(EventTrigger.COLLECTION_NAME);
+	leoPlatformCollectionNames.add(ScheduledJob.COLLECTION_NAME);
+	leoPlatformCollectionNames.add(Campaign.COLLECTION_NAME);
+	leoPlatformCollectionNames.add(Creative.COLLECTION_NAME);
 	
     }
 

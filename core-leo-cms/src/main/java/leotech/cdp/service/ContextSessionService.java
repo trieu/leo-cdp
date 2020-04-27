@@ -51,8 +51,10 @@ public class ContextSessionService {
 		TrackingApiParam.DEV_ENV);
 	String locationCode = loc.getLocationCode();
 
+	//create new
 	ContextSession ctxSession = new ContextSession(observerId, dateTime, dateTimeKey, locationCode, userDeviceId, ip,
 		mediaHost, appId, touchpointId, visitorId, email, fingerprintId, environment);
+	
 
 	String ctxSessionKey = ctxSession.getSessionKey();
 
@@ -150,7 +152,7 @@ public class ContextSessionService {
 	String loginProviderName = ctxSession.getLoginProviderName();
 	ProfileDataService.updateLoginInfo(loginProviderName, loginId, email, profileId, observerId, lastTouchpointId,
 		sourceIP, usedDeviceId);
-	return 101;
+	return 102;
     }
 
 }

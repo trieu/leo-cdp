@@ -29,7 +29,7 @@ public class EventDataService {
 	e.setEnvironment(environment);
 
 	TrackingEventDaoUtil.record(e);
-	return 200;
+	return 201;
     }
 
     public static int recordActionEvent(ContextSession ctxSession, String environment, String deviceId, String sourceIP,
@@ -51,7 +51,7 @@ public class EventDataService {
 	e.setEnvironment(environment);
 
 	TrackingEventDaoUtil.record(e);
-	return 200;
+	return 221;
     }
 
     public static int recordConversionEvent(ContextSession ctxSession, String environment, String srcEventKey,
@@ -77,6 +77,6 @@ public class EventDataService {
 		deviceType, sourceIP, timeSpent, srcEventKey);
 	e.setEnvironment(environment);
 	ConversionEventDaoUtil.record(e);
-	return 200;
+	return 241;
     }
 }
