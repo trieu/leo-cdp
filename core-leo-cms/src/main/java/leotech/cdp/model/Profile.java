@@ -14,6 +14,7 @@ import com.arangodb.entity.DocumentField;
 import com.arangodb.entity.DocumentField.Type;
 import com.arangodb.model.HashIndexOptions;
 import com.arangodb.model.PersistentIndexOptions;
+import com.devskiller.friendly_id.FriendlyId;
 import com.google.gson.annotations.Expose;
 
 import leotech.system.util.database.ArangoDbUtil;
@@ -51,8 +52,8 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	    instance.ensurePersistentIndex(Arrays.asList("primaryPhone"), new PersistentIndexOptions().unique(false));
 	    instance.ensurePersistentIndex(Arrays.asList("primaryAvatar"), new PersistentIndexOptions().unique(false));
 	    instance.ensureHashIndex(Arrays.asList("rootProfileId"), new HashIndexOptions());
-	    instance.ensurePersistentIndex(Arrays.asList("identityAttributes[*]"),
-		    new PersistentIndexOptions().unique(false));
+	    instance.ensurePersistentIndex(Arrays.asList("identities[*]"), new PersistentIndexOptions().unique(false));
+	    instance.ensurePersistentIndex(Arrays.asList("sessionKeys[*]"), new PersistentIndexOptions().unique(false));
 	    instance.ensureHashIndex(Arrays.asList("personaUri"), new HashIndexOptions());
 	}
 	return instance;
@@ -112,7 +113,10 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
     String lastWebCookies = "";
 
     @Expose
-    Map<String, String> identityMap = new HashMap<>(100);
+    List<String> identities = new ArrayList<>(100);
+    
+    @Expose
+    List<String> sessionKeys = new ArrayList<>(100);
 
     @Expose
     String primaryEmail = "";
@@ -208,10 +212,14 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
     public boolean isReadyForSave() {
 	return this.observerId != null && this.lastUsedDeviceId != null && this.lastTouchpointId != null;
     }
+    
+    public Profile() {
+    }
 
-    protected void initBaseInformation(String sessionKey, String visitorId, int type, String observerId,
+    protected void initBaseInformation(String ctxSessionKey, String visitorId, int type, String observerId,
 	    String lastTouchpointId, String lastSeenIp, String usedDeviceId, String email, String phone) {
-	this.identityMap.put(sessionKey, visitorId);
+	this.sessionKeys.add(ctxSessionKey);
+	this.identities.add(visitorId);
 	this.type = type;
 	this.observerId = observerId;
 	this.lastTouchpointId = lastTouchpointId;
@@ -220,37 +228,67 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	this.usedDeviceIds.add(usedDeviceId);
 	this.primaryEmail = email;
 	this.primaryPhone = phone;
-	String keyHint = type + observerId + lastTouchpointId + lastSeenIp + usedDeviceId;
-	this.id = UUID.nameUUIDFromBytes(keyHint.getBytes()).toString();
+	this.id = buildProfileId(type, observerId, lastTouchpointId, lastSeenIp, usedDeviceId, email, phone);
     }
 
-    public Profile(String sessionKey, String visitorId, int type, String observerId, String lastTouchpointId,
-	    String lastSeenIp, String usedDeviceId, String email) {
-	super();
-	initBaseInformation(sessionKey, visitorId, type, observerId, lastTouchpointId, lastSeenIp, usedDeviceId, email,
-		"");
-    }
-
-    public Profile(String sessionKey, String visitorId, int type, String observerId, String lastTouchpointId,
-	    String lastSeenIp, String usedDeviceId, String email, String phone) {
-	super();
-	initBaseInformation(sessionKey, visitorId, type, observerId, lastTouchpointId, lastSeenIp, usedDeviceId, email,
-		phone);
+    public static String buildProfileId(int type, String observerId, String lastTouchpointId, String lastSeenIp,String usedDeviceId, String email, String phone) {
+	String keyHint = type + observerId + lastTouchpointId + lastSeenIp + usedDeviceId + email + phone;
+	String id = FriendlyId.toFriendlyId(UUID.nameUUIDFromBytes(keyHint.getBytes()));
+	return id;
     }
 
     /**
-     * new ANONYMOUS profile
+     * new IDENTIFIED profile with email
+     * 
+     * @param sessionKey
+     * @param visitorId
+     * @param observerId
+     * @param lastTouchpointId
+     * @param lastSeenIp
+     * @param usedDeviceId
+     * @param email
+     * @return
+     */
+    public static Profile newIdentifiedProfile(String ctxSessionKey, String visitorId, String observerId, String lastTouchpointId,
+	    String lastSeenIp, String usedDeviceId, String email) {
+	Profile p = new Profile();
+	p.initBaseInformation(ctxSessionKey, visitorId,ProfileType.IDENTIFIED, observerId, lastTouchpointId, lastSeenIp, usedDeviceId, email,"");
+	return p;
+    }
+
+    /**
+     * new CRM_USER profile with email and phone
+     * 
+     * @param sessionKey
+     * @param visitorId
+     * @param observerId
+     * @param lastTouchpointId
+     * @param lastSeenIp
+     * @param usedDeviceId
+     * @param email
+     * @param phone
+     * @return
+     */
+    public static Profile newCrmProfile(String ctxSessionKey, String visitorId,  String observerId, String lastTouchpointId,
+	    String lastSeenIp, String usedDeviceId, String email, String phone) {
+	Profile p = new Profile();
+	p.initBaseInformation(ctxSessionKey, visitorId, ProfileType.CRM_USER, observerId, lastTouchpointId, lastSeenIp, usedDeviceId, email,phone);
+	return p;
+    }
+
+    /**
+     * new ANONYMOUS profile for web or app tracking
      * 
      * @param observerId
      * @param lastTouchpointId
      * @param lastSeenIp
      * @param usedDeviceId
      */
-    public Profile(String sessionKey, String visitorId, String observerId, String lastTouchpointId, String lastSeenIp,
+    public static Profile newAnonymousProfile(String ctxSessionKey, String visitorId, String observerId, String lastTouchpointId, String lastSeenIp,
 	    String usedDeviceId) {
-	super();
-	initBaseInformation(sessionKey, visitorId, ProfileType.ANONYMOUS, observerId, lastTouchpointId, lastSeenIp,
-		usedDeviceId, "", "");
+	Profile p = new Profile();
+	p.initBaseInformation(ctxSessionKey, visitorId, ProfileType.ANONYMOUS, observerId, lastTouchpointId, lastSeenIp,usedDeviceId, "", "");
+	return p;
     }
 
     // -- getter and setter methods --
@@ -368,12 +406,22 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
     }
 
   
-    public Map<String, String> getIdentityMap() {
-        return identityMap;
+    
+
+    public List<String> getIdentities() {
+        return identities;
     }
 
-    public void setIdentityMap(Map<String, String> identityMap) {
-        this.identityMap = identityMap;
+    public void setIdentities(List<String> identities) {
+        this.identities = identities;
+    }
+
+    public List<String> getSessionKeys() {
+        return sessionKeys;
+    }
+
+    public void setSessionKeys(List<String> sessionKeys) {
+        this.sessionKeys = sessionKeys;
     }
 
     public String getPrimaryEmail() {

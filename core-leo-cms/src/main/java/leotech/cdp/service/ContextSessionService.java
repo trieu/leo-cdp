@@ -43,11 +43,13 @@ public class ContextSessionService {
 	String mediaHost = StringUtil.safeString(params.get(TrackingApiParam.MEDIA_HOST));
 	String appId = StringUtil.safeString(params.get(TrackingApiParam.APP_ID));
 	String initTouchpointId = StringUtil.safeString(params.get(TrackingApiParam.INIT_TOUCHPOINT_ID));
+	
 	String visitorId = StringUtil.safeString(params.get(TrackingApiParam.VISITOR_ID));
+	String email = StringUtil.safeString(params.get(TrackingApiParam.EMAIL));
+	String phone = StringUtil.safeString(params.get(TrackingApiParam.PHONE));
 
 	String fingerprintId = StringUtil.safeString(params.get(TrackingApiParam.FINGERPRINT_ID));
-	String environment = StringUtil.safeString(params.get(TrackingApiParam.TRACKING_ENVIRONMENT),
-		TrackingApiParam.DEV_ENV);
+	String environment = StringUtil.safeString(params.get(TrackingApiParam.TRACKING_ENVIRONMENT),TrackingApiParam.DEV_ENV);
 	String locationCode = loc.getLocationCode();
 
 	ContextSession ctxSession = createContextSession(observerId, dateTime, locationCode, dateTimeKey, userDeviceId,
@@ -57,7 +59,7 @@ public class ContextSessionService {
 	String ctxSessionKey = ctxSession.getSessionKey();
 	
 	// load profile ID from DB
-	Profile profile = ProfileDataService.getProfile(ctxSessionKey, visitorId, observerId, initTouchpointId, ip, userDeviceId);
+	Profile profile = ProfileDataService.getProfile(ctxSessionKey, visitorId, observerId, initTouchpointId, ip, userDeviceId, email, phone);
 	String profileId = profile.getId();
 	int profileType = profile.getType();
 
