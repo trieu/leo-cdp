@@ -31,9 +31,10 @@ public class EventObserverHttpRouter extends BaseHttpRouter {
     public static final String INVALID = "invalid";
     public static final String FAILED = "failed";
     public static final String OK = "ok";
-    
+
     public static final String PREFIX_CLICK_REDIRECT = "/clr/";
-    public static final String PREFIX_CONTEXT_SESSION = "/cxs/";
+    public static final String PREFIX_CONTEXT_SESSION_INIT = "/css-init/";
+    public static final String PREFIX_CONTEXT_SESSION_PROFILE_INIT = "/css-pf-init/";
     public static final String PREFIX_EVENT_VIEW = "/etv/";
     public static final String PREFIX_EVENT_ACTION = "/eta/";
     public static final String PREFIX_EVENT_CONVERSION = "/etc/";
@@ -43,12 +44,14 @@ public class EventObserverHttpRouter extends BaseHttpRouter {
     }
 
     static class ObserverResponse {
-	public final String data;
+	public final String sessionKey;
+	public final String message;
 	public final int status;
 
-	public ObserverResponse(String data, int status) {
+	public ObserverResponse(String sessionKey, String message, int status) {
 	    super();
-	    this.data = data;
+	    this.sessionKey = sessionKey;
+	    this.message = message;
 	    this.status = status;
 	}
 
@@ -82,10 +85,16 @@ public class EventObserverHttpRouter extends BaseHttpRouter {
 	    String eventName = StringUtil.safeString(params.get(TrackingApiParam.EVENT_NAME)).toLowerCase();
 	    String sessionKey = StringUtil.safeString(params.get(TrackingApiParam.CTX_SESSION_KEY));
 
-	    // init ContextSession
-	    ContextSession ctxSession = ContextSessionService.synchData(sessionKey, req, params, device);
+	    if (uri.startsWith(PREFIX_CONTEXT_SESSION_PROFILE_INIT) && StringUtil.isEmpty(sessionKey)) {
 
-	    if (StringUtil.isNotEmpty(sessionKey) && StringUtil.isNotEmpty(eventName)) {
+		// init ContextSession 
+		ContextSession ctxSession = ContextSessionService.init(req, params, device);
+		resp.end(new Gson().toJson(new ObserverResponse(ctxSession.getSessionKey(), OK, 100)));
+
+	    } else if (StringUtil.isNotEmpty(eventName)) {
+
+		// synch ContextSession with event tracking
+		ContextSession ctxSession = ContextSessionService.synchData(sessionKey, req, params, device);
 
 		int status = 404;
 		if (ctxSession != null) {
@@ -106,19 +115,23 @@ public class EventObserverHttpRouter extends BaseHttpRouter {
 
 		    // synchronize the device (how), touchpoint's context (where), session (when)
 		    // and profile (who) into one object for analytics (understand why)
-		    else if (uri.startsWith(PREFIX_CONTEXT_SESSION)) {
-			status = 101;
+		    else if (uri.startsWith(PREFIX_CONTEXT_SESSION_PROFILE_INIT)) {
+			if (StringUtil.isNotEmpty(ctxSession.getEmail())) {
+			    status = ContextSessionService.updateSessionWithProfile(req, params, ctxSession);
+			} else {
+			    status = 101;
+			}
 		    }
 		}
 
 		if (status == 200) {
-		    resp.end(new Gson().toJson(new ObserverResponse(OK, status)));
+		    resp.end(new Gson().toJson(new ObserverResponse(ctxSession.getSessionKey(), OK, status)));
 		} else if (status == 500) {
-		    resp.end(new Gson().toJson(new ObserverResponse(FAILED, status)));
+		    resp.end(new Gson().toJson(new ObserverResponse(ctxSession.getSessionKey(), FAILED, status)));
 		} else if (status == 101) {
-		    resp.end(new Gson().toJson(new ObserverResponse(ctxSession.getSessionKey(), status)));
+		    resp.end(new Gson().toJson(new ObserverResponse(ctxSession.getSessionKey(), OK, status)));
 		} else {
-		    resp.end(new Gson().toJson(new ObserverResponse(INVALID, status)));
+		    resp.end(new Gson().toJson(new ObserverResponse(ctxSession.getSessionKey(), INVALID, status)));
 		}
 		return true;
 

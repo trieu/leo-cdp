@@ -2,6 +2,8 @@ package leotech.cdp.service;
 
 import org.joda.time.DateTime;
 
+import com.google.gson.Gson;
+
 import io.vertx.core.MultiMap;
 import io.vertx.core.http.HttpServerRequest;
 import leotech.cdp.dao.ContextSessionDaoUtil;
@@ -24,86 +26,131 @@ public class ContextSessionService {
     public static final int AFTER_30_MINUTES = 1800;
     static ShardedJedisPool jedisPool = RedisConfigs.load().get("realtimeDataStats").getShardedJedisPool();
 
-    public static ContextSession createContextSession(String observerId, DateTime dateTime, String dateTimeKey,
-	    String locationCode, String userDeviceId, String ip, String mediaHost, String appId, String touchpointId,
-	    String visitorId, String fingerprintId, String environment) {
+   
 
-	ContextSession s = new ContextSession(observerId, dateTime, dateTimeKey, locationCode, userDeviceId, ip,
-		mediaHost, appId, touchpointId, visitorId, fingerprintId, environment);
-
-	return s;
-    }
-
-    public static ContextSession createContextSession(HttpServerRequest req, MultiMap params, DeviceInfo dv,DateTime dateTime, String dateTimeKey) {
+    static ContextSession createContextSession(HttpServerRequest req, MultiMap params, DeviceInfo dv, DateTime dateTime,
+	    String dateTimeKey) {
 	String ip = RequestInfoUtil.getRemoteIP(req);
 	GeoLocation loc = GeoLocationUtil.getGeoLocation(ip);
 
 	String observerId = StringUtil.safeString(params.get(TrackingApiParam.OBSERVER_ID));
-	String userDeviceId = StringUtil.safeString(params.get(TrackingApiParam.USER_DEVICE_ID));
+	String userDeviceId = DeviceDataService.getDeviceId(params, dv);
 	String mediaHost = StringUtil.safeString(params.get(TrackingApiParam.MEDIA_HOST));
 	String appId = StringUtil.safeString(params.get(TrackingApiParam.APP_ID));
-	String initTouchpointId = StringUtil.safeString(params.get(TrackingApiParam.INIT_TOUCHPOINT_ID));
-	
+	String touchpointId = StringUtil.safeString(params.get(TrackingApiParam.INIT_TOUCHPOINT_ID));
+
 	String visitorId = StringUtil.safeString(params.get(TrackingApiParam.VISITOR_ID));
 	String email = StringUtil.safeString(params.get(TrackingApiParam.EMAIL));
 	String phone = StringUtil.safeString(params.get(TrackingApiParam.PHONE));
 
+	String loginId = StringUtil.safeString(params.get(TrackingApiParam.LOGIN_ID));
+	String loginIdProviderName = StringUtil.safeString(params.get(TrackingApiParam.LOGIN_PROVIDER_NAME));
+
 	String fingerprintId = StringUtil.safeString(params.get(TrackingApiParam.FINGERPRINT_ID));
-	String environment = StringUtil.safeString(params.get(TrackingApiParam.TRACKING_ENVIRONMENT),TrackingApiParam.DEV_ENV);
+	String environment = StringUtil.safeString(params.get(TrackingApiParam.TRACKING_ENVIRONMENT),
+		TrackingApiParam.DEV_ENV);
 	String locationCode = loc.getLocationCode();
 
-	ContextSession ctxSession = createContextSession(observerId, dateTime, locationCode, dateTimeKey, userDeviceId,
-		ip, mediaHost, appId, initTouchpointId, visitorId, fingerprintId, environment);
+	ContextSession ctxSession = new ContextSession(observerId, dateTime, dateTimeKey, locationCode, userDeviceId, ip,
+		mediaHost, appId, touchpointId, visitorId, email, fingerprintId, environment);
 
-	
 	String ctxSessionKey = ctxSession.getSessionKey();
-	
+
 	// load profile ID from DB
-	Profile profile = ProfileDataService.getProfile(ctxSessionKey, visitorId, observerId, initTouchpointId, ip, userDeviceId, email, phone);
+	Profile profile = ProfileDataService.getOrCreateProfile(ctxSessionKey, visitorId, observerId, touchpointId,
+		ip, userDeviceId, email, phone);
 	String profileId = profile.getId();
 	int profileType = profile.getType();
 
 	// FIXME run async to save session to DB
 	ctxSession.setProfileId(profileId);
 	ctxSession.setProfileType(profileType);
+	ctxSession.setLoginId(loginId);
+	ctxSession.setLoginProviderName(loginIdProviderName);
+
 	ContextSessionDaoUtil.create(ctxSession);
-	
+
 	return ctxSession;
     }
 
     public static ContextSession synchData(final String clientSessionKey, HttpServerRequest req, MultiMap params,
-	    DeviceInfo dv) {
+	    DeviceInfo device) {
 	RedisCommand<ContextSession> cmd = new RedisCommand<ContextSession>(jedisPool) {
 	    @Override
 	    protected ContextSession build() throws JedisException {
-		String dateTimeKey = null;
+		String json = null;
 		if (StringUtil.isNotEmpty(clientSessionKey)) {
-		    dateTimeKey = jedis.get(clientSessionKey);
+		    json = jedis.get(clientSessionKey);
 		}
-		ContextSession ctxSession = null;
-		if (dateTimeKey == null) {
 
+		ContextSession ctxSession = null;
+		DateTime dateTime = new DateTime();
+		String dateTimeKey = ContextSession.getSessionDateTimeKey(dateTime);
+		
+		if (json == null) {
+		    
 		    // the session is expired, so create a new one and commit to database
-		    DateTime dateTime = new DateTime();
-		    ctxSession = createContextSession(req, params, dv, dateTime, dateTimeKey);
-		    dateTimeKey = ContextSession.getSessionDateTimeKey(dateTime);
+		    ctxSession = createContextSession(req, params, device, dateTime, dateTimeKey);
 		    String newSessionKey = ctxSession.getSessionKey();
+		    String sessionJson = new Gson().toJson(ctxSession);
 
 		    Pipeline p = jedis.pipelined();
-		    p.set(newSessionKey, dateTimeKey);
+		    p.set(newSessionKey, sessionJson);
 		    p.expire(newSessionKey, AFTER_30_MINUTES);
 		    p.sync();
 
 		} else {
 
 		    // get from database for event recording
-		    ctxSession = ContextSessionDaoUtil.getByKey(clientSessionKey);
+		    ctxSession = new Gson().fromJson(json, ContextSession.class);
+		   
 		}
 		return ctxSession;
 	    }
 	};
 
 	return cmd.execute();
+    }
+
+    public static ContextSession init(HttpServerRequest req, MultiMap params, DeviceInfo device) {
+	RedisCommand<ContextSession> cmd = new RedisCommand<ContextSession>(jedisPool) {
+	    @Override
+	    protected ContextSession build() throws JedisException {
+
+		ContextSession ctxSession = null;
+		DateTime dateTime = new DateTime();
+		String dateTimeKey = ContextSession.getSessionDateTimeKey(dateTime);
+
+		// create a new one and commit to database
+		ctxSession = createContextSession(req, params, device, dateTime, dateTimeKey);
+
+		String newSessionKey = ctxSession.getSessionKey();
+		String sessionJson = new Gson().toJson(ctxSession);
+
+		Pipeline p = jedis.pipelined();
+		p.set(newSessionKey, sessionJson);
+		p.expire(newSessionKey, AFTER_30_MINUTES);
+		p.sync();
+
+		return ctxSession;
+	    }
+	};
+
+	return cmd.execute();
+    }
+
+    public static int updateSessionWithProfile(HttpServerRequest req, MultiMap params, ContextSession ctxSession) {
+	String usedDeviceId = ctxSession.getUserDeviceId();
+	String sourceIP = RequestInfoUtil.getRemoteIP(req);
+	String lastTouchpointId = ctxSession.getRefTouchpointId();
+	String observerId = ctxSession.getObserverId();
+	String profileId = ctxSession.getProfileId();
+	String email = ctxSession.getEmail();
+	String loginId = ctxSession.getLoginId();
+	String loginProviderName = ctxSession.getLoginProviderName();
+	ProfileDataService.updateLoginInfo(loginProviderName, loginId, email, profileId, observerId, lastTouchpointId,
+		sourceIP, usedDeviceId);
+	return 101;
     }
 
 }

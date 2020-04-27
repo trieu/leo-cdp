@@ -90,6 +90,10 @@ public class ContextSession extends CdpPersistentObject {
     String visitorId;
     int profileType = Profile.ProfileType.ANONYMOUS;
     String profileId;
+    
+    String email;
+    String loginId;
+    String loginProviderName;
 
     String fingerprintId;
     Date createAt;
@@ -97,21 +101,21 @@ public class ContextSession extends CdpPersistentObject {
     String environment;
 
     public ContextSession(String observerId, DateTime dateTime, String dateTimeKey, String locationCode,
-	    String userDeviceId, String ip, String host, String appId, String touchpointId, String visitorId,
+	    String userDeviceId, String ip, String host, String appId, String touchpointId, String visitorId,String email,
 	    String fingerprintId, int hoursToDelete, String environment) {
 	super();
-	init(observerId, dateTime, dateTimeKey, locationCode, userDeviceId, ip, host, appId, touchpointId, visitorId,fingerprintId, hoursToDelete, environment);
+	init(observerId, dateTime, dateTimeKey, locationCode, userDeviceId, ip, host, appId, touchpointId, visitorId,email,fingerprintId, hoursToDelete, environment);
     }
 
     public ContextSession(String observerId, DateTime dateTime, String dateTimeKey, String locationCode,
-	    String userDeviceId, String ip, String host, String appId, String touchpointId, String visitorId,
+	    String userDeviceId, String ip, String host, String appId, String touchpointId, String visitorId,String email,
 	    String fingerprintId, String environment) {
 	super();
-	init(observerId, dateTime, dateTimeKey, locationCode, userDeviceId, ip, host, appId, touchpointId, visitorId,fingerprintId, 0, environment);
+	init(observerId, dateTime, dateTimeKey, locationCode, userDeviceId, ip, host, appId, touchpointId, visitorId,email,fingerprintId, 0, environment);
     }
 
     private void init(String observerId, DateTime dateTime, String dateTimeKey, String locationCode,
-	    String userDeviceId, String ip, String mediaHost, String appId, String refTouchpointId, String visitorId,
+	    String userDeviceId, String ip, String mediaHost, String appId, String refTouchpointId, String visitorId,String email,
 	    String fingerprintId, int hoursToDelete, String environment) {
 	this.observerId = observerId;
 	this.locationCode = locationCode;
@@ -121,14 +125,14 @@ public class ContextSession extends CdpPersistentObject {
 	this.appId = appId;
 	this.refTouchpointId = refTouchpointId;
 	this.visitorId = visitorId;
+	this.email = email;
 	this.fingerprintId = fingerprintId;
 	this.environment = environment;
 
 	this.createAt = dateTime.toDate();
 	this.dateTimeKey = dateTimeKey;
 
-	String keyHint = environment + locationCode + userDeviceId + ip + mediaHost + appId + visitorId + fingerprintId
-		+ dateTime.getMillis();
+	String keyHint = email + environment + locationCode + userDeviceId + ip + mediaHost + appId + visitorId + fingerprintId + dateTime.getMillis();
 	this.sessionKey = FriendlyId.toFriendlyId(UUID.nameUUIDFromBytes(keyHint.getBytes()));
 
 	if (hoursToDelete > HOURS_OF_A_WEEK) {
@@ -246,4 +250,29 @@ public class ContextSession extends CdpPersistentObject {
 	this.profileType = profileType;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getLoginId() {
+        return loginId;
+    }
+
+    public void setLoginId(String loginId) {
+        this.loginId = loginId;
+    }
+
+    public String getLoginProviderName() {
+        return loginProviderName;
+    }
+
+    public void setLoginProviderName(String loginProviderName) {
+        this.loginProviderName = loginProviderName;
+    }
+
+    
 }

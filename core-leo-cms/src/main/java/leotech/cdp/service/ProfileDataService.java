@@ -10,8 +10,7 @@ import rfx.core.util.StringUtil;
 
 public class ProfileDataService {
 
-    public static Profile getProfile(String ctxSessionKey, String visitorId, String observerId, String initTouchpointId, String lastSeenIp, String userDeviceId, String email, String phone) {
-	
+    public static Profile getOrCreateProfile(String ctxSessionKey, String visitorId, String observerId, String initTouchpointId, String lastSeenIp, String userDeviceId, String email, String phone) {
 	
 	int type = Profile.ProfileType.ANONYMOUS;
 	if(StringUtil.isNotEmpty(email) && StringUtil.isEmpty(phone)) {
@@ -22,32 +21,28 @@ public class ProfileDataService {
 	
 	
 	String id = Profile.buildProfileId(type, observerId, initTouchpointId, lastSeenIp, userDeviceId, email, phone);
-	Profile p = ProfileDaoUtil.getById(id);
-	if(p == null) {
+	
+	Profile pf = ProfileDaoUtil.getById(id);
+	if(pf == null) {
 	    if(type == Profile.ProfileType.ANONYMOUS) {
-		p = Profile.newAnonymousProfile(ctxSessionKey, visitorId, observerId, initTouchpointId, lastSeenIp, userDeviceId);
+		pf = Profile.newAnonymousProfile(ctxSessionKey, visitorId, observerId, initTouchpointId, lastSeenIp, userDeviceId);
 	    }
 	    else if(type == Profile.ProfileType.IDENTIFIED) {
-		p = Profile.newIdentifiedProfile(ctxSessionKey, visitorId, observerId, initTouchpointId, lastSeenIp, userDeviceId, email);
-	    } else if(type == Profile.ProfileType.CRM_USER) {
-		p = Profile.newCrmProfile(ctxSessionKey, visitorId, observerId, initTouchpointId, lastSeenIp, userDeviceId, email, phone);
+		pf = Profile.newIdentifiedProfile(ctxSessionKey, visitorId, observerId, initTouchpointId, lastSeenIp, userDeviceId, email);
+	    } 
+	    else if(type == Profile.ProfileType.CRM_USER) {
+		pf = Profile.newCrmProfile(ctxSessionKey, visitorId, observerId, initTouchpointId, lastSeenIp, userDeviceId, email, phone);
 	    }
 	    
-	    ProfileDaoUtil.create(p);
+	    ProfileDaoUtil.create(pf);
 	}
 	
 	//TODO
-	return p;
+	return pf;
     }
     
-//    public static Profile createAnonymous(int type, String observerId, String lastTouchpointId, String lastSeenIp,
-//	    String usedDeviceId) {
-//	Profile p = new Profile(observerId, lastTouchpointId, lastSeenIp, usedDeviceId);
-//	ProfileDaoUtil.create(p);
-//	return p;
-//    }
 
-    public static Profile updateSocialLoginInfo(String socialMediaName, String socialLoginId, String email, String profileId, String observerId, String lastTouchpointId, String lastSeenIp, String usedDeviceId) {
+    public static Profile updateLoginInfo(String socialMediaName, String socialLoginId, String email, String profileId, String observerId, String lastTouchpointId, String lastSeenIp, String usedDeviceId) {
 	Profile p = ProfileDaoUtil.getById(profileId);
 	
 	Map<String, Integer> acquisitionChannels = p.getAcquisitionChannels();
