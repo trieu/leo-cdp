@@ -1,5 +1,5 @@
 /**
- * USPA_EventObserver 1.0 - built on 22/01/2020
+ * LeoEventObserver 1.0 - built on 28/04/2020
  */
 (function (global, undefined) {
     'use strict';

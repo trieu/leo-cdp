@@ -185,18 +185,22 @@
         console.debug('templateFolder: {{templateFolder}}')
         console.debug('templateName: {{templateName}}');
         
+        
         (function () {
-            var src = '//xemgiday.com/public/js/uspa-event-observer/tracking-event.src.js';
+            var src = '//xemgiday.com/public/js/leo-event-observer/tracking-event.src.js';
             var jsNode = document.createElement('script');
             jsNode.async = true;
             jsNode.src = src;
             var s = document.getElementsByTagName('script')[0];
             s.parentNode.insertBefore(jsNode, s);
         })();
-        
-
-        function USPA_Proxy_Ready() {
-            USPA_Proxy.trackEvent({ type: "pageview", context: "homepage" });
+        window.LeoObserverId = "tester";
+        //ready
+        function Leo_Observer_Proxy_Ready(sessionInfo) {
+            //Leo_Observer_Proxy.trackEvent({ type: "pageview", context: "homepage" });
+            if(window.console){					
+				window.console.log(sessionInfo);
+			}
         }
     </script>
 </body>
