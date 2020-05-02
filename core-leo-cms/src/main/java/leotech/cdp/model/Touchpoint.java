@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
@@ -14,7 +13,6 @@ import com.arangodb.model.FulltextIndexOptions;
 import com.arangodb.model.GeoIndexOptions;
 import com.arangodb.model.HashIndexOptions;
 import com.arangodb.model.PersistentIndexOptions;
-import com.devskiller.friendly_id.FriendlyId;
 import com.google.gson.annotations.Expose;
 
 import leotech.system.util.database.ArangoDbUtil;
@@ -23,9 +21,9 @@ import rfx.core.util.StringUtil;
 /**
  * @author Trieu Nguyen
  * 
- *         A touchpoint can be defined as any way a consumer can interact with a
- *         business, whether it be person-to-person, through a website, an app
- *         or any form of communication
+ *   A touchpoint can be defined as any way a consumer can interact with a
+ *    business, whether it be person-to-person, through a website, an app
+ *    or any form of communication
  *
  */
 public class Touchpoint extends CdpPersistentObject  {
@@ -103,19 +101,19 @@ public class Touchpoint extends CdpPersistentObject  {
     int status = 0;
 
     @Expose
-    String url;
+    String url = "";
     
     @Expose
-    String thumbnailUrl;
+    String thumbnailUrl = "";
 
     @Expose
-    String countryCode;
+    String countryCode = "";
 
     @Expose
-    String locationCode;
+    String locationCode = "";
 
     @Expose
-    String address;
+    String address = "";
 
     @Expose
     double latitude = 0;
@@ -136,10 +134,10 @@ public class Touchpoint extends CdpPersistentObject  {
     String collectionId = "";
 
     @Expose
-    String parentId;
+    String parentId = "";
 
     @Expose
-    int unitCost = 0;
+    double unitCost = 0;
 
     @Expose
     Date updatedAt;
@@ -347,11 +345,11 @@ public class Touchpoint extends CdpPersistentObject  {
 	this.parentId = parentId;
     }
 
-    public int getUnitCost() {
+    public double getUnitCost() {
 	return unitCost;
     }
 
-    public void setUnitCost(int unitCost) {
+    public void setUnitCost(double unitCost) {
 	this.unitCost = unitCost;
     }
 
