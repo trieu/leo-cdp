@@ -1,20 +1,91 @@
 <html>
 
 <head>
-    <script src="//xemgiday.com/public/js/leo-event-observer/uuid.min.js" ></script>
-    <script>
-        var __uspaBaseLogUrl = '//log.xemgiday.com/cdp/v1';
-    </script>
+   
 </head>
 
 <body>
-   
-    <script src="//xemgiday.com/public/js/leo-event-observer/tracking.src.js" ></script>
-    <script>
-        if (location.hash.length > 0) {
-            USPA_EventObserver.doTracking('event', location.hash.substring(1));
+	<div id="leoproxy" ></div>
+	
+	<script>
+		
+		var ROOT_DOMAIN = '';
+	 	if (location.hash.length > 0) {
+            ROOT_DOMAIN =  location.hash.substring(1);
+        } else {
+        	console.error('ROOT_DOMAIN is empty')
         }
+ 
+        var LEO_LOG_URL = '//log.' + ROOT_DOMAIN;
+        var PREFIX_EVENT_SESSION_INIT = LEO_LOG_URL + "/cxs-pf-init";
+        var PREFIX_EVENT_VIEW_URL = LEO_LOG_URL + "/etv";
+        var PREFIX_EVENT_ACTION_URL = LEO_LOG_URL + "/eta";
+        var PREFIX_EVENT_CONVERSION_URL = LEO_LOG_URL + "/etc";
+       
+         // addEventListener support for IE8
+        function bindEvent(element, eventName, eventHandler) {
+            if (element.addEventListener) {
+                element.addEventListener(eventName, eventHandler, false);
+            } else if (element.attachEvent) {
+                element.attachEvent('on' + eventName, eventHandler);
+            }
+        }
+
+        // Send a message to the parent
+        var sendMessage = function (msg) {
+            // Make sure you are sending a string, and to stringify JSON
+            window.parent.postMessage(msg, '*');
+        };
+        
+        // Listen to messages from parent window
+        bindEvent(window, 'message', function (e) {
+           console.log(e.data);
+  		   proxyCallHandler(JSON.parse(e.data))
+        });
+        
+        function loadScript(src, callback) {
+		  var s,r,t;
+		  r = false;
+		  s = document.createElement('script');
+		  s.type = 'text/javascript';
+		  s.src = src;
+		  s.onload = s.onreadystatechange = function() {
+		    if (!r && (!this.readyState || this.readyState == 'complete')) {
+		      r = true;
+		      if(callback) callback();
+		    }
+		  };
+		  document.getElementById('leoproxy').appendChild(s);
+		}
+
     </script>
+    
+    <script>
+    
+        var codeIsReady = function(){
+    		sendMessage("LeoObserverProxyLoaded");
+    	}
+    	
+    	function LeoObserverProxyReady(sessionInfo) {
+    		sendMessage("LeoObserverProxyReady");
+            if(window.console){					
+				window.console.log(sessionInfo);
+			}
+        }
+    	
+    	var proxyCallHandler = function(data){
+        	if(data.call === 'getContextSession' && data.params) {
+        		LeoEventObserver.getContextSession(data.params, LeoObserverProxyReady);
+        	}
+        }
+
+        loadScript('//' + ROOT_DOMAIN +'/public/js/leo-event-observer/uuid.min.js',function(){
+        	loadScript('//' + ROOT_DOMAIN +'/public/js/leo-event-observer/tracking.src.js',codeIsReady);
+        })
+    </script>
+    
+   
+  
 
 </body>
 

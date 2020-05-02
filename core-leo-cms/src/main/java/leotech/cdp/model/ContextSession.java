@@ -132,7 +132,8 @@ public class ContextSession extends CdpPersistentObject {
 	this.createAt = dateTime.toDate();
 	this.dateTimeKey = dateTimeKey;
 
-	String keyHint = email + environment + locationCode + userDeviceId + ip + mediaHost + appId + visitorId + fingerprintId + dateTime.getMinuteOfHour();
+	String mns = dateTime.getMinuteOfHour() < 30 ? "0" : "1";
+	String keyHint = email + environment + locationCode + userDeviceId + ip + mediaHost + appId + visitorId + fingerprintId + mns;
 	this.sessionKey = FriendlyId.toFriendlyId(UUID.nameUUIDFromBytes(keyHint.getBytes()));
 
 	if (hoursToDelete > HOURS_OF_A_WEEK) {

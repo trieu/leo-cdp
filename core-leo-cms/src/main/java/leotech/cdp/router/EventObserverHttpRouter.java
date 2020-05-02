@@ -34,7 +34,7 @@ public class EventObserverHttpRouter extends BaseHttpRouter {
 
     public static final String PREFIX_CLICK_REDIRECT = "/clr";
     
-    public static final String PREFIX_CONTEXT_SESSION_PROFILE_INIT = "/css-pf-init";
+    public static final String PREFIX_CONTEXT_SESSION_PROFILE_INIT = "/cxs-pf-init";
     public static final String PREFIX_EVENT_VIEW = "/etv";
     public static final String PREFIX_EVENT_ACTION = "/eta";
     public static final String PREFIX_EVENT_CONVERSION = "/etc";
