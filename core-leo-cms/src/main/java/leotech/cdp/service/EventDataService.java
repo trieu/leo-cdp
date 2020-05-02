@@ -10,7 +10,7 @@ import leotech.system.model.DeviceInfo;
 public class EventDataService {
 
     public static int recordViewEvent(ContextSession ctxSession, String environment, String deviceId, String sourceIP,
-	    DeviceInfo dv, String srcTouchpointId, String eventName) {
+	    DeviceInfo dv, String touchpointUrl, String eventName) {
 	String deviceName = dv.deviceName;
 	String deviceOS = dv.deviceOs;
 
@@ -22,10 +22,12 @@ public class EventDataService {
 	String refProfileId = ctxSession.getProfileId();
 	String sessionKey = ctxSession.getSessionKey();
 	String observerId = ctxSession.getObserverId();
+	String mediaHost = ctxSession.getMediaHost();
 	int eventValue = 1;
 
+	String srcTouchpointId = TouchpointDataService.getTouchpointIdFromWebsite(mediaHost, touchpointUrl);
 	TrackingEvent e = new TrackingEvent(observerId, sessionKey, eventName, eventValue, refProfileId, refProfileType,
-		srcTouchpointId, refTouchpointId, browserName, deviceId, deviceOS, deviceName, deviceType, sourceIP);
+		srcTouchpointId , refTouchpointId, browserName, deviceId, deviceOS, deviceName, deviceType, sourceIP);
 	e.setEnvironment(environment);
 
 	TrackingEventDaoUtil.record(e);
@@ -33,7 +35,7 @@ public class EventDataService {
     }
 
     public static int recordActionEvent(ContextSession ctxSession, String environment, String deviceId, String sourceIP,
-	    DeviceInfo dv, String srcTouchpointId, String eventName, int eventValue) {
+	    DeviceInfo dv, String touchpointUrl, String eventName, int eventValue) {
 
 	String deviceName = dv.deviceName;
 	String deviceOS = dv.deviceOs;
@@ -46,6 +48,10 @@ public class EventDataService {
 	String refProfileId = ctxSession.getProfileId();
 	String sessionKey = ctxSession.getSessionKey();
 	String observerId = ctxSession.getObserverId();
+	String mediaHost = ctxSession.getMediaHost();
+	
+	String srcTouchpointId = TouchpointDataService.getTouchpointIdFromWebsite(mediaHost, touchpointUrl);
+	
 	TrackingEvent e = new TrackingEvent(observerId, sessionKey, eventName, eventValue, refProfileId, refProfileType,
 		srcTouchpointId, refTouchpointId, browserName, deviceId, deviceOS, deviceName, deviceType, sourceIP);
 	e.setEnvironment(environment);
@@ -55,7 +61,7 @@ public class EventDataService {
     }
 
     public static int recordConversionEvent(ContextSession ctxSession, String environment, String srcEventKey,
-	    String deviceId, String sourceIP, DeviceInfo dv, String srcTouchpointId, String eventName, int eventValue,
+	    String deviceId, String sourceIP, DeviceInfo dv, String touchpointUrl, String eventName, int eventValue,
 	    String transactionCode) {
 	String deviceName = dv.deviceName;
 	String deviceOS = dv.deviceOs;
@@ -68,9 +74,11 @@ public class EventDataService {
 	int refProfileType = ctxSession.getProfileType();
 	String sessionKey = ctxSession.getSessionKey();
 	String observerId = ctxSession.getObserverId();
+	String mediaHost = ctxSession.getMediaHost();
 
 	// TODO
 	int timeSpent = 1;
+	String srcTouchpointId = TouchpointDataService.getTouchpointIdFromWebsite(mediaHost, touchpointUrl);
 
 	ConversionEvent e = new ConversionEvent(observerId, sessionKey, eventName, eventValue, refProfileId,
 		refProfileType, srcTouchpointId, refTouchpointId, browserName, deviceId, deviceOS, deviceName,

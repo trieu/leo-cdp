@@ -324,13 +324,9 @@
 
  // ------------ BEGIN lscache ------------------
 /**
- * lscache library
+ * lscache library https://github.com/pamelafox/lscache
  * Copyright (c) 2011, Pamela Fox
- *
  */
-
-/* jshint undef:true, browser:true, node:true */
-/* global define */
 
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
@@ -783,10 +779,10 @@
 			}
 		}			
 		
-		var obsId = params.observerId, media = params.host, ctxUrl = params.contextUrl;
+		var obsId = params.observerId, media = params.host, tpurl = params.tpurl;
 		
 		var vsId = getUUID()
-		var url = PREFIX_EVENT_SESSION_INIT + '?observer='+obsId + '&media='+media+'&ctxUrl='+ctxUrl+'&visid='+vsId;
+		var url = PREFIX_EVENT_SESSION_INIT + '?observer='+obsId + '&media='+media+'&tpurl='+tpurl+'&visid='+vsId;
 		LeoCorsRequest.get(false, url,[], h);
 	}	
 

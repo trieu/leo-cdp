@@ -13,32 +13,32 @@ public class TrackingApi {
 
     public static int recordViewEvent(HttpServerRequest req, MultiMap params, DeviceInfo dv, ContextSession ctxSession,
 	    String eventName) {
-	String srcTouchpointId = StringUtil.safeString(params.get(TrackingApiParam.SOURCE_TOUCHPOINT_ID));
+	String touchpointUrl = StringUtil.safeString(params.get(TrackingApiParam.TOUCHPOINT_URL));
 	String deviceId = DeviceDataService.getDeviceId(params, dv);
 	String environment = StringUtil.safeString(params.get(TrackingApiParam.TRACKING_ENVIRONMENT),TrackingApiParam.DEV_ENV);
 	String sourceIP = RequestInfoUtil.getRemoteIP(req);
-
-	return EventDataService.recordViewEvent(ctxSession, environment, deviceId, sourceIP, dv, srcTouchpointId,
+	
+	return EventDataService.recordViewEvent(ctxSession, environment, deviceId, sourceIP, dv, touchpointUrl,
 		eventName);
     }
 
     public static int recordActionEvent(HttpServerRequest req, MultiMap params, DeviceInfo dv,
 	    ContextSession ctxSession, String eventName) {
-	String srcTouchpointId = StringUtil.safeString(params.get(TrackingApiParam.SOURCE_TOUCHPOINT_ID));
+	String touchpointUrl = StringUtil.safeString(params.get(TrackingApiParam.TOUCHPOINT_URL));
 	String deviceId = DeviceDataService.getDeviceId(params, dv);
 	String environment = StringUtil.safeString(params.get(TrackingApiParam.TRACKING_ENVIRONMENT),
 		TrackingApiParam.DEV_ENV);
 	String sourceIP = RequestInfoUtil.getRemoteIP(req);
 	int eventValue = StringUtil.safeParseInt(params.get(TrackingApiParam.EVENT_VALUE), 1);
 
-	return EventDataService.recordActionEvent(ctxSession, environment, deviceId, sourceIP, dv, srcTouchpointId,
+	return EventDataService.recordActionEvent(ctxSession, environment, deviceId, sourceIP, dv, touchpointUrl,
 		eventName, eventValue);
     }
 
     public static int recordConversionEvent(HttpServerRequest req, MultiMap params, DeviceInfo dv,
 	    ContextSession ctxSession, String eventName) {
 	String srcEventKey = StringUtil.safeString(params.get(TrackingApiParam.SRC_EVENT_KEY));
-	String srcTouchpointId = StringUtil.safeString(params.get(TrackingApiParam.SOURCE_TOUCHPOINT_ID));
+	String srcTouchpointUrl = StringUtil.safeString(params.get(TrackingApiParam.TOUCHPOINT_URL));
 	String deviceId = DeviceDataService.getDeviceId(params, dv);
 	String sourceIP = RequestInfoUtil.getRemoteIP(req);
 	int eventValue = 1;
@@ -47,7 +47,7 @@ public class TrackingApi {
 		TrackingApiParam.DEV_ENV);
 
 	return EventDataService.recordConversionEvent(ctxSession, environment, srcEventKey, deviceId, sourceIP, dv,
-		srcTouchpointId, eventName, eventValue, transactionCode);
+		srcTouchpointUrl, eventName, eventValue, transactionCode);
     }
 
 }

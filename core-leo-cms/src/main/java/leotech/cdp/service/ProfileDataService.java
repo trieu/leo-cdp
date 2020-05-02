@@ -34,10 +34,10 @@ public class ProfileDataService {
 		pf = Profile.newCrmProfile(ctxSessionKey, visitorId, observerId, initTouchpointId, lastSeenIp, userDeviceId, email, phone);
 	    }
 	    
+	    //TODO run in a thread
 	    ProfileDaoUtil.create(pf);
 	}
 	
-	//TODO
 	return pf;
     }
     

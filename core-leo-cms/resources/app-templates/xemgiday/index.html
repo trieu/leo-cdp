@@ -191,7 +191,7 @@
     	window.LeoObserverId = "tester";
     	window.LeoObserverLogDomain = "xemgiday.com";
         (function () {
-            var src = '//xemgiday.com/public/js/leo-event-observer/tracking-event.src.js';
+            var src = '//'+ window.LeoObserverLogDomain + '/public/js/leo-event-observer/tracking-event.src.js';
             var jsNode = document.createElement('script');
             jsNode.async = true;
             jsNode.src = src;
@@ -200,7 +200,7 @@
         })();
         //Leo is ready
         function LeoObserverProxyReady() {
-            LeoObserverProxy.trackEvent({ type: "pageview", context: "homepage" });
+            LeoObserverProxy.trackEvent({ type: "pageview", touchpoint: "owned media xemgiday.com" });
         }
     </script>
 </body>

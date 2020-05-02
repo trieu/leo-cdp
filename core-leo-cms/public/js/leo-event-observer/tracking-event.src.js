@@ -47,8 +47,8 @@
     	if(data === "LeoObserverProxyLoaded"){
 	    	
 			var host = encodeURIComponent(document.location.host);
-			var contextUrl = encodeURIComponent(document.location.href);
-			var params = {'observerId':observerId,'host':host,'contextUrl':contextUrl}
+			var tpurl = encodeURIComponent(document.location.href);
+			var params = {'observerId':observerId,'host':host,'tpurl':tpurl}
 			
 			var payload = JSON.stringify({'call':'getContextSession','params':params});
 			sendMessage(payload);
@@ -66,7 +66,7 @@
     });
 
 
-  LeoObserverProxy.trackEvent = function(eventData) {
+  LeoObserverProxy.recordViewEvent = function(eventData) {
     if (typeof eventData === "object") {
       //build params
       var event = encodeURIComponent(JSON.stringify(eventData))
@@ -77,7 +77,9 @@
       
       var host = encodeURIComponent(document.location.host);
 	  var contextUrl = encodeURIComponent(document.location.href);
-      var params = {'observerId':observerId,'host':host,'contextUrl':contextUrl} 
+      var params = {'observerId':observerId,'host':host,'contextUrl':contextUrl};
+      params['stouchid'] = 
+      
 	  var payload = JSON.stringify({'call':'doTracking','params':params,'eventType':'view'});
       
     }

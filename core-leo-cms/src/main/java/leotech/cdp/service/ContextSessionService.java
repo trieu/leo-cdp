@@ -37,7 +37,7 @@ public class ContextSessionService {
 	String userDeviceId = DeviceDataService.getDeviceId(params, dv);
 	String mediaHost = StringUtil.safeString(params.get(TrackingApiParam.MEDIA_HOST));
 	String appId = StringUtil.safeString(params.get(TrackingApiParam.APP_ID));
-	String touchpointId = StringUtil.safeString(params.get(TrackingApiParam.INIT_TOUCHPOINT_ID));
+	String touchpointUrl = StringUtil.safeString(params.get(TrackingApiParam.TOUCHPOINT_URL));
 
 	String visitorId = StringUtil.safeString(params.get(TrackingApiParam.VISITOR_ID));
 	String email = StringUtil.safeString(params.get(TrackingApiParam.EMAIL));
@@ -50,6 +50,8 @@ public class ContextSessionService {
 	String environment = StringUtil.safeString(params.get(TrackingApiParam.TRACKING_ENVIRONMENT),
 		TrackingApiParam.DEV_ENV);
 	String locationCode = loc.getLocationCode();
+	
+	String touchpointId = TouchpointDataService.getTouchpointIdFromWebsite(mediaHost, touchpointUrl);
 
 	//create new
 	ContextSession ctxSession = new ContextSession(observerId, dateTime, dateTimeKey, locationCode, userDeviceId, ip,
@@ -64,12 +66,12 @@ public class ContextSessionService {
 	String profileId = profile.getId();
 	int profileType = profile.getType();
 
-	// FIXME run async to save session to DB
 	ctxSession.setProfileId(profileId);
 	ctxSession.setProfileType(profileType);
 	ctxSession.setLoginId(loginId);
 	ctxSession.setLoginProviderName(loginIdProviderName);
 
+	//TODO run in a thread
 	ContextSessionDaoUtil.create(ctxSession);
 
 	return ctxSession;
