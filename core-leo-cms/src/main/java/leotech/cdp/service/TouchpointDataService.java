@@ -5,8 +5,8 @@ import leotech.cdp.model.Touchpoint;
 
 public class TouchpointDataService {
     
-    public static String getTouchpointIdFromWebsite(String mediaHost, String touchpointUrl) {
-	Touchpoint tp = new Touchpoint(mediaHost, Touchpoint.TouchpointType.WEBSITE, touchpointUrl);
+    public static String getTouchpointId(String name, int type, String touchpointUrl) {
+	Touchpoint tp = new Touchpoint(name, type , touchpointUrl);
 	
 	//TODO run in a thread
 	String id = TouchpointDaoUtil.save(tp);

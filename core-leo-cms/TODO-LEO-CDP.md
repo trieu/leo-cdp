@@ -4,6 +4,7 @@
 ## Slide
 
 * [Product vision](https://docs.google.com/presentation/d/1GHUXBjdUctDxkUS_WLqls_aT79GqOlYN3MIQvXwLN5s/edit?usp=sharing)
+* Flow https://github.com/USPA-Technology/leotech-final-build/blob/master/leo-cdp-event-observer-data-flow.md
 
 ## Case study 
 

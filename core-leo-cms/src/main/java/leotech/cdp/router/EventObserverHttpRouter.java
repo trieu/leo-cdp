@@ -23,7 +23,7 @@ import rfx.core.util.StringUtil;
 
 /**
  * @author Trieu Nguyen diagram:
- *         https://github.com/USPA-Technology/leotech-final-build/blob/master/leo-cdp-event-observer-data-flow.md
+ *  https://github.com/USPA-Technology/leotech-final-build/blob/master/leo-cdp-event-observer-data-flow.md
  *
  */
 public class EventObserverHttpRouter extends BaseHttpRouter {
@@ -98,17 +98,17 @@ public class EventObserverHttpRouter extends BaseHttpRouter {
 
 		int status = 404;
 		if (currentSession != null) {
-		    // event-view(pageview|screenview|storeview|trueview,contentId,sessionKey,profileId)
+		    // event-view(pageview|screenview|storeview|trueview|placeview,contentId,sessionKey,visitorId)
 		    if (uri.startsWith(PREFIX_EVENT_VIEW)) {
 			status = TrackingApi.recordViewEvent(req, params, device, currentSession, eventName);
 		    }
 
-		    // event-action(click|play|touch|contact,sessionKey,profileId)
+		    // event-action(click|play|touch|contact|watch|test,sessionKey,visitorId)
 		    else if (uri.startsWith(PREFIX_EVENT_ACTION)) {
 			status = TrackingApi.recordActionEvent(req, params, device, currentSession, eventName);
 		    }
 
-		    // event-conversion(add_to_cart|submit_form|checkout,sessionKey,profileId)
+		    // event-conversion(add_to_cart|submit_form|checkout|join,sessionKey,visitorId)
 		    else if (uri.startsWith(PREFIX_EVENT_CONVERSION)) {
 			status = TrackingApi.recordConversionEvent(req, params, device, currentSession, eventName);
 		    }

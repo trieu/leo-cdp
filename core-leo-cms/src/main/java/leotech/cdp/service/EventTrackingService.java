@@ -1,16 +1,25 @@
 package leotech.cdp.service;
 
+import java.util.Map;
+
 import leotech.cdp.dao.ConversionEventDaoUtil;
 import leotech.cdp.dao.TrackingEventDaoUtil;
 import leotech.cdp.model.ContextSession;
 import leotech.cdp.model.ConversionEvent;
+import leotech.cdp.model.Touchpoint;
 import leotech.cdp.model.TrackingEvent;
 import leotech.system.model.DeviceInfo;
 
+/**
+ * @author Trieu Nguyen (Thomas)
+ *
+ */
 public class EventTrackingService {
+    
+    //
 
     public static int recordViewEvent(ContextSession ctxSession, String environment, String deviceId, String sourceIP,
-	    DeviceInfo dv, String touchpointUrl, String eventName) {
+	    DeviceInfo dv, String touchpointUrl, String eventName, Map<String,String> extAttributes) {
 	String deviceName = dv.deviceName;
 	String deviceOS = dv.deviceOs;
 
@@ -23,10 +32,10 @@ public class EventTrackingService {
 	String sessionKey = ctxSession.getSessionKey();
 	String observerId = ctxSession.getObserverId();
 	String mediaHost = ctxSession.getMediaHost();
-	int eventValue = 1;
+	long eventCount = 1;
 
-	String srcTouchpointId = TouchpointDataService.getTouchpointIdFromWebsite(mediaHost, touchpointUrl);
-	TrackingEvent e = new TrackingEvent(observerId, sessionKey, eventName, eventValue, refProfileId, refProfileType,
+	String srcTouchpointId = TouchpointDataService.getTouchpointId(mediaHost, Touchpoint.TouchpointType.WEBSITE, touchpointUrl);
+	TrackingEvent e = new TrackingEvent(observerId, sessionKey, eventName, eventCount, refProfileId, refProfileType,
 		srcTouchpointId , refTouchpointId, browserName, deviceId, deviceOS, deviceName, deviceType, sourceIP);
 	e.setEnvironment(environment);
 
@@ -35,7 +44,7 @@ public class EventTrackingService {
     }
 
     public static int recordActionEvent(ContextSession ctxSession, String environment, String deviceId, String sourceIP,
-	    DeviceInfo dv, String touchpointUrl, String eventName, int eventValue) {
+	    DeviceInfo dv, String touchpointUrl, String eventName, long eventCount, String feedbackText, Map<String,String> extAttributes) {
 
 	String deviceName = dv.deviceName;
 	String deviceOS = dv.deviceOs;
@@ -50,19 +59,21 @@ public class EventTrackingService {
 	String observerId = ctxSession.getObserverId();
 	String mediaHost = ctxSession.getMediaHost();
 	
-	String srcTouchpointId = TouchpointDataService.getTouchpointIdFromWebsite(mediaHost, touchpointUrl);
+	String srcTouchpointId = TouchpointDataService.getTouchpointId(mediaHost, Touchpoint.TouchpointType.WEBSITE, touchpointUrl);
 	
-	TrackingEvent e = new TrackingEvent(observerId, sessionKey, eventName, eventValue, refProfileId, refProfileType,
+	TrackingEvent e = new TrackingEvent(observerId, sessionKey, eventName, eventCount, refProfileId, refProfileType,
 		srcTouchpointId, refTouchpointId, browserName, deviceId, deviceOS, deviceName, deviceType, sourceIP);
 	e.setEnvironment(environment);
+	e.setFeedbackText(feedbackText);
+	e.setExtAttributes(extAttributes);
 
 	TrackingEventDaoUtil.record(e);
 	return 221;
     }
 
     public static int recordConversionEvent(ContextSession ctxSession, String environment, String srcEventKey,
-	    String deviceId, String sourceIP, DeviceInfo dv, String touchpointUrl, String eventName, int eventValue,
-	    String transactionCode) {
+	    String deviceId, String sourceIP, DeviceInfo dv, String touchpointUrl, String eventName, long eventCount,
+	    String transactionCode, String feedbackText, Map<String,String> extAttributes) {
 	String deviceName = dv.deviceName;
 	String deviceOS = dv.deviceOs;
 
@@ -78,12 +89,15 @@ public class EventTrackingService {
 
 	// TODO
 	int timeSpent = 1;
-	String srcTouchpointId = TouchpointDataService.getTouchpointIdFromWebsite(mediaHost, touchpointUrl);
+	String srcTouchpointId = TouchpointDataService.getTouchpointId(mediaHost, Touchpoint.TouchpointType.WEBSITE, touchpointUrl);
 
-	ConversionEvent e = new ConversionEvent(observerId, sessionKey, eventName, eventValue, refProfileId,
+	ConversionEvent e = new ConversionEvent(observerId, sessionKey, eventName, eventCount, refProfileId,
 		refProfileType, srcTouchpointId, refTouchpointId, browserName, deviceId, deviceOS, deviceName,
 		deviceType, sourceIP, timeSpent, srcEventKey);
 	e.setEnvironment(environment);
+	e.setFeedbackText(feedbackText);
+	e.setExtAttributes(extAttributes);
+	
 	ConversionEventDaoUtil.record(e);
 	return 241;
     }

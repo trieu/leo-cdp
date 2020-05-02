@@ -1,7 +1,13 @@
 package leotech.system.util;
 
+import java.lang.reflect.Type;
 import java.net.InetSocketAddress;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import io.vertx.core.MultiMap;
 import io.vertx.core.http.HttpServerRequest;
@@ -62,6 +68,17 @@ public class RequestInfoUtil {
 	}
 
 	return reqInfo.toString();
-
+    }
+    
+    public static Map<String,String> getHashMapFromRequest(MultiMap params, String paramName){
+	Map<String,String> map = null;
+	String jsonStr = StringUtil.safeString(params.get(paramName),"{}");
+	Gson gson = new Gson();
+	Type strMapType = new TypeToken<Map<String, String>>() {}.getType();
+	map = gson.fromJson(jsonStr, strMapType);
+	if(map == null) {
+	    map = new HashMap<String, String>(0);
+	}
+	return map;
     }
 }

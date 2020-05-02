@@ -143,7 +143,7 @@ public class TrackingEvent extends CdpPersistentObject {
     protected String sourceIP;
 
     @Expose
-    protected String feedbackData;
+    protected String feedbackText;
     
     protected String environment;
     
@@ -395,22 +395,12 @@ public class TrackingEvent extends CdpPersistentObject {
 	this.browserName = browserName;
     }
 
-    
-
     public String getDeviceType() {
         return deviceType;
     }
 
     public void setDeviceType(String deviceType) {
         this.deviceType = deviceType;
-    }
-
-    public Map<String, String> getExtAttributes() {
-        return extAttributes;
-    }
-
-    public void setExtAttributes(Map<String, String> extAttributes) {
-        this.extAttributes = extAttributes;
     }
 
     public String getDeviceId() {
@@ -444,14 +434,7 @@ public class TrackingEvent extends CdpPersistentObject {
     public void setSourceIP(String sourceIP) {
 	this.sourceIP = sourceIP;
     }
-
-    public String getFeedbackData() {
-	return feedbackData;
-    }
-
-    public void setFeedbackData(String feedbackData) {
-	this.feedbackData = feedbackData;
-    }
+   
 
     public int getPartitionId() {
 	return partitionId;
@@ -472,7 +455,22 @@ public class TrackingEvent extends CdpPersistentObject {
     public void setEnvironment(String environment) {
         this.environment = environment;
     }
-    
-    
+
+    public String getFeedbackText() {
+        return feedbackText;
+    }
+
+    public void setFeedbackText(String feedbackText) {
+        this.feedbackText = feedbackText;
+    }
+
+    public Map<String, String> getExtAttributes() {
+        return extAttributes;
+    }
+
+    public void setExtAttributes(Map<String, String> extAttributes) {
+        this.extAttributes = extAttributes;
+    }
+ 
 
 }

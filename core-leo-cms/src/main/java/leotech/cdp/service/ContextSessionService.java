@@ -9,6 +9,7 @@ import io.vertx.core.http.HttpServerRequest;
 import leotech.cdp.dao.ContextSessionDaoUtil;
 import leotech.cdp.model.ContextSession;
 import leotech.cdp.model.Profile;
+import leotech.cdp.model.Touchpoint;
 import leotech.cdp.router.api.TrackingApiParam;
 import leotech.system.model.DeviceInfo;
 import leotech.system.model.GeoLocation;
@@ -47,11 +48,10 @@ public class ContextSessionService {
 	String loginIdProviderName = StringUtil.safeString(params.get(TrackingApiParam.LOGIN_PROVIDER_NAME));
 
 	String fingerprintId = StringUtil.safeString(params.get(TrackingApiParam.FINGERPRINT_ID));
-	String environment = StringUtil.safeString(params.get(TrackingApiParam.TRACKING_ENVIRONMENT),
-		TrackingApiParam.DEV_ENV);
+	String environment = StringUtil.safeString(params.get(TrackingApiParam.TRACKING_ENVIRONMENT),TrackingApiParam.DEV_ENV);
 	String locationCode = loc.getLocationCode();
 	
-	String touchpointId = TouchpointDataService.getTouchpointIdFromWebsite(mediaHost, touchpointUrl);
+	String touchpointId = TouchpointDataService.getTouchpointId(mediaHost, Touchpoint.TouchpointType.WEBSITE, touchpointUrl);
 
 	//create new
 	ContextSession ctxSession = new ContextSession(observerId, dateTime, dateTimeKey, locationCode, userDeviceId, ip,

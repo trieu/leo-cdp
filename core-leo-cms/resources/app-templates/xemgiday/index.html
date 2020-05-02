@@ -14,8 +14,8 @@
     <meta content="website" property="og:type" />
     <meta content="{{pageName}}" property="og:site_name" />
     <meta content="{{pageTitle}}" itemprop="headline" property="og:title" />
-    <meta content="{{{pageUrl}}}" itemprop="url" property="og:url" />
-    <meta content="{{{pageImage}}}" itemprop="thumbnailUrl" property="og:image" />
+    <meta content="//{{{pageUrl}}}" itemprop="url" property="og:url" />
+    <meta content="//{{{pageImage}}}" itemprop="thumbnailUrl" property="og:image" />
     <meta content="{{pageDescription}}" itemprop="description" property="og:description" />
 
     <meta name="author" content="Iris - The A.I Media Bot" />
@@ -187,11 +187,11 @@
     </script>
     
     <script>
-    	//Leo Data Hub Analytics
+    	//Leo Web Event Observer for Data Hub Analytics
     	window.LeoObserverId = "tester";
     	window.LeoObserverLogDomain = "xemgiday.com";
         (function () {
-            var src = '//'+ window.LeoObserverLogDomain + '/public/js/leo-event-observer/tracking-event.src.js';
+            var src = '//'+ window.LeoObserverLogDomain + '/public/js/leo-event-observer/leoproxy.js';
             var jsNode = document.createElement('script');
             jsNode.async = true;
             jsNode.src = src;
@@ -200,7 +200,7 @@
         })();
         //Leo is ready
         function LeoObserverProxyReady() {
-            LeoObserverProxy.trackEvent({ type: "pageview", touchpoint: "owned media xemgiday.com" });
+            LeoObserverProxy.recordViewEvent("pageview", { touchpoint: "owned media xemgiday.com" });
         }
     </script>
 </body>
