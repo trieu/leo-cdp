@@ -16,6 +16,8 @@ import leotech.system.util.database.ArangoDbUtil;
 public class TouchpointDaoUtil {
 
     static final String AQL_GET_TOUCHPOINT_BY_ID = AqlTemplate.get("AQL_GET_TOUCHPOINT_BY_ID");
+    static final String AQL_GET_TOUCHPOINT_BY_URL = AqlTemplate.get("AQL_GET_TOUCHPOINT_BY_URL");
+    
     static final String AQL_GET_TOUCHPOINTS = AqlTemplate.get("AQL_GET_TOUCHPOINTS");
 
     private static final String AQL_FIND_KEY_AQL = ArangoDbUtil.contentFindKeyAql(Touchpoint.COLLECTION_NAME);
@@ -42,7 +44,17 @@ public class TouchpointDaoUtil {
 	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
 	Map<String, Object> bindVars = new HashMap<>(1);
 	bindVars.put("id", id);
-	Touchpoint p = new ArangoDbQuery<Touchpoint>(db, AQL_GET_TOUCHPOINT_BY_ID, bindVars, Touchpoint.class).getResultsAsObject();
+	Touchpoint p = new ArangoDbQuery<Touchpoint>(db, AQL_GET_TOUCHPOINT_BY_ID, bindVars, Touchpoint.class)
+		.getResultsAsObject();
+	return p;
+    }
+
+    public static Touchpoint getByUrl(String url) {
+	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+	Map<String, Object> bindVars = new HashMap<>(1);
+	bindVars.put("url", url);
+	Touchpoint p = new ArangoDbQuery<Touchpoint>(db, AQL_GET_TOUCHPOINT_BY_URL, bindVars, Touchpoint.class)
+		.getResultsAsObject();
 	return p;
     }
 
@@ -51,7 +63,8 @@ public class TouchpointDaoUtil {
 	Map<String, Object> bindVars = new HashMap<>(2);
 	bindVars.put("startIndex", startIndex);
 	bindVars.put("numberResult", numberResult);
-	List<Touchpoint> list = new ArangoDbQuery<Touchpoint>(db, AQL_GET_TOUCHPOINTS, bindVars, Touchpoint.class).getResultsAsList();
+	List<Touchpoint> list = new ArangoDbQuery<Touchpoint>(db, AQL_GET_TOUCHPOINTS, bindVars, Touchpoint.class)
+		.getResultsAsList();
 	return list;
     }
 

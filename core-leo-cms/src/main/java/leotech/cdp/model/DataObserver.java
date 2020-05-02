@@ -2,7 +2,6 @@ package leotech.cdp.model;
 
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
@@ -93,7 +92,7 @@ public class DataObserver extends CdpPersistentObject{
     public DataObserver(String name, int type, String touchpointId) {
 	super();
 	String keyHint = name + type + touchpointId;
-	this.id = UUID.nameUUIDFromBytes(keyHint.getBytes()).toString();
+	this.id = id(keyHint);
 	this.name = name;
 	this.type = type;
 	this.touchpointId = touchpointId;

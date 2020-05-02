@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import com.arangodb.ArangoCollection;
@@ -80,16 +82,16 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
     String rootProfileId = "";
 
     @Expose
-    List<String> inCollections = new ArrayList<String>(10);
+    Set<String> inCollections = new HashSet<String>(10);
 
     @Expose
-    List<String> inSegments = new ArrayList<String>(20);
+    Set<String> inSegments = new HashSet<String>(20);
 
     @Expose
-    List<String> inJourneyMaps = new ArrayList<String>(20);
+    Set<String> inJourneyMaps = new HashSet<String>(20);
 
     @Expose
-    List<String> atTouchpoints = new ArrayList<String>(100);
+    Set<String> atTouchpoints = new HashSet<String>(100);
 
     @Expose
     int status = 1;
@@ -113,10 +115,10 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
     String lastWebCookies = "";
 
     @Expose
-    List<String> identities = new ArrayList<>(100);
+    Set<String> identities = new HashSet<>(100);
     
     @Expose
-    List<String> sessionKeys = new ArrayList<>(100);
+    Set<String> sessionKeys = new HashSet<>(100);
 
     @Expose
     String primaryEmail = "";
@@ -140,10 +142,10 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
     int ageGroup = 0;
 
     @Expose
-    List<String> usedDeviceIds = new ArrayList<>(10);
+    Set<String> usedDeviceIds = new HashSet<>(10);
 
     @Expose
-    List<String> workingHistory = new ArrayList<>(20);
+    Set<String> workingHistory = new HashSet<>(20);
 
     @Expose
     Map<String, Integer> acquisitionChannels = new HashMap<>(20);
@@ -173,10 +175,10 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
     Map<String, String> subscribedChannels = new HashMap<>(100);
 
     @Expose
-    List<String> businessTransactions = new ArrayList<String>();
+    Set<String> businessTransactions = new HashSet<String>();
 
     @Expose
-    List<String> supportHistory = new ArrayList<String>();
+    Set<String> supportHistory = new HashSet<String>();
 
     @Expose
     int socialCreditScore = 0;
@@ -223,6 +225,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	this.type = type;
 	this.observerId = observerId;
 	this.lastTouchpointId = lastTouchpointId;
+	this.atTouchpoints.add(lastTouchpointId);
 	this.lastSeenIp = lastSeenIp;
 	this.lastUsedDeviceId = usedDeviceId;
 	this.usedDeviceIds.add(usedDeviceId);
@@ -233,8 +236,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
     public static String buildProfileId(int type, String observerId, String lastTouchpointId, String lastSeenIp,String usedDeviceId, String email, String phone) {
 	String keyHint = type + observerId + lastTouchpointId + lastSeenIp + usedDeviceId + email + phone;
-	String id = FriendlyId.toFriendlyId(UUID.nameUUIDFromBytes(keyHint.getBytes()));
-	return id;
+	return id(keyHint);
     }
 
     /**
@@ -333,27 +335,27 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	this.rootProfileId = rootProfileId;
     }
 
-    public List<String> getInSegments() {
+    public Set<String> getInSegments() {
 	return inSegments;
     }
 
-    public void setInSegments(List<String> inSegments) {
+    public void setInSegments(Set<String> inSegments) {
 	this.inSegments = inSegments;
     }
 
-    public List<String> getInJourneyMaps() {
+    public Set<String> getInJourneyMaps() {
 	return inJourneyMaps;
     }
 
-    public void setInJourneyMaps(List<String> inJourneyMaps) {
+    public void setInJourneyMaps(Set<String> inJourneyMaps) {
 	this.inJourneyMaps = inJourneyMaps;
     }
 
-    public List<String> getAtTouchpoints() {
+    public Set<String> getAtTouchpoints() {
 	return atTouchpoints;
     }
 
-    public void setAtTouchpoints(List<String> atTouchpoints) {
+    public void setAtTouchpoints(Set<String> atTouchpoints) {
 	this.atTouchpoints = atTouchpoints;
     }
 
@@ -408,19 +410,19 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
   
     
 
-    public List<String> getIdentities() {
+    public Set<String> getIdentities() {
         return identities;
     }
 
-    public void setIdentities(List<String> identities) {
+    public void setIdentities(Set<String> identities) {
         this.identities = identities;
     }
 
-    public List<String> getSessionKeys() {
+    public Set<String> getSessionKeys() {
         return sessionKeys;
     }
 
-    public void setSessionKeys(List<String> sessionKeys) {
+    public void setSessionKeys(Set<String> sessionKeys) {
         this.sessionKeys = sessionKeys;
     }
 
@@ -470,11 +472,11 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	this.ageGroup = ageGroup;
     }
 
-    public List<String> getUsedDeviceIds() {
+    public Set<String> getUsedDeviceIds() {
 	return usedDeviceIds;
     }
 
-    public void setUsedDeviceIds(List<String> usedDeviceIds) {
+    public void setUsedDeviceIds(Set<String> usedDeviceIds) {
 	this.usedDeviceIds = usedDeviceIds;
     }
 
@@ -610,11 +612,11 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	this.age = age;
     }
 
-    public List<String> getWorkingHistory() {
+    public Set<String> getWorkingHistory() {
 	return workingHistory;
     }
 
-    public void setWorkingHistory(List<String> workingHistory) {
+    public void setWorkingHistory(Set<String> workingHistory) {
 	this.workingHistory = workingHistory;
     }
 
@@ -634,27 +636,27 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	this.weeklyMobileUsage = weeklyMobileUsage;
     }
 
-    public List<String> getBusinessTransactions() {
+    public Set<String> getBusinessTransactions() {
 	return businessTransactions;
     }
 
-    public void setBusinessTransactions(List<String> businessTransactions) {
+    public void setBusinessTransactions(Set<String> businessTransactions) {
 	this.businessTransactions = businessTransactions;
     }
 
-    public List<String> getSupportHistory() {
+    public Set<String> getSupportHistory() {
 	return supportHistory;
     }
 
-    public void setSupportHistory(List<String> supportHistory) {
+    public void setSupportHistory(Set<String> supportHistory) {
 	this.supportHistory = supportHistory;
     }
 
-    public List<String> getInCollections() {
+    public Set<String> getInCollections() {
 	return inCollections;
     }
 
-    public void setInCollections(List<String> inCollections) {
+    public void setInCollections(Set<String> inCollections) {
 	this.inCollections = inCollections;
     }
 

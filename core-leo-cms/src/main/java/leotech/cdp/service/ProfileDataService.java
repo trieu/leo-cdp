@@ -3,6 +3,7 @@ package leotech.cdp.service;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import leotech.cdp.dao.ProfileDaoUtil;
 import leotech.cdp.model.Profile;
@@ -46,7 +47,7 @@ public class ProfileDataService {
 	Profile p = ProfileDaoUtil.getById(profileId);
 	
 	Map<String, Integer> acquisitionChannels = p.getAcquisitionChannels();
-	List<String> ids = p.getIdentities();
+	Set<String> ids = p.getIdentities();
 	String sid = socialMediaName + "#" + socialLoginId;
 	if (!acquisitionChannels.containsKey(socialMediaName) && !ids.contains(sid)) {
 	    acquisitionChannels.put(socialMediaName, 1);

@@ -4,7 +4,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.UUID;
 
 import org.joda.time.DateTime;
 
@@ -14,7 +13,6 @@ import com.arangodb.entity.DocumentField;
 import com.arangodb.entity.DocumentField.Type;
 import com.arangodb.model.PersistentIndexOptions;
 import com.arangodb.model.TtlIndexOptions;
-import com.devskiller.friendly_id.FriendlyId;
 
 import leotech.system.util.database.ArangoDbUtil;
 import rfx.core.util.StringUtil;
@@ -85,6 +83,7 @@ public class ContextSession extends CdpPersistentObject {
     String mediaHost;
     String appId;
     String refTouchpointId;
+    String srcTouchpointId;
     String observerId;
 
     String visitorId;
@@ -101,21 +100,21 @@ public class ContextSession extends CdpPersistentObject {
     String environment;
 
     public ContextSession(String observerId, DateTime dateTime, String dateTimeKey, String locationCode,
-	    String userDeviceId, String ip, String host, String appId, String touchpointId, String visitorId,String email,
+	    String userDeviceId, String ip, String host, String appId, String refTouchpointId, String srcTouchpointId, String visitorId,String email,
 	    String fingerprintId, int hoursToDelete, String environment) {
 	super();
-	init(observerId, dateTime, dateTimeKey, locationCode, userDeviceId, ip, host, appId, touchpointId, visitorId,email,fingerprintId, hoursToDelete, environment);
+	init(observerId, dateTime, dateTimeKey, locationCode, userDeviceId, ip, host, appId, refTouchpointId,srcTouchpointId, visitorId,email,fingerprintId, hoursToDelete, environment);
     }
 
     public ContextSession(String observerId, DateTime dateTime, String dateTimeKey, String locationCode,
-	    String userDeviceId, String ip, String host, String appId, String touchpointId, String visitorId,String email,
+	    String userDeviceId, String ip, String host, String appId, String refTouchpointId,String srcTouchpointId, String visitorId,String email,
 	    String fingerprintId, String environment) {
 	super();
-	init(observerId, dateTime, dateTimeKey, locationCode, userDeviceId, ip, host, appId, touchpointId, visitorId,email,fingerprintId, 0, environment);
+	init(observerId, dateTime, dateTimeKey, locationCode, userDeviceId, ip, host, appId, refTouchpointId,srcTouchpointId, visitorId,email,fingerprintId, 0, environment);
     }
 
     private void init(String observerId, DateTime dateTime, String dateTimeKey, String locationCode,
-	    String userDeviceId, String ip, String mediaHost, String appId, String refTouchpointId, String visitorId,String email,
+	    String userDeviceId, String ip, String mediaHost, String appId, String refTouchpointId,String srcTouchpointId, String visitorId,String email,
 	    String fingerprintId, int hoursToDelete, String environment) {
 	this.observerId = observerId;
 	this.locationCode = locationCode;
@@ -124,6 +123,7 @@ public class ContextSession extends CdpPersistentObject {
 	this.mediaHost = mediaHost;
 	this.appId = appId;
 	this.refTouchpointId = refTouchpointId;
+	this.srcTouchpointId = srcTouchpointId;
 	this.visitorId = visitorId;
 	this.email = email;
 	this.fingerprintId = fingerprintId;
@@ -134,7 +134,7 @@ public class ContextSession extends CdpPersistentObject {
 
 	String mns = dateTime.getMinuteOfHour() < 30 ? "0" : "1";
 	String keyHint = email + environment + locationCode + userDeviceId + ip + mediaHost + appId + visitorId + fingerprintId + mns;
-	this.sessionKey = FriendlyId.toFriendlyId(UUID.nameUUIDFromBytes(keyHint.getBytes()));
+	this.sessionKey = id(keyHint);
 
 	if (hoursToDelete > HOURS_OF_A_WEEK) {
 	    this.autoDeleteAt = dateTime.plusHours(hoursToDelete).toDate();
@@ -181,6 +181,16 @@ public class ContextSession extends CdpPersistentObject {
 
     public void setRefTouchpointId(String refTouchpointId) {
 	this.refTouchpointId = refTouchpointId;
+    }
+    
+    
+
+    public String getSrcTouchpointId() {
+        return srcTouchpointId;
+    }
+
+    public void setSrcTouchpointId(String srcTouchpointId) {
+        this.srcTouchpointId = srcTouchpointId;
     }
 
     public String getVisitorId() {

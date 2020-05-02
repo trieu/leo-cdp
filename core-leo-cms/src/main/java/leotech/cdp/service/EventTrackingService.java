@@ -34,7 +34,8 @@ public class EventTrackingService {
 	String mediaHost = ctxSession.getMediaHost();
 	long eventCount = 1;
 
-	String srcTouchpointId = TouchpointDataService.getTouchpointId(mediaHost, Touchpoint.TouchpointType.WEBSITE, touchpointUrl);
+	Touchpoint srcTouchpoint = TouchpointDataService.getOrCreateDigitalTouchpoint(mediaHost, Touchpoint.TouchpointType.WEBSITE, touchpointUrl);
+	String srcTouchpointId = srcTouchpoint.getId();
 	TrackingEvent e = new TrackingEvent(observerId, sessionKey, eventName, eventCount, refProfileId, refProfileType,
 		srcTouchpointId , refTouchpointId, browserName, deviceId, deviceOS, deviceName, deviceType, sourceIP);
 	e.setEnvironment(environment);
@@ -59,7 +60,8 @@ public class EventTrackingService {
 	String observerId = ctxSession.getObserverId();
 	String mediaHost = ctxSession.getMediaHost();
 	
-	String srcTouchpointId = TouchpointDataService.getTouchpointId(mediaHost, Touchpoint.TouchpointType.WEBSITE, touchpointUrl);
+	Touchpoint srcTouchpoint = TouchpointDataService.getOrCreateDigitalTouchpoint(mediaHost, Touchpoint.TouchpointType.WEBSITE, touchpointUrl);
+	String srcTouchpointId = srcTouchpoint.getId();
 	
 	TrackingEvent e = new TrackingEvent(observerId, sessionKey, eventName, eventCount, refProfileId, refProfileType,
 		srcTouchpointId, refTouchpointId, browserName, deviceId, deviceOS, deviceName, deviceType, sourceIP);
@@ -89,7 +91,8 @@ public class EventTrackingService {
 
 	// TODO
 	int timeSpent = 1;
-	String srcTouchpointId = TouchpointDataService.getTouchpointId(mediaHost, Touchpoint.TouchpointType.WEBSITE, touchpointUrl);
+	Touchpoint srcTouchpoint = TouchpointDataService.getOrCreateDigitalTouchpoint(mediaHost, Touchpoint.TouchpointType.WEBSITE, touchpointUrl);
+	String srcTouchpointId = srcTouchpoint.getId();
 
 	ConversionEvent e = new ConversionEvent(observerId, sessionKey, eventName, eventCount, refProfileId,
 		refProfileType, srcTouchpointId, refTouchpointId, browserName, deviceId, deviceOS, deviceName,

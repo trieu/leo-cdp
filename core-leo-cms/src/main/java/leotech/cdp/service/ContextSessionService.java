@@ -38,8 +38,13 @@ public class ContextSessionService {
 	String userDeviceId = DeviceDataService.getDeviceId(params, dv);
 	String mediaHost = StringUtil.safeString(params.get(TrackingApiParam.MEDIA_HOST));
 	String appId = StringUtil.safeString(params.get(TrackingApiParam.APP_ID));
-	String touchpointUrl = StringUtil.safeString(params.get(TrackingApiParam.TOUCHPOINT_URL));
+	
+	// touchpoint params
+	String touchpointName = StringUtil.decodeUrlUTF8(params.get(TrackingApiParam.TOUCHPOINT_NAME));
+	String touchpointUrl = StringUtil.decodeUrlUTF8(params.get(TrackingApiParam.TOUCHPOINT_URL));
+	String touchpointRefUrl = StringUtil.decodeUrlUTF8(params.get(TrackingApiParam.TOUCHPOINT_REFERRER_URL));
 
+	// profile params
 	String visitorId = StringUtil.safeString(params.get(TrackingApiParam.VISITOR_ID));
 	String email = StringUtil.safeString(params.get(TrackingApiParam.EMAIL));
 	String phone = StringUtil.safeString(params.get(TrackingApiParam.PHONE));
@@ -51,18 +56,23 @@ public class ContextSessionService {
 	String environment = StringUtil.safeString(params.get(TrackingApiParam.TRACKING_ENVIRONMENT),TrackingApiParam.DEV_ENV);
 	String locationCode = loc.getLocationCode();
 	
-	String touchpointId = TouchpointDataService.getTouchpointId(mediaHost, Touchpoint.TouchpointType.WEBSITE, touchpointUrl);
-
+	
+	// touchpoint info process
+	Touchpoint refTouchPoint = TouchpointDataService.getOrCreateDigitalTouchpoint("Referrer", Touchpoint.TouchpointType.WEBSITE, touchpointRefUrl);
+	Touchpoint srcTouchpoint = TouchpointDataService.getOrCreateDigitalTouchpoint(touchpointName, Touchpoint.TouchpointType.WEBSITE, touchpointUrl);
+	String refTouchpointId = refTouchPoint.getId();
+	String srcTouchpointId = srcTouchpoint.getId();
+	
+	
 	//create new
 	ContextSession ctxSession = new ContextSession(observerId, dateTime, dateTimeKey, locationCode, userDeviceId, ip,
-		mediaHost, appId, touchpointId, visitorId, email, fingerprintId, environment);
+		mediaHost, appId, refTouchpointId, srcTouchpointId, visitorId, email, fingerprintId, environment);
 	
 
 	String ctxSessionKey = ctxSession.getSessionKey();
 
 	// load profile ID from DB
-	Profile profile = ProfileDataService.getOrCreateProfile(ctxSessionKey, visitorId, observerId, touchpointId,
-		ip, userDeviceId, email, phone);
+	Profile profile = ProfileDataService.getOrCreateProfile(ctxSessionKey, visitorId, observerId, srcTouchpointId, ip, userDeviceId, email, phone);
 	String profileId = profile.getId();
 	int profileType = profile.getType();
 

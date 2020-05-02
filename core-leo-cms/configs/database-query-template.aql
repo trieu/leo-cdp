@@ -144,6 +144,25 @@ AQL_GET_FILE_METADATA_BY_OBJECT =>
 	RETURN f
 ;
 
+########### AQL CDP TOUCHPOINT COLLECTION ########################################################################################################;
+
+AQL_GET_TOUCHPOINT_BY_ID =>
+	FOR e in cdp_touchpoint FILTER e.id == @id  
+	RETURN e
+;
+
+AQL_GET_TOUCHPOINTS => 
+	FOR e in cdp_touchpoint 
+	SORT e.createdAt DESC
+	LIMIT @startIndex,@numberResult 
+	RETURN e
+;
+
+AQL_GET_TOUCHPOINT_BY_URL =>
+	FOR e in cdp_touchpoint FILTER e.url == @url  
+	RETURN e
+;
+
 ########### AQL CDP PROFILE COLLECTION ########################################################################################################;
 
 AQL_GET_PROFILE_BY_ID =>
@@ -151,7 +170,7 @@ AQL_GET_PROFILE_BY_ID =>
 	RETURN e
 ;
 
-########### AQL CDP PROFILE COLLECTION ########################################################################################################;
+########### AQL CDP CONTEXT_SESSION COLLECTION ########################################################################################################;
 
 AQL_GET_CONTEXT_SESSION_BY_KEY =>
 	FOR e in cdp_contextsession FILTER e.sessionKey == @sessionKey  

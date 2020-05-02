@@ -14,9 +14,11 @@ import com.arangodb.model.FulltextIndexOptions;
 import com.arangodb.model.GeoIndexOptions;
 import com.arangodb.model.HashIndexOptions;
 import com.arangodb.model.PersistentIndexOptions;
+import com.devskiller.friendly_id.FriendlyId;
 import com.google.gson.annotations.Expose;
 
 import leotech.system.util.database.ArangoDbUtil;
+import rfx.core.util.StringUtil;
 
 /**
  * @author Trieu Nguyen
@@ -26,7 +28,7 @@ import leotech.system.util.database.ArangoDbUtil;
  *         or any form of communication
  *
  */
-public class Touchpoint extends CdpPersistentObject implements Comparable<Touchpoint> {
+public class Touchpoint extends CdpPersistentObject  {
 
     public static final class TouchpointType {
 	public static final int ECOMMERCE_PLATFORM = 1;
@@ -89,7 +91,7 @@ public class Touchpoint extends CdpPersistentObject implements Comparable<Touchp
     String name;
 
     @Expose
-    int type;
+    int type = -1;
 
     @Expose
     boolean isMediaSrc = false;
@@ -102,7 +104,7 @@ public class Touchpoint extends CdpPersistentObject implements Comparable<Touchp
 
     @Expose
     String url;
-
+    
     @Expose
     String thumbnailUrl;
 
@@ -147,21 +149,16 @@ public class Touchpoint extends CdpPersistentObject implements Comparable<Touchp
 
     @Override
     public boolean isReadyForSave() {
-	// TODO Auto-generated method stub
-	return false;
+	return StringUtil.isNotEmpty(this.name) && this.type >=0 && (StringUtil.isNotEmpty(this.url) || StringUtil.isNotEmpty(this.locationCode));
     }
 
-    @Override
-    public int compareTo(Touchpoint o) {
-	// TODO Auto-generated method stub
-	return 0;
-    }
+    
 
     ////////////////
 
     public Touchpoint() {
 	// TODO Auto-generated constructor stub
-	this.createdAt = new Date();
+	
     }
 
     /**
@@ -180,7 +177,7 @@ public class Touchpoint extends CdpPersistentObject implements Comparable<Touchp
 	this.type = type;
 	this.url = url;
 	String keyHint = name + type + url;
-	this.id = UUID.nameUUIDFromBytes(keyHint.getBytes()).toString();
+	this.id = id(keyHint);
     }
 
     /**
@@ -203,7 +200,7 @@ public class Touchpoint extends CdpPersistentObject implements Comparable<Touchp
 	this.latitude = latitude;
 	this.longitude = longitude;
 	String keyHint = name + type + locationCode;
-	this.id = UUID.nameUUIDFromBytes(keyHint.getBytes()).toString();
+	this.id = id(keyHint);
     }
 
     public String getId() {

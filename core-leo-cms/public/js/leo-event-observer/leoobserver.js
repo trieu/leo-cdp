@@ -749,6 +749,13 @@
         var url = PREFIX_EVENT_SESSION_INIT + '?observer=' + obsId + '&media=' + media + '&ctxUrl=' + ctxUrl + '&visid=' + vsId;
         LeoCorsRequest.get(false, url, [], h);
     }
+    
+    var objectToQueryString = function(params){
+    	var queryString = Object.keys(params).map((key) => {
+		    return encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
+		}).join('&');
+		return queryString;
+    }
 
     var getContextSession = function(params, callback) {
         var h = function(resHeaders, text) {
@@ -758,13 +765,10 @@
             }
         }
 
-        var obsId = params.observerId,
-            media = params.host,
-            
-            tpurl = params.tpurl;
-
-        var vsId = getUUID()
-        var url = PREFIX_EVENT_SESSION_INIT + '?obsid=' + obsId + '&media=' + media + '&tpurl=' + tpurl + '&visid=' + vsId;
+        var queryStr = objectToQueryString(params);
+        var vsId = getUUID();
+        
+        var url = PREFIX_EVENT_SESSION_INIT + '?' + queryStr + '&visid=' + vsId;
         LeoCorsRequest.get(false, url, [], h);
     }
 

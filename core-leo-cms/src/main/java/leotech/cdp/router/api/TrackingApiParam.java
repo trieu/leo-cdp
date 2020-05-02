@@ -11,13 +11,15 @@ public final class TrackingApiParam {
     public static final String LOGIN_ID = "loginid";
     public static final String LOGIN_PROVIDER_NAME = "loginprovider";
    
-    public static final String TOUCHPOINT = "tp";
+    public static final String OBSERVER_ID = "obsid";
+    public static final String TOUCHPOINT_NAME = "tpname";
     public static final String TOUCHPOINT_URL = "tpurl";
+    public static final String TOUCHPOINT_REFERRER_URL = "tprefurl";
     
     public static final String APP_ID = "appid";
     public static final String MEDIA_HOST = "mediahost";
     public static final String USER_DEVICE_ID = "udeviceid";
-    public static final String OBSERVER_ID = "obsid";
+   
     public static final String SRC_EVENT_KEY = "srceventk";
     
     

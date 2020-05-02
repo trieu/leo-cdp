@@ -5,12 +5,15 @@ import leotech.cdp.model.Touchpoint;
 
 public class TouchpointDataService {
     
-    public static String getTouchpointId(String name, int type, String touchpointUrl) {
-	Touchpoint tp = new Touchpoint(name, type , touchpointUrl);
-	
-	//TODO run in a thread
-	String id = TouchpointDaoUtil.save(tp);
-	return id;
+
+    public static Touchpoint getOrCreateDigitalTouchpoint(String name, int type, String touchpointUrl) {
+	Touchpoint tp = TouchpointDaoUtil.getByUrl(touchpointUrl);
+	if(tp == null) {
+	    tp = new Touchpoint(name, type , touchpointUrl);
+	    // run in a threadpool
+	    TouchpointDaoUtil.save(tp);
+	}
+	return tp;
     }
 
 }
