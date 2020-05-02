@@ -4,7 +4,7 @@ import io.vertx.core.MultiMap;
 import io.vertx.core.http.HttpServerRequest;
 import leotech.cdp.model.ContextSession;
 import leotech.cdp.service.DeviceDataService;
-import leotech.cdp.service.EventDataService;
+import leotech.cdp.service.EventTrackingService;
 import leotech.system.model.DeviceInfo;
 import leotech.system.util.RequestInfoUtil;
 import rfx.core.util.StringUtil;
@@ -18,7 +18,7 @@ public class TrackingApi {
 	String environment = StringUtil.safeString(params.get(TrackingApiParam.TRACKING_ENVIRONMENT),TrackingApiParam.DEV_ENV);
 	String sourceIP = RequestInfoUtil.getRemoteIP(req);
 	
-	return EventDataService.recordViewEvent(ctxSession, environment, deviceId, sourceIP, dv, touchpointUrl,
+	return EventTrackingService.recordViewEvent(ctxSession, environment, deviceId, sourceIP, dv, touchpointUrl,
 		eventName);
     }
 
@@ -31,7 +31,7 @@ public class TrackingApi {
 	String sourceIP = RequestInfoUtil.getRemoteIP(req);
 	int eventValue = StringUtil.safeParseInt(params.get(TrackingApiParam.EVENT_VALUE), 1);
 
-	return EventDataService.recordActionEvent(ctxSession, environment, deviceId, sourceIP, dv, touchpointUrl,
+	return EventTrackingService.recordActionEvent(ctxSession, environment, deviceId, sourceIP, dv, touchpointUrl,
 		eventName, eventValue);
     }
 
@@ -46,7 +46,7 @@ public class TrackingApi {
 	String environment = StringUtil.safeString(params.get(TrackingApiParam.TRACKING_ENVIRONMENT),
 		TrackingApiParam.DEV_ENV);
 
-	return EventDataService.recordConversionEvent(ctxSession, environment, srcEventKey, deviceId, sourceIP, dv,
+	return EventTrackingService.recordConversionEvent(ctxSession, environment, srcEventKey, deviceId, sourceIP, dv,
 		srcTouchpointUrl, eventName, eventValue, transactionCode);
     }
 

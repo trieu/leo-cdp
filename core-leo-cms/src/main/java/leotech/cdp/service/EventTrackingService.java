@@ -7,7 +7,7 @@ import leotech.cdp.model.ConversionEvent;
 import leotech.cdp.model.TrackingEvent;
 import leotech.system.model.DeviceInfo;
 
-public class EventDataService {
+public class EventTrackingService {
 
     public static int recordViewEvent(ContextSession ctxSession, String environment, String deviceId, String sourceIP,
 	    DeviceInfo dv, String touchpointUrl, String eventName) {
