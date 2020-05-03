@@ -220,7 +220,7 @@ public class MainHttpRouter extends BaseHttpRouter {
 	try {
 	    boolean isAdminReq = StringUtil.safeString(req.params().get("admin")).equals("1");
 	    if (isAdminReq) {
-		networkDomain = MediaNetworkDataService.ADMIN_LEOCLOUDCMS_COM;
+		networkDomain = MediaNetworkDataService.ADMIN_LEO_PLATFORM;
 	    }
 	    String tplFolder = MediaNetworkDataService.getWebTemplateFolder(networkDomain);
 	    String relPath = "./resources/" + APP_TEMPLATES + HOME_ROUTER + tplFolder;

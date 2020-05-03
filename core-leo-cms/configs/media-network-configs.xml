@@ -36,13 +36,13 @@
         <AppTemplateFolder></AppTemplateFolder>
         <ContentCategoryId></ContentCategoryId>
         <PublicContentClass>standard</PublicContentClass>
-        <PageTitle>leocloudcms.com</PageTitle>
+        <PageTitle>leoplatform.net</PageTitle>
         <PageHeaderLogo>/public/images/leotech-logo.png</PageHeaderLogo>
-        <BaseStaticUrl>//leocloudcms.com</BaseStaticUrl>
-        <BaseAdminApiUrl>//leocloudcms.com</BaseAdminApiUrl>
-        <BaseDeliveryApiUrl>//api.leocloudcms.com</BaseDeliveryApiUrl>
-        <BaseUploaderUrl>//uploader.leocloudcms.com</BaseUploaderUrl>
-        <BaseLogCollectorUrl>//log.leocloudcms.com</BaseLogCollectorUrl>
+        <BaseStaticUrl>//leoplatform.net</BaseStaticUrl>
+        <BaseAdminApiUrl>//leoplatform.net</BaseAdminApiUrl>
+        <BaseDeliveryApiUrl>//api.leoplatform.net</BaseDeliveryApiUrl>
+        <BaseUploaderUrl>//uploader.leoplatform.net</BaseUploaderUrl>
+        <BaseLogCollectorUrl>//log.leoplatform.net</BaseLogCollectorUrl>
         <PageTitle></PageTitle>
         <GoogleTrackingId></GoogleTrackingId>
         <NumberSimilarPostsInList>7</NumberSimilarPostsInList>
@@ -50,22 +50,22 @@
     
     <MediaNetwork>
         <networkId>5222157891479909862</networkId>
-        <name>LeoCloudCMS</name>
-        <uri>leocloudcms</uri>
-        <domain>leocloudcms.com</domain>
+        <name>LeoPlatform</name>
+        <uri>leoplatform</uri>
+        <domain>leoplatform.net</domain>
         <WebTemplateFolder>default-web-template</WebTemplateFolder>
         <AndroidAppId></AndroidAppId>
         <IosAppId></IosAppId>
         <AppTemplateFolder></AppTemplateFolder>
         <ContentCategoryId></ContentCategoryId>
         <PublicContentClass>standard</PublicContentClass>
-        <PageTitle>leocloudcms.com</PageTitle>
+        <PageTitle>leoplatform.net</PageTitle>
         <PageHeaderLogo>/public/images/leotech-logo.png</PageHeaderLogo>
-        <BaseStaticUrl>//leocloudcms.com</BaseStaticUrl>
-        <BaseAdminApiUrl>//leocloudcms.com</BaseAdminApiUrl>
-        <BaseDeliveryApiUrl>//api.leocloudcms.com</BaseDeliveryApiUrl>
-        <BaseUploaderUrl>//uploader.leocloudcms.com</BaseUploaderUrl>
-        <BaseLogCollectorUrl>//log.leocloudcms.com</BaseLogCollectorUrl>
+        <BaseStaticUrl>//leoplatform.net</BaseStaticUrl>
+        <BaseAdminApiUrl>//leoplatform.net</BaseAdminApiUrl>
+        <BaseDeliveryApiUrl>//api.leoplatform.net</BaseDeliveryApiUrl>
+        <BaseUploaderUrl>//uploader.leoplatform.net</BaseUploaderUrl>
+        <BaseLogCollectorUrl>//log.leoplatform.net</BaseLogCollectorUrl>
         <AdsTxtContent></AdsTxtContent>
         <GoogleTrackingId></GoogleTrackingId>
         <NumberSimilarPostsInList>7</NumberSimilarPostsInList>

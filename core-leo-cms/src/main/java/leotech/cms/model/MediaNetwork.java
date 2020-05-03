@@ -61,25 +61,25 @@ public class MediaNetwork implements PersistentArangoObject {
     List<ContentClassPostQuery> contentClassPostQueries;
     
     @XmlElement(name = "PageTitle")
-    String pageTitle = "leocloudcms.com";
+    String pageTitle = "leoplatform.net";
     
     @XmlElement(name = "PageHeaderLogo")
     String pageHeaderLogo = "/public/images/leotech-logo.png";
     
     @XmlElement(name = "BaseStaticUrl")
-    String baseStaticUrl = "//leocloudcms.com";
+    String baseStaticUrl = "//leoplatform.net";
     
     @XmlElement(name = "BaseAdminApiUrl")
-    String baseAdminApiUrl = "//leocloudcms.com";
+    String baseAdminApiUrl = "//leoplatform.net";
     
     @XmlElement(name = "BaseDeliveryApiUrl")
-    String baseDeliveryApiUrl = "//api.leocloudcms.com";
+    String baseDeliveryApiUrl = "//api.leoplatform.net";
     
     @XmlElement(name = "BaseUploaderUrl")
-    String baseUploaderUrl = "//uploader.leocloudcms.com";
+    String baseUploaderUrl = "//uploader.leoplatform.net";
     
     @XmlElement(name = "BaseLogCollectorUrl")
-    String baseLogCollectorUrl = "//log.leocloudcms.com";
+    String baseLogCollectorUrl = "//log.leoplatform.net";
     
     @XmlElement(name = "AdsTxtContent")
     String adsTxtContent = "";

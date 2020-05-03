@@ -43,12 +43,12 @@ public class RequestInfoUtil {
 		return ((InetSocketAddress) address).getAddress().getHostAddress();
 	    }
 	    String[] toks = address.toString().split("/");
-	    if(toks.length > 1) {
+	    if (toks.length > 1) {
 		String[] toks2 = toks[1].split(":");
-		if(toks2.length > 0) {
-		    return toks2[0];    
-		}		
-	    }	    
+		if (toks2.length > 0) {
+		    return toks2[0];
+		}
+	    }
 	} catch (Throwable e) {
 	    e.printStackTrace();
 	}
@@ -69,14 +69,17 @@ public class RequestInfoUtil {
 
 	return reqInfo.toString();
     }
-    
-    public static Map<String,String> getHashMapFromRequest(MultiMap params, String paramName){
-	Map<String,String> map = null;
-	String jsonStr = StringUtil.safeString(params.get(paramName),"{}");
-	Gson gson = new Gson();
-	Type strMapType = new TypeToken<Map<String, String>>() {}.getType();
-	map = gson.fromJson(jsonStr, strMapType);
-	if(map == null) {
+
+    public static Map<String, String> getHashMapFromRequest(MultiMap params, String paramName) {
+	Map<String, String> map = null;
+	String jsonStr = StringUtil.decodeUrlUTF8(params.get(paramName));
+	if (StringUtil.isNotEmpty(jsonStr)) {
+	    Gson gson = new Gson();
+	    Type strMapType = new TypeToken<Map<String, String>>() {}.getType();
+	    map = gson.fromJson(jsonStr, strMapType);
+	}
+
+	if (map == null) {
 	    map = new HashMap<String, String>(0);
 	}
 	return map;

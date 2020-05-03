@@ -82,7 +82,7 @@ public class EventObserverHttpRouter extends BaseHttpRouter {
 	    outHeaders.set(CONTENT_TYPE, BaseApiHandler.CONTENT_TYPE_JSON);
 
 	    // init core params
-	    String eventName = StringUtil.safeString(params.get(TrackingApiParam.EVENT_NAME)).toLowerCase();
+	    String eventName = StringUtil.safeString(params.get(TrackingApiParam.EVENT_METRIC_NAME)).toLowerCase();
 	    String clientSessionKey = StringUtil.safeString(params.get(TrackingApiParam.CTX_SESSION_KEY));
 
 	    if (uri.startsWith(PREFIX_CONTEXT_SESSION_PROFILE_INIT) && StringUtil.isEmpty(clientSessionKey)) {
@@ -122,6 +122,9 @@ public class EventObserverHttpRouter extends BaseHttpRouter {
 			    status = 101;
 			}
 		    }
+		} else {
+		    // 
+		    resp.end(new Gson().toJson(new ObserverResponse("", INVALID, status)));
 		}
 
 		if (status >= 200 && status < 300) {

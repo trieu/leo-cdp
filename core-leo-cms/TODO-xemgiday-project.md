@@ -25,7 +25,7 @@
 
 ## Product Mission
 * 100,000 visitors / day
-* Success Case Study for LeoCloudCMS.com 
+* Success Case Study 
 
 ## Data Source
 * https://www.humanbrainfacts.org/hypothalamus.php

@@ -20,13 +20,13 @@ public final class TrackingApiParam {
     public static final String MEDIA_HOST = "mediahost";
     public static final String USER_DEVICE_ID = "udeviceid";
    
+    
     public static final String SRC_EVENT_KEY = "srceventk";
-    
-    
-    public static final String EVENT_NAME = "en";
+    public static final String EVENT_METRIC_NAME = "metric";
     public static final String EVENT_VALUE = "ev";
+    public static final String EVENT_JSON_DATA = "eventdata";
     public static final String FEEDBACK_TEXT = "feedback";
-    public static final String EVENT_EXT_ATTRS = "extattrs";
+   
     public static final String TRANSACTION_CODE = "tsc";
     
     public static final String DEV_ENV = "dev";

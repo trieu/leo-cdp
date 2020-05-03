@@ -19,7 +19,7 @@ public class EventTrackingService {
     //
 
     public static int recordViewEvent(ContextSession ctxSession, String environment, String deviceId, String sourceIP,
-	    DeviceInfo dv, String touchpointUrl, String eventName, Map<String,String> extAttributes) {
+	    DeviceInfo dv, String touchpointUrl, String eventName, Map<String,String> eventJsonData) {
 	String deviceName = dv.deviceName;
 	String deviceOS = dv.deviceOs;
 
@@ -45,7 +45,7 @@ public class EventTrackingService {
     }
 
     public static int recordActionEvent(ContextSession ctxSession, String environment, String deviceId, String sourceIP,
-	    DeviceInfo dv, String touchpointUrl, String eventName, long eventCount, String feedbackText, Map<String,String> extAttributes) {
+	    DeviceInfo dv, String touchpointUrl, String eventName, long eventCount, String feedbackText, Map<String,String> eventJsonData) {
 
 	String deviceName = dv.deviceName;
 	String deviceOS = dv.deviceOs;
@@ -67,7 +67,9 @@ public class EventTrackingService {
 		srcTouchpointId, refTouchpointId, browserName, deviceId, deviceOS, deviceName, deviceType, sourceIP);
 	e.setEnvironment(environment);
 	e.setFeedbackText(feedbackText);
-	e.setExtAttributes(extAttributes);
+	
+	//FIXME
+	//e.setExtAttributes(extAttributes);
 
 	TrackingEventDaoUtil.record(e);
 	return 221;
@@ -75,7 +77,7 @@ public class EventTrackingService {
 
     public static int recordConversionEvent(ContextSession ctxSession, String environment, String srcEventKey,
 	    String deviceId, String sourceIP, DeviceInfo dv, String touchpointUrl, String eventName, long eventCount,
-	    String transactionCode, String feedbackText, Map<String,String> extAttributes) {
+	    String transactionCode, String feedbackText, Map<String,String> eventJsonData) {
 	String deviceName = dv.deviceName;
 	String deviceOS = dv.deviceOs;
 
@@ -99,7 +101,9 @@ public class EventTrackingService {
 		deviceType, sourceIP, timeSpent, srcEventKey);
 	e.setEnvironment(environment);
 	e.setFeedbackText(feedbackText);
-	e.setExtAttributes(extAttributes);
+	
+	//FIXME
+	//e.setExtAttributes(extAttributes);
 	
 	ConversionEventDaoUtil.record(e);
 	return 241;

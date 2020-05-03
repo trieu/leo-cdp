@@ -12,11 +12,11 @@
         window.LeoObserverProxy = LeoObserverProxy;
 
         // addEventListener support for IE8
-        function bindEvent(element, eventName, eventHandler) {
+        function bindEvent(element, metricName, eventHandler) {
             if (element.addEventListener) {
-                element.addEventListener(eventName, eventHandler, false);
+                element.addEventListener(metricName, eventHandler, false);
             } else if (element.attachEvent) {
-                element.attachEvent('on' + eventName, eventHandler);
+                element.attachEvent('on' + metricName, eventHandler);
             }
         }
 
@@ -43,21 +43,27 @@
             ifProxy.contentWindow.postMessage(msg, '*');
         };
 
-        LeoObserverProxy.messageHandler = function(data) {
-            if (data === "LeoObserverProxyLoaded") {
+        LeoObserverProxy.messageHandler = function(hash) {
+        	
+            if (hash === "#LeoObserverProxyLoaded") {
  				initLeoContextSession()
-            } else if (data === "LeoObserverProxyReady") {
-                if (typeof LeoObserverProxyReady === "function") LeoObserverProxyReady();
+            } 
+            else if (hash === "#LeoObserverProxyReady") {
+                if (typeof leoObserverProxyReady === "function") {
+                	leoObserverProxyReady();
+                }
             }
         }
 
 
-        // Listen to message from child window
-        bindEvent(window, 'message', function(e) {
-            LeoObserverProxy.messageHandler(e.data);
+        // Listen to message from child window 
+        bindEvent(window['leotech_event_proxy'], 'hashchange', function() {
+        	var hash = window['leotech_event_proxy'].document.location.hash;
+        	console.log('LeoObserverProxy.messageHandler '+hash);
+            LeoObserverProxy.messageHandler(hash);
         });
 
-        var getObserverParams = function(eventData) {
+        var getObserverParams = function(metricName, eventData) {
             var mediaHost = encodeURIComponent(document.location.host);
 			var tprefurl =  encodeURIComponent(document.referrer ? document.referrer : "");
 			var tpname = encodeURIComponent(document.title);
@@ -71,8 +77,9 @@
                 'tpurl': tpurl,
                 'tpname' : tpname
             };
-            if(eventData){
-             	var event = encodeURIComponent(JSON.stringify(eventData))
+            if(metricName && eventData){
+            	params['metric'] = metricName;
+             	params['eventdata'] = encodeURIComponent(JSON.stringify(eventData)); 
             }
             return params;
         }
@@ -83,14 +90,15 @@
                 'params': getObserverParams(false)
             });
             sendMessage(payload);
+            console.log('LeoObserverProxy.initLeoContextSession')
 		}
 		
 		
 
         // event-view(pageview|screenview|storeview|trueview|placeview,contentId,sessionKey,visitorId)
-        LeoObserverProxy.recordViewEvent = function(eventName, eventData) {
+        LeoObserverProxy.recordViewEvent = function(metricName, eventData) {
             if (typeof eventData === "object") {
-                var params = getObserverParams(eventData);
+                var params = getObserverParams(metricName, eventData);
                 var payload = JSON.stringify({
                     'call': 'doTracking',
                     'params': params,
@@ -101,9 +109,9 @@
         }
 
         // event-action(click|play|touch|contact|watch|test,sessionKey,visitorId)
-        LeoObserverProxy.recordActionEvent = function(eventName, eventData) {
+        LeoObserverProxy.recordActionEvent = function(metricName, eventData) {
             if (typeof eventData === "object") {
-                var params = getObserverParams(eventData);
+                var params = getObserverParams(metricName, eventData);
                 var payload = JSON.stringify({
                     'call': 'doTracking',
                     'params': params,
@@ -114,9 +122,9 @@
         }
 
         // event-conversion(add_to_cart|submit_form|checkout|join,sessionKey,visitorId)
-        LeoObserverProxy.recordConversionEvent = function(eventName, eventData) {
+        LeoObserverProxy.recordConversionEvent = function(metricName, eventData) {
             if (typeof eventData === "object") {
-                var params = getObserverParams(eventData);
+                var params = getObserverParams(metricName,eventData);
                 var payload = JSON.stringify({
                     'call': 'doTracking',
                     'params': params,

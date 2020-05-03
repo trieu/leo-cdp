@@ -25,9 +25,7 @@ public class MediaNetworkDataService {
 
     // TODO add shared redis cache here, load MediaNetwork from database
 
-    public static final String ADMIN_LEOCLOUDCMS_COM = "admin.leocloudcms.com";
-
-    public static final String COM_LEOCLOUDCMS = "com.leocloudcms";
+    public static final String ADMIN_LEO_PLATFORM = "admin.leoplatform.net";
 
     // default app templates
     public static final String DEFAULT_ADMIN_TEMPLATE_FOLDER = "default-admin-template";

@@ -706,6 +706,15 @@
 
 (function(global, undefined) {
     var LeoEventObserver = {};
+    var sessionKey = false;
+    
+    function setSessionKey(key){
+    	sessionKey = key;
+    }
+    
+    function getSessionKey(){
+    	return sessionKey;
+    }
 
     function generateUUID() {
         var d = new Date().getTime();
@@ -733,7 +742,7 @@
         return new UUID(5, "ns:URL", url).format("b16").toLowerCase()
     }
 
-    var doTracking = function(metric, params, callback) {
+    var doTracking = function(eventType, params, callback) {
         var h = function(resHeaders, text) {
             var data = JSON.parse(text);
             if (typeof callback === "function") {
@@ -741,13 +750,23 @@
             }
         }
 
-        var obsId = params.observerId,
-            media = params.host,
-            ctxUrl = params.contextUrl;
-
-        var vsId = getUUID()
-        var url = PREFIX_EVENT_SESSION_INIT + '?observer=' + obsId + '&media=' + media + '&ctxUrl=' + ctxUrl + '&visid=' + vsId;
-        LeoCorsRequest.get(false, url, [], h);
+        var queryStr = objectToQueryString(params);
+        var vsId = getUUID();
+        var sessionKey = getSessionKey();
+        if(sessionKey){
+        	
+        	var prefixUrl = PREFIX_EVENT_VIEW_URL;
+	        if(eventType === 'action'){
+	        	prefixUrl = PREFIX_EVENT_ACTION_URL;
+	        } 
+	        else if(eventType === 'conversion'){
+	        	prefixUrl = PREFIX_EVENT_CONVERSION_URL;
+	        } 
+	        
+	        var url = prefixUrl + '?' + queryStr + '&visid=' + vsId + '&ctxsk=' + sessionKey ;
+	        LeoCorsRequest.get(false, url, [], h);
+        }
+        
     }
     
     var objectToQueryString = function(params){
@@ -760,8 +779,14 @@
     var getContextSession = function(params, callback) {
         var h = function(resHeaders, text) {
             var data = JSON.parse(text);
-            if (typeof callback === "function") {
-                callback(data);
+            if(data.status === 101){
+            	setSessionKey(data.sessionKey);
+            	if (typeof callback === "function") {
+                	callback(data);
+            	}
+            }
+            else {
+            	console.error(data)
             }
         }
 
