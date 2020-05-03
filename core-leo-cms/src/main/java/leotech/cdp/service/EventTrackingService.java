@@ -19,7 +19,7 @@ public class EventTrackingService {
     //
 
     public static int recordViewEvent(ContextSession ctxSession, String environment, String deviceId, String sourceIP,
-	    DeviceInfo dv, String touchpointUrl, String eventName, Map<String,String> eventJsonData) {
+	    DeviceInfo dv, String touchpointUrl, String eventName, Map<String,String> eventData) {
 	String deviceName = dv.deviceName;
 	String deviceOS = dv.deviceOs;
 
@@ -39,13 +39,14 @@ public class EventTrackingService {
 	TrackingEvent e = new TrackingEvent(observerId, sessionKey, eventName, eventCount, refProfileId, refProfileType,
 		srcTouchpointId , refTouchpointId, browserName, deviceId, deviceOS, deviceName, deviceType, sourceIP);
 	e.setEnvironment(environment);
+	e.setEventData(eventData);
 
 	TrackingEventDaoUtil.record(e);
 	return 201;
     }
 
     public static int recordActionEvent(ContextSession ctxSession, String environment, String deviceId, String sourceIP,
-	    DeviceInfo dv, String touchpointUrl, String eventName, long eventCount, String feedbackText, Map<String,String> eventJsonData) {
+	    DeviceInfo dv, String touchpointUrl, String eventName, long eventCount, String feedbackText, Map<String,String> eventData) {
 
 	String deviceName = dv.deviceName;
 	String deviceOS = dv.deviceOs;
@@ -67,17 +68,15 @@ public class EventTrackingService {
 		srcTouchpointId, refTouchpointId, browserName, deviceId, deviceOS, deviceName, deviceType, sourceIP);
 	e.setEnvironment(environment);
 	e.setFeedbackText(feedbackText);
+	e.setEventData(eventData);
 	
-	//FIXME
-	//e.setExtAttributes(extAttributes);
-
 	TrackingEventDaoUtil.record(e);
 	return 221;
     }
 
     public static int recordConversionEvent(ContextSession ctxSession, String environment, String srcEventKey,
 	    String deviceId, String sourceIP, DeviceInfo dv, String touchpointUrl, String eventName, long eventCount,
-	    String transactionCode, String feedbackText, Map<String,String> eventJsonData) {
+	    String transactionCode, String feedbackText, Map<String,String> eventData) {
 	String deviceName = dv.deviceName;
 	String deviceOS = dv.deviceOs;
 
@@ -101,9 +100,7 @@ public class EventTrackingService {
 		deviceType, sourceIP, timeSpent, srcEventKey);
 	e.setEnvironment(environment);
 	e.setFeedbackText(feedbackText);
-	
-	//FIXME
-	//e.setExtAttributes(extAttributes);
+	e.setEventData(eventData);
 	
 	ConversionEventDaoUtil.record(e);
 	return 241;

@@ -2,6 +2,7 @@ package leotech.cdp.model;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.arangodb.ArangoCollection;
@@ -148,7 +149,7 @@ public class TrackingEvent extends CdpPersistentObject {
     protected String environment;
     
     @Expose
-    protected Map<String,String> extAttributes;
+    protected Map<String,String> eventData;
 
     @Expose
     protected int partitionId = 0;
@@ -464,13 +465,18 @@ public class TrackingEvent extends CdpPersistentObject {
         this.feedbackText = feedbackText;
     }
 
-    public Map<String, String> getExtAttributes() {
-        return extAttributes;
+    public Map<String, String> getEventData() {
+	if(eventData == null) {
+	    eventData = new HashMap<String, String>(5);
+	}
+        return eventData;
     }
 
-    public void setExtAttributes(Map<String, String> extAttributes) {
-        this.extAttributes = extAttributes;
+    public void setEventData(Map<String, String> eventData) {
+        this.eventData = eventData;
     }
+
+    
  
 
 }

@@ -195,5 +195,11 @@ AQL_GET_TRACKING_EVENTS_BY_PROFILE_ID =>
 	RETURN e
 ;
 
+AQL_GET_CONVERSION_EVENTS_BY_PROFILE_ID =>
+	FOR e in cdp_conversionevent FILTER e.refProfileId == @refProfileId  
+	SORT e.timestamp DESC
+	RETURN e
+;
+
 
 ############################################### END AQL  #####################################################################################

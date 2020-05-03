@@ -57,6 +57,7 @@
     <script src="//{{baseStaticUrl}}/public/js/utils/mdl-chips-input.js"></script>
     <script src="//{{baseStaticUrl}}/public/js/utils/handlebars.min.js"></script>
     <script src="//{{baseStaticUrl}}/public/js/utils/core.leocms.common.js"></script>
+    <script src="//{{baseStaticUrl}}/public/js/utils/jquery.iframetracker.min.js"></script>
 
     <!-- BotUI -->
     <link rel="stylesheet" href="https://unpkg.com/botui/build/botui.min.css" />
@@ -198,9 +199,52 @@
             var s = document.getElementsByTagName('script')[0];
             s.parentNode.insertBefore(jsNode, s);
         })();
+        
         //Leo is ready
         function leoObserverProxyReady() {
             LeoObserverProxy.recordViewEvent("pageview", { email: "thomas@example.com" });
+            
+            $('a[href^="/html/post"]').click(function (event) {
+
+				// Don't follow the link
+				//event.preventDefault();
+			
+				// Log the clicked element in the console
+				var url = location.href.substring(0,location.href.length-1) + $(this).attr('href');
+				console.log(url);
+				LeoObserverProxy.recordActionEvent("click", { post_url: url });
+			
+			});
+			$('a[href^="/html/page"]').click(function (event) {
+
+				// Don't follow the link
+				//event.preventDefault();
+			
+				// Log the clicked element in the console
+				var url = location.href.substring(0,location.href.length-1) + $(this).attr('href');
+				console.log(url);
+				LeoObserverProxy.recordActionEvent("click", { page_url: url });
+			});
+			
+			$('iframe').iframeTracker({
+			  blurCallback: function(){
+			      // Do something
+			      console.log("click ads " + this._src);
+			      LeoObserverProxy.recordConversionEvent("click_ads", { ads_url: this._src });
+			  },
+			
+			  overCallback: function(element){
+			      // Saving the iframe wrapper id
+			      this._src = $(element).attr('src'); 
+			      
+			  },
+			  outCallback: function(element){
+			      // Reset 
+			      this._src = null; 
+			  },
+			   _src: null
+			});
+			
         }
     </script>
 </body>

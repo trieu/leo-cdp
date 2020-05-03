@@ -37,7 +37,7 @@ public class TrackingApi {
 	
 	String feedbackText = StringUtil.safeString(params.get(TrackingApiParam.FEEDBACK_TEXT));
 	Map<String,String> eventJsonData = RequestInfoUtil.getHashMapFromRequest(params, TrackingApiParam.EVENT_JSON_DATA);
-	int eventCount = StringUtil.safeParseInt(eventJsonData.getOrDefault(TrackingApiParam.EVENT_VALUE, "1"));
+	int eventCount = 1;
 
 	return EventTrackingService.recordActionEvent(ctxSession, environment, deviceId, sourceIP, device, touchpointUrl,
 		eventName, eventCount, feedbackText, eventJsonData);
@@ -50,15 +50,15 @@ public class TrackingApi {
 	String srcTouchpointUrl = StringUtil.safeString(params.get(TrackingApiParam.TOUCHPOINT_URL));
 	String deviceId = DeviceDataService.getDeviceId(params, device);
 	String feedbackText = StringUtil.safeString(params.get(TrackingApiParam.FEEDBACK_TEXT));
-	Map<String,String> extAttributes = RequestInfoUtil.getHashMapFromRequest(params, TrackingApiParam.EVENT_JSON_DATA);
+	Map<String,String> eventJsonData = RequestInfoUtil.getHashMapFromRequest(params, TrackingApiParam.EVENT_JSON_DATA);
 	
-	int eventCount = StringUtil.safeParseInt(extAttributes.getOrDefault(TrackingApiParam.EVENT_VALUE, "1"));
+	int eventCount = 1;
 	String transactionCode = StringUtil.safeString(params.get(TrackingApiParam.TRANSACTION_CODE));
 	String environment = StringUtil.safeString(params.get(TrackingApiParam.TRACKING_ENVIRONMENT),
 		TrackingApiParam.DEV_ENV);
 
 	return EventTrackingService.recordConversionEvent(ctxSession, environment, srcEventKey, deviceId, sourceIP, device,
-		srcTouchpointUrl, eventName, eventCount, transactionCode, feedbackText, extAttributes);
+		srcTouchpointUrl, eventName, eventCount, transactionCode, feedbackText, eventJsonData);
     }
 
 }
