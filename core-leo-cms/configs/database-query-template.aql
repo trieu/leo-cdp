@@ -170,6 +170,19 @@ AQL_GET_PROFILE_BY_ID =>
 	RETURN e
 ;
 
+AQL_GET_PROFILE_BY_IDENTITY =>
+	FOR e in cdp_profile FILTER @visitorId IN e.identities[*]
+	RETURN e
+;
+
+AQL_GET_PROFILE_BY_KEY_IDENTITIES => 
+	FOR e in cdp_profile 
+	FILTER e.primaryEmail == @primaryEmail OR e.primaryPhone == @primaryPhone
+			OR @visitorId IN e.identities[*] OR @email IN e.identities[*] OR @phone IN e.identities[*]
+			OR @userDeviceId IN e.usedDeviceIds[*]
+	RETURN e
+;
+
 ########### AQL CDP CONTEXT_SESSION COLLECTION ########################################################################################################;
 
 AQL_GET_CONTEXT_SESSION_BY_KEY =>
@@ -187,7 +200,7 @@ AQL_GET_CONTEXT_SESSIONS_BY_PROFILE_ID =>
 	RETURN e
 ;
 
-########### AQL CDP TRACKING_EVENTS COLLECTION ########################################################################################################;
+########### AQL CDP EVENTS QUERIES ########################################################################################################;
 
 AQL_GET_TRACKING_EVENTS_BY_PROFILE_ID =>
 	FOR e in cdp_trackingevent FILTER e.refProfileId == @refProfileId  

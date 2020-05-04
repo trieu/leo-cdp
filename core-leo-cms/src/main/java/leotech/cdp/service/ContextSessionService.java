@@ -46,13 +46,12 @@ public class ContextSessionService {
 		String visitorId = StringUtil.safeString(params.get(TrackingApiParam.VISITOR_ID));
 		String email = StringUtil.safeString(params.get(TrackingApiParam.EMAIL));
 		String phone = StringUtil.safeString(params.get(TrackingApiParam.PHONE));
+		String fingerprintId = StringUtil.safeString(params.get(TrackingApiParam.FINGERPRINT_ID));
 
 		String loginId = StringUtil.safeString(params.get(TrackingApiParam.LOGIN_ID));
-		String loginIdProviderName = StringUtil.safeString(params.get(TrackingApiParam.LOGIN_PROVIDER_NAME));
+		String loginIdProvider = StringUtil.safeString(params.get(TrackingApiParam.LOGIN_PROVIDER));
 
-		String fingerprintId = StringUtil.safeString(params.get(TrackingApiParam.FINGERPRINT_ID));
-		String environment = StringUtil.safeString(params.get(TrackingApiParam.TRACKING_ENVIRONMENT),
-				TrackingApiParam.DEV_ENV);
+		String env = StringUtil.safeString(params.get(TrackingApiParam.DATA_ENVIRONMENT), TrackingApiParam.DEV_ENV);
 		String locationCode = loc.getLocationCode();
 
 		// touchpoint info process
@@ -66,20 +65,20 @@ public class ContextSessionService {
 		// create new
 		ContextSession ctxSession = new ContextSession(observerId, dateTime, dateTimeKey, locationCode,
 				userDeviceId, ip, mediaHost, appId, refTouchpointId, srcTouchpointId, visitorId, email,
-				fingerprintId, environment);
+				fingerprintId, env);
 
 		String ctxSessionKey = ctxSession.getSessionKey();
 
 		// load profile ID from DB
-		Profile profile = ProfileDataService.getOrCreateProfile(ctxSessionKey, visitorId, observerId,
-				srcTouchpointId, ip, userDeviceId, email, phone);
+		Profile profile = ProfileDataService.getOrCreateNew(ctxSessionKey, observerId, srcTouchpointId, ip,
+				visitorId, userDeviceId, email, phone, fingerprintId, loginId, loginIdProvider);
 		String profileId = profile.getId();
 		int profileType = profile.getType();
 
 		ctxSession.setProfileId(profileId);
 		ctxSession.setProfileType(profileType);
 		ctxSession.setLoginId(loginId);
-		ctxSession.setLoginProviderName(loginIdProviderName);
+		ctxSession.setLoginProvider(loginIdProvider);
 
 		// TODO run in a thread
 		ContextSessionDaoUtil.create(ctxSession);
@@ -162,7 +161,7 @@ public class ContextSessionService {
 		String profileId = ctxSession.getProfileId();
 		String email = ctxSession.getEmail();
 		String loginId = ctxSession.getLoginId();
-		String loginProviderName = ctxSession.getLoginProviderName();
+		String loginProviderName = ctxSession.getLoginProvider();
 		ProfileDataService.updateLoginInfo(loginProviderName, loginId, email, profileId, observerId,
 				lastTouchpointId, sourceIP, usedDeviceId);
 		return 102;

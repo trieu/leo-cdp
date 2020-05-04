@@ -1,7 +1,6 @@
 package leotech.cdp.service;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -11,29 +10,37 @@ import rfx.core.util.StringUtil;
 
 public class ProfileDataService {
 
-	public static Profile getOrCreateProfile(String ctxSessionKey, String visitorId, String observerId,
-			String initTouchpointId, String lastSeenIp, String userDeviceId, String email, String phone) {
+	public static Profile getOrCreateNew(String ctxSessionKey, String observerId, String initTouchpointId,
+			String lastSeenIp, String visitorId, String userDeviceId, String email, String phone, String fingerprintId, String loginId, String loginIdProvider) {
 
+		boolean isHasLoginInfo = StringUtil.isNotEmpty(loginId) && StringUtil.isNotEmpty(loginIdProvider);
 		int type = Profile.ProfileType.ANONYMOUS;
-		if (StringUtil.isNotEmpty(email) && StringUtil.isEmpty(phone)) {
+		if (StringUtil.isNotEmpty(email) || StringUtil.isNotEmpty(phone) || isHasLoginInfo ) {
 			type = Profile.ProfileType.IDENTIFIED;
-		} else if (StringUtil.isNotEmpty(email) && StringUtil.isNotEmpty(phone)) {
+		} 
+		else if (StringUtil.isNotEmpty(email) && StringUtil.isNotEmpty(phone)) {
 			type = Profile.ProfileType.CRM_USER;
 		}
 
-		String id = Profile.buildProfileId(type, observerId, initTouchpointId, lastSeenIp, userDeviceId, email, phone);
-
-		Profile pf = ProfileDaoUtil.getById(id);
+		Profile pf = ProfileDaoUtil.getByKeyIdentities(visitorId, email, phone, userDeviceId);
 		if (pf == null) {
 			if (type == Profile.ProfileType.ANONYMOUS) {
-				pf = Profile.newAnonymousProfile(ctxSessionKey, visitorId, observerId, initTouchpointId, lastSeenIp,
-						userDeviceId);
-			} else if (type == Profile.ProfileType.IDENTIFIED) {
-				pf = Profile.newIdentifiedProfile(ctxSessionKey, visitorId, observerId, initTouchpointId,
-						lastSeenIp, userDeviceId, email);
-			} else if (type == Profile.ProfileType.CRM_USER) {
-				pf = Profile.newCrmProfile(ctxSessionKey, visitorId, observerId, initTouchpointId, lastSeenIp,
-						userDeviceId, email, phone);
+				pf = Profile.newAnonymousProfile(ctxSessionKey, observerId, initTouchpointId, lastSeenIp, visitorId,
+						userDeviceId, fingerprintId);
+			} 
+			else if (type == Profile.ProfileType.IDENTIFIED) {
+				
+				pf = Profile.newIdentifiedProfile(ctxSessionKey, observerId, initTouchpointId, lastSeenIp,
+						visitorId, userDeviceId, email, fingerprintId);
+				
+				if(isHasLoginInfo) {
+					pf.setIdentity(loginId,loginIdProvider);
+				}
+				
+			} 
+			else if (type == Profile.ProfileType.CRM_USER) {
+				pf = Profile.newCrmProfile(ctxSessionKey, observerId, initTouchpointId, lastSeenIp, visitorId,
+						userDeviceId, email, phone, fingerprintId);
 			}
 
 			// TODO run in a thread

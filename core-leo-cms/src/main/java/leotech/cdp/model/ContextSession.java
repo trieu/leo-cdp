@@ -92,7 +92,7 @@ public class ContextSession extends CdpPersistentObject {
     
     String email;
     String loginId;
-    String loginProviderName;
+    String loginProvider;
 
     String fingerprintId;
     Date createAt;
@@ -277,12 +277,12 @@ public class ContextSession extends CdpPersistentObject {
         this.loginId = loginId;
     }
 
-    public String getLoginProviderName() {
-        return loginProviderName;
+    public String getLoginProvider() {
+        return loginProvider;
     }
 
-    public void setLoginProviderName(String loginProviderName) {
-        this.loginProviderName = loginProviderName;
+    public void setLoginProvider(String loginProvider) {
+        this.loginProvider = loginProvider;
     }
 
     

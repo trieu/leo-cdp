@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
 
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
@@ -16,10 +15,10 @@ import com.arangodb.entity.DocumentField;
 import com.arangodb.entity.DocumentField.Type;
 import com.arangodb.model.HashIndexOptions;
 import com.arangodb.model.PersistentIndexOptions;
-import com.devskiller.friendly_id.FriendlyId;
 import com.google.gson.annotations.Expose;
 
 import leotech.system.util.database.ArangoDbUtil;
+import rfx.core.util.StringUtil;
 
 /**
  * @author Trieu Nguyen (Thomas)
@@ -226,22 +225,40 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	protected void initBaseInformation(String ctxSessionKey, String visitorId, int type, String observerId,
 			String lastTouchpointId, String lastSeenIp, String usedDeviceId, String email, String phone) {
 		this.sessionKeys.add(ctxSessionKey);
-		this.identities.add(visitorId);
 		this.type = type;
+		
 		this.observerId = observerId;
 		this.lastTouchpointId = lastTouchpointId;
 		this.atTouchpoints.add(lastTouchpointId);
 		this.lastSeenIp = lastSeenIp;
 		this.lastUsedDeviceId = usedDeviceId;
+		
 		this.usedDeviceIds.add(usedDeviceId);
 		this.primaryEmail = email;
 		this.primaryPhone = phone;
-		this.id = buildProfileId(type, observerId, lastTouchpointId, lastSeenIp, usedDeviceId, email, phone);
+		
+		// hash for unique id key
+		this.id = buildProfileId(type, visitorId, usedDeviceId, email, phone);
+
+		// add multiple identity data for indexing
+		if (StringUtil.isNotEmpty(visitorId)) {
+			this.identities.add(visitorId);
+		}
+		if (StringUtil.isNotEmpty(email)) {
+			this.identities.add(email);
+		}
+		if (StringUtil.isNotEmpty(phone)) {
+			this.identities.add(phone);
+		}
+		if (StringUtil.isNotEmpty(usedDeviceId)) {
+			this.identities.add(usedDeviceId);
+		}
+
 	}
 
-	public static String buildProfileId(int type, String observerId, String lastTouchpointId, String lastSeenIp,
-			String usedDeviceId, String email, String phone) {
-		String keyHint = type  + usedDeviceId + email + phone;
+	public static String buildProfileId(int type, String visitorId, String usedDeviceId, String email,
+			String phone) {
+		String keyHint = type + visitorId + usedDeviceId + email + phone;
 		return id(keyHint);
 	}
 
@@ -257,8 +274,8 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	 * @param email
 	 * @return
 	 */
-	public static Profile newIdentifiedProfile(String ctxSessionKey, String visitorId, String observerId,
-			String lastTouchpointId, String lastSeenIp, String usedDeviceId, String email) {
+	public static Profile newIdentifiedProfile(String ctxSessionKey, String observerId, String lastTouchpointId,
+			String lastSeenIp, String visitorId, String usedDeviceId, String email, String fingerprintId) {
 		Profile p = new Profile();
 		p.initBaseInformation(ctxSessionKey, visitorId, ProfileType.IDENTIFIED, observerId, lastTouchpointId,
 				lastSeenIp, usedDeviceId, email, "");
@@ -278,8 +295,9 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	 * @param phone
 	 * @return
 	 */
-	public static Profile newCrmProfile(String ctxSessionKey, String visitorId, String observerId,
-			String lastTouchpointId, String lastSeenIp, String usedDeviceId, String email, String phone) {
+	public static Profile newCrmProfile(String ctxSessionKey, String observerId, String lastTouchpointId,
+			String lastSeenIp, String visitorId, String usedDeviceId, String email, String phone,
+			String fingerprintId) {
 		Profile p = new Profile();
 		p.initBaseInformation(ctxSessionKey, visitorId, ProfileType.CRM_USER, observerId, lastTouchpointId,
 				lastSeenIp, usedDeviceId, email, phone);
@@ -294,8 +312,8 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	 * @param lastSeenIp
 	 * @param usedDeviceId
 	 */
-	public static Profile newAnonymousProfile(String ctxSessionKey, String visitorId, String observerId,
-			String lastTouchpointId, String lastSeenIp, String usedDeviceId) {
+	public static Profile newAnonymousProfile(String ctxSessionKey, String observerId, String lastTouchpointId,
+			String lastSeenIp, String visitorId, String usedDeviceId, String fingerprintId) {
 		Profile p = new Profile();
 		p.initBaseInformation(ctxSessionKey, visitorId, ProfileType.ANONYMOUS, observerId, lastTouchpointId,
 				lastSeenIp, usedDeviceId, "", "");
@@ -312,9 +330,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		return id;
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
+	
 
 	public void setType(int type) {
 		this.type = type;
@@ -422,6 +438,15 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	public void setIdentities(Set<String> identities) {
 		this.identities = identities;
+	}
+	
+	public void setIdentity(String identity) {
+		this.identities.add(identity);
+	}
+	
+	public void setIdentity(String loginId, String loginProvider) {
+		
+		this.identities.add(loginId + loginProvider);
 	}
 
 	public Set<String> getSessionKeys() {

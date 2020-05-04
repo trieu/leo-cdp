@@ -20,7 +20,7 @@ public class TrackingApi {
 	
 	String touchpointUrl = StringUtil.safeString(params.get(TrackingApiParam.TOUCHPOINT_URL));
 	String deviceId = DeviceDataService.getDeviceId(params, device);
-	String environment = StringUtil.safeString(params.get(TrackingApiParam.TRACKING_ENVIRONMENT),TrackingApiParam.DEV_ENV);
+	String environment = StringUtil.safeString(params.get(TrackingApiParam.DATA_ENVIRONMENT),TrackingApiParam.DEV_ENV);
 	Map<String,String> eventJsonData = RequestInfoUtil.getHashMapFromRequest(params, TrackingApiParam.EVENT_JSON_DATA);
 	
 	System.out.println(new Gson().toJson(eventJsonData));
@@ -33,7 +33,7 @@ public class TrackingApi {
 	
 	String touchpointUrl = StringUtil.safeString(params.get(TrackingApiParam.TOUCHPOINT_URL));
 	String deviceId = DeviceDataService.getDeviceId(params, device);
-	String environment = StringUtil.safeString(params.get(TrackingApiParam.TRACKING_ENVIRONMENT),TrackingApiParam.DEV_ENV);
+	String environment = StringUtil.safeString(params.get(TrackingApiParam.DATA_ENVIRONMENT),TrackingApiParam.DEV_ENV);
 	
 	String feedbackText = StringUtil.safeString(params.get(TrackingApiParam.FEEDBACK_TEXT));
 	Map<String,String> eventJsonData = RequestInfoUtil.getHashMapFromRequest(params, TrackingApiParam.EVENT_JSON_DATA);
@@ -54,7 +54,7 @@ public class TrackingApi {
 	
 	int eventCount = 1;
 	String transactionCode = StringUtil.safeString(params.get(TrackingApiParam.TRANSACTION_CODE));
-	String environment = StringUtil.safeString(params.get(TrackingApiParam.TRACKING_ENVIRONMENT),
+	String environment = StringUtil.safeString(params.get(TrackingApiParam.DATA_ENVIRONMENT),
 		TrackingApiParam.DEV_ENV);
 
 	return EventTrackingService.recordConversionEvent(ctxSession, environment, srcEventKey, deviceId, sourceIP, device,
