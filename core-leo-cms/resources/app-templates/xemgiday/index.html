@@ -189,63 +189,59 @@
     
     <script>
     	//Leo Web Event Observer for Data Hub Analytics
-    	window.leoObserverId = "tester";
-    	window.leoObserverLogDomain = "xemgiday.com";
-        (function () {
-            var src = '//'+ window.leoObserverLogDomain + '/public/js/leo-event-observer/leoproxy.js';
-            var jsNode = document.createElement('script');
-            jsNode.async = true;
-            jsNode.src = src;
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jsNode, s);
-        })();
-        
-        //Leo is ready
-        function leoObserverProxyReady() {
-            LeoObserverProxy.recordViewEvent("pageview", { email: "thomas@example.com" });
-            
-            $('a[href^="/html/post"]').click(function (event) {
-
-				// Don't follow the link
-				//event.preventDefault();
-			
-				// Log the clicked element in the console
-				var url = location.href.substring(0,location.href.length-1) + $(this).attr('href');
-				console.log(url);
-				LeoObserverProxy.recordActionEvent("click", { post_url: url });
-			
-			});
-			$('a[href^="/html/page"]').click(function (event) {
-
-				// Don't follow the link
-				//event.preventDefault();
-			
-				// Log the clicked element in the console
-				var url = location.href.substring(0,location.href.length-1) + $(this).attr('href');
-				console.log(url);
-				LeoObserverProxy.recordActionEvent("click", { page_url: url });
-			});
-			
-			$('iframe').iframeTracker({
-			  blurCallback: function(){
-			      // Do something
-			      console.log("click ads " + this._src);
-			      LeoObserverProxy.recordConversionEvent("click_ads", { ads_url: this._src });
-			  },
-			
-			  overCallback: function(element){
-			      // Saving the iframe wrapper id
-			      this._src = $(element).attr('src'); 
-			      
-			  },
-			  outCallback: function(element){
-			      // Reset 
-			      this._src = null; 
-			  },
-			   _src: null
-			});
-			
-        }
+		window.leoObserverId = "tester";
+		window.leoObserverLogDomain = "xemgiday.com";
+		(function() {
+		    var src = '//' + window.leoObserverLogDomain + '/public/js/leo-event-observer/leoproxy.js';
+		    var jsNode = document.createElement('script');
+		    jsNode.async = true;
+		    jsNode.src = src;
+		    var s = document.getElementsByTagName('script')[0];
+		    s.parentNode.insertBefore(jsNode, s);
+		})();
+		
+		function leoObserverProxyReady() {
+		    //Leo is ready, record view data
+		    LeoObserverProxy.recordViewEvent("pageview", {
+		        email: "thomas@example.com"
+		    });
+		    // record action data
+		    $('a[href^="/html/post"]').click(function(event) {
+		        //event.preventDefault(); // Don't follow the link
+		        // Log the clicked post url
+		        var url = location.href.substring(0, location.href.length - 1) + $(this).attr('href');
+		        console.log(url);
+		        LeoObserverProxy.recordActionEvent("click", {
+		            post_url: url
+		        });
+		    });
+		    $('a[href^="/html/page"]').click(function(event) {
+		        // Don't follow the link
+		        //event.preventDefault();
+		        // Log the clicked page url
+		        var url = location.href.substring(0, location.href.length - 1) + $(this).attr('href');
+		        console.log(url);
+		        LeoObserverProxy.recordActionEvent("click", {
+		            page_url: url
+		        });
+		    });
+		    $('iframe').iframeTracker({
+		        blurCallback: function() {
+		            // record conversion data for business optimization
+		            console.log("click ads " + this._src);
+		            LeoObserverProxy.recordConversionEvent("click_ads", {
+		                ads_url: this._src
+		            });
+		        },
+		        overCallback: function(element) {
+		            this._src = $(element).attr('src'); // Saving the iframe ads placement src 
+		        },
+		        outCallback: function(element) {
+		            this._src = null; // Reset 
+		        },
+		        _src: null
+		    });
+		}
     </script>
 </body>
 
