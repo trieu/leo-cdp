@@ -20,107 +20,107 @@ import leotech.system.model.JsonDataPayload;
  */
 public class DeliveryApiRouter extends BaseApiRouter {
 
-    
-    public DeliveryApiRouter(RoutingContext context) {
-	super(context);
-    }
-
-    @Override
-    public boolean handle() throws Exception {
-	return this.handle(this.context);
-    }
-
-    @Override
-    protected JsonDataPayload callHttpPostApiProcessor(String userSession, String uri, JsonObject paramJson) {
-	JsonDataPayload payload = null;
-	try {
-
-	    if (uri.startsWith(POST_PREFIX)) {
-		payload = new PostApiHandler().httpPostApiHandler(userSession, uri, paramJson);
-	    }
-
-	    else if (uri.equalsIgnoreCase(PAGE_PREFIX)) {
-		payload = new PageApiHandler().httpPostApiHandler(userSession, uri, paramJson);
-	    }
-
-	    else if (uri.startsWith(CATEGORY_PREFIX)) {
-		payload = new CategoryApiHandler().httpPostApiHandler(userSession, uri, paramJson);
-	    }
-
-	    else if (uri.startsWith(USER_PREFIX)) {
-		payload = new UserApiHandler().httpPostApiHandler(userSession, uri, paramJson);
-	    }
-
-	    else if (uri.startsWith(TOPIC_PREFIX)) {
-		// TODO
-	    }
-
-	    else if (uri.startsWith(KEYWORD_PREFIX)) {
-		// TODO
-	    }
-
-	    else if (uri.startsWith(COMMENT_PREFIX)) {
-		// TODO
-	    }
-
-	    else if (uri.startsWith(BOOKMARK_PREFIX)) {
-		// TODO
-	    }
-
-	    else if (uri.startsWith(ADS_PREFIX)) {
-		// SSP Bid Request processing
-		// AdBiddingHandler.handle(context);
-	    }
-	} catch (Throwable e) {
-	    e.printStackTrace();
-	    payload = JsonDataPayload.fail(e.getMessage(), 500);
-	}
-	if (payload == null) {
-	    payload = JsonDataPayload.fail("Not handler found for uri:" + uri, 404);
-	}
-	return payload;
-    }
-
-    @Override
-    protected JsonDataPayload callHttpGetApiProcessor(String userSession, String uri, MultiMap params) {
-	JsonDataPayload payload = null;
-
-	try {
-	    if (uri.startsWith(QUERY_PREFIX) || uri.startsWith(SEARCH_PREFIX)) {
-		payload = new ContentQueryApiHandler().httpGetApiHandler(userSession, uri, params);
-	    }
-
-	    else if (uri.startsWith(POST_PREFIX)) {
-		payload = new PostApiHandler().httpGetApiHandler(userSession, uri, params);
-	    }
-
-	    else if (uri.startsWith(PAGE_PREFIX)) {
-		payload = new PageApiHandler().httpGetApiHandler(userSession, uri, params);
-	    }
-
-	    else if (uri.startsWith(CATEGORY_PREFIX)) {
-		payload = new CategoryApiHandler().httpGetApiHandler(userSession, uri, params);
-	    }
-
-	    else if (uri.startsWith(USER_PREFIX)) {
-		payload = new UserApiHandler().httpGetApiHandler(userSession, uri, params);
-	    }
-
-	    else if (uri.equalsIgnoreCase(PING)) {
-		payload = JsonDataPayload.ok(uri, PONG);
-	    }
-
-	    else if (uri.equalsIgnoreCase(START_DATE)) {
-		payload = JsonDataPayload.ok(uri, START_DATE);
-	    }
-	} catch (Throwable e) {
-	    e.printStackTrace();
-	    payload = JsonDataPayload.fail(e.getMessage(), 500);
+	public DeliveryApiRouter(RoutingContext context) {
+		super(context);
 	}
 
-	if (payload == null) {
-	    payload = JsonDataPayload.fail("Not handler found for uri:" + uri, 404);
+	@Override
+	public boolean handle() throws Exception {
+		return this.handle(this.context);
 	}
-	return payload;
-    }
+
+	@Override
+	protected JsonDataPayload callHttpPostApiProcessor(String userSession, String uri, JsonObject paramJson) {
+		JsonDataPayload payload = null;
+		try {
+
+			if (uri.startsWith(POST_PREFIX)) {
+				payload = new PostApiHandler().httpPostApiHandler(userSession, uri, paramJson);
+			}
+
+			else if (uri.equalsIgnoreCase(PAGE_PREFIX)) {
+				payload = new PageApiHandler().httpPostApiHandler(userSession, uri, paramJson);
+			}
+
+			else if (uri.startsWith(CATEGORY_PREFIX)) {
+				payload = new CategoryApiHandler().httpPostApiHandler(userSession, uri, paramJson);
+			}
+
+			else if (uri.startsWith(USER_PREFIX)) {
+				payload = new UserApiHandler().httpPostApiHandler(userSession, uri, paramJson);
+			}
+
+			else if (uri.startsWith(TOPIC_PREFIX)) {
+				// TODO
+			}
+
+			else if (uri.startsWith(KEYWORD_PREFIX)) {
+				// TODO
+			}
+
+			else if (uri.startsWith(COMMENT_PREFIX)) {
+				// TODO
+			}
+
+			else if (uri.startsWith(BOOKMARK_PREFIX)) {
+				// TODO
+			}
+
+			else if (uri.startsWith(ADS_PREFIX)) {
+				// SSP Bid Request processing
+				// AdBiddingHandler.handle(context);
+			}
+		} catch (Throwable e) {
+			e.printStackTrace();
+			payload = JsonDataPayload.fail(e.getMessage(), 500);
+		}
+		if (payload == null) {
+			payload = JsonDataPayload.fail("Not handler found for uri:" + uri, 404);
+		}
+		return payload;
+	}
+
+	@Override
+	protected JsonDataPayload callHttpGetApiProcessor(String userSession, String uri, MultiMap params) {
+		JsonDataPayload payload = null;
+
+		try {
+			if (uri.startsWith(QUERY_PREFIX) || uri.startsWith(SEARCH_PREFIX)) {
+				payload = new ContentQueryApiHandler().httpGetApiHandler(userSession, uri, params);
+			}
+
+			else if (uri.startsWith(POST_PREFIX)) {
+				payload = new PostApiHandler().httpGetApiHandler(userSession, uri, params);
+			}
+
+			else if (uri.startsWith(PAGE_PREFIX)) {
+				payload = new PageApiHandler().httpGetApiHandler(userSession, uri, params);
+			}
+
+			else if (uri.startsWith(CATEGORY_PREFIX)) {
+				payload = new CategoryApiHandler().httpGetApiHandler(userSession, uri, params);
+			}
+
+			else if (uri.startsWith(USER_PREFIX)) {
+				payload = new UserApiHandler().httpGetApiHandler(userSession, uri, params);
+			}
+
+			else if (uri.equalsIgnoreCase(PING)) {
+				payload = JsonDataPayload.ok(uri, PONG);
+			}
+
+			else if (uri.equalsIgnoreCase(START_DATE)) {
+				payload = JsonDataPayload.ok(uri, START_DATE);
+			}
+			
+		} catch (Throwable e) {
+			e.printStackTrace();
+			payload = JsonDataPayload.fail(e.getMessage(), 500);
+		}
+
+		if (payload == null) {
+			payload = JsonDataPayload.fail("Not handler found for uri:" + uri, 404);
+		}
+		return payload;
+	}
 }

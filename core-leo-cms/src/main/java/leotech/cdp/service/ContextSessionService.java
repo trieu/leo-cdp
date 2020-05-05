@@ -12,7 +12,7 @@ import leotech.cdp.dao.ContextSessionDaoUtil;
 import leotech.cdp.model.ContextSession;
 import leotech.cdp.model.Profile;
 import leotech.cdp.model.Touchpoint;
-import leotech.cdp.router.api.ObserverApiParam;
+import leotech.cdp.router.api.ApiParamKey;
 import leotech.system.model.DeviceInfo;
 import leotech.system.model.GeoLocation;
 import leotech.system.util.GeoLocationUtil;
@@ -34,31 +34,30 @@ public class ContextSessionService {
 		String ip = RequestInfoUtil.getRemoteIP(req);
 		GeoLocation loc = GeoLocationUtil.getGeoLocation(ip);
 
-		String observerId = StringUtil.safeString(params.get(ObserverApiParam.OBSERVER_ID));
+		String observerId = StringUtil.safeString(params.get(ApiParamKey.OBSERVER_ID));
 		String userDeviceId = DeviceDataService.getDeviceId(params, dv);
-		String mediaHost = StringUtil.safeString(params.get(ObserverApiParam.MEDIA_HOST));
-		String appId = StringUtil.safeString(params.get(ObserverApiParam.APP_ID));
+		String mediaHost = StringUtil.safeString(params.get(ApiParamKey.MEDIA_HOST));
+		String appId = StringUtil.safeString(params.get(ApiParamKey.APP_ID));
 
 		// touchpoint params
-		String touchpointName = StringUtil.decodeUrlUTF8(params.get(ObserverApiParam.TOUCHPOINT_NAME));
-		String touchpointUrl = StringUtil.decodeUrlUTF8(params.get(ObserverApiParam.TOUCHPOINT_URL));
-		String touchpointRefUrl = StringUtil.decodeUrlUTF8(params.get(ObserverApiParam.TOUCHPOINT_REFERRER_URL));
-		String touchpointRefDomain = StringUtil.decodeUrlUTF8(params.get(ObserverApiParam.TOUCHPOINT_REFERRER_DOMAIN));
+		String touchpointName = StringUtil.decodeUrlUTF8(params.get(ApiParamKey.TOUCHPOINT_NAME));
+		String touchpointUrl = StringUtil.decodeUrlUTF8(params.get(ApiParamKey.TOUCHPOINT_URL));
+		String touchpointRefUrl = StringUtil.decodeUrlUTF8(params.get(ApiParamKey.TOUCHPOINT_REFERRER_URL));
+		String touchpointRefDomain = StringUtil.decodeUrlUTF8(params.get(ApiParamKey.TOUCHPOINT_REFERRER_DOMAIN));
 		
 		// owned media has data from itself , earned media is from facebook or google or youtube
 		boolean isFromOwnedMedia = mediaHost.equals(touchpointRefDomain);
 		
-
 		// profile params
-		String visitorId = StringUtil.safeString(params.get(ObserverApiParam.VISITOR_ID));
-		String email = StringUtil.safeString(params.get(ObserverApiParam.EMAIL));
-		String phone = StringUtil.safeString(params.get(ObserverApiParam.PHONE));
-		String fingerprintId = StringUtil.safeString(params.get(ObserverApiParam.FINGERPRINT_ID));
+		String visitorId = StringUtil.safeString(params.get(ApiParamKey.VISITOR_ID));
+		String email = StringUtil.safeString(params.get(ApiParamKey.EMAIL));
+		String phone = StringUtil.safeString(params.get(ApiParamKey.PHONE));
+		String fingerprintId = StringUtil.safeString(params.get(ApiParamKey.FINGERPRINT_ID));
 
-		String loginId = StringUtil.safeString(params.get(ObserverApiParam.LOGIN_ID));
-		String loginIdProvider = StringUtil.safeString(params.get(ObserverApiParam.LOGIN_PROVIDER));
+		String loginId = StringUtil.safeString(params.get(ApiParamKey.LOGIN_ID));
+		String loginIdProvider = StringUtil.safeString(params.get(ApiParamKey.LOGIN_PROVIDER));
 
-		String env = StringUtil.safeString(params.get(ObserverApiParam.DATA_ENVIRONMENT), ObserverApiParam.DEV_ENV);
+		String env = StringUtil.safeString(params.get(ApiParamKey.DATA_ENVIRONMENT), ApiParamKey.DEV_ENV);
 		String locationCode = loc.getLocationCode();
 
 		// touch-point info process
@@ -159,21 +158,18 @@ public class ContextSessionService {
 	public static int updateSessionWithProfile(HttpServerRequest req, MultiMap params, ContextSession ctxSession) {
 		String usedDeviceId = ctxSession.getUserDeviceId();
 		String sourceIP = RequestInfoUtil.getRemoteIP(req);
-		String lastTouchpointId = ctxSession.getRefTouchpointId();
+		String lastTouchpointId = ctxSession.getSrcTouchpointId();
 		String observerId = ctxSession.getObserverId();
 		String profileId = ctxSession.getProfileId();
 		
-		
 		MultiMap formAttributes = req.formAttributes();
 		
-		
-		Map<String, String> profileData = RequestInfoUtil.getHashMapFromRequestParams(formAttributes,ObserverApiParam.PROFILE_DATA);
+		Map<String, String> profileData = RequestInfoUtil.getHashMapFromRequestParams(formAttributes,ApiParamKey.PROFILE_DATA);
 		System.out.println(profileData);
 		
 		String email = profileData.getOrDefault("email", "");
 		String loginId = profileData.getOrDefault("loginId", "");
 		String loginProvider = profileData.getOrDefault("loginProvider", "");
-		
 		
 		ProfileDataService.updateLoginInfo(loginProvider, loginId, email, profileId, observerId, lastTouchpointId, sourceIP, usedDeviceId);
 		

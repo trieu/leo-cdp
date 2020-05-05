@@ -33,8 +33,7 @@
 
         // Send a message to the parent
         var sendMessage = function (msg) {
-            // Make sure you are sending a string, and to stringify JSON
-            // window.parent.postMessage(msg, '*');
+            // Make sure you are sending a string, and to stringify JSON window.parent.postMessage(msg, '*');
             console.log('Send a message to the observer proxy ' + msg);
             location.hash = msg;
         };
@@ -67,28 +66,15 @@
     		sendMessage("LeoObserverProxyLoaded");
     	}
     	
-    	function leoObserverProxyReady(sessionInfo) {
-    		sendMessage("LeoObserverProxyReady");
-            if(window.console){					
-				window.console.log(sessionInfo);
-			}
-        }
-    	
     	var proxyCallHandler = function(data){
         	if(data.call === 'getContextSession' && data.params) {
-        		LeoEventObserver.getContextSession(data.params, leoObserverProxyReady);
+        		LeoEventObserver.getContextSession(data.params);
         	}
         	else if(data.call === 'doTracking' && data.eventType && data.params){
-        		var callback = function(rs){
-        			window.console.log(rs);
-        		}
-        		LeoEventObserver.doTracking(data.eventType, data.params, callback);
+        		LeoEventObserver.doTracking(data.eventType, data.params);
         	} 
         	else if(data.call === 'updateProfile' && data.params ){
-        		var callback = function(rs){
-        			window.console.log(rs);
-        		}
-        		LeoEventObserver.updateProfile(data.params, callback);
+        		LeoEventObserver.updateProfile(data.params);
         	}
         }
 
@@ -96,7 +82,6 @@
         	loadScript('//' + ROOT_DOMAIN +'/public/js/leo-event-observer/leoobserver.js',codeIsReady);
         })
     </script>
-
 
 </body>
 

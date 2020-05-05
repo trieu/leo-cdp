@@ -79,7 +79,7 @@ public class ProfileDataService {
 		p.setIdentity(loginId, loginProvider);
 		p.setPrimaryEmail(email);
 		p.setObserverId(observerId);
-		p.setLastTouchpointId(lastTouchpointId);
+		
 		p.setLastSeenIp(lastSeenIp);
 		p.setLastUsedDeviceId(usedDeviceId);
 		p.setUpdatedAt(new Date());

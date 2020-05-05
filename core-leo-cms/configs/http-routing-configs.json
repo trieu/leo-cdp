@@ -32,11 +32,11 @@
 			"bodyHandlerEnabled": true,
 			"sockJsHandlerEnabled": false
 		},
-		"eventObserverWorker": {
-			"name": "eventObserverWorker",
+		"dataTrackingWorker": {
+			"name": "dataTrackingWorker",
 			"host": "127.0.0.1",
 			"port": 9080,
-			"classNameHttpRouter": "leotech.cdp.router.EventObserverHttpRouter",
+			"classNameHttpRouter": "leotech.cdp.router.DataTrackingHttpRouter",
 			"bodyHandlerEnabled": true,
 			"sockJsHandlerEnabled": false,
 			"defaultDbConfig" : "leoCdpDbConfigs"

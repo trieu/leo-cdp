@@ -11,7 +11,7 @@ import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.RoutingContext;
 import leotech.cdp.model.ContextSession;
 import leotech.cdp.router.api.TrackingApi;
-import leotech.cdp.router.api.ObserverApiParam;
+import leotech.cdp.router.api.ApiParamKey;
 import leotech.cdp.service.ContextSessionService;
 import leotech.core.api.BaseApiHandler;
 import leotech.core.api.BaseHttpRouter;
@@ -25,7 +25,7 @@ import rfx.core.util.StringUtil;
  *         https://github.com/USPA-Technology/leotech-final-build/blob/master/leo-cdp-event-observer-data-flow.md
  *
  */
-public class EventObserverHttpRouter extends BaseHttpRouter {
+public class DataTrackingHttpRouter extends BaseHttpRouter {
 
 	public static final String INVALID = "invalid";
 	public static final String FAILED = "failed";
@@ -39,7 +39,7 @@ public class EventObserverHttpRouter extends BaseHttpRouter {
 	public static final String PREFIX_EVENT_ACTION = "/eta";
 	public static final String PREFIX_EVENT_CONVERSION = "/etc";
 
-	public EventObserverHttpRouter(RoutingContext context) {
+	public DataTrackingHttpRouter(RoutingContext context) {
 		super(context);
 	}
 
@@ -54,7 +54,6 @@ public class EventObserverHttpRouter extends BaseHttpRouter {
 			this.message = message;
 			this.status = status;
 		}
-
 	}
 
 	@Override
@@ -85,8 +84,8 @@ public class EventObserverHttpRouter extends BaseHttpRouter {
 			outHeaders.set(CONTENT_TYPE, BaseApiHandler.CONTENT_TYPE_JSON);
 
 			// init core params
-			String eventName = StringUtil.safeString(params.get(ObserverApiParam.EVENT_METRIC_NAME)).toLowerCase();
-			String clientSessionKey = StringUtil.safeString(params.get(ObserverApiParam.CTX_SESSION_KEY));
+			String eventName = StringUtil.safeString(params.get(ApiParamKey.EVENT_METRIC_NAME)).toLowerCase();
+			String clientSessionKey = StringUtil.safeString(params.get(ApiParamKey.CTX_SESSION_KEY));
 
 			if (uri.startsWith(PREFIX_CONTEXT_SESSION_PROFILE_INIT) && StringUtil.isEmpty(clientSessionKey)) {
 				

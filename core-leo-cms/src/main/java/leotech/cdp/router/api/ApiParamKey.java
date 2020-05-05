@@ -1,6 +1,6 @@
 package leotech.cdp.router.api;
 
-public final class ObserverApiParam {
+public final class ApiParamKey {
     public static final String CTX_SESSION_KEY = "ctxsk";
     public static final String FINGERPRINT_ID = "fgpid";
     

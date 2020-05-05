@@ -724,9 +724,11 @@
     
     function setSessionKey(key){
     	sessionKey = key;
+    	lscache.set("leoctxsk", sessionKey, 10);
     }
     
     function getSessionKey(){
+    	sessionKey = lscache.get("leoctxsk");
     	return sessionKey;
     }
 
@@ -758,10 +760,8 @@
 
     var doTracking = function(eventType, params, callback) {
         var h = function(resHeaders, text) {
-            var data = JSON.parse(text);
-            if (typeof callback === "function") {
-                callback(data);
-            }
+            //var data = JSON.parse(text);
+            
         }
 
         var queryStr = objectToQueryString(params);
@@ -782,12 +782,10 @@
         }
     }
     
-    var updateProfile = function(params, callback) {
+    var updateProfile = function(params) {
     	 var h = function(resHeaders, text) {
-             var data = JSON.parse(text);
-             if (typeof callback === "function") {
-                 callback(data);
-             }
+             //var data = JSON.parse(text);
+             
          }
     	 
          params['visid'] =  getUUID();
@@ -805,26 +803,42 @@
 		}).join('&');
 		return queryString;
     }
+    
+    function leoObserverProxyReady(data) {
+    	setSessionKey(data.sessionKey);
+		sendMessage("LeoObserverProxyReady");
+        if(window.console){
+			window.console.log(data);
+		}
+    }
 
-    var getContextSession = function(params, callback) {
-        var h = function(resHeaders, text) {
-            var data = JSON.parse(text);
-            if(data.status === 101){
-            	setSessionKey(data.sessionKey);
-            	if (typeof callback === "function") {
-                	callback(data);
-            	}
+    var getContextSession = function(params) {
+    	
+    	var leoctxsk = getSessionKey();
+    	
+    	if( typeof leoctxsk !== 'string' ){
+    		// the cache is expired
+    		var h = function(resHeaders, text) {
+                var data = JSON.parse(text);
+                if(data.status === 101){
+                	leoObserverProxyReady(data);
+                }
+                else {
+                	console.error(data)
+                }
             }
-            else {
-            	console.error(data)
-            }
-        }
 
-        var queryStr = objectToQueryString(params);
-        var vsId = getUUID();
-        var url = PREFIX_SESSION_INIT_URL + '?' + queryStr + '&visid=' + vsId;
+            var queryStr = objectToQueryString(params);
+            var vsId = getUUID();
+            var url = PREFIX_SESSION_INIT_URL + '?' + queryStr + '&visid=' + vsId;
+            
+            LeoCorsRequest.get(false, url, [], h);
+    	}
+    	else {
+    		// the cache is valid
+    		sendMessage("LeoObserverProxyReady");
+    	}
         
-        LeoCorsRequest.get(false, url, [], h);
     }
 
     LeoEventObserver.doTracking = doTracking;
