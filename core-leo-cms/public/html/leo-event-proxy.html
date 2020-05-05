@@ -16,7 +16,8 @@
         }
  
         var LEO_LOG_URL = '//log.' + ROOT_DOMAIN;
-        var PREFIX_EVENT_SESSION_INIT = LEO_LOG_URL + "/cxs-pf-init";
+        var PREFIX_SESSION_INIT_URL = LEO_LOG_URL + "/cxs-pf-init";
+        var PREFIX_UPDATE_PROFILE_URL = LEO_LOG_URL + "/cxs-pf-update";
         var PREFIX_EVENT_VIEW_URL = LEO_LOG_URL + "/etv";
         var PREFIX_EVENT_ACTION_URL = LEO_LOG_URL + "/eta";
         var PREFIX_EVENT_CONVERSION_URL = LEO_LOG_URL + "/etc";
@@ -83,6 +84,12 @@
         		}
         		LeoEventObserver.doTracking(data.eventType, data.params, callback);
         	} 
+        	else if(data.call === 'updateProfile' && data.params ){
+        		var callback = function(rs){
+        			window.console.log(rs);
+        		}
+        		LeoEventObserver.updateProfile(data.params, callback);
+        	}
         }
 
         loadScript('//' + ROOT_DOMAIN +'/public/js/leo-event-observer/uuid.min.js',function(){

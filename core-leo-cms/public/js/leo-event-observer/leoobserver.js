@@ -45,25 +45,6 @@
         return null;
     }
 
-    function CreateXMLDocumentObject(rootName) {
-        if (!rootName) {
-            rootName = "";
-        }
-        var xmlDoc = CreateMSXMLDocumentObject();
-        if (xmlDoc) {
-            if (rootName) {
-                var rootNode = xmlDoc.createElement(rootName);
-                xmlDoc.appendChild(rootNode);
-            }
-        } else {
-            if (document.implementation.createDocument) {
-                xmlDoc = document.implementation.createDocument("", rootName, null);
-            }
-        }
-
-        return xmlDoc;
-    }
-
     function ParseHTTPResponse(httpRequest) {
         var xmlDoc = httpRequest.responseXML;
 
@@ -135,7 +116,7 @@
                     }
                     callback(resHeaders, httpRequest.responseText);
                 } else {
-                    logError("Operation failed by AdsPlayRequest.get: " + url);
+                    logError("Operation failed by LeoCorsRequest.get: " + url);
                 }
             }
         }
@@ -150,6 +131,39 @@
             httpRequest.send();
         }
     }
+    
+    LeoCorsRequest.post = function(withCredentials, url, respHeaderNames, params, callback) {
+        var httpRequest = null;
+        var onStateChange = function() {
+            if ((httpRequest.readyState == 0 || httpRequest.readyState == 4) && httpRequest.status == 200) {
+                if (IsRequestSuccessful(httpRequest)) {
+                    var resHeaders = {};
+                    for (var i = 0; i < respHeaderNames.length; i++) {
+                        var name = respHeaderNames[i];
+                        var val = httpRequest.getResponseHeader(name);
+                        if (val) {
+                            resHeaders[name] = val;
+                        }
+                    }
+                    callback(resHeaders, httpRequest.responseText);
+                } else {
+                    logError("Operation failed by LeoCorsRequest.post: " + url);
+                }
+            }
+        }
+
+        if (!httpRequest) {
+            httpRequest = CreateHTTPRequestObject();
+        }
+        if (httpRequest) {
+            httpRequest.open("POST", url, true); // async
+            httpRequest.setRequestHeader('Content-type', 'application/x-www-form-urlencoded'); // form submit
+            httpRequest.onreadystatechange = onStateChange;
+            httpRequest.withCredentials = withCredentials;
+            httpRequest.send(params);
+        }
+    }
+    
     global.LeoCorsRequest = LeoCorsRequest;
 })(typeof window === 'undefined' ? this : window);
 
@@ -766,7 +780,23 @@
 	        var url = prefixUrl + '?' + queryStr + '&visid=' + vsId + '&ctxsk=' + sessionKey ;
 	        LeoCorsRequest.get(false, url, [], h);
         }
-        
+    }
+    
+    var updateProfile = function(params, callback) {
+    	 var h = function(resHeaders, text) {
+             var data = JSON.parse(text);
+             if (typeof callback === "function") {
+                 callback(data);
+             }
+         }
+    	 
+         params['visid'] =  getUUID();
+         var paramsStr = objectToQueryString(params);
+         
+         var sessionKey = getSessionKey();        
+         var url = PREFIX_UPDATE_PROFILE_URL + '?' + 'ctxsk=' + sessionKey;
+         
+         LeoCorsRequest.post(false, url , [], paramsStr , h);
     }
     
     var objectToQueryString = function(params){
@@ -792,13 +822,14 @@
 
         var queryStr = objectToQueryString(params);
         var vsId = getUUID();
+        var url = PREFIX_SESSION_INIT_URL + '?' + queryStr + '&visid=' + vsId;
         
-        var url = PREFIX_EVENT_SESSION_INIT + '?' + queryStr + '&visid=' + vsId;
         LeoCorsRequest.get(false, url, [], h);
     }
 
     LeoEventObserver.doTracking = doTracking;
     LeoEventObserver.getContextSession = getContextSession;
+    LeoEventObserver.updateProfile = updateProfile;
 
     global.LeoEventObserver = LeoEventObserver;
 

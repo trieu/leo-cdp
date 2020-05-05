@@ -13,6 +13,7 @@ import com.arangodb.entity.DocumentField;
 import com.arangodb.entity.DocumentField.Type;
 import com.arangodb.model.PersistentIndexOptions;
 import com.arangodb.model.TtlIndexOptions;
+import com.google.gson.annotations.Expose;
 
 import leotech.system.util.database.ArangoDbUtil;
 import rfx.core.util.StringUtil;
@@ -23,267 +24,302 @@ import rfx.core.util.StringUtil;
  */
 public class ContextSession extends CdpPersistentObject {
 
-    public static final String DATE_HOUR_FORMAT_PATTERN = "yyyy-MM-dd-HH";
-    static final DateFormat DATEHOUR_FORMAT = new SimpleDateFormat(DATE_HOUR_FORMAT_PATTERN);
-    private static final int HOURS_OF_A_WEEK = 168;
+	public static final String DATE_HOUR_FORMAT_PATTERN = "yyyy-MM-dd-HH";
+	static final DateFormat DATEHOUR_FORMAT = new SimpleDateFormat(DATE_HOUR_FORMAT_PATTERN);
+	private static final int HOURS_OF_A_WEEK = 168;
 
-    public static final String COLLECTION_NAME = COLLECTION_PREFIX + ContextSession.class.getSimpleName().toLowerCase();
-    static ArangoCollection instance;
+	public static final String COLLECTION_NAME = COLLECTION_PREFIX
+			+ ContextSession.class.getSimpleName().toLowerCase();
+	static ArangoCollection instance;
 
-    @Override
-    public ArangoCollection getCollection() {
-	if (instance == null) {
-	    ArangoDatabase arangoDatabase = ArangoDbUtil.getArangoDatabase();
+	@Override
+	public ArangoCollection getCollection() {
+		if (instance == null) {
+			ArangoDatabase arangoDatabase = ArangoDbUtil.getArangoDatabase();
 
-	    instance = arangoDatabase.collection(COLLECTION_NAME);
+			instance = arangoDatabase.collection(COLLECTION_NAME);
 
-	    // ensure indexing key fields for fast lookup
+			// ensure indexing key fields for fast lookup
 
-	    instance.ensurePersistentIndex(Arrays.asList("userDeviceId"), new PersistentIndexOptions().unique(false));
-	    instance.ensurePersistentIndex(Arrays.asList("locationCode"), new PersistentIndexOptions().unique(false));
-	    instance.ensurePersistentIndex(Arrays.asList("appId"), new PersistentIndexOptions().unique(false));
-	    instance.ensurePersistentIndex(Arrays.asList("host"), new PersistentIndexOptions().unique(false));
-	    instance.ensurePersistentIndex(Arrays.asList("refTouchpointId"),
-		    new PersistentIndexOptions().unique(false));
-	    instance.ensurePersistentIndex(Arrays.asList("visitorId"), new PersistentIndexOptions().unique(false));
-	    instance.ensurePersistentIndex(Arrays.asList("profileId"), new PersistentIndexOptions().unique(false));
-	    instance.ensureTtlIndex(Arrays.asList("autoDeleteAt"), new TtlIndexOptions().expireAfter(0));
+			instance.ensurePersistentIndex(Arrays.asList("userDeviceId"),
+					new PersistentIndexOptions().unique(false));
+			instance.ensurePersistentIndex(Arrays.asList("locationCode"),
+					new PersistentIndexOptions().unique(false));
+			instance.ensurePersistentIndex(Arrays.asList("appId"), new PersistentIndexOptions().unique(false));
+			instance.ensurePersistentIndex(Arrays.asList("host"), new PersistentIndexOptions().unique(false));
+			instance.ensurePersistentIndex(Arrays.asList("refTouchpointId"),
+					new PersistentIndexOptions().unique(false));
+			instance.ensurePersistentIndex(Arrays.asList("visitorId"), new PersistentIndexOptions().unique(false));
+			instance.ensurePersistentIndex(Arrays.asList("profileId"), new PersistentIndexOptions().unique(false));
+			instance.ensureTtlIndex(Arrays.asList("autoDeleteAt"), new TtlIndexOptions().expireAfter(0));
 
+		}
+		return instance;
 	}
-	return instance;
-    }
 
-    @Override
-    public boolean isReadyForSave() {
-	return StringUtil.isNotEmpty(ip) && StringUtil.isNotEmpty(sessionKey) && StringUtil.isNotEmpty(refTouchpointId);
-    }
-
-    /**
-     * @param Date
-     * @return date string in format "yyyy-MM-dd-HH"
-     */
-    public static String getSessionDateTimeKey(DateTime dt) {
-	String tk = DATEHOUR_FORMAT.format(dt.toDate());
-	int m = dt.getMinuteOfHour();
-	if (m < 30) {
-	    tk += "-00";
-	} else {
-	    tk += "-30";
+	@Override
+	public boolean isReadyForSave() {
+		return StringUtil.isNotEmpty(ip) && StringUtil.isNotEmpty(sessionKey)
+				&& StringUtil.isNotEmpty(refTouchpointId);
 	}
-	return tk;
-    }
 
-    @DocumentField(Type.KEY)
-    String sessionKey;
-
-    String dateTimeKey;
-    String userDeviceId;
-    String ip;
-    String locationCode;
-    String mediaHost;
-    String appId;
-    String refTouchpointId;
-    String srcTouchpointId;
-    String observerId;
-
-    String visitorId;
-    int profileType = Profile.ProfileType.ANONYMOUS;
-    String profileId;
-    
-    String email;
-    String loginId;
-    String loginProvider;
-
-    String fingerprintId;
-    Date createAt;
-    Date autoDeleteAt;
-    String environment;
-
-    public ContextSession(String observerId, DateTime dateTime, String dateTimeKey, String locationCode,
-	    String userDeviceId, String ip, String host, String appId, String refTouchpointId, String srcTouchpointId, String visitorId,String email,
-	    String fingerprintId, int hoursToDelete, String environment) {
-	super();
-	init(observerId, dateTime, dateTimeKey, locationCode, userDeviceId, ip, host, appId, refTouchpointId,srcTouchpointId, visitorId,email,fingerprintId, hoursToDelete, environment);
-    }
-
-    public ContextSession(String observerId, DateTime dateTime, String dateTimeKey, String locationCode,
-	    String userDeviceId, String ip, String host, String appId, String refTouchpointId,String srcTouchpointId, String visitorId,String email,
-	    String fingerprintId, String environment) {
-	super();
-	init(observerId, dateTime, dateTimeKey, locationCode, userDeviceId, ip, host, appId, refTouchpointId,srcTouchpointId, visitorId,email,fingerprintId, 0, environment);
-    }
-
-    private void init(String observerId, DateTime dateTime, String dateTimeKey, String locationCode,
-	    String userDeviceId, String ip, String mediaHost, String appId, String refTouchpointId,String srcTouchpointId, String visitorId,String email,
-	    String fingerprintId, int hoursToDelete, String environment) {
-	this.observerId = observerId;
-	this.locationCode = locationCode;
-	this.userDeviceId = userDeviceId;
-	this.ip = ip;
-	this.mediaHost = mediaHost;
-	this.appId = appId;
-	this.refTouchpointId = refTouchpointId;
-	this.srcTouchpointId = srcTouchpointId;
-	this.visitorId = visitorId;
-	this.email = email;
-	this.fingerprintId = fingerprintId;
-	this.environment = environment;
-
-	this.createAt = dateTime.toDate();
-	this.dateTimeKey = dateTimeKey;
-
-	String mns = dateTime.getMinuteOfHour() < 30 ? "0" : "1";
-	String keyHint = email + environment + locationCode + userDeviceId + ip + mediaHost + appId + visitorId + fingerprintId + mns;
-	this.sessionKey = id(keyHint);
-
-	if (hoursToDelete > HOURS_OF_A_WEEK) {
-	    this.autoDeleteAt = dateTime.plusHours(hoursToDelete).toDate();
-	} else {
-	    this.autoDeleteAt = dateTime.plusHours(HOURS_OF_A_WEEK).toDate();
+	/**
+	 * @param Date
+	 * @return date string in format "yyyy-MM-dd-HH"
+	 */
+	public static String getSessionDateTimeKey(DateTime dt) {
+		String tk = DATEHOUR_FORMAT.format(dt.toDate());
+		int m = dt.getMinuteOfHour();
+		if (m < 30) {
+			tk += "-00";
+		} else {
+			tk += "-30";
+		}
+		return tk;
 	}
-    }
 
-    public String getUserDeviceId() {
-	return userDeviceId;
-    }
+	@DocumentField(Type.KEY)
+	String sessionKey;
 
-    public void setUserDeviceId(String userDeviceId) {
-	this.userDeviceId = userDeviceId;
-    }
+	String dateTimeKey;
+	String userDeviceId;
+	String ip;
+	String locationCode;
+	String mediaHost;
+	String appId;
+	String refTouchpointId;
+	String srcTouchpointId;
+	String observerId;
 
-    public String getIp() {
-	return ip;
-    }
+	String visitorId;
+	int profileType = Profile.ProfileType.ANONYMOUS;
+	String profileId;
 
-    public void setIp(String ip) {
-	this.ip = ip;
-    }
+	String email;
+	String phone;
+	String loginId;
+	String loginProvider;
+	String fingerprintId;
+	
+	Date createAt;
 
-    public String getMediaHost() {
-	return mediaHost;
-    }
+	Date updatedAt;
+	
+	Date autoDeleteAt;
+	String environment;
 
-    public void setMediaHost(String mediaHost) {
-	this.mediaHost = mediaHost;
-    }
+	public ContextSession(String observerId, DateTime dateTime, String dateTimeKey, String locationCode,
+			String userDeviceId, String ip, String host, String appId, String refTouchpointId,
+			String srcTouchpointId, String visitorId, String email, String phone, String fingerprintId, int hoursToDelete,
+			String environment) {
+		super();
+		init(observerId, dateTime, dateTimeKey, locationCode, userDeviceId, ip, host, appId, refTouchpointId,
+				srcTouchpointId, visitorId, email, phone, fingerprintId, hoursToDelete, environment);
+	}
 
-    public String getAppId() {
-	return appId;
-    }
+	public ContextSession(String observerId, DateTime dateTime, String dateTimeKey, String locationCode,
+			String userDeviceId, String ip, String host, String appId, String refTouchpointId,
+			String srcTouchpointId, String visitorId, String email, String phone, String fingerprintId, String environment) {
+		super();
+		init(observerId, dateTime, dateTimeKey, locationCode, userDeviceId, ip, host, appId, refTouchpointId,
+				srcTouchpointId, visitorId, email, phone, fingerprintId, 0, environment);
+	}
 
-    public void setAppId(String appId) {
-	this.appId = appId;
-    }
+	private void init(String observerId, DateTime dateTime, String dateTimeKey, String locationCode,
+			String userDeviceId, String ip, String mediaHost, String appId, String refTouchpointId,
+			String srcTouchpointId, String visitorId, String email, String phone, String fingerprintId, int hoursToDelete,
+			String environment) {
+		this.observerId = observerId;
+		this.locationCode = locationCode;
+		this.userDeviceId = userDeviceId;
+		this.ip = ip;
+		this.mediaHost = mediaHost;
+		this.appId = appId;
+		this.refTouchpointId = refTouchpointId;
+		this.srcTouchpointId = srcTouchpointId;
+		
+		this.visitorId = visitorId;
+		this.email = email;
+		this.phone = phone;
+		this.fingerprintId = fingerprintId;
+		this.environment = environment;
 
-    public String getRefTouchpointId() {
-	return refTouchpointId;
-    }
+		this.createAt = dateTime.toDate();
+		this.dateTimeKey = dateTimeKey;
 
-    public void setRefTouchpointId(String refTouchpointId) {
-	this.refTouchpointId = refTouchpointId;
-    }
-    
-    
+		String mns = dateTime.getMinuteOfHour() < 30 ? "0" : "1";
+		String keyHint = email + environment + locationCode + userDeviceId + ip + mediaHost + appId + visitorId + fingerprintId + mns;
+		this.sessionKey = id(keyHint);
 
-    public String getSrcTouchpointId() {
-        return srcTouchpointId;
-    }
+		if (hoursToDelete > HOURS_OF_A_WEEK) {
+			this.autoDeleteAt = dateTime.plusHours(hoursToDelete).toDate();
+		} else {
+			this.autoDeleteAt = dateTime.plusHours(HOURS_OF_A_WEEK).toDate();
+		}
+	}
 
-    public void setSrcTouchpointId(String srcTouchpointId) {
-        this.srcTouchpointId = srcTouchpointId;
-    }
+	public String getUserDeviceId() {
+		return userDeviceId;
+	}
 
-    public String getVisitorId() {
-	return visitorId;
-    }
+	public void setUserDeviceId(String userDeviceId) {
+		this.userDeviceId = userDeviceId;
+	}
 
-    public void setVisitorId(String visitorId) {
-	this.visitorId = visitorId;
-    }
+	public String getIp() {
+		return ip;
+	}
 
-    public String getProfileId() {
-	return profileId;
-    }
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
 
-    public void setProfileId(String profileId) {
-	this.profileId = profileId;
-    }
+	public String getMediaHost() {
+		return mediaHost;
+	}
 
-    public String getFingerprintId() {
-	return fingerprintId;
-    }
+	public void setMediaHost(String mediaHost) {
+		this.mediaHost = mediaHost;
+	}
 
-    public void setFingerprintId(String fingerprintId) {
-	this.fingerprintId = fingerprintId;
-    }
+	public String getAppId() {
+		return appId;
+	}
 
-    public Date getCreateAt() {
-	return createAt;
-    }
+	public void setAppId(String appId) {
+		this.appId = appId;
+	}
 
-    public void setCreateAt(Date createAt) {
-	this.createAt = createAt;
-    }
+	public String getRefTouchpointId() {
+		return refTouchpointId;
+	}
 
-    public Date getAutoDeleteAt() {
-	return autoDeleteAt;
-    }
+	public void setRefTouchpointId(String refTouchpointId) {
+		this.refTouchpointId = refTouchpointId;
+	}
 
-    public void setAutoDeleteAt(Date autoDeleteAt) {
-	this.autoDeleteAt = autoDeleteAt;
-    }
+	public String getSrcTouchpointId() {
+		return srcTouchpointId;
+	}
 
-    public String getSessionKey() {
-	return sessionKey;
-    }
+	public void setSrcTouchpointId(String srcTouchpointId) {
+		this.srcTouchpointId = srcTouchpointId;
+	}
 
-    public String getDateTimeKey() {
-	return dateTimeKey;
-    }
+	public String getVisitorId() {
+		return visitorId;
+	}
 
-    public String getLocationCode() {
-	return locationCode;
-    }
+	public void setVisitorId(String visitorId) {
+		this.visitorId = visitorId;
+	}
 
-    public String getObserverId() {
-	return observerId;
-    }
+	public String getProfileId() {
+		return profileId;
+	}
 
-    public void setObserverId(String observerId) {
-	this.observerId = observerId;
-    }
+	public void setProfileId(String profileId) {
+		this.profileId = profileId;
+	}
 
-    public int getProfileType() {
-	return profileType;
-    }
+	public String getFingerprintId() {
+		return fingerprintId;
+	}
 
-    public void setProfileType(int profileType) {
-	this.profileType = profileType;
-    }
+	public void setFingerprintId(String fingerprintId) {
+		this.fingerprintId = fingerprintId;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public Date getCreateAt() {
+		return createAt;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setCreateAt(Date createAt) {
+		this.createAt = createAt;
+	}
+	
+	
 
-    public String getLoginId() {
-        return loginId;
-    }
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
 
-    public void setLoginId(String loginId) {
-        this.loginId = loginId;
-    }
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
 
-    public String getLoginProvider() {
-        return loginProvider;
-    }
+	public String getEnvironment() {
+		return environment;
+	}
 
-    public void setLoginProvider(String loginProvider) {
-        this.loginProvider = loginProvider;
-    }
+	public void setEnvironment(String environment) {
+		this.environment = environment;
+	}
 
-    
+	
+
+	public Date getAutoDeleteAt() {
+		return autoDeleteAt;
+	}
+
+	public void setAutoDeleteAt(Date autoDeleteAt) {
+		this.autoDeleteAt = autoDeleteAt;
+	}
+
+	public String getSessionKey() {
+		return sessionKey;
+	}
+
+	public String getDateTimeKey() {
+		return dateTimeKey;
+	}
+
+	public String getLocationCode() {
+		return locationCode;
+	}
+	
+	public void setLocationCode(String locationCode) {
+		this.locationCode = locationCode;
+	}
+
+	public String getObserverId() {
+		return observerId;
+	}
+
+	public void setObserverId(String observerId) {
+		this.observerId = observerId;
+	}
+
+	public int getProfileType() {
+		return profileType;
+	}
+
+	public void setProfileType(int profileType) {
+		this.profileType = profileType;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getLoginId() {
+		return loginId;
+	}
+
+	public void setLoginId(String loginId) {
+		this.loginId = loginId;
+	}
+
+	public String getLoginProvider() {
+		return loginProvider;
+	}
+
+	public void setLoginProvider(String loginProvider) {
+		this.loginProvider = loginProvider;
+	}
+
 }

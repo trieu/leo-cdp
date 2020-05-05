@@ -38,8 +38,7 @@ public class ProfileDaoUtil {
 		if (profile.isReadyForSave()) {
 			ArangoCollection col = profile.getCollection();
 			if (col != null) {
-				String k = profile.getKey();
-
+				String k = profile.getId();
 				if (k != null) {
 					profile.setUpdatedAt(new Date());
 					col.updateDocument(k, profile);

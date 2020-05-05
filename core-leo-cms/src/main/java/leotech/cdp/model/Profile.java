@@ -48,7 +48,6 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 			instance = arangoDatabase.collection(COLLECTION_NAME);
 
 			// ensure indexing key fields for fast lookup
-			instance.ensurePersistentIndex(Arrays.asList("id"), new PersistentIndexOptions().unique(true));
 			instance.ensurePersistentIndex(Arrays.asList("primaryEmail"),
 					new PersistentIndexOptions().unique(false));
 			instance.ensurePersistentIndex(Arrays.asList("primaryPhone"),
@@ -58,28 +57,36 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 			instance.ensureHashIndex(Arrays.asList("rootProfileId"), new HashIndexOptions());
 			instance.ensurePersistentIndex(Arrays.asList("identities[*]"),
 					new PersistentIndexOptions().unique(false));
+			instance.ensurePersistentIndex(Arrays.asList("usedDeviceIds[*]"),
+					new PersistentIndexOptions().unique(false));
 			instance.ensurePersistentIndex(Arrays.asList("sessionKeys[*]"),
+					new PersistentIndexOptions().unique(false));
+			instance.ensurePersistentIndex(Arrays.asList("inSegments[*]"),
+					new PersistentIndexOptions().unique(false));
+			instance.ensurePersistentIndex(Arrays.asList("atTouchpoints[*]"),
+					new PersistentIndexOptions().unique(false));
+			instance.ensurePersistentIndex(Arrays.asList("inCollections[*]"),
 					new PersistentIndexOptions().unique(false));
 			instance.ensureHashIndex(Arrays.asList("personaUri"), new HashIndexOptions());
 		}
 		return instance;
 	}
 
-	@DocumentField(Type.KEY)
-	@Expose
-	private String key;
 
+	@DocumentField(Type.KEY)
 	@Expose
 	String id;
 
 	@Expose
 	int type = ProfileType.ANONYMOUS;
+	
+	@Expose
+	Set<String> identities = new HashSet<>(100);
 
 	@Expose
 	Date createdAt = new Date();
 
-	@Expose
-	String collectionId = "";
+
 
 	// the main ID after Identity Resolution process
 	@Expose
@@ -118,8 +125,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	@Expose
 	String lastWebCookies = "";
 
-	@Expose
-	Set<String> identities = new HashSet<>(100);
+	
 
 	@Expose
 	Set<String> sessionKeys = new HashSet<>(100);
@@ -222,8 +228,11 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	public Profile() {
 	}
 
-	protected void initBaseInformation(String ctxSessionKey, String visitorId, int type, String observerId,
+	protected void initBaseInformation(int partitionId, String ctxSessionKey, String visitorId, int type, String observerId,
 			String lastTouchpointId, String lastSeenIp, String usedDeviceId, String email, String phone) {
+		// hash for unique id key
+		
+		this.partitionId = partitionId;		
 		this.sessionKeys.add(ctxSessionKey);
 		this.type = type;
 		
@@ -233,14 +242,10 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		this.lastSeenIp = lastSeenIp;
 		this.lastUsedDeviceId = usedDeviceId;
 		
-		this.usedDeviceIds.add(usedDeviceId);
 		this.primaryEmail = email;
 		this.primaryPhone = phone;
 		
-		// hash for unique id key
-		this.id = buildProfileId(type, visitorId, usedDeviceId, email, phone);
-
-		// add multiple identity data for indexing
+		// add 3 primary identity data for indexing
 		if (StringUtil.isNotEmpty(visitorId)) {
 			this.identities.add(visitorId);
 		}
@@ -250,16 +255,23 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		if (StringUtil.isNotEmpty(phone)) {
 			this.identities.add(phone);
 		}
-		if (StringUtil.isNotEmpty(usedDeviceId)) {
-			this.identities.add(usedDeviceId);
+		
+		// add secondary identity usedDeviceIds for indexing
+		if(StringUtil.isNotEmpty(usedDeviceId)) {
+			this.usedDeviceIds.add(usedDeviceId);
 		}
+		
+		this.id = buildProfileId(type, visitorId, usedDeviceId, email, phone, partitionId);
 
 	}
 
-	public static String buildProfileId(int type, String visitorId, String usedDeviceId, String email,
-			String phone) {
-		String keyHint = type + visitorId + usedDeviceId + email + phone;
-		return id(keyHint);
+	public final static String  buildProfileId(int type, String visitorId, String usedDeviceId, String email,
+			String phone, int partitionId) {
+		if(StringUtil.isNotEmpty(visitorId) || StringUtil.isNotEmpty(usedDeviceId)) {
+			String keyHint = type + visitorId + usedDeviceId + email + phone + partitionId;
+			return id(keyHint);
+		}
+		throw new IllegalArgumentException("visitorId or usedDeviceId must not be empty");
 	}
 
 	/**
@@ -277,7 +289,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	public static Profile newIdentifiedProfile(String ctxSessionKey, String observerId, String lastTouchpointId,
 			String lastSeenIp, String visitorId, String usedDeviceId, String email, String fingerprintId) {
 		Profile p = new Profile();
-		p.initBaseInformation(ctxSessionKey, visitorId, ProfileType.IDENTIFIED, observerId, lastTouchpointId,
+		p.initBaseInformation(0,ctxSessionKey, visitorId, ProfileType.IDENTIFIED, observerId, lastTouchpointId,
 				lastSeenIp, usedDeviceId, email, "");
 		return p;
 	}
@@ -299,7 +311,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 			String lastSeenIp, String visitorId, String usedDeviceId, String email, String phone,
 			String fingerprintId) {
 		Profile p = new Profile();
-		p.initBaseInformation(ctxSessionKey, visitorId, ProfileType.CRM_USER, observerId, lastTouchpointId,
+		p.initBaseInformation(0,ctxSessionKey, visitorId, ProfileType.CRM_USER, observerId, lastTouchpointId,
 				lastSeenIp, usedDeviceId, email, phone);
 		return p;
 	}
@@ -315,7 +327,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	public static Profile newAnonymousProfile(String ctxSessionKey, String observerId, String lastTouchpointId,
 			String lastSeenIp, String visitorId, String usedDeviceId, String fingerprintId) {
 		Profile p = new Profile();
-		p.initBaseInformation(ctxSessionKey, visitorId, ProfileType.ANONYMOUS, observerId, lastTouchpointId,
+		p.initBaseInformation(0,ctxSessionKey, visitorId, ProfileType.ANONYMOUS, observerId, lastTouchpointId,
 				lastSeenIp, usedDeviceId, "", "");
 		return p;
 	}
@@ -344,13 +356,6 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		this.createdAt = createdAt;
 	}
 
-	public String getCollectionId() {
-		return collectionId;
-	}
-
-	public void setCollectionId(String collectionId) {
-		this.collectionId = collectionId;
-	}
 
 	public String getRootProfileId() {
 		return rootProfileId;
@@ -441,12 +446,15 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	}
 	
 	public void setIdentity(String identity) {
-		this.identities.add(identity);
+		if(StringUtil.isNotEmpty(identity)) {
+			this.identities.add(identity);
+		}
 	}
 	
 	public void setIdentity(String loginId, String loginProvider) {
-		
-		this.identities.add(loginId + loginProvider);
+		if(StringUtil.isNotEmpty(loginId) && StringUtil.isNotEmpty(loginProvider)) {
+			this.identities.add(loginId + "#" + loginProvider);
+		}
 	}
 
 	public Set<String> getSessionKeys() {
@@ -623,9 +631,6 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		this.partitionId = partitionId;
 	}
 
-	public String getKey() {
-		return key;
-	}
 
 	public int getGender() {
 		return gender;

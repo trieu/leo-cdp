@@ -20,11 +20,7 @@ import rfx.core.util.StringUtil;
 public abstract class BaseApiRouter extends BaseHttpRouter {
 
 	private static final String P_USER_SESSION = "usersession";
-	public static final String HTTP_POST_NAME = "post";
-	public static final String HTTP_GET_NAME = "get";
-	public static final String HTTP_GET_OPTIONS = "options";
-
-	public static final String HEADER_SESSION = "leouss";
+	
 
 	////////////
 	public static final String START_DATE = "/start-date";
@@ -84,14 +80,14 @@ public abstract class BaseApiRouter extends BaseHttpRouter {
 		// CORS Header
 		BaseHttpRouter.setCorsHeaders(outHeaders, origin);
 
-		String httpMethod = request.method().name().toLowerCase();
+		String httpMethod = request.rawMethod();
 		String uri = request.path();
 		String host = request.host();
 		String userAgent = request.getHeader(HttpHeaderNames.USER_AGENT);
 		String userIp = CookieUUIDUtil.getRemoteIP(request);
 		System.out.println(httpMethod + " ==>>>> host: " + host + " uri: " + uri);
 
-		if (HTTP_POST_NAME.equals(httpMethod)) {
+		if (HTTP_POST_NAME.equalsIgnoreCase(httpMethod)) {
 			String bodyStr = StringUtil.safeString(context.getBodyAsString(), "{}");
 			System.out.println("HTTP_POST ===> getBodyAsString: " + bodyStr);
 			System.out.println("HTTP_POST ===> contentType: " + contentType);
@@ -125,7 +121,7 @@ public abstract class BaseApiRouter extends BaseHttpRouter {
 				return false;
 			}
 
-		} else if (HTTP_GET_NAME.equals(httpMethod)) {
+		} else if (HTTP_GET_NAME.equalsIgnoreCase(httpMethod)) {
 
 			String userSession = CookieUserSessionUtil.getUserSession(context,
 					StringUtil.safeString(reqHeaders.get(HEADER_SESSION)));

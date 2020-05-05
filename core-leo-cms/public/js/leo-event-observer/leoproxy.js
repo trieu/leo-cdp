@@ -44,7 +44,6 @@
         };
 
         LeoObserverProxy.messageHandler = function(hash) {
-        	
             if (hash === "#LeoObserverProxyLoaded") {
  				initLeoContextSession()
             } 
@@ -63,7 +62,7 @@
             LeoObserverProxy.messageHandler(hash);
         });
 
-        var getObserverParams = function(metricName, eventData) {
+        var getObserverParams = function(metricName, eventData, profileObject) {
             var mediaHost = encodeURIComponent(document.location.host);
 			var tprefurl =  encodeURIComponent(document.referrer ? document.referrer : "");
 			var tpname = encodeURIComponent(document.title);
@@ -81,6 +80,9 @@
             	params['metric'] = metricName;
              	params['eventdata'] = encodeURIComponent(JSON.stringify(eventData)); 
             }
+            if(profileObject){
+            	params['profiledata'] = JSON.stringify(profileObject); 
+            }
             return params;
         }
 
@@ -97,15 +99,16 @@
 
         // event-view(pageview|screenview|storeview|trueview|placeview,contentId,sessionKey,visitorId)
         LeoObserverProxy.recordViewEvent = function(metricName, eventData) {
-            if (typeof eventData === "object") {
-                var params = getObserverParams(metricName, eventData);
-                var payload = JSON.stringify({
-                    'call': 'doTracking',
-                    'params': params,
-                    'eventType': 'view'
-                });
-                sendMessage(payload);
+            if (typeof eventData !== "object") {
+            	eventData = {};
             }
+            var params = getObserverParams(metricName, eventData);
+            var payload = JSON.stringify({
+                'call': 'doTracking',
+                'params': params,
+                'eventType': 'view'
+            });
+            sendMessage(payload);
         }
 
         // event-action(click|play|touch|contact|watch|test,sessionKey,visitorId)
@@ -129,6 +132,16 @@
                     'call': 'doTracking',
                     'params': params,
                     'eventType': 'conversion'
+                });
+                sendMessage(payload);
+            }
+        }
+        
+        LeoObserverProxy.updateProfileBySession = function(profileObject) {
+            if (typeof profileObject === "object") {
+                var payload = JSON.stringify({
+                    'call': 'updateProfile',
+                    'params': getObserverParams(false,false,profileObject)
                 });
                 sendMessage(payload);
             }

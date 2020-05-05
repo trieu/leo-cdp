@@ -10,15 +10,21 @@ import rfx.core.util.StringUtil;
 
 public class ProfileDataService {
 
-	public static Profile getOrCreateNew(String ctxSessionKey, String observerId, String initTouchpointId,
-			String lastSeenIp, String visitorId, String userDeviceId, String email, String phone, String fingerprintId, String loginId, String loginIdProvider) {
+	public static Profile getOrCreateFromPublicDataStream(String ctxSessionKey, String observerId,
+			String initTouchpointId, String lastSeenIp, String visitorId, String userDeviceId) {
+		return getOrCreateNew(ctxSessionKey, observerId, initTouchpointId, lastSeenIp, visitorId, userDeviceId, "",
+				"", "", "", "");
+	}
 
-		boolean isHasLoginInfo = StringUtil.isNotEmpty(loginId) && StringUtil.isNotEmpty(loginIdProvider);
+	public static Profile getOrCreateNew(String ctxSessionKey, String observerId, String initTouchpointId,
+			String lastSeenIp, String visitorId, String userDeviceId, String email, String phone,
+			String fingerprintId, String loginId, String loginProvider) {
+
+		
 		int type = Profile.ProfileType.ANONYMOUS;
-		if (StringUtil.isNotEmpty(email) || StringUtil.isNotEmpty(phone) || isHasLoginInfo ) {
+		if (StringUtil.isNotEmpty(email) || StringUtil.isNotEmpty(phone) || StringUtil.isNotEmpty(loginId)) {
 			type = Profile.ProfileType.IDENTIFIED;
-		} 
-		else if (StringUtil.isNotEmpty(email) && StringUtil.isNotEmpty(phone)) {
+		} else if (StringUtil.isNotEmpty(email) && StringUtil.isNotEmpty(phone)) {
 			type = Profile.ProfileType.CRM_USER;
 		}
 
@@ -27,18 +33,16 @@ public class ProfileDataService {
 			if (type == Profile.ProfileType.ANONYMOUS) {
 				pf = Profile.newAnonymousProfile(ctxSessionKey, observerId, initTouchpointId, lastSeenIp, visitorId,
 						userDeviceId, fingerprintId);
-			} 
-			else if (type == Profile.ProfileType.IDENTIFIED) {
-				
+			} else if (type == Profile.ProfileType.IDENTIFIED) {
+
 				pf = Profile.newIdentifiedProfile(ctxSessionKey, observerId, initTouchpointId, lastSeenIp,
 						visitorId, userDeviceId, email, fingerprintId);
-				
-				if(isHasLoginInfo) {
-					pf.setIdentity(loginId,loginIdProvider);
+
+				if (StringUtil.isNotEmpty(loginId)) {
+					pf.setIdentity(loginId, loginProvider);
 				}
-				
-			} 
-			else if (type == Profile.ProfileType.CRM_USER) {
+
+			} else if (type == Profile.ProfileType.CRM_USER) {
 				pf = Profile.newCrmProfile(ctxSessionKey, observerId, initTouchpointId, lastSeenIp, visitorId,
 						userDeviceId, email, phone, fingerprintId);
 			}
@@ -50,19 +54,20 @@ public class ProfileDataService {
 		return pf;
 	}
 
-	public static Profile updateLoginInfo(String socialMediaName, String socialLoginId, String email,
-			String profileId, String observerId, String lastTouchpointId, String lastSeenIp, String usedDeviceId) {
+	public static Profile updateLoginInfo(String loginId, String loginProvider, String email, String profileId,
+			String observerId, String lastTouchpointId, String lastSeenIp, String usedDeviceId) {
 		Profile p = ProfileDaoUtil.getById(profileId);
-
-		Map<String, Integer> acquisitionChannels = p.getAcquisitionChannels();
-		Set<String> ids = p.getIdentities();
-		String sid = socialMediaName + "#" + socialLoginId;
-		if (!acquisitionChannels.containsKey(socialMediaName) && !ids.contains(sid)) {
-			acquisitionChannels.put(socialMediaName, 1);
+		
+		
+		if(StringUtil.isNotEmpty(loginProvider)) {
+			Map<String, Integer> acquisitionChannels = p.getAcquisitionChannels();
+			int count = acquisitionChannels.getOrDefault(loginProvider, 0) + 1;
+			acquisitionChannels.put(loginProvider, count);
 			p.setAcquisitionChannels(acquisitionChannels);
-			ids.add(sid);
 		}
+		
 
+		p.setIdentity(loginId, loginProvider);
 		p.setPrimaryEmail(email);
 		p.setObserverId(observerId);
 		p.setLastTouchpointId(lastTouchpointId);

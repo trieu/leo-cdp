@@ -11,7 +11,7 @@ import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.RoutingContext;
 import leotech.cdp.model.ContextSession;
 import leotech.cdp.router.api.TrackingApi;
-import leotech.cdp.router.api.TrackingApiParam;
+import leotech.cdp.router.api.ObserverApiParam;
 import leotech.cdp.service.ContextSessionService;
 import leotech.core.api.BaseApiHandler;
 import leotech.core.api.BaseHttpRouter;
@@ -34,6 +34,7 @@ public class EventObserverHttpRouter extends BaseHttpRouter {
 	public static final String PREFIX_CLICK_REDIRECT = "/clr";
 
 	public static final String PREFIX_CONTEXT_SESSION_PROFILE_INIT = "/cxs-pf-init";
+	public static final String PREFIX_UPDATE_PROFILE_LOGIN_INFO = "/cxs-pf-update";
 	public static final String PREFIX_EVENT_VIEW = "/etv";
 	public static final String PREFIX_EVENT_ACTION = "/eta";
 	public static final String PREFIX_EVENT_CONVERSION = "/etc";
@@ -60,11 +61,14 @@ public class EventObserverHttpRouter extends BaseHttpRouter {
 	public boolean handle() throws Exception {
 		HttpServerRequest req = context.request();
 
+		String httpMethod = req.rawMethod();
 		String uri = req.uri();
-		System.out.println("RoutingHandler.URI: " + uri);
+		System.out.println(httpMethod + " uri: " + uri);
 
 		MultiMap reqHeaders = req.headers();
 		MultiMap params = req.params();
+		
+		
 		HttpServerResponse resp = req.response();
 		MultiMap outHeaders = resp.headers();
 		outHeaders.set(CONNECTION, HttpTrackingUtil.HEADER_CONNECTION_CLOSE);
@@ -81,19 +85,22 @@ public class EventObserverHttpRouter extends BaseHttpRouter {
 			outHeaders.set(CONTENT_TYPE, BaseApiHandler.CONTENT_TYPE_JSON);
 
 			// init core params
-			String eventName = StringUtil.safeString(params.get(TrackingApiParam.EVENT_METRIC_NAME)).toLowerCase();
-			String clientSessionKey = StringUtil.safeString(params.get(TrackingApiParam.CTX_SESSION_KEY));
+			String eventName = StringUtil.safeString(params.get(ObserverApiParam.EVENT_METRIC_NAME)).toLowerCase();
+			String clientSessionKey = StringUtil.safeString(params.get(ObserverApiParam.CTX_SESSION_KEY));
 
 			if (uri.startsWith(PREFIX_CONTEXT_SESSION_PROFILE_INIT) && StringUtil.isEmpty(clientSessionKey)) {
-				// init ContextSession
+				
+				// synchronize session (when) with user's device (how), touchpoint's context (where) and profile (who)
+				// into one object for analytics (understand why)
+			
 				ContextSession initSession = ContextSessionService.init(req, params, device);
 				resp.end(new Gson().toJson(new ObserverResponse(initSession.getSessionKey(), OK, 101)));
-
-			} else if (StringUtil.isNotEmpty(eventName)) {
+				
+			} 
+			else if (StringUtil.isNotEmpty(eventName)) {
 
 				// synch ContextSession with event tracking
-				ContextSession currentSession = ContextSessionService.synchData(clientSessionKey, req, params,
-						device);
+				ContextSession currentSession = ContextSessionService.synchData(clientSessionKey, req, params,device);
 
 				int status = 404;
 				if (currentSession != null) {
@@ -111,18 +118,7 @@ public class EventObserverHttpRouter extends BaseHttpRouter {
 					else if (uri.startsWith(PREFIX_EVENT_CONVERSION)) {
 						status = TrackingApi.recordConversionEvent(req, params, device, currentSession, eventName);
 					}
-
-					// synchronize the device (how), touchpoint's context
-					// (where), session (when)
-					// and profile (who) into one object for analytics
-					// (understand why)
-					else if (uri.startsWith(PREFIX_CONTEXT_SESSION_PROFILE_INIT)) {
-						if (StringUtil.isNotEmpty(currentSession.getEmail())) {
-							status = ContextSessionService.updateSessionWithProfile(req, params, currentSession);
-						} else {
-							status = 101;
-						}
-					}
+					
 				} else {
 					//
 					resp.end(new Gson().toJson(new ObserverResponse("", INVALID, status)));
@@ -140,7 +136,18 @@ public class EventObserverHttpRouter extends BaseHttpRouter {
 							.toJson(new ObserverResponse(currentSession.getSessionKey(), INVALID, status)));
 				}
 				return true;
-
+				
+			} else if(httpMethod.equalsIgnoreCase("POST") && uri.startsWith(PREFIX_UPDATE_PROFILE_LOGIN_INFO)) {
+				
+				int status = 404;
+				// synch ContextSession with request
+				ContextSession currentSession = ContextSessionService.synchData(clientSessionKey, req, params,device);
+				if (StringUtil.isNotEmpty(currentSession.getProfileId())) {
+					status = ContextSessionService.updateSessionWithProfile(req, params, currentSession);
+				} else {
+					status = 101;
+				}
+				resp.end(new Gson().toJson(new ObserverResponse(currentSession.getSessionKey(), OK, status)));
 			}
 
 			// click redirect for O2O synchronization

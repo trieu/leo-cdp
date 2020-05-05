@@ -202,9 +202,11 @@
 		
 		function leoObserverProxyReady() {
 		    //Leo is ready, record view data
-		    LeoObserverProxy.recordViewEvent("pageview", {
-		        email: "thomas@example.com"
-		    });
+		    LeoObserverProxy.recordViewEvent("pageview");
+		    
+		    // update current session the profile
+		    LeoObserverProxy.updateProfileBySession({email: "thomas@example.com"})
+		    
 		    // record action data
 		    $('a[href^="/html/post"]').click(function(event) {
 		        //event.preventDefault(); // Don't follow the link

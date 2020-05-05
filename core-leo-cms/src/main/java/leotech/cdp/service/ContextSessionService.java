@@ -1,5 +1,7 @@
 package leotech.cdp.service;
 
+import java.util.Map;
+
 import org.joda.time.DateTime;
 
 import com.google.gson.Gson;
@@ -10,7 +12,7 @@ import leotech.cdp.dao.ContextSessionDaoUtil;
 import leotech.cdp.model.ContextSession;
 import leotech.cdp.model.Profile;
 import leotech.cdp.model.Touchpoint;
-import leotech.cdp.router.api.TrackingApiParam;
+import leotech.cdp.router.api.ObserverApiParam;
 import leotech.system.model.DeviceInfo;
 import leotech.system.model.GeoLocation;
 import leotech.system.util.GeoLocationUtil;
@@ -32,46 +34,43 @@ public class ContextSessionService {
 		String ip = RequestInfoUtil.getRemoteIP(req);
 		GeoLocation loc = GeoLocationUtil.getGeoLocation(ip);
 
-		String observerId = StringUtil.safeString(params.get(TrackingApiParam.OBSERVER_ID));
+		String observerId = StringUtil.safeString(params.get(ObserverApiParam.OBSERVER_ID));
 		String userDeviceId = DeviceDataService.getDeviceId(params, dv);
-		String mediaHost = StringUtil.safeString(params.get(TrackingApiParam.MEDIA_HOST));
-		String appId = StringUtil.safeString(params.get(TrackingApiParam.APP_ID));
+		String mediaHost = StringUtil.safeString(params.get(ObserverApiParam.MEDIA_HOST));
+		String appId = StringUtil.safeString(params.get(ObserverApiParam.APP_ID));
 
 		// touchpoint params
-		String touchpointName = StringUtil.decodeUrlUTF8(params.get(TrackingApiParam.TOUCHPOINT_NAME));
-		String touchpointUrl = StringUtil.decodeUrlUTF8(params.get(TrackingApiParam.TOUCHPOINT_URL));
-		String touchpointRefUrl = StringUtil.decodeUrlUTF8(params.get(TrackingApiParam.TOUCHPOINT_REFERRER_URL));
+		String touchpointName = StringUtil.decodeUrlUTF8(params.get(ObserverApiParam.TOUCHPOINT_NAME));
+		String touchpointUrl = StringUtil.decodeUrlUTF8(params.get(ObserverApiParam.TOUCHPOINT_URL));
+		String touchpointRefUrl = StringUtil.decodeUrlUTF8(params.get(ObserverApiParam.TOUCHPOINT_REFERRER_URL));
 
 		// profile params
-		String visitorId = StringUtil.safeString(params.get(TrackingApiParam.VISITOR_ID));
-		String email = StringUtil.safeString(params.get(TrackingApiParam.EMAIL));
-		String phone = StringUtil.safeString(params.get(TrackingApiParam.PHONE));
-		String fingerprintId = StringUtil.safeString(params.get(TrackingApiParam.FINGERPRINT_ID));
+		String visitorId = StringUtil.safeString(params.get(ObserverApiParam.VISITOR_ID));
+		String email = StringUtil.safeString(params.get(ObserverApiParam.EMAIL));
+		String phone = StringUtil.safeString(params.get(ObserverApiParam.PHONE));
+		String fingerprintId = StringUtil.safeString(params.get(ObserverApiParam.FINGERPRINT_ID));
 
-		String loginId = StringUtil.safeString(params.get(TrackingApiParam.LOGIN_ID));
-		String loginIdProvider = StringUtil.safeString(params.get(TrackingApiParam.LOGIN_PROVIDER));
+		String loginId = StringUtil.safeString(params.get(ObserverApiParam.LOGIN_ID));
+		String loginIdProvider = StringUtil.safeString(params.get(ObserverApiParam.LOGIN_PROVIDER));
 
-		String env = StringUtil.safeString(params.get(TrackingApiParam.DATA_ENVIRONMENT), TrackingApiParam.DEV_ENV);
+		String env = StringUtil.safeString(params.get(ObserverApiParam.DATA_ENVIRONMENT), ObserverApiParam.DEV_ENV);
 		String locationCode = loc.getLocationCode();
 
-		// touchpoint info process
-		Touchpoint refTouchPoint = TouchpointDataService.getOrCreateDigitalTouchpoint("Referrer",
-				Touchpoint.TouchpointType.WEBSITE, touchpointRefUrl);
-		Touchpoint srcTouchpoint = TouchpointDataService.getOrCreateDigitalTouchpoint(touchpointName,
-				Touchpoint.TouchpointType.WEBSITE, touchpointUrl);
+		// touch-point info process
+		Touchpoint refTouchPoint = TouchpointDataService.getOrCreateWebTouchpoint(Touchpoint.TouchpointType.WEBSITE, touchpointRefUrl);
+		Touchpoint srcTouchpoint = TouchpointDataService.getOrCreateWebTouchpoint(touchpointName, Touchpoint.TouchpointType.WEBSITE, touchpointUrl);
 		String refTouchpointId = refTouchPoint.getId();
 		String srcTouchpointId = srcTouchpoint.getId();
 
 		// create new
 		ContextSession ctxSession = new ContextSession(observerId, dateTime, dateTimeKey, locationCode,
-				userDeviceId, ip, mediaHost, appId, refTouchpointId, srcTouchpointId, visitorId, email,
+				userDeviceId, ip, mediaHost, appId, refTouchpointId, srcTouchpointId, visitorId, email, phone,
 				fingerprintId, env);
 
 		String ctxSessionKey = ctxSession.getSessionKey();
 
 		// load profile ID from DB
-		Profile profile = ProfileDataService.getOrCreateNew(ctxSessionKey, observerId, srcTouchpointId, ip,
-				visitorId, userDeviceId, email, phone, fingerprintId, loginId, loginIdProvider);
+		Profile profile = ProfileDataService.getOrCreateFromPublicDataStream(ctxSessionKey, observerId, srcTouchpointId, ip, visitorId, userDeviceId);
 		String profileId = profile.getId();
 		int profileType = profile.getType();
 
@@ -159,11 +158,25 @@ public class ContextSessionService {
 		String lastTouchpointId = ctxSession.getRefTouchpointId();
 		String observerId = ctxSession.getObserverId();
 		String profileId = ctxSession.getProfileId();
-		String email = ctxSession.getEmail();
-		String loginId = ctxSession.getLoginId();
-		String loginProviderName = ctxSession.getLoginProvider();
-		ProfileDataService.updateLoginInfo(loginProviderName, loginId, email, profileId, observerId,
-				lastTouchpointId, sourceIP, usedDeviceId);
+		
+		
+		MultiMap formAttributes = req.formAttributes();
+		
+		Map<String, String> profileData = RequestInfoUtil.getHashMapFromRequestParams(formAttributes,ObserverApiParam.PROFILE_DATA);
+		System.out.println(profileData);
+		
+		String email = profileData.getOrDefault("email", "");
+		String loginId = profileData.getOrDefault("loginId", "");
+		String loginProvider = profileData.getOrDefault("loginProvider", "");
+		
+		
+		ProfileDataService.updateLoginInfo(loginProvider, loginId, email, profileId, observerId, lastTouchpointId, sourceIP, usedDeviceId);
+		
+		ctxSession.setEmail(email);
+		ctxSession.setLoginId(loginId);
+		ctxSession.setLoginProvider(loginProvider);
+		ContextSessionDaoUtil.update(ctxSession);
+		
 		return 102;
 	}
 

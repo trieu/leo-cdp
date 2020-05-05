@@ -1,6 +1,6 @@
 package leotech.cdp.router.api;
 
-public final class TrackingApiParam {
+public final class ObserverApiParam {
     public static final String CTX_SESSION_KEY = "ctxsk";
     public static final String FINGERPRINT_ID = "fgpid";
     
@@ -10,6 +10,7 @@ public final class TrackingApiParam {
     public static final String PHONE = "phone";
     public static final String LOGIN_ID = "loginid";
     public static final String LOGIN_PROVIDER = "loginprovider";
+    public static final String PROFILE_DATA = "profiledata";
    
     public static final String OBSERVER_ID = "obsid";
     public static final String TOUCHPOINT_NAME = "tpname";

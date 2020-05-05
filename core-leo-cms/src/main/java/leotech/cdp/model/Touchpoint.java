@@ -21,356 +21,371 @@ import rfx.core.util.StringUtil;
 /**
  * @author Trieu Nguyen
  * 
- *   A touchpoint can be defined as any way a consumer can interact with a
- *    business, whether it be person-to-person, through a website, an app
- *    or any form of communication
+ *         A touchpoint can be defined as any way a consumer can interact with a
+ *         business, whether it be person-to-person, through a website, an app
+ *         or any form of communication
  *
  */
-public class Touchpoint extends CdpPersistentObject  {
+public class Touchpoint extends CdpPersistentObject {
 
-    public static final class TouchpointType {
-	public static final int ECOMMERCE_PLATFORM = 1;
-	public static final int WEBSITE = 2;
-	public static final int MOBILE_APP = 3;
-	public static final int SMART_TV_APP = 4;
-	public static final int IOT_APP = 5;
-	public static final int OTT_APP = 6;
-	public static final int SOCIAL_MEDIA_PLATFORM = 7;
-	public static final int URBAN_MARKET = 8;
-	public static final int RETAIL_STORE = 9;
-	public static final int TRADITIONAL_TV = 10;
+	public static final class TouchpointType {
+		public static final int ECOMMERCE_PLATFORM = 1;
+		public static final int WEBSITE = 2;
+		public static final int MOBILE_APP = 3;
+		public static final int SMART_TV_APP = 4;
+		public static final int IOT_APP = 5;
+		public static final int OTT_APP = 6;
+		public static final int SOCIAL_MEDIA_PLATFORM = 7;
+		public static final int URBAN_MARKET = 8;
+		public static final int RETAIL_STORE = 9;
+		public static final int TRADITIONAL_TV = 10;
 
-	public static final int SHOPPING_MALL = 11;
-	public static final int COFFEE_SHOP = 12;
-	public static final int CONFERENCE_HALL = 13;
-	public static final int URBAN_PARK = 14;
-	public static final int OFFICE_BUILDING = 15;
-	public static final int EXPERIENCE_SPACE = 16;
-	public static final int OUTDOOR_PR_EVENT = 17;
-	public static final int BILLBOARD_OUTDOOR = 18;
-	public static final int BILLBOARD_INDOOR = 19;
-	public static final int TRANSIT_MEDIA = 20;
-	public static final int SPORTING_EVENT = 21;
+		public static final int SHOPPING_MALL = 11;
+		public static final int COFFEE_SHOP = 12;
+		public static final int CONFERENCE_HALL = 13;
+		public static final int URBAN_PARK = 14;
+		public static final int OFFICE_BUILDING = 15;
+		public static final int EXPERIENCE_SPACE = 16;
+		public static final int OUTDOOR_PR_EVENT = 17;
+		public static final int BILLBOARD_OUTDOOR = 18;
+		public static final int BILLBOARD_INDOOR = 19;
+		public static final int TRANSIT_MEDIA = 20;
+		public static final int SPORTING_EVENT = 21;
 
-	public static final int KEY_OPINION_LEADER = 22;
-    }
-
-    public static final String COLLECTION_NAME = COLLECTION_PREFIX + Touchpoint.class.getSimpleName().toLowerCase();
-    static ArangoCollection instance;
-
-    @Override
-    public ArangoCollection getCollection() {
-	if (instance == null) {
-	    ArangoDatabase arangoDatabase = ArangoDbUtil.getArangoDatabase();
-
-	    instance = arangoDatabase.collection(COLLECTION_NAME);
-
-	    // ensure indexing key fields for fast lookup
-	    instance.ensureFulltextIndex(Arrays.asList("name"), new FulltextIndexOptions());
-	    instance.ensurePersistentIndex(Arrays.asList("url"), new PersistentIndexOptions().unique(false));
-	    instance.ensurePersistentIndex(Arrays.asList("primaryPhone"), new PersistentIndexOptions().unique(false));
-	    instance.ensurePersistentIndex(Arrays.asList("collectionId"), new PersistentIndexOptions().unique(false));
-	    instance.ensurePersistentIndex(Arrays.asList("parentId"), new PersistentIndexOptions().unique(false));
-	    instance.ensurePersistentIndex(Arrays.asList("locationCode"), new PersistentIndexOptions().unique(false));
-	    instance.ensureHashIndex(Arrays.asList("keywords[*]"), new HashIndexOptions());
-	    instance.ensureGeoIndex(Arrays.asList("latitude", "longitude"), new GeoIndexOptions());
+		public static final int KEY_OPINION_LEADER = 22;
 	}
-	return instance;
-    }
 
-    @DocumentField(Type.KEY)
-    @Expose
-    private String key;
+	public static final String COLLECTION_NAME = COLLECTION_PREFIX + Touchpoint.class.getSimpleName().toLowerCase();
+	static ArangoCollection instance;
 
-    @Expose
-    String id;
+	@Override
+	public ArangoCollection getCollection() {
+		if (instance == null) {
+			ArangoDatabase arangoDatabase = ArangoDbUtil.getArangoDatabase();
 
-    @Expose
-    String name;
+			instance = arangoDatabase.collection(COLLECTION_NAME);
 
-    @Expose
-    int type = -1;
+			// ensure indexing key fields for fast lookup
+			instance.ensureFulltextIndex(Arrays.asList("name"), new FulltextIndexOptions());
+			instance.ensurePersistentIndex(Arrays.asList("url"), new PersistentIndexOptions().unique(false));
+			
+			instance.ensurePersistentIndex(Arrays.asList("collectionId"),new PersistentIndexOptions().unique(false));
+			instance.ensurePersistentIndex(Arrays.asList("parentId"), new PersistentIndexOptions().unique(false));
+			instance.ensurePersistentIndex(Arrays.asList("locationCode"),new PersistentIndexOptions().unique(false));
+			instance.ensureHashIndex(Arrays.asList("keywords[*]"), new HashIndexOptions());
+			instance.ensureGeoIndex(Arrays.asList("latitude", "longitude"), new GeoIndexOptions());
+		}
+		return instance;
+	}
 
-    @Expose
-    boolean isMediaSrc = false;
 
-    @Expose
-    Date createdAt;
+	@DocumentField(Type.KEY)
+	@Expose
+	String id;
 
-    @Expose
-    int status = 0;
+	@Expose
+	String name;
 
-    @Expose
-    String url = "";
-    
-    @Expose
-    String thumbnailUrl = "";
+	@Expose
+	int type = -1;
 
-    @Expose
-    String countryCode = "";
+	@Expose
+	boolean isMediaSrc = false;
 
-    @Expose
-    String locationCode = "";
+	@Expose
+	Date createdAt;
 
-    @Expose
-    String address = "";
+	@Expose
+	int status = 0;
 
-    @Expose
-    double latitude = 0;
+	@Expose
+	String url = "";
 
-    @Expose
-    double longitude = 0;
+	@Expose
+	String thumbnailUrl = "";
 
-    @Expose
-    double radius = 0;
+	@Expose
+	String countryCode = "";
 
-    @Expose
-    double reachableArea = 0;
+	@Expose
+	String locationCode = "";
 
-    @Expose
-    List<String> keywords = new ArrayList<>();
+	@Expose
+	String address = "";
 
-    @Expose
-    String collectionId = "";
+	@Expose
+	double latitude = 0;
 
-    @Expose
-    String parentId = "";
+	@Expose
+	double longitude = 0;
 
-    @Expose
-    double unitCost = 0;
+	@Expose
+	double radius = 0;
 
-    @Expose
-    Date updatedAt;
+	@Expose
+	double reachableArea = 0;
 
-    @Expose
-    int partitionId;
+	@Expose
+	List<String> keywords = new ArrayList<>();
 
-    @Override
-    public boolean isReadyForSave() {
-	return StringUtil.isNotEmpty(this.name) && this.type >=0 && (StringUtil.isNotEmpty(this.url) || StringUtil.isNotEmpty(this.locationCode));
-    }
+	@Expose
+	String collectionId = "";
 
-    
+	@Expose
+	String parentId = "";
 
-    ////////////////
+	@Expose
+	double unitCost = 0;
 
-    public Touchpoint() {
-	// TODO Auto-generated constructor stub
+	@Expose
+	Date updatedAt;
+
+	@Expose
+	int partitionId;
+
+	@Override
+	public boolean isReadyForSave() {
+		return StringUtil.isNotEmpty(this.name) && this.type >= 0
+				&& (StringUtil.isNotEmpty(this.url) || StringUtil.isNotEmpty(this.locationCode));
+	}
+
+	////////////////
+
+	public Touchpoint() {
+		// TODO Auto-generated constructor stub
+
+	}
+
+	/**
+	 * for online touch-point from internal API
+	 * 
+	 * @param name
+	 * @param type
+	 * @param isMediaSrc
+	 * @param url
+	 * @param collectionId
+	 */
+	public Touchpoint(String name, int type, String url) {
+		super();
+		this.createdAt = new Date();
+		this.name = name;
+		this.type = type;
+		this.url = url;
+		String keyHint = type + url;
+		this.id = id(keyHint);
+	}
 	
-    }
+	/**
+	 * for online touch-point from public API
+	 * 
+	 * @param name
+	 * @param type
+	 * @param isMediaSrc
+	 * @param url
+	 * @param collectionId
+	 */
+	public Touchpoint(int type, String url) {
+		super();
+		this.createdAt = new Date();
+		this.name = "Web";
+		this.type = type;
+		this.url = url;
+		String keyHint = type + url;
+		this.id = id(keyHint);
+	}
 
-    /**
-     * for online touch-point
-     * 
-     * @param name
-     * @param type
-     * @param isMediaSrc
-     * @param url
-     * @param collectionId
-     */
-    public Touchpoint(String name, int type, String url) {
-	super();
-	this.createdAt = new Date();
-	this.name = name;
-	this.type = type;
-	this.url = url;
-	String keyHint = name + type + url;
-	this.id = id(keyHint);
-    }
+	/**
+	 * for offline touch-point
+	 * 
+	 * @param name
+	 * @param type
+	 * @param isMediaSrc
+	 * @param locationCode
+	 * @param address
+	 * @param collectionId
+	 */
+	public Touchpoint(String name, int type, String locationCode, String address, double latitude,
+			double longitude) {
+		super();
+		this.createdAt = new Date();
+		this.name = name;
+		this.type = type;
+		this.locationCode = locationCode;
+		this.address = address;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		String keyHint = type + locationCode + name;
+		this.id = id(keyHint);
+	}
 
-    /**
-     * for offline touch-point
-     * 
-     * @param name
-     * @param type
-     * @param isMediaSrc
-     * @param locationCode
-     * @param address
-     * @param collectionId
-     */
-    public Touchpoint(String name, int type, String locationCode, String address, double latitude, double longitude) {
-	super();
-	this.createdAt = new Date();
-	this.name = name;
-	this.type = type;
-	this.locationCode = locationCode;
-	this.address = address;
-	this.latitude = latitude;
-	this.longitude = longitude;
-	String keyHint = name + type + locationCode;
-	this.id = id(keyHint);
-    }
+	public String getId() {
+		return id;
+	}
 
-    public String getId() {
-	return id;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public void setId(String id) {
-	this.id = id;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getName() {
-	return name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setName(String name) {
-	this.name = name;
-    }
+	public int getType() {
+		return type;
+	}
 
-    public int getType() {
-	return type;
-    }
+	public void setType(int type) {
+		this.type = type;
+	}
 
-    public void setType(int type) {
-	this.type = type;
-    }
+	public boolean isMediaSrc() {
+		return isMediaSrc;
+	}
 
-    public boolean isMediaSrc() {
-	return isMediaSrc;
-    }
+	public void setMediaSrc(boolean isMediaSrc) {
+		this.isMediaSrc = isMediaSrc;
+	}
 
-    public void setMediaSrc(boolean isMediaSrc) {
-	this.isMediaSrc = isMediaSrc;
-    }
+	public Date getCreatedAt() {
+		return createdAt;
+	}
 
-    public Date getCreatedAt() {
-	return createdAt;
-    }
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
 
-    public void setCreatedAt(Date createdAt) {
-	this.createdAt = createdAt;
-    }
+	public int getStatus() {
+		return status;
+	}
 
-    public int getStatus() {
-	return status;
-    }
+	public void setStatus(int status) {
+		this.status = status;
+	}
 
-    public void setStatus(int status) {
-	this.status = status;
-    }
+	public String getUrl() {
+		return url;
+	}
 
-    public String getUrl() {
-	return url;
-    }
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
-    public void setUrl(String url) {
-	this.url = url;
-    }
+	public String getThumbnailUrl() {
+		return thumbnailUrl;
+	}
 
-    public String getThumbnailUrl() {
-	return thumbnailUrl;
-    }
+	public void setThumbnailUrl(String thumbnailUrl) {
+		this.thumbnailUrl = thumbnailUrl;
+	}
 
-    public void setThumbnailUrl(String thumbnailUrl) {
-	this.thumbnailUrl = thumbnailUrl;
-    }
+	public String getCountryCode() {
+		return countryCode;
+	}
 
-    public String getCountryCode() {
-	return countryCode;
-    }
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
 
-    public void setCountryCode(String countryCode) {
-	this.countryCode = countryCode;
-    }
+	public String getLocationCode() {
+		return locationCode;
+	}
 
-    public String getLocationCode() {
-	return locationCode;
-    }
+	public void setLocationCode(String locationCode) {
+		this.locationCode = locationCode;
+	}
 
-    public void setLocationCode(String locationCode) {
-	this.locationCode = locationCode;
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    public String getAddress() {
-	return address;
-    }
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
-    public void setAddress(String address) {
-	this.address = address;
-    }
+	public double getLatitude() {
+		return latitude;
+	}
 
-    public double getLatitude() {
-	return latitude;
-    }
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
 
-    public void setLatitude(double latitude) {
-	this.latitude = latitude;
-    }
+	public double getLongitude() {
+		return longitude;
+	}
 
-    public double getLongitude() {
-	return longitude;
-    }
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
 
-    public void setLongitude(double longitude) {
-	this.longitude = longitude;
-    }
+	public double getRadius() {
+		return radius;
+	}
 
-    public double getRadius() {
-	return radius;
-    }
+	public void setRadius(double radius) {
+		this.radius = radius;
+	}
 
-    public void setRadius(double radius) {
-	this.radius = radius;
-    }
+	public double getReachableArea() {
+		return reachableArea;
+	}
 
-    public double getReachableArea() {
-	return reachableArea;
-    }
+	public void setReachableArea(double reachableArea) {
+		this.reachableArea = reachableArea;
+	}
 
-    public void setReachableArea(double reachableArea) {
-	this.reachableArea = reachableArea;
-    }
+	public List<String> getKeywords() {
+		return keywords;
+	}
 
-    public List<String> getKeywords() {
-	return keywords;
-    }
+	public void setKeywords(List<String> keywords) {
+		this.keywords = keywords;
+	}
 
-    public void setKeywords(List<String> keywords) {
-	this.keywords = keywords;
-    }
+	public String getCollectionId() {
+		return collectionId;
+	}
 
-    public String getCollectionId() {
-	return collectionId;
-    }
+	public void setCollectionId(String collectionId) {
+		this.collectionId = collectionId;
+	}
 
-    public void setCollectionId(String collectionId) {
-	this.collectionId = collectionId;
-    }
+	public String getParentId() {
+		return parentId;
+	}
 
-    public String getParentId() {
-	return parentId;
-    }
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
+	}
 
-    public void setParentId(String parentId) {
-	this.parentId = parentId;
-    }
+	public double getUnitCost() {
+		return unitCost;
+	}
 
-    public double getUnitCost() {
-	return unitCost;
-    }
+	public void setUnitCost(double unitCost) {
+		this.unitCost = unitCost;
+	}
 
-    public void setUnitCost(double unitCost) {
-	this.unitCost = unitCost;
-    }
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
 
-    public Date getUpdatedAt() {
-	return updatedAt;
-    }
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
 
-    public void setUpdatedAt(Date updatedAt) {
-	this.updatedAt = updatedAt;
-    }
+	public int getPartitionId() {
+		return partitionId;
+	}
 
-    public int getPartitionId() {
-	return partitionId;
-    }
+	public void setPartitionId(int partitionId) {
+		this.partitionId = partitionId;
+	}
 
-    public void setPartitionId(int partitionId) {
-	this.partitionId = partitionId;
-    }
-
-    public String getKey() {
-	return key;
-    }
+	
 
 }

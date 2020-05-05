@@ -147,7 +147,7 @@ AQL_GET_FILE_METADATA_BY_OBJECT =>
 ########### AQL CDP TOUCHPOINT COLLECTION ########################################################################################################;
 
 AQL_GET_TOUCHPOINT_BY_ID =>
-	FOR e in cdp_touchpoint FILTER e.id == @id  
+	FOR e in cdp_touchpoint FILTER e._key == @id  
 	RETURN e
 ;
 
@@ -166,7 +166,7 @@ AQL_GET_TOUCHPOINT_BY_URL =>
 ########### AQL CDP PROFILE COLLECTION ########################################################################################################;
 
 AQL_GET_PROFILE_BY_ID =>
-	FOR e in cdp_profile FILTER e.id == @id  
+	FOR e in cdp_profile FILTER e._key == @id  
 	RETURN e
 ;
 
