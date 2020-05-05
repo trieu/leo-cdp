@@ -19,8 +19,8 @@ public class EventTrackingService {
 	//
 
 	public static int recordViewEvent(ContextSession ctxSession, String environment, String deviceId,
-			String sourceIP, DeviceInfo dv, String srcTouchpointName, String srcTouchpointUrl, String refTouchpointUrl, String eventName,
-			Map<String, String> eventData) {
+			String sourceIP, DeviceInfo dv, String srcTouchpointName, String srcTouchpointUrl,
+			String refTouchpointUrl, String touchpointRefDomain, String eventName, Map<String, String> eventData) {
 		String deviceName = dv.deviceName;
 		String deviceOS = dv.deviceOs;
 
@@ -32,13 +32,16 @@ public class EventTrackingService {
 		String sessionKey = ctxSession.getSessionKey();
 		String observerId = ctxSession.getObserverId();
 
+		// owned media has data from itself
+		boolean isFromOwnedMedia = ctxSession.getMediaHost().equals(touchpointRefDomain);
+
 		long eventCount = 1;
 
 		// touch-point info process
-		Touchpoint refTouchPoint = TouchpointDataService.getOrCreateWebTouchpoint(Touchpoint.TouchpointType.WEBSITE,
-				refTouchpointUrl);
-		Touchpoint srcTouchpoint = TouchpointDataService.getOrCreateWebTouchpoint(srcTouchpointName,Touchpoint.TouchpointType.WEBSITE,
-				srcTouchpointUrl);
+		Touchpoint refTouchPoint = TouchpointDataService.getOrCreateWebTouchpoint(touchpointRefDomain,
+				Touchpoint.TouchpointType.WEBSITE, refTouchpointUrl, isFromOwnedMedia);
+		Touchpoint srcTouchpoint = TouchpointDataService.getOrCreateWebTouchpoint(srcTouchpointName,
+				Touchpoint.TouchpointType.WEBSITE, srcTouchpointUrl);
 		String refTouchpointId = refTouchPoint.getId();
 		String srcTouchpointId = srcTouchpoint.getId();
 
@@ -53,8 +56,9 @@ public class EventTrackingService {
 	}
 
 	public static int recordActionEvent(ContextSession ctxSession, String environment, String deviceId,
-			String sourceIP, DeviceInfo dv,String srcTouchpointName, String srcTouchpointUrl, String refTouchpointUrl, String eventName,
-			long eventCount, String feedbackText, Map<String, String> eventData) {
+			String sourceIP, DeviceInfo dv, String srcTouchpointName, String srcTouchpointUrl,
+			String refTouchpointUrl, String touchpointRefDomain, String eventName, long eventCount,
+			String feedbackText, Map<String, String> eventData) {
 
 		String deviceName = dv.deviceName;
 		String deviceOS = dv.deviceOs;
@@ -66,13 +70,14 @@ public class EventTrackingService {
 		String refProfileId = ctxSession.getProfileId();
 		String sessionKey = ctxSession.getSessionKey();
 		String observerId = ctxSession.getObserverId();
-		String mediaHost = ctxSession.getMediaHost();
+		// owned media has data from itself
+		boolean isFromOwnedMedia = ctxSession.getMediaHost().equals(touchpointRefDomain);
 
 		// touch-point info process
-		Touchpoint refTouchPoint = TouchpointDataService.getOrCreateWebTouchpoint(Touchpoint.TouchpointType.WEBSITE,
-				refTouchpointUrl);
-		Touchpoint srcTouchpoint = TouchpointDataService.getOrCreateWebTouchpoint(srcTouchpointName,Touchpoint.TouchpointType.WEBSITE,
-				srcTouchpointUrl);
+		Touchpoint refTouchPoint = TouchpointDataService.getOrCreateWebTouchpoint(touchpointRefDomain,
+				Touchpoint.TouchpointType.WEBSITE, refTouchpointUrl, isFromOwnedMedia);
+		Touchpoint srcTouchpoint = TouchpointDataService.getOrCreateWebTouchpoint(srcTouchpointName,
+				Touchpoint.TouchpointType.WEBSITE, srcTouchpointUrl);
 		String refTouchpointId = refTouchPoint.getId();
 		String srcTouchpointId = srcTouchpoint.getId();
 
@@ -88,9 +93,9 @@ public class EventTrackingService {
 	}
 
 	public static int recordConversionEvent(ContextSession ctxSession, String environment, String srcEventKey,
-			String deviceId, String sourceIP, DeviceInfo dv,String srcTouchpointName, String srcTouchpointUrl, String refTouchpointUrl,
-			String eventName, long eventCount, String transactionCode, String feedbackText,
-			Map<String, String> eventData) {
+			String deviceId, String sourceIP, DeviceInfo dv, String srcTouchpointName, String srcTouchpointUrl,
+			String refTouchpointUrl, String touchpointRefDomain, String eventName, long eventCount,
+			String transactionCode, String feedbackText, Map<String, String> eventData) {
 		String deviceName = dv.deviceName;
 		String deviceOS = dv.deviceOs;
 
@@ -101,16 +106,17 @@ public class EventTrackingService {
 		int refProfileType = ctxSession.getProfileType();
 		String sessionKey = ctxSession.getSessionKey();
 		String observerId = ctxSession.getObserverId();
-		
+		// owned media has data from itself
+		boolean isFromOwnedMedia = ctxSession.getMediaHost().equals(touchpointRefDomain);
 
 		// TODO
 		int timeSpent = 1;
 
 		// touch-point info process
-		Touchpoint refTouchPoint = TouchpointDataService.getOrCreateWebTouchpoint(Touchpoint.TouchpointType.WEBSITE,
-				refTouchpointUrl);
-		Touchpoint srcTouchpoint = TouchpointDataService.getOrCreateWebTouchpoint(srcTouchpointName,Touchpoint.TouchpointType.WEBSITE,
-				srcTouchpointUrl);
+		Touchpoint refTouchPoint = TouchpointDataService.getOrCreateWebTouchpoint(touchpointRefDomain,
+				Touchpoint.TouchpointType.WEBSITE, refTouchpointUrl, isFromOwnedMedia);
+		Touchpoint srcTouchpoint = TouchpointDataService.getOrCreateWebTouchpoint(srcTouchpointName,
+				Touchpoint.TouchpointType.WEBSITE, srcTouchpointUrl);
 		String refTouchpointId = refTouchPoint.getId();
 		String srcTouchpointId = srcTouchpoint.getId();
 

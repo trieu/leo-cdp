@@ -90,7 +90,7 @@ public class Touchpoint extends CdpPersistentObject {
 	int type = -1;
 
 	@Expose
-	boolean isMediaSrc = false;
+	boolean isOwnedMedia = true;
 
 	@Expose
 	Date createdAt;
@@ -161,7 +161,7 @@ public class Touchpoint extends CdpPersistentObject {
 	 * 
 	 * @param name
 	 * @param type
-	 * @param isMediaSrc
+	 * @param isOwnedMedia
 	 * @param url
 	 * @param collectionId
 	 */
@@ -180,7 +180,7 @@ public class Touchpoint extends CdpPersistentObject {
 	 * 
 	 * @param name
 	 * @param type
-	 * @param isMediaSrc
+	 * @param isOwnedMedia
 	 * @param url
 	 * @param collectionId
 	 */
@@ -199,7 +199,7 @@ public class Touchpoint extends CdpPersistentObject {
 	 * 
 	 * @param name
 	 * @param type
-	 * @param isMediaSrc
+	 * @param isOwnedMedia
 	 * @param locationCode
 	 * @param address
 	 * @param collectionId
@@ -242,12 +242,14 @@ public class Touchpoint extends CdpPersistentObject {
 		this.type = type;
 	}
 
-	public boolean isMediaSrc() {
-		return isMediaSrc;
+	
+
+	public boolean isOwnedMedia() {
+		return isOwnedMedia;
 	}
 
-	public void setMediaSrc(boolean isMediaSrc) {
-		this.isMediaSrc = isMediaSrc;
+	public void setOwnedMedia(boolean isOwnedMedia) {
+		this.isOwnedMedia = isOwnedMedia;
 	}
 
 	public Date getCreatedAt() {

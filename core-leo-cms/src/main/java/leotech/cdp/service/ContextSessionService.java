@@ -43,6 +43,11 @@ public class ContextSessionService {
 		String touchpointName = StringUtil.decodeUrlUTF8(params.get(ObserverApiParam.TOUCHPOINT_NAME));
 		String touchpointUrl = StringUtil.decodeUrlUTF8(params.get(ObserverApiParam.TOUCHPOINT_URL));
 		String touchpointRefUrl = StringUtil.decodeUrlUTF8(params.get(ObserverApiParam.TOUCHPOINT_REFERRER_URL));
+		String touchpointRefDomain = StringUtil.decodeUrlUTF8(params.get(ObserverApiParam.TOUCHPOINT_REFERRER_DOMAIN));
+		
+		// owned media has data from itself , earned media is from facebook or google or youtube
+		boolean isFromOwnedMedia = mediaHost.equals(touchpointRefDomain);
+		
 
 		// profile params
 		String visitorId = StringUtil.safeString(params.get(ObserverApiParam.VISITOR_ID));
@@ -57,7 +62,7 @@ public class ContextSessionService {
 		String locationCode = loc.getLocationCode();
 
 		// touch-point info process
-		Touchpoint refTouchPoint = TouchpointDataService.getOrCreateWebTouchpoint(Touchpoint.TouchpointType.WEBSITE, touchpointRefUrl);
+		Touchpoint refTouchPoint = TouchpointDataService.getOrCreateWebTouchpoint(touchpointRefDomain, Touchpoint.TouchpointType.WEBSITE, touchpointRefUrl, isFromOwnedMedia);
 		Touchpoint srcTouchpoint = TouchpointDataService.getOrCreateWebTouchpoint(touchpointName, Touchpoint.TouchpointType.WEBSITE, touchpointUrl);
 		String refTouchpointId = refTouchPoint.getId();
 		String srcTouchpointId = srcTouchpoint.getId();
@@ -66,11 +71,10 @@ public class ContextSessionService {
 		ContextSession ctxSession = new ContextSession(observerId, dateTime, dateTimeKey, locationCode,
 				userDeviceId, ip, mediaHost, appId, refTouchpointId, srcTouchpointId, visitorId, email, phone,
 				fingerprintId, env);
-
 		String ctxSessionKey = ctxSession.getSessionKey();
 
 		// load profile ID from DB
-		Profile profile = ProfileDataService.getOrCreateFromPublicDataStream(ctxSessionKey, observerId, srcTouchpointId, ip, visitorId, userDeviceId);
+		Profile profile = ProfileDataService.updateOrCreateFromWebTouchpoint(ctxSessionKey, observerId, srcTouchpointId, refTouchpointId, touchpointRefDomain, ip, visitorId, userDeviceId);
 		String profileId = profile.getId();
 		int profileType = profile.getType();
 
@@ -161,6 +165,7 @@ public class ContextSessionService {
 		
 		
 		MultiMap formAttributes = req.formAttributes();
+		
 		
 		Map<String, String> profileData = RequestInfoUtil.getHashMapFromRequestParams(formAttributes,ObserverApiParam.PROFILE_DATA);
 		System.out.println(profileData);

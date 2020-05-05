@@ -7,6 +7,8 @@
     if (typeof window.LeoObserverProxy === "undefined") {
         var proxyHtmlUrl = "//" + window.leoObserverLogDomain + "/public/html/leo-event-proxy.html#";
         var leoObserverId = window.leoObserverId;
+        var srcTouchpointUrl = window.srcTouchpointUrl;
+        var srcTouchpointName = window.srcTouchpointName;
 
         var LeoObserverProxy = {};
         window.LeoObserverProxy = LeoObserverProxy;
@@ -63,16 +65,19 @@
         });
 
         var getObserverParams = function(metricName, eventData, profileObject) {
-            var mediaHost = encodeURIComponent(document.location.host);
-			var tprefurl =  encodeURIComponent(document.referrer ? document.referrer : "");
-			var tpname = encodeURIComponent(document.title);
-            var tpurl = encodeURIComponent(document.location.href);
+			var tprefurl =  encodeURIComponent(document.referrer);
+			var tprefdomain = extractRootDomain(document.referrer);
+			
+			var tpname = srcTouchpointName || encodeURIComponent(document.title);
+			var mediaHost = extractRootDomain(document.location.href);
+            var tpurl = srcTouchpointUrl || encodeURIComponent(document.location.href);
             
             //build params
             var params = {
                 'obsid': leoObserverId,
                 'mediahost': mediaHost,
                 'tprefurl': tprefurl,
+                'tprefdomain': tprefdomain,
                 'tpurl': tpurl,
                 'tpname' : tpname
             };
@@ -85,6 +90,13 @@
             }
             return params;
         }
+        
+        
+        var extractRootDomain = function(url){
+        	try {
+        	    return new URL(url).hostname.split('.').slice(-2).join('.');
+        	} catch(e) {} return "";
+        };
 
 		var initLeoContextSession = function(){
             var payload = JSON.stringify({

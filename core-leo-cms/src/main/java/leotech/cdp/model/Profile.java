@@ -72,21 +72,18 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		return instance;
 	}
 
-
 	@DocumentField(Type.KEY)
 	@Expose
 	String id;
 
 	@Expose
 	int type = ProfileType.ANONYMOUS;
-	
+
 	@Expose
 	Set<String> identities = new HashSet<>(100);
 
 	@Expose
 	Date createdAt = new Date();
-
-
 
 	// the main ID after Identity Resolution process
 	@Expose
@@ -124,8 +121,6 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	@Expose
 	String lastWebCookies = "";
-
-	
 
 	@Expose
 	Set<String> sessionKeys = new HashSet<>(100);
@@ -228,23 +223,24 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	public Profile() {
 	}
 
-	protected void initBaseInformation(int partitionId, String ctxSessionKey, String visitorId, int type, String observerId,
-			String lastTouchpointId, String lastSeenIp, String usedDeviceId, String email, String phone) {
+	protected void initBaseInformation(int partitionId, String ctxSessionKey, String visitorId, int type,
+			String observerId, String lastTouchpointId, String lastSeenIp, String usedDeviceId, String email,
+			String phone) {
 		// hash for unique id key
-		
-		this.partitionId = partitionId;		
+
+		this.partitionId = partitionId;
 		this.sessionKeys.add(ctxSessionKey);
 		this.type = type;
-		
+
 		this.observerId = observerId;
 		this.lastTouchpointId = lastTouchpointId;
 		this.atTouchpoints.add(lastTouchpointId);
 		this.lastSeenIp = lastSeenIp;
 		this.lastUsedDeviceId = usedDeviceId;
-		
+
 		this.primaryEmail = email;
 		this.primaryPhone = phone;
-		
+
 		// add 3 primary identity data for indexing
 		if (StringUtil.isNotEmpty(visitorId)) {
 			this.identities.add(visitorId);
@@ -255,19 +251,19 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		if (StringUtil.isNotEmpty(phone)) {
 			this.identities.add(phone);
 		}
-		
+
 		// add secondary identity usedDeviceIds for indexing
-		if(StringUtil.isNotEmpty(usedDeviceId)) {
+		if (StringUtil.isNotEmpty(usedDeviceId)) {
 			this.usedDeviceIds.add(usedDeviceId);
 		}
-		
+
 		this.id = buildProfileId(type, visitorId, usedDeviceId, email, phone, partitionId);
 
 	}
 
-	public final static String  buildProfileId(int type, String visitorId, String usedDeviceId, String email,
+	public final static String buildProfileId(int type, String visitorId, String usedDeviceId, String email,
 			String phone, int partitionId) {
-		if(StringUtil.isNotEmpty(visitorId) || StringUtil.isNotEmpty(usedDeviceId)) {
+		if (StringUtil.isNotEmpty(visitorId) || StringUtil.isNotEmpty(usedDeviceId)) {
 			String keyHint = type + visitorId + usedDeviceId + email + phone + partitionId;
 			return id(keyHint);
 		}
@@ -289,7 +285,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	public static Profile newIdentifiedProfile(String ctxSessionKey, String observerId, String lastTouchpointId,
 			String lastSeenIp, String visitorId, String usedDeviceId, String email, String fingerprintId) {
 		Profile p = new Profile();
-		p.initBaseInformation(0,ctxSessionKey, visitorId, ProfileType.IDENTIFIED, observerId, lastTouchpointId,
+		p.initBaseInformation(0, ctxSessionKey, visitorId, ProfileType.IDENTIFIED, observerId, lastTouchpointId,
 				lastSeenIp, usedDeviceId, email, "");
 		return p;
 	}
@@ -311,7 +307,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 			String lastSeenIp, String visitorId, String usedDeviceId, String email, String phone,
 			String fingerprintId) {
 		Profile p = new Profile();
-		p.initBaseInformation(0,ctxSessionKey, visitorId, ProfileType.CRM_USER, observerId, lastTouchpointId,
+		p.initBaseInformation(0, ctxSessionKey, visitorId, ProfileType.CRM_USER, observerId, lastTouchpointId,
 				lastSeenIp, usedDeviceId, email, phone);
 		return p;
 	}
@@ -327,7 +323,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	public static Profile newAnonymousProfile(String ctxSessionKey, String observerId, String lastTouchpointId,
 			String lastSeenIp, String visitorId, String usedDeviceId, String fingerprintId) {
 		Profile p = new Profile();
-		p.initBaseInformation(0,ctxSessionKey, visitorId, ProfileType.ANONYMOUS, observerId, lastTouchpointId,
+		p.initBaseInformation(0, ctxSessionKey, visitorId, ProfileType.ANONYMOUS, observerId, lastTouchpointId,
 				lastSeenIp, usedDeviceId, "", "");
 		return p;
 	}
@@ -342,8 +338,6 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		return id;
 	}
 
-	
-
 	public void setType(int type) {
 		this.type = type;
 	}
@@ -355,7 +349,6 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
-
 
 	public String getRootProfileId() {
 		return rootProfileId;
@@ -387,6 +380,10 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	public void setAtTouchpoints(Set<String> atTouchpoints) {
 		this.atTouchpoints = atTouchpoints;
+	}
+
+	public void reachAtTouchpoint(String atTouchpointId) {
+		this.atTouchpoints.add(atTouchpointId);
 	}
 
 	public int getStatus() {
@@ -444,15 +441,15 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	public void setIdentities(Set<String> identities) {
 		this.identities = identities;
 	}
-	
+
 	public void setIdentity(String identity) {
-		if(StringUtil.isNotEmpty(identity)) {
+		if (StringUtil.isNotEmpty(identity)) {
 			this.identities.add(identity);
 		}
 	}
-	
+
 	public void setIdentity(String loginId, String loginProvider) {
-		if(StringUtil.isNotEmpty(loginId) && StringUtil.isNotEmpty(loginProvider)) {
+		if (StringUtil.isNotEmpty(loginId) && StringUtil.isNotEmpty(loginProvider)) {
 			this.identities.add(loginId + "#" + loginProvider);
 		}
 	}
@@ -631,7 +628,6 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		this.partitionId = partitionId;
 	}
 
-
 	public int getGender() {
 		return gender;
 	}
@@ -702,6 +698,13 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	public void setAcquisitionChannels(Map<String, Integer> acquisitionChannels) {
 		this.acquisitionChannels = acquisitionChannels;
+	}
+
+	public void updateAcquisitionChannel(String channel) {
+		if (StringUtil.isNotEmpty(channel)) {
+			int count = acquisitionChannels.getOrDefault(channel, 0) + 1;
+			acquisitionChannels.put(channel, count);
+		}
 	}
 
 	public String getLastWebCookies() {

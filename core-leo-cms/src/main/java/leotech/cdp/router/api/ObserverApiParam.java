@@ -16,6 +16,8 @@ public final class ObserverApiParam {
     public static final String TOUCHPOINT_NAME = "tpname";
     public static final String TOUCHPOINT_URL = "tpurl";
     public static final String TOUCHPOINT_REFERRER_URL = "tprefurl";
+    public static final String TOUCHPOINT_REFERRER_DOMAIN = "tprefdomain";
+    
     
     public static final String APP_ID = "appid";
     public static final String MEDIA_HOST = "mediahost";
