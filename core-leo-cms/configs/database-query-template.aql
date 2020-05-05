@@ -177,9 +177,8 @@ AQL_GET_PROFILE_BY_IDENTITY =>
 
 AQL_GET_PROFILE_BY_KEY_IDENTITIES => 
 	FOR e in cdp_profile 
-	FILTER e.primaryEmail == @primaryEmail OR e.primaryPhone == @primaryPhone
-			OR @visitorId IN e.identities[*] OR @email IN e.identities[*] OR @phone IN e.identities[*]
-			OR @userDeviceId IN e.usedDeviceIds[*]
+	FILTER  @visitorId IN e.identities[*] OR @userDeviceId IN e.usedDeviceIds[*]
+			OR @email IN e.identities[*] OR @phone IN e.identities[*]
 	RETURN e
 ;
 

@@ -61,9 +61,7 @@ public class ProfileDaoUtil {
 		ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("visitorId", visitorId);
-		bindVars.put("primaryEmail", email);
 		bindVars.put("email", email);
-		bindVars.put("primaryPhone", phone);
 		bindVars.put("phone", phone);
 		bindVars.put("userDeviceId", userDeviceId);
 		Profile p = new ArangoDbQuery<Profile>(db, AQL_GET_PROFILE_BY_KEY_IDENTITIES, bindVars, Profile.class).getResultsAsObject();

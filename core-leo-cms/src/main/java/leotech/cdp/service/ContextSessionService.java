@@ -134,6 +134,7 @@ public class ContextSessionService {
 			protected ContextSession build() throws JedisException {
 
 				ContextSession ctxSession = null;
+				
 				DateTime dateTime = new DateTime();
 				String dateTimeKey = ContextSession.getSessionDateTimeKey(dateTime);
 

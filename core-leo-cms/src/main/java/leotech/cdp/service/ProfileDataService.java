@@ -27,6 +27,7 @@ public class ProfileDataService {
 			type = Profile.ProfileType.CRM_USER;
 		}
 
+		System.out.println("getByKeyIdentities visitorId "+visitorId);
 		Profile pf = ProfileDaoUtil.getByKeyIdentities(visitorId, email, phone, userDeviceId);
 		if (pf == null) {
 			if (type == Profile.ProfileType.ANONYMOUS) {

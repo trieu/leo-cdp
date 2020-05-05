@@ -743,10 +743,10 @@
     }
 
     function getUUID() {
-        var key = 'leotech_vid';
+        var key = 'leocdp_vid';
         var uuid = LeoCookieUtil.get(key);
         if (!uuid) {
-            uuid = getHashedId(generateUUID());
+            uuid = generateUUID();
             LeoCookieUtil.set(key, uuid, {
                 expires: 315569520
             }); // Expires in 10 years
@@ -815,8 +815,9 @@
     var getContextSession = function(params) {
     	
     	var leoctxsk = getSessionKey();
-    	
-    	if( typeof leoctxsk !== 'string' ){
+    	var isExpired = typeof leoctxsk !== 'string';
+    	isExpired = true;
+    	if( isExpired ){
     		// the cache is expired
     		var h = function(resHeaders, text) {
                 var data = JSON.parse(text);
@@ -827,7 +828,7 @@
                 	console.error(data)
                 }
             }
-
+    		
             var queryStr = objectToQueryString(params);
             var vsId = getUUID();
             var url = PREFIX_SESSION_INIT_URL + '?' + queryStr + '&visid=' + vsId;
