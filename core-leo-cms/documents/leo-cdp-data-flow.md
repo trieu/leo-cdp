@@ -2,12 +2,12 @@
 sequenceDiagram
     Touchpoint->>+Observer: loadObserverCode
     Observer-->>Touchpoint: observerIsReady
-    Observer->>+ContextSessionApi: getContextSession
-    ContextSessionApi->>+SessionDataService: createContextSession
+    Observer->>+ContextSessionApi: getContextSession(visitorId, touchpointId)
+    ContextSessionApi->>+SessionDataService: createContextSession(visitorId, touchpointId)
     SessionDataService->>+ProfileDataService: getProfile(sessionKey,visitorId,observerId,initTouchpointId,ip,deviceId,email,phone)
     ProfileDataService-->>SessionDataService: ProfileData-ANONYMOUS|IDENTIFIED|CRM_USER
     SessionDataService->>+ContextSessionApi: ContextSessionData
-    ContextSessionApi-->>Observer: data(sessionKey,visitorId)
+    ContextSessionApi-->>Observer: Context Session Information
     Touchpoint->>+Observer:seen(pageview|screenview|storeview|trueview|placeview)
     Observer->>+TrackingApi: event-view(pageview|screenview|storeview|trueview|placeview,contentId,sessionKey,visitorId)
     TrackingApi->>+DataFilter:validateWithRules
@@ -26,6 +26,12 @@ sequenceDiagram
     DataFilter->>+ProfileDataService:validateWithProfileSchema
     DataFilter->>+EventDataService: record-conversion-event
     TrackingApi-->>Observer: ok|failed|invalid
+    loop Every 15 seconds
+        Analytics360Service-->Touchpoint: touchpoint data enrichment
+    end
+    loop Every 10 seconds
+        Analytics360Service-->ProfileDataService: profile data enrichment
+    end
     Analytics360Service->>+ProfileDataService:query(visitorId|profileId|email|touchpoint|observer)
     ProfileDataService-->>Analytics360Service:listOfProfiles
     Analytics360Service->>+EventDataService:query(visitorId|profileId)
