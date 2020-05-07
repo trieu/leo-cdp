@@ -28,7 +28,7 @@ public class CrawledYouTubeVideoDaoUtil {
     public static CrawledYouTubeVideo getByVideoID(String videoID) {
 	Map<String, Object> bindKeys = new HashMap<>();
 	bindKeys.put("videoID", videoID);
-	ArangoCursor<CrawledYouTubeVideo> cursor2 = ArangoDbUtil.getArangoDatabase().query(AQL_FIND_BY_ID_AQL, bindKeys, null, CrawledYouTubeVideo.class);
+	ArangoCursor<CrawledYouTubeVideo> cursor2 = ArangoDbUtil.getActiveArangoDbInstance().query(AQL_FIND_BY_ID_AQL, bindKeys, null, CrawledYouTubeVideo.class);
 	while (cursor2.hasNext()) {
 	    try {
 		CrawledYouTubeVideo v = cursor2.next();
@@ -79,7 +79,7 @@ public class CrawledYouTubeVideoDaoUtil {
     }
 
     public static List<CrawledYouTubeVideo> list(int startIndex, int numberResult) {
-	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+	ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 	Map<String, Object> bindVars = new HashMap<>(2);
 	bindVars.put("startIndex", startIndex);
 	bindVars.put("numberResult", numberResult);

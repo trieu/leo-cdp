@@ -39,7 +39,7 @@ public class ObserverDaoUtil {
     }
 
     public static DataObserver getById(String id) {
-	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+	ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 	Map<String, Object> bindVars = new HashMap<>(1);
 	bindVars.put("id", id);
 	DataObserver p = new ArangoDbQuery<DataObserver>(db, AQL_GET_OBSERVER_BY_ID, bindVars, DataObserver.class).getResultsAsObject();
@@ -47,7 +47,7 @@ public class ObserverDaoUtil {
     }
 
     public static List<DataObserver> list(int startIndex, int numberResult) {
-	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+	ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 	Map<String, Object> bindVars = new HashMap<>(2);
 	bindVars.put("startIndex", startIndex);
 	bindVars.put("numberResult", numberResult);

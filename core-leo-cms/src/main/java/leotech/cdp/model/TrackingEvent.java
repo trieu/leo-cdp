@@ -28,7 +28,7 @@ public class TrackingEvent extends CdpPersistentObject {
     @Override
     public ArangoCollection getCollection() {
 	if (instance == null) {
-	    ArangoDatabase arangoDatabase = ArangoDbUtil.getArangoDatabase();
+	    ArangoDatabase arangoDatabase = ArangoDbUtil.getActiveArangoDbInstance();
 
 	    instance = arangoDatabase.collection(COLLECTION_NAME);
 

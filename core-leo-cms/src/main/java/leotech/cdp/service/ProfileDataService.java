@@ -27,7 +27,6 @@ public class ProfileDataService {
 			type = Profile.ProfileType.CRM_USER;
 		}
 
-		System.out.println("getByKeyIdentities visitorId "+visitorId);
 		Profile pf = ProfileDaoUtil.getByKeyIdentities(visitorId, email, phone, userDeviceId);
 		if (pf == null) {
 			if (type == Profile.ProfileType.ANONYMOUS) {
@@ -48,15 +47,15 @@ public class ProfileDataService {
 			}
 
 			pf.reachAtTouchpoint(refTouchpointId);
-			pf.updateAcquisitionChannel(touchpointRefDomain);
-			pf.updateAcquisitionChannel(loginProvider);
+			pf.updateReferrerChannel(touchpointRefDomain);
+			pf.updateReferrerChannel(loginProvider);
 
 			// TODO run in a thread
 			ProfileDaoUtil.create(pf);
 		} else {
 			pf.reachAtTouchpoint(refTouchpointId);
-			pf.updateAcquisitionChannel(touchpointRefDomain);
-			pf.updateAcquisitionChannel(loginProvider);
+			pf.updateReferrerChannel(touchpointRefDomain);
+			pf.updateReferrerChannel(loginProvider);
 			pf.setIdentity(loginId, loginProvider);
 			pf.setPrimaryEmail(email);
 			pf.setPrimaryPhone(phone);
@@ -72,11 +71,11 @@ public class ProfileDataService {
 		return pf;
 	}
 
-	public static Profile updateLoginInfo(String loginId, String loginProvider, String email, String profileId,
-			String observerId, String lastTouchpointId, String lastSeenIp, String usedDeviceId) {
+	public static Profile updateLoginInfo(String loginId, String loginProvider, String email, 
+			String profileId, String observerId, String lastTouchpointId, String lastSeenIp, String usedDeviceId) {
 		Profile p = ProfileDaoUtil.getById(profileId);
 
-		p.updateAcquisitionChannel(loginProvider);
+		p.updateReferrerChannel(loginProvider);
 		p.setIdentity(loginId, loginProvider);
 		p.setPrimaryEmail(email);
 		p.setObserverId(observerId);

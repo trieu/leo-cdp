@@ -43,7 +43,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	@Override
 	public ArangoCollection getCollection() {
 		if (instance == null) {
-			ArangoDatabase arangoDatabase = ArangoDbUtil.getArangoDatabase();
+			ArangoDatabase arangoDatabase = ArangoDbUtil.getActiveArangoDbInstance();
 
 			instance = arangoDatabase.collection(COLLECTION_NAME);
 
@@ -153,7 +153,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	Set<String> workingHistory = new HashSet<>(20);
 
 	@Expose
-	Map<String, Integer> acquisitionChannels = new HashMap<>(20);
+	Map<String, Integer> referrerChannels = new HashMap<>(20);
 
 	@Expose
 	List<String> viewedContents = new ArrayList<String>(100);
@@ -692,18 +692,18 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		this.inCollections = inCollections;
 	}
 
-	public Map<String, Integer> getAcquisitionChannels() {
-		return acquisitionChannels;
+	public Map<String, Integer> getReferrerChannels() {
+		return referrerChannels;
 	}
 
-	public void setAcquisitionChannels(Map<String, Integer> acquisitionChannels) {
-		this.acquisitionChannels = acquisitionChannels;
+	public void setReferrerChannels(Map<String, Integer> referrerChannels) {
+		this.referrerChannels = referrerChannels;
 	}
 
-	public void updateAcquisitionChannel(String channel) {
+	public void updateReferrerChannel(String channel) {
 		if (StringUtil.isNotEmpty(channel)) {
-			int count = acquisitionChannels.getOrDefault(channel, 0) + 1;
-			acquisitionChannels.put(channel, count);
+			int count = referrerChannels.getOrDefault(channel, 0) + 1;
+			referrerChannels.put(channel, count);
 		}
 	}
 

@@ -50,7 +50,7 @@ public class ProfileDaoUtil {
 	}
 
 	public static Profile getByVisitorId(String visitorId) {
-		ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("visitorId", visitorId);
 		Profile p = new ArangoDbQuery<Profile>(db, AQL_GET_PROFILE_BY_IDENTITY, bindVars, Profile.class).getResultsAsObject();
@@ -58,7 +58,7 @@ public class ProfileDaoUtil {
 	}
 	
 	public static Profile getByKeyIdentities(String visitorId, String email, String phone, String userDeviceId) {
-		ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("visitorId", visitorId);
 		bindVars.put("email", email);
@@ -69,7 +69,7 @@ public class ProfileDaoUtil {
 	}
 	
 	public static Profile getById(String id) {
-		ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("id", id);
 		Profile p = new ArangoDbQuery<Profile>(db, AQL_GET_PROFILE_BY_ID, bindVars, Profile.class)
@@ -78,7 +78,7 @@ public class ProfileDaoUtil {
 	}
 
 	public static long countTotalOfProfiles() {
-		ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 		long c = db.collection(Profile.COLLECTION_NAME).count().getCount();
 		return c;
 	}

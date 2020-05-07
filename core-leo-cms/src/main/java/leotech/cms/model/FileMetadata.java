@@ -77,7 +77,7 @@ public class FileMetadata implements PersistentArangoObject {
     @Override
     public ArangoCollection getCollection() {
 	if (collection == null) {
-	    ArangoDatabase arangoDatabase = ArangoDbUtil.getArangoDatabase();
+	    ArangoDatabase arangoDatabase = ArangoDbUtil.getActiveArangoDbInstance();
 	    collection = arangoDatabase.collection(COLLECTION_NAME);
 
 	    // ensure indexing key fields

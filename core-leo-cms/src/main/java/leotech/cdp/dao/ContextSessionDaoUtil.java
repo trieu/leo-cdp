@@ -56,7 +56,7 @@ public class ContextSessionDaoUtil {
 	}
 
 	public static ContextSession getByKey(String sessionKey) {
-		ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("sessionKey", sessionKey);
 		ContextSession s = new ArangoDbQuery<ContextSession>(db, AQL_GET_CONTEXT_SESSION_BY_KEY, bindVars,
@@ -65,7 +65,7 @@ public class ContextSessionDaoUtil {
 	}
 
 	public static List<ContextSession> getSessionsByVisitorId(String visitorId) {
-		ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("visitorId", visitorId);
 		List<ContextSession> list = new ArangoDbQuery<ContextSession>(db, AQL_GET_CONTEXT_SESSIONS_BY_VISITOR_ID,
@@ -74,7 +74,7 @@ public class ContextSessionDaoUtil {
 	}
 
 	public static List<ContextSession> geSessionsByProfileId(String profileId) {
-		ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("profileId", profileId);
 		List<ContextSession> list = new ArangoDbQuery<ContextSession>(db, AQL_GET_CONTEXT_SESSIONS_BY_PROFILE_ID,

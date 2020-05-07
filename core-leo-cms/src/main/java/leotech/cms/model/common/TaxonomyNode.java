@@ -79,7 +79,7 @@ public abstract class TaxonomyNode implements PersistentArangoObject {
 
     public static ArangoCollection getCollection(ArangoCollection collection, String colName) throws ArangoDBException {
 	if (collection == null) {
-	    ArangoDatabase arangoDatabase = ArangoDbUtil.getArangoDatabase();
+	    ArangoDatabase arangoDatabase = ArangoDbUtil.getActiveArangoDbInstance();
 
 	    collection = arangoDatabase.collection(colName);
 

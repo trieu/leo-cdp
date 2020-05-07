@@ -24,7 +24,7 @@ public class ReportUnit  extends CdpPersistentObject implements Comparable<Repor
     @Override
     public ArangoCollection getCollection() {
 	if (instance == null) {
-	    ArangoDatabase arangoDatabase = ArangoDbUtil.getArangoDatabase();
+	    ArangoDatabase arangoDatabase = ArangoDbUtil.getActiveArangoDbInstance();
 
 	    instance = arangoDatabase.collection(COLLECTION_NAME);
 

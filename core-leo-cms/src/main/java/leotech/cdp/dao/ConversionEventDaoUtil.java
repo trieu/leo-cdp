@@ -37,7 +37,7 @@ public class ConversionEventDaoUtil {
  
 
     public static List<ConversionEvent> getEventsByProfileId(String refProfileId) {
-	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+	ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 	Map<String, Object> bindVars = new HashMap<>(1);
 	bindVars.put("refProfileId", refProfileId);
 	List<ConversionEvent> list = new ArangoDbQuery<ConversionEvent>(db, AQL_GET_CONVERSION_EVENTS_BY_PROFILE_ID, bindVars, ConversionEvent.class).getResultsAsList();

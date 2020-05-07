@@ -38,7 +38,7 @@ public class TrackingEventDaoUtil {
  
 
     public static List<TrackingEvent> getEventsByProfileId(String refProfileId) {
-	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+	ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 	Map<String, Object> bindVars = new HashMap<>(1);
 	bindVars.put("refProfileId", refProfileId);
 	List<TrackingEvent> list = new ArangoDbQuery<TrackingEvent>(db, AQL_GET_TRACKING_EVENTS_BY_PROFILE_ID, bindVars, TrackingEvent.class).getResultsAsList();

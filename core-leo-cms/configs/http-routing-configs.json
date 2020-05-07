@@ -42,14 +42,14 @@
 			"defaultDbConfig" : "leoCdpDbConfigs"
 		},
 		
-		"mainHttpBigDataVietNamOrg": {
+		"mainHttpBookstore": {
 			"name": "MainHttpWorker",
 			"host": "127.0.0.1",
-			"port": 9190,
+			"port": 9192,
 			"classNameHttpRouter": "leotech.cms.router.MainHttpRouter",
 			"bodyHandlerEnabled": true,
 			"sockJsHandlerEnabled": true,
-			"defaultDbConfig" : "defaultDbConfigs"
+			"defaultDbConfig" : "dbConfigsBookstore"
 		},
 		"mainHttpWorkerXemGiDay": {
 			"name": "MainHttpWorker",

@@ -18,6 +18,7 @@ import leotech.cms.service.RealtimeDataService;
 import leotech.core.api.BaseHttpRouter;
 import leotech.core.config.HttpRoutingConfigs;
 import leotech.system.util.CmsLogUtil;
+import leotech.system.util.database.ArangoDbUtil;
 import rfx.core.stream.node.worker.BaseWorker;
 
 public class HttpWorker extends BaseWorker {
@@ -66,6 +67,7 @@ public class HttpWorker extends BaseWorker {
 		instance = new HttpWorker(workerName);
 		String host = instance.httpRoutingConfigs.getHost();
 		int port = instance.httpRoutingConfigs.getPort();
+		ArangoDbUtil.initActiveArangoDatabase(instance.httpRoutingConfigs.getDefaultDbConfig());
 		instance.start(host, port);
 	}
 

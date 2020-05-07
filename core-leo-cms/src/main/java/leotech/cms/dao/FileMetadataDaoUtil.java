@@ -43,7 +43,7 @@ public class FileMetadataDaoUtil {
     }
 
     public static FileMetadata getByPath(String path) {
-	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+	ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 	Map<String, Object> bindVars = new HashMap<>(1);
 	bindVars.put("path", path);
 	
@@ -57,7 +57,7 @@ public class FileMetadataDaoUtil {
     public static List<FileMetadata> listAllByNetwork(long networkId) {
 	List<FileMetadata> list = new ArrayList<>();
 	try {
-	    ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+	    ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 	    Map<String, Object> bindVars = new HashMap<>(3);
 	    bindVars.put("networkId", networkId);
 
@@ -75,7 +75,7 @@ public class FileMetadataDaoUtil {
     public static List<FileMetadata> listAllByOwner(String ownerLogin) {
 	List<FileMetadata> list = new ArrayList<>();
 	try {
-	    ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+	    ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 	    Map<String, Object> bindVars = new HashMap<>(3);
 	    bindVars.put("ownerLogin", ownerLogin);
 
@@ -93,7 +93,7 @@ public class FileMetadataDaoUtil {
     public static List<FileMetadata> listAllByObject(String refObjectClass, String refObjectKey) {
 	List<FileMetadata> list = new ArrayList<>();
 	try {
-	    ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+	    ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 	    Map<String, Object> bindVars = new HashMap<>(3);
 	    bindVars.put("refObjectClass", refObjectClass);
 	    bindVars.put("refObjectKey", refObjectKey);

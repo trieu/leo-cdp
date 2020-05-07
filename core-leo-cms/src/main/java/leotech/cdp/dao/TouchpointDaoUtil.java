@@ -40,7 +40,7 @@ public class TouchpointDaoUtil {
 	}
 
 	public static Touchpoint getById(String id) {
-		ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("id", id);
 		Touchpoint p = new ArangoDbQuery<Touchpoint>(db, AQL_GET_TOUCHPOINT_BY_ID, bindVars, Touchpoint.class)
@@ -49,7 +49,7 @@ public class TouchpointDaoUtil {
 	}
 
 	public static Touchpoint getByUrl(String url) {
-		ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("url", url);
 		Touchpoint p = new ArangoDbQuery<Touchpoint>(db, AQL_GET_TOUCHPOINT_BY_URL, bindVars, Touchpoint.class)
@@ -58,7 +58,7 @@ public class TouchpointDaoUtil {
 	}
 
 	public static List<Touchpoint> list(int startIndex, int numberResult) {
-		ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(2);
 		bindVars.put("startIndex", startIndex);
 		bindVars.put("numberResult", numberResult);

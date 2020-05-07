@@ -41,7 +41,7 @@ public class CategoryDaoUtil {
     }
 
     public static Category getByKey(String key) {
-	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+	ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 	Map<String, Object> bindVars = new HashMap<>(1);
 	bindVars.put("_key", key);
 	Category cat = new ArangoDbQuery<Category>(db, AQL_GET_CATEGORY_BY_KEY, bindVars, Category.class).getResultsAsObject();
@@ -58,7 +58,7 @@ public class CategoryDaoUtil {
       }
 
     public static List<Category> listAllByNetwork(long networkId) {
-	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+	ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 	Map<String, Object> bindVars = new HashMap<>(1);
 	bindVars.put("networkId", networkId);
 	List<Category> list = new ArangoDbQuery<Category>(db, AQL_GET_ALL_CATEGORIES_BY_NETWORK, bindVars, Category.class).getResultsAsList();

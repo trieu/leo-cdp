@@ -28,7 +28,7 @@ public class ContentQueryDaoUtil {
 	    return new HashMap<>(0);
 	}
 
-	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+	ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 	Map<String, List<Post>> results = new HashMap<>(keywords.length);
 
 	for (String keyword : keywords) {
@@ -77,7 +77,7 @@ public class ContentQueryDaoUtil {
 	ArangoCursor<Post> cursor = null;
 	try {
 	    StringBuilder aql = new StringBuilder("FOR p in post FILTER ");
-	    ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+	    ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 	    Map<String, Object> bindVars = new HashMap<>(categoryKeys.length);
 
 	    // category filter
@@ -186,7 +186,7 @@ public class ContentQueryDaoUtil {
 
 	}
 
-	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+	ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 	Map<String, Object> bindVars = new HashMap<>(1);
 
 	StringBuilder aql = new StringBuilder("FOR p IN FULLTEXT(post, \"title\", @query) ");
@@ -225,7 +225,7 @@ public class ContentQueryDaoUtil {
 	}
 
 	StringBuilder aql = new StringBuilder("FOR p in page FILTER ( ");
-	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+	ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 	Map<String, Object> bindVars = new HashMap<>(keywords.length);
 
 	int c = 0;

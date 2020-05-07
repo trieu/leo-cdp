@@ -63,7 +63,7 @@ public class PageDaoUtil {
     }
 
     public static Page getById(String id) {
-	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+	ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 	Map<String, Object> bindVars = new HashMap<>(1);
 	bindVars.put("id", id);
 	Page p = new ArangoDbQuery<Page>(db, AQL_GET_PAGE_BY_ID, bindVars, Page.class).getResultsAsObject();
@@ -71,7 +71,7 @@ public class PageDaoUtil {
     }
 
     public static Page getBySlug(String slug) {
-	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+	ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 	Map<String, Object> bindVars = new HashMap<>(1);
 	bindVars.put("slug", slug);
 	Page p = new ArangoDbQuery<Page>(db, AQL_GET_PAGE_BY_SLUG, bindVars, Page.class).getResultsAsObject();
@@ -79,7 +79,7 @@ public class PageDaoUtil {
     }
 
     public static List<Page> listByNetwork(long networkId, int startIndex, int numberResult) {
-	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+	ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 	Map<String, Object> bindVars = new HashMap<>(3);
 	bindVars.put("networkId", networkId);
 	bindVars.put("startIndex", startIndex);
@@ -89,7 +89,7 @@ public class PageDaoUtil {
     }
 
     public static List<Page> listByCategory(String categoryKey) {
-	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+	ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 	Map<String, Object> bindVars = new HashMap<>(1);
 	bindVars.put("categoryKey", categoryKey);
 	List<Page> list = new ArangoDbQuery<Page>(db, AQL_GET_ALL_PAGES_BY_CATEGORY, bindVars, Page.class).getResultsAsList();
@@ -97,7 +97,7 @@ public class PageDaoUtil {
     }
     
     public static List<Page> listByCategoryWithPublicPrivacy(String categoryKey) {
-	ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+	ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 	Map<String, Object> bindVars = new HashMap<>(1);
 	bindVars.put("categoryKey", categoryKey);
 	List<Page> list = new ArangoDbQuery<Page>(db, AQL_GET_PUBLIC_PAGES_BY_CATEGORY, bindVars, Page.class).getResultsAsList();

@@ -74,7 +74,7 @@ public class PostDaoUtil {
 	}
 
 	public static Post getById(String id, boolean headlineOnly) {
-		ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("id", id);
 		Post p = new ArangoDbQuery<Post>(db, AQL_GET_POST_BY_ID, bindVars, Post.class, new CallbackQuery<Post>() {
@@ -92,7 +92,7 @@ public class PostDaoUtil {
 	}
 
 	public static Post getBySlug(String slug) {
-		ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("slug", slug);
 		Post p = new ArangoDbQuery<Post>(db, AQL_GET_POST_BY_SLUG, bindVars, Post.class, new CallbackQuery<Post>() {
@@ -105,7 +105,7 @@ public class PostDaoUtil {
 	}
 
 	public static List<Post> listByNetwork(long networkId, int startIndex, int numberResult) {
-		ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(3);
 		bindVars.put("networkId", networkId);
 		bindVars.put("startIndex", startIndex);
@@ -121,7 +121,7 @@ public class PostDaoUtil {
 	}
 
 	public static List<Post> listByPage(String pageId, int startIndex, int numberResult) {
-		ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(3);
 		bindVars.put("pageId", pageId);
 		bindVars.put("startIndex", startIndex);
@@ -161,7 +161,7 @@ public class PostDaoUtil {
 		}
 		StringBuilder aql = new StringBuilder(
 				"FOR p in post FILTER p.contentClass == @contentClass AND p.privacyStatus == 0 ");
-		ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("contentClass", contentClass);
 
@@ -222,7 +222,7 @@ public class PostDaoUtil {
 	}
 
 	public static List<Post> listAllByPage(String pageId) {
-		ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("pageId", pageId);
 		List<Post> list = new ArangoDbQuery<Post>(db, AQL_GET_ALL_POSTS_BY_PAGE, bindVars, Post.class,
@@ -236,7 +236,7 @@ public class PostDaoUtil {
 	}
 
 	public static List<Post> listAllByCategoryOrPage(String categoryKey, String pageId) {
-		ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("categoryKey", categoryKey);
 		bindVars.put("pageId", pageId);
@@ -252,7 +252,7 @@ public class PostDaoUtil {
 
 	public static List<Post> listViewablePostsByPage(String pageId, long ownerId, int startIndex,
 			int numberResult) {
-		ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(4);
 		bindVars.put("pageId", pageId);
 		bindVars.put("ownerId", ownerId);
@@ -270,7 +270,7 @@ public class PostDaoUtil {
 
 	public static List<Post> list(long networkId, int startIndex, int numberResult, int privacyStatus,
 			String pageId, int status) {
-		ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(3);
 		bindVars.put("networkId", networkId);
 		bindVars.put("startIndex", startIndex);
@@ -307,7 +307,7 @@ public class PostDaoUtil {
 
 	public static Map<String, Object> getPostsOfDefaultHomepage(List<ContentClassPostQuery> ccpQueries) {
 		Map<String, Object> map = new HashMap<>();
-		ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 		ArangoCursor<BaseDocument> cursor = null;
 		String aql = buildContentClassPostQuery(ccpQueries);
 		cursor = db.query(aql, new HashMap<>(0), null, BaseDocument.class);
@@ -322,7 +322,7 @@ public class PostDaoUtil {
 	@SuppressWarnings("unchecked")
 	public static List<String> getAllKeywords() {
 		List<String> list = null;
-		ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 		ArangoCursor<BaseDocument> cursor = db.query(AQL_GET_KEYWORDS_OF_ALL_POSTS, new HashMap<>(0), null,
 				BaseDocument.class);
 		while (cursor.hasNext()) {
@@ -344,7 +344,7 @@ public class PostDaoUtil {
 		}
 
 		List<Post> list = new ArrayList<>();
-		ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 		Map<String, Object> bindVars = new HashMap<>();
 
 		StringBuilder aql = new StringBuilder("FOR p in post FILTER ");
@@ -409,7 +409,7 @@ public class PostDaoUtil {
 	}
 
 	public static long countTotalOfPostCollection() {
-		ArangoDatabase db = ArangoDbUtil.getArangoDatabase();
+		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 		long c = db.collection(Post.COLLECTION_NAME).count().getCount();
 		return c;
 	}
