@@ -46,8 +46,8 @@ public class HttpWorker extends BaseWorker {
 
 		System.out.println("...HttpWorker.defaultDbConfig " + defaultDbConfig);
 		if (httpRoutingConfigs == null) {
-			throw new IllegalArgumentException("not valid workerName in "
-					+ HttpRoutingConfigs.CONFIGS_HTTP_ROUTING_CONFIGS_JSON);
+			throw new IllegalArgumentException(
+					"not valid workerName in " + HttpRoutingConfigs.FILE_HTTP_ROUTING_CONFIGS_JSON);
 		} else {
 			System.out.println("loaded config " + new Gson().toJson(httpRoutingConfigs));
 		}
@@ -103,8 +103,8 @@ public class HttpWorker extends BaseWorker {
 			try {
 				String className = httpRoutingConfigs.getClassNameHttpRouter();
 				Class<?> myClass = Class.forName(className);
-				BaseHttpRouter obj = (BaseHttpRouter) myClass
-						.getConstructor(RoutingContext.class).newInstance(context);
+				BaseHttpRouter obj = (BaseHttpRouter) myClass.getConstructor(RoutingContext.class)
+						.newInstance(context);
 				obj.handle();
 			} catch (Throwable e) {
 				e.printStackTrace();

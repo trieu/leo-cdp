@@ -11,6 +11,7 @@ public abstract class BaseHttpRouter {
 	public static final String SERVER_VERSION = "LeoTech";
 	public static final String HTTP = "http://";
 	public final static String DEFAULT_PATH = "/";
+	
 
 	public final String SPIDER = "Spider";
 

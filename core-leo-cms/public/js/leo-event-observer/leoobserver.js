@@ -743,13 +743,34 @@
     }
 
     function getUUID() {
+    	var options = { excludes: {userAgent: true}}
+    	if (window.requestIdleCallback) {
+    		Fingerprint2.get(options, function (components) {
+    			console.log(components)
+    		    var values = components.map(function (component) { return component.value })
+    		    var fingerprintId = Fingerprint2.x64hash128(values.join(''), 31)
+    		    console.log("=> fingerprintId " + fingerprintId)
+    		})
+    	} else {
+    		Fingerprint2.get(options, function (components) {
+    			console.log(components)
+    		    var values = components.map(function (component) { return component.value })
+    		    var fingerprintId = Fingerprint2.x64hash128(values.join(''), 31)
+    		    console.log("=> fingerprintId " + fingerprintId)
+    		})
+    	}
+    	
         var key = 'leocdp_vid';
-        var uuid = LeoCookieUtil.get(key);
+        var uuid =  lscache.get(key); // LeoCookieUtil.get(key)
+        
         if (!uuid) {
             uuid = generateUUID();
-            LeoCookieUtil.set(key, uuid, {
-                expires: 315569520
-            }); // Expires in 10 years
+            lscache.set(key, uuid, 10000);
+            
+            // Expires in 10 years
+            //LeoCookieUtil.set(key, uuid, {expires: 315569520}); 
+            
+            
         }
         return uuid;
     }

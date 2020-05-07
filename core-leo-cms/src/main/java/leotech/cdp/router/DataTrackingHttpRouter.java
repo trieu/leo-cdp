@@ -15,6 +15,7 @@ import leotech.cdp.router.api.ApiParamKey;
 import leotech.cdp.service.ContextSessionService;
 import leotech.core.api.BaseApiHandler;
 import leotech.core.api.BaseHttpRouter;
+import leotech.core.api.PublicFileHttpRouter;
 import leotech.system.model.DeviceInfo;
 import leotech.system.util.DeviceInfoUtil;
 import leotech.system.util.HttpTrackingUtil;
@@ -80,14 +81,16 @@ public class DataTrackingHttpRouter extends BaseHttpRouter {
 
 			// set CORS Header
 			String origin = StringUtil.safeString(reqHeaders.get(BaseApiHandler.ORIGIN), "*");
-			BaseHttpRouter.setCorsHeaders(outHeaders, origin);
-			outHeaders.set(CONTENT_TYPE, BaseApiHandler.CONTENT_TYPE_JSON);
+			
 
 			// init core params
 			String eventName = StringUtil.safeString(params.get(ApiParamKey.EVENT_METRIC_NAME)).toLowerCase();
 			String clientSessionKey = StringUtil.safeString(params.get(ApiParamKey.CTX_SESSION_KEY));
 
 			if (uri.startsWith(PREFIX_CONTEXT_SESSION_PROFILE_INIT) && StringUtil.isEmpty(clientSessionKey)) {
+				
+				BaseHttpRouter.setCorsHeaders(outHeaders, origin);
+				outHeaders.set(CONTENT_TYPE, BaseApiHandler.CONTENT_TYPE_JSON);
 				
 				// synchronize session (when) with user's device (how), touchpoint's context (where) and profile (who)
 				// into one object for analytics (understand why)
@@ -97,6 +100,9 @@ public class DataTrackingHttpRouter extends BaseHttpRouter {
 				
 			} 
 			else if (StringUtil.isNotEmpty(eventName)) {
+				
+				BaseHttpRouter.setCorsHeaders(outHeaders, origin);
+				outHeaders.set(CONTENT_TYPE, BaseApiHandler.CONTENT_TYPE_JSON);
 
 				// synch ContextSession with event tracking
 				ContextSession currentSession = ContextSessionService.synchData(clientSessionKey, req, params,device);
@@ -138,6 +144,9 @@ public class DataTrackingHttpRouter extends BaseHttpRouter {
 				
 			} else if(httpMethod.equalsIgnoreCase("POST") && uri.startsWith(PREFIX_UPDATE_PROFILE_LOGIN_INFO)) {
 				
+				BaseHttpRouter.setCorsHeaders(outHeaders, origin);
+				outHeaders.set(CONTENT_TYPE, BaseApiHandler.CONTENT_TYPE_JSON);
+				
 				int status = 404;
 				// synch ContextSession with request
 				ContextSession currentSession = ContextSessionService.synchData(clientSessionKey, req, params,device);
@@ -172,6 +181,12 @@ public class DataTrackingHttpRouter extends BaseHttpRouter {
 					resp.end("beacon is INVALID");
 				}
 				return true;
+			}
+			
+			
+			// Files handler with CDN (Images, CSS, JS, JSON,...)
+			else if (req.path().startsWith(PublicFileHttpRouter.PUBLIC_FILE_ROUTER)) {
+				PublicFileHttpRouter.handle(resp, outHeaders, req.path(), params);
 			}
 
 			else if (uri.equalsIgnoreCase("/ping")) {

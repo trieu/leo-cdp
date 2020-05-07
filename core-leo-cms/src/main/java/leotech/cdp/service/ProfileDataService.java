@@ -20,15 +20,17 @@ public class ProfileDataService {
 			String userDeviceId, String email, String phone, String fingerprintId, String loginId,
 			String loginProvider) {
 
-		int type = Profile.ProfileType.ANONYMOUS;
-		if (StringUtil.isNotEmpty(email) || StringUtil.isNotEmpty(phone) || StringUtil.isNotEmpty(loginId)) {
-			type = Profile.ProfileType.IDENTIFIED;
-		} else if (StringUtil.isNotEmpty(email) && StringUtil.isNotEmpty(phone)) {
-			type = Profile.ProfileType.CRM_USER;
-		}
-
 		Profile pf = ProfileDaoUtil.getByKeyIdentities(visitorId, email, phone, userDeviceId);
+		
 		if (pf == null) {
+			
+			int type = Profile.ProfileType.ANONYMOUS;
+			if (StringUtil.isNotEmpty(email) || StringUtil.isNotEmpty(phone) || StringUtil.isNotEmpty(loginId)) {
+				type = Profile.ProfileType.IDENTIFIED;
+			} else if (StringUtil.isNotEmpty(email) && StringUtil.isNotEmpty(phone)) {
+				type = Profile.ProfileType.CRM_USER;
+			}
+			
 			if (type == Profile.ProfileType.ANONYMOUS) {
 				pf = Profile.newAnonymousProfile(ctxSessionKey, observerId, srcTouchpointId, lastSeenIp, visitorId,
 						userDeviceId, fingerprintId);

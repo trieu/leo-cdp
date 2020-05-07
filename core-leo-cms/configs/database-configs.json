@@ -10,6 +10,7 @@
 			,"dbdriverclasspath" : "com.arangodb.ArangoDB"
 			,"enabled" : true
 		},		
+		
 		"dbConfigsBlueseed" : {
 			"username" : "blueseed"
 			,"password" : "Platform@123456"
@@ -20,16 +21,18 @@
 			,"dbdriverclasspath" : "com.arangodb.ArangoDB"
 			,"enabled" : true
 		},
+		
 		"dbConfigsXemGiDay" : {
-			"username" : "leodev"
+			"username" : "root"
 			,"password" : "123456"
-			,"database" : "xemgiday"
+			,"database" : "bdvn_cms"
 			,"host" : "127.0.0.1"				
 			,"port" : 8529
 			,"dbdriver" : "arangodb"
 			,"dbdriverclasspath" : "com.arangodb.ArangoDB"
 			,"enabled" : true
 		},
+		
 		"dbConfigsVideoMonngon":{
 			"username" : "monngon"
 			,"password" : "Platform@123456"
@@ -40,6 +43,7 @@
 			,"dbdriverclasspath" : "com.arangodb.ArangoDB"
 			,"enabled" : true
 		},
+		
 		"defaultDbConfigs" : {
 			"username" : "root"
 			,"password" : "123456"
@@ -50,6 +54,7 @@
 			,"dbdriverclasspath" : "com.arangodb.ArangoDB"
 			,"enabled" : true
 		},
+		
 		"leoCdpDbConfigs" : {
 			"username" : "root"
 			,"password" : "123456"
@@ -60,6 +65,7 @@
 			,"dbdriverclasspath" : "com.arangodb.ArangoDB"
 			,"enabled" : true
 		},
+		
 		"dbConfigsBookstore" : {
 			"username" : "root"
 			,"password" : "123456"

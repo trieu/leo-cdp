@@ -189,13 +189,13 @@
     
     <script>
     	//Leo Web Event Observer for Data Hub Analytics
-    	window.leoObserverLogDomain = "xemgiday.com";
-		window.leoObserverId = "tester";
+    	window.leoObserverLogDomain = "cdp.bigdatavietnam.org";
+		window.leoObserverId = "xemgiday_web_observer";
 		window.srcTouchpointName = encodeURIComponent(document.title);
 		window.srcTouchpointUrl = encodeURIComponent(location.protocol + '//' + location.host + location.pathname);
 		
 		(function() {
-		    var src = '//' + window.leoObserverLogDomain + '/public/js/leo-event-observer/leoproxy.js';
+		    var src = 'https://' + window.leoObserverLogDomain + '/public/js/leo-event-observer/leoproxy.js';
 		    var jsNode = document.createElement('script');
 		    jsNode.async = true;
 		    jsNode.src = src;

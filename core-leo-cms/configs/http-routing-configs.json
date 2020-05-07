@@ -1,5 +1,6 @@
 {
 	"map": {
+		"------------ mainHttpWorker ------------" : {"notes" : "Leo CMS - Default Node for all System" },
 		"mainHttpWorker": {
 			"name": "MainHttpWorker",
 			"host": "127.0.0.1",
@@ -8,6 +9,8 @@
 			"bodyHandlerEnabled": true,
 			"sockJsHandlerEnabled": true
 		},
+		
+		"------------ adminApiWorker ------------" : {"notes" : "Leo CMS - Admin API System" },
 		"adminApiWorker": {
 			"name": "AdminApiWorker",
 			"host": "127.0.0.1",
@@ -16,6 +19,8 @@
 			"bodyHandlerEnabled": true,
 			"sockJsHandlerEnabled": true
 		},
+		
+		"------------ deliveryApiWorker ------------" : {"notes" : "Leo CMS - Content Delivery System" },
 		"deliveryApiWorker": {
 			"name": "DeliveryApiWorker",
 			"host": "127.0.0.1",
@@ -24,6 +29,8 @@
 			"bodyHandlerEnabled": true,
 			"sockJsHandlerEnabled": true
 		},
+		
+		"------------ uploadFileWorker ------------" : {"notes" : "Leo CMS - File Uploading System" },
 		"uploadFileWorker": {
 			"name": "UploadFileWorker",
 			"host": "127.0.0.1",
@@ -32,6 +39,8 @@
 			"bodyHandlerEnabled": true,
 			"sockJsHandlerEnabled": false
 		},
+		
+		"------------ dataTrackingWorker ------------" : {"notes" : "Leo CDP - Event Data Tracking System" },
 		"dataTrackingWorker": {
 			"name": "dataTrackingWorker",
 			"host": "127.0.0.1",
@@ -42,6 +51,7 @@
 			"defaultDbConfig" : "leoCdpDbConfigs"
 		},
 		
+		"------------ mainHttpBookstore ------------" : {"notes" : "Leo CMS -  Demo Retail Bookstore E-Commerce for testing CDP" },
 		"mainHttpBookstore": {
 			"name": "MainHttpWorker",
 			"host": "127.0.0.1",
@@ -51,6 +61,8 @@
 			"sockJsHandlerEnabled": true,
 			"defaultDbConfig" : "dbConfigsBookstore"
 		},
+		
+		"------------ mainHttpWorkerXemGiDay ------------" : {"notes" : "Leo CMS - Free Video Hub for everything" },
 		"mainHttpWorkerXemGiDay": {
 			"name": "MainHttpWorker",
 			"host": "127.0.0.1",
@@ -60,6 +72,8 @@
 			"sockJsHandlerEnabled": true,
 			"defaultDbConfig" : "dbConfigsXemGiDay"
 		},
+		
+		"------------ mainHttpVideoMonngon ------------" : {"notes" : "Leo CMS - Free Video Hub for cooking and food review" },
 		"mainHttpVideoMonngon": {
 			"name": "MainHttpWorker",
 			"host": "127.0.0.1",

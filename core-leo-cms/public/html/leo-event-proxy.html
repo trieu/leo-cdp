@@ -7,15 +7,18 @@
 	<div id="leoproxy" ></div>
 	
 	<script>
-		
+		console.log()
 		var ROOT_DOMAIN = '';
+		var PARENT_ORIGIN = '*';
 	 	if (location.hash.length > 0) {
-            ROOT_DOMAIN =  location.hash.substring(1);
+	 		var toks = location.hash.substring(1).split('_');
+            ROOT_DOMAIN = toks[0];
+            PARENT_ORIGIN = toks[1];
         } else {
         	console.error('ROOT_DOMAIN is empty')
         }
  
-        var LEO_LOG_URL = '//log.' + ROOT_DOMAIN;
+        var LEO_LOG_URL = '//' + ROOT_DOMAIN;
         var PREFIX_SESSION_INIT_URL = LEO_LOG_URL + "/cxs-pf-init";
         var PREFIX_UPDATE_PROFILE_URL = LEO_LOG_URL + "/cxs-pf-update";
         var PREFIX_EVENT_VIEW_URL = LEO_LOG_URL + "/etv";
@@ -35,13 +38,18 @@
         var sendMessage = function (msg) {
             // Make sure you are sending a string, and to stringify JSON window.parent.postMessage(msg, '*');
             console.log('Send a message to the observer proxy ' + msg);
-            location.hash = msg;
+            
+            window.parent.postMessage(msg, PARENT_ORIGIN);
         };
+        
+     
         
         // Listen to messages from parent window
         bindEvent(window, 'message', function (e) {
-           console.log(e.data);
-  		   proxyCallHandler(JSON.parse(e.data))
+        	//console.log("===> iframe.e.origin " + e.origin)
+        	if (e.origin !== PARENT_ORIGIN)
+        	    return;
+  		   	proxyCallHandler(JSON.parse(e.data))
         });
         
         function loadScript(src, callback) {
@@ -79,7 +87,11 @@
         }
 
         loadScript('//' + ROOT_DOMAIN +'/public/js/leo-event-observer/uuid.min.js',function(){
-        	loadScript('//' + ROOT_DOMAIN +'/public/js/leo-event-observer/leoobserver.js',codeIsReady);
+        	//FIXME callback hell
+        	loadScript('//' + ROOT_DOMAIN +'/public/js/leo-event-observer/fingerprint2.min.js',function(){
+        		loadScript('//' + ROOT_DOMAIN +'/public/js/leo-event-observer/leoobserver.js',codeIsReady);
+        	})
+        	
         })
     </script>
 

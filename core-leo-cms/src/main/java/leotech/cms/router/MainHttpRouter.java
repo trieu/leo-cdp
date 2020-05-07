@@ -19,6 +19,7 @@ import leotech.cms.service.WebDataServiceUtil;
 import leotech.core.api.BaseApiHandler;
 import leotech.core.api.BaseApiRouter;
 import leotech.core.api.BaseHttpRouter;
+import leotech.core.api.PublicFileHttpRouter;
 import leotech.core.api.SecuredApiProxyHandler;
 import leotech.system.model.DeviceInfo;
 import leotech.system.template.HandlebarsTemplateUtil;
@@ -42,15 +43,12 @@ public class MainHttpRouter extends BaseHttpRouter {
 	private static final String MIME_TYPE_HTML = ContentType.TEXT_HTML.getMimeType();
 	private static final String HTML_DIRECT_RENDER = "/html/";
 
-	static final int CACHING_EXPIRED_TIME = 3600 * 24 * 7;// 7 days
-	private static final String MAX_AGE_CACHING_PUBLIC = "max-age=" + CACHING_EXPIRED_TIME + ", public";
-
 	private static final String APP_TEMPLATES = "app-templates";
 
 	public static final String ADMIN_ROUTER = "/admin";
 	public static final String API_GATEWAY_ROUTER = "/api-gateway";
 	public static final String APP_ROUTER = "/app";
-	public static final String PUBLIC_FILE_ROUTER = "/public";
+	
 	public static final String VIEW_ROUTER = "/view";
 	public static final String HOME_ROUTER = "/";
 
@@ -129,8 +127,8 @@ public class MainHttpRouter extends BaseHttpRouter {
 		}
 
 		// Files handler with CDN (Images, CSS, JS, JSON,...)
-		else if (path.startsWith(PUBLIC_FILE_ROUTER)) {
-			publicFileHandler(resp, outHeaders, path, params);
+		else if (path.startsWith(PublicFileHttpRouter.PUBLIC_FILE_ROUTER)) {
+			PublicFileHttpRouter.handle(resp, outHeaders, path, params);
 		}
 
 		// HTML view ajax loader
@@ -193,31 +191,7 @@ public class MainHttpRouter extends BaseHttpRouter {
 	//////////////////////////////////////////////////////////////////////////////////////
 	// utils //
 
-	void publicFileHandler(HttpServerResponse resp, MultiMap outHeaders, String path, MultiMap params) {
-
-		try {
-			String pathname = path.replace(PUBLIC_FILE_ROUTER, "./public").replaceAll("%20", " ");
-
-			System.out.println("publicFileHandler " + pathname);
-			File file = new File(pathname);
-			if (file.isFile()) {
-				outHeaders.set(HttpHeaderNames.CACHE_CONTROL, MAX_AGE_CACHING_PUBLIC);
-				if (params.get("download") != null) {
-					outHeaders.set(HttpHeaderNames.CONTENT_TYPE,
-							ContentType.APPLICATION_OCTET_STREAM.getMimeType());
-					String name = file.getName();
-					outHeaders.set(HttpHeaderNames.CONTENT_DISPOSITION, "attachment; filename=\"" + name + "\"");
-				}
-				resp.sendFile(pathname);
-			} else {
-				resp.setStatusCode(HttpStatus.SC_NOT_FOUND);
-				resp.end(TemplateUtil._404);
-			}
-		} catch (Exception e) {
-			resp.setStatusCode(HttpStatus.SC_INTERNAL_SERVER_ERROR);
-			resp.end(TemplateUtil._500);
-		}
-	}
+	
 
 	void viewRoutingHandler(HttpServerRequest req, HttpServerResponse resp, String path, String networkDomain) {
 		try {

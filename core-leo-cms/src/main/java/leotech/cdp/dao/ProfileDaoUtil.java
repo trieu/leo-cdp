@@ -58,8 +58,9 @@ public class ProfileDaoUtil {
 	}
 	
 	public static Profile getByKeyIdentities(String visitorId, String email, String phone, String userDeviceId) {
+		System.out.println("==> getByKeyIdentities visitorId:" + visitorId + " email:" + email + " phone:" + phone + " userDeviceId:" + userDeviceId);
 		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
-		Map<String, Object> bindVars = new HashMap<>(1);
+		Map<String, Object> bindVars = new HashMap<>(4);
 		bindVars.put("visitorId", visitorId);
 		bindVars.put("email", email);
 		bindVars.put("phone", phone);

@@ -5,7 +5,9 @@
 // ------------ LEO Proxy ------------------
 (function() {
     if (typeof window.LeoObserverProxy === "undefined") {
-        var proxyHtmlUrl = "//" + window.leoObserverLogDomain + "/public/html/leo-event-proxy.html#";
+    	var leoProxyOrigin = location.protocol + '//' + location.hostname;
+    	var targetPostMessage = 'https://' + window.leoObserverLogDomain;
+        var proxyHtmlUrl = 'https://' + window.leoObserverLogDomain + "/public/html/leo-event-proxy.html#";
         var leoObserverId = window.leoObserverId;
         var srcTouchpointUrl = window.srcTouchpointUrl;
         var srcTouchpointName = window.srcTouchpointName;
@@ -30,7 +32,7 @@
         ifProxy.name = 'leotech_event_proxy';
         ifProxy.height = 0;
         ifProxy.setAttribute("style", "display:none!important");
-        ifProxy.src = proxyHtmlUrl + window.leoObserverLogDomain;
+        ifProxy.src = proxyHtmlUrl + window.leoObserverLogDomain + '_' + leoProxyOrigin;
 
         //append to trigger iframe post back data to server
         var body = document.getElementsByTagName("body");
@@ -42,26 +44,27 @@
         // Send a message to the child iframe
         var sendMessage = function(msg) {
             // Make sure you are sending a string, and to stringify JSON
-            ifProxy.contentWindow.postMessage(msg, '*');
+            ifProxy.contentWindow.postMessage(msg, targetPostMessage);
         };
 
         LeoObserverProxy.messageHandler = function(hash) {
-            if (hash === "#LeoObserverProxyLoaded") {
+            if (hash === "LeoObserverProxyLoaded") {
  				initLeoContextSession()
             } 
-            else if (hash === "#LeoObserverProxyReady") {
+            else if (hash === "LeoObserverProxyReady") {
                 if (typeof leoObserverProxyReady === "function") {
                 	leoObserverProxyReady();
                 }
             }
         }
-
-
-        // Listen to message from child window 
-        bindEvent(window['leotech_event_proxy'], 'hashchange', function() {
-        	var hash = window['leotech_event_proxy'].document.location.hash;
-        	console.log('LeoObserverProxy.messageHandler '+hash);
-            LeoObserverProxy.messageHandler(hash);
+        
+        // Listen to messages from parent window
+        
+        bindEvent(window, 'message', function(e) {
+        	//console.log("===> host.e.origin " + e.origin)
+        	if (e.origin !== targetPostMessage)
+        	    return;
+        	LeoObserverProxy.messageHandler(e.data);
         });
 
         var getObserverParams = function(metricName, eventData, profileObject) {
@@ -106,7 +109,6 @@
             sendMessage(payload);
             console.log('LeoObserverProxy.initLeoContextSession')
 		}
-		
 		
 
         // event-view(pageview|screenview|storeview|trueview|placeview,contentId,sessionKey,visitorId)

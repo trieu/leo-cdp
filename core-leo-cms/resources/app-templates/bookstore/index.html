@@ -145,10 +145,10 @@
 
         window.fbAsyncInit = function () {
             FB.init({
-                appId: '473520689340615',
+                appId: '514311416047283',
                 cookie: true, // enable cookies to allow the server to access the session
                 xfbml: true, // parse social plugins on this page
-                version: 'v3.3' // The Graph API version to use for the call
+                version: 'v7.0' // The Graph API version to use for the call
             });
             FB.getLoginStatus(function (response) {
                 statusChangeCallback(response);
@@ -156,13 +156,13 @@
         };
 
         // Load the SDK asynchronously
-        (function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "https://connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
+       (function(d, s, id){
+     	 var js, fjs = d.getElementsByTagName(s)[0];
+	     if (d.getElementById(id)) {return;}
+	     js = d.createElement(s); js.id = id;
+	     js.src = "https://connect.facebook.net/en_US/sdk.js";
+	     fjs.parentNode.insertBefore(js, fjs);
+	   }(document, 'script', 'facebook-jssdk'));
 
         function facebookReadyAPI() {
             console.log('Welcome!  Fetching your information.... ');
@@ -170,11 +170,14 @@
                 locale: 'en_US',
                 fields: 'id, name, email, picture'
             }, function (response) {
-                console.log('Successful login for: ' + response.name);
+                console.log('Successful login, name: ' + response.name  + " email: " + response.email);
                 var profileImgSrc = 'https://graph.facebook.com/' + response.id + '/picture?width=45';
                 console.log(profileImgSrc);
                 $('#account-menu').html('<img class="user_profile_s" src="' +profileImgSrc + '" />').show();
                 $('#user-login').hide();
+                
+             	// update current session the profile
+    		    LeoObserverProxy.updateProfileBySession({email: response.email})
             });
         }
     </script>
@@ -190,8 +193,8 @@
     
     <script>
     	//Leo Web Event Observer for Data Hub Analytics
-    	window.leoObserverLogDomain = "xemgiday.com";
-		window.leoObserverId = "tester";
+    	window.leoObserverLogDomain = "cdp.bigdatavietnam.org";
+		window.leoObserverId = "bookstore_web_observer";
 		window.srcTouchpointName = encodeURIComponent(document.title);
 		window.srcTouchpointUrl = encodeURIComponent(location.protocol + '//' + location.host + location.pathname);
 		
@@ -246,8 +249,7 @@
 		        _src: null
 		    });
 		    
-		    // update current session the profile
-		    LeoObserverProxy.updateProfileBySession({email: "thomas@example.com"})
+		    
 		}
     </script>
 </body>
