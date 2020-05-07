@@ -8,19 +8,16 @@ import rfx.core.util.StringUtil;
 
 public class ProfileDataService {
 
-	public static Profile updateOrCreateFromWebTouchpoint(String ctxSessionKey, String observerId,
-			String srcTouchpointId, String refTouchpointId, String touchpointRefDomain, String lastSeenIp,
-			String visitorId, String userDeviceId) {
-		return updateOrCreate(ctxSessionKey, observerId, srcTouchpointId, refTouchpointId, touchpointRefDomain,
-				lastSeenIp, visitorId, userDeviceId, "", "", "", "", "");
+	public static Profile updateOrCreateFromWebTouchpoint(String observerId,String srcTouchpointId, String refTouchpointId, String touchpointRefDomain, String lastSeenIp,
+			String visitorId, String userDeviceId, String fingerprintId) {
+		return updateOrCreate( observerId, srcTouchpointId, refTouchpointId, touchpointRefDomain,lastSeenIp, visitorId, userDeviceId, fingerprintId, "", "", "", "");
 	}
 
-	public static Profile updateOrCreate(String ctxSessionKey, String observerId, String srcTouchpointId,
+	public static Profile updateOrCreate( String observerId, String srcTouchpointId,
 			String refTouchpointId, String touchpointRefDomain, String lastSeenIp, String visitorId,
-			String userDeviceId, String email, String phone, String fingerprintId, String loginId,
-			String loginProvider) {
+			String userDeviceId, String fingerprintId, String email, String phone, String loginId, String loginProvider) {
 
-		Profile pf = ProfileDaoUtil.getByKeyIdentities(visitorId, email, phone, userDeviceId);
+		Profile pf = ProfileDaoUtil.getByKeyIdentities(visitorId, email, phone, userDeviceId, fingerprintId);
 		
 		if (pf == null) {
 			
@@ -32,11 +29,11 @@ public class ProfileDataService {
 			}
 			
 			if (type == Profile.ProfileType.ANONYMOUS) {
-				pf = Profile.newAnonymousProfile(ctxSessionKey, observerId, srcTouchpointId, lastSeenIp, visitorId,
+				pf = Profile.newAnonymousProfile( observerId, srcTouchpointId, lastSeenIp, visitorId,
 						userDeviceId, fingerprintId);
 			} else if (type == Profile.ProfileType.IDENTIFIED) {
 
-				pf = Profile.newIdentifiedProfile(ctxSessionKey, observerId, srcTouchpointId, lastSeenIp, visitorId,
+				pf = Profile.newIdentifiedProfile( observerId, srcTouchpointId, lastSeenIp, visitorId,
 						userDeviceId, email, fingerprintId);
 
 				if (StringUtil.isNotEmpty(loginId)) {
@@ -44,24 +41,24 @@ public class ProfileDataService {
 				}
 
 			} else if (type == Profile.ProfileType.CRM_USER) {
-				pf = Profile.newCrmProfile(ctxSessionKey, observerId, srcTouchpointId, lastSeenIp, visitorId,
+				pf = Profile.newCrmProfile( observerId, srcTouchpointId, lastSeenIp, visitorId,
 						userDeviceId, email, phone, fingerprintId);
 			}
 
-			pf.reachAtTouchpoint(refTouchpointId);
+			pf.engageAtTouchpoint(refTouchpointId);
 			pf.updateReferrerChannel(touchpointRefDomain);
 			pf.updateReferrerChannel(loginProvider);
 
 			// TODO run in a thread
 			ProfileDaoUtil.create(pf);
 		} else {
-			pf.reachAtTouchpoint(refTouchpointId);
+			pf.engageAtTouchpoint(refTouchpointId);
 			pf.updateReferrerChannel(touchpointRefDomain);
 			pf.updateReferrerChannel(loginProvider);
 			pf.setIdentity(loginId, loginProvider);
 			pf.setPrimaryEmail(email);
 			pf.setPrimaryPhone(phone);
-			pf.setObserverId(observerId);
+			pf.setLastObserverId(observerId);
 			pf.setLastTouchpointId(srcTouchpointId);
 			pf.setLastSeenIp(lastSeenIp);
 			pf.setLastUsedDeviceId(userDeviceId);
@@ -73,17 +70,31 @@ public class ProfileDataService {
 		return pf;
 	}
 
-	public static Profile updateLoginInfo(String loginId, String loginProvider, String email, 
+	public static Profile updateLoginInfo(String loginId, String loginProvider, String email, String phone, 
 			String profileId, String observerId, String lastTouchpointId, String lastSeenIp, String usedDeviceId) {
 		Profile p = ProfileDaoUtil.getById(profileId);
 
 		p.updateReferrerChannel(loginProvider);
+		
 		p.setIdentity(loginId, loginProvider);
-		p.setPrimaryEmail(email);
-		p.setObserverId(observerId);
+		
+		
+		if(StringUtil.isNotEmpty(email)) {
+			p.setPrimaryEmail(email);
+		}
+		
+		if(StringUtil.isNotEmpty(phone)) {
+			p.setPrimaryPhone(phone);
+		}
+
+		if(StringUtil.isNotEmpty(usedDeviceId)) {
+			p.setLastUsedDeviceId(usedDeviceId);
+		}
+		
+		p.setLastObserverId(observerId);
 		
 		p.setLastSeenIp(lastSeenIp);
-		p.setLastUsedDeviceId(usedDeviceId);
+		
 		p.setUpdatedAt(new Date());
 
 		ProfileDaoUtil.update(p);

@@ -2,7 +2,7 @@ package leotech.cdp.router.api;
 
 public final class ApiParamKey {
     public static final String CTX_SESSION_KEY = "ctxsk";
-    public static final String FINGERPRINT_ID = "fgpid";
+    public static final String FINGERPRINT_ID = "fgp";
     
     public static final String PROFILE_ID = "prfd";
     public static final String VISITOR_ID = "visid";

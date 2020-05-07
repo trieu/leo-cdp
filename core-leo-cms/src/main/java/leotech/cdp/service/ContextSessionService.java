@@ -44,43 +44,43 @@ public class ContextSessionService {
 		String touchpointUrl = StringUtil.decodeUrlUTF8(params.get(ApiParamKey.TOUCHPOINT_URL));
 		String touchpointRefUrl = StringUtil.decodeUrlUTF8(params.get(ApiParamKey.TOUCHPOINT_REFERRER_URL));
 		String touchpointRefDomain = StringUtil.decodeUrlUTF8(params.get(ApiParamKey.TOUCHPOINT_REFERRER_DOMAIN));
-		
 		// owned media has data from itself , earned media is from facebook or google or youtube
 		boolean isFromOwnedMedia = mediaHost.equals(touchpointRefDomain);
 		
-		// profile params
-		String visitorId = StringUtil.safeString(params.get(ApiParamKey.VISITOR_ID));
-		String email = StringUtil.safeString(params.get(ApiParamKey.EMAIL));
-		String phone = StringUtil.safeString(params.get(ApiParamKey.PHONE));
-		String fingerprintId = StringUtil.safeString(params.get(ApiParamKey.FINGERPRINT_ID));
-
-		String loginId = StringUtil.safeString(params.get(ApiParamKey.LOGIN_ID));
-		String loginIdProvider = StringUtil.safeString(params.get(ApiParamKey.LOGIN_PROVIDER));
-
-		String env = StringUtil.safeString(params.get(ApiParamKey.DATA_ENVIRONMENT), ApiParamKey.DEV_ENV);
-		String locationCode = loc.getLocationCode();
-
 		// touch-point info process
 		Touchpoint refTouchPoint = TouchpointDataService.getOrCreateWebTouchpoint(touchpointRefDomain, Touchpoint.TouchpointType.WEBSITE, touchpointRefUrl, isFromOwnedMedia);
 		Touchpoint srcTouchpoint = TouchpointDataService.getOrCreateWebTouchpoint(touchpointName, Touchpoint.TouchpointType.WEBSITE, touchpointUrl);
 		String refTouchpointId = refTouchPoint.getId();
 		String srcTouchpointId = srcTouchpoint.getId();
+		
+		
+		// profile params
+		String visitorId = StringUtil.safeString(params.get(ApiParamKey.VISITOR_ID));
+		String fingerprintId = StringUtil.safeString(params.get(ApiParamKey.FINGERPRINT_ID))+"_"+ip;
+		
+//		String email = StringUtil.safeString(params.get(ApiParamKey.EMAIL));
+//		String phone = StringUtil.safeString(params.get(ApiParamKey.PHONE));
+//		
+//		String loginId = StringUtil.safeString(params.get(ApiParamKey.LOGIN_ID));
+//		String loginIdProvider = StringUtil.safeString(params.get(ApiParamKey.LOGIN_PROVIDER));
+
+		String env = StringUtil.safeString(params.get(ApiParamKey.DATA_ENVIRONMENT), ApiParamKey.DEV_ENV);
+		String locationCode = loc.getLocationCode();
+
+		
+		
+		// load profile ID from DB
+		Profile profile = ProfileDataService.updateOrCreateFromWebTouchpoint(observerId, srcTouchpointId, refTouchpointId, touchpointRefDomain, ip, 
+				visitorId, userDeviceId, fingerprintId);
+		String profileId = profile.getId();
+		visitorId = profile.getVisitorId();
+		int profileType = profile.getType();
+		
 
 		// create new
 		ContextSession ctxSession = new ContextSession(observerId, dateTime, dateTimeKey, locationCode,
-				userDeviceId, ip, mediaHost, appId, refTouchpointId, srcTouchpointId, visitorId, email, phone,
-				fingerprintId, env);
-		String ctxSessionKey = ctxSession.getSessionKey();
-
-		// load profile ID from DB
-		Profile profile = ProfileDataService.updateOrCreateFromWebTouchpoint(ctxSessionKey, observerId, srcTouchpointId, refTouchpointId, touchpointRefDomain, ip, visitorId, userDeviceId);
-		String profileId = profile.getId();
-		int profileType = profile.getType();
-
-		ctxSession.setProfileId(profileId);
-		ctxSession.setProfileType(profileType);
-		ctxSession.setLoginId(loginId);
-		ctxSession.setLoginProvider(loginIdProvider);
+				userDeviceId, ip, mediaHost, appId, refTouchpointId, srcTouchpointId, profileId, profileType, visitorId, env);
+		
 
 		// TODO run in a thread
 		ContextSessionDaoUtil.create(ctxSession);
@@ -159,9 +159,10 @@ public class ContextSessionService {
 	public static int updateSessionWithProfile(HttpServerRequest req, MultiMap params, ContextSession ctxSession) {
 		String usedDeviceId = ctxSession.getUserDeviceId();
 		String sourceIP = RequestInfoUtil.getRemoteIP(req);
+		
 		String lastTouchpointId = ctxSession.getSrcTouchpointId();
 		String observerId = ctxSession.getObserverId();
-		String profileId = ctxSession.getProfileId();
+		String curProfileId = ctxSession.getProfileId();
 		
 		MultiMap formAttributes = req.formAttributes();
 		
@@ -169,15 +170,18 @@ public class ContextSessionService {
 		System.out.println(profileData);
 		
 		String email = profileData.getOrDefault("email", "");
+		String phone = profileData.getOrDefault("phone", "");
 		String loginId = profileData.getOrDefault("loginId", "");
 		String loginProvider = profileData.getOrDefault("loginProvider", "");
 		
-		ProfileDataService.updateLoginInfo(loginProvider, loginId, email, profileId, observerId, lastTouchpointId, sourceIP, usedDeviceId);
+		Profile profile = ProfileDataService.updateLoginInfo(loginProvider, loginId, email, phone, curProfileId, observerId, lastTouchpointId, sourceIP, usedDeviceId);
 		
-		ctxSession.setEmail(email);
-		ctxSession.setLoginId(loginId);
-		ctxSession.setLoginProvider(loginProvider);
-		ContextSessionDaoUtil.update(ctxSession);
+		String newProfileId = profile.getId();
+		
+		if(! newProfileId.equals(curProfileId)) {
+			ctxSession.setProfileId(newProfileId);
+			ContextSessionDaoUtil.update(ctxSession);
+		}
 		
 		return 102;
 	}

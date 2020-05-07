@@ -57,14 +57,15 @@ public class ProfileDaoUtil {
 		return p;
 	}
 	
-	public static Profile getByKeyIdentities(String visitorId, String email, String phone, String userDeviceId) {
-		System.out.println("==> getByKeyIdentities visitorId:" + visitorId + " email:" + email + " phone:" + phone + " userDeviceId:" + userDeviceId);
+	public static Profile getByKeyIdentities(String visitorId, String email, String phone, String userDeviceId, String fingerprintId) {
+		System.out.println("==> getByKeyIdentities visitorId:" + visitorId + " email:" + email + " phone:" + phone + " userDeviceId:" + userDeviceId+ " fingerprintId:" + fingerprintId);
 		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(4);
 		bindVars.put("visitorId", visitorId);
 		bindVars.put("email", email);
 		bindVars.put("phone", phone);
 		bindVars.put("userDeviceId", userDeviceId);
+		bindVars.put("fingerprintId", fingerprintId);
 		Profile p = new ArangoDbQuery<Profile>(db, AQL_GET_PROFILE_BY_KEY_IDENTITIES, bindVars, Profile.class).getResultsAsObject();
 		return p;
 	}

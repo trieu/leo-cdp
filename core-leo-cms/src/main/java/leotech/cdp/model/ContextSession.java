@@ -85,70 +85,61 @@ public class ContextSession extends CdpPersistentObject {
 	String userDeviceId;
 	String ip;
 	String locationCode;
-	String mediaHost;
+	String refMediaHost;
 	String appId;
 	String refTouchpointId;
 	String srcTouchpointId;
 	String observerId;
-
+	String profileId;
 	String visitorId;
 	int profileType = Profile.ProfileType.ANONYMOUS;
-	String profileId;
-
-	String email;
-	String phone;
-	String loginId;
-	String loginProvider;
-	String fingerprintId;
 	
 	Date createAt;
-
 	Date updatedAt;
 	
 	Date autoDeleteAt;
 	String environment;
 
 	public ContextSession(String observerId, DateTime dateTime, String dateTimeKey, String locationCode,
-			String userDeviceId, String ip, String host, String appId, String refTouchpointId,
-			String srcTouchpointId, String visitorId, String email, String phone, String fingerprintId, int hoursToDelete,
+			String userDeviceId, String ip, String refMediaHost, String appId, String refTouchpointId,
+			String srcTouchpointId, String profileId, int profileType, String visitorId, int hoursToDelete,
 			String environment) {
 		super();
-		init(observerId, dateTime, dateTimeKey, locationCode, userDeviceId, ip, host, appId, refTouchpointId,
-				srcTouchpointId, visitorId, email, phone, fingerprintId, hoursToDelete, environment);
+		init(observerId, dateTime, dateTimeKey, locationCode, userDeviceId, ip, refMediaHost, appId, refTouchpointId,
+				srcTouchpointId, profileId, profileType, visitorId, hoursToDelete, environment);
 	}
 
 	public ContextSession(String observerId, DateTime dateTime, String dateTimeKey, String locationCode,
-			String userDeviceId, String ip, String host, String appId, String refTouchpointId,
-			String srcTouchpointId, String visitorId, String email, String phone, String fingerprintId, String environment) {
+			String userDeviceId, String ip, String refMediaHost,  String appId, String refTouchpointId,
+			String srcTouchpointId, String profileId, int profileType, String visitorId, String environment) {
 		super();
-		init(observerId, dateTime, dateTimeKey, locationCode, userDeviceId, ip, host, appId, refTouchpointId,
-				srcTouchpointId, visitorId, email, phone, fingerprintId, 0, environment);
+		init(observerId, dateTime, dateTimeKey, locationCode, userDeviceId, ip, refMediaHost, appId, refTouchpointId,
+				srcTouchpointId, profileId, profileType, visitorId,  0, environment);
 	}
 
 	private void init(String observerId, DateTime dateTime, String dateTimeKey, String locationCode,
-			String userDeviceId, String ip, String mediaHost, String appId, String refTouchpointId,
-			String srcTouchpointId, String visitorId, String email, String phone, String fingerprintId, int hoursToDelete,
-			String environment) {
+			String userDeviceId, String ip, String refMediaHost, String appId, String refTouchpointId,
+			String srcTouchpointId, String profileId, int profileType, String visitorId, int hoursToDelete, String environment) {
 		this.observerId = observerId;
 		this.locationCode = locationCode;
 		this.userDeviceId = userDeviceId;
 		this.ip = ip;
-		this.mediaHost = mediaHost;
+		this.refMediaHost = refMediaHost;
 		this.appId = appId;
 		this.refTouchpointId = refTouchpointId;
 		this.srcTouchpointId = srcTouchpointId;
 		
+		this.profileId = profileId;
+		this.profileType =  profileType;
 		this.visitorId = visitorId;
-		this.email = email;
-		this.phone = phone;
-		this.fingerprintId = fingerprintId;
+		
 		this.environment = environment;
 
 		this.createAt = dateTime.toDate();
 		this.dateTimeKey = dateTimeKey;
 
 		String mns = dateTime.getMinuteOfHour() < 30 ? "0" : "1";
-		String keyHint = email + environment + locationCode + userDeviceId + ip + mediaHost + appId + visitorId + fingerprintId + mns;
+		String keyHint =  environment + locationCode + userDeviceId + ip + appId + profileId + mns;
 		this.sessionKey = id(keyHint);
 
 		if (hoursToDelete > HOURS_OF_A_WEEK) {
@@ -175,11 +166,11 @@ public class ContextSession extends CdpPersistentObject {
 	}
 
 	public String getMediaHost() {
-		return mediaHost;
+		return refMediaHost;
 	}
 
 	public void setMediaHost(String mediaHost) {
-		this.mediaHost = mediaHost;
+		this.refMediaHost = mediaHost;
 	}
 
 	public String getAppId() {
@@ -206,14 +197,7 @@ public class ContextSession extends CdpPersistentObject {
 		this.srcTouchpointId = srcTouchpointId;
 	}
 
-	public String getVisitorId() {
-		return visitorId;
-	}
-
-	public void setVisitorId(String visitorId) {
-		this.visitorId = visitorId;
-	}
-
+	
 	public String getProfileId() {
 		return profileId;
 	}
@@ -222,12 +206,21 @@ public class ContextSession extends CdpPersistentObject {
 		this.profileId = profileId;
 	}
 
-	public String getFingerprintId() {
-		return fingerprintId;
+	
+	public String getVisitorId() {
+		return visitorId;
 	}
 
-	public void setFingerprintId(String fingerprintId) {
-		this.fingerprintId = fingerprintId;
+	public void setVisitorId(String visitorId) {
+		this.visitorId = visitorId;
+	}
+
+	public int getProfileType() {
+		return profileType;
+	}
+
+	public void setProfileType(int profileType) {
+		this.profileType = profileType;
 	}
 
 	public Date getCreateAt() {
@@ -237,8 +230,6 @@ public class ContextSession extends CdpPersistentObject {
 	public void setCreateAt(Date createAt) {
 		this.createAt = createAt;
 	}
-	
-	
 
 	public Date getUpdatedAt() {
 		return updatedAt;
@@ -256,7 +247,6 @@ public class ContextSession extends CdpPersistentObject {
 		this.environment = environment;
 	}
 
-	
 
 	public Date getAutoDeleteAt() {
 		return autoDeleteAt;
@@ -290,36 +280,5 @@ public class ContextSession extends CdpPersistentObject {
 		this.observerId = observerId;
 	}
 
-	public int getProfileType() {
-		return profileType;
-	}
-
-	public void setProfileType(int profileType) {
-		this.profileType = profileType;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getLoginId() {
-		return loginId;
-	}
-
-	public void setLoginId(String loginId) {
-		this.loginId = loginId;
-	}
-
-	public String getLoginProvider() {
-		return loginProvider;
-	}
-
-	public void setLoginProvider(String loginProvider) {
-		this.loginProvider = loginProvider;
-	}
 
 }

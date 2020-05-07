@@ -171,14 +171,14 @@ AQL_GET_PROFILE_BY_ID =>
 ;
 
 AQL_GET_PROFILE_BY_IDENTITY =>
-	FOR e in cdp_profile FILTER @visitorId IN e.identities[*]
+	FOR e in cdp_profile FILTER @visitorId IN e.identities[*] AND e.status == 1
 	RETURN e
 ;
 
 AQL_GET_PROFILE_BY_KEY_IDENTITIES => 
 	FOR e in cdp_profile 
-	FILTER  @visitorId IN e.identities[*] OR @userDeviceId IN e.usedDeviceIds[*]
-			OR @email IN e.identities[*] OR @phone IN e.identities[*]
+	FILTER  e.status == 1 AND (@visitorId IN e.identities[*] OR @userDeviceId IN e.usedDeviceIds[*] OR @fingerprintId IN e.identities[*]
+			OR @email IN e.identities[*] OR @phone IN e.identities[*])
 	RETURN e
 ;
 

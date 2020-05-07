@@ -70,9 +70,7 @@
     </script>
     
     <script>
-        var codeIsReady = function(){
-    		sendMessage("LeoObserverProxyLoaded");
-    	}
+        
     	
     	var proxyCallHandler = function(data){
         	if(data.call === 'getContextSession' && data.params) {
@@ -85,13 +83,16 @@
         		LeoEventObserver.updateProfile(data.params);
         	}
         }
+    	
+    	var codeIsReady = function(){
+        	LeoEventObserver.initFingerprint();
+        	setTimeout(function(){
+        		sendMessage("LeoObserverProxyLoaded");
+        	},789)
+    	}
 
-        loadScript('//' + ROOT_DOMAIN +'/public/js/leo-event-observer/uuid.min.js',function(){
-        	//FIXME callback hell
-        	loadScript('//' + ROOT_DOMAIN +'/public/js/leo-event-observer/fingerprint2.min.js',function(){
-        		loadScript('//' + ROOT_DOMAIN +'/public/js/leo-event-observer/leoobserver.js',codeIsReady);
-        	})
-        	
+        loadScript('//' + ROOT_DOMAIN +'/public/js/leo-event-observer/hash.min.js',function(){
+        	loadScript('//' + ROOT_DOMAIN +'/public/js/leo-event-observer/leoobserver.js',codeIsReady);
         })
     </script>
 

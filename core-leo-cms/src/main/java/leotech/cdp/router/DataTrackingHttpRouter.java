@@ -46,11 +46,13 @@ public class DataTrackingHttpRouter extends BaseHttpRouter {
 
 	static class ObserverResponse {
 		public final String sessionKey;
+		public final String visitorId;
 		public final String message;
 		public final int status;
 
-		public ObserverResponse(String sessionKey, String message, int status) {
+		public ObserverResponse(String visitorId, String sessionKey, String message, int status) {
 			super();
+			this.visitorId = visitorId;
 			this.sessionKey = sessionKey;
 			this.message = message;
 			this.status = status;
@@ -95,8 +97,8 @@ public class DataTrackingHttpRouter extends BaseHttpRouter {
 				// synchronize session (when) with user's device (how), touchpoint's context (where) and profile (who)
 				// into one object for analytics (understand why)
 			
-				ContextSession initSession = ContextSessionService.init(req, params, device);
-				resp.end(new Gson().toJson(new ObserverResponse(initSession.getSessionKey(), OK, 101)));
+				ContextSession session = ContextSessionService.init(req, params, device);
+				resp.end(new Gson().toJson(new ObserverResponse(session.getVisitorId(), session.getSessionKey(), OK, 101)));
 				
 			} 
 			else if (StringUtil.isNotEmpty(eventName)) {
@@ -126,19 +128,19 @@ public class DataTrackingHttpRouter extends BaseHttpRouter {
 					
 				} else {
 					//
-					resp.end(new Gson().toJson(new ObserverResponse("", INVALID, status)));
+					resp.end(new Gson().toJson(new ObserverResponse("","", INVALID, status)));
 				}
 
 				if (status >= 200 && status < 300) {
-					resp.end(new Gson().toJson(new ObserverResponse(currentSession.getSessionKey(), OK, status)));
+					resp.end(new Gson().toJson(new ObserverResponse(currentSession.getVisitorId(),currentSession.getSessionKey(), OK, status)));
 				} else if (status == 500) {
 					resp.end(new Gson()
-							.toJson(new ObserverResponse(currentSession.getSessionKey(), FAILED, status)));
+							.toJson(new ObserverResponse(currentSession.getVisitorId(),currentSession.getSessionKey(), FAILED, status)));
 				} else if (status == 102) {
-					resp.end(new Gson().toJson(new ObserverResponse(currentSession.getSessionKey(), OK, status)));
+					resp.end(new Gson().toJson(new ObserverResponse(currentSession.getVisitorId(),currentSession.getSessionKey(), OK, status)));
 				} else {
 					resp.end(new Gson()
-							.toJson(new ObserverResponse(currentSession.getSessionKey(), INVALID, status)));
+							.toJson(new ObserverResponse(currentSession.getVisitorId(),currentSession.getSessionKey(), INVALID, status)));
 				}
 				return true;
 				
@@ -155,7 +157,7 @@ public class DataTrackingHttpRouter extends BaseHttpRouter {
 				} else {
 					status = 101;
 				}
-				resp.end(new Gson().toJson(new ObserverResponse(currentSession.getSessionKey(), OK, status)));
+				resp.end(new Gson().toJson(new ObserverResponse(currentSession.getVisitorId(),currentSession.getSessionKey(), OK, status)));
 			}
 
 			// click redirect for O2O synchronization

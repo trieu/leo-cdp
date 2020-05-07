@@ -741,43 +741,35 @@
         });
         return uuid;
     }
+    
+    function initFingerprint(){
+    	var options = { excludes: { enumerateDevices : true, deviceMemory : true}}
+    	Fingerprint2.get(options, function (components) {
+    	    var values = components.map(function (component) { return component.value })
+    	    var fingerprintId = Fingerprint2.x64hash128(values.join(''), 31)
+  
+    	    var oneWeekInMinutes = 10080;
+    		lscache.set("leocdp_fgp", fingerprintId);
+    	})
+    }
 
     function getUUID() {
-    	var options = { excludes: {userAgent: true}}
-    	if (window.requestIdleCallback) {
-    		Fingerprint2.get(options, function (components) {
-    			console.log(components)
-    		    var values = components.map(function (component) { return component.value })
-    		    var fingerprintId = Fingerprint2.x64hash128(values.join(''), 31)
-    		    console.log("=> fingerprintId " + fingerprintId)
-    		})
-    	} else {
-    		Fingerprint2.get(options, function (components) {
-    			console.log(components)
-    		    var values = components.map(function (component) { return component.value })
-    		    var fingerprintId = Fingerprint2.x64hash128(values.join(''), 31)
-    		    console.log("=> fingerprintId " + fingerprintId)
-    		})
-    	}
     	
         var key = 'leocdp_vid';
-        var uuid =  lscache.get(key); // LeoCookieUtil.get(key)
+        var uuid =  lscache.get(key); // LeoCookieUtil.get(key) // should remove cookie storage ?
         
         if (!uuid) {
             uuid = generateUUID();
-            lscache.set(key, uuid, 10000);
+            
+            //cache forever
+            lscache.set(key, uuid);
             
             // Expires in 10 years
             //LeoCookieUtil.set(key, uuid, {expires: 315569520}); 
-            
-            
         }
         return uuid;
     }
     
-    function getHashedUrl(url) {
-        return new UUID(5, "ns:URL", url).format("b16").toLowerCase()
-    }
 
     var doTracking = function(eventType, params, callback) {
         var h = function(resHeaders, text) {
@@ -819,6 +811,9 @@
     }
     
     var objectToQueryString = function(params){
+    	// add fingerprint to params
+    	params['fgp'] = lscache.get("leocdp_fgp") || '';
+    	
     	var queryString = Object.keys(params).map((key) => {
 		    return encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
 		}).join('&');
@@ -827,6 +822,13 @@
     
     function leoObserverProxyReady(data) {
     	setSessionKey(data.sessionKey);
+    	
+    	var vid = getUUID();
+    	var newVisitorId = data.visitorId;
+    	if(newVisitorId && newVisitorId !== vid){
+    		lscache.set('leocdp_vid', newVisitorId);
+    	}
+    	
 		sendMessage("LeoObserverProxyReady");
         if(window.console){
 			window.console.log(data);
@@ -866,7 +868,9 @@
     LeoEventObserver.doTracking = doTracking;
     LeoEventObserver.getContextSession = getContextSession;
     LeoEventObserver.updateProfile = updateProfile;
+    LeoEventObserver.initFingerprint = initFingerprint;
 
     global.LeoEventObserver = LeoEventObserver;
 
 })(typeof window === 'undefined' ? this : window);
+
