@@ -1,17 +1,15 @@
 package leotech.cdp.dao;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.arangodb.ArangoCollection;
-import com.arangodb.ArangoCursor;
-import com.arangodb.ArangoDBException;
 import com.arangodb.ArangoDatabase;
 
 import leotech.cdp.model.Profile;
+import leotech.cdp.model.Touchpoint;
 import leotech.cdp.query.ProfileMatchingResult;
 import leotech.core.config.AqlTemplate;
 import leotech.system.util.database.ArangoDbQuery;
@@ -20,6 +18,8 @@ import leotech.system.util.database.ArangoDbUtil;
 public class ProfileDaoUtil {
 
 	static long limitTotalProfiles = 7000;
+	
+	static final String AQL_GET_PROFILES_BY_PAGINATION = AqlTemplate.get("AQL_GET_PROFILES_BY_PAGINATION");
 	static final String AQL_GET_PROFILE_BY_ID = AqlTemplate.get("AQL_GET_PROFILE_BY_ID");
 	static final String AQL_GET_PROFILE_BY_IDENTITY = AqlTemplate.get("AQL_GET_PROFILE_BY_IDENTITY");
 	static final String AQL_GET_PROFILE_BY_KEY_IDENTITIES = AqlTemplate.get("AQL_GET_PROFILE_BY_KEY_IDENTITIES");
@@ -85,6 +85,15 @@ public class ProfileDaoUtil {
 		Profile p = new ArangoDbQuery<Profile>(db, AQL_GET_PROFILE_BY_ID, bindVars, Profile.class)
 				.getResultsAsObject();
 		return p;
+	}
+	
+	public static List<Profile> list(int startIndex, int numberResult) {
+		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
+		Map<String, Object> bindVars = new HashMap<>(2);
+		bindVars.put("startIndex", startIndex);
+		bindVars.put("numberResult", numberResult);
+		List<Profile> list = new ArangoDbQuery<Profile>(db, AQL_GET_PROFILES_BY_PAGINATION, bindVars, Profile.class).getResultsAsList();
+		return list;
 	}
 
 	public static long countTotalOfProfiles() {

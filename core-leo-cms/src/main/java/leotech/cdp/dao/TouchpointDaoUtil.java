@@ -18,7 +18,9 @@ public class TouchpointDaoUtil {
 	static final String AQL_GET_TOUCHPOINT_BY_ID = AqlTemplate.get("AQL_GET_TOUCHPOINT_BY_ID");
 	static final String AQL_GET_TOUCHPOINT_BY_URL = AqlTemplate.get("AQL_GET_TOUCHPOINT_BY_URL");
 	static final String AQL_GET_TOUCHPOINTS = AqlTemplate.get("AQL_GET_TOUCHPOINTS");
-
+	static final String AQL_GET_TOP_100_TOUCHPOINTS_BY_PROFILE  = AqlTemplate.get("AQL_GET_TOP_100_TOUCHPOINTS_BY_PROFILE");
+	static final String AQL_GET_TOUCHPOINT_FLOW_BY_PROFILE  = AqlTemplate.get("AQL_GET_TOUCHPOINT_FLOW_BY_PROFILE");
+	
 	
 
 	public static String save(Touchpoint tp) {
@@ -63,6 +65,17 @@ public class TouchpointDaoUtil {
 		bindVars.put("startIndex", startIndex);
 		bindVars.put("numberResult", numberResult);
 		List<Touchpoint> list = new ArangoDbQuery<Touchpoint>(db, AQL_GET_TOUCHPOINTS, bindVars, Touchpoint.class)
+				.getResultsAsList();
+		return list;
+	}
+	
+	public static List<Touchpoint> top100ByProfile(String profileId) {
+		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
+		
+		Map<String, Object> bindVars = new HashMap<>(1);
+		bindVars.put("profileId", profileId);
+		
+		List<Touchpoint> list = new ArangoDbQuery<Touchpoint>(db, AQL_GET_TOP_100_TOUCHPOINTS_BY_PROFILE, bindVars, Touchpoint.class)
 				.getResultsAsList();
 		return list;
 	}
