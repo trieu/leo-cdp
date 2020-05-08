@@ -19,6 +19,7 @@ import leotech.cms.model.Post;
 import leotech.cms.model.User;
 import leotech.cms.model.bot.LeoBot;
 import leotech.cms.model.common.ContentType;
+import leotech.cms.query.SearchPostUtil;
 import leotech.crawler.model.CrawledYouTubeVideo;
 import leotech.system.util.seach.LuceneSearchPostUtil;
 
@@ -27,13 +28,8 @@ public class PostDataService {
 	// TODO add shared redis cache here
 
 	public static int rebuildSearchIndex() throws IOException {
-		File dir = new File(LuceneSearchPostUtil.LUCENE_INDEX_FOLDER_NAME);
-		if (dir.isDirectory()) {
-			FileUtils.deleteDirectory(dir);
-		}
-		List<Post> posts = PostDaoUtil.listByNetwork(MediaNetwork.DEFAULT_ID, 0, Integer.MAX_VALUE);
-		LuceneSearchPostUtil.insertPostIndex(posts);
-		return posts.size();
+		int s = SearchPostUtil.indexing();
+		return s;
 	}
 
 	public static String savePostInfo(CrawledYouTubeVideo tubeVideo, String ownerId, String pageId,
@@ -56,7 +52,7 @@ public class PostDataService {
 
 		String saveId = PostDaoUtil.save(post);
 		if (saveId != null) {
-			LuceneSearchPostUtil.doPostIndexing(post);
+			SearchPostUtil.doPostIndexing(post);
 		}
 		return saveId;
 	}
@@ -165,9 +161,9 @@ public class PostDataService {
 		String saveId = PostDaoUtil.save(post);
 		if (saveId != null) {
 			if (updateData) {
-				LuceneSearchPostUtil.updateIndexedPost(post);
+				SearchPostUtil.updateIndexedPost(post);
 			} else {
-				LuceneSearchPostUtil.insertPostIndex(post);
+				SearchPostUtil.insertPostIndex(post);
 			}
 		}
 		return saveId;
@@ -176,7 +172,7 @@ public class PostDataService {
 	public static boolean deletePost(String postId) {
 		boolean ok = PostDaoUtil.deletePost(postId);
 		if (ok) {
-			LuceneSearchPostUtil.deletePostIndex(postId);
+			SearchPostUtil.deletePostIndex(postId);
 		}
 		return ok;
 	}

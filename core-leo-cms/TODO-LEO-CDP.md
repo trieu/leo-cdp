@@ -8,6 +8,10 @@
 
 ## Case study 
 
+## Simple Recommendation Engine with Apache Spark
+
+https://dzone.com/articles/building-sales-recommendation-engine-with-apache-s
+
 ## Public API for tracking
 
 getContextSession

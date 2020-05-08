@@ -16,7 +16,7 @@ import leotech.cms.model.renderable.ContentMediaBox;
 import leotech.cms.model.renderable.MediaNetworkDataModel;
 import leotech.cms.model.renderable.PostDataModel;
 import leotech.cms.model.renderable.WebData;
-import leotech.system.util.seach.LuceneSearchPostUtil;
+import leotech.cms.query.SearchPostUtil;
 import rfx.core.util.StringUtil;
 
 public class WebDataServiceUtil {
@@ -123,7 +123,7 @@ public class WebDataServiceUtil {
 			} else {
 				keywords = new String[]{};
 			}
-			List<Post> posts = LuceneSearchPostUtil.searchPublicPost(keywords, startIndex, numberResult);
+			List<Post> posts = SearchPostUtil.searchPublicPost(keywords, startIndex, numberResult);
 			String title = keywordsStr + " - Content Search";
 			if (posts != null) {
 				model = new PostDataModel(networkDomain, webTemplateFolder, SEARCH_POST, title, posts);
