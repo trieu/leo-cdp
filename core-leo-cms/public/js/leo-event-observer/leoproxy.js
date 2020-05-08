@@ -52,8 +52,9 @@
  				initLeoContextSession()
             } 
             else if (hash === "LeoObserverProxyReady") {
-                if (typeof leoObserverProxyReady === "function") {
-                	leoObserverProxyReady();
+            	var f = window.leoObserverProxyReady;
+                if (typeof f === "function") {
+                	f();
                 }
             }
         }
@@ -61,7 +62,7 @@
         // Listen to messages from parent window
         
         bindEvent(window, 'message', function(e) {
-        	//console.log("===> host.e.origin " + e.origin)
+        	//console.log("===> host.e.origin " + e.origin + " data " + e.data)
         	if (e.origin !== targetPostMessage)
         	    return;
         	LeoObserverProxy.messageHandler(e.data);

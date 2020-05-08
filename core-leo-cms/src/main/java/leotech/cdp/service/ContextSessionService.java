@@ -70,8 +70,7 @@ public class ContextSessionService {
 		
 		
 		// load profile ID from DB
-		Profile profile = ProfileDataService.updateOrCreateFromWebTouchpoint(observerId, srcTouchpointId, refTouchpointId, touchpointRefDomain, ip, 
-				visitorId, userDeviceId, fingerprintId);
+		Profile profile = ProfileDataService.updateOrCreateFromWebTouchpoint(observerId, srcTouchpointId, refTouchpointId, touchpointRefDomain, ip, visitorId, userDeviceId, fingerprintId);
 		String profileId = profile.getId();
 		visitorId = profile.getVisitorId();
 		int profileType = profile.getType();

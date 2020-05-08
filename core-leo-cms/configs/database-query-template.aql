@@ -176,10 +176,23 @@ AQL_GET_PROFILE_BY_IDENTITY =>
 ;
 
 AQL_GET_PROFILE_BY_KEY_IDENTITIES => 
-	FOR e in cdp_profile 
-	FILTER  e.status == 1 AND (@visitorId IN e.identities[*] OR @userDeviceId IN e.usedDeviceIds[*] OR @fingerprintId IN e.identities[*]
-			OR @email IN e.identities[*] OR @phone IN e.identities[*])
-	RETURN e
+	LET rs1 = (
+        FOR e in cdp_profile 
+        FILTER  e.status == 1 AND (
+            @visitorId IN e.identities[*] 
+            OR @userDeviceId IN e.usedDeviceIds[*]  	
+            OR @email IN e.identities[*] 
+            OR @phone IN e.identities[*])
+        LIMIT 1
+    	RETURN e
+    )
+    LET rs2 = (
+        FOR e in cdp_profile 
+        FILTER e.status == 1 AND @fingerprintId IN e.identities[*]
+        LIMIT 1
+    	RETURN e
+    )
+	RETURN { "deterministic" : rs1, "probabilistic" : rs2 }
 ;
 
 ########### AQL CDP CONTEXT_SESSION COLLECTION ########################################################################################################;

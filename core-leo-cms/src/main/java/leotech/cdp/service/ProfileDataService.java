@@ -17,6 +17,7 @@ public class ProfileDataService {
 			String refTouchpointId, String touchpointRefDomain, String lastSeenIp, String visitorId,
 			String userDeviceId, String fingerprintId, String email, String phone, String loginId, String loginProvider) {
 
+		// the key function for real-time Identity Resolution into one profile
 		Profile pf = ProfileDaoUtil.getByKeyIdentities(visitorId, email, phone, userDeviceId, fingerprintId);
 		
 		if (pf == null) {

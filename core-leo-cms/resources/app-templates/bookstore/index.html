@@ -143,27 +143,6 @@
             });
         }
 
-        window.fbAsyncInit = function () {
-            FB.init({
-                appId: '514311416047283',
-                cookie: true, // enable cookies to allow the server to access the session
-                xfbml: true, // parse social plugins on this page
-                version: 'v7.0' // The Graph API version to use for the call
-            });
-            FB.getLoginStatus(function (response) {
-                statusChangeCallback(response);
-            });
-        };
-
-        // Load the SDK asynchronously
-       (function(d, s, id){
-     	 var js, fjs = d.getElementsByTagName(s)[0];
-	     if (d.getElementById(id)) {return;}
-	     js = d.createElement(s); js.id = id;
-	     js.src = "https://connect.facebook.net/en_US/sdk.js";
-	     fjs.parentNode.insertBefore(js, fjs);
-	   }(document, 'script', 'facebook-jssdk'));
-
         function facebookReadyAPI() {
             console.log('Welcome!  Fetching your information.... ');
             FB.api('/me', {
@@ -180,6 +159,31 @@
     		    LeoObserverProxy.updateProfileBySession({email: response.email})
             });
         }
+        
+        function loadFacebookSdk(){
+        	 window.fbAsyncInit = function () {
+                 FB.init({
+                     appId: '514311416047283',
+                     cookie: true, // enable cookies to allow the server to access the session
+                     xfbml: true, // parse social plugins on this page
+                     version: 'v7.0' // The Graph API version to use for the call
+                 });
+                 FB.getLoginStatus(function (response) {
+                     statusChangeCallback(response);
+                 });
+             };
+
+             // Load the SDK asynchronously
+            (function(d, s, id){
+          	 var js, fjs = d.getElementsByTagName(s)[0];
+     	     if (d.getElementById(id)) {return;}
+     	     js = d.createElement(s); js.id = id;
+     	     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     	     fjs.parentNode.insertBefore(js, fjs);
+     	   }(document, 'script', 'facebook-jssdk'));
+        }
+        
+        loadFacebookSdk();
     </script>
 
     {{#renderHtmlView "bookstore/layout" this }}{{/renderHtmlView}}
@@ -208,10 +212,12 @@
 		})();
 		
 		function leoObserverProxyReady() {
+			
+			
 		    //Leo is ready, record view data
 		    LeoObserverProxy.recordViewEvent("pageview");
-		   
 		    
+ 
 		    // record action data
 		    $('a[href^="/html/post"]').click(function(event) {
 		        //event.preventDefault(); // Don't follow the link

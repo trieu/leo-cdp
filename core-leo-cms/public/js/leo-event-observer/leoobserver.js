@@ -721,10 +721,17 @@
 (function(global, undefined) {
     var LeoEventObserver = {};
     var sessionKey = false;
+    var debug = true;
+    
+    function debugLog(data){
+    	if(debug && window.console){
+			window.console.log(data);
+		}
+    }
     
     function setSessionKey(key){
     	sessionKey = key;
-    	lscache.set("leoctxsk", sessionKey, 10);
+    	lscache.set("leoctxsk", sessionKey, SESSION_CACHE_MINUTES);
     }
     
     function getSessionKey(){
@@ -830,16 +837,15 @@
     	}
     	
 		sendMessage("LeoObserverProxyReady");
-        if(window.console){
-			window.console.log(data);
-		}
+        debugLog(data);
     }
 
     var getContextSession = function(params) {
-    	
     	var leoctxsk = getSessionKey();
     	var isExpired = typeof leoctxsk !== 'string';
-    	isExpired = true;
+    	
+    	//isExpired = true; // TODO to debug, uncomment this line
+    	
     	if( isExpired ){
     		// the cache is expired
     		var h = function(resHeaders, text) {
@@ -862,7 +868,6 @@
     		// the cache is valid
     		sendMessage("LeoObserverProxyReady");
     	}
-        
     }
 
     LeoEventObserver.doTracking = doTracking;

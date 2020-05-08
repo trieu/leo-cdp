@@ -7,7 +7,7 @@
 	<div id="leoproxy" ></div>
 	
 	<script>
-		console.log()
+		
 		var ROOT_DOMAIN = '';
 		var PARENT_ORIGIN = '*';
 	 	if (location.hash.length > 0) {
@@ -24,6 +24,7 @@
         var PREFIX_EVENT_VIEW_URL = LEO_LOG_URL + "/etv";
         var PREFIX_EVENT_ACTION_URL = LEO_LOG_URL + "/eta";
         var PREFIX_EVENT_CONVERSION_URL = LEO_LOG_URL + "/etc";
+        var SESSION_CACHE_MINUTES = 20;
        
          // addEventListener support for IE8
         function bindEvent(element, eventName, eventHandler) {
@@ -42,15 +43,16 @@
             window.parent.postMessage(msg, PARENT_ORIGIN);
         };
         
-     
-        
         // Listen to messages from parent window
         bindEvent(window, 'message', function (e) {
-        	//console.log("===> iframe.e.origin " + e.origin)
+        	
+        	//console.log("===> iframe.e.origin " + e.origin + " data " + e.data)
+        	
         	if (e.origin !== PARENT_ORIGIN)
         	    return;
   		   	proxyCallHandler(JSON.parse(e.data))
         });
+        
         
         function loadScript(src, callback) {
 		  var s,r,t;
@@ -70,29 +72,50 @@
     </script>
     
     <script>
-        
+        // the event queue
+    	var queueTracking = [], queueUpdating = [];
     	
     	var proxyCallHandler = function(data){
         	if(data.call === 'getContextSession' && data.params) {
         		LeoEventObserver.getContextSession(data.params);
         	}
         	else if(data.call === 'doTracking' && data.eventType && data.params){
-        		LeoEventObserver.doTracking(data.eventType, data.params);
+        		queueTracking.push(data);
         	} 
         	else if(data.call === 'updateProfile' && data.params ){
-        		LeoEventObserver.updateProfile(data.params);
+        		queueUpdating.push(data);
         	}
         }
     	
     	var codeIsReady = function(){
+    		
         	LeoEventObserver.initFingerprint();
+        	
         	setTimeout(function(){
         		sendMessage("LeoObserverProxyLoaded");
-        	},789)
+        	},500);
+        	
+        	setInterval(function(){
+        		
+        		var len = queueTracking.length;
+        		while(len > 0) { 
+        			var data = queueTracking.pop(); 
+        			LeoEventObserver.doTracking(data.eventType, data.params);
+        			len = len - 1;
+        		}
+        		
+        		len = queueUpdating.length;
+        		while(len > 0) { 
+        			var data = queueUpdating.pop(); 
+        			LeoEventObserver.updateProfile(data.params);
+        			len = len - 1;
+        		}
+        		
+        	},678);
     	}
 
         loadScript('//' + ROOT_DOMAIN +'/public/js/leo-event-observer/hash.min.js',function(){
-        	loadScript('//' + ROOT_DOMAIN +'/public/js/leo-event-observer/leoobserver.js',codeIsReady);
+        	loadScript('//' + ROOT_DOMAIN +'/public/js/leo-event-observer/leoobserver.js', codeIsReady);
         })
     </script>
 
