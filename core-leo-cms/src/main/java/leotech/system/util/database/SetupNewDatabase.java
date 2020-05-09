@@ -150,9 +150,9 @@ public class SetupNewDatabase {
 			boolean ok = UserDaoUtil.activateAsSuperAdmin(firstUser.getUserLogin());
 			if (ok) {
 				System.out.println("activateAsSuperAdmin OK");
-				String categoryKey = CategoryDaoUtil.save(new Category("Document", MediaNetwork.DEFAULT_ID));
+				String categoryKey = CategoryDaoUtil.save(new Category("Website Contents", MediaNetwork.DEFAULT_ID));
 				if (categoryKey != null) {
-					Page page = new Page("Introduction to Leo", MediaNetwork.DEFAULT_ID, categoryKey,
+					Page page = new Page("Introduction to Leo CDP", MediaNetwork.DEFAULT_ID, categoryKey,
 							firstUser.getKey());
 					page.setMediaInfo("TODO");
 					PageDaoUtil.save(page);

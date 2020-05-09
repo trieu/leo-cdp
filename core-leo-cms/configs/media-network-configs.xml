@@ -82,8 +82,8 @@
         <AppTemplateFolder></AppTemplateFolder>      
         <ContentCategoryId>318084</ContentCategoryId>
         <PublicContentClass>standard</PublicContentClass>
-        <PageTitle>Bookstore Demo</PageTitle>
-        <PageHeaderLogo>/public/images/leotech-logo.png</PageHeaderLogo>
+        <PageTitle>Leo CDP for Book Retail Industry</PageTitle>
+        <PageHeaderLogo>/public/images/leo-cdp-logo.png</PageHeaderLogo>
         <BaseStaticUrl>bookstore.bigdatavietnam.org</BaseStaticUrl>
         <BaseAdminApiUrl>bookstore.bigdatavietnam.org</BaseAdminApiUrl>
         <BaseDeliveryApiUrl>bookstore.bigdatavietnam.org</BaseDeliveryApiUrl>

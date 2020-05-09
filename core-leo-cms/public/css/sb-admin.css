@@ -562,7 +562,7 @@ img {
 		
 	}
 	#page-wrapper {
-		padding-left: 220px;
+		padding-left: 234px;
 	}
 }
 
@@ -670,8 +670,8 @@ ul.alert-dropdown {
 	.side-nav {
 		position: fixed;
 		top: 51px;
-		left: 200px;
-		width: 226px;
+		left: 198px;
+    	width: 234px;
 		height: 100%;
 		margin-left: -200px;
 		padding-bottom: 60px;
