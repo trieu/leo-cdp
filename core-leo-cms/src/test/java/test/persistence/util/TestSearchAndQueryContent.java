@@ -23,81 +23,82 @@ import leotech.system.util.CmsLogUtil;
 import leotech.system.util.database.ArangoDbUtil;
 
 public class TestSearchAndQueryContent {
-    @BeforeTest
-    public void setup() {
-	System.out.println("setup");
-    }
-
-    @AfterTest
-    public void clean() {
-	System.out.println("clean");
-    }
-
-    // @Test(priority = 1)
-    public void listPagesByKeywords() {
-	String[] keywords = "vietnam, steel market".split(",");
-	List<Page> pages = ContentQueryDaoUtil.listPagesByKeywords(keywords, true, false, true);
-	for (Page p : pages) {
-	    System.out.println(p.getTitle());
-	    System.out.println(p.getTitle());
-	}
-	Assert.assertTrue(pages.size() > 0);
-    }
-
-    @Test(priority = 2)
-    public void listPostsByCategoriesAndKeywords() {
-
-	String[] defCategoryKeys = new String[] { "1329181", "1329376", "1329482" };
-	String[] keywords = new String[] {};
-	Map<String, List<Post>> results = ContentQueryDaoUtil.listPostsByCategoriesAndKeywords(defCategoryKeys, keywords, true, true, true);
-
-	Set<String> catSlugs = results.keySet();
-
-	for (String catSlug : catSlugs) {
-	    List<Post> posts = results.get(catSlug);
-	    for (Post p : posts) {
-		// System.out.println(catSlug + " => " + p.getTitle());
-	    }
+	@BeforeTest
+	public void setup() {
+		System.out.println("setup");
 	}
 
-	Assert.assertTrue(results.size() > 0);
-    }
+	@AfterTest
+	public void clean() {
+		System.out.println("clean");
+	}
 
-    protected static void testGetAllKeywords() {
-	List<String> list = PostDaoUtil.getAllKeywords();
-	List<Map<String, String>> keywords = list.stream().map(e -> {
-	    Map<String, String> map = new HashMap<>(1);
-	    map.put("name", e);
-	    return map;
-	}).collect(Collectors.toList());
-	JsonDataPayload payload = JsonDataPayload.ok("", keywords, false);
-	payload.setReturnOnlyData(true);
-	System.out.println(payload.toString());
-    }
+	// @Test(priority = 1)
+	public void listPagesByKeywords() {
+		String[] keywords = "vietnam, steel market".split(",");
+		List<Page> pages = ContentQueryDaoUtil.listPagesByKeywords(keywords, true, false, true);
+		for (Page p : pages) {
+			System.out.println(p.getTitle());
+			System.out.println(p.getTitle());
+		}
+		Assert.assertTrue(pages.size() > 0);
+	}
 
-    public static void main(String[] args) {
-	ArangoDbUtil.setDbConfigs(DbConfigs.load("dbConfigsBluescope"));
-	
-	List<ContentClassPostQuery> ccpQueries = new ArrayList<>();
-	ccpQueries.add(new ContentClassPostQuery("market_news","news", "1329181"));
-	ccpQueries.add(new ContentClassPostQuery("product_list","product", "1329376"));
-	ccpQueries.add(new ContentClassPostQuery("project_list","project", "1329482"));
+	@Test(priority = 2)
+	public void listPostsByCategoriesAndKeywords() {
 
-	System.out.println(PostDaoUtil.buildContentClassPostQuery(ccpQueries));
-	System.out.println(PostDaoUtil.checkLimitOfLicense());
-	testQueryPostsForHomepage();
-    }
+		String[] defCategoryKeys = new String[]{"1329181", "1329376", "1329482"};
+		String[] keywords = new String[]{};
+		Map<String, List<Post>> results = ContentQueryDaoUtil.listPostsByCategoriesAndKeywords(defCategoryKeys,
+				keywords, true, true, true);
 
-    public static void testQueryPostsForHomepage() {
-	CmsLogUtil.setLogLevelToInfo();
-	List<ContentClassPostQuery> ccpQueries = new ArrayList<>();
-	ccpQueries.add(new ContentClassPostQuery("market_news","news", "1329181"));
-	ccpQueries.add(new ContentClassPostQuery("product_list","product", "1329376"));
-	ccpQueries.add(new ContentClassPostQuery("project_list","project", "1329482"));
-	// new TestSearchAndQueryContent().listPostsByCategoriesAndKeywords();
-	Map<String, Object> map = PostDaoUtil.getPostsOfDefaultHomepage(ccpQueries);
-	System.out.println(JsonDataPayload.ok("", map));
-	rfx.core.util.Utils.exitSystemAfterTimeout(1000);
-    }
+		Set<String> catSlugs = results.keySet();
+
+		for (String catSlug : catSlugs) {
+			List<Post> posts = results.get(catSlug);
+			for (Post p : posts) {
+				// System.out.println(catSlug + " => " + p.getTitle());
+			}
+		}
+
+		Assert.assertTrue(results.size() > 0);
+	}
+
+	protected static void testGetAllKeywords() {
+		List<String> list = PostDaoUtil.getAllKeywords();
+		List<Map<String, String>> keywords = list.stream().map(e -> {
+			Map<String, String> map = new HashMap<>(1);
+			map.put("name", e);
+			return map;
+		}).collect(Collectors.toList());
+		JsonDataPayload payload = JsonDataPayload.ok("", keywords, false);
+		payload.setReturnOnlyData(true);
+		System.out.println(payload.toString());
+	}
+
+	public static void main(String[] args) {
+		ArangoDbUtil.setDbConfigs(DbConfigs.load("dbConfigsBluescope"));
+
+		List<ContentClassPostQuery> ccpQueries = new ArrayList<>();
+		ccpQueries.add(new ContentClassPostQuery("market_news", "news", "1329181"));
+		ccpQueries.add(new ContentClassPostQuery("product_list", "product", "1329376"));
+		ccpQueries.add(new ContentClassPostQuery("project_list", "project", "1329482"));
+
+		System.out.println(PostDaoUtil.buildContentClassPostQuery(ccpQueries));
+		System.out.println(PostDaoUtil.checkLimitOfLicense());
+		testQueryPostsForHomepage();
+	}
+
+	public static void testQueryPostsForHomepage() {
+
+		List<ContentClassPostQuery> ccpQueries = new ArrayList<>();
+		ccpQueries.add(new ContentClassPostQuery("market_news", "news", "1329181"));
+		ccpQueries.add(new ContentClassPostQuery("product_list", "product", "1329376"));
+		ccpQueries.add(new ContentClassPostQuery("project_list", "project", "1329482"));
+		// new TestSearchAndQueryContent().listPostsByCategoriesAndKeywords();
+		Map<String, Object> map = PostDaoUtil.getPostsOfDefaultHomepage(ccpQueries);
+		System.out.println(JsonDataPayload.ok("", map));
+		rfx.core.util.Utils.exitSystemAfterTimeout(1000);
+	}
 
 }

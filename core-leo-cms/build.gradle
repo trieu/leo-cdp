@@ -84,7 +84,10 @@ dependencies {
 		,'io.vertx:vertx-web:3.8.5'
 		,'io.vertx:vertx-codegen:3.8.5'
 		,'com.google.code.gson:gson:2.8.2'
-		,'log4j:log4j:1.2.17'
+		
+		,'org.apache.logging.log4j:log4j-api:2.13.2'
+		,'org.apache.logging.log4j:log4j-core:2.13.2'
+		
 		,'org.jsoup:jsoup:1.13.1'					
 		,'org.apache.commons:commons-lang3:3.3.2'
 		,'commons-net:commons-net:3.6'    		
