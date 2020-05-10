@@ -29,6 +29,7 @@ import rfx.core.util.StringUtil;
 public class Touchpoint extends CdpPersistentObject {
 
 	public static final class TouchpointType {
+		//online
 		public static final int ECOMMERCE_PLATFORM = 1;
 		public static final int WEBSITE = 2;
 		public static final int MOBILE_APP = 3;
@@ -36,10 +37,13 @@ public class Touchpoint extends CdpPersistentObject {
 		public static final int IOT_APP = 5;
 		public static final int OTT_APP = 6;
 		public static final int SOCIAL_MEDIA_PLATFORM = 7;
+		
+		//offline retail
 		public static final int URBAN_MARKET = 8;
 		public static final int RETAIL_STORE = 9;
+		
+		//offline
 		public static final int TRADITIONAL_TV = 10;
-
 		public static final int SHOPPING_MALL = 11;
 		public static final int COFFEE_SHOP = 12;
 		public static final int CONFERENCE_HALL = 13;

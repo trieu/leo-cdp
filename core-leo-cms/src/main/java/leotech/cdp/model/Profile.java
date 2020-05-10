@@ -210,6 +210,12 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	@Expose
 	int partitionId = 0;
+	
+	@Expose
+	Map<String, Map<String,String>> extData = new HashMap<>();
+	
+	@Expose
+	Map<String, Map<String,String>> predictionMetrics = new HashMap<>();
 
 	@Override
 	public int compareTo(Profile o) {
