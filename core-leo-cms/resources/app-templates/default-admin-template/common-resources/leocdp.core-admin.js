@@ -60,7 +60,7 @@ function loadCategoryNavigation() {
         if (rs.data && rs.httpCode === 0) {
             var raw_template = $('#category-navigation-tpl').html();
             var template = Handlebars.compile(raw_template);
-            var placeHolder = $('#categoryNavigation');
+            var placeHolder = $('#content_hub_menu');
             rs.data.forEach(function (e) {
                 //console.log(e);	
                 //e.name = toTitleCase(e.name);

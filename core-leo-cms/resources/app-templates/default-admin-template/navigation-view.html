@@ -44,12 +44,15 @@
 		<ul class="nav navbar-nav side-nav">
 		
 			<li style="display: block;" >
-				<a href="javascript:;" data-toggle="collapse" data-target="#menuAdReport"> <i class="fa fa-fw fa-exchange"></i>
+				<a href="javascript:;" data-toggle="collapse" data-target="#business_hub_menu"> <i class="fa fa-fw fa-exchange"></i>
 					Business Hub  <i class="fa fa-fw fa-caret-down"></i>
 				</a>
-				<ul id="menuAdReport" class="collapse in" aria-expanded="true">			
+				<ul id="business_hub_menu" class="collapse in" aria-expanded="true">			
 					<li style="display: ;" >
 						<a href="#calljs-loadLeadReport()"> <i class="fa fa-fw fa-line-chart"></i> Sales Dashboard </a>
+					</li>
+					<li style="display: ;" >
+						<a href="#calljs-loadLeadReport()"> <i class="fa fa-fw fa-map-o"></i> Customer Journey Map </a>
 					</li>		
 					<li>
 						<a href="#calljs-"> <i class="fa fa-fw fa-cubes"></i> Product Catalog</a>
@@ -64,12 +67,15 @@
 			</li>
 
 			<li>
-				<a href="javascript:;" data-toggle="collapse" data-target="#categoryNavigation"> <i class="fa fa-fw fa-sitemap"></i>
+				<a href="javascript:;" data-toggle="collapse" data-target="#content_hub_menu"> <i class="fa fa-fw fa-sitemap"></i>
 					Content Hub <i class="fa fa-fw fa-caret-down"></i>
 				</a>
-				<ul id="categoryNavigation" class="collapse in" aria-expanded="true">
-					<li style="display: ;" >
+				<ul id="content_hub_menu" class="collapse in" aria-expanded="true">
+					<li >
 						<a href="#calljs-loadContentReport()"> <i class="fa fa-fw fa-area-chart"></i> Content Dashboard</a>
+					</li>
+					<li>
+						<a href="#calljs-loadCategoryList()"> <i class="fa fa-folder-open-o" aria-hidden="true"></i> Category Folder </a>
 					</li>
 					<li>
 						<a href="#calljs-"> <i class="fa fa-fw fa-plug"></i> Content Hub API</a>
@@ -78,24 +84,19 @@
 			</li>
 
 			<li >
-				<a href="javascript:;" data-toggle="collapse" data-target="#menuAdReport"> <i class="fa fa-fw fa-database"></i>
+				<a href="javascript:;" data-toggle="collapse" data-target="#audience_hub_menu"> <i class="fa fa-fw fa-database"></i>
 					Audience Hub <i class="fa fa-fw fa-caret-down"></i>
 				</a>
-				<ul id="menuAdReport" class="collapse in" aria-expanded="true">
+				<ul id="audience_hub_menu" class="collapse in" aria-expanded="true">
 					<li>
 						<a href="#calljs-loadMainDashboard()"> <i class="fa fa-fw fa-area-chart"></i> Audience Dashboard </a>
 					</li>
-					<li style="display: ;" >
-						<a href="#calljs-loadLeadReport()"> <i class="fa fa-fw fa-map-o"></i> Journey Maps </a>
-					</li>
+					
 					<li>
-						<a href="#calljs-loadUserReport()"> <i class="fa fa-fw fa-users"></i> Audience Profiles </a>
+						<a href="#calljs-loadUserReport()"> <i class="fa fa-fw fa-users"></i> Audience Profile </a>
 					</li>
-					<li style="display: ;" >
-						<a href="#calljs-loadLeadReport()"> <i class="fa fa-fw fa-object-group"></i> Segments </a>
-					</li>
-					<li style="display: ;" >
-						<a href="#calljs-loadLeadReport()"> <i class="fa fa-fw fa-line-chart"></i> Custom Reporting </a>
+					<li  >
+						<a href="#calljs-loadLeadReport()"> <i class="fa fa-fw fa-object-group"></i> Profile Segmentation </a>
 					</li>
 					<li>
 						<a href="#calljs-"> <i class="fa fa-fw fa-plug"></i> Audience Hub API</a>
@@ -104,18 +105,21 @@
 			</li>
 
 			<li style="display: block;" >
-				<a href="javascript:;" data-toggle="collapse" data-target="#menuAdReport"> <i class="fa fa-fw fa-heart"></i>
+				<a href="javascript:;" data-toggle="collapse" data-target="#personalization_hub"> <i class="fa fa-fw fa-heart"></i>
 					Personalization Hub<i class="fa fa-fw fa-caret-down"></i>
 				</a>
-				<ul id="menuAdReport" class="collapse in" aria-expanded="true">					
+				<ul id="personalization_hub" class="collapse in" aria-expanded="true">					
 					<li>
-						<a href="#calljs-"> <i class="fa fa-fw fa-camera"></i> Data Observer</a>
+						<a href="#calljs-"> <i class="fa fa-fw fa-camera"></i> Data Observer Tag</a>
+					</li>
+					<li>
+						<a href="#calljs-"> <i class="fa fa-fw fa-plug"></i> Data Observer API</a>
 					</li>				
 					<li>
-						<a href="#calljs-"> <i class="fa fa-fw fa-user-circle-o"></i> Persona Models</a>
+						<a href="#calljs-"> <i class="fa fa-fw fa-user-circle"></i> Leo A.I Prediction Model </a>
 					</li>	
 					<li>
-						<a href="#calljs-"> <i class="fa fa-fw fa-internet-explorer"></i> Web Widgets</a>
+						<a href="#calljs-"> <i class="fa fa-fw fa-internet-explorer"></i> Web Widget </a>
 					</li>
 					<li>
 						<a href="#calljs-"> <i class="fa fa-fw fa-plug"></i> Smart Recommender API</a>
@@ -124,18 +128,15 @@
 			</li>
 
 			<li>
-				<a href="javascript:;" data-toggle="collapse" data-target="#menuUsers"> <i class="fa fa-cogs" aria-hidden="true"></i>
+				<a href="javascript:;" data-toggle="collapse" data-target="#system_management_menu"> <i class="fa fa-cogs" aria-hidden="true"></i>
 					System Management <i class="fa fa-fw fa-caret-down"></i>
 				</a>
-				<ul id="menuUsers" class="collapse in" aria-expanded="false">
+				<ul id="system_management_menu" class="collapse in" aria-expanded="false">
 					<li>
-						<a href="#calljs-loadUserList()"> <i class="fa fa-user-plus" aria-hidden="true"></i> User Management </a>
+						<a href="#calljs-loadUserList()"> <i class="fa fa-user-plus" aria-hidden="true"></i>  User Login Management </a>
 					</li>
 					<li>
-						<a href="#calljs-loadCategoryList()"> <i class="fa fa-folder-open-o" aria-hidden="true"></i> Category Management</a>
-					</li>
-					<li>
-						<a href="#calljs-loadSystemManagement()"> <i class="fa fa-cog" aria-hidden="true"></i> System Configs</a>
+						<a href="#calljs-loadSystemManagement()"> <i class="fa fa-cog" aria-hidden="true"></i> System configuration </a>
 					</li>
 				</ul>
 			</li>
@@ -166,7 +167,7 @@
 
 	function mainViewReady() {
 		if (isMobileDevice()) {
-			var msg ='<div class="alert alert-info"> <strong> CMS Admin</strong> is not supported on mobile browsers! </div>';
+			var msg ='<div class="alert alert-info"> <strong> Leo CDP Admin</strong> is not supported on mobile browsers! </div>';
 			$('#page-main-notification').show().html(msg);
 		} else {
 			loadCategoryNavigation();

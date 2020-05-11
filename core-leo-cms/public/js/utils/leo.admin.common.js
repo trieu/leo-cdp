@@ -182,6 +182,7 @@
 
 window.loadView = window.loadView || function (uri, divSelector, callback) {
 
+	//caching view in LocalStorage
 	var time2Live = typeof window.apiCacheTime2Live === 'number' ? window.apiCacheTime2Live : 1; // in munute
 	var apiCacheEnabled = typeof window.apiCacheEnabled === 'boolean' ? window.apiCacheEnabled : true;
 	var cacheKey = 'lview_' + getCacheKey(uri + divSelector, {});
@@ -189,6 +190,7 @@ window.loadView = window.loadView || function (uri, divSelector, callback) {
 	if (apiCacheEnabled) {
 		result = lscache.get(cacheKey);
 	}
+	
 	if (result) {
 		$(divSelector).empty().html(result);
 		if (typeof callback === 'function') {
