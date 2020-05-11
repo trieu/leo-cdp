@@ -1,10 +1,10 @@
 package leotech.starter;
 
-import leotech.system.util.CmsLogUtil;
+import leotech.system.util.LogUtil;
 
 public class TrackingWorkerStarter {
 	public static void main(String[] args) throws Exception {
-		CmsLogUtil.setLogLevelToInfo();
+		LogUtil.setLogLevelToInfo();
 		HttpWorker.start("dataTrackingWorker");
 	}
 }

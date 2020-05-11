@@ -19,7 +19,7 @@ import leotech.cms.model.Page;
 import leotech.cms.model.Post;
 import leotech.core.config.DbConfigs;
 import leotech.system.model.JsonDataPayload;
-import leotech.system.util.CmsLogUtil;
+import leotech.system.util.LogUtil;
 import leotech.system.util.database.ArangoDbUtil;
 
 public class TestSearchAndQueryContent {

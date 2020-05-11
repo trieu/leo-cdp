@@ -17,7 +17,7 @@ import leotech.cms.handler.tracking.RealtimeDataHandler;
 import leotech.cms.service.RealtimeDataService;
 import leotech.core.api.BaseHttpRouter;
 import leotech.core.config.HttpRoutingConfigs;
-import leotech.system.util.CmsLogUtil;
+import leotech.system.util.LogUtil;
 import leotech.system.util.database.ArangoDbUtil;
 import rfx.core.stream.node.worker.BaseWorker;
 
@@ -61,7 +61,7 @@ public class HttpWorker extends BaseWorker {
 	 * @param httpHandler
 	 */
 	public static void start(String workerName) {
-		CmsLogUtil.setLogLevelToInfo();
+		LogUtil.setLogLevelToInfo();
 		System.setProperty("vertx.disableFileCPResolving", "true");
 
 		instance = new HttpWorker(workerName);

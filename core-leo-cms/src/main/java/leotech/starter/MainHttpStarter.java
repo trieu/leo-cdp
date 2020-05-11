@@ -1,11 +1,11 @@
 package leotech.starter;
 
-import leotech.system.util.CmsLogUtil;
+import leotech.system.util.LogUtil;
 
 public class MainHttpStarter {
 
 	public static void main(String[] args) throws Exception {
-		CmsLogUtil.setLogLevelToInfo();
+		LogUtil.setLogLevelToInfo();
 		if (args.length == 1) {
 			String workerName = args[0];
 			HttpWorker.start(workerName);
