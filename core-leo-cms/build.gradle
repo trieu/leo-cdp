@@ -21,8 +21,8 @@ repositories {
     }
 }
 
-configurations {
-    
+configurations.all {
+   exclude module: 'ch.qos.logback'
 }
 
 dependencies {
@@ -88,8 +88,7 @@ dependencies {
 		,'org.apache.logging.log4j:log4j-api:2.13.2'
 		,'org.apache.logging.log4j:log4j-core:2.13.2'
 		,'org.slf4j:slf4j-api:1.7.30'
-		
-		
+		,'org.slf4j:slf4j-simple:1.7.30'
 		
 		,'org.jsoup:jsoup:1.13.1'					
 		,'org.apache.commons:commons-lang3:3.3.2'

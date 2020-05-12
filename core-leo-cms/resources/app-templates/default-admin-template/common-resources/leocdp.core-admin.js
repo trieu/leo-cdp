@@ -137,31 +137,7 @@ function loadUserInfoWidget() {
     });
 }
 
-// ------------ Report Analytics Controllers ---------------------
 
-function loadMainDashboard() {
-    loadView('/view/report/main-dashboard.html?admin=1', pageDomSelector, function () {
-        loadDataMainDashboard();
-    });
-}
-
-function loadContentReport() {
-    loadView('/view/report/content-report.html?admin=1', pageDomSelector, function () {
-
-    });
-}
-
-function loadLeadReport() {
-    loadView('/view/report/lead-report.html?admin=1', pageDomSelector, function () {
-
-    });
-}
-
-function loadUserReport() {
-    loadView('/view/report/user-report.html?admin=1', pageDomSelector, function () {
-        loadDataUserAnalytics();
-    });
-}
 
 // ------------ Page Controllers ---------------------
 
