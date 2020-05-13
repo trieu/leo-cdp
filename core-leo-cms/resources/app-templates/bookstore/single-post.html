@@ -77,6 +77,14 @@
     var autoplayVideo = true;
     var isYoutube = false;
     var playerReadyCalled = false;
+    var contentClass = '{{contentClass}}';
+    var postType = {{type}};
+    
+    if(postType != 4){
+   		$('#postMediaVideo, #postMediaAction').hide();
+        $('#fbLikeBox').show();
+	}
+    
 
     function playerReady() {
         playerReadyCalled = true;

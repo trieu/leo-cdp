@@ -103,6 +103,7 @@
                 <label>Content Data Class </label>
                 <select id="contentClass" name="contentClass" data-placeholder="Choose a content class" class="select">
                     <option value="standard" selected>Standard Content</option>
+                    <option value="youtube_video">YouTube Embedded Video</option>
                     <option value="blogpost" >Blog Post</option>                    
                     <option value="news">News</option>
                     <option value="company_info">Company Information</option>
@@ -185,6 +186,16 @@
     function postTypeSelectionCallback(type) {
         postType = type;
         checkPostTypeAndSetupMediaEditor(postType, '');
+    }
+    
+    function initPostEditor(params){
+    	loadView('/view/common-widgets/headline-images.html?admin=1', '#post-headline-images', function () {
+            $('#post-headline-images div.thumbnail p').editable({
+                type: 'text',
+                title: 'Enter Image Label Value'
+            });
+            loadDataPostEditor(params)
+        });
     }
 
     function loadDataPostEditor(params) {
@@ -632,12 +643,7 @@
         }
     }
 
-    loadView('/view/common-widgets/headline-images.html?admin=1', '#post-headline-images', function () {
-        $('#post-headline-images div.thumbnail p').editable({
-            type: 'text',
-            title: 'Enter Image Label Value'
-        });
-    });
+    
 
     
    

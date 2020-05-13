@@ -55,6 +55,12 @@
 
 <script>
     var postModel = false;
+    
+    function initPostInfoView(params){
+    	loadView('/view/common-widgets/headline-images.html?admin=1', '#headline-images-div', function () {
+            loadDataPostInfo(params)
+        });
+    }
 
     function loadDataPostInfo(params) {
         if (params) {
@@ -146,5 +152,5 @@
         win.focus();
     }
 
-    loadView('/view/common-widgets/headline-images.html?admin=1', '#headline-images-div');
+    
 </script>

@@ -202,7 +202,7 @@ function postEditor(id, pageId, categoryKey) {
     console.log('postEditor' + id);
     loadView('/view/post/post-editor.html?admin=1', pageDomSelector, function () {
         console.log('edit post ' + id);
-        loadDataPostEditor({
+        initPostEditor({
             'postId': id,
             'pageId': pageId,
             'categoryKey': categoryKey
@@ -213,7 +213,7 @@ function postEditor(id, pageId, categoryKey) {
 function postInfo(id) {
     if (id) {
         loadView('/view/post/post-info.html?admin=1', pageDomSelector, function () {
-            loadDataPostInfo({
+        	initPostInfoView({
                 postId: id
             });
         });

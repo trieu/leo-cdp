@@ -192,7 +192,8 @@ img.article-image {
 }
 
 .portfolio-copy {
-    max-width: 800px;
+    max-width: 860px;
+    margin: auto;
 }
 
 .no-padding {
