@@ -40,3 +40,7 @@ http://log.xemgiday.com/eta?observer=tester&media=xemgiday.com&itouchid=homepage
 * learn from https://tealium.com/assets/pdf/tag_management_comparison_matrix.pdf
 * https://community.tealiumiq.com/t5/Data-Layer/Data-Layer-Definition-Publisher/ta-p/17268
 * https://docs.tealium.com/platforms/javascript/universal-data-object/
+
+## Chart & Visualization
+* http://sigmajs.org
+* https://www.chartjs.org

@@ -32,7 +32,7 @@
     	margin-top: 5px;
     }
     .chart_header {
-	    margin: 15px auto;
+	    margin: 15px auto 8px;
 	    text-align: center;
 	    background-color: #D3D3D3;
 	    border-radius: 7px;
@@ -89,36 +89,41 @@
     <!-- MAIN BODY here -->
 
     <div class="row">
-        <div class="col-md-3 chart_box">
-        	<h3 class="chart_header" >Audience Statistics</h3>
-            <div class="summary_metric">
-                <div class="vcenter">
-                   
-                    <h4> <span class="label label-default"> 33,801 </span> &nbsp; profiles </h4>
-                    <h4> <span class="label label-default"> 63 </span> &nbsp; segments </h4>
-                    <h4> <span class="label label-default"> 1,489 </span> &nbsp; customers </h4>
-                    <h4> <span class="label label-default"> 900 </span> &nbsp; new customers </h4>
- 
-                </div>
-            </div>
-            <hr>
-            <h3 class="chart_header" >Event Statistics</h3>
-            <div class="summary_metric">
-                <div class="vcenter">
-                
-                    <h4> <span class="label label-default"> 61,656 </span> &nbsp; content views </h4>
-                    <h4> <span class="label label-default"> 8,152 </span> &nbsp; product views </h4>
-                    <h4> <span class="label label-default"> 996 </span> &nbsp; purchases </h4>
-                    <h4> <span class="label label-default"> 921 </span> &nbsp; first-time purchases </h4>
-                    
-                </div>
-            </div>
+        <div class="col-md-3">
+        	<div class="chart_box">
+	        	<h3 class="chart_header" >Audience Statistics</h3>
+	            <div class="summary_metric">
+	                <div class="vcenter">
+	                   
+	                    <h4> <span class="label label-default"> 33,801 </span> &nbsp; profiles </h4>
+	                    <h4> <span class="label label-default"> 63 </span> &nbsp; segments </h4>
+	                    <h4> <span class="label label-default"> 1,489 </span> &nbsp; customers </h4>
+	                    <h4> <span class="label label-default"> 900 </span> &nbsp; new customers </h4>
+	 
+	                </div>
+	            </div>
+	            
+	            <h3 class="chart_header" >Event Tracking Statistics</h3>
+	            <div class="summary_metric">
+	                <div class="vcenter">
+	                
+	                    <h4> <span class="label label-default"> 61,656 </span> &nbsp; page views </h4>
+	                    <h4> <span class="label label-default"> 8,152 </span> &nbsp; product info views </h4>
+	                    <h4> <span class="label label-default"> 7,548 </span> &nbsp; product video views </h4>
+	                    <h4> <span class="label label-default"> 2,262 </span> &nbsp; add-to-cart clicks </h4>
+	                    <h4> <span class="label label-default"> 1,782 </span> &nbsp; purchases </h4>
+	                	<h4> <span class="label label-default"> 921 </span> &nbsp; first-time purchases </h4>
+	                	<h4> <span class="label label-default"> 861 </span> &nbsp; repeat purchases </h4>
+	                    
+	                </div>
+	            </div>
+        	</div>
         </div>
         <div class="col-md-9">
             <div class="row">
                 <div class="col-md-6 chart_box">
                     <h3 class="chart_header" >Profile Conversion Funnel</h3>
-                    <div id="funnel"></div>
+                    <div id="profile_funnel"></div>
                 </div>
                 <div class="col-md-6 chart_box">
                     <div id="audience_source" style=float:left>
@@ -130,9 +135,20 @@
     </div>
 
     <div class="row chart_box">
-        <h3 class="chart_header" style="width: 75%;" > Sales channel's performance from purchasing data </h3>
-        <div id="chart" style="text-align:center;">
-            <svg></svg>
+     	<div class="col-md-3 ">
+     	
+     		<h3 class="chart_header" >Event Conversion Funnel</h3>
+            <div class="summary_metric">
+                <div class="vcenter">
+                   <div id="event_funnel"></div>
+                </div>
+            </div>
+     	</div>
+    	<div class="col-md-9">
+	        <h3 class="chart_header" style="width: 100%;" > Sales channel's performance from purchasing data </h3>
+	        <div id="chart" style="text-align:center;">
+	            <svg></svg>
+	        </div>
         </div>
     </div>
 
@@ -155,7 +171,8 @@
     });
 
     function initSalesDashboard() {
-        loadConversionFunnel();
+        loadProfileFunnel();
+        loadEventFunnel();
         loadAudienceVenn();
         loadChannelPerformance();
     }
@@ -243,7 +260,7 @@
             .call(d3.axisLeft(y));
     }
 
-    function loadConversionFunnel() {
+    function loadProfileFunnel() {
         var data = [
             ['Visitor', 21981, '#008080'],
             ['Follower', 7423, '#4AADC6'],
@@ -251,7 +268,6 @@
             ['Customer', 1489, '#C46511'],
             ['Repeat Customer', 589, '#3f2ae2']
         ];
-
         var options = {
       		block: {
       			highlight: true
@@ -259,9 +275,9 @@
             chart: {
                 curve: {
                     enabled: true,
-                    height: 24
+                    height: 20
                 },
-                bottomWidth : 0.42,
+                bottomWidth : 0.52,
                 height: 360
             },
             tooltip: {
@@ -278,8 +294,45 @@
                 }
             }
         };
-
-        var chart = new D3Funnel('#funnel');
+        var chart = new D3Funnel('#profile_funnel');
+        chart.draw(data, options);
+    }
+    
+    function loadEventFunnel() {
+        var data = [
+            ['product info view', 8152, '#008080'],
+            ['product video view', 7548, '#4AADC6'],
+            ['add-to-cart click', 2262, '#702963'],
+            ['purchase', 1782, '#C46511'],
+            ['repeat purchase', 861, '#3f2ae2']
+        ];
+        var options = {
+      		block: {
+      			highlight: true
+      	    },
+            chart: {
+                curve: {
+                    enabled: true,
+                    height: 16
+                },
+                bottomWidth : 0.69,
+                height: 320
+            },
+            tooltip: {
+                enabled: true
+            },
+            label: {
+                fontSize: '15px'
+            },
+            events: {
+                click: {
+                    block: function (data) {
+                        console.log(data.label.raw);
+                    }
+                }
+            }
+        };
+        var chart = new D3Funnel('#event_funnel');
         chart.draw(data, options);
     }
 
