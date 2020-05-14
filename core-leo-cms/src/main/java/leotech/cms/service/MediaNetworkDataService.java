@@ -1,21 +1,16 @@
 package leotech.cms.service;
 
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamReader;
 
 import io.vertx.core.json.JsonObject;
-import leotech.cms.model.ContentClassPostQuery;
 import leotech.cms.model.MediaNetwork;
 import leotech.cms.model.MediaNetworkXml;
 
@@ -25,10 +20,10 @@ public class MediaNetworkDataService {
 
 	// TODO add shared redis cache here, load MediaNetwork from database
 
-	public static final String ADMIN_LEO_PLATFORM = "admin.leoplatform.net";
+	public static final String ADMIN_LEO_PLATFORM = "admin.leocdp.com";
 
 	// default app templates
-	public static final String DEFAULT_ADMIN_TEMPLATE_FOLDER = "default-admin-template";
+	public static final String DEFAULT_ADMIN_TEMPLATE_FOLDER = "leocdp-admin";
 	public static final String DEFAUFT_WEB_TEMPLATE_FOLDER = "default-web-template";
 
 	final static MediaNetwork DEFAULT_CONTENT_NETWORK = new MediaNetwork("Genesis Network", "localhost",

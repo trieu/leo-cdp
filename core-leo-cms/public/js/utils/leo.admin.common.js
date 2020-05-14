@@ -197,8 +197,7 @@ window.loadView = window.loadView || function (uri, divSelector, callback) {
 			try {
 				callback.apply();
 			} catch (error) {
-				alert(error);
-				location.href = '/';
+				console.error(error);
 			}
 		}
 	} else {

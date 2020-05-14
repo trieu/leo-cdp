@@ -29,21 +29,21 @@
         <networkId>10000</networkId>
         <name>Leo CDP Admin</name>
         <uri>admin</uri>
-        <domain>admin.leoplatform.net</domain>
-        <WebTemplateFolder>default-admin-template</WebTemplateFolder>
+        <domain>admin.leocdp.com</domain>
+        <WebTemplateFolder>leocdp-admin</WebTemplateFolder>
         <AndroidAppId></AndroidAppId>
         <IosAppId></IosAppId>
         <AppTemplateFolder></AppTemplateFolder>
         <ContentCategoryId></ContentCategoryId>
         <PublicContentClass>standard</PublicContentClass>
-        <PageTitle>leoplatform.net</PageTitle>
+        <PageTitle>leocdp.com</PageTitle>
         <PageHeaderLogo>/public/images/leotech-logo.png</PageHeaderLogo>
-        <BaseStaticUrl>//leoplatform.net</BaseStaticUrl>
-        <BaseAdminApiUrl>//leoplatform.net</BaseAdminApiUrl>
-        <BaseDeliveryApiUrl>//api.leoplatform.net</BaseDeliveryApiUrl>
-        <BaseUploaderUrl>//uploader.leoplatform.net</BaseUploaderUrl>
-        <BaseLogCollectorUrl>//log.leoplatform.net</BaseLogCollectorUrl>
-        <PageTitle></PageTitle>
+        <BaseStaticUrl>//leocdp.com</BaseStaticUrl>
+        <BaseAdminApiUrl>//admin.leocdp.com</BaseAdminApiUrl>
+        <BaseDeliveryApiUrl>//api.leocdp.com</BaseDeliveryApiUrl>
+        <BaseUploaderUrl>//uploader.leocdp.com</BaseUploaderUrl>
+        <BaseLogCollectorUrl>//log.leocdp.com</BaseLogCollectorUrl>
+        <PageTitle>Leo CDP Admin</PageTitle>
         <GoogleTrackingId></GoogleTrackingId>
         <NumberSimilarPostsInList>7</NumberSimilarPostsInList>
     </MediaNetwork>
