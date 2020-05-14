@@ -29,13 +29,13 @@
     <div id="page_navigator_desktop" class="mdl-layout__header-row portfolio-navigation-row mdl-layout--large-screen-only">
         <nav class="mdl-navigation mdl-typography--body-1-force-preferred-font">
             <!-- main header pages -->
-            <a class="mdl-navigation__link " href="/">Trang chủ</a>
+            <a class="mdl-navigation__link " style="min-width: 120px" href="/">Trang chủ</a>
             {{#each topPageNavigators}}
-            <a class="mdl-navigation__link " href="{{uri}}" id="page_{{id}}">{{name}}</a>
+            	<a class="mdl-navigation__link" style="min-width: 155px" href="{{uri}}" id="page_{{id}}">{{name}}</a>
             {{/each}}
         </nav>
     </div>
-    <div id="page_navigator_mobile" class="mdl-layout__drawer mdl-layout--small-screen-only">
+    <div id="page_navigator_mobile" class="mdl-layout__drawer ">
         <nav class="mdl-navigation mdl-typography--body-1-force-preferred-font">
             <!-- main header pages -->
             {{#each topPageNavigators}}
@@ -48,7 +48,7 @@
     <main class="mdl-layout__content">
 
         <!-- TODO -->
-        <div class="mdl-tabs__tab-bar">
+        <div class="mdl-tabs__tab-bar ">
             <a href="/" title="Home" class="mdl-tabs__tab is-active"><i class="material-icons">home</i></a>            
             <a href="/html/most-trending" class="mdl-tabs__tab"><i class="material-icons">trending_up</i></a>
             <a href="/html/top-posts-by-keywords?keywords=music" class="mdl-tabs__tab"><i class="material-icons">music_video</i></a>
@@ -62,6 +62,7 @@
             <a id="user-login" href="javascript:doUserLogin()" title="Login" class="mdl-tabs__tab"><i class="material-icons">account_box</i></a>
             
         </div>      
+        
         <div class="mdl-grid portfolio-max-width">
             <!-- main content here -->
             {{#doIf templateName '==' "index" }}

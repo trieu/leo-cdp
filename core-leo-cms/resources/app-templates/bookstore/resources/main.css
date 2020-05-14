@@ -12,7 +12,9 @@ main.mdl-layout__content {
 }
 
 .mdl-layout-title img {
-    height: 60px;margin-left:100px;margin: auto;
+    max-height: 60px;
+    max-width: 160px;
+    margin: auto;margin-left:100px;
 }
 
 #postMediaInfo {
@@ -136,7 +138,8 @@ main.mdl-layout__content {
 }
 
 .portfolio-header .mdl-layout__drawer-button {
-    background-color: rgba(197, 197, 197, 0.44);
+    background-color: #000169;
+    border-radius: 8px;
 }
 
 .portfolio-navigation-row .is-active {
