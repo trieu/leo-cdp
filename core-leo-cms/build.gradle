@@ -75,7 +75,6 @@ dependencies {
 	// simple, stupid rules engine 
 	compile group: 'org.jeasy', name: 'easy-rules-core', version: '3.4.0'
 	
-	
     compile (	   
 		fileTree(dir: 'ext-lib', include: '**/*.jar') 	
     		    	

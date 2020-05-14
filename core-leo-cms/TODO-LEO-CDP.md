@@ -44,3 +44,4 @@ http://log.xemgiday.com/eta?observer=tester&media=xemgiday.com&itouchid=homepage
 ## Chart & Visualization
 * http://sigmajs.org
 * https://www.chartjs.org
+* User Journey, Gantt, Sequence https://github.com/mermaid-js/mermaid
