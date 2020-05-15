@@ -48,7 +48,7 @@ public class WebDataServiceUtil {
 
 	public static WebData build(String path, String networkDomain, MultiMap params, String userSession) {
 		MediaNetwork network = MediaNetworkDataService.getContentNetwork(networkDomain);
-		String publicContentClass = network.getPublicContentClass();
+		List<String> publicContentClasses = network.getPublicContentClassList();
 		String contentCategoryId = network.getContentCategoryId();
 		String webTemplateFolder = network.getWebTemplateFolder();
 
@@ -94,7 +94,7 @@ public class WebDataServiceUtil {
 				keywords = new String[]{};
 			}
 			List<Post> posts = PostDaoUtil.listPublicPostsByKeywords(new String[]{contentCategoryId},
-					publicContentClass, keywords, startIndex, numberResult);
+					publicContentClasses, keywords, startIndex, numberResult);
 			String title = " Top posts about \"" + keywordsStr + "\"";
 			if (posts != null) {
 				model = new PostDataModel(networkDomain, webTemplateFolder, LIST_POST, title, posts);
@@ -185,8 +185,7 @@ public class WebDataServiceUtil {
 		return model;
 	}
 
-	public static WebData buildModel(String host, String tplFolderName, String tplName, MultiMap params,
-			String userSession) {
+	public static WebData buildModel(String host, String tplFolderName, String tplName, MultiMap params, String userSession) {
 		MediaNetwork network = MediaNetworkDataService.getContentNetwork(host);
 		String categoryId = network.getContentCategoryId();
 

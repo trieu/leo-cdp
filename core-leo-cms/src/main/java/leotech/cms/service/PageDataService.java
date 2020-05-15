@@ -148,10 +148,13 @@ public class PageDataService {
 
 	public static Page getPageWithPosts(String slug, int startIndex, int numberResult) {
 		Page page = PageDaoUtil.getBySlug(slug);
-		String pageId = page.getId();
-		List<Post> posts = PostDaoUtil.listByPage(pageId, startIndex, numberResult);
-		page.setPostsWithOrderByTime(posts);
-
+		
+		if(page != null) {
+			String pageId = page.getId();
+			List<Post> posts = PostDaoUtil.listByPage(pageId, startIndex, numberResult);
+			page.setPostsWithOrderByTime(posts);
+		}
+		
 		return page;
 	}
 

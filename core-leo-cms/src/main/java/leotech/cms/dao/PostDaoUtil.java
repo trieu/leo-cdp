@@ -15,6 +15,7 @@ import leotech.cms.model.ContentClassPostQuery;
 import leotech.cms.model.MediaNetwork;
 import leotech.cms.model.Post;
 import leotech.core.config.AqlTemplate;
+import leotech.system.model.DataPrivacy;
 import leotech.system.util.database.ArangoDbQuery;
 import leotech.system.util.database.ArangoDbQuery.CallbackQuery;
 import leotech.system.util.database.ArangoDbUtil;
@@ -139,31 +140,43 @@ public class PostDaoUtil {
 	public static List<Post> listPostsByMediaNetwork(MediaNetwork mediaNetwork, boolean includeProtected,
 			boolean includePrivate, int startIndex, int numberResult) {
 		return listAllByContentClassAndKeywords(mediaNetwork.getContentCategoryId(),
-				mediaNetwork.getPublicContentClass(), new String[]{}, includeProtected, includePrivate, false,
+				mediaNetwork.getPublicContentClassList(), new String[]{}, includeProtected, includePrivate, false,
 				startIndex, numberResult);
 	}
 
-	public static List<Post> listAllByContentClass(String contentCategoryId, String contentClass,
+	public static List<Post> listAllByContentClass(String contentCategoryId, List<String> contentClasses,
 			boolean includeProtected, boolean includePrivate, int startIndex, int numberResult) {
-		return listAllByContentClassAndKeywords(contentCategoryId, contentClass, new String[]{}, includeProtected,
+		return listAllByContentClassAndKeywords(contentCategoryId, contentClasses, new String[]{}, includeProtected,
 				includePrivate, false, startIndex, numberResult);
 	}
 
-	public static List<Post> listAllByContentClassAndKeywords(String contentCategoryId, String contentClass,
+	public static List<Post> listAllByContentClassAndKeywords(String contentCategoryId, List<String> publicContentClasses,
 			String[] keywords, boolean includeProtected, boolean includePrivate, boolean joinResultByAnd,
 			int startIndex, int numberResult) {
-
-		System.out.println("listAllByContentClassAndKeywords ");
-
-		if (StringUtil.isEmpty(contentClass)) {
-			System.out.println("contentClass is empty");
-			return new ArrayList<Post>(0);
-		}
-		StringBuilder aql = new StringBuilder(
-				"FOR p in post FILTER p.contentClass == @contentClass AND p.privacyStatus == 0 ");
 		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
-		Map<String, Object> bindVars = new HashMap<>(1);
-		bindVars.put("contentClass", contentClass);
+		
+		StringBuilder aql = new StringBuilder();
+		aql.append("FOR p in post FILTER p.privacyStatus == ").append(DataPrivacy.PUBLIC);
+		
+		Map<String, Object> bindVars = new HashMap<>();
+		
+		// content class
+		int c = 0;
+		int sizeContentClasses = publicContentClasses.size();
+		if(sizeContentClasses > 0) {
+			aql.append(" AND ( ");
+			for (String contentClass : publicContentClasses) {
+				if (!contentClass.isEmpty()) {
+					bindVars.put("contentClass"+c, contentClass);
+					aql.append(" p.contentClass == @contentClass").append(c).append(" ");
+					c++;
+					if (c + 1 <= sizeContentClasses) {
+						aql.append(" OR ");
+					}
+				}
+			}
+			aql.append(" ) ");
+		}
 
 		System.out.println("contentCategoryId " + contentCategoryId);
 		if (StringUtil.isNotEmpty(contentCategoryId)) {
@@ -173,7 +186,7 @@ public class PostDaoUtil {
 
 		// keyword filter
 		if (keywords.length > 0) {
-			int c = 0;
+			c = 0;
 			aql.append(" AND ( ");
 
 			String keywordLogicOperator;
@@ -337,7 +350,7 @@ public class PostDaoUtil {
 		return list == null ? new ArrayList<>(0) : list;
 	}
 
-	public static List<Post> listPublicPostsByKeywords(String[] categoryKeys, String contentClass,
+	public static List<Post> listPublicPostsByKeywords(String[] categoryKeys, List<String> publicContentClasses,
 			String[] keywords, int startIndex, int numberResult) {
 		if (keywords.length == 0 || categoryKeys.length == 0) {
 			return new ArrayList<>(0);
@@ -350,14 +363,27 @@ public class PostDaoUtil {
 		StringBuilder aql = new StringBuilder("FOR p in post FILTER ");
 
 		// content class
-		if (!contentClass.isEmpty()) {
-			bindVars.put("contentClass", contentClass);
-			aql.append(" p.contentClass == @contentClass ");
+		int c = 0;
+		int sizeContentClasses = publicContentClasses.size();
+		if(sizeContentClasses > 0) {
+			aql.append(" ( ");
+			for (String contentClass : publicContentClasses) {
+				if (!contentClass.isEmpty()) {
+					bindVars.put("contentClass"+c, contentClass);
+					aql.append(" p.contentClass == @contentClass").append(c).append(" ");
+					c++;
+					if (c + 1 <= sizeContentClasses) {
+						aql.append(" OR ");
+					}
+				}
+			}
+			aql.append(" ) ");
 		}
+		
 
 		// category filter
 		aql.append(" AND ( ");
-		int c = 0;
+		c = 0;
 		for (String categoryKey : categoryKeys) {
 			categoryKey = categoryKey.trim();
 			if (!categoryKey.isEmpty()) {

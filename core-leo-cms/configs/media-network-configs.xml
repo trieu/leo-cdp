@@ -81,7 +81,7 @@
         <IosAppId></IosAppId>
         <AppTemplateFolder></AppTemplateFolder>      
         <ContentCategoryId>318084</ContentCategoryId>
-        <PublicContentClass>standard</PublicContentClass>
+        <PublicContentClass>standard,youtube_video</PublicContentClass>
         <PageTitle>Leo CDP for Book Retail Industry</PageTitle>
         <PageHeaderLogo>/public/images/leo-cdp-logo.png</PageHeaderLogo>
         <BaseStaticUrl>bookstore.bigdatavietnam.org</BaseStaticUrl>

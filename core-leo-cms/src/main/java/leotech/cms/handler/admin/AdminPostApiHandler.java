@@ -1,5 +1,6 @@
 package leotech.cms.handler.admin;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -94,7 +95,8 @@ public class AdminPostApiHandler extends BaseSecuredDataApi {
 					keywords = new String[]{};
 				}
 				// FIXME
-				List<Post> list = PostDaoUtil.listAllByContentClassAndKeywords(null, contentClass, keywords, true,
+				List<String> contentClasses = Arrays.asList(contentClass);
+				List<Post> list = PostDaoUtil.listAllByContentClassAndKeywords(null, contentClasses, keywords, true,
 						false, false, 0, 1000);
 				return JsonDataPayload.ok(uri, list, true);
 			} else if (uri.equalsIgnoreCase("/post/search")) {

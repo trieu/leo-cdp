@@ -95,7 +95,7 @@ public class MainHttpRouter extends BaseHttpRouter {
 		System.out.println("==>>>> host: " + host + " path: " + path);
 
 		// HOME page
-		if (path.equals(HOME_ROUTER)) {
+		if (path.equals(HOME_ROUTER) ) {
 			outHeaders.set(CONTENT_TYPE, MIME_TYPE_HTML);
 			BaseHttpRouter.setCorsHeaders(outHeaders, origin);
 
