@@ -8,9 +8,10 @@
 
 ## Case study 
 
-## Simple Recommendation Engine with Apache Spark
+## Smart Recommendation Engine with multiple algorithms
 
 https://dzone.com/articles/building-sales-recommendation-engine-with-apache-s
+https://download.oracle.com/otndocs/products/spatial/pdf/oow_2016/OW2016_Building_a_Java_Recommender_System_in_15_Minutes_with_Graph_Technologies.pdf
 
 ## Public API for tracking
 

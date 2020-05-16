@@ -128,6 +128,15 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	String visitorId = "";
 
 	@Expose
+	String firstName = "";
+	
+	@Expose
+	String lastName = "";
+	
+	@Expose
+	String primaryUsername = "";
+	
+	@Expose
 	String primaryEmail = "";
 
 	@Expose
@@ -225,10 +234,17 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	@Override
 	public boolean isReadyForSave() {
-		return this.lastObserverId != null && this.lastUsedDeviceId != null && this.lastTouchpointId != null;
+		return this.id != null && this.lastObserverId != null && this.lastUsedDeviceId != null && this.lastTouchpointId != null && this.identities.size()>0;
 	}
 
 	public Profile() {
+	}
+	
+	public Profile(String primaryUsername) {
+		this.primaryUsername = primaryUsername;
+		if (StringUtil.isNotEmpty(primaryUsername)) {
+			this.identities.add(primaryUsername);
+		}
 	}
 
 	protected void initBaseInformation(int partitionId, String visitorId, int type,
@@ -723,6 +739,35 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	public void setVisitorId(String visitorId) {
 		this.visitorId = visitorId;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getPrimaryUsername() {
+		return primaryUsername;
+	}
+
+	public void setPrimaryUsername(String primaryUsername) {
+		this.primaryUsername = primaryUsername;
+	}
+	
+	@Override
+	public String toString() {
+		return StringUtil.join(this.identities.toArray(),"-");
 	}
 
 }
