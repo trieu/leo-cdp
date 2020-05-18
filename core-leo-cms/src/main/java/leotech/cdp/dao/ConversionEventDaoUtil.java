@@ -9,9 +9,9 @@ import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
 import com.devskiller.friendly_id.FriendlyId;
 
-import leotech.cdp.model.ConversionEvent;
-import leotech.cdp.model.Profile;
-import leotech.cdp.model.TrackingEvent;
+import leotech.cdp.model.audience.ConversionEvent;
+import leotech.cdp.model.audience.Profile;
+import leotech.cdp.model.audience.TrackingEvent;
 import leotech.cms.model.Page;
 import leotech.core.config.AqlTemplate;
 import leotech.system.util.database.ArangoDbQuery;

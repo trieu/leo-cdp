@@ -1,6 +1,8 @@
-package leotech.cdp.model;
+package leotech.cdp.model.audience;
 
 import com.arangodb.ArangoCollection;
+
+import leotech.cdp.model.CdpPersistentObject;
 
 public class UserDevice extends CdpPersistentObject{
     

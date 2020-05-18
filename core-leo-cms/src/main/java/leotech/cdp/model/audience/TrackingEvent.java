@@ -1,4 +1,4 @@
-package leotech.cdp.model;
+package leotech.cdp.model.audience;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -12,6 +12,7 @@ import com.arangodb.entity.DocumentField.Type;
 import com.arangodb.model.PersistentIndexOptions;
 import com.google.gson.annotations.Expose;
 
+import leotech.cdp.model.CdpPersistentObject;
 import leotech.system.util.database.ArangoDbUtil;
 import rfx.core.util.DateTimeUtil;
 import rfx.core.util.StringUtil;

@@ -1,4 +1,4 @@
-package leotech.cdp.model;
+package leotech.cdp.model.audience;
 
 import java.util.Arrays;
 

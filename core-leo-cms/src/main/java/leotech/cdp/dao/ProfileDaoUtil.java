@@ -8,8 +8,8 @@ import java.util.Map;
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
 
-import leotech.cdp.model.Profile;
-import leotech.cdp.model.Touchpoint;
+import leotech.cdp.model.audience.Profile;
+import leotech.cdp.model.business.Touchpoint;
 import leotech.cdp.query.ProfileMatchingResult;
 import leotech.core.config.AqlTemplate;
 import leotech.system.util.database.ArangoDbQuery;

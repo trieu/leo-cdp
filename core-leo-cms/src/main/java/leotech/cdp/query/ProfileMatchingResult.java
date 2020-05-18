@@ -3,7 +3,7 @@ package leotech.cdp.query;
 import java.util.ArrayList;
 import java.util.List;
 
-import leotech.cdp.model.Profile;
+import leotech.cdp.model.audience.Profile;
 
 public class ProfileMatchingResult {
 	

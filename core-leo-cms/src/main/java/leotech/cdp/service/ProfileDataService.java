@@ -3,7 +3,7 @@ package leotech.cdp.service;
 import java.util.Date;
 
 import leotech.cdp.dao.ProfileDaoUtil;
-import leotech.cdp.model.Profile;
+import leotech.cdp.model.audience.Profile;
 import rfx.core.util.StringUtil;
 
 public class ProfileDataService {

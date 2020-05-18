@@ -9,8 +9,8 @@ import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDBException;
 import com.arangodb.ArangoDatabase;
 
-import leotech.cdp.model.ContextSession;
-import leotech.cdp.model.Touchpoint;
+import leotech.cdp.model.audience.ContextSession;
+import leotech.cdp.model.business.Touchpoint;
 import leotech.cms.model.Post;
 import leotech.core.config.AqlTemplate;
 import leotech.system.util.database.ArangoDbQuery;

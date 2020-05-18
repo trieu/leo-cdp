@@ -1,7 +1,7 @@
 package leotech.cdp.service;
 
 import leotech.cdp.dao.TouchpointDaoUtil;
-import leotech.cdp.model.Touchpoint;
+import leotech.cdp.model.business.Touchpoint;
 import rfx.core.util.StringUtil;
 
 public class TouchpointDataService {

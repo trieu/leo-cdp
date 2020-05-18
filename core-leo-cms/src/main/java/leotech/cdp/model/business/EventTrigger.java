@@ -1,8 +1,9 @@
-package leotech.cdp.model;
+package leotech.cdp.model.business;
 
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
 
+import leotech.cdp.model.CdpPersistentObject;
 import leotech.system.util.database.ArangoDbUtil;
 
 /**

@@ -1,9 +1,12 @@
-package leotech.cdp.model;
+package leotech.cdp.model.business;
 
 import com.arangodb.ArangoCollection;
 
-public class Campaign extends CdpPersistentObject implements Comparable<Campaign> {
-    public static final String COLLECTION_NAME = COLLECTION_PREFIX + Campaign.class.getSimpleName().toLowerCase();
+import leotech.cdp.model.CdpPersistentObject;
+
+public class Creative extends CdpPersistentObject implements Comparable<Creative> {
+    
+    public static final String COLLECTION_NAME = COLLECTION_PREFIX + Creative.class.getSimpleName().toLowerCase();
 
     @Override
     public ArangoCollection getCollection() {
@@ -18,7 +21,7 @@ public class Campaign extends CdpPersistentObject implements Comparable<Campaign
     }
 
     @Override
-    public int compareTo(Campaign o) {
+    public int compareTo(Creative o) {
 	// TODO Auto-generated method stub
 	return 0;
     }
