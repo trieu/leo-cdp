@@ -1,12 +1,17 @@
 package leotech.cdp.service;
 
 import java.util.Date;
+import java.util.List;
 
+import io.vertx.core.json.JsonObject;
 import leotech.cdp.dao.ProfileDaoUtil;
 import leotech.cdp.model.audience.Profile;
+import leotech.cms.model.User;
 import rfx.core.util.StringUtil;
 
 public class ProfileDataService {
+
+	private static final String CRM_IMPORT = "crm-import";
 
 	public static Profile updateOrCreateFromWebTouchpoint(String observerId,String srcTouchpointId, String refTouchpointId, String touchpointRefDomain, String lastSeenIp,
 			String visitorId, String userDeviceId, String fingerprintId) {
@@ -100,6 +105,69 @@ public class ProfileDataService {
 
 		ProfileDaoUtil.update(p);
 		return p;
+	}
+	
+	public static List<Profile> list(int startIndex, int numberResult){
+		List<Profile> list = ProfileDaoUtil.list(startIndex, numberResult);
+		return list;
+	}
+	
+	public static Profile getById(String id) {
+		Profile profile = ProfileDaoUtil.getById(id);
+		return profile;
+	}
+	
+	public static Profile createNewCrmProfile(JsonObject paramJson, User loginUser) {
+		
+		String firstName = paramJson.getString("firstName", "");
+		String lastName = paramJson.getString("lastName", "");
+		String email = paramJson.getString("email", "");
+		String phone = paramJson.getString("phone", "");
+		
+		Profile pf = Profile.newCrmProfile( CRM_IMPORT, "", "", "","", email, phone, "");
+		pf.setFirstName(firstName);
+		pf.setLastName(lastName);
+		ProfileDaoUtil.create(pf);
+		return pf;
+	}
+	
+	public static Profile update(JsonObject paramJson, User loginUser) {
+		String profileId = paramJson.getString("profileId", "");
+		Profile pf = ProfileDaoUtil.getById(profileId);
+		
+		String firstName = paramJson.getString("firstName", "");
+		String lastName = paramJson.getString("lastName", "");
+		String email = paramJson.getString("email", "");
+		String phone = paramJson.getString("phone", "");
+		
+		
+		if(!firstName.isEmpty()) {
+			pf.setLastName(firstName);
+		}
+		
+		if(!lastName.isEmpty()) {
+			pf.setLastName(lastName);
+		}
+		
+		if(!email.isEmpty()) {
+			pf.setPrimaryEmail(email);
+		}
+		
+		if(!phone.isEmpty()) {
+			pf.setPrimaryPhone(phone);
+		}
+		
+		//TODO
+		ProfileDaoUtil.update(pf);
+		return pf;
+	}
+	
+	public static boolean disable(JsonObject paramJson, User loginUser) {
+		String profileId = paramJson.getString("profileId", "");
+		Profile pf = ProfileDaoUtil.getById(profileId);
+		pf.setStatus(-1);
+		ProfileDaoUtil.update(pf);
+		return pf != null;
 	}
 
 }

@@ -1,6 +1,20 @@
 
 # LEO CDP
 
+## Cost & Pricing 
+
+* One year subscription on private Google cloud: $9,999
+* Monthly Product package = $999 (ArangoDB + Google Cloud)
+* Total monthly infrastructure cost: (0.52 * 24 * 30) + 235.27 = $609.67
+* Total monthly DevOps cost: $89.33
+* Total monthly consulting and training cost: $100
+* Total monthly profit: $200
+
+
+ArangoDB cost: 8 GB	20 GB (or more)	$ 0.52/hr at https://cloud.arangodb.com/home
+
+Cloud compute cost: https://cloud.google.com/products/calculator/#id=1f054b6b-d785-4f8d-b8ea-145a0127c4fb
+
 ## Slide
 
 * [Product vision](https://docs.google.com/presentation/d/1GHUXBjdUctDxkUS_WLqls_aT79GqOlYN3MIQvXwLN5s/edit?usp=sharing)

@@ -17,7 +17,7 @@ import leotech.system.util.database.ArangoDbUtil;
 
 public class ProfileDaoUtil {
 
-	static long limitTotalProfiles = 7000;
+	static long limitTotalProfiles = 5000;
 	
 	static final String AQL_GET_PROFILES_BY_PAGINATION = AqlTemplate.get("AQL_GET_PROFILES_BY_PAGINATION");
 	static final String AQL_GET_PROFILE_BY_ID = AqlTemplate.get("AQL_GET_PROFILE_BY_ID");
@@ -82,8 +82,7 @@ public class ProfileDaoUtil {
 		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("id", id);
-		Profile p = new ArangoDbQuery<Profile>(db, AQL_GET_PROFILE_BY_ID, bindVars, Profile.class)
-				.getResultsAsObject();
+		Profile p = new ArangoDbQuery<Profile>(db, AQL_GET_PROFILE_BY_ID, bindVars, Profile.class).getResultsAsObject();
 		return p;
 	}
 	
