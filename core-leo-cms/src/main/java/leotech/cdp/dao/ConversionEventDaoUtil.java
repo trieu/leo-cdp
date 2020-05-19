@@ -19,29 +19,27 @@ import leotech.system.util.database.ArangoDbUtil;
 
 public class ConversionEventDaoUtil {
 
-   
-    static final String AQL_GET_CONVERSION_EVENTS_BY_PROFILE_ID = AqlTemplate.get("AQL_GET_CONVERSION_EVENTS_BY_PROFILE_ID");
-   
+	static final String AQL_GET_CONVERSION_EVENTS_BY_PROFILE_ID = AqlTemplate
+			.get("AQL_GET_CONVERSION_EVENTS_BY_PROFILE_ID");
 
-    public static boolean record(ConversionEvent e) {
-	if (e.isReadyForSave()) {
-	    ArangoCollection col = e.getCollection();
-	    if (col != null) {
-		col.insertDocument(e);
-		return true;
-	    }
+	public static boolean record(ConversionEvent e) {
+		if (e.isReadyForSave()) {
+			ArangoCollection col = e.getCollection();
+			if (col != null) {
+				col.insertDocument(e);
+				return true;
+			}
+		}
+		return false;
 	}
-	return false;
-    }
 
- 
-
-    public static List<ConversionEvent> getEventsByProfileId(String refProfileId) {
-	ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
-	Map<String, Object> bindVars = new HashMap<>(1);
-	bindVars.put("refProfileId", refProfileId);
-	List<ConversionEvent> list = new ArangoDbQuery<ConversionEvent>(db, AQL_GET_CONVERSION_EVENTS_BY_PROFILE_ID, bindVars, ConversionEvent.class).getResultsAsList();
-	return list;
-    }
+	public static List<ConversionEvent> getEventsByProfileId(String refProfileId) {
+		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
+		Map<String, Object> bindVars = new HashMap<>(1);
+		bindVars.put("refProfileId", refProfileId);
+		List<ConversionEvent> list = new ArangoDbQuery<ConversionEvent>(db, AQL_GET_CONVERSION_EVENTS_BY_PROFILE_ID,
+				bindVars, ConversionEvent.class).getResultsAsList();
+		return list;
+	}
 
 }
