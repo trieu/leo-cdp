@@ -181,18 +181,18 @@
  */
 
 window.loadView = window.loadView || function (uri, divSelector, callback) {
-
 	//caching view in LocalStorage
 	var time2Live = typeof window.apiCacheTime2Live === 'number' ? window.apiCacheTime2Live : 1; // in munute
 	var apiCacheEnabled = typeof window.apiCacheEnabled === 'boolean' ? window.apiCacheEnabled : true;
 	var cacheKey = 'lview_' + getCacheKey(uri + divSelector, {});
-	var result = false;
+	var resultHtml = false;
 	if (apiCacheEnabled) {
-		result = lscache.get(cacheKey);
+		resultHtml = lscache.get(cacheKey);
 	}
 	
-	if (result) {
-		$(divSelector).empty().html(result);
+	if (resultHtml) {
+		//set HTML into view placeholder from cached
+		$(divSelector).empty().html(resultHtml);
 		if (typeof callback === 'function') {
 			try {
 				callback.apply();
@@ -205,15 +205,25 @@ window.loadView = window.loadView || function (uri, divSelector, callback) {
 		$.ajax({
 			url: fullUrl,
 			type: 'GET',
-			success: function (data) {
-				$(divSelector).empty().html(data);
+			success: function (htmlTpl) {
+				// load HTML with i18n data
+				if(uri === '/view/navigation-view.html?admin=1') {
+					$(divSelector).empty().html(htmlTpl);
+					lscache.set(cacheKey, htmlTpl, time2Live);
+				} else {
+					var i18nModel = typeof window.i18nLeoAdminData === 'function' ? window.i18nLeoAdminData() : {};
+					
+					var finalHtml = Handlebars.compile(htmlTpl)(i18nModel);
+					$(divSelector).empty().html(finalHtml);
+					lscache.set(cacheKey, finalHtml, time2Live);
+				}
+				
 				if (typeof callback === 'function') {
 					try {
 						callback.apply();
-						lscache.set(cacheKey, data, time2Live);
+						
 					} catch (error) {
-						alert(error);
-						location.href = '/';
+						console.error(error);
 					}
 				}
 			},

@@ -1,6 +1,6 @@
 var prefixCallJs = '#calljs-';
 var pageDomSelector = '#page-wrapper';
-window.apiCacheEnabled = false;
+
 
 $(document).ready(function () {
     if (LeoCmsApiUtil.isLoginSessionOK()) {
@@ -74,19 +74,7 @@ function loadUserProfileForm(id) {
     });
 }
 
-window.currentUserProfile = {'displayName':''};
-function loadUserInfoWidget() {
-    var urlStr = baseAdminApi + '/user/get-info';
-    LeoCmsApiUtil.callPostAdminApi(urlStr, {}, function (json) {
-        if (json.httpCode === 0 && json.errorMessage === '') {
-            if (json.data) {
-                var user = json.data;
-                $('#userDisplayName').html(user.displayName);
-                window.currentUserProfile = user;
-            }
-        }
-    });
-}
+
 
 //////////////////////////////////////////////////// COMMON ////////////////////////////////////////////////
 
@@ -161,17 +149,7 @@ function loadMediaInfoView(mediaInfo, type, editMode) {
 }
 
 
-function loadCommonModalHtml() {
-    var list = [
-        '/view/common-widgets/query-filter-modal.html?admin=1',
-        '/view/common-widgets/post-type-selection-modal.html?admin=1',
-        '/view/common-widgets/confirm-delete-data-modal.html?admin=1',
-        '/view/common-widgets/iris-chatbot.html?admin=1'
-    ];
-    list.forEach(function (e) {
-        loadModalboxHtml(e);
-    });
-}
+
 
 function getHeadLinesImagsObject() {
     var obj = {};
@@ -187,48 +165,7 @@ function getHeadLinesImagsObject() {
     return obj;
 }
 
-function initMainSeach() {
-    var domSelector = "#main_search";
-    var options = {
-        url: window.baseAdminApi + "/post/keywords-for-search",
-        getValue: "name",
-        list: {
-            match: {
-                enabled: true
-            },
-            maxNumberOfElements: 10,
-            showAnimation: {
-                type: "slide",
-                time: 200
-            },
-            hideAnimation: {
-                type: "slide",
-                time: 200
-            },
-            sort: {
-                enabled: true
-            },
-            onSelectItemEvent: function () {
-                var node = $(domSelector);
-                var value = node.getSelectedItemData().name;
-                if (value) {
-                    node.val(value).trigger("change");
-                }
-            },
-            onChooseEvent: function () {
-                searchingByKeywords();
-            }
-        },
-        theme: "round"
-    };
 
-    $(domSelector).easyAutocomplete(options).on('keyup', function (e) {
-        if (e.keyCode == 13) {
-            searchingByKeywords();
-            $('.easy-autocomplete-container > ul').hide();
-        }
-    });
-}
 
 function searchContent(keywords) {
     $('#main_search').val(keywords);

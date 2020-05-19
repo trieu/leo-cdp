@@ -7,7 +7,7 @@ function loadSalesDashboard() {
     });
 }
 
-function loadJourneyMapDesigner() {
+function loadJourneyMapStudio() {
     loadView('/view/hubs/business/journey-map-studio.html?admin=1', pageDomSelector, function () {
     	loadOkJourneyMapDesigner();
     });
@@ -124,22 +124,7 @@ function deletePost() {
 
 //------------ Category Controllers ---------------------
 
-function loadCategoryNavigation() {
-    LeoCmsApiUtil.callPostAdminApi(baseAdminApi + '/category/list-all', {}, function (rs) {
-        if (rs.data && rs.httpCode === 0) {
-            var raw_template = $('#category-navigation-tpl').html();
-            var template = Handlebars.compile(raw_template);
-            var placeHolder = $('#content_hub_menu');
-            rs.data.forEach(function (e) {
-                //console.log(e);	
-                //e.name = toTitleCase(e.name);
-                var html = template(e);
-                placeHolder.append(html);
-            });
-            $('[title]').tooltip();
-        }
-    });
-}
+
 
 function loadPagesOfCategory(catKey, catName) {
     loadView('/view/page-list.html?admin=1', pageDomSelector, function () {

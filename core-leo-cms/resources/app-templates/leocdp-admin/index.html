@@ -16,12 +16,17 @@
 	<title> {{pageTitle}} </title>
 	<meta name="description" content="Leo CDP Admin"/>
 
+	
+	<!-- i18n Data Model -->
+	<script src="/view/i18n/vn.js?admin=1"></script>
+	
 	<!-- LeoCMS Common Config here -->
 	<script>
 		window.baseStaticUrl = location.protocol +  '//{{baseStaticUrl}}';
 		window.baseAdminApi = location.protocol + '//{{baseAdminApiUrl}}';
 		window.baseUploadApi = location.protocol + '//{{baseUploaderUrl}}:9071';
 		window.pageHeaderLogo = baseStaticUrl + '{{pageHeaderLogo}}';
+		window.apiCacheEnabled = false;
 	</script>
 
 	<!-- Bootstrap Core CSS -->
@@ -120,6 +125,8 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/vertx/3.6.3/vertx-eventbus.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/vue/latest/vue.min.js"></script>
 	<script src="https://unpkg.com/botui/build/botui.js"></script>
+	
+	
 
 </head>
 
@@ -254,7 +261,7 @@
 	<script src="//{{baseStaticUrl}}/public/js/utils/leo.admin.common.js"></script>
 	
 	<script src="//{{baseStaticUrl}}/view/common-resources/leocdp.core-admin.js?admin=1"></script>
-	<script src="//{{baseStaticUrl}}/view/common-resources/leocdp.router.js?admin=1"></script>
+	<script async="true" defer="defer" src="//{{baseStaticUrl}}/view/common-resources/leocdp.router.js?admin=1"></script>
 	
 	
 
