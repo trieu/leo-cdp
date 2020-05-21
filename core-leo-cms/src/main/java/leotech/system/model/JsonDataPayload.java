@@ -34,18 +34,18 @@ public class JsonDataPayload {
 	String staticBaseUrl = STATIC_BASE_URL;
 
 	boolean returnOnlyData = false;
-
+	
 	transient Gson gson;
 
-	public static final JsonDataPayload ok(String uri, Object data, boolean exposeAllData) {
+	public static  JsonDataPayload ok(String uri, Object data, boolean exposeAllData) {
 		return new JsonDataPayload(uri, data, exposeAllData);
 	}
 
-	public static final JsonDataPayload ok(String uri, Object data) {
+	public static  JsonDataPayload ok(String uri, Object data) {
 		return new JsonDataPayload(uri, data, false);
 	}
 
-	public static final JsonDataPayload fail(String errorMessage, int httpCode) {
+	public static  JsonDataPayload fail(String errorMessage, int httpCode) {
 		return new JsonDataPayload(errorMessage, httpCode);
 	}
 
@@ -132,6 +132,10 @@ public class JsonDataPayload {
 		}
 		return gson.toJson(this);
 	}
+
+	
+	
+	
 	
 	
 }

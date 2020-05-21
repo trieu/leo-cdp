@@ -69,6 +69,14 @@ public class RequestInfoUtil {
 
 		return reqInfo.toString();
 	}
+	
+	public static final int getInteger(MultiMap params, String paramName, int defaultValue){
+		return StringUtil.safeParseInt(params.get(paramName), defaultValue) ;
+	}
+	
+	public static final String getString(MultiMap params, String paramName, String defaultValue){
+		return StringUtil.safeString(params.get(paramName), defaultValue) ;
+	}
 
 	public static Map<String, String> getHashMapFromRequestParams(MultiMap params, String paramName) {
 		Map<String, String> map = null;

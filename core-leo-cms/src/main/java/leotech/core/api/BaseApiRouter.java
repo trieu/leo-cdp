@@ -88,6 +88,8 @@ public abstract class BaseApiRouter extends BaseHttpRouter {
 		String host = request.host();
 		String userAgent = request.getHeader(HttpHeaderNames.USER_AGENT);
 		String userIp = CookieUUIDUtil.getRemoteIP(request);
+		String leoAdminSession = StringUtil.safeString(reqHeaders.get(HEADER_SESSION));
+		
 		System.out.println(httpMethod + " ==>>>> host: " + host + " uri: " + uri);
 
 		if (HTTP_POST_NAME.equalsIgnoreCase(httpMethod)) {
@@ -112,7 +114,7 @@ public abstract class BaseApiRouter extends BaseHttpRouter {
 				}
 			}
 
-			String userSession = paramJson.getString(P_USER_SESSION, "");
+			String userSession = paramJson.getString(P_USER_SESSION, leoAdminSession);
 
 			JsonDataPayload out = callHttpPostApiProcessor(userSession, uri, paramJson);
 			if (out != null) {
@@ -126,8 +128,8 @@ public abstract class BaseApiRouter extends BaseHttpRouter {
 
 		} else if (HTTP_GET_NAME.equalsIgnoreCase(httpMethod)) {
 
-			String userSession = CookieUserSessionUtil.getUserSession(context,
-					StringUtil.safeString(reqHeaders.get(HEADER_SESSION)));
+			
+			String userSession = CookieUserSessionUtil.getUserSession(context, leoAdminSession );
 
 			MultiMap params = request.params();
 			params.add("__userIp", userIp);

@@ -7,6 +7,8 @@ import io.vertx.core.json.JsonObject;
 import leotech.cdp.dao.ProfileDaoUtil;
 import leotech.cdp.model.audience.Profile;
 import leotech.cms.model.User;
+import leotech.system.model.DataFilter;
+import leotech.system.model.JsonDataTablePayload;
 import rfx.core.util.StringUtil;
 
 public class ProfileDataService {
@@ -110,6 +112,12 @@ public class ProfileDataService {
 	public static List<Profile> list(int startIndex, int numberResult){
 		List<Profile> list = ProfileDaoUtil.list(startIndex, numberResult);
 		return list;
+	}
+	
+	public static JsonDataTablePayload filter(DataFilter filter){
+		JsonDataTablePayload rs  = ProfileDaoUtil.filter(filter);
+		//TODO caching
+		return rs;
 	}
 	
 	public static Profile getById(String id) {

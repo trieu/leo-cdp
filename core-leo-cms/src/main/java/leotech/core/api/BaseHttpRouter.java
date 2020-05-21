@@ -27,7 +27,11 @@ public abstract class BaseHttpRouter {
 	protected static final String PING = "/ping";
 	
 	public static final String HTTP_POST_NAME = "POST";
+	public static final String HTTP_PUT_NAME = "PUT";
+	public static final String HTTP_PATCH_NAME = "PATCH";
 	public static final String HTTP_GET_NAME = "GET";
+	public static final String HTTP_DELETE_NAME = "DELETE";
+	
 	public static final String HTTP_GET_OPTIONS = "options";
 	public static final String HEADER_SESSION = "leouss";
 

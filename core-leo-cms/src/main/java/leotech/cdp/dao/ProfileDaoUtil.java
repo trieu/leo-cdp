@@ -12,6 +12,8 @@ import leotech.cdp.model.audience.Profile;
 import leotech.cdp.model.business.Touchpoint;
 import leotech.cdp.query.ProfileMatchingResult;
 import leotech.core.config.AqlTemplate;
+import leotech.system.model.DataFilter;
+import leotech.system.model.JsonDataTablePayload;
 import leotech.system.util.database.ArangoDbQuery;
 import leotech.system.util.database.ArangoDbUtil;
 
@@ -93,6 +95,25 @@ public class ProfileDaoUtil  extends BaseLeoCdpDao {
 		bindVars.put("numberResult", numberResult);
 		List<Profile> list = new ArangoDbQuery<Profile>(db, AQL_GET_PROFILES_BY_PAGINATION, bindVars, Profile.class).getResultsAsList();
 		return list;
+	}
+	
+	public static JsonDataTablePayload filter(DataFilter filter) {
+		ArangoDatabase db = getCdpDbInstance();
+		
+		System.out.println("==> before apply DataFilter " + filter);
+		
+		//TODO dynamic query builder for filtering data
+		Map<String, Object> bindVars = new HashMap<>(2);
+		bindVars.put("startIndex", filter.getStart());
+		bindVars.put("numberResult", filter.getLength());
+		
+		List<Profile> list = new ArangoDbQuery<Profile>(db, AQL_GET_PROFILES_BY_PAGINATION, bindVars, Profile.class).getResultsAsList();
+		
+		long recordsTotal = countTotalOfProfiles();
+		int recordsFiltered = list.size();
+		int draw = filter.getDraw();
+		JsonDataTablePayload payload =  JsonDataTablePayload.data(filter.getUri(), list, recordsTotal, recordsFiltered, draw);
+		return payload;
 	}
 
 	public static long countTotalOfProfiles() {
