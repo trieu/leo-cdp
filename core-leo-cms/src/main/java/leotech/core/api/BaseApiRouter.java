@@ -30,6 +30,7 @@ public abstract class BaseApiRouter extends BaseHttpRouter {
 	public static final String POST_PREFIX = "/post";
 	public static final String PAGE_PREFIX = "/page";
 	public static final String CATEGORY_PREFIX = "/category";
+	
 	public static final String TOPIC_PREFIX = "/topic";
 	public static final String KEYWORD_PREFIX = "/keyword";
 	public static final String USER_PREFIX = "/user";
@@ -43,6 +44,8 @@ public abstract class BaseApiRouter extends BaseHttpRouter {
 	public static final String COMMENT_PREFIX = "/comment";
 	public static final String BOOKMARK_PREFIX = "/bookmark";
 	public static final String ADS_PREFIX = "/ads";
+	
+	public static final String CDP_PROFILE_PREFIX = "/cdp/profile";
 
 	private JsonDataPayload defaultDataHttpGet = JsonDataPayload.fail("No HTTP GET handler found", 404);
 	private JsonDataPayload defaultDataHttpPost = JsonDataPayload.fail("No HTTP POST handler found", 404);

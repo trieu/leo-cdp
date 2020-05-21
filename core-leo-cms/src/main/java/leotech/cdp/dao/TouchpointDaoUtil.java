@@ -13,7 +13,7 @@ import leotech.core.config.AqlTemplate;
 import leotech.system.util.database.ArangoDbQuery;
 import leotech.system.util.database.ArangoDbUtil;
 
-public class TouchpointDaoUtil {
+public class TouchpointDaoUtil  extends BaseLeoCdpDao {
 
 	static final String AQL_GET_TOUCHPOINT_BY_ID = AqlTemplate.get("AQL_GET_TOUCHPOINT_BY_ID");
 	static final String AQL_GET_TOUCHPOINT_BY_URL = AqlTemplate.get("AQL_GET_TOUCHPOINT_BY_URL");
@@ -42,7 +42,7 @@ public class TouchpointDaoUtil {
 	}
 
 	public static Touchpoint getById(String id) {
-		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
+		ArangoDatabase db = getCdpDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("id", id);
 		Touchpoint p = new ArangoDbQuery<Touchpoint>(db, AQL_GET_TOUCHPOINT_BY_ID, bindVars, Touchpoint.class)
@@ -51,7 +51,7 @@ public class TouchpointDaoUtil {
 	}
 
 	public static Touchpoint getByUrl(String url) {
-		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
+		ArangoDatabase db = getCdpDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("url", url);
 		Touchpoint p = new ArangoDbQuery<Touchpoint>(db, AQL_GET_TOUCHPOINT_BY_URL, bindVars, Touchpoint.class)
@@ -60,7 +60,7 @@ public class TouchpointDaoUtil {
 	}
 
 	public static List<Touchpoint> list(int startIndex, int numberResult) {
-		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
+		ArangoDatabase db = getCdpDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(2);
 		bindVars.put("startIndex", startIndex);
 		bindVars.put("numberResult", numberResult);
@@ -70,7 +70,7 @@ public class TouchpointDaoUtil {
 	}
 	
 	public static List<Touchpoint> top100ByProfile(String profileId) {
-		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
+		ArangoDatabase db = getCdpDbInstance();
 		
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("profileId", profileId);

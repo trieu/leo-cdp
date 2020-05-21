@@ -193,6 +193,8 @@ window.loadView = window.loadView || function (uri, divSelector, callback) {
 	if (resultHtml) {
 		//set HTML into view placeholder from cached
 		$(divSelector).empty().html(resultHtml);
+		$(window).scrollTop(0);
+
 		if (typeof callback === 'function') {
 			try {
 				callback.apply();
@@ -217,6 +219,7 @@ window.loadView = window.loadView || function (uri, divSelector, callback) {
 					$(divSelector).empty().html(finalHtml);
 					lscache.set(cacheKey, finalHtml, time2Live);
 				}
+				$(window).scrollTop(0);
 				
 				if (typeof callback === 'function') {
 					try {

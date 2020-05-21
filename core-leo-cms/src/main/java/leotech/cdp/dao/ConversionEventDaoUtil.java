@@ -17,7 +17,7 @@ import leotech.core.config.AqlTemplate;
 import leotech.system.util.database.ArangoDbQuery;
 import leotech.system.util.database.ArangoDbUtil;
 
-public class ConversionEventDaoUtil {
+public class ConversionEventDaoUtil  extends BaseLeoCdpDao {
 
 	static final String AQL_GET_CONVERSION_EVENTS_BY_PROFILE_ID = AqlTemplate
 			.get("AQL_GET_CONVERSION_EVENTS_BY_PROFILE_ID");
@@ -34,7 +34,7 @@ public class ConversionEventDaoUtil {
 	}
 
 	public static List<ConversionEvent> getEventsByProfileId(String refProfileId) {
-		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
+		ArangoDatabase db = getCdpDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("refProfileId", refProfileId);
 		List<ConversionEvent> list = new ArangoDbQuery<ConversionEvent>(db, AQL_GET_CONVERSION_EVENTS_BY_PROFILE_ID,

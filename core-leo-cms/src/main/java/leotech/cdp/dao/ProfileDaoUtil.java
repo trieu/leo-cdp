@@ -15,7 +15,7 @@ import leotech.core.config.AqlTemplate;
 import leotech.system.util.database.ArangoDbQuery;
 import leotech.system.util.database.ArangoDbUtil;
 
-public class ProfileDaoUtil {
+public class ProfileDaoUtil  extends BaseLeoCdpDao {
 
 	static long limitTotalProfiles = 5000;
 	
@@ -55,7 +55,7 @@ public class ProfileDaoUtil {
 	}
 
 	public static Profile getByVisitorId(String visitorId) {
-		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
+		ArangoDatabase db = getCdpDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("visitorId", visitorId);
 		Profile p = new ArangoDbQuery<Profile>(db, AQL_GET_PROFILE_BY_IDENTITY, bindVars, Profile.class).getResultsAsObject();
@@ -72,14 +72,14 @@ public class ProfileDaoUtil {
 		bindVars.put("userDeviceId", userDeviceId);
 		bindVars.put("fingerprintId", fingerprintId);
 		
-		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
+		ArangoDatabase db = getCdpDbInstance();
 		ProfileMatchingResult matchRs = new ArangoDbQuery<ProfileMatchingResult>(db, AQL_GET_PROFILE_BY_KEY_IDENTITIES, bindVars, ProfileMatchingResult.class)
 				.getResultsAsObject();
 		return matchRs.getBestMatchingProfile();
 	}
 	
 	public static Profile getById(String id) {
-		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
+		ArangoDatabase db = getCdpDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("id", id);
 		Profile p = new ArangoDbQuery<Profile>(db, AQL_GET_PROFILE_BY_ID, bindVars, Profile.class).getResultsAsObject();
@@ -87,7 +87,7 @@ public class ProfileDaoUtil {
 	}
 	
 	public static List<Profile> list(int startIndex, int numberResult) {
-		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
+		ArangoDatabase db = getCdpDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(2);
 		bindVars.put("startIndex", startIndex);
 		bindVars.put("numberResult", numberResult);
@@ -96,7 +96,7 @@ public class ProfileDaoUtil {
 	}
 
 	public static long countTotalOfProfiles() {
-		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
+		ArangoDatabase db = getCdpDbInstance();
 		long c = db.collection(Profile.COLLECTION_NAME).count().getCount();
 		return c;
 	}

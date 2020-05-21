@@ -12,7 +12,7 @@ import leotech.core.config.AqlTemplate;
 import leotech.system.util.database.ArangoDbQuery;
 import leotech.system.util.database.ArangoDbUtil;
 
-public class DeviceDaoUtil {
+public class DeviceDaoUtil extends BaseLeoCdpDao {
 
 	static final String AQL_GET_TRACKING_EVENTS_BY_PROFILE_ID = AqlTemplate.get("AQL_GET_TRACKING_EVENTS_BY_PROFILE_ID");
 
@@ -28,7 +28,7 @@ public class DeviceDaoUtil {
 	}
 
 	public static List<TrackingEvent> getEventsByProfileId(String refProfileId) {
-		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
+		ArangoDatabase db = getCdpDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("refProfileId", refProfileId);
 		List<TrackingEvent> list = new ArangoDbQuery<TrackingEvent>(db, AQL_GET_TRACKING_EVENTS_BY_PROFILE_ID,

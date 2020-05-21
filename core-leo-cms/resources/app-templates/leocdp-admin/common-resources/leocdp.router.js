@@ -125,7 +125,6 @@ function deletePost() {
 //------------ Category Controllers ---------------------
 
 
-
 function loadPagesOfCategory(catKey, catName) {
     loadView('/view/page-list.html?admin=1', pageDomSelector, function () {
         loadPageList(catKey, catName);

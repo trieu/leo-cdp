@@ -3,6 +3,7 @@ package leotech.cms.router;
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
+import leotech.cdp.admin.handler.CdpProfileApiHandler;
 import leotech.cms.handler.admin.AdminCategoryApiHandler;
 import leotech.cms.handler.admin.AdminPageApiHandler;
 import leotech.cms.handler.admin.AdminPostApiHandler;
@@ -29,6 +30,10 @@ public class AdminApiRouter extends BaseApiRouter {
 		try {
 			if (uri.startsWith(USER_PREFIX)) {
 				payload = new AdminUserApiHandler().httpPostApiHandler(userSession, uri, paramJson);
+			}
+			//
+			else if (uri.startsWith(CDP_PROFILE_PREFIX)) {
+				payload = new CdpProfileApiHandler().httpPostApiHandler(userSession, uri, paramJson);
 			}
 			//
 			else if (uri.startsWith(CATEGORY_PREFIX)) {
@@ -67,6 +72,10 @@ public class AdminApiRouter extends BaseApiRouter {
 				payload = new AdminUserApiHandler().httpGetApiHandler(userSession, uri, params);
 			}
 			//
+			else if (uri.startsWith(CDP_PROFILE_PREFIX)) {
+				payload = new CdpProfileApiHandler().httpGetApiHandler(userSession, uri, params);
+			}
+			//
 			else if (uri.startsWith(CATEGORY_PREFIX)) {
 				payload = new AdminCategoryApiHandler().httpGetApiHandler(userSession, uri, params);
 			}
@@ -81,7 +90,9 @@ public class AdminApiRouter extends BaseApiRouter {
 			//
 			else if (uri.startsWith(QUERY_PREFIX) || uri.startsWith(SEARCH_PREFIX)) {
 				payload = new ContentQueryApiHandler().httpGetApiHandler(userSession, uri, params);
-			} else if (uri.startsWith(BOT_PREFIX)) {
+			}
+			//
+			else if (uri.startsWith(BOT_PREFIX)) {
 				payload = new BotApiHandler().httpGetApiHandler(userSession, uri, params);
 			}
 		} catch (Throwable e) {

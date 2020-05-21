@@ -1,6 +1,10 @@
 
 # LEO CDP
 
+## Logo 
+
+logomakr.com/9qp3SD
+
 ## Cost & Pricing 
 
 * One year subscription on private Google cloud: $9,999

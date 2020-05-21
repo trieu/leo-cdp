@@ -16,7 +16,7 @@ import leotech.core.config.AqlTemplate;
 import leotech.system.util.database.ArangoDbQuery;
 import leotech.system.util.database.ArangoDbUtil;
 
-public class ContextSessionDaoUtil {
+public class ContextSessionDaoUtil extends BaseLeoCdpDao {
 
 	static final String AQL_GET_CONTEXT_SESSIONS_BY_VISITOR_ID = AqlTemplate
 			.get("AQL_GET_CONTEXT_SESSIONS_BY_VISITOR_ID");
@@ -56,7 +56,7 @@ public class ContextSessionDaoUtil {
 	}
 
 	public static ContextSession getByKey(String sessionKey) {
-		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
+		ArangoDatabase db = getCdpDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("sessionKey", sessionKey);
 		ContextSession s = new ArangoDbQuery<ContextSession>(db, AQL_GET_CONTEXT_SESSION_BY_KEY, bindVars,
@@ -65,7 +65,7 @@ public class ContextSessionDaoUtil {
 	}
 
 	public static List<ContextSession> getSessionsByVisitorId(String visitorId) {
-		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
+		ArangoDatabase db = getCdpDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("visitorId", visitorId);
 		List<ContextSession> list = new ArangoDbQuery<ContextSession>(db, AQL_GET_CONTEXT_SESSIONS_BY_VISITOR_ID,
@@ -74,7 +74,7 @@ public class ContextSessionDaoUtil {
 	}
 
 	public static List<ContextSession> geSessionsByProfileId(String profileId) {
-		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
+		ArangoDatabase db = getCdpDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("profileId", profileId);
 		List<ContextSession> list = new ArangoDbQuery<ContextSession>(db, AQL_GET_CONTEXT_SESSIONS_BY_PROFILE_ID,
