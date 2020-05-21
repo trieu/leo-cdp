@@ -58,11 +58,11 @@
     </div>
     
     <div class="row float-right">
-		<div class='col-md-7 col-sm-4 col-xs-12 text-center'>
+		<div class='col-md-7 col-xs-12 text-center'>
 			<h4>Reporting date: <span> January 12, 2020 </span> &#8594;  <span> May 11, 2020 </span></h4> 
 		</div>
 		 
-        <div class='col-md-2 col-sm-4 col-xs-12'>
+        <div class='col-md-2 col-xs-12'>
             <div class="form-group">
                 <div class='input-group date' id='beginFilterDate'>
                     <input type='text' class="form-control" autocomplete="off" /> <span class="input-group-addon">
@@ -71,7 +71,7 @@
                 </div>
             </div>
         </div>
-        <div class='col-md-2 col-sm-4 col-xs-12'>
+        <div class='col-md-2 col-xs-12'>
             <div class="form-group">
                 <div class='input-group date' id='endFilterDate'>
                     <input type='text' class="form-control" autocomplete="off" /> <span class="input-group-addon">
@@ -81,7 +81,7 @@
             </div>
         </div>
         
-        <div class='col-md-1 col-sm-2 col-xs-12'>
+        <div class='col-md-1 col-xs-12'>
         	<button type="button" class="btn btn-primary"> OK </button>
          </div>
         
@@ -104,20 +104,7 @@
 	                </div>
 	            </div>
 	            
-	            <h3 class="chart_header" >Event Tracking Statistics</h3>
-	            <div class="summary_metric">
-	                <div class="vcenter">
-	                
-	                    <h4> <span class="label label-default"> 61,656 </span> &nbsp; page views </h4>
-	                    <h4> <span class="label label-default"> 8,152 </span> &nbsp; product info views </h4>
-	                    <h4> <span class="label label-default"> 7,548 </span> &nbsp; product video views </h4>
-	                    <h4> <span class="label label-default"> 2,262 </span> &nbsp; add-to-cart clicks </h4>
-	                    <h4> <span class="label label-default"> 1,782 </span> &nbsp; purchases </h4>
-	                	<h4> <span class="label label-default"> 921 </span> &nbsp; first-time purchases </h4>
-	                	<h4> <span class="label label-default"> 861 </span> &nbsp; repeat purchases </h4>
-	                    
-	                </div>
-	            </div>
+	           
         	</div>
         </div>
         <div class="col-md-9">
@@ -136,17 +123,8 @@
     </div>
 
     <div class="row chart_box">
-     	<div class="col-md-3 ">
-     	
-     		<h3 class="chart_header" >Event Conversion Funnel</h3>
-            <div class="summary_metric">
-                <div class="vcenter">
-                   <div id="event_funnel"></div>
-                </div>
-            </div>
-     	</div>
-    	<div class="col-md-9">
-	        <h3 class="chart_header" style="width: 100%;" > Sales channel's performance from purchasing data </h3>
+    	<div class="col-md-12">
+	        <h3 class="chart_header" style="width: 100%;" > Daily Audience Statistics </h3>
 	        <div id="chart" style="text-align:center;">
 	            <svg></svg>
 	        </div>
@@ -173,92 +151,8 @@
 
     function initSalesDashboard() {
         loadProfileFunnel();
-        loadEventFunnel();
         loadAudienceVenn();
-        loadChannelPerformance();
-    }
-
-    function loadChannelPerformance() {
-        var data = [{
-            "channelName": "Ecommerce Website",
-            "lead": 181
-        }, {
-            "channelName": "Ecommerce App",
-            "lead": 189
-        }, {
-            "channelName": "Social Media Groups",
-            "lead": 387
-        }, {
-            "channelName": "Retail Store",
-            "lead": 187
-        }, {
-            "channelName": "Book Reseller",
-            "lead": 52
-        }];
-
-        // set the dimensions and margins of the graph
-        var margin = {
-                top: 20,
-                right: 20,
-                bottom: 30,
-                left: 180
-            },
-            width = 1080 - margin.left - margin.right,
-            height = 350 - margin.top - margin.bottom;
-
-        // set the ranges
-        var y = d3.scaleBand()
-            .range([height, 0])
-            .padding(0.1);
-
-        var x = d3.scaleLinear()
-            .range([0, width]);
-
-        // append the svg object to the body of the page
-        // append a 'group' element to 'svg'
-        // moves the 'group' element to the top left margin
-        var svg = d3.select("#chart svg").attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform",
-                "translate(" + margin.left + "," + margin.top + ")");;
-
-        // format the data
-        data.forEach(function (d) {
-            d.lead = +d.lead;
-        });
-
-        // Scale the range of the data in the domains
-        x.domain([0, d3.max(data, function (d) {
-            return d.lead;
-        })])
-        y.domain(data.map(function (d) {
-            return d.channelName;
-        }));
-        //y.domain([0, d3.max(data, function(d) { return d.lead; })]);
-
-        // append the rectangles for the bar chart
-        svg.selectAll(".bar")
-            .data(data)
-            .enter().append("rect")
-            .attr("class", "bar")
-            //.attr("x", function(d) { return x(d.lead); })
-            .attr("width", function (d) {
-                return x(d.lead);
-            })
-            .attr("y", function (d) {
-                return y(d.channelName);
-            })
-            .attr("height", y.bandwidth());
-
-        // add the x Axis
-        svg.append("g")
-            .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x));
-
-        // add the y Axis
-        svg.append("g")
-            .call(d3.axisLeft(y));
+        
     }
 
     function loadProfileFunnel() {
@@ -299,43 +193,6 @@
         chart.draw(data, options);
     }
     
-    function loadEventFunnel() {
-        var data = [
-            ['product info view', 8152, '#008080'],
-            ['product video view', 7548, '#4AADC6'],
-            ['add-to-cart click', 2262, '#702963'],
-            ['purchase', 1782, '#C46511'],
-            ['repeat purchase', 861, '#3f2ae2']
-        ];
-        var options = {
-      		block: {
-      			highlight: true
-      	    },
-            chart: {
-                curve: {
-                    enabled: true,
-                    height: 16
-                },
-                bottomWidth : 0.69,
-                height: 320
-            },
-            tooltip: {
-                enabled: true
-            },
-            label: {
-                fontSize: '15px'
-            },
-            events: {
-                click: {
-                    block: function (data) {
-                        console.log(data.label.raw);
-                    }
-                }
-            }
-        };
-        var chart = new D3Funnel('#event_funnel');
-        chart.draw(data, options);
-    }
 
     function loadAudienceVenn() {
         var sets = [{

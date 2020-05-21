@@ -164,7 +164,23 @@ function loadAudienceDashboard() {
     });
 }
 
+function loadAudienceProfiles() {
+    loadView('/view/hubs/audience/audience-profile-list.html?admin=1', pageDomSelector, function () {
+    	loadDataProfileList();
+    });
+}
 
+function loadAudienceSegmentation() {
+    loadView('/view/hubs/audience/audience-segment-list.html?admin=1', pageDomSelector, function () {
+    	initSalesDashboard();
+    });
+}
+
+function loadAudienceHubApiManagement() {
+    loadView('/view/hubs/audience/audience-hub-api-configs.html?admin=1', pageDomSelector, function () {
+    	initSalesDashboard();
+    });
+}
 
 // ------------ Report Analytics Controllers ---------------------
 
