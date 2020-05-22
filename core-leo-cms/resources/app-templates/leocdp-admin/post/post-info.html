@@ -59,7 +59,7 @@
     function initPostInfoView(params){
     	loadView('/view/common-widgets/headline-images.html?admin=1', '#headline-images-div', function () {
             loadDataPostInfo(params)
-        });
+        }, true);
     }
 
     function loadDataPostInfo(params) {

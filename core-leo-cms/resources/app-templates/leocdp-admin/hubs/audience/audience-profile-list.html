@@ -3,7 +3,7 @@
     <!-- MAIN BODY here -->
      <div class="row">
         <div class="col-lg-9">
-            <h2 class="page-header" > <a href="javascript:"> Audience Hub </a> &#8594; <a href="javascript:"> Audience Profiles </a> </h2>
+            <h2 class="page-header" > <a href="javascript:"> Audience Hub </a> &#8594; <a href="#calljs-loadAudienceProfiles()"> Audience Profiles </a> </h2>
         </div>
         <div class="col-lg-3 text-center" style="padding: 10px">
         	<button type="button" class="btn btn-primary" onclick="loadDataProfileList()" > New Profile </button>
@@ -11,7 +11,7 @@
         </div>
     </div>
     
-    <div class="row float-right">
+    <div class="row float-right" style="display: none">
 		<div class='col-md-7  col-xs-12 text-center'>
 			<h4> Data from <span> January 12, 2020 </span> to  <span> May 11, 2020 </span></h4> 
 		</div>
@@ -49,7 +49,6 @@
         </div>
 	</div>
 	<hr>
-   
 
     <div class="row">
         <div class="col-lg-12">
@@ -57,7 +56,7 @@
                 <table id="profile-list" class="display" style="width:100%">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>Profile UUID</th>
                             <th>FirstName</th>
                             <th>Last Name</th>
                             <th>Primary Email</th>
@@ -111,8 +110,9 @@
                     },
                     {
                         "render": function (data, type, row) {
-                            var callJsStr = "#calljs-profileDetails('" + data + "')";
-                            return '<a title="' + row.title + '" href="' + callJsStr + '" >Edit</a>';
+                        	var callJsViewStr = "#calljs-loadProfile360Analytics('" + row.id + "')";
+                            var callJsEditStr = "#calljs-loadProfileDataEditor('" + row.id + "')";
+                            return '<a title="Profile 360 Analytics" href="' + callJsViewStr + '" >View</a> <br> <a title="Profile Data Editor" href="' + callJsEditStr + '" >Edit</a>';
                         },
                         "targets": 8
                     }

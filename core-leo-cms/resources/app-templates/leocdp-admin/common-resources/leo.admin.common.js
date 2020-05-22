@@ -180,7 +180,7 @@
  * ################## common utils functions ####################
  */
 
-window.loadView = window.loadView || function (uri, divSelector, callback) {
+window.loadView = window.loadView || function (uri, divSelector, callback, i18nTurnOff ) {
 	//caching view in LocalStorage
 	var time2Live = typeof window.apiCacheTime2Live === 'number' ? window.apiCacheTime2Live : 1; // in munute
 	var apiCacheEnabled = typeof window.apiCacheEnabled === 'boolean' ? window.apiCacheEnabled : true;
@@ -209,12 +209,11 @@ window.loadView = window.loadView || function (uri, divSelector, callback) {
 			type: 'GET',
 			success: function (htmlTpl) {
 				// load HTML with i18n data
-				if(uri === '/view/navigation-view.html?admin=1') {
+				if(i18nTurnOff === true) {
 					$(divSelector).empty().html(htmlTpl);
 					lscache.set(cacheKey, htmlTpl, time2Live);
 				} else {
 					var i18nModel = typeof window.i18nLeoAdminData === 'function' ? window.i18nLeoAdminData() : {};
-					
 					var finalHtml = Handlebars.compile(htmlTpl)(i18nModel);
 					$(divSelector).empty().html(finalHtml);
 					lscache.set(cacheKey, finalHtml, time2Live);

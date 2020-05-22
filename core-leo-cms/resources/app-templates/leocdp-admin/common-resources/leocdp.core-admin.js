@@ -1,5 +1,5 @@
 var prefixCallJs = '#calljs-';
-var pageDomSelector = '#page-wrapper';
+var pageDomSelector = '#page_main_content';
 
 
 $(document).ready(function () {
@@ -17,21 +17,21 @@ $(document).ready(function () {
                         if (jsCode != '') {
                             eval(jsCode);
                         }
-                        $('#page-wrapper').show();
+                        $(pageDomSelector).show();
                     } catch (error) {
                         alert(error);
                         location.href = '/admin';
                     }
                 }, 654);
-            });
+            }, true);
         } else {
             var uri = location.hash.length === 0 ? defaultPath : location.hash.substring(1);
             loadView(uri, '#wrapper', function () {
                 //default view
                 mainViewReady();
                 loadCategoryList();
-                $('#page-wrapper').show();
-            });
+                $(pageDomSelector).show();
+            }, true);
         }
     } else {
         loadView('/view/login.html?admin=1', '#wrapper');
@@ -209,4 +209,12 @@ var loadModalboxHtml = function (uri) {
             console.error("loadModalboxHtml.error: ", data);           
         }
     });
+}
+
+var makeNodeEditable = function(selector){
+    selector.attr('title','Editor').editable({
+        type: 'textarea',
+        rows: 3,
+        inputclass: 'editable_text_editor'
+    })
 }

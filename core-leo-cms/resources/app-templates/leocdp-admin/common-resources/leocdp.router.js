@@ -182,6 +182,20 @@ function loadAudienceHubApiManagement() {
     });
 }
 
+
+
+function loadProfile360Analytics() {
+    loadView('/view/hubs/audience/profile-360-analytics.html?admin=1', pageDomSelector, function () {
+    	initProfile360Analytics();
+    });
+}
+
+function loadProfileDataEditor() {
+    loadView('/view/hubs/audience/profile-data-editor.html?admin=1', pageDomSelector, function () {
+    	initProfileDataEditor();
+    });
+}
+
 // ------------ Report Analytics Controllers ---------------------
 
 

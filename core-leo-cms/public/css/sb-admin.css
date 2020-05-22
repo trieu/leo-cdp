@@ -553,6 +553,11 @@ img {
 	width: 100%;
 }
 
+#page_main_content {
+	padding: 20px 25px 0 25px;
+	margin-bottom: 50px;
+}
+
 .huge {
 	font-size: 50px;
 	line-height: normal;
@@ -1833,3 +1838,79 @@ scale
 	width: 14px;
 	height: 14px;
 }
+
+.plain ol>li {
+	line-height: .8em;
+}
+
+.plain ol>li>p {
+	color: #000;
+	padding: 8px;
+}
+
+.editable_text {
+	font-size: 18px;
+}
+.editable_text:hover {
+	background-color: #bcbbbf;
+}
+
+/* -------------------------------------- */
+/* underlined list stle                   */
+.underlined ol {
+	counter-reset: li;
+	/* Initiate a counter */
+	margin-left: 0;
+	/* Remove the default left margin */
+	padding-left: 0;
+	/* Remove the default left padding */
+}
+
+.underlined ol>li {
+	position: relative;
+	/* Create a positioning context */
+	margin: 0 0 6px 2em;
+	/* Give each list item a left margin to make room for the numbers */
+	padding: 4px 8px;
+	/* Add some spacing around the content */
+	list-style: none;
+	/* Disable the normal item numbering */
+	border-top: 2px solid #666;
+	background: #f6f6f6;
+}
+
+.underlined ol>li>p {
+	color: #000;
+}
+
+.underlined ol>li:before {
+	content: counter(li);
+	/* Use the counter as content */
+	counter-increment: li;
+	/* Increment the counter by 1 */
+	/* Position and style the number */
+	position: absolute;
+	top: -2px;
+	left: -2em;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	width: 2em;
+	margin-right: 8px;
+	padding: 4px;
+	border-top: 2px solid #666;
+	color: #fff;
+	background: #666;
+	font-weight: bold;
+	font-family: "Helvetica Neue", Arial, sans-serif;
+	text-align: center;
+}
+
+.underlined li ol, .underlined li ul {
+	margin-top: 6px;
+}
+
+.underlined ol ol li:last-child {
+	margin-bottom: 0;
+}
+

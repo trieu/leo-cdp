@@ -27,14 +27,17 @@
         var template = Handlebars.compile(raw_template);
         var placeHolder = $('#headline_images');
         var c = 0;
+       
         for (var imgSrc in obj) {
             var imgCaption = obj[imgSrc];
-            var id = c + 'headline_image' + (new Date().getTime())
+            var id = c + 'headline_image' + (new Date().getTime());
+            console.log(imgSrc)
             var html = template({
-                image_caption: imgCaption,
-                image_src: imgSrc,
+                'image_caption': imgCaption,
+                'image_src': imgSrc,
                 'id': id
             });
+            console.log(html)
             placeHolder.append(html);
             c++;
 

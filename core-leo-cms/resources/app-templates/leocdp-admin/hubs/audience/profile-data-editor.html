@@ -1,14 +1,10 @@
-<style>
-#key_business_action {
-	background-color: #c9cad4;
-	height: 28px;
-}
-</style>
 
 
 <div class="row" id="breadcrumb_header" >
       	<div class="col-md-10" >
-           <h2 class="page-header" > <a href="javascript:"> Business Hub </a> &#8594; <a href="javascript:"> Journey Map Studio </a> </h2>
+           <h2 class="page-header" > <a href="javascript:"> Audience Hub </a> 
+           &#8594; <a href="#calljs-loadAudienceProfiles()"> Audience Profiles </a>
+           &#8594; <a href="javascript:"> Profile Editor </a> </h2>
        </div>
        <div class="col-md-2" >
        	<button type="button" class="btn btn-primary btn-lg">Save</button>
@@ -16,7 +12,7 @@
        </div>
    </div>
 
-   <h2 id="journey_map_name" >Hành trình chung của khách hàng cho hệ thống bán lẻ sách</h2>
+<h2 id="journey_map_name" >Hành trình chung của khách hàng cho hệ thống bán lẻ sách</h2>
 
    <div class="container-fluid">
 
@@ -235,20 +231,6 @@
             </table>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-5">
-        	<h3> {{key_business_action}} </h3>
-        </div>
-         <div class="col-md-7">
-         	<div id="key_business_action" data-field="key_business_action" >
-                <h3 class="editable_text"> Mua sách </h3>
-            </div>
-        </div>
-    </div>    
-    
-    <div class="row">
-    	 <div id="sankeyChart" style="height:580px; width:98%;"></div>
-    </div>
 
 </div>
 <br><br><br>
@@ -256,7 +238,7 @@
 <script type="text/javascript">
     ///Js code
     
-    function loadOkJourneyMapDesigner() {
+    function initProfileDataEditor() {
     	//setup editable node
         $('.editable_text').each(function(){
             makeNodeEditable($(this))
@@ -280,158 +262,6 @@
             	$('#' + target ).append(ele);
                 makeNodeEditable(ele.find('p'));
             }
-            
         });
-
-        setTimeout(experienceMapDiagram,500);
-    }
-
-    function experienceMapDiagram() {
-        var metricName = 'Reach'
-        var journeyStages = ['Google Search', 'Facebook Group', 'YouTube channel', 'E-commerce Website', 'E-commerce Mobile App','Email khách hàng (CRM)','Số điện thoại khách hàng (CRM)','Cửa hàng bán lẻ','Đường sách']
-        var journeyStageMetrics = { 'Mua sách' : 'đơn hàng' }
-
-        var configSankey = {
-            margin: {
-                top: 10,
-                left: 10,
-                right: 10,
-                bottom: 10
-            },
-            nodes: {
-                dynamicSizeFontNode: {
-                    enabled: true,
-                    minSize: 14,
-                    maxSize: 30
-                },
-                fontSize: 14, // if dynamicSizeFontNode not enabled
-                draggableX: false, // default [ false ]
-                draggableY: true, // default [ true ]
-                colors: d3.scaleOrdinal(d3.schemeCategory10)
-            },
-            links: {
-                formatValue: function (name, val) {
-                    //console.log('formatValue ' + name)
-                    var label = journeyStageMetrics[name] ? journeyStageMetrics[name] : metricName
-                    return d3.format(",.0f")(val) + ' ' + label;
-                },
-                unit: metricName // if not set formatValue function
-            },
-            tooltip: {
-                infoDiv: true, // if false display default tooltip
-                labelSource: 'Input:',
-                labelTarget: 'Output:'
-            }
-        }
-        var datajson = {
-            nodes: [
-                {
-                    id: 0,
-                    name: "Google Search"
-                }, {
-                    id: 1,
-                    name: "Facebook Group"
-                }, {
-                    id: 2,
-                    name: "YouTube channel",
-
-                }, {
-                    id: 3,
-                    name: "E-commerce Website",
-
-                }, {
-                    id: 4,
-                    name: "E-commerce Mobile App"
-                }, {
-                    id: 5,
-                    name: "Email khách hàng (CRM)"
-                }, {
-                    id: 6,
-                    name: "Số điện thoại khách hàng (CRM)"
-                }, {
-                    id: 7,
-                    name: "Cửa hàng bán lẻ"
-                }, {
-                    id: 8,
-                    name: "Đường sách"
-                } , {
-                    id: 9,
-                    name: "Mua sách"
-                }
-                ],
-            links: [
-                {
-                    source: 0,
-                    target: 3,
-                    value: 1
-                },
-                {
-                    source: 1,
-                    target: 3,
-                    value: 1
-                }, {
-                    source: 2,
-                    target: 3,
-                    value: 1
-                }, {
-                    source: 0,
-                    target: 4,
-                    value: 1
-                },
-                {
-                    source: 1,
-                    target: 4,
-                    value: 1
-                }, {
-                    source: 0,
-                    target: 2,
-                    value: 1
-                } , {
-                    source: 2,
-                    target: 7,
-                    value: 1
-                }  , {
-                    source: 5,
-                    target: 4,
-                    value: 1
-                }
-                , {
-                    source: 6,
-                    target: 4,
-                    value: 1
-                }
-                , {
-                    source: 2,
-                    target: 7,
-                    value: 1
-                } , {
-                    source: 2,
-                    target: 8,
-                    value: 1
-                } , {
-                    source: 8,
-                    target: 9,
-                    value: 1
-                } , {
-                    source: 4,
-                    target: 9,
-                    value: 1
-                }  , {
-                    source: 3,
-                    target: 9,
-                    value: 1
-                }  , {
-                    source: 7,
-                    target: 9,
-                    value: 1
-                } , {
-                    source: 7,
-                    target: 4,
-                    value: 1
-                }
-                ]
-        };
-
-        var objSankey = sk.createSankey('#sankeyChart', configSankey, datajson);
     }
 </script>

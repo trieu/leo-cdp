@@ -818,8 +818,10 @@
     }
     
     var objectToQueryString = function(params){
-    	// add fingerprint to params
-    	params['fgp'] = lscache.get("leocdp_fgp") || '';
+    	// FIXME add fingerprint to params
+    	if(OBSERVE_WITH_FINGERPRINT){
+    		params['fgp'] = lscache.get("leocdp_fgp") || '';
+    	}
     	
     	var queryString = Object.keys(params).map((key) => {
 		    return encodeURIComponent(key) + '=' + encodeURIComponent(params[key])

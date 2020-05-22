@@ -9,7 +9,7 @@ logomakr.com/9qp3SD
 
 * One year subscription on private Google cloud: $9,999
 * Monthly Product package = $999 (ArangoDB + Google Cloud)
-* Total monthly infrastructure cost: (0.52 * 24 * 30) + 235.27 = $609.67
+* Total monthly infrastructure cost: (0.52 x 24 x 30) + 235.27 = $609.67
 * Total monthly DevOps cost: $89.33
 * Total monthly consulting and training cost: $100
 * Total monthly profit: $200
