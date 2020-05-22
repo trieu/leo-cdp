@@ -1855,7 +1855,9 @@ scale
 	background-color: #bcbbbf;
 }
 
-/* -------------------------------------- */
+
+
+/* Profile, Customer Journey */
 /* underlined list stle                   */
 .underlined ol {
 	counter-reset: li;
@@ -1912,5 +1914,12 @@ scale
 
 .underlined ol ol li:last-child {
 	margin-bottom: 0;
+}
+
+.avatar {
+  vertical-align: middle;
+  max-width: 320px;
+  max-height: 320px;
+  border-radius: 50%;
 }
 

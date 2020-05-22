@@ -1,17 +1,14 @@
 
 <div class="row" id="breadcrumb_header" >
-      	<div class="col-md-10" >
+      	<div class="col-md-12" >
            <h2 class="page-header" > <a href="javascript:"> Audience Hub </a> 
            &#8594; <a href="#calljs-loadAudienceProfiles()"> Audience Profiles </a>
            &#8594; <a href="javascript:"> Profile 360 Analytics </a> </h2>
        </div>
-       <div class="col-md-2" >
-       	<button type="button" class="btn btn-primary btn-lg">Save</button>
-		<button type="button" class="btn btn-secondary btn-lg">Cancel</button>
-       </div>
+       
    </div>
 
-   <h2 id="journey_map_name" >Hành trình chung của khách hàng cho hệ thống bán lẻ sách</h2>
+   <h2 id="journey_map_name" >Hành trình của khách hàng </h2>
 
    <div class="container-fluid">
 
@@ -21,18 +18,18 @@
            <div class="col-md-4">
                <div class="text-center">
                    <h3>Avatar</h3>
-                   <img src="https://i.pinimg.com/236x/a8/d9/67/a8d9677a5bddd2eb122417b22a4a1cae--reading-is-sexy-light-photography.jpg"
-                       alt="Profile Avatar" class="rounded mx-auto d-block">
+                   <img src="/public/images/avatars/profile-default-avatar.png"
+                       alt="Profile Avatar" class="rounded mx-auto d-block avatar">
                </div>
            </div>
            <div class="col-md-8">
 
                <div>
-                   <h3> {{target_customer_name}} </h3>
-                   <strong class="editable_text"> nhóm mê sách kinh doanh </strong>
+                   <h3> {{profile_full_name}} </h3>
+                   <strong class="editable_text"> Nguyen Van A </strong>
                </div>
                <br>
-               <h3> {{persona_attributes}}
+               <h3> {{profile_attributes}}
                    <span class="editable_add_item" data-target="persona_attributes"  ></span>  
                </h3>
                <table border=0 class="underlined" style="width: 100%;">
@@ -41,15 +38,15 @@
                            <ol id="persona_attributes" data-field="persona_attributes">
                                <li>
                                    <b data-persona="key" class="editable_text" > Giới tính </b> 
-                                   <p data-persona="value" class="editable_text" > Nam và nữ </p>
+                                   <p data-persona="value" class="editable_text" > Nam </p>
                                </li>
                                <li>
                                    <b data-persona="key" class="editable_text" > Độ tuổi </b> 
-                                   <p data-persona="value" class="editable_text" > 16 - 60 </p>
+                                   <p data-persona="value" class="editable_text" > 30 </p>
                                </li>
                                <li>
                                    <b data-persona="key" class="editable_text" > Vùng địa lý </b> 
-                                   <p data-persona="value" class="editable_text" > Việt Nam  </p>
+                                   <p data-persona="value" class="editable_text" > TP.HCM, Việt Nam  </p>
                                </li>
                            </ol>
                        </td>
@@ -64,7 +61,7 @@
        <div class="row">
 
            <div class="col-md-6">
-               <h3> {{persona_expectations}} 
+               <h3> {{profile_expectations}} 
                    <span class="editable_add_item" data-target="persona_expectations"  ></span>  
                </h3> 
                
@@ -88,7 +85,7 @@
            </div>
 
            <div class="col-md-6">
-               <h3> {{persona_interests}}  
+               <h3> {{profile_interests}}  
                    <span class="editable_add_item" data-target="persona_interests"  ></span>  
                </h3>
                <table style="width: 100%;" class="plain">
@@ -118,7 +115,7 @@
        <div class="row">
 
            <div class="col-md-6">
-               <h3> {{business_ideas}} 
+               <h3> {{profile_recommended_ideas}} 
                    <span class="editable_add_item" data-target="business_ideas"  ></span> 
                </h3>
                <table class="plain" style="width: 100%;">
@@ -141,7 +138,7 @@
            </div>
 
            <div class="col-md-6">
-               <h3> {{business_solutions}}
+               <h3> {{profile_recommended_solutions}}
                    <span class="editable_add_item" data-target="business_solutions"  ></span> 
                </h3>
                <table class="plain" style="width: 100%;">
@@ -170,7 +167,7 @@
 
        <div class="row">
            <div class="col-md-6">
-               <h3> {{persona_touchpoints}}
+               <h3> {{profile_touchpoints}}
                    <span class="editable_add_item" data-target="persona_touchpoints"  ></span>
                </h3>
                <table class="plain">
@@ -210,7 +207,7 @@
                </table>
            </div>
            <div class="col-md-6">
-           	<h3> {{conversion_actions}} <span class="editable_add_item" data-target="conversion_actions" ></span> </h3>
+           	<h3> {{profile_actions}} <span class="editable_add_item" data-target="conversion_actions" ></span> </h3>
                <table class="plain" style="width: 100%;">
                    <tr>
                        <td>
@@ -230,16 +227,8 @@
                </table>
            </div>
        </div>
-       <div class="row">
-           <div class="col-md-5">
-           	<h3> {{key_business_action}} </h3>
-           </div>
-            <div class="col-md-7">
-            	<div id="key_business_action" data-field="key_business_action" >
-                   <h3 class="editable_text"> Mua sách </h3>
-               </div>
-           </div>
-       </div>    
+       
+      
        
        <div class="row">
        	 <div id="sankeyChart" style="height:580px; width:98%;"></div>
@@ -256,30 +245,7 @@
     
     function initProfile360Analytics() {
     	//setup editable node
-        $('.editable_text').each(function(){
-            makeNodeEditable($(this))
-        });
-
-        //setup add new editable node
-        var iconNode = '<i class="fa fa-plus-square" aria-hidden="true"></i>';
-        $('.editable_add_item').html(iconNode).click(function(){
-            var btnSelector = $(this);
-            var target = btnSelector.data('target');
-            console.log(target)
-            
-            var ele = false;
-            if(target === 'persona_attributes'){
-            	ele = $('<li> <b data-persona="key" class="editable_text" > </b> <p data-persona="value" class="editable_text" > </p> </li>');
-            	$('#' + target ).append(ele);
-                makeNodeEditable(ele.find('b'));
-                makeNodeEditable(ele.find('p'));
-            } else {
-            	ele = $('<li> <p class="editable_text"> </p> </li>');
-            	$('#' + target ).append(ele);
-                makeNodeEditable(ele.find('p'));
-            }
-            
-        });
+        
 
         setTimeout(experienceMapDiagram,500);
     }

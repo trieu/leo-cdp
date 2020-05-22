@@ -94,6 +94,13 @@
                     }
                 },
                 'columnDefs': [
+                	{
+                        "render": function (data, type, row) {
+                        	var callJsViewStr = "#calljs-loadProfile360Analytics('" + row.id + "')";
+                            return '<a title="Profile 360 Analytics" href="' + callJsViewStr + '" >'+data.substr(0,8)+'...</a>';
+                        },
+                        "targets": 0
+                    },
                     {
                         "render": function (data, type, row) {
                             var date = moment(new Date(data)).format('YYYY-MM-DD HH:mm:ss');
