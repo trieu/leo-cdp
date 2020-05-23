@@ -4,7 +4,7 @@ var pageDomSelector = '#page_main_content';
 
 $(document).ready(function () {
     if (LeoCmsApiUtil.isLoginSessionOK()) {
-        var defaultPath = '/view/navigation-view.html?admin=1';
+        var defaultPath = '/view/main-view.html?admin=1';
 
         //find action js
         var idx = location.hash.indexOf(prefixCallJs);
