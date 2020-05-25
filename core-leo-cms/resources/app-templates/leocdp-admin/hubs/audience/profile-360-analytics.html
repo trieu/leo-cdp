@@ -21,7 +21,8 @@
 #attribution_description {
     text-align: center;
     font-size: 18px;
-    width: 100%;
+    width: 80%;
+    margin:auto;
     font-weight: bold;
 }
 
@@ -91,13 +92,17 @@
 
             <div id="attribution_description"></div> <br>
 			
-			<div class="col-md-4 ">
-            	<div class="user_profile_attrs"> &nbsp; &nbsp; &nbsp; &nbsp; </div> &nbsp; are attributes of Customer Profile 
-            </div>
-            
-            <div class="col-md-4 ">
-            	<div class="persona_profile_attrs"> &nbsp; &nbsp; &nbsp; &nbsp; </div> &nbsp; are attributes of Customer Persona 
+			<div class="row" >
+				<div class="col-md-3 "></div>
+				<div class="col-md-3 ">
+	            	<div class="user_profile_attrs"> &nbsp; &nbsp; &nbsp; &nbsp; </div> &nbsp; are attributes of Customer Profile 
+	            </div>
+	            <div class="col-md-3 ">
+	            	<div class="persona_profile_attrs"> &nbsp; &nbsp; &nbsp; &nbsp; </div> &nbsp; are attributes of Customer Persona 
+				</div>
+				<div class="col-md-3 "></div>
 			</div>
+			
 			
             <div id="profile_attribution" class="col-md-12 bar-module" style="text-align: center;"></div>
         </div>
@@ -633,9 +638,9 @@
                 "translate(" + margin.left + "," + margin.top + ")");
 
         // Labels of row and columns
-        var attribution_fields = ["Live_in_Saigon", "Love_Coffee", "Visited_Web", "Installed_App", "Used_Credit_Card", "Male", "Married", "Love_Sport", "Love_Tech", "Reading_News"]
-        var myGroups = attribution_fields
-        var myVars = attribution_fields
+    
+        var myGroups = ["Live_in_Saigon", "Visited_Web", "Installed_App", "Used_Credit_Card"]
+        var myVars = ["Used_Credit_Card", "Installed_App",  "Visited_Web", "Live_in_Saigon" ]
 
         // Build X scales and axis:
         var x = d3.scaleBand()
@@ -649,7 +654,7 @@
             .selectAll("text")
             .attr("transform", "translate(-10,10)rotate(-30)")
             .style("text-anchor", "end")
-            .style("font-size", 12)
+            .style("font-size", 15)
             .style("fill", "#E91E0D");
 
         // Build X scales and axis:
@@ -662,14 +667,20 @@
             .call(d3.axisLeft(y))
             .selectAll("text")
             .style("text-anchor", "end")
-            .style("font-size", 14)
+            .style("font-size", 15)
             .style("fill", "#463CC4")
             ;
 
         // Build color scale
         var myColor = d3.scaleLinear()
             .range(["white", "#008748"])
-            .domain([1, 100])
+            .domain([1, 100]);
+        
+        function select_axis_label(datum) {
+            return d3.select('.x_axis')
+            	.selectAll('text')
+            	.filter(function(x) { return x == datum.letter; });
+        }
 
         //Read the data
         d3.csv("/public/uploaded-files/sample-profile-attribution.csv", function (data) {
@@ -677,26 +688,43 @@
             // Three function that change the tooltip when user hover / move / leave a cell
 
             var onclick = function (d) {
-            	console.log(d)
-                alert("The exact value of this cell is: " + d.value)
+            	var str = " [Profile attribute: " + d.profile_attr + " - Persona attribute: " + d.persona_attr + "] : Matching Score = " + d.matching_score + " %";
+                $('#attribution_description').text(str);
+                var myNode = svg.select("#cell_"+ d.profile_attr + '_' + d.persona_attr);
+            	
+                var str = " [Profile attribute: " + d.profile_attr + " - Persona attribute: " + d.persona_attr + "] : Matching Score = " + d.matching_score + " %";
+                $('#attribution_description').text(str).effect("highlight", {color:"#5eeb34"}, 6000 );
             }
+           
             var mouseover = function (d) {
             	console.log(d)
-                $('#attribution_description').text("Similarity: " + d.value + " %")
+            	var myNode = svg.select("#cell_"+ d.profile_attr + '_' + d.persona_attr);
+            	myNode.style("fill", "#5eeb34");
+            	
+            	var str = " [Profile attribute: " + d.profile_attr + " - Persona attribute: " + d.persona_attr + "] : Matching Score = " + d.matching_score + " %";
+                $('#attribution_description').text(str);
+            }
+            
+            var mouseout = function(d) {
+           		var myNode = svg.select("#cell_"+ d.profile_attr + '_' + d.persona_attr);
+               	myNode.style("fill", myColor(d.matching_score) );
             }
 
             // add the squares
             svg.selectAll()
-                .data(data, function (d) { return d.group + ':' + d.variable; })
+                .data(data, function (d) { return d.profile_attr + ':' + d.persona_attr; })
                 .enter()
                 .append("rect")
-                .attr("x", function (d) { return x(d.group) })
-                .attr("y", function (d) { return y(d.variable) })
+                .attr("id", function (d) { return "cell_"+ d.profile_attr + '_' + d.persona_attr })
+                .attr("x", function (d) { return x(d.profile_attr) } )
+                .attr("y", function (d) { return y(d.persona_attr) } )
                 .attr("width", x.bandwidth())
                 .attr("height", y.bandwidth())
-                .style("fill", function (d) { return myColor(d.value) })
+                .style("fill", function (d) { return myColor(d.matching_score)} )
                 .on("click", onclick)
                 .on("mouseover", mouseover)
+                .on('mouseout', mouseout)
+                ;
         })
     }
 </script>
