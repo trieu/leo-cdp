@@ -1,3 +1,32 @@
+<style>
+<!--
+#attribution_description {
+    text-align: center;
+    font-size: 18px;
+    width: 100%;
+    font-weight: bold;
+}
+.user_profile_attrs {
+    background-color: #463CC4;
+    width: 50px;
+    height: 20px;
+    display: inline;
+}
+.persona_profile_attrs {
+    background-color: #E91E0D;
+    width: 50px;
+    height: 20px;
+    display: inline;
+}
+#attribution_description {
+    text-align: center;
+    font-size: 18px;
+    width: 100%;
+    font-weight: bold;
+}
+
+-->
+</style>
 
 <div class="row" id="breadcrumb_header" >
       	<div class="col-md-12" >
@@ -30,12 +59,12 @@
                </div>
                <br>
                <h3> {{profile_attributes}}
-                   <span class="editable_add_item" data-target="persona_attributes"  ></span>  
+                   <span class="editable_add_item" data-target="personal_attributes"  ></span>  
                </h3>
                <table border=0 class="underlined" style="width: 100%;">
                    <tr>
                        <td>
-                           <ol id="persona_attributes" data-field="persona_attributes">
+                           <ol id="personal_attributes" data-field="personal_attributes">
                                <li>
                                    <b data-persona="key" class="editable_text" > Giới tính </b> 
                                    <p data-persona="value" class="editable_text" > Nam </p>
@@ -55,20 +84,61 @@
            </div>
 
        </div>
+       
+       <div class="line" ></div>
+       <div class="row" >
+            <h3 style="text-align:center;width: 100%;">Attribution Matrix of Profile and Persona </h3>
 
+            <div id="attribution_description"></div> <br>
+			
+			<div class="col-md-4 ">
+            	<div class="user_profile_attrs"> &nbsp; &nbsp; &nbsp; &nbsp; </div> &nbsp; are attributes of Customer Profile 
+            </div>
+            
+            <div class="col-md-4 ">
+            	<div class="persona_profile_attrs"> &nbsp; &nbsp; &nbsp; &nbsp; </div> &nbsp; are attributes of Customer Persona 
+			</div>
+			
+            <div id="profile_attribution" class="col-md-12 bar-module" style="text-align: center;"></div>
+        </div>
+       
+       <br>
        <div class="line"></div>
+       <div class="row">
+       		<h3 style="text-align: center"> Customer Journey Map </h3>
+       	 	<div id="sankeyChart" style="height:580px; width:98%;"></div>
+       </div>
+       
+       <br><br>
+       <div class="line"></div>
+       <div class="row" >
+            <div class="col-md-6 bar-module">
+                <div id="venn_two" style=float:left>
+                    <h3 style="text-align: center">Media Touchpoints</h3>
+                </div>
+            </div>
+            <div class="col-md-6 ">
+                <div>
+                    <h3>Predictive Personality Traits(OCEAN Model) </h3>
+                </div>
+                <div class="pairs">
+                    <div id="chart_persornality">
+                    </div>
+                </div>
+            </div>
+       </div>
 
        <div class="row">
 
            <div class="col-md-6">
                <h3> {{profile_expectations}} 
-                   <span class="editable_add_item" data-target="persona_expectations"  ></span>  
+                   <span class="editable_add_item" data-target="personal_expectations"  ></span>  
                </h3> 
                
                <table style="width: 100%;" class="plain">
                    <tr>
                        <td>
-                           <ol id="persona_expectations" data-field="persona_expectations" >
+                           <ol id="personal_expectations" data-field="personal_expectations" >
                                <li>
                                    <p class="editable_text"> đọc thử nội dung trước khi mua  </p>
                                </li>
@@ -86,12 +156,12 @@
 
            <div class="col-md-6">
                <h3> {{profile_interests}}  
-                   <span class="editable_add_item" data-target="persona_interests"  ></span>  
+                   <span class="editable_add_item" data-target="personal_interests"  ></span>  
                </h3>
                <table style="width: 100%;" class="plain">
                    <tr>
                        <td>
-                           <ol id="persona_interests" data-field="persona_interests" >
+                           <ol id="personal_interests" data-field="personal_interests" >
                                <li>
                                    <p class="editable_text"> học hỏi kiến thức mới về công nghệ </p>
                                </li>
@@ -168,12 +238,12 @@
        <div class="row">
            <div class="col-md-6">
                <h3> {{profile_touchpoints}}
-                   <span class="editable_add_item" data-target="persona_touchpoints"  ></span>
+                   <span class="editable_add_item" data-target="personal_touchpoints"  ></span>
                </h3>
                <table class="plain">
                    <tr>
                        <td>
-                           <ol id="persona_touchpoints" data-field="persona_touchpoints" >
+                           <ol id="personal_touchpoints" data-field="personal_touchpoints" >
                             	<li>
                                    <p class="editable_text"> Google Search </p>
                                </li>
@@ -227,12 +297,6 @@
                </table>
            </div>
        </div>
-       
-      
-       
-       <div class="row">
-       	 <div id="sankeyChart" style="height:580px; width:98%;"></div>
-       </div>
 
    </div>
     <br><br><br><br>
@@ -241,16 +305,19 @@
 <script type="text/javascript">
     ///Js code
 
-  
     
     function initProfile360Analytics() {
     	//setup editable node
-        
 
-        setTimeout(experienceMapDiagram,500);
+        setTimeout(function(){
+        	loadProfileAttribution();
+            loadMediaTouchpoints()
+            profilePathDiagram()
+            personalityDiagram();
+        },500);
     }
 
-    function experienceMapDiagram() {
+    function profilePathDiagram() {
         var metricName = 'Reach'
         var journeyStages = ['Google Search', 'Facebook Group', 'YouTube channel', 'E-commerce Website', 'E-commerce Mobile App','Email khách hàng (CRM)','Số điện thoại khách hàng (CRM)','Cửa hàng bán lẻ','Đường sách']
         var journeyStageMetrics = { 'Mua sách' : 'đơn hàng' }
@@ -397,5 +464,239 @@
         };
 
         var objSankey = sk.createSankey('#sankeyChart', configSankey, datajson);
+    }
+    
+    function loadMediaTouchpoints() {
+        var sets = [{
+            sets: ["Email"],
+            figure: 27.92,
+            label: "Email",
+            size: 27.92
+        }, {
+            sets: ["Direct Traffic"],
+            figure: 55.28,
+            label: "Direct Traffic",
+            size: 55.28
+        }, {
+            sets: ["Search Engine"],
+            figure: 7.62,
+            label: "Search Engine",
+            size: 7.62
+        }, {
+            sets: ["Email", "Direct Traffic"],
+            figure: 3.03,
+            label: "Email and Direct Traffic",
+            size: 3.03
+        }, {
+            sets: ["Email", "Search Engine"],
+            figure: 1.66,
+            label: "Email and Search Engine",
+            size: 1.66
+        }, {
+            sets: ["Direct Traffic", "Search Engine"],
+            figure: 2.4,
+            label: "Direct Traffic and Search Engine",
+            size: 2.4
+        }, {
+            sets: ["Email", "Direct Traffic", "Search Engine"],
+            figure: 1.08,
+            label: "Email, Direct Traffic, and Search Engine",
+            size: 1.08
+        }];
+
+        var chart = venn
+            .VennDiagram()
+            .width(500)
+            .height(400);
+
+        var div2 = d3
+            .select("#venn_two")
+            .datum(sets)
+            .call(chart);
+        div2.selectAll("text").style("fill", "white");
+        div2
+            .selectAll(".venn-circle path")
+            .style("fill-opacity", 0.8)
+            .style("stroke-width", 1)
+            .style("stroke-opacity", 1)
+            .style("stroke", "fff");
+
+        var tooltip = d3
+            .select("body")
+            .append("div")
+            .attr("class", "venntooltip");
+
+        div2
+            .selectAll("g")
+            .on("mouseover", function (d, i) {
+                // sort all the areas relative to the current item
+                venn.sortAreas(div2, d);
+
+                // Display a tooltip with the current size
+                tooltip
+                    .transition()
+                    .duration(40)
+                    .style("opacity", 1);
+                tooltip.text(d.size + "% media touchpoint " + d.label);
+
+                // highlight the current path
+                var selection = d3
+                    .select(this)
+                    .transition("tooltip")
+                    .duration(400);
+                selection
+                    .select("path")
+                    .style("stroke-width", 3)
+                    .style("fill-opacity", d.sets.length == 1 ? 0.8 : 0)
+                    .style("stroke-opacity", 1);
+            })
+
+            .on("mousemove", function () {
+                tooltip
+                    .style("left", d3.event.pageX + "px")
+                    .style("top", d3.event.pageY - 28 + "px");
+            })
+
+            .on("mouseout", function (d, i) {
+                tooltip
+                    .transition()
+                    .duration(2500)
+                    .style("opacity", 0);
+                var selection = d3
+                    .select(this)
+                    .transition("tooltip")
+                    .duration(400);
+                selection
+                    .select("path")
+                    .style("stroke-width", 3)
+                    .style("fill-opacity", d.sets.length == 1 ? 0.8 : 0)
+                    .style("stroke-opacity", 1);
+            });
+    }
+
+    function personalityDiagram() {
+        var width = 300,
+            height = 300;
+
+        // Config for the Radar chart
+        var config = {
+            w: width,
+            h: height,
+            maxValue: 100,
+            levels: 5,
+            ExtraWidthX: 300
+        }
+
+        var data = [
+            [{
+                "area": "Openness",
+                "value": 80
+            }, {
+                "area": "Conscientiousness",
+                "value": 40
+            }, {
+                "area": "Extraversion ",
+                "value": 40
+            }, {
+                "area": "Agreeableness ",
+                "value": 90
+            }, {
+                "area": "Neuroticism ",
+                "value": 60
+            }]
+        ]
+
+        //Call function to draw the Radar chart
+
+        var svg = d3.select('chart_persornality')
+            .append('svg')
+            .attr("width", width)
+            .attr("height", height);
+
+        RadarChart.draw("#chart_persornality", data, config);
+    }
+    
+    function loadProfileAttribution() {
+        // set the dimensions and margins of the graph
+        var containerW = Math.round($("#profile_attribution").width())
+        var margin = { top: 30, right: 60, bottom: 100, left: 140 },
+            width = containerW - margin.left - margin.right,
+            height = 550 - margin.top - margin.bottom;
+
+        // append the svg object to the body of the page
+        var svg = d3.select("#profile_attribution")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform",
+                "translate(" + margin.left + "," + margin.top + ")");
+
+        // Labels of row and columns
+        var attribution_fields = ["Live_in_Saigon", "Love_Coffee", "Visited_Web", "Installed_App", "Used_Credit_Card", "Male", "Married", "Love_Sport", "Love_Tech", "Reading_News"]
+        var myGroups = attribution_fields
+        var myVars = attribution_fields
+
+        // Build X scales and axis:
+        var x = d3.scaleBand()
+            .range([0, width])
+            .domain(myGroups)
+            .padding(0.01);
+        svg.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .attr("class", "x_axis")
+            .call(d3.axisBottom(x))
+            .selectAll("text")
+            .attr("transform", "translate(-10,10)rotate(-30)")
+            .style("text-anchor", "end")
+            .style("font-size", 12)
+            .style("fill", "#E91E0D");
+
+        // Build X scales and axis:
+        var y = d3.scaleBand()
+            .range([height, 0])
+            .domain(myVars)
+            .padding(0.01);
+        svg.append("g")
+            .attr("class", "y_axis")
+            .call(d3.axisLeft(y))
+            .selectAll("text")
+            .style("text-anchor", "end")
+            .style("font-size", 14)
+            .style("fill", "#463CC4")
+            ;
+
+        // Build color scale
+        var myColor = d3.scaleLinear()
+            .range(["white", "#008748"])
+            .domain([1, 100])
+
+        //Read the data
+        d3.csv("/public/uploaded-files/sample-profile-attribution.csv", function (data) {
+        	
+            // Three function that change the tooltip when user hover / move / leave a cell
+
+            var onclick = function (d) {
+            	console.log(d)
+                alert("The exact value of this cell is: " + d.value)
+            }
+            var mouseover = function (d) {
+            	console.log(d)
+                $('#attribution_description').text("Similarity: " + d.value + " %")
+            }
+
+            // add the squares
+            svg.selectAll()
+                .data(data, function (d) { return d.group + ':' + d.variable; })
+                .enter()
+                .append("rect")
+                .attr("x", function (d) { return x(d.group) })
+                .attr("y", function (d) { return y(d.variable) })
+                .attr("width", x.bandwidth())
+                .attr("height", y.bandwidth())
+                .style("fill", function (d) { return myColor(d.value) })
+                .on("click", onclick)
+                .on("mouseover", mouseover)
+        })
     }
 </script>
