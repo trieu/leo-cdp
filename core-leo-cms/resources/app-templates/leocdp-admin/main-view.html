@@ -42,17 +42,18 @@
 	<div id="main-navbar" class="collapse navbar-collapse navbar-ex1-collapse">
 		<ul class="nav navbar-nav side-nav">
 		
+			<!--  1 - Business Data Management  -->
 			<li>
-				<a href="javascript:;" data-toggle="collapse" data-target="#business_hub_menu"> <i class="fa fa-fw fa-exchange"></i>
-					Business Hub  <i class="fa fa-fw fa-caret-down"></i>
+				<a href="javascript:;" data-toggle="collapse" data-target="#business_hub_menu"> <i class="fa fa-fw fa-briefcase"></i>
+					Business Data Hub <i id="business_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
 				<ul id="business_hub_menu" class="collapse in" aria-expanded="true">
-					<li style="display: ;" >
-						<a href="#calljs-loadJourneyMapStudio()"> <i class="fa fa-fw fa-map-o"></i> Journey Map Studio </a>
-					</li>	
-					<li style="display: ;" >
+					<li>
 						<a href="#calljs-loadSalesDashboard()"> <i class="fa fa-fw fa-line-chart"></i> Sales Dashboard </a>
 					</li>	
+					<li>
+						<a href="#calljs-loadJourneyMapStudio()"> <i class="fa fa-fw fa-map-o"></i> Journey Map Studio </a>
+					</li>
 					<li>
 						<a href="#calljs-loadProductCatalogManagement()"> <i class="fa fa-fw fa-cubes"></i> Product Catalog</a>
 					</li>
@@ -60,31 +61,39 @@
 						<a href="#calljs-loadServiceCatalogManagement()"> <i class="fa fa-fw fa-thumbs-up"></i> Service Catalog</a>
 					</li>	
 					<li>
-						<a href="#calljs-loadBusinessHubApiManagement()"> <i class="fa fa-fw fa-plug"></i> Business Data API</a>
+						<a href="#calljs-loadBusinessHubApiManagement()"> <i class="fa fa-fw fa-plug"></i> Business Data API </a>
 					</li>
 				</ul>
 			</li>
 
+			<!--  2 - Creative Content Management  -->
 			<li>
 				<a href="javascript:;" data-toggle="collapse" data-target="#content_hub_menu"> <i class="fa fa-fw fa-sitemap"></i>
-					Content Hub <i class="fa fa-fw fa-caret-down"></i>
+					Creative Content Hub <i id="content_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
 				<ul id="content_hub_menu" class="collapse in" aria-expanded="true">
-					<li >
-						<a href="#calljs-loadContentReport()"> <i class="fa fa-fw fa-area-chart"></i> Content Dashboard </a>
+					<li>
+						<a href="#calljs-loadContentDashboard()"> <i class="fa fa-fw fa-area-chart"></i> Content Dashboard </a>
 					</li>
 					<li>
 						<a href="#calljs-loadCategoryList()"> <i class="fa fa-folder-open-o" aria-hidden="true"></i> Category Folder </a>
 					</li>
 					<li>
-						<a href="#calljs-loadContentHubApiManagement()"> <i class="fa fa-fw fa-plug"></i> Content Data API</a>
+						<a href="#calljs-loadContentHubApiManagement()"> <i class="fa fa-fw fa-plug"></i> Content Data API </a>
+					</li>
+					<li>
+						<a href="#calljs-loadCopywritingMarketplace()"> <i class="fa fa-fw fa-exchange"></i> Copywriting Marketplace </a>
+					</li>
+					<li>
+						<a href="#calljs-loadMediaMarketplace()"> <i class="fa fa-fw fa-exchange"></i> Media Marketplace </a>
 					</li>
 				</ul>
 			</li>
 
+			<!--  3 - Audience Data Management  -->
 			<li>
 				<a href="javascript:;" data-toggle="collapse" data-target="#audience_hub_menu"> <i class="fa fa-fw fa-database"></i>
-					Audience Hub <i class="fa fa-fw fa-caret-down"></i>
+					Audience Data Hub <i id="audience_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
 				<ul id="audience_hub_menu" class="collapse in" aria-expanded="true">
 					<li>
@@ -94,7 +103,7 @@
 					<li>
 						<a href="#calljs-loadAudienceProfiles()"> <i class="fa fa-fw fa-users"></i> Audience Profiles </a>
 					</li>
-					<li  >
+					<li>
 						<a href="#calljs-loadAudienceSegmentation()"> <i class="fa fa-fw fa-object-group"></i> Audience Segmentation </a>
 					</li>
 						
@@ -105,15 +114,19 @@
 						<a href="#calljs-loadAudienceHubApiManagement()"> <i class="fa fa-fw fa-plug"></i> Audience Data API</a>
 					</li>
 					
+					<li>
+						<a href="#calljs-loadDataMarketplace()"> <i class="fa fa-fw fa-exchange"></i> Data Marketplace </a>
+					</li>
+					
 				</ul>
 			</li>
 
-			<li>
-				<a href="javascript:;" data-toggle="collapse" data-target="#personalization_hub"> <i class="fa fa-fw fa-heart"></i>
-					Personalization Hub<i class="fa fa-fw fa-caret-down"></i>
+			<!--  4 - Personalization Content Management  -->
+			<li id="nav_personalization_hub" >
+				<a href="javascript:;" data-toggle="collapse" data-target="#personalization_hub_menu"> <i class="fa fa-fw fa-heart"></i>
+					Personalization A.I Hub<i id="personalization_hub_collapse_icon" class="fa fa-fw fa-caret-left"></i>
 				</a>
-				<ul id="personalization_hub" class="collapse in" aria-expanded="true">					
-							
+				<ul id="personalization_hub_menu" class="collapse out" aria-expanded="true">					
 					<li>
 						<a href="#calljs-loadLeoPredictionModel()"> <i class="fa fa-fw fa-user-circle"></i> Leo A.I Prediction Model </a>
 					</li>	
@@ -123,26 +136,26 @@
 					<li>
 						<a href="#calljs-loadRecommenderApiManagement()"> <i class="fa fa-fw fa-plug"></i> Recommender API</a>
 					</li>
+					<li >
+						<a href="#calljs-loadAiModelMarketplace()"> <i class="fa fa-fw fa-exchange"></i> A.I Model Marketplace </a>
+					</li>	
 				</ul>
 			</li>
 			
-			<li>
-				<a href="javascript:;" data-toggle="collapse" data-target="#activation_hub"> <i class="fa fa-fw fa-connectdevelop"></i>
-					Activation Hub<i class="fa fa-fw fa-caret-down"></i>
+			<!--  5 - Marketing & Sales Activation Management  -->
+			<li id="nav_activation_hub" >
+				<a href="javascript:;" data-toggle="collapse" data-target="#activation_hub_menu"> <i class="fa fa-fw fa-bolt"></i>
+					Sales Activation Hub <i id="activation_hub_collapse_icon" class="fa fa-fw fa-caret-left"></i>
 				</a>
-				<ul id="activation_hub" class="collapse in" aria-expanded="true">					
-					
+				<ul id="activation_hub_menu" class="collapse out" aria-expanded="true" >
 					<li>
-						<a href="#calljs-loadEmailMarketing()"> <i class="fa fa-fw fa-list-ol"></i> Campaign Management </a>
-					</li>
-					<li >
-						<a href="#calljs-loadAffiliateMarketing()"> <i class="fa fa-fw fa-pencil-square-o"></i> Copywriting Marketplace </a>
+						<a href="#calljs-loadCampaignManagement()"> <i class="fa fa-fw fa-list-ol"></i> Campaign Management </a>
 					</li>
 					<li>
-						<a href="#calljs-loadAffiliateMarketing()"> <i class="fa fa-fw fa-exchange"></i> Media Marketplace </a>
-					</li>	
+						<a href="#calljs-loadAdvertisingMarketplace()"> <i class="fa fa-fw fa-exchange"></i> Advertising Marketplace </a>
+					</li>
 					<li>
-						<a href="#calljs-loadAffiliateMarketing()"> <i class="fa fa-fw fa-handshake-o"></i> Affiliate Marketplace </a>
+						<a href="#calljs-loadAffiliateMarketplace()"> <i class="fa fa-fw fa-exchange"></i> Affiliate Marketplace </a>
 					</li>
 					<li>
 						<a href="#calljs-loadActivationApiManagement()"> <i class="fa fa-fw fa-plug"></i> Activation Data API</a>
@@ -150,11 +163,12 @@
 				</ul>
 			</li>
 
-			<li>
+			<!--  6 - System Management  -->
+			<li id="nav_system_management" >
 				<a href="javascript:;" data-toggle="collapse" data-target="#system_management_menu"> <i class="fa fa-cogs" aria-hidden="true"></i>
-					System Management <i class="fa fa-fw fa-caret-down"></i>
+					System Management <i id="system_management_collapse_icon" class="fa fa-fw fa-caret-left"></i>
 				</a>
-				<ul id="system_management_menu" class="collapse in" aria-expanded="false">
+				<ul id="system_management_menu" class="collapse out" aria-expanded="false">
 					<li>
 						<a href="#calljs-loadUserList()"> <i class="fa fa-user-plus" aria-hidden="true"></i>  User Login Management </a>
 					</li>
@@ -235,6 +249,7 @@
 	}
 	
 	function initMainSeach() {
+		
 	    var domSelector = "#main_search";
 	    var options = {
 	        url: window.baseAdminApi + "/post/keywords-for-search",
@@ -276,18 +291,76 @@
 	        }
 	    });
 	}
+	
+	function navigationSetup(){
+		
+		//business menu
+		$("#business_hub_menu").on("hide.bs.collapse", function(){
+        	$("#business_hub_collapse_icon").attr('class','fa fa-fw fa-caret-left');
+        });
+        $("#business_hub_menu").on("show.bs.collapse", function(){
+        	$("#business_hub_collapse_icon").attr('class','fa fa-fw fa-caret-down');
+        });
+         
+        // content menu
+		$("#content_hub_menu").on("hide.bs.collapse", function(){
+        	$("#content_hub_collapse_icon").attr('class','fa fa-fw fa-caret-left');
+        });
+        $("#content_hub_menu").on("show.bs.collapse", function(){
+         	$("#content_hub_collapse_icon").attr('class','fa fa-fw fa-caret-down');
+        });
+         
+     	// audience menu
+		$("#audience_hub_menu").on("hide.bs.collapse", function(){
+        	$("#audience_hub_collapse_icon").attr('class','fa fa-fw fa-caret-left');
+        });
+        $("#audience_hub_menu").on("show.bs.collapse", function(){
+         	$("#audience_hub_collapse_icon").attr('class','fa fa-fw fa-caret-down');
+        });
+        
+     	// personalization menu
+		$("#personalization_hub_menu").on("hide.bs.collapse", function(){
+        	$("#personalization_hub_collapse_icon").attr('class','fa fa-fw fa-caret-left');
+        });
+        $("#personalization_hub_menu").on("show.bs.collapse", function(){
+         	$("#personalization_hub_collapse_icon").attr('class','fa fa-fw fa-caret-down');
+        });
+        
+        
+         
+        // activation menu
+		$("#activation_hub_menu").on("hide.bs.collapse", function(){
+        	$("#activation_hub_collapse_icon").attr('class','fa fa-fw fa-caret-left');
+        });
+        $("#activation_hub_menu").on("show.bs.collapse", function(){
+        	$("#activation_hub_collapse_icon").attr('class','fa fa-fw fa-caret-down');
+        });
+        
+     	// activation menu
+		$("#system_management_menu").on("hide.bs.collapse", function(){
+        	$("#system_management_collapse_icon").attr('class','fa fa-fw fa-caret-left');
+        });
+        $("#system_management_menu").on("show.bs.collapse", function(){
+        	$("#system_management_collapse_icon").attr('class','fa fa-fw fa-caret-down');
+        });
+        
+	}
 
 	function mainViewReady() {
 		if (isMobileDevice()) {
 			var msg ='<div class="alert alert-info"> <strong> Leo CDP Admin</strong> is not supported on mobile browsers! </div>';
 			$('#page-main-notification').show().html(msg);
 		} else {
+			
 			loadCategoryNavigation();
 			loadCommonModalHtml();
 			loadUserInfoWidget();
 			initMainSeach();
+			navigationSetup();
+			
 			$('#main_cms_navigation').show();
 			$('#logo-img').attr('src',window.pageHeaderLogo).show();
+			
 		}
 	};
 </script>

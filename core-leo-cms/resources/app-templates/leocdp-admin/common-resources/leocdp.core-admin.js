@@ -1,7 +1,6 @@
 var prefixCallJs = '#calljs-';
 var pageDomSelector = '#page_main_content';
 
-
 $(document).ready(function () {
     if (LeoCmsApiUtil.isLoginSessionOK()) {
         var defaultPath = '/view/main-view.html?admin=1';
@@ -29,8 +28,12 @@ $(document).ready(function () {
             loadView(uri, '#wrapper', function () {
                 //default view
                 mainViewReady();
-                loadCategoryList();
+                
+                // TODO allow config here 
+                loadSalesDashboard();
+                
                 $(pageDomSelector).show();
+                
             }, true);
         }
     } else {
@@ -149,8 +152,6 @@ function loadMediaInfoView(mediaInfo, type, editMode) {
 }
 
 
-
-
 function getHeadLinesImagsObject() {
     var obj = {};
     $('#headline_images .thumbnail').each(function () {
@@ -164,8 +165,6 @@ function getHeadLinesImagsObject() {
     });
     return obj;
 }
-
-
 
 function searchContent(keywords) {
     $('#main_search').val(keywords);

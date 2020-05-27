@@ -48,7 +48,7 @@
            <div class="col-md-4">
                <div class="text-center">
                    <h3>Avatar</h3>
-                   <img src="/public/images/avatars/profile-default-avatar.png"
+                   <img src="https://randomuser.me/api/portraits/men/90.jpg"
                        alt="Profile Avatar" class="rounded mx-auto d-block avatar">
                </div>
            </div>
@@ -88,7 +88,7 @@
        
        <div class="line" ></div>
        <div class="row" >
-            <h3 style="text-align:center;width: 100%;">Attribution Matrix of Profile and Persona </h3>
+            <h3 style="text-align:center;width: 100%;">Customer Attribution Matrix of Profile and Persona </h3>
 
             <div id="attribution_description"></div> <br>
 			
@@ -639,8 +639,8 @@
 
         // Labels of row and columns
     
-        var myGroups = ["Live_in_Saigon", "Visited_Web", "Installed_App", "Used_Credit_Card"]
-        var myVars = ["Used_Credit_Card", "Installed_App",  "Visited_Web", "Live_in_Saigon" ]
+        var myGroups = ["Live_in_Saigon", "Visited_Web", "Installed_App", "Used_Credit_Card","Buy_Product"]
+        var myVars = ["Buy_Product", "Used_Credit_Card", "Installed_App",  "Visited_Web", "Live_in_Saigon" ]
 
         // Build X scales and axis:
         var x = d3.scaleBand()
@@ -683,7 +683,8 @@
         }
 
         //Read the data
-        d3.csv("/public/uploaded-files/sample-profile-attribution.csv", function (data) {
+        var urlDataSource = "/public/uploaded-files/sample-profile-attribution.csv?_=" + new Date().getTime();
+        d3.csv(urlDataSource, function (data) {
         	
             // Three function that change the tooltip when user hover / move / leave a cell
 
