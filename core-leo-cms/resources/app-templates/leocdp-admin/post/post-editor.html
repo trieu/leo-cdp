@@ -124,6 +124,7 @@
                     <option value="1"> TEXT</option>
                     <option value="3"> OFFICE_DOCUMENT</option>
                     <option value="4"> VIDEO</option>
+                    <option value="9"> VIDEO_AND_BLOG </option>
                     <option value="8"> IMAGE_SLIDESHOW</option>
                 </select>
             </div>
@@ -611,8 +612,8 @@
     }
 
     function checkPostTypeAndSetupMediaEditor(postType, value) {
-        // TEXT , RICH_MEDIA, SLIDE_SHOW, IMAGE_SLIDESHOW
-        if (postType === 1  || postType === 2 || postType === 6 || postType === 8 ) {
+        // TEXT , RICH_MEDIA, SLIDE_SHOW, IMAGE_SLIDESHOW, VIDEO_AND_BLOG
+        if (postType === 1  || postType === 2 || postType === 6 || postType === 8 || postType === 9 ) {
             // human content editor
             $('#content_div').html(editorViewTpl);
             trixElement = document.querySelector('trix-editor[input="mediaInfo"]');

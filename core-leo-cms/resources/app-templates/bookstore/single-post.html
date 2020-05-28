@@ -9,7 +9,7 @@
         <a id="btnEditPost" target="_blank" href="/admin#calljs-postInfo('{{id}}')" style="display: none"> Edit </a>
     </div>
 
-    <div id="postMediaVideo" class="mdl-cell mdl-cell--12-col ">
+    <div id="postMediaVideo" class="mdl-cell mdl-cell--12-col" style="display: none;">
         <!-- video loader -->
         <div id="videoProgressLoader" style="margin: auto"
             class="mdl-cell--6-col mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
@@ -23,7 +23,7 @@
     </div>
 
     <!-- main actions -->
-    <div id="postMediaAction" class="mdl-card__actions mdl-card--border mdl-typography--text-center">
+    <div id="postMediaAction" class="mdl-card__actions mdl-card--border mdl-typography--text-center" style="display: none;" >
         <a id="arrow_back" href="#" style="float:left;"><i class="material-icons">skip_previous</i></a>
         <a id="fast_rewind" href="javascript:player.currentTime(player.currentTime()-15)" style="float:left;"><i
                 class="material-icons">fast_rewind</i></a>
@@ -80,9 +80,9 @@
     var contentClass = '{{contentClass}}';
     var postType = {{type}};
     
-    if(postType != 4){
-   		$('#postMediaVideo, #postMediaAction').hide();
-        $('#fbLikeBox').show();
+    if(postType == 4 || postType == 9 ){
+    	$('#postMediaVideo, #postMediaAction').show();
+    	$('#fbLikeBox').hide();
 	}
     
 

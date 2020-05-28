@@ -24,7 +24,7 @@
 				<ul class="dropdown-menu">
 					<li><a href="#"> <i class="fa fa-fw fa-user"></i> Profile
 						</a></li>
-					<li><a href="#"> <i class="fa fa-fw fa-envelope"></i>Inbox
+					<li><a href="#"> <i class="fa fa-fw fa-envelope"></i> Inbox
 						</a></li>
 					<li><a href="#"> <i class="fa fa-fw fa-gear"></i> Settings
 						</a></li>
@@ -101,10 +101,10 @@
 					</li>
 					
 					<li>
-						<a href="#calljs-loadAudienceProfiles()"> <i class="fa fa-fw fa-users"></i> Audience Profiles </a>
+						<a href="#calljs-loadAudienceProfiles()"> <i class="fa fa-fw fa-users"></i> Audience Profile </a>
 					</li>
 					<li>
-						<a href="#calljs-loadAudienceSegmentation()"> <i class="fa fa-fw fa-object-group"></i> Audience Segmentation </a>
+						<a href="#calljs-loadAudienceSegmentation()"> <i class="fa fa-fw fa-object-group"></i> Audience Segment </a>
 					</li>
 						
 					<li>
@@ -124,9 +124,9 @@
 			<!--  4 - Personalization Content Management  -->
 			<li id="nav_personalization_hub" >
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#personalization_hub_menu"> <i class="fa fa-fw fa-heart"></i>
-					Personalization A.I Hub<i id="personalization_hub_collapse_icon" class="fa fa-fw fa-caret-left"></i>
+					Personalization Hub<i id="personalization_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
-				<ul id="personalization_hub_menu" class="collapse out" aria-expanded="true">					
+				<ul id="personalization_hub_menu" class="collapse in" aria-expanded="true">					
 					<li>
 						<a href="#calljs-loadLeoPredictionModel()"> <i class="fa fa-fw fa-user-circle"></i> Leo A.I Prediction Model </a>
 					</li>	
@@ -325,8 +325,6 @@
         $("#personalization_hub_menu").on("show.bs.collapse", function(){
          	$("#personalization_hub_collapse_icon").attr('class','fa fa-fw fa-caret-down');
         });
-        
-        
          
         // activation menu
 		$("#activation_hub_menu").on("hide.bs.collapse", function(){
@@ -352,7 +350,8 @@
 			$('#page-main-notification').show().html(msg);
 		} else {
 			
-			//loadCategoryNavigation();
+			//loadCategoryNavigation(); //FIXME
+			
 			loadCommonModalHtml();
 			loadUserInfoWidget();
 			initMainSeach();

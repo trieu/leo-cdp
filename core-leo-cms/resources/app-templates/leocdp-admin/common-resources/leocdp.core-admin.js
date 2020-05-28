@@ -144,7 +144,7 @@ function loadMediaInfoView(mediaInfo, type, editMode) {
     if (html === '') {
         html = '<div class="alert alert-info"></div>';
     }
-    if (type === 1 && editMode) {
+    if ( (type === 1 || type === 9) && editMode) {
         $('#mediaInfoPreview').hide();
     } else {
         $('#mediaInfoPreview').html(html);
@@ -217,3 +217,7 @@ var makeNodeEditable = function(selector){
         inputclass: 'editable_text_editor'
     })
 }
+
+document.addEventListener("trix-file-accept", function(event) {
+  event.preventDefault();
+});

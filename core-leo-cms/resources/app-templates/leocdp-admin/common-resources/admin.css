@@ -159,3 +159,7 @@ textarea {
     overflow-y: scroll;
 }
 
+.trix-button-group--file-tools {
+    display: none !important;
+}
+

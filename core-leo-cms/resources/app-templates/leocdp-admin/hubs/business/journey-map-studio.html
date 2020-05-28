@@ -5,7 +5,6 @@
 }
 </style>
 
-
 <div class="row" id="breadcrumb_header" >
       	<div class="col-md-10" >
            <h2 class="page-header" > <a href="javascript:"> Business Hub </a> &#8594; <a href="javascript:"> Journey Map Studio </a> </h2>
@@ -17,7 +16,7 @@
    </div>
 
    <h2 id="journey_map_name" >Hành trình chung của khách hàng cho hệ thống bán lẻ sách</h2>
-
+   
    <div class="container-fluid">
 
        <!-- MAIN BODY here -->
@@ -244,17 +243,47 @@
                 <h3 class="editable_text"> Mua sách </h3>
             </div>
         </div>
-    </div>    
-    
+    </div>
+        
+    <hr>
     <div class="row">
+     	 <h3 style="text-align: center;"> Journey Flow </h3>
     	 <div id="sankeyChart" style="height:580px; width:98%;"></div>
     </div>
+    
+   <div id="profileJourneyDiv" >
+	 <span></span>
+   </div>
+   <textarea id="flow_code" rows="3" cols="4">
+	  journey
+	    title My working day
+	    section Go to work
+	      Make tea: 5: Me
+	      Go upstairs: 3: Me
+	      Do work: 1: Me, Cat
+	    section Go home
+	      Go downstairs: 5: Me
+	      Sit down: 5: Me
+   </textarea>
 
 </div>
 <br><br><br>
 
 <script type="text/javascript">
     ///Js code
+    
+    function renderProfileJourney(){
+        // Example of using the API
+      	var element = document.querySelector("#profileJourneyDiv");
+
+        var insertSvg = function(svgCode, bindFunctions){
+        	//$('#profileJourneyDiv').html(svgCode);
+        	element.innerHTML = svgCode;
+        };
+
+        var graphDefinition = $('#flow_code').val();
+        var graph = mermaid.mermaidAPI.render('profileJourney', graphDefinition, insertSvg);
+    }
     
     function loadOkJourneyMapDesigner() {
     	//setup editable node
@@ -283,7 +312,11 @@
             
         });
 
-        setTimeout(experienceMapDiagram,500);
+        setTimeout(function(){ 
+        	experienceMapDiagram(); 
+        	renderProfileJourney();  
+        },600);
+        
     }
 
     function experienceMapDiagram() {
@@ -429,7 +462,7 @@
                     target: 4,
                     value: 1
                 }
-                ]
+             ]
         };
 
         var objSankey = sk.createSankey('#sankeyChart', configSankey, datajson);
