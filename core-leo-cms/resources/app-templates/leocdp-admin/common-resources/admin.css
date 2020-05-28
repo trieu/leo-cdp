@@ -88,10 +88,10 @@ textarea {
     position: fixed;
     margin-top: 10px;
     width: 40%;
-    height: 30px;
+    height: 32px;
     left: auto;
     margin-left: 5%;
-    min-width: 100px;
+    min-width: 70px;
 }
 
 .easy-autocomplete-container {
