@@ -10,9 +10,9 @@ import leotech.cms.dao.CategoryDaoUtil;
 import leotech.cms.dao.PageDaoUtil;
 import leotech.cms.dao.UserDaoUtil;
 import leotech.cms.model.Category;
-import leotech.cms.model.AppMetadata;
 import leotech.cms.model.Page;
-import leotech.cms.model.User;
+import leotech.system.model.AppMetadata;
+import leotech.system.model.User;
 import rfx.core.util.Utils;
 
 public class RunSetupCoreDatabase {

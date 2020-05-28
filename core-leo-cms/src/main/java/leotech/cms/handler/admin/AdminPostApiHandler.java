@@ -9,13 +9,13 @@ import java.util.stream.Collectors;
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import leotech.cms.dao.PostDaoUtil;
-import leotech.cms.model.AppMetadata;
 import leotech.cms.model.Post;
-import leotech.cms.model.User;
 import leotech.cms.query.SearchPostUtil;
 import leotech.cms.service.PostDataService;
 import leotech.core.api.BaseSecuredDataApi;
+import leotech.system.model.AppMetadata;
 import leotech.system.model.JsonDataPayload;
+import leotech.system.model.User;
 import rfx.core.util.StringUtil;
 
 public class AdminPostApiHandler extends BaseSecuredDataApi {

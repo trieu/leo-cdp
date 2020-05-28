@@ -4,13 +4,13 @@ import java.util.List;
 
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
-import leotech.cms.model.User;
 import leotech.core.api.BaseSecuredDataApi;
 import leotech.crawler.model.ArticleData;
 import leotech.crawler.model.CrawledYouTubeVideo;
 import leotech.crawler.util.ArticleDataCrawler;
 import leotech.crawler.util.YouTubeVideoCrawler;
 import leotech.system.model.JsonDataPayload;
+import leotech.system.model.User;
 import rfx.core.util.StringUtil;
 
 public class BotApiHandler extends BaseSecuredDataApi {

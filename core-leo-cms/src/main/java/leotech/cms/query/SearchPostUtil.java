@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import leotech.cms.dao.PostDaoUtil;
-import leotech.cms.model.AppMetadata;
 import leotech.cms.model.Post;
+import leotech.system.model.AppMetadata;
 
 public class SearchPostUtil {
 	

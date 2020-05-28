@@ -14,13 +14,13 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import leotech.cms.dao.PostDaoUtil;
 import leotech.cms.model.MediaInfoUnit;
-import leotech.cms.model.AppMetadata;
 import leotech.cms.model.Post;
-import leotech.cms.model.User;
 import leotech.cms.model.bot.LeoBot;
 import leotech.cms.model.common.ContentType;
 import leotech.cms.query.SearchPostUtil;
 import leotech.crawler.model.CrawledYouTubeVideo;
+import leotech.system.model.AppMetadata;
+import leotech.system.model.User;
 import leotech.system.util.seach.LuceneSearchPostUtil;
 
 public class PostDataService {

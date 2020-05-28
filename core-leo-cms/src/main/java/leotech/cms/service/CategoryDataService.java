@@ -7,7 +7,7 @@ import java.util.Map;
 import io.vertx.core.json.JsonObject;
 import leotech.cms.dao.CategoryDaoUtil;
 import leotech.cms.model.Category;
-import leotech.cms.model.AppMetadata;
+import leotech.system.model.AppMetadata;
 
 public class CategoryDataService {
 

@@ -14,75 +14,76 @@ import leotech.cms.model.common.MediaNode;
 
 public class Page extends MediaNode {
 
-    @Expose
-    @com.arangodb.velocypack.annotations.Expose(serialize = false, deserialize = false)
-    SortedSet<Post> postsOfPage;
+	@Expose
+	@com.arangodb.velocypack.annotations.Expose(serialize = false, deserialize = false)
+	SortedSet<Post> postsOfPage;
 
-    boolean isRunByBot = false;// if true , then new Bot Subscriber is created for this page
+	boolean isRunByBot = false;// if true , then new Bot Subscriber is created
+								// for this page
 
-    @Expose
-    protected Map<String, List<String>> mapContentClassKeywords = new HashMap<>(50);
+	@Expose
+	protected Map<String, List<String>> mapContentClassKeywords = new HashMap<>(50);
 
-    public Page() {
-    }
-
-    public Page(String title, long networkId, String categoryKey, String ownerId) {
-	super(title, "", networkId, ContentType.HTML_TEXT, ownerId);
-	this.categoryKeys.add(categoryKey);
-    }
-
-    public Page(String title, long networkId, String categoryKey, String ownerId, String mediaInfo) {
-	super(title, "", networkId, ContentType.HTML_TEXT, ownerId);
-	this.categoryKeys.add(categoryKey);
-	this.mediaInfo = mediaInfo;
-    }
-
-    public void setPostsWithOrderByTime(List<Post> posts) {
-	this.postsOfPage = new TreeSet<>();
-	postsOfPage.addAll(posts);
-    }
-
-    public static final String COLLECTION_NAME = Page.class.getSimpleName().toLowerCase();
-    static ArangoCollection collectionInstance;
-
-    @Override
-    public ArangoCollection getCollection() {
-	return getCollection(collectionInstance, COLLECTION_NAME);
-    }
-
-    public SortedSet<Post> getPostsOfPage() {
-	if (postsOfPage == null) {
-	    postsOfPage = new TreeSet<>();
+	public Page() {
 	}
-	return postsOfPage;
-    }
 
-    public void setPostsOfPage(SortedSet<Post> posts) {
-	this.postsOfPage = posts;
-    }
+	public Page(String title, long networkId, String categoryKey, String ownerId) {
+		super(title, "", networkId, ContentType.HTML_TEXT, ownerId);
+		this.categoryKeys.add(categoryKey);
+	}
 
-    public boolean isRunByBot() {
-	return isRunByBot;
-    }
+	public Page(String title, long networkId, String categoryKey, String ownerId, String mediaInfo) {
+		super(title, "", networkId, ContentType.HTML_TEXT, ownerId);
+		this.categoryKeys.add(categoryKey);
+		this.mediaInfo = mediaInfo;
+	}
 
-    public void setRunByBot(boolean isRunByBot) {
-	this.isRunByBot = isRunByBot;
-    }
+	public void setPostsWithOrderByTime(List<Post> posts) {
+		this.postsOfPage = new TreeSet<>();
+		postsOfPage.addAll(posts);
+	}
 
-    public Map<String, List<String>> getMapContentClassKeywords() {
-	return mapContentClassKeywords;
-    }
+	public static final String COLLECTION_NAME = Page.class.getSimpleName().toLowerCase();
+	static ArangoCollection collectionInstance;
 
-    public void clearMapContentClassKeywords() {
-	this.mapContentClassKeywords.clear();
-    }
+	@Override
+	public ArangoCollection getCollection() {
+		return getCollection(collectionInstance, COLLECTION_NAME);
+	}
 
-    public void setMapContentClassKeywords(Map<String, List<String>> mapContentClassKeywords) {
-	this.mapContentClassKeywords = mapContentClassKeywords;
-    }
+	public SortedSet<Post> getPostsOfPage() {
+		if (postsOfPage == null) {
+			postsOfPage = new TreeSet<>();
+		}
+		return postsOfPage;
+	}
 
-    public void setContentClassKeywords(String contentClass, List<String> keywords) {
-	this.mapContentClassKeywords.put(contentClass, keywords);
-    }
+	public void setPostsOfPage(SortedSet<Post> posts) {
+		this.postsOfPage = posts;
+	}
+
+	public boolean isRunByBot() {
+		return isRunByBot;
+	}
+
+	public void setRunByBot(boolean isRunByBot) {
+		this.isRunByBot = isRunByBot;
+	}
+
+	public Map<String, List<String>> getMapContentClassKeywords() {
+		return mapContentClassKeywords;
+	}
+
+	public void clearMapContentClassKeywords() {
+		this.mapContentClassKeywords.clear();
+	}
+
+	public void setMapContentClassKeywords(Map<String, List<String>> mapContentClassKeywords) {
+		this.mapContentClassKeywords = mapContentClassKeywords;
+	}
+
+	public void setContentClassKeywords(String contentClass, List<String> keywords) {
+		this.mapContentClassKeywords.put(contentClass, keywords);
+	}
 
 }

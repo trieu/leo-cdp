@@ -14,6 +14,7 @@ import com.arangodb.model.PersistentIndexOptions;
 import com.google.gson.annotations.Expose;
 
 import leotech.cms.model.common.PersistentArangoObject;
+import leotech.system.model.AppMetadata;
 import leotech.system.util.database.ArangoDbUtil;
 import rfx.core.util.StringUtil;
 

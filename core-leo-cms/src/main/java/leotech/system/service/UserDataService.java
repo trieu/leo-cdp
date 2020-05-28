@@ -1,12 +1,12 @@
-package leotech.cms.service;
+package leotech.system.service;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import io.vertx.core.json.JsonObject;
 import leotech.cms.dao.UserDaoUtil;
-import leotech.cms.model.AppMetadata;
-import leotech.cms.model.User;
+import leotech.system.model.AppMetadata;
+import leotech.system.model.User;
 
 public class UserDataService {
 

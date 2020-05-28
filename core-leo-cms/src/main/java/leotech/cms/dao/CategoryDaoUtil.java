@@ -10,8 +10,8 @@ import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
 
 import leotech.cms.model.Category;
-import leotech.cms.model.User;
 import leotech.core.config.AqlTemplate;
+import leotech.system.model.User;
 import leotech.system.util.database.ArangoDbQuery;
 import leotech.system.util.database.ArangoDbUtil;
 

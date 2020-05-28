@@ -11,8 +11,8 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamReader;
 
 import io.vertx.core.json.JsonObject;
-import leotech.cms.model.AppMetadata;
-import leotech.cms.model.AppMetadataXml;
+import leotech.system.model.AppMetadata;
+import leotech.system.model.AppMetadataXml;
 
 public class AppMetadataService {
 

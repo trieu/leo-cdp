@@ -1,4 +1,4 @@
-package leotech.cms.model;
+package leotech.system.model;
 
 import java.util.List;
 

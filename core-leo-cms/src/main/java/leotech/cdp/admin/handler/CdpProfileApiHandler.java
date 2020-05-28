@@ -6,10 +6,10 @@ import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import leotech.cdp.model.audience.Profile;
 import leotech.cdp.service.ProfileDataService;
-import leotech.cms.model.User;
 import leotech.core.api.BaseSecuredDataApi;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataPayload;
+import leotech.system.model.User;
 import leotech.system.util.RequestInfoUtil;
 
 public class CdpProfileApiHandler extends BaseSecuredDataApi {

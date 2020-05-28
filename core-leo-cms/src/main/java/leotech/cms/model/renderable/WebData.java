@@ -8,8 +8,8 @@ import java.util.Map;
 
 import org.apache.http.HttpStatus;
 
-import leotech.cms.model.AppMetadata;
 import leotech.cms.model.Post;
+import leotech.system.model.AppMetadata;
 import leotech.system.service.AppMetadataService;
 import leotech.system.template.TemplateUtil;
 import rfx.core.util.StringUtil;

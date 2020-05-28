@@ -9,7 +9,6 @@ import leotech.cms.dao.PostDaoUtil;
 import leotech.cms.handler.delivery.PageApiHandler;
 import leotech.cms.handler.delivery.PostApiHandler;
 import leotech.cms.model.Category;
-import leotech.cms.model.AppMetadata;
 import leotech.cms.model.Post;
 import leotech.cms.model.renderable.CategoryDataModel;
 import leotech.cms.model.renderable.ContentMediaBox;
@@ -17,6 +16,7 @@ import leotech.cms.model.renderable.MediaNetworkDataModel;
 import leotech.cms.model.renderable.PostDataModel;
 import leotech.cms.model.renderable.WebData;
 import leotech.cms.query.SearchPostUtil;
+import leotech.system.model.AppMetadata;
 import leotech.system.service.AppMetadataService;
 import rfx.core.util.StringUtil;
 

@@ -4,10 +4,10 @@ import java.util.List;
 
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
-import leotech.cms.model.AppMetadata;
-import leotech.cms.model.User;
 import leotech.core.api.BaseSecuredDataApi;
+import leotech.system.model.AppMetadata;
 import leotech.system.model.JsonDataPayload;
+import leotech.system.model.User;
 import leotech.system.service.AppMetadataService;
 
 public class AdminMediaNetworkApiHandler extends BaseSecuredDataApi {

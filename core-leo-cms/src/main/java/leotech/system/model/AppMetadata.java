@@ -1,4 +1,4 @@
-package leotech.cms.model;
+package leotech.system.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import com.arangodb.ArangoCollection;
 import com.google.gson.Gson;
 
+import leotech.cms.model.ContentClassPostQuery;
 import leotech.cms.model.common.PersistentArangoObject;
 import rfx.core.util.HashUtil;
 import rfx.core.util.StringUtil;

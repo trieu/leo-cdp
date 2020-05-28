@@ -9,9 +9,9 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import leotech.cms.dao.PostDaoUtil;
-import leotech.cms.model.AppMetadata;
 import leotech.cms.model.Post;
 import leotech.cms.model.common.ContentType;
+import leotech.system.model.AppMetadata;
 import rfx.core.util.StringUtil;
 
 public class TestPostDataUtil {

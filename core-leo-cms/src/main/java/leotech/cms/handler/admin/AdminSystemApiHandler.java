@@ -2,10 +2,10 @@ package leotech.cms.handler.admin;
 
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
-import leotech.cms.model.User;
 import leotech.cms.service.PostDataService;
 import leotech.core.api.BaseSecuredDataApi;
 import leotech.system.model.JsonDataPayload;
+import leotech.system.model.User;
 
 public class AdminSystemApiHandler extends BaseSecuredDataApi {
     // for Admin CMS, only for ROLE_SUPER_ADMIN

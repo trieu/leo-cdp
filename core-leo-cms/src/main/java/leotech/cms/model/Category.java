@@ -6,20 +6,20 @@ import leotech.cms.model.common.TaxonomyNode;
 
 public class Category extends TaxonomyNode {
 
-    public Category() {
+	public Category() {
 
-    }
+	}
 
-    public Category(String name, long networkId) {
-	super(name, networkId);
-    }
+	public Category(String name, long networkId) {
+		super(name, networkId);
+	}
 
-    public static final String COLLECTION_NAME = Category.class.getSimpleName().toLowerCase();
-    static ArangoCollection collectionInstance;
+	public static final String COLLECTION_NAME = Category.class.getSimpleName().toLowerCase();
+	static ArangoCollection collectionInstance;
 
-    @Override
-    public ArangoCollection getCollection() {
-	return getCollection(collectionInstance, COLLECTION_NAME);
-    }
+	@Override
+	public ArangoCollection getCollection() {
+		return getCollection(collectionInstance, COLLECTION_NAME);
+	}
 
 }

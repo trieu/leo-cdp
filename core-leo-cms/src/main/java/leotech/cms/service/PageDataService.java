@@ -11,11 +11,11 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import leotech.cms.dao.PageDaoUtil;
 import leotech.cms.dao.PostDaoUtil;
-import leotech.cms.model.AppMetadata;
 import leotech.cms.model.Page;
 import leotech.cms.model.Post;
-import leotech.cms.model.User;
 import leotech.cms.model.common.ContentType;
+import leotech.system.model.AppMetadata;
+import leotech.system.model.User;
 import leotech.system.util.KeywordUtil;
 
 public class PageDataService {

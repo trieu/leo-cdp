@@ -8,8 +8,8 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import leotech.cms.dao.UserDaoUtil;
-import leotech.cms.model.AppMetadata;
-import leotech.cms.model.User;
+import leotech.system.model.AppMetadata;
+import leotech.system.model.User;
 
 public class TestUserDataUtil {
     private static final String PASS = "qazxsw";

@@ -12,8 +12,8 @@ import com.github.jknack.handlebars.Helper;
 import com.github.jknack.handlebars.Options;
 import com.google.gson.Gson;
 
-import leotech.cms.model.User;
-import leotech.cms.service.UserDataService;
+import leotech.system.model.User;
+import leotech.system.service.UserDataService;
 import rfx.core.util.RandomUtil;
 import rfx.core.util.StringPool;
 import rfx.core.util.StringUtil;

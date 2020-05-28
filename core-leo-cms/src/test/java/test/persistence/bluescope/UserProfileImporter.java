@@ -10,9 +10,9 @@ import com.univocity.parsers.tsv.TsvParser;
 import com.univocity.parsers.tsv.TsvParserSettings;
 
 import leotech.cms.dao.UserDaoUtil;
-import leotech.cms.model.AppMetadata;
-import leotech.cms.model.User;
 import leotech.core.config.DbConfigs;
+import leotech.system.model.AppMetadata;
+import leotech.system.model.User;
 import leotech.system.util.database.ArangoDbUtil;
 
 public class UserProfileImporter {

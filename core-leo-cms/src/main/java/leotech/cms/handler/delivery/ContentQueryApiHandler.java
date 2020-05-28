@@ -12,10 +12,10 @@ import leotech.cms.dao.PostDaoUtil;
 import leotech.cms.model.ContentClassPostQuery;
 import leotech.cms.model.Page;
 import leotech.cms.model.Post;
-import leotech.cms.model.User;
 import leotech.cms.query.SearchPostUtil;
 import leotech.core.api.BaseSecuredDataApi;
 import leotech.system.model.JsonDataPayload;
+import leotech.system.model.User;
 import rfx.core.util.StringUtil;
 
 public class ContentQueryApiHandler extends BaseSecuredDataApi {

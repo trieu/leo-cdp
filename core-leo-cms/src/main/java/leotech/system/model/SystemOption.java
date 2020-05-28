@@ -1,4 +1,4 @@
-package leotech.cms.model;
+package leotech.system.model;
 
 import com.arangodb.entity.DocumentField;
 import com.arangodb.entity.DocumentField.Type;

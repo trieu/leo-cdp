@@ -6,11 +6,11 @@ import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import leotech.cdp.utils.ThirdPartyTrackingUtil;
 import leotech.cms.dao.UserDaoUtil;
-import leotech.cms.model.AppMetadata;
-import leotech.cms.model.User;
-import leotech.cms.service.UserDataService;
 import leotech.core.api.BaseSecuredDataApi;
+import leotech.system.model.AppMetadata;
 import leotech.system.model.JsonDataPayload;
+import leotech.system.model.User;
+import leotech.system.service.UserDataService;
 
 
 public class AdminUserApiHandler extends BaseSecuredDataApi {

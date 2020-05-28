@@ -12,9 +12,9 @@ import com.arangodb.ArangoDatabase;
 import com.arangodb.entity.BaseDocument;
 
 import leotech.cms.model.ContentClassPostQuery;
-import leotech.cms.model.AppMetadata;
 import leotech.cms.model.Post;
 import leotech.core.config.AqlTemplate;
+import leotech.system.model.AppMetadata;
 import leotech.system.model.DataPrivacy;
 import leotech.system.util.database.ArangoDbQuery;
 import leotech.system.util.database.ArangoDbQuery.CallbackQuery;

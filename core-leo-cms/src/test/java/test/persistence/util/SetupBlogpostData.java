@@ -1,8 +1,8 @@
 package test.persistence.util;
 
 import leotech.cms.dao.PostDaoUtil;
-import leotech.cms.model.AppMetadata;
 import leotech.cms.model.Post;
+import leotech.system.model.AppMetadata;
 import rfx.core.util.Utils;
 
 public class SetupBlogpostData {

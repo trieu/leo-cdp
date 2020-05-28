@@ -3,8 +3,8 @@ package test.persistence.bluescope;
 import org.testng.Assert;
 
 import leotech.cms.dao.UserDaoUtil;
-import leotech.cms.model.AppMetadata;
-import leotech.cms.model.User;
+import leotech.system.model.AppMetadata;
+import leotech.system.model.User;
 
 public class NewUser {
 

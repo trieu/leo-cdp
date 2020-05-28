@@ -6,9 +6,9 @@ import java.util.List;
 import io.vertx.core.json.JsonObject;
 import leotech.cdp.dao.ProfileDaoUtil;
 import leotech.cdp.model.audience.Profile;
-import leotech.cms.model.User;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataTablePayload;
+import leotech.system.model.User;
 import rfx.core.util.StringUtil;
 
 public class ProfileDataService {

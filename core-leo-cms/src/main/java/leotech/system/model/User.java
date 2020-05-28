@@ -1,4 +1,4 @@
-package leotech.cms.model;
+package leotech.system.model;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -13,6 +13,9 @@ import com.arangodb.model.HashIndexOptions;
 import com.arangodb.model.PersistentIndexOptions;
 import com.google.gson.annotations.Expose;
 
+import leotech.cms.model.Category;
+import leotech.cms.model.Page;
+import leotech.cms.model.Post;
 import leotech.cms.model.common.PersistentArangoObject;
 import leotech.system.util.Encryptor;
 import leotech.system.util.database.ArangoDbUtil;
