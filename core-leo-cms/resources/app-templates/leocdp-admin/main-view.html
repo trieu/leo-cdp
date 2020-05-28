@@ -44,10 +44,10 @@
 		
 			<!--  1 - Business Data Management  -->
 			<li>
-				<a href="javascript:;" data-toggle="collapse" data-target="#business_hub_menu"> <i class="fa fa-fw fa-briefcase"></i>
+				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#business_hub_menu"> <i class="fa fa-fw fa-briefcase"></i>
 					Business Data Hub <i id="business_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
-				<ul id="business_hub_menu" class="collapse in" aria-expanded="true">
+				<ul  id="business_hub_menu" class="collapse in" aria-expanded="true">
 					<li>
 						<a href="#calljs-loadSalesDashboard()"> <i class="fa fa-fw fa-line-chart"></i> Sales Dashboard </a>
 					</li>	
@@ -63,12 +63,15 @@
 					<li>
 						<a href="#calljs-loadBusinessHubApiManagement()"> <i class="fa fa-fw fa-plug"></i> Business Data API </a>
 					</li>
+					<li>
+						<a href="#calljs-loadBusinessConsultingAgency()"> <i class="fa fa-fw fa-question-circle"></i> Business Consulting </a>
+					</li>
 				</ul>
 			</li>
 
 			<!--  2 - Creative Content Management  -->
 			<li>
-				<a href="javascript:;" data-toggle="collapse" data-target="#content_hub_menu"> <i class="fa fa-fw fa-sitemap"></i>
+				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#content_hub_menu"> <i class="fa fa-fw fa-sitemap"></i>
 					Creative Content Hub <i id="content_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
 				<ul id="content_hub_menu" class="collapse in" aria-expanded="true">
@@ -82,9 +85,6 @@
 						<a href="#calljs-loadContentHubApiManagement()"> <i class="fa fa-fw fa-plug"></i> Content Data API </a>
 					</li>
 					<li>
-						<a href="#calljs-loadCopywritingMarketplace()"> <i class="fa fa-fw fa-exchange"></i> Copywriting Marketplace </a>
-					</li>
-					<li>
 						<a href="#calljs-loadMediaMarketplace()"> <i class="fa fa-fw fa-exchange"></i> Media Marketplace </a>
 					</li>
 				</ul>
@@ -92,7 +92,7 @@
 
 			<!--  3 - Audience Data Management  -->
 			<li>
-				<a href="javascript:;" data-toggle="collapse" data-target="#audience_hub_menu"> <i class="fa fa-fw fa-database"></i>
+				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#audience_hub_menu"> <i class="fa fa-fw fa-database"></i>
 					Audience Data Hub <i id="audience_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
 				<ul id="audience_hub_menu" class="collapse in" aria-expanded="true">
@@ -115,7 +115,7 @@
 					</li>
 					
 					<li>
-						<a href="#calljs-loadDataMarketplace()"> <i class="fa fa-fw fa-exchange"></i> Data Marketplace </a>
+						<a href="#calljs-loadDataMarketplace()"> <i class="fa fa-fw fa-exchange"></i> Audience Marketplace </a>
 					</li>
 					
 				</ul>
@@ -123,7 +123,7 @@
 
 			<!--  4 - Personalization Content Management  -->
 			<li id="nav_personalization_hub" >
-				<a href="javascript:;" data-toggle="collapse" data-target="#personalization_hub_menu"> <i class="fa fa-fw fa-heart"></i>
+				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#personalization_hub_menu"> <i class="fa fa-fw fa-heart"></i>
 					Personalization A.I Hub<i id="personalization_hub_collapse_icon" class="fa fa-fw fa-caret-left"></i>
 				</a>
 				<ul id="personalization_hub_menu" class="collapse out" aria-expanded="true">					
@@ -144,7 +144,7 @@
 			
 			<!--  5 - Marketing & Sales Activation Management  -->
 			<li id="nav_activation_hub" >
-				<a href="javascript:;" data-toggle="collapse" data-target="#activation_hub_menu"> <i class="fa fa-fw fa-bolt"></i>
+				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#activation_hub_menu"> <i class="fa fa-fw fa-bolt"></i>
 					Sales Activation Hub <i id="activation_hub_collapse_icon" class="fa fa-fw fa-caret-left"></i>
 				</a>
 				<ul id="activation_hub_menu" class="collapse out" aria-expanded="true" >
@@ -165,7 +165,7 @@
 
 			<!--  6 - System Management  -->
 			<li id="nav_system_management" >
-				<a href="javascript:;" data-toggle="collapse" data-target="#system_management_menu"> <i class="fa fa-cogs" aria-hidden="true"></i>
+				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#system_management_menu"> <i class="fa fa-cogs" aria-hidden="true"></i>
 					System Management <i id="system_management_collapse_icon" class="fa fa-fw fa-caret-left"></i>
 				</a>
 				<ul id="system_management_menu" class="collapse out" aria-expanded="false">
@@ -352,7 +352,7 @@
 			$('#page-main-notification').show().html(msg);
 		} else {
 			
-			loadCategoryNavigation();
+			//loadCategoryNavigation();
 			loadCommonModalHtml();
 			loadUserInfoWidget();
 			initMainSeach();
