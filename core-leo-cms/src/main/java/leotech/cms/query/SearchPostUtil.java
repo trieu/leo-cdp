@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import leotech.cms.dao.PostDaoUtil;
-import leotech.cms.model.MediaNetwork;
+import leotech.cms.model.AppMetadata;
 import leotech.cms.model.Post;
 
 public class SearchPostUtil {
@@ -34,7 +34,7 @@ public class SearchPostUtil {
 	
 	public static int indexing() {
 		//TODO
-		List<Post> posts = PostDaoUtil.listByNetwork(MediaNetwork.DEFAULT_ID, 0, Integer.MAX_VALUE);
+		List<Post> posts = PostDaoUtil.listByNetwork(AppMetadata.DEFAULT_ID, 0, Integer.MAX_VALUE);
 		return posts.size();
 	}
 	

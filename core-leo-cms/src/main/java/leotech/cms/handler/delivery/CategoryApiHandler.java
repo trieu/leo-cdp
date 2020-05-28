@@ -6,7 +6,7 @@ import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import leotech.cms.dao.CategoryDaoUtil;
 import leotech.cms.model.Category;
-import leotech.cms.model.MediaNetwork;
+import leotech.cms.model.AppMetadata;
 import leotech.cms.model.User;
 import leotech.core.api.BaseSecuredDataApi;
 import leotech.system.model.JsonDataPayload;
@@ -27,7 +27,7 @@ public class CategoryApiHandler extends BaseSecuredDataApi {
 	    return JsonErrorPayload.NO_AUTHENTICATION;
 	} else {
 	    if (uri.equalsIgnoreCase(CATEGORY_LIST)) {
-		List<Category> cats = CategoryDaoUtil.listAllByNetwork(MediaNetwork.DEFAULT_ID);
+		List<Category> cats = CategoryDaoUtil.listAllByNetwork(AppMetadata.DEFAULT_ID);
 		return JsonDataPayload.ok(uri, cats);
 	    }
 	    return JsonErrorPayload.NO_HANDLER_FOUND;

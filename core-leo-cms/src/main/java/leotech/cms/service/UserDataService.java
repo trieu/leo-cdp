@@ -5,7 +5,7 @@ import java.util.Map;
 
 import io.vertx.core.json.JsonObject;
 import leotech.cms.dao.UserDaoUtil;
-import leotech.cms.model.MediaNetwork;
+import leotech.cms.model.AppMetadata;
 import leotech.cms.model.User;
 
 public class UserDataService {
@@ -33,7 +33,7 @@ public class UserDataService {
 		});
 
 		if (createNew) {
-			User user = new User(userLogin, userPass, displayName, userEmail, MediaNetwork.DEFAULT_ID);
+			User user = new User(userLogin, userPass, displayName, userEmail, AppMetadata.DEFAULT_ID);
 			user.setRole(role);
 			user.setStatus(status);
 			user.setCustomData(customData);

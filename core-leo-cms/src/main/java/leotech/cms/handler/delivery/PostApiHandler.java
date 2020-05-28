@@ -8,7 +8,7 @@ import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import leotech.cdp.utils.ThirdPartyTrackingUtil;
 import leotech.cms.dao.PostDaoUtil;
-import leotech.cms.model.MediaNetwork;
+import leotech.cms.model.AppMetadata;
 import leotech.cms.model.Post;
 import leotech.cms.model.User;
 import leotech.cms.model.renderable.PostDataModel;
@@ -147,7 +147,7 @@ public class PostApiHandler extends BaseSecuredDataApi {
 		return JsonErrorPayload.NO_HANDLER_FOUND;
 	}
 
-	public static WebData buildPostDataModel(String userSession, MediaNetwork network, String slug, int startIndex,
+	public static WebData buildPostDataModel(String userSession, AppMetadata network, String slug, int startIndex,
 			int numberResult) {
 		PostDataModel model = null;
 		String networkDomain = network.getDomain();

@@ -56,7 +56,7 @@ public class FileMetadata implements PersistentArangoObject {
     List<Long> viewerIds = new ArrayList<>();
 
     @Expose
-    long networkId = MediaNetwork.DEFAULT_ID;
+    long networkId = AppMetadata.DEFAULT_ID;
 
     public FileMetadata() {
     }

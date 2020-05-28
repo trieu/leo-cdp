@@ -11,7 +11,7 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import leotech.cms.dao.PageDaoUtil;
 import leotech.cms.dao.PostDaoUtil;
-import leotech.cms.model.MediaNetwork;
+import leotech.cms.model.AppMetadata;
 import leotech.cms.model.Page;
 import leotech.cms.model.Post;
 import leotech.cms.model.User;
@@ -35,7 +35,7 @@ public class PageDataService {
 		Page page;
 		if (pageId.isEmpty()) {
 			// create new page
-			long networkId = MediaNetwork.DEFAULT_ID;
+			long networkId = AppMetadata.DEFAULT_ID;
 			page = new Page(title, networkId, categoryKey, ownerId, mediaInfo);
 		} else {
 			// update existed page

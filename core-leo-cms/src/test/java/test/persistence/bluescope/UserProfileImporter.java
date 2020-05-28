@@ -10,7 +10,7 @@ import com.univocity.parsers.tsv.TsvParser;
 import com.univocity.parsers.tsv.TsvParserSettings;
 
 import leotech.cms.dao.UserDaoUtil;
-import leotech.cms.model.MediaNetwork;
+import leotech.cms.model.AppMetadata;
 import leotech.cms.model.User;
 import leotech.core.config.DbConfigs;
 import leotech.system.util.database.ArangoDbUtil;
@@ -34,7 +34,7 @@ public class UserProfileImporter {
 		String position = data[3];
 		String userLogin = email.split("@")[0];
 		String pass = "12345678";
-		User user = new User(userLogin,pass, displayName, email, MediaNetwork.DEFAULT_ID);
+		User user = new User(userLogin,pass, displayName, email, AppMetadata.DEFAULT_ID);
 		user.addCustomData("position", position);
 		user.addCustomData("department", department);
 		user.setStatus(User.STATUS_ACTIVE);

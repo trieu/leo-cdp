@@ -16,14 +16,14 @@ import rfx.core.util.HashUtil;
 import rfx.core.util.StringUtil;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class MediaNetwork implements PersistentArangoObject {
+public class AppMetadata implements PersistentArangoObject {
 
 	public static final long DEFAULT_ID = 10000L;
 
-	public static final String COLLECTION_NAME = MediaNetwork.class.getSimpleName().toLowerCase();
+	public static final String COLLECTION_NAME = AppMetadata.class.getSimpleName().toLowerCase();
 
-	@XmlElement(name = "networkId")
-	long networkId = DEFAULT_ID;
+	@XmlElement(name = "appId")
+	long appId = DEFAULT_ID;
 
 	@XmlElement(name = "name")
 	String name = ""; // Big Data Vietnam Content Network
@@ -89,10 +89,10 @@ public class MediaNetwork implements PersistentArangoObject {
 	@XmlElement(name = "NumberSimilarPostsInList")
 	int numberSimilarPostsInList = 7;
 
-	public MediaNetwork() {
+	public AppMetadata() {
 	}
 
-	public MediaNetwork(String name, String uri, String domain, String webTemplateFolder) {
+	public AppMetadata(String name, String uri, String domain, String webTemplateFolder) {
 		super();
 		this.name = name;
 		this.uri = uri;
@@ -100,7 +100,7 @@ public class MediaNetwork implements PersistentArangoObject {
 		this.webTemplateFolder = webTemplateFolder;
 
 		if (!uri.equals("admin")) {
-			this.networkId = hashToNetworkId(domain);
+			this.appId = hashToNetworkId(domain);
 		}
 	}
 
@@ -108,8 +108,8 @@ public class MediaNetwork implements PersistentArangoObject {
 		return DEFAULT_ID + HashUtil.hashUrl128Bit(domain);
 	}
 
-	public long getNetworkId() {
-		return networkId;
+	public long getAppId() {
+		return appId;
 	}
 
 	public String getName() {
@@ -136,8 +136,8 @@ public class MediaNetwork implements PersistentArangoObject {
 		this.domain = domain;
 	}
 
-	public void setNetworkId(long networkId) {
-		this.networkId = networkId;
+	public void setAppId(long appId) {
+		this.appId = appId;
 	}
 
 	public String getWebTemplateFolder() {

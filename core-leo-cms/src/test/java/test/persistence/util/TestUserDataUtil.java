@@ -8,7 +8,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import leotech.cms.dao.UserDaoUtil;
-import leotech.cms.model.MediaNetwork;
+import leotech.cms.model.AppMetadata;
 import leotech.cms.model.User;
 
 public class TestUserDataUtil {
@@ -32,7 +32,7 @@ public class TestUserDataUtil {
 
      @Test(priority = 1)
     public void saveNewUserAndActivate() {
-	User user = new User(USERLOGIN, PASS, USERLOGIN, "tantrieuf31@gmail.com",  MediaNetwork.DEFAULT_ID);
+	User user = new User(USERLOGIN, PASS, USERLOGIN, "tantrieuf31@gmail.com",  AppMetadata.DEFAULT_ID);
 	userId = UserDaoUtil.createNew(user);
 	System.out.println("UserDaoUtil.save " + userId);
 	Assert.assertTrue(userId != null);
@@ -55,7 +55,7 @@ public class TestUserDataUtil {
 	for (int i = 1; i <= 10; i++) {
 	    String displayName = "Name Tester number:" + i;
 	    String userLogin = "tester" + i;
-	    User user = new User(userLogin, "123456", displayName, userLogin + "@example.com", MediaNetwork.DEFAULT_ID);
+	    User user = new User(userLogin, "123456", displayName, userLogin + "@example.com", AppMetadata.DEFAULT_ID);
 	    userId = UserDaoUtil.createNew(user);
 	    System.out.println("UserDaoUtil.save " + userId);
 	    Assert.assertTrue(userId != null);
@@ -67,7 +67,7 @@ public class TestUserDataUtil {
     
     @Test(priority = 4)
     public void getAllUsersInNetwork() {
-	List<User> users = UserDaoUtil.listAllUsersInNetwork(MediaNetwork.DEFAULT_ID);
+	List<User> users = UserDaoUtil.listAllUsersInNetwork(AppMetadata.DEFAULT_ID);
 	Assert.assertTrue(users.size() >= 10);
 	for (User user : users) {
 	    System.out.println("listAllUsersInNetwork.user " + user.getUserLogin());

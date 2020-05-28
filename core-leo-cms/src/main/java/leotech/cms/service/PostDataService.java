@@ -14,7 +14,7 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import leotech.cms.dao.PostDaoUtil;
 import leotech.cms.model.MediaInfoUnit;
-import leotech.cms.model.MediaNetwork;
+import leotech.cms.model.AppMetadata;
 import leotech.cms.model.Post;
 import leotech.cms.model.User;
 import leotech.cms.model.bot.LeoBot;
@@ -37,7 +37,7 @@ public class PostDataService {
 		String title = tubeVideo.getTitle();
 		String mediaInfo = tubeVideo.getDescription();
 		String videoUrl = "https://www.youtube.com/watch?v=" + tubeVideo.getVideoID();
-		long networkId = MediaNetwork.DEFAULT_ID;
+		long networkId = AppMetadata.DEFAULT_ID;
 		int type = ContentType.HTML_TEXT;
 		String contentClass = "standard";
 		int privacyStatus = -1;// private
@@ -72,7 +72,7 @@ public class PostDataService {
 		boolean updateData = false;
 		if (postId.isEmpty()) {
 			// create new content
-			long networkId = MediaNetwork.DEFAULT_ID;
+			long networkId = AppMetadata.DEFAULT_ID;
 			post = new Post(title, mediaInfo, networkId, type, pageId, categoryKey, ownerId);
 			System.out.println("create new content ....");
 		} else {

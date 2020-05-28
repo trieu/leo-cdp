@@ -4,11 +4,11 @@ import java.util.List;
 
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
-import leotech.cms.model.MediaNetwork;
+import leotech.cms.model.AppMetadata;
 import leotech.cms.model.User;
-import leotech.cms.service.MediaNetworkDataService;
 import leotech.core.api.BaseSecuredDataApi;
 import leotech.system.model.JsonDataPayload;
+import leotech.system.service.AppMetadataService;
 
 public class AdminMediaNetworkApiHandler extends BaseSecuredDataApi {
 
@@ -28,32 +28,32 @@ public class AdminMediaNetworkApiHandler extends BaseSecuredDataApi {
 		switch (uri) {
 
 		case API_LIST_ALL: {
-		    List<MediaNetwork> list = MediaNetworkDataService.listAll();
+		    List<AppMetadata> list = AppMetadataService.listAll();
 		    return JsonDataPayload.ok(uri, list, true);
 		}
 		case API_GET_INFO: {
 		    String key = paramJson.getString("key", "");
 		    if (!key.isEmpty()) {
-			MediaNetwork network;
+			AppMetadata network;
 			if (key.equals("newcategory")) {
-			    network = new MediaNetwork();
+			    network = new AppMetadata();
 			} else {
-			    network = MediaNetworkDataService.getByKey(key);
+			    network = AppMetadataService.getByKey(key);
 			}
 			return JsonDataPayload.ok(uri, network, false);
 		    }
 		}
 		case API_CREATE_NEW: {
-		    String key = MediaNetworkDataService.save(paramJson, true);
+		    String key = AppMetadataService.save(paramJson, true);
 		    return JsonDataPayload.ok(uri, key, true);
 		}
 		case API_UPDATE_INFO: {
-		    String key = MediaNetworkDataService.save(paramJson, false);
+		    String key = AppMetadataService.save(paramJson, false);
 		    return JsonDataPayload.ok(uri, key, true);
 		}
 		case API_DELETE: {
 		    String key = paramJson.getString("key", "");
-		    MediaNetworkDataService.deleteByKey(key);
+		    AppMetadataService.deleteByKey(key);
 		    return JsonDataPayload.ok(uri, key, true);
 		}
 		default: {

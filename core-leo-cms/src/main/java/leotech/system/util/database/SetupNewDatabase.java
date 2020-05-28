@@ -27,7 +27,7 @@ import leotech.cms.dao.PageDaoUtil;
 import leotech.cms.dao.UserDaoUtil;
 import leotech.cms.model.Category;
 import leotech.cms.model.FileMetadata;
-import leotech.cms.model.MediaNetwork;
+import leotech.cms.model.AppMetadata;
 import leotech.cms.model.Page;
 import leotech.cms.model.Post;
 import leotech.cms.model.User;
@@ -43,7 +43,7 @@ public class SetupNewDatabase {
 
 		// CMS - content management system
 		leoCMSCollectionNames.add("systemconfigs");
-		leoCMSCollectionNames.add(MediaNetwork.COLLECTION_NAME);
+		leoCMSCollectionNames.add(AppMetadata.COLLECTION_NAME);
 		leoCMSCollectionNames.add(Category.COLLECTION_NAME);
 		leoCMSCollectionNames.add(Page.COLLECTION_NAME);
 		leoCMSCollectionNames.add(Post.COLLECTION_NAME);
@@ -144,15 +144,15 @@ public class SetupNewDatabase {
 		if (importDefaultData) {
 			User firstUser = UserDaoUtil.getByUserLogin("cms_admin");
 			if (firstUser == null) {
-				firstUser = new User("cms_admin", "123456abc", "cms_admin", "cms_admin@example.com", MediaNetwork.DEFAULT_ID);
+				firstUser = new User("cms_admin", "123456abc", "cms_admin", "cms_admin@example.com", AppMetadata.DEFAULT_ID);
 				UserDaoUtil.createNew(firstUser);
 			}
 			boolean ok = UserDaoUtil.activateAsSuperAdmin(firstUser.getUserLogin());
 			if (ok) {
 				System.out.println("activateAsSuperAdmin OK");
-				String categoryKey = CategoryDaoUtil.save(new Category("Website Contents", MediaNetwork.DEFAULT_ID));
+				String categoryKey = CategoryDaoUtil.save(new Category("Website Contents", AppMetadata.DEFAULT_ID));
 				if (categoryKey != null) {
-					Page page = new Page("Introduction to Leo CDP", MediaNetwork.DEFAULT_ID, categoryKey,
+					Page page = new Page("Introduction to Leo CDP", AppMetadata.DEFAULT_ID, categoryKey,
 							firstUser.getKey());
 					page.setMediaInfo("TODO");
 					PageDaoUtil.save(page);

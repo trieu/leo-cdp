@@ -6,7 +6,7 @@ import java.util.List;
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import leotech.cms.dao.PageDaoUtil;
-import leotech.cms.model.MediaNetwork;
+import leotech.cms.model.AppMetadata;
 import leotech.cms.model.Page;
 import leotech.cms.model.User;
 import leotech.cms.model.renderable.PageDataModel;
@@ -65,7 +65,7 @@ public class PageApiHandler extends BaseSecuredDataApi {
 	}
     }
 
-    public static WebData buildPageDataModel(String path, MediaNetwork network, String objectId, int startIndex,
+    public static WebData buildPageDataModel(String path, AppMetadata network, String objectId, int startIndex,
 	    int numberResult) {
 	WebData model;
 	String networkDomain = network.getDomain();
@@ -94,7 +94,7 @@ public class PageApiHandler extends BaseSecuredDataApi {
 
 	} else {
 	    String title = network.getName() + " - Top Pages";
-	    List<Page> pages = PageDataService.getPagesByNetwork(network.getNetworkId(), startIndex, numberResult);
+	    List<Page> pages = PageDataService.getPagesByNetwork(network.getAppId(), startIndex, numberResult);
 	    model = new PageDataModel(networkDomain, templateFolder, LIST_PAGE, title, pages);
 	    model.setBaseStaticUrl(network.getBaseStaticUrl());
 		

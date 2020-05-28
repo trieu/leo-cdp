@@ -7,7 +7,7 @@ import java.util.Map;
 import io.vertx.core.json.JsonObject;
 import leotech.cms.dao.CategoryDaoUtil;
 import leotech.cms.model.Category;
-import leotech.cms.model.MediaNetwork;
+import leotech.cms.model.AppMetadata;
 
 public class CategoryDataService {
 
@@ -29,7 +29,7 @@ public class CategoryDataService {
 	});
 
 	if (createNew) {
-	    catKey = CategoryDaoUtil.save(new Category(name, MediaNetwork.DEFAULT_ID));
+	    catKey = CategoryDaoUtil.save(new Category(name, AppMetadata.DEFAULT_ID));
 	} else {
 	    Category c = CategoryDaoUtil.getByKey(catKey);
 	    c.setName(name);

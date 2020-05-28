@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import leotech.cms.dao.PostDaoUtil;
-import leotech.cms.model.MediaNetwork;
+import leotech.cms.model.AppMetadata;
 import leotech.cms.model.Post;
 import leotech.cms.model.User;
 import leotech.cms.query.SearchPostUtil;
@@ -37,7 +37,7 @@ public class AdminPostApiHandler extends BaseSecuredDataApi {
 				if (uri.equalsIgnoreCase(API_LIST_ALL)) {
 					int startIndex = paramJson.getInteger("startIndex", 0);
 					int numberResult = paramJson.getInteger("numberResult", 1000);
-					List<Post> list = PostDaoUtil.listByNetwork(MediaNetwork.DEFAULT_ID, startIndex, numberResult);
+					List<Post> list = PostDaoUtil.listByNetwork(AppMetadata.DEFAULT_ID, startIndex, numberResult);
 					return JsonDataPayload.ok(uri, list, true);
 				} else if (uri.equalsIgnoreCase(API_LIST_RECENT_POSTS_OF_PAGE)) {
 					String pageId = StringUtil.safeString(paramJson.getString("pageId"));

@@ -12,7 +12,7 @@ import com.arangodb.ArangoDatabase;
 import com.arangodb.entity.BaseDocument;
 
 import leotech.cms.model.ContentClassPostQuery;
-import leotech.cms.model.MediaNetwork;
+import leotech.cms.model.AppMetadata;
 import leotech.cms.model.Post;
 import leotech.core.config.AqlTemplate;
 import leotech.system.model.DataPrivacy;
@@ -137,7 +137,7 @@ public class PostDaoUtil {
 		return list;
 	}
 
-	public static List<Post> listPostsByMediaNetwork(MediaNetwork mediaNetwork, boolean includeProtected,
+	public static List<Post> listPostsByMediaNetwork(AppMetadata mediaNetwork, boolean includeProtected,
 			boolean includePrivate, int startIndex, int numberResult) {
 		return listAllByContentClassAndKeywords(mediaNetwork.getContentCategoryId(),
 				mediaNetwork.getPublicContentClassList(), new String[]{}, includeProtected, includePrivate, false,

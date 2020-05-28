@@ -6,7 +6,7 @@ import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import leotech.cms.dao.CategoryDaoUtil;
 import leotech.cms.model.Category;
-import leotech.cms.model.MediaNetwork;
+import leotech.cms.model.AppMetadata;
 import leotech.cms.model.User;
 import leotech.cms.service.CategoryDataService;
 import leotech.core.api.BaseSecuredDataApi;
@@ -27,7 +27,7 @@ public class AdminCategoryApiHandler extends BaseSecuredDataApi {
 			if (isAdminRole(loginUser)) {
 				switch (uri) {
 					case API_LIST_ALL : {
-						List<Category> list = CategoryDaoUtil.listAllByNetwork(MediaNetwork.DEFAULT_ID);
+						List<Category> list = CategoryDaoUtil.listAllByNetwork(AppMetadata.DEFAULT_ID);
 						return JsonDataPayload.ok(uri, list, true);
 					}
 					case API_GET_INFO : {

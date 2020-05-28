@@ -5,7 +5,7 @@ import java.util.List;
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import leotech.cms.dao.PageDaoUtil;
-import leotech.cms.model.MediaNetwork;
+import leotech.cms.model.AppMetadata;
 import leotech.cms.model.Page;
 import leotech.cms.model.User;
 import leotech.cms.service.PageDataService;
@@ -33,7 +33,7 @@ public class AdminPageApiHandler extends BaseSecuredDataApi {
 					case API_LIST_ALL : {
 						int startIndex = paramJson.getInteger("startIndex", 0);
 						int numberResult = paramJson.getInteger("numberResult", 1000);
-						List<Page> list = PageDaoUtil.listByNetwork(MediaNetwork.DEFAULT_ID, startIndex,
+						List<Page> list = PageDaoUtil.listByNetwork(AppMetadata.DEFAULT_ID, startIndex,
 								numberResult);
 						return JsonDataPayload.ok(uri, list, true);
 					}

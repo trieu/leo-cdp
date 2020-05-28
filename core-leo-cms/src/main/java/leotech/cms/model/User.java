@@ -92,7 +92,7 @@ public class User implements PersistentArangoObject {
     long networkId;
 
     @Expose
-    List<MediaNetwork> subscribedNetworks;
+    List<AppMetadata> subscribedNetworks;
 
     @Expose
     List<Category> subscribedCategories;
@@ -265,11 +265,11 @@ public class User implements PersistentArangoObject {
 	this.isOnline = isOnline;
     }
 
-    public List<MediaNetwork> getSubscribedNetworks() {
+    public List<AppMetadata> getSubscribedNetworks() {
 	return subscribedNetworks;
     }
 
-    public void setSubscribedNetworks(List<MediaNetwork> subscribedNetworks) {
+    public void setSubscribedNetworks(List<AppMetadata> subscribedNetworks) {
 	this.subscribedNetworks = subscribedNetworks;
     }
 

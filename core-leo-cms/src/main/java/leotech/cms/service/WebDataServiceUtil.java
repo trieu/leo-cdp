@@ -9,7 +9,7 @@ import leotech.cms.dao.PostDaoUtil;
 import leotech.cms.handler.delivery.PageApiHandler;
 import leotech.cms.handler.delivery.PostApiHandler;
 import leotech.cms.model.Category;
-import leotech.cms.model.MediaNetwork;
+import leotech.cms.model.AppMetadata;
 import leotech.cms.model.Post;
 import leotech.cms.model.renderable.CategoryDataModel;
 import leotech.cms.model.renderable.ContentMediaBox;
@@ -17,6 +17,7 @@ import leotech.cms.model.renderable.MediaNetworkDataModel;
 import leotech.cms.model.renderable.PostDataModel;
 import leotech.cms.model.renderable.WebData;
 import leotech.cms.query.SearchPostUtil;
+import leotech.system.service.AppMetadataService;
 import rfx.core.util.StringUtil;
 
 public class WebDataServiceUtil {
@@ -47,7 +48,7 @@ public class WebDataServiceUtil {
 	static final int NUMBER_RESULTS = 6;
 
 	public static WebData build(String path, String networkDomain, MultiMap params, String userSession) {
-		MediaNetwork network = MediaNetworkDataService.getContentNetwork(networkDomain);
+		AppMetadata network = AppMetadataService.getContentNetwork(networkDomain);
 		List<String> publicContentClasses = network.getPublicContentClassList();
 		String contentCategoryId = network.getContentCategoryId();
 		String webTemplateFolder = network.getWebTemplateFolder();
@@ -152,7 +153,7 @@ public class WebDataServiceUtil {
 		return model;
 	}
 
-	public static WebData buildMediaNetworkDataModel(MediaNetwork network, String objectId) {
+	public static WebData buildMediaNetworkDataModel(AppMetadata network, String objectId) {
 		WebData model;
 		String networkDomain = network.getDomain();
 		String templateFolder = network.getWebTemplateFolder();
@@ -164,7 +165,7 @@ public class WebDataServiceUtil {
 		return model;
 	}
 
-	public static WebData buildCategoryDataModel(MediaNetwork network, String objectId) {
+	public static WebData buildCategoryDataModel(AppMetadata network, String objectId) {
 		WebData model;
 		String networkDomain = network.getDomain();
 		String templateFolder = network.getWebTemplateFolder();
@@ -179,14 +180,14 @@ public class WebDataServiceUtil {
 			}
 		} else {
 			String title = network.getName() + "- All categories";
-			List<Category> cats = CategoryDataService.getCategoriesByNetwork(network.getNetworkId());
+			List<Category> cats = CategoryDataService.getCategoriesByNetwork(network.getAppId());
 			model = new CategoryDataModel(networkDomain, templateFolder, LIST_CATEGORY, title, cats);
 		}
 		return model;
 	}
 
 	public static WebData buildModel(String host, String tplFolderName, String tplName, MultiMap params, String userSession) {
-		MediaNetwork network = MediaNetworkDataService.getContentNetwork(host);
+		AppMetadata network = AppMetadataService.getContentNetwork(host);
 		String categoryId = network.getContentCategoryId();
 
 		WebData model = new WebData(host, tplFolderName, tplName);

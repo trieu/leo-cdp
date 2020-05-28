@@ -6,7 +6,7 @@ import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import leotech.cdp.utils.ThirdPartyTrackingUtil;
 import leotech.cms.dao.UserDaoUtil;
-import leotech.cms.model.MediaNetwork;
+import leotech.cms.model.AppMetadata;
 import leotech.cms.model.User;
 import leotech.cms.service.UserDataService;
 import leotech.core.api.BaseSecuredDataApi;
@@ -36,7 +36,7 @@ public class AdminUserApiHandler extends BaseSecuredDataApi {
 		switch (uri) {
 
 		case API_LIST_ALL:
-		    List<User> list = UserDaoUtil.listAllUsersInNetwork(MediaNetwork.DEFAULT_ID);
+		    List<User> list = UserDaoUtil.listAllUsersInNetwork(AppMetadata.DEFAULT_ID);
 		    return JsonDataPayload.ok(uri, list, false);
 		case API_CREATE: {
 		    String userId = UserDataService.saveUserInfo(paramJson, true);
@@ -108,7 +108,7 @@ public class AdminUserApiHandler extends BaseSecuredDataApi {
 	if (user != null) {
 	    if (isAdminRole(user)) {
 		if (uri.equalsIgnoreCase(API_LIST_ALL)) {
-		    List<User> list = UserDaoUtil.listAllUsersInNetwork(MediaNetwork.DEFAULT_ID);
+		    List<User> list = UserDaoUtil.listAllUsersInNetwork(AppMetadata.DEFAULT_ID);
 		    return JsonDataPayload.ok(uri, list, true);
 		}
 	    } else {

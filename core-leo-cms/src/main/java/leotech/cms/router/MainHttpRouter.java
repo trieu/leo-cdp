@@ -14,7 +14,6 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.RoutingContext;
 import leotech.cms.model.renderable.WebData;
-import leotech.cms.service.MediaNetworkDataService;
 import leotech.cms.service.WebDataServiceUtil;
 import leotech.core.api.BaseApiHandler;
 import leotech.core.api.BaseApiRouter;
@@ -22,6 +21,7 @@ import leotech.core.api.BaseHttpRouter;
 import leotech.core.api.PublicFileHttpRouter;
 import leotech.core.api.SecuredApiProxyHandler;
 import leotech.system.model.DeviceInfo;
+import leotech.system.service.AppMetadataService;
 import leotech.system.template.HandlebarsTemplateUtil;
 import leotech.system.template.TemplateUtil;
 import leotech.system.util.CookieUserSessionUtil;
@@ -101,7 +101,7 @@ public class MainHttpRouter extends BaseHttpRouter {
 
 			boolean isSearchEngineBot = SPIDER.equals(device.deviceName);
 			// detect template folder name from domain
-			String tplFolderName = MediaNetworkDataService.getWebTemplateFolder(host);
+			String tplFolderName = AppMetadataService.getWebTemplateFolder(host);
 			if (tplFolderName.isEmpty()) {
 				resp.setStatusCode(HttpStatus.SC_NOT_FOUND);
 				resp.end(TemplateUtil._404);
@@ -149,7 +149,7 @@ public class MainHttpRouter extends BaseHttpRouter {
 		else if (path.equals(ADMIN_ROUTER)) {
 			outHeaders.set(CONTENT_TYPE, MIME_TYPE_HTML);
 			BaseHttpRouter.setCorsHeaders(outHeaders, origin);
-			String tplFolder = MediaNetworkDataService.DEFAULT_ADMIN_TEMPLATE_FOLDER;
+			String tplFolder = AppMetadataService.DEFAULT_ADMIN_TEMPLATE_FOLDER;
 			handleWebPageRequest(params, false, host, tplFolder, "index", resp, userSession);
 		}
 
@@ -197,9 +197,9 @@ public class MainHttpRouter extends BaseHttpRouter {
 		try {
 			boolean isAdminReq = StringUtil.safeString(req.params().get("admin")).equals("1");
 			if (isAdminReq) {
-				networkDomain = MediaNetworkDataService.ADMIN_LEO_PLATFORM;
+				networkDomain = AppMetadataService.ADMIN_LEO_PLATFORM;
 			}
-			String tplFolder = MediaNetworkDataService.getWebTemplateFolder(networkDomain);
+			String tplFolder = AppMetadataService.getWebTemplateFolder(networkDomain);
 			String relPath = "./resources/" + APP_TEMPLATES + HOME_ROUTER + tplFolder;
 			String pathname = path.replace(VIEW_ROUTER, relPath).replaceAll("%20", " ");
 			System.out.println("VIEW_ROUTER.pathname " + pathname);

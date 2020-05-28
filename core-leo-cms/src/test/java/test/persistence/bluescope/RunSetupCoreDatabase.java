@@ -10,14 +10,14 @@ import leotech.cms.dao.CategoryDaoUtil;
 import leotech.cms.dao.PageDaoUtil;
 import leotech.cms.dao.UserDaoUtil;
 import leotech.cms.model.Category;
-import leotech.cms.model.MediaNetwork;
+import leotech.cms.model.AppMetadata;
 import leotech.cms.model.Page;
 import leotech.cms.model.User;
 import rfx.core.util.Utils;
 
 public class RunSetupCoreDatabase {
 
-    static long networkId = MediaNetwork.DEFAULT_ID;
+    static long networkId = AppMetadata.DEFAULT_ID;
     static String ownerId = "7038807";
 
     public static void main(String[] args) {
@@ -27,12 +27,12 @@ public class RunSetupCoreDatabase {
     }
     
     static void setupUserCollection() {
-	User user = new User("superadmin", "AppCms4bluescope", "SuperAdmin", "trieunt@blueseed.tv",  MediaNetwork.DEFAULT_ID);
+	User user = new User("superadmin", "AppCms4bluescope", "SuperAdmin", "trieunt@blueseed.tv",  AppMetadata.DEFAULT_ID);
 	String userId = UserDaoUtil.createNew(user);
 	boolean ok = UserDaoUtil.activateAsSuperAdmin(user.getUserLogin());
 	System.out.println(ok +" UserDaoUtil.save " + userId);
 	
-	User user2 = new User("admin", "Admin#bluescope", "Admin", "hont@blueseed.tv",  MediaNetwork.DEFAULT_ID);
+	User user2 = new User("admin", "Admin#bluescope", "Admin", "hont@blueseed.tv",  AppMetadata.DEFAULT_ID);
 	String userId2 = UserDaoUtil.createNew(user2);
 	boolean ok2 = UserDaoUtil.activateAsSuperAdmin(user2.getUserLogin());
 	System.out.println(ok2 + " UserDaoUtil.save " + userId2);

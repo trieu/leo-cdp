@@ -9,7 +9,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import leotech.cms.dao.PostDaoUtil;
-import leotech.cms.model.MediaNetwork;
+import leotech.cms.model.AppMetadata;
 import leotech.cms.model.Post;
 import leotech.cms.model.common.ContentType;
 import rfx.core.util.StringUtil;
@@ -32,7 +32,7 @@ public class TestPostDataUtil {
 
     @Test(priority = 1)
     public void saveNewPost() {
-	Post post = new Post("Viet Nam Market", "this is content of post", MediaNetwork.DEFAULT_ID, ownerId);
+	Post post = new Post("Viet Nam Market", "this is content of post", AppMetadata.DEFAULT_ID, ownerId);
 	postId = PostDaoUtil.save(post);
 	System.out.println("PostDaoUtil.save " + postId);
 	Assert.assertTrue(postId != null);
@@ -42,13 +42,13 @@ public class TestPostDataUtil {
     public void getById() {
 	Post post = PostDaoUtil.getById(postId);
 	Assert.assertNotNull(post);
-	Assert.assertTrue(post.getNetworkId() == MediaNetwork.DEFAULT_ID);
+	Assert.assertTrue(post.getNetworkId() == AppMetadata.DEFAULT_ID);
 	System.out.println(post.getTitle());
     }
 
     @Test(priority = 3)
     public void updatePost() {
-	Post post = new Post(postId, "Viet Nam Market", "this is updated content of post", MediaNetwork.DEFAULT_ID, ownerId);
+	Post post = new Post(postId, "Viet Nam Market", "this is updated content of post", AppMetadata.DEFAULT_ID, ownerId);
 	post.setPageId(pageId);
 	String updatePostId = PostDaoUtil.save(post);
 	System.out.println("PostDaoUtil.save " + postId);
@@ -70,7 +70,7 @@ public class TestPostDataUtil {
 	List<Post> posts = PostDaoUtil.listByPage(pageId, 0, 50);
 	if (posts.size() < 50) {
 	    for (int i = 1; i <= 50; i++) {
-		Post post = new Post("Document" + i, "/public/uploaded-files/377f14d50d98c550c5569c91582e8c48362e7c40.pdf", MediaNetwork.DEFAULT_ID, ownerId);
+		Post post = new Post("Document" + i, "/public/uploaded-files/377f14d50d98c550c5569c91582e8c48362e7c40.pdf", AppMetadata.DEFAULT_ID, ownerId);
 		post.setPageId(pageId);
 		post.setKeyword("document");
 		post.setKeyword("test");

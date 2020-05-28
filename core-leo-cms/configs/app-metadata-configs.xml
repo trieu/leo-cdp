@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<MediaNetworkList>
+<AppMetadataList>
 
-    <MediaNetwork>
-        <networkId>-3032901574009874613</networkId>
+    <AppMetadata>
+        <appId>-3032901574009874613</appId>
         <name>XemGiDay.com</name>
         <uri>xemgiday</uri>
         <domain>xemgiday.com</domain>
@@ -22,11 +22,11 @@
         <AdsTxtContent> google.com, pub-9034869050940123, DIRECT, f08c47fec0942fa0 </AdsTxtContent>
         <GoogleTrackingId></GoogleTrackingId>
         <NumberSimilarPostsInList>7</NumberSimilarPostsInList>
-    </MediaNetwork>
+    </AppMetadata>
     
     
-    <MediaNetwork>
-        <networkId>10000</networkId>
+    <AppMetadata>
+        <appId>10000</appId>
         <name>Leo CDP Admin</name>
         <uri>admin</uri>
         <domain>admin.leocdp.com</domain>
@@ -46,10 +46,10 @@
         <PageTitle>Leo CDP Admin</PageTitle>
         <GoogleTrackingId></GoogleTrackingId>
         <NumberSimilarPostsInList>7</NumberSimilarPostsInList>
-    </MediaNetwork>
+    </AppMetadata>
     
-    <MediaNetwork>
-        <networkId>5222157891479909862</networkId>
+    <AppMetadata>
+        <appId>5222157891479909862</appId>
         <name>LeoPlatform</name>
         <uri>leoplatform</uri>
         <domain>leoplatform.net</domain>
@@ -69,10 +69,10 @@
         <AdsTxtContent></AdsTxtContent>
         <GoogleTrackingId></GoogleTrackingId>
         <NumberSimilarPostsInList>7</NumberSimilarPostsInList>
-    </MediaNetwork>    
+    </AppMetadata>    
   
-    <MediaNetwork>
-        <networkId>9999</networkId>
+    <AppMetadata>
+        <appId>9999</appId>
         <name>bookstore.bigdatavietnam.org</name>
         <uri>bookstore</uri>
         <domain>bookstore.bigdatavietnam.org</domain>
@@ -92,6 +92,6 @@
         <AdsTxtContent> </AdsTxtContent>
         <GoogleTrackingId></GoogleTrackingId>
         <NumberSimilarPostsInList>7</NumberSimilarPostsInList>
-    </MediaNetwork>
+    </AppMetadata>
     
-</MediaNetworkList>
+</AppMetadataList>
