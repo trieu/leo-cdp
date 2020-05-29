@@ -31,7 +31,20 @@ function loadBusinessHubApiManagement(){
     });
 }
 
+function loadBusinessAnalytics360() {
+	loadView('/view/hubs/in-development.html?admin=1', pageDomSelector, function () {
+		//TODO
+    });
+}
+
 //###################### Content Hub ######################
+
+function loadContentDashboard() {
+	document.title = 'Content Dashboard';
+	loadView('/view/hubs/content/content-dashboard.html?admin=1', pageDomSelector, function () {
+		initContentDashboard();
+    });
+}
 
 //------------ Page Controllers ---------------------
 
@@ -180,12 +193,24 @@ function loadCategoryForm(id) {
     });
 }
 
+function loadMediaMarketplace(){
+	loadView('/view/hubs/in-development.html?admin=1', pageDomSelector, function () {
+        //TODO
+    });
+}
+
 
 //###################### Audience Hub ######################
 
 function loadAudienceDashboard() {
     loadView('/view/hubs/audience/audience-dashboard.html?admin=1', pageDomSelector, function () {
     	initSalesDashboard();
+    });
+}
+
+function loadAudienceDataObserver(){
+	loadView('/view/hubs/in-development.html?admin=1', pageDomSelector, function () {
+        //TODO
     });
 }
 
@@ -197,7 +222,7 @@ function loadAudienceProfiles() {
 
 function loadAudienceSegmentation() {
     loadView('/view/hubs/audience/audience-segment-list.html?admin=1', pageDomSelector, function () {
-    	initSalesDashboard();
+    	//TODO
     });
 }
 
