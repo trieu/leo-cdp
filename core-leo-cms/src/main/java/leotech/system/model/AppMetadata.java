@@ -37,11 +37,11 @@ public class AppMetadata implements PersistentArangoObject {
 	String domain = ""; // bigdatavietnam.org
 
 	@XmlElement(name = "WebTemplateFolder")
-	String webTemplateFolder = ""; // bigdatavietnam/web
+	String webTemplateFolder = ""; // e.g: bigdatavietnam
 
 	// data for native app on mobile devices (Android, iOS)
 	@XmlElement(name = "AndroidAppId")
-	String androidAppId = ""; // bigdatavietnam-org
+	String androidAppId = ""; // e.g: bigdatavietnam-org
 
 	@XmlElement(name = "IosAppId")
 	String iosAppId = "";
@@ -61,7 +61,7 @@ public class AppMetadata implements PersistentArangoObject {
 	List<ContentClassPostQuery> contentClassPostQueries;
 
 	@XmlElement(name = "PageTitle")
-	String pageTitle = "leoplatform.net";
+	String pageTitle = "Leo CDP";
 
 	@XmlElement(name = "PageHeaderLogo")
 	String pageHeaderLogo = "/public/images/leotech-logo.png";

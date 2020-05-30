@@ -22,184 +22,185 @@ import rfx.core.util.StringUtil;
 
 public abstract class TaxonomyNode implements PersistentArangoObject {
 
-    @DocumentField(Type.KEY)
-    @Expose
-    private String key;
+	@DocumentField(Type.KEY)
+	@Expose
+	private String key;
 
-    @Expose
-    String name;
+	@Expose
+	String name;
 
-    @Expose
-    String description;
+	@Expose
+	String description;
 
-    @Expose
-    String parentId;
+	@Expose
+	String parentId;
 
-    @Expose
-    String headlineImageUrl = "";
+	@Expose
+	String headlineImageUrl = "";
 
-    @Expose
-    long creationTime;
+	@Expose
+	long creationTime;
 
-    @Expose
-    long modificationTime;
+	@Expose
+	long modificationTime;
 
-    @Expose
-    int navigationOrder = 0;// for the order of display in menu
+	@Expose
+	int navigationOrder = 0;// for the order of display in menu
 
-    @Expose
-    String slug = ""; // for SEO friendly
+	@Expose
+	String slug = ""; // for SEO friendly
 
-    long networkId = 0; // the content network ID
+	long networkId = 0; // the content network ID
 
-    int privacyStatus = 0;// 0: public, 1: protected or -1: private
+	int privacyStatus = 0;// 0: public, 1: protected or -1: private
 
-    List<String> viewerIds = new ArrayList<>();
+	List<String> viewerIds = new ArrayList<>();
 
-    @Expose
-    Map<String, String> customData = new HashMap<>();
+	@Expose
+	Map<String, String> customData = new HashMap<>();
 
-    protected TaxonomyNode() {
-    }
-
-    public TaxonomyNode(String name, long networkId) {
-	super();
-	initRequiredData(name, networkId);
-	this.description = "";
-	this.parentId = "";
-    }
-
-    public void initRequiredData(String name, long networkId) {
-	this.name = name;
-	this.networkId = networkId;
-	this.slug = networkId + "-" + new Slugify().slugify(name);
-	this.creationTime = System.currentTimeMillis();
-	this.modificationTime = System.currentTimeMillis();
-    }
-
-    public static ArangoCollection getCollection(ArangoCollection collection, String colName) throws ArangoDBException {
-	if (collection == null) {
-	    ArangoDatabase arangoDatabase = ArangoDbUtil.getActiveArangoDbInstance();
-
-	    collection = arangoDatabase.collection(colName);
-
-	    // ensure indexing key fields
-	    collection.ensureFulltextIndex(Arrays.asList("name"), new FulltextIndexOptions().minLength(2));
-	    collection.ensureFulltextIndex(Arrays.asList("description"), new FulltextIndexOptions().minLength(10));
-	    collection.ensurePersistentIndex(Arrays.asList("slug"), new PersistentIndexOptions().unique(true));
-	    collection.ensureHashIndex(Arrays.asList("parentId"), new HashIndexOptions());
-	    collection.ensureHashIndex(Arrays.asList("networkId"), new HashIndexOptions());
+	protected TaxonomyNode() {
 	}
-	return collection;
-    }
 
-    @Override
-    public boolean isReadyForSave() {
-	return StringUtil.isNotEmpty(name) && networkId > 0 && StringUtil.isNotEmpty(this.slug);
-    }
+	public TaxonomyNode(String name, long networkId) {
+		super();
+		initRequiredData(name, networkId);
+		this.description = "";
+		this.parentId = "";
+	}
 
-    public String getKey() {
-	return key;
-    }
+	public void initRequiredData(String name, long networkId) {
+		this.name = name;
+		this.networkId = networkId;
+		this.slug = networkId + "-" + new Slugify().slugify(name);
+		this.creationTime = System.currentTimeMillis();
+		this.modificationTime = System.currentTimeMillis();
+	}
 
-    public void setKey(String key) {
-	this.key = key;
-    }
+	public static ArangoCollection getCollection(ArangoCollection collection, String colName)
+			throws ArangoDBException {
+		if (collection == null) {
+			ArangoDatabase arangoDatabase = ArangoDbUtil.getActiveArangoDbInstance();
 
-    public String getName() {
-	return name;
-    }
+			collection = arangoDatabase.collection(colName);
 
-    public void setName(String name) {
-	this.name = name;
-    }
+			// ensure indexing key fields
+			collection.ensureFulltextIndex(Arrays.asList("name"), new FulltextIndexOptions().minLength(2));
+			collection.ensureFulltextIndex(Arrays.asList("description"), new FulltextIndexOptions().minLength(10));
+			collection.ensurePersistentIndex(Arrays.asList("slug"), new PersistentIndexOptions().unique(true));
+			collection.ensureHashIndex(Arrays.asList("parentId"), new HashIndexOptions());
+			collection.ensureHashIndex(Arrays.asList("networkId"), new HashIndexOptions());
+		}
+		return collection;
+	}
 
-    public String getDescription() {
-	return description;
-    }
+	@Override
+	public boolean isReadyForSave() {
+		return StringUtil.isNotEmpty(name) && networkId > 0 && StringUtil.isNotEmpty(this.slug);
+	}
 
-    public void setDescription(String description) {
-	this.description = description;
-    }
+	public String getKey() {
+		return key;
+	}
 
-    public String getParentId() {
-	return parentId;
-    }
+	public void setKey(String key) {
+		this.key = key;
+	}
 
-    public void setParentId(String parentId) {
-	this.parentId = parentId;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getHeadlineImageUrl() {
-	return headlineImageUrl;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setHeadlineImageUrl(String headlineImageUrl) {
-	this.headlineImageUrl = headlineImageUrl;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public String getSlug() {
-	return slug;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public void setSlug(String slug) {
-	this.slug = slug;
-    }
+	public String getParentId() {
+		return parentId;
+	}
 
-    public long getNetworkId() {
-	return networkId;
-    }
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
+	}
 
-    public void setNetworkId(int networkId) {
-	this.networkId = networkId;
-    }
+	public String getHeadlineImageUrl() {
+		return headlineImageUrl;
+	}
 
-    public long getCreationTime() {
-	return creationTime;
-    }
+	public void setHeadlineImageUrl(String headlineImageUrl) {
+		this.headlineImageUrl = headlineImageUrl;
+	}
 
-    public void setCreationTime(long creationTime) {
-	this.creationTime = creationTime;
-    }
+	public String getSlug() {
+		return slug;
+	}
 
-    public long getModificationTime() {
-	return modificationTime;
-    }
+	public void setSlug(String slug) {
+		this.slug = slug;
+	}
 
-    public void setModificationTime(long modificationTime) {
-	this.modificationTime = modificationTime;
-    }
+	public long getNetworkId() {
+		return networkId;
+	}
 
-    public int getPrivacyStatus() {
-	return privacyStatus;
-    }
+	public void setNetworkId(int networkId) {
+		this.networkId = networkId;
+	}
 
-    public void setPrivacyStatus(int privacyStatus) {
-	this.privacyStatus = privacyStatus;
-    }
+	public long getCreationTime() {
+		return creationTime;
+	}
 
-    public List<String> getViewerIds() {
-	return viewerIds;
-    }
+	public void setCreationTime(long creationTime) {
+		this.creationTime = creationTime;
+	}
 
-    public void setViewerIds(List<String> viewerIds) {
-	this.viewerIds = viewerIds;
-    }
+	public long getModificationTime() {
+		return modificationTime;
+	}
 
-    public Map<String, String> getCustomData() {
-	return customData;
-    }
+	public void setModificationTime(long modificationTime) {
+		this.modificationTime = modificationTime;
+	}
 
-    public void setCustomData(Map<String, String> customData) {
-	this.customData = customData;
-    }
+	public int getPrivacyStatus() {
+		return privacyStatus;
+	}
 
-    public int getNavigationOrder() {
-	return navigationOrder;
-    }
+	public void setPrivacyStatus(int privacyStatus) {
+		this.privacyStatus = privacyStatus;
+	}
 
-    public void setNavigationOrder(int navigationOrder) {
-	this.navigationOrder = navigationOrder;
-    }
+	public List<String> getViewerIds() {
+		return viewerIds;
+	}
+
+	public void setViewerIds(List<String> viewerIds) {
+		this.viewerIds = viewerIds;
+	}
+
+	public Map<String, String> getCustomData() {
+		return customData;
+	}
+
+	public void setCustomData(Map<String, String> customData) {
+		this.customData = customData;
+	}
+
+	public int getNavigationOrder() {
+		return navigationOrder;
+	}
+
+	public void setNavigationOrder(int navigationOrder) {
+		this.navigationOrder = navigationOrder;
+	}
 
 }

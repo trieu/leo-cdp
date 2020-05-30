@@ -152,11 +152,11 @@ public class SetupNewDatabase {
 				System.out.println("activateAsSuperAdmin OK");
 				String categoryKey = CategoryDaoUtil.save(new Category("Website Contents", AppMetadata.DEFAULT_ID));
 				if (categoryKey != null) {
-					Page page = new Page("Introduction to Leo CDP", AppMetadata.DEFAULT_ID, categoryKey,
-							firstUser.getKey());
-					page.setMediaInfo("TODO");
+					Page page = new Page("Introduction to Leo CDP", AppMetadata.DEFAULT_ID, categoryKey, firstUser.getKey());
+					page.setMediaInfo("");
 					PageDaoUtil.save(page);
 				}
+				CategoryDaoUtil.save(new Category("Content Tracking Links", AppMetadata.DEFAULT_ID ));
 			}
 		}
 	}

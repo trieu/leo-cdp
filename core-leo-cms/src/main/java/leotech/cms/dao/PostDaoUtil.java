@@ -137,10 +137,10 @@ public class PostDaoUtil {
 		return list;
 	}
 
-	public static List<Post> listPostsByMediaNetwork(AppMetadata mediaNetwork, boolean includeProtected,
+	public static List<Post> listPostsByMediaNetwork(AppMetadata app, boolean includeProtected,
 			boolean includePrivate, int startIndex, int numberResult) {
-		return listAllByContentClassAndKeywords(mediaNetwork.getContentCategoryId(),
-				mediaNetwork.getPublicContentClassList(), new String[]{}, includeProtected, includePrivate, false,
+		return listAllByContentClassAndKeywords(app.getContentCategoryId(),
+				app.getPublicContentClassList(), new String[]{}, includeProtected, includePrivate, false,
 				startIndex, numberResult);
 	}
 
