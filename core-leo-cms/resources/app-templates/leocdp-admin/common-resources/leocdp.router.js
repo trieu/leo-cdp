@@ -267,3 +267,23 @@ function loadUserReport() {
     });
 }
 
+//###################### User Controllers ######################
+
+function loadUserList() {
+    loadView('/view/user-list.html?admin=1', pageDomSelector, function () {
+        loadDataUserList();
+    });
+}
+
+function loadUserProfileForm(id) {
+    loadView('/view/user-form.html?admin=1', pageDomSelector, function () {
+        if (id) {
+            // load from API
+            loadDataUserProfile(id);
+        } else {
+            // create new
+            loadDataUserProfile(false);
+        }
+    });
+}
+

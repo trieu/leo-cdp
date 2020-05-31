@@ -1,0 +1,60 @@
+
+### Admin Leo CDP ###
+
+nano /usr/local/etc/nginx/servers/admin.leocdp.com
+
+server {
+	    listen 80;
+	    listen [::]:80;
+	
+	    server_name admin.leocdp.com;
+	    return 301 https://admin.leocdp.com$request_uri;
+}
+
+server {
+        listen 443 ssl http2;
+        listen [::]:443 ssl http2;
+
+        server_name admin.leocdp.com;
+
+        ssl_certificate		/usr/local/etc/nginx/ssl/admin.leocdp.com.crt;
+        ssl_certificate_key	/usr/local/etc/nginx/ssl/admin.leocdp.com.key;
+
+        location / {
+             proxy_pass http://127.0.0.1:9070/;
+             proxy_set_header X-Forwarded-Proto $scheme;
+             proxy_set_header X-Forwarded-Port $server_port;
+             proxy_set_header Host            $host;
+             proxy_set_header X-Forwarded-For $remote_addr;
+        }
+}
+
+### Bookstore Website TEST ###
+
+nano /usr/local/etc/nginx/servers/bookstore.bigdatavietnam.org
+
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name bookstore.bigdatavietnam.org;
+    return 301 https://bookstore.bigdatavietnam.org$request_uri;
+}
+
+server {
+        listen 443 ssl http2;
+        listen [::]:443 ssl http2;
+
+        server_name bookstore.bigdatavietnam.org;
+
+        ssl_certificate      /usr/local/etc/nginx/ssl/bookstore.bigdatavietnam.org.crt;
+        ssl_certificate_key  /usr/local/etc/nginx/ssl/bookstore.bigdatavietnam.org.key;
+
+        location / {
+             proxy_pass http://127.0.0.1:9192/;
+             proxy_set_header X-Forwarded-Proto $scheme;
+             proxy_set_header X-Forwarded-Port $server_port;
+             proxy_set_header Host            $host;
+             proxy_set_header X-Forwarded-For $remote_addr;
+        }
+}

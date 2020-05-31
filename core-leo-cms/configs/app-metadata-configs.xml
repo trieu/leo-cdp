@@ -28,7 +28,7 @@
     <AppMetadata>
         <appId>10000</appId>
         <name>Leo CDP Admin</name>
-        <uri>admin</uri>
+        <uri>admin-leocdp</uri>
         <domain>admin.leocdp.com</domain>
         <WebTemplateFolder>leocdp-admin</WebTemplateFolder>
         <AndroidAppId></AndroidAppId>
@@ -36,9 +36,9 @@
         <AppTemplateFolder></AppTemplateFolder>
         <ContentCategoryId></ContentCategoryId>
         <PublicContentClass>standard</PublicContentClass>
-        <PageTitle>leocdp.com</PageTitle>
-        <PageHeaderLogo>/public/images/leotech-logo.png</PageHeaderLogo>
-        <BaseStaticUrl>//leocdp.com</BaseStaticUrl>
+        <PageTitle>Admin Leo CDP</PageTitle>
+        <PageHeaderLogo>/public/images/leo-cdp-logo.png</PageHeaderLogo>
+        <BaseStaticUrl>//admin.leocdp.com</BaseStaticUrl>
         <BaseAdminApiUrl>//admin.leocdp.com</BaseAdminApiUrl>
         <BaseDeliveryApiUrl>//api.leocdp.com</BaseDeliveryApiUrl>
         <BaseUploaderUrl>//uploader.leocdp.com</BaseUploaderUrl>
@@ -47,29 +47,6 @@
         <GoogleTrackingId></GoogleTrackingId>
         <NumberSimilarPostsInList>7</NumberSimilarPostsInList>
     </AppMetadata>
-    
-    <AppMetadata>
-        <appId>5222157891479909862</appId>
-        <name>LeoPlatform</name>
-        <uri>leoplatform</uri>
-        <domain>leoplatform.net</domain>
-        <WebTemplateFolder>default-web-template</WebTemplateFolder>
-        <AndroidAppId></AndroidAppId>
-        <IosAppId></IosAppId>
-        <AppTemplateFolder></AppTemplateFolder>
-        <ContentCategoryId></ContentCategoryId>
-        <PublicContentClass>standard</PublicContentClass>
-        <PageTitle>leoplatform.net</PageTitle>
-        <PageHeaderLogo>/public/images/leotech-logo.png</PageHeaderLogo>
-        <BaseStaticUrl>//leoplatform.net</BaseStaticUrl>
-        <BaseAdminApiUrl>//leoplatform.net</BaseAdminApiUrl>
-        <BaseDeliveryApiUrl>//api.leoplatform.net</BaseDeliveryApiUrl>
-        <BaseUploaderUrl>//uploader.leoplatform.net</BaseUploaderUrl>
-        <BaseLogCollectorUrl>//log.leoplatform.net</BaseLogCollectorUrl>
-        <AdsTxtContent></AdsTxtContent>
-        <GoogleTrackingId></GoogleTrackingId>
-        <NumberSimilarPostsInList>7</NumberSimilarPostsInList>
-    </AppMetadata>    
   
     <AppMetadata>
         <appId>9999</appId>

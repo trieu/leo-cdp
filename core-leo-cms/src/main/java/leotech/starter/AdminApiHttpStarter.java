@@ -14,7 +14,7 @@ public class AdminApiHttpStarter {
 			String command = args[0];
 			String dbKey = args[1];
 			if (SETUP_NEW_CMS.equalsIgnoreCase(command)) {
-				SetupNewDatabase.createDbCollections("cms",dbKey);
+				SetupNewDatabase.createDbCollections("cms", dbKey);
 				Utils.exitSystemAfterTimeout(3000);
 			} else {
 				String workerName = command;
