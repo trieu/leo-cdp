@@ -14,13 +14,13 @@ function loadJourneyMapStudio() {
 }
 
 function loadProductCatalogManagement(){
-	loadView('/view/hubs/in-development.html?admin=1', pageDomSelector, function () {
+	loadView('/view/hubs/business/product-catalog.html?admin=1', pageDomSelector, function () {
 		//TODO
     });
 }
 
 function loadServiceCatalogManagement(){
-	loadView('/view/hubs/in-development.html?admin=1', pageDomSelector, function () {
+	loadView('/view/hubs/business/service-catalog.html?admin=1', pageDomSelector, function () {
 		//TODO
     });
 }
@@ -209,7 +209,7 @@ function loadAudienceDashboard() {
 }
 
 function loadAudienceDataObserver(){
-	loadView('/view/hubs/in-development.html?admin=1', pageDomSelector, function () {
+	loadView('/view/hubs/audience/audience-data-observer.html?admin=1', pageDomSelector, function () {
         //TODO
     });
 }

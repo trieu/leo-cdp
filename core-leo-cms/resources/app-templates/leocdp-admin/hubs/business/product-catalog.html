@@ -1,0 +1,33 @@
+
+
+
+<div id="my"></div>
+
+<script>
+data = [
+    [3, 'Classe A', 'Cheese', 1, '2017-01-12'],
+    [1, 'Classe B', 'Apples', 1, '2017-01-12'],
+    [2, 'Classe A', 'Carrots', 1, '2017-01-12'],
+    [1, 'Classe C', 'Oranges', 0, '2017-01-12'],
+];
+
+var urlDataSource = "/public/uploaded-files/sample-jexcel-data.json?_=" + new Date().getTime();
+$('#my').jexcel({
+    data:data,
+    colHeaders:  [ 'Country', 'Description', 'Type', 'Stock', 'Next purchase' ],
+    colWidths: [ 300, 80, 100, 60, 120 ],
+    columns: [
+        { type: 'autocomplete', url:urlDataSource },
+        { type: 'text' },
+        { type: 'dropdown', source:[ {'id':'1', 'name':'Fruits'}, {'id':'2', 'name':'Legumes'}, {'id':'3', 'name':'General Food'} ] },
+        { type: 'checkbox' },
+        { type: 'calendar' },
+    ]
+});
+</script>
+
+<br>
+
+https://bossanova.uk/jexcel/v4/examples/datatables
+
+https://bossanova.uk/jexcel/v4/examples/events
