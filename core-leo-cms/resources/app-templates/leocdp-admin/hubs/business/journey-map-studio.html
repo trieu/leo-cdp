@@ -6,16 +6,16 @@
 </style>
 
 <div class="row" id="breadcrumb_header" >
-      	<div class="col-md-10" >
-           <h2 class="page-header" > <a href="javascript:"> Business Hub </a> &#8594; <a href="javascript:"> Journey Map Studio </a> </h2>
+      	<div class="col-md-8" >
+           <h4 class="page-header" > <a href="javascript:"> Business Hub </a> &#8594; <a href="javascript:"> Journey Map Studio </a> </h4>
        </div>
-       <div class="col-md-2" >
-       	<button type="button" class="btn btn-primary btn-lg">Save</button>
-		<button type="button" class="btn btn-secondary btn-lg">Cancel</button>
+       <div class="col-md-4 hcenter" >
+       	<button type="button" class="btn btn-primary ">Save</button>
+		<button type="button" class="btn btn-secondary ">Cancel</button>
        </div>
    </div>
 
-   <h2 id="journey_map_name" >Hành trình chung của khách hàng cho hệ thống bán lẻ sách</h2>
+   <h3 id="journey_map_name" >Hành trình chung của khách hàng cho hệ thống bán lẻ sách</h3>
    
    <div class="container-fluid">
 
@@ -24,7 +24,7 @@
     <div class="row">
         <div class="col-md-4">
             <div class="text-center">
-                <h3>Avatar</h3>
+                <h4>Avatar</h4>
                 <img src="https://i.pinimg.com/236x/a8/d9/67/a8d9677a5bddd2eb122417b22a4a1cae--reading-is-sexy-light-photography.jpg"
                     alt="Profile Avatar" class="rounded mx-auto d-block">
             </div>
@@ -32,13 +32,13 @@
         <div class="col-md-8">
 
             <div>
-                <h3> {{target_customer_name}} </h3>
+                <h4> {{target_customer_name}} </h4>
                 <strong class="editable_text"> nhóm mê sách kinh doanh </strong>
             </div>
             <br>
-            <h3> {{persona_attributes}}
+            <h4> {{persona_attributes}}
                 <span class="editable_add_item" data-target="persona_attributes"  ></span>  
-            </h3>
+            </h4>
             <table border=0 class="underlined" style="width: 100%;">
                 <tr>
                     <td>
@@ -68,9 +68,9 @@
     <div class="row">
 
         <div class="col-md-6">
-            <h3> {{persona_expectations}} 
+            <h4> {{persona_expectations}} 
                 <span class="editable_add_item" data-target="persona_expectations"  ></span>  
-            </h3> 
+            </h4> 
             
             <table style="width: 100%;" class="plain">
                 <tr>
@@ -92,9 +92,9 @@
         </div>
 
         <div class="col-md-6">
-            <h3> {{persona_interests}}  
+            <h4> {{persona_interests}}  
                 <span class="editable_add_item" data-target="persona_interests"  ></span>  
-            </h3>
+            </h4>
             <table style="width: 100%;" class="plain">
                 <tr>
                     <td>
@@ -122,9 +122,9 @@
     <div class="row">
 
         <div class="col-md-6">
-            <h3> {{business_ideas}} 
+            <h4> {{business_ideas}} 
                 <span class="editable_add_item" data-target="business_ideas"  ></span> 
-            </h3>
+            </h4>
             <table class="plain" style="width: 100%;">
                 <tr>
                     <td>
@@ -145,9 +145,9 @@
         </div>
 
         <div class="col-md-6">
-            <h3> {{business_solutions}}
+            <h4> {{business_solutions}}
                 <span class="editable_add_item" data-target="business_solutions"  ></span> 
-            </h3>
+            </h4>
             <table class="plain" style="width: 100%;">
                 <tr>
                     <td>
@@ -174,9 +174,9 @@
 
     <div class="row">
         <div class="col-md-6">
-            <h3> {{persona_touchpoints}}
+            <h4> {{persona_touchpoints}}
                 <span class="editable_add_item" data-target="persona_touchpoints"  ></span>
-            </h3>
+            </h4>
             <table class="plain">
                 <tr>
                     <td>
@@ -214,7 +214,7 @@
             </table>
         </div>
         <div class="col-md-6">
-        	<h3> {{conversion_actions}} <span class="editable_add_item" data-target="conversion_actions" ></span> </h3>
+        	<h4> {{conversion_actions}} <span class="editable_add_item" data-target="conversion_actions" ></span> </h4>
             <table class="plain" style="width: 100%;">
                 <tr>
                     <td>
@@ -236,18 +236,18 @@
     </div>
     <div class="row">
         <div class="col-md-5">
-        	<h3> {{key_business_action}} </h3>
+        	<h4> {{key_business_action}} </h4>
         </div>
          <div class="col-md-7">
          	<div id="key_business_action" data-field="key_business_action" >
-                <h3 class="editable_text"> Mua sách </h3>
+                <h4 class="editable_text"> Mua sách </h4>
             </div>
         </div>
     </div>
         
     <hr>
     <div class="row">
-     	 <h3 style="text-align: center;"> Journey Flow </h3>
+     	 <h4 style="text-align: center;"> Journey Flow </h4>
     	 <div id="sankeyChart" style="height:580px; width:98%;"></div>
     </div>
     

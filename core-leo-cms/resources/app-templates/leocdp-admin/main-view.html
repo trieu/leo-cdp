@@ -204,6 +204,14 @@
 <script>
 	/////////////////////////////// READY //////////////////////////////////
 	
+	function pageWrapperResize(){
+		$('#page-wrapper').attr('style', 'width:'+($(window).width() - 234 ) + 'px!important');
+	}
+	
+	$( window ).resize(function() {
+		pageWrapperResize();
+	});
+	
 	function loadCategoryNavigation() {
 	    LeoCmsApiUtil.callPostAdminApi(baseAdminApi + '/category/list-all', {}, function (rs) {
 	        if (rs.data && rs.httpCode === 0) {
@@ -350,6 +358,7 @@
 		} else {
 			
 			//loadCategoryNavigation(); //FIXME
+			pageWrapperResize();
 			
 			loadCommonModalHtml();
 			loadUserInfoWidget();

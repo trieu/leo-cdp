@@ -39,8 +39,13 @@
 	    padding: 5px;
     }
     
+    #audience_source {
+    	width: 100%;
+    	float: left;
+    }
+    
     #chart text, #audience_source text {
-    	font-size: 15px;
+    	font-size: 14px;
     }
     
     svg {
@@ -91,44 +96,44 @@
 
     <div class="row">
         <div class="col-md-3">
-        	<div class="chart_box">
-	        	<h3 class="chart_header" >Audience Statistics</h3>
+        	<div class="row chart_box">
+	        	<h4 class="chart_header" >Audience Statistics</h4>
 	            <div class="summary_metric">
 	                <div class="vcenter">
 	                   
-	                    <h4> <span class="label label-default"> 33,801 </span> &nbsp; profiles </h4>
-	                    <h4> <span class="label label-default"> 63 </span> &nbsp; segments </h4>
-	                    <h4> <span class="label label-default"> 1,489 </span> &nbsp; customers </h4>
-	                    <h4> <span class="label label-default"> 900 </span> &nbsp; new customers </h4>
+	                    <h5> <span class="label label-default"> 33,801 </span> &nbsp; profiles </h5>
+	                    <h5> <span class="label label-default"> 63 </span> &nbsp; segments </h5>
+	                    <h5> <span class="label label-default"> 1,489 </span> &nbsp; customers </h5>
+	                    <h5> <span class="label label-default"> 900 </span> &nbsp; new customers </h5>
 	 
 	                </div>
 	            </div>
 	            
-	            <h3 class="chart_header" >Event Tracking Statistics</h3>
+	            <h4 class="chart_header" >Event Tracking Statistics</h4>
 	            <div class="summary_metric">
 	                <div class="vcenter">
 	                
-	                    <h4> <span class="label label-default"> 61,656 </span> &nbsp; page views </h4>
-	                    <h4> <span class="label label-default"> 8,152 </span> &nbsp; product info views </h4>
-	                    <h4> <span class="label label-default"> 7,548 </span> &nbsp; product video views </h4>
-	                    <h4> <span class="label label-default"> 2,262 </span> &nbsp; add-to-cart clicks </h4>
-	                    <h4> <span class="label label-default"> 1,782 </span> &nbsp; purchases </h4>
-	                	<h4> <span class="label label-default"> 921 </span> &nbsp; first-time purchases </h4>
-	                	<h4> <span class="label label-default"> 861 </span> &nbsp; repeat purchases </h4>
+	                    <h5> <span class="label label-default"> 61,656 </span> &nbsp; page views </h5>
+	                    <h5> <span class="label label-default"> 8,152 </span> &nbsp; product info views </h5>
+	                    <h5> <span class="label label-default"> 7,548 </span> &nbsp; product video views </h5>
+	                    <h5> <span class="label label-default"> 2,262 </span> &nbsp; add-to-cart clicks </h5>
+	                    <h5> <span class="label label-default"> 1,782 </span> &nbsp; purchases </h5>
+	                	<h5> <span class="label label-default"> 921 </span> &nbsp; first-time purchases </h5>
+	                	<h5> <span class="label label-default"> 861 </span> &nbsp; repeat purchases </h5>
 	                    
 	                </div>
 	            </div>
         	</div>
         </div>
         <div class="col-md-9">
-            <div class="row">
-                <div class="col-md-6 chart_box">
-                    <h3 class="chart_header" >Profile Conversion Funnel</h3>
+            <div class="row chart_box">
+                <div class="col-md-6 ">
+                    <h4 class="chart_header" >Profile Conversion Funnel</h4>
                     <div id="profile_funnel"></div>
                 </div>
-                <div class="col-md-6 chart_box">
-                    <div id="audience_source" style=float:left>
-                        <h3 class="chart_header" >Audience Media Sources</h3>
+                <div class="col-md-6">
+                    <div id="audience_source" >
+                        <h4 class="chart_header" >Audience Media Sources</h4>
                     </div>
                 </div>
             </div>
@@ -138,7 +143,7 @@
     <div class="row chart_box">
      	<div class="col-md-3 ">
      	
-     		<h3 class="chart_header" >Event Conversion Funnel</h3>
+     		<h4 class="chart_header" >Event Conversion Funnel</h4>
             <div class="summary_metric">
                 <div class="vcenter">
                    <div id="event_funnel"></div>
@@ -146,7 +151,7 @@
             </div>
      	</div>
     	<div class="col-md-9">
-	        <h3 class="chart_header" style="width: 100%;" > Sales channel's performance from purchasing data </h3>
+	        <h4 class="chart_header" style="width: 100%;" > Sales channel's performance from purchasing data </h4>
 	        <div id="chart" style="text-align:center;">
 	            <svg></svg>
 	        </div>
@@ -203,7 +208,7 @@
                 bottom: 30,
                 left: 180
             },
-            width = 1080 - margin.left - margin.right,
+            width = $('#chart').width() - margin.left - margin.right,
             height = 350 - margin.top - margin.bottom;
 
         // set the ranges
@@ -285,7 +290,7 @@
                 enabled: true
             },
             label: {
-                fontSize: '15px'
+                fontSize: '14px'
             },
             events: {
                 click: {
@@ -316,14 +321,14 @@
                     enabled: true,
                     height: 16
                 },
-                bottomWidth : 0.69,
-                height: 320
+                bottomWidth : 0.64,
+                height: 322
             },
             tooltip: {
                 enabled: true
             },
             label: {
-                fontSize: '15px'
+                fontSize: '11px'
             },
             events: {
                 click: {
@@ -383,7 +388,7 @@
         ];
 
         var chart = venn.VennDiagram()
-            .width(450)
+            .width($('#audience_source').width())
             .height(360)
 
         var div2 = d3.select("#audience_source").datum(sets).call(chart);
