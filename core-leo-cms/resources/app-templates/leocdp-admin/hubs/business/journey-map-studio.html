@@ -3,19 +3,39 @@
 	background-color: #c9cad4;
 	height: 28px;
 }
+pre.mermaid > textarea {
+    -webkit-font-smoothing: initial;
+    border-radius: 2px;
+    color: #525252;
+    display: block;
+    font-family: Roboto Mono,Monaco,courier,monospace;
+    font-size: 1.4rem;
+    line-height: inherit;
+    margin: 0 2px;
+    max-width: inherit;
+    width: 100%;
+    height: 280px;
+    overflow: inherit;
+    padding: 1.2em 5px;
+    white-space: inherit;
+}
+
+.experience_journey_flow svg {
+	font: 16px / 24px "Tahoma" sans-serif !important;
+}
 </style>
 
 <div class="row" id="breadcrumb_header" >
-      	<div class="col-md-8" >
-           <h4 class="page-header" > <a href="javascript:"> Business Hub </a> &#8594; <a href="javascript:"> Journey Map Studio </a> </h4>
-       </div>
-       <div class="col-md-4 hcenter" >
-       	<button type="button" class="btn btn-primary ">Save</button>
+    <div class="col-md-8" >
+         <h4 class="page-header" > <a href="javascript:"> Business Hub </a> &#8594; <a href="javascript:"> Journey Map Studio </a> </h4>
+    </div>
+    <div class="col-md-4 hcenter" >
+		<button type="button" class="btn btn-primary ">Save</button>
 		<button type="button" class="btn btn-secondary ">Cancel</button>
-       </div>
-   </div>
+    </div>
+</div>
 
-   <h3 id="journey_map_name" >Hành trình chung của khách hàng cho hệ thống bán lẻ sách</h3>
+   <h3 id="journey_map_name" class="editable_text" >Hành trình chung của khách hàng cho hệ thống bán lẻ sách</h3>
    
    <div class="container-fluid">
 
@@ -36,7 +56,7 @@
                 <strong class="editable_text"> nhóm mê sách kinh doanh </strong>
             </div>
             <br>
-            <h4> {{persona_attributes}}
+            <h4>1) {{persona_attributes}}
                 <span class="editable_add_item" data-target="persona_attributes"  ></span>  
             </h4>
             <table border=0 class="underlined" style="width: 100%;">
@@ -68,7 +88,7 @@
     <div class="row">
 
         <div class="col-md-6">
-            <h4> {{persona_expectations}} 
+            <h4>2) {{persona_expectations}} 
                 <span class="editable_add_item" data-target="persona_expectations"  ></span>  
             </h4> 
             
@@ -92,9 +112,7 @@
         </div>
 
         <div class="col-md-6">
-            <h4> {{persona_interests}}  
-                <span class="editable_add_item" data-target="persona_interests"  ></span>  
-            </h4>
+            <h4>3) {{persona_interests}} <span class="editable_add_item" data-target="persona_interests"  ></span> </h4>
             <table style="width: 100%;" class="plain">
                 <tr>
                     <td>
@@ -122,9 +140,7 @@
     <div class="row">
 
         <div class="col-md-6">
-            <h4> {{business_ideas}} 
-                <span class="editable_add_item" data-target="business_ideas"  ></span> 
-            </h4>
+            <h4>4) {{business_ideas}} <span class="editable_add_item" data-target="business_ideas"  ></span> </h4>
             <table class="plain" style="width: 100%;">
                 <tr>
                     <td>
@@ -145,7 +161,7 @@
         </div>
 
         <div class="col-md-6">
-            <h4> {{business_solutions}}
+            <h4>5) {{business_solutions}}
                 <span class="editable_add_item" data-target="business_solutions"  ></span> 
             </h4>
             <table class="plain" style="width: 100%;">
@@ -174,13 +190,13 @@
 
     <div class="row">
         <div class="col-md-6">
-            <h4> {{persona_touchpoints}}
-                <span class="editable_add_item" data-target="persona_touchpoints"  ></span>
+            <h4>6) {{lead_generation_keywords}}
+                <span class="editable_add_item" data-target="lead_generation_keywords"  ></span>
             </h4>
             <table class="plain">
                 <tr>
                     <td>
-                        <ol id="persona_touchpoints" data-field="persona_touchpoints" >
+                        <ol id="lead_generation_keywords" data-field="lead_generation_keywords" >
                          	<li>
                                 <p class="editable_text"> Google Search </p>
                             </li>
@@ -214,7 +230,7 @@
             </table>
         </div>
         <div class="col-md-6">
-        	<h4> {{conversion_actions}} <span class="editable_add_item" data-target="conversion_actions" ></span> </h4>
+        	<h4>7) {{conversion_actions}} <span class="editable_add_item" data-target="conversion_actions" ></span> </h4>
             <table class="plain" style="width: 100%;">
                 <tr>
                     <td>
@@ -234,9 +250,128 @@
             </table>
         </div>
     </div>
+    
+    <hr>
+    
+    <div class="row">
+
+        <div class="col-md-6">
+            <h4>8) {{touchpoints_demand_generation}} <span class="editable_add_item" data-target="touchpoints_demand_generation"  ></span> </h4>
+            <table class="plain" style="width: 100%;">
+                <tr>
+                    <td>
+                        <ol id="touchpoints_demand_generation" data-field="touchpoints_demand_generation" >
+                            <li>
+                                <p class="editable_text"> Google Search </p>
+                            </li>
+                            <li>
+                                <p class="editable_text"> Facebook Group </p>
+                            </li>
+                            <li>
+                                <p class="editable_text"> YouTube channel </p>
+                            </li>
+                            <li>
+                                <p class="editable_text"> Đường sách </p>
+                            </li>
+                        </ol>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-md-6">
+            <h4>9) {{touchpoints_experience_for_lead}}
+                <span class="editable_add_item" data-target="touchpoints_experience_for_lead"  ></span> 
+            </h4>
+            <table class="plain" style="width: 100%;">
+                <tr>
+                    <td>
+                        <ol id="touchpoints_experience_for_lead" data-field="touchpoints_experience_for_lead" >
+                            <li>
+                                <p class="editable_text"> Website </p>
+                            </li>
+                            <li>
+                                <p class="editable_text"> Mobile app </p>
+                            </li>
+                            <li>
+                                <p class="editable_text"> Đường sách </p>
+                            </li>
+                            <li>
+                                <p class="editable_text"> Cửa hàng bán lẻ </p>
+                            </li>
+                        </ol>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+       <div id="leadJourneyDiv" class="experience_journey_flow row" ></div>
+
+    </div>
+    
+    <hr>
+    
+    <div class="row">
+
+        <div class="col-md-6">
+            <h4>10) {{touchpoints_business_transaction}} <span class="editable_add_item" data-target="touchpoints_business_transaction"  ></span> </h4>
+            <table class="plain" style="width: 100%;">
+                <tr>
+                    <td>
+                        <ol id="touchpoints_business_transaction" data-field="touchpoints_business_transaction" >
+                            <li>
+                                <p class="editable_text"> E-commerce Website </p>
+                            </li>
+                            <li>
+                                <p class="editable_text"> E-commerce Mobile App </p>
+                            </li>
+                            <li>
+                                <p class="editable_text"> Cửa hàng bán lẻ </p>
+                            </li>
+                            <li>
+                                <p class="editable_text"> Đường sách </p>
+                            </li>
+                        </ol>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-md-6">
+            <h4>11) {{touchpoints_experience_for_customer}}
+                <span class="editable_add_item" data-target="touchpoints_experience_for_customer"  ></span> 
+            </h4>
+            <table class="plain" style="width: 100%;">
+                <tr>
+                    <td>
+                        <ol id="touchpoints_experience_for_customer" data-field="touchpoints_experience_for_customer" >
+                            <li>
+                                <p class="editable_text"> Website - Customer Support </p>
+                            </li>
+                            <li>
+                                <p class="editable_text"> Mobile App - Customer Support </p>
+                            </li>
+                            <li>
+                                <p class="editable_text"> Social Media Fan Pages </p>
+                            </li>
+                            <li>
+                                <p class="editable_text"> Social Groups  </p>
+                            </li>
+                        </ol>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <div id="customerJourneyDiv" class="experience_journey_flow row" ></div>
+
+    </div>
+    
+    <hr>
+    
     <div class="row">
         <div class="col-md-5">
-        	<h4> {{key_business_action}} </h4>
+        	<h4>12) {{key_business_action}} </h4>
         </div>
          <div class="col-md-7">
          	<div id="key_business_action" data-field="key_business_action" >
@@ -244,27 +379,56 @@
             </div>
         </div>
     </div>
-        
-    <hr>
-    <div class="row">
-     	 <h4 style="text-align: center;"> Journey Flow </h4>
-    	 <div id="sankeyChart" style="height:580px; width:98%;"></div>
-    </div>
     
-   <div id="profileJourneyDiv" >
-	 <span></span>
+    <hr>    
+    
+    <div class="row" style="display: none" >
+     	 <h4 style="text-align: center;"> Lead Journey Map Code </h4>
+    	 <pre class="mermaid" >
+			<textarea id="lead_flow_code" >
+journey
+    title  "{{touchpoints_demand_generation}}" => "{{touchpoints_experience_for_lead}}"
+    section {{touchpoints_demand_generation}}
+    	Google Search:3: Lead
+      	Facebook Group:3: Lead
+      	YouTube channel:3: Lead
+      	Đường sách : 3: Lead
+    section {{touchpoints_experience_for_lead}}
+      	Website:3:  Lead
+      	Mobile app:3:  Lead
+      	Đường sách:3:  Lead
+      	Cửa hàng bán lẻ:3:  Lead   
+			</textarea>
+	   	</pre>
    </div>
-   <textarea id="flow_code" rows="3" cols="4">
-	  journey
-	    title My working day
-	    section Go to work
-	      Make tea: 5: Me
-	      Go upstairs: 3: Me
-	      Do work: 1: Me, Cat
-	    section Go home
-	      Go downstairs: 5: Me
-	      Sit down: 5: Me
-   </textarea>
+   <div class="row" style="display: none" >
+     	 <h4 style="text-align: center;"> Customer Journey Map Code </h4>
+    	 <pre class="mermaid" >
+			<textarea id="customer_flow_code" >
+journey
+    title "{{touchpoints_business_transaction}}" => "{{touchpoints_experience_for_customer}}"
+    section {{touchpoints_business_transaction}}
+    	E-commerce Website:3: Customer
+      	E-commerce Mobile App:3: Customer
+      	Cửa hàng bán lẻ:3: Customer
+      	Đường sách : 3: Customer
+    section {{touchpoints_experience_for_customer}}
+      	Website - Customer Support:3: Customer
+      	Mobile App - Customer Support:3: Customer
+      	Social Media Fan Page:3: Customer
+      	Social Group:3: Customer
+			</textarea>
+	   	</pre>
+   </div>
+   
+  
+   <div class="row" style="display: none" >
+     	 <h4 style="text-align: center;"> Customer Journey Map </h4>
+    	 <div id="sankeyChart" ></div>
+   </div>
+   
+   
+   
 
 </div>
 <br><br><br>
@@ -272,17 +436,28 @@
 <script type="text/javascript">
     ///Js code
     
-    function renderProfileJourney(){
+    function renderLeadJourney(){
         // Example of using the API
-      	var element = document.querySelector("#profileJourneyDiv");
-
-        var insertSvg = function(svgCode, bindFunctions){
-        	//$('#profileJourneyDiv').html(svgCode);
-        	element.innerHTML = svgCode;
-        };
-
-        var graphDefinition = $('#flow_code').val();
-        var graph = mermaid.mermaidAPI.render('profileJourney', graphDefinition, insertSvg);
+        var placeholderSelector = "#leadJourneyDiv";
+        var graphDefinition = $('#lead_flow_code').val().trim();
+        $(placeholderSelector).find('div').remove();
+      	
+        var gid = "lead_graph_"+ new Date().getTime(); 
+        graph = mermaid.mermaidAPI.render(gid, graphDefinition, function(svgCode, bindFunctions){
+        	document.querySelector(placeholderSelector).innerHTML = '<div>'+svgCode+"</div>";
+        });
+    }
+    
+    function renderCustomerJourney(){
+        // Example of using the API
+        var placeholderSelector = "#customerJourneyDiv";
+        var graphDefinition = $('#customer_flow_code').val().trim();
+        $(placeholderSelector).find('div').remove();
+      	
+        var gid = "customer_graph_"+ new Date().getTime(); 
+        graph = mermaid.mermaidAPI.render(gid, graphDefinition, function(svgCode, bindFunctions){
+        	document.querySelector(placeholderSelector).innerHTML = '<div>'+svgCode+"</div>";
+        });
     }
     
     function loadOkJourneyMapDesigner() {
@@ -313,13 +488,15 @@
         });
 
         setTimeout(function(){ 
-        	experienceMapDiagram(); 
-        	renderProfileJourney();  
+        	renderLeadJourney(); 
+        	renderCustomerJourney();  
         },600);
         
     }
 
     function experienceMapDiagram() {
+    	var placeholderSelector = '#sankeyChart';
+    	$(placeholderSelector).attr('style','height:580px; width:98%;')
         var metricName = 'Reach'
         var journeyStages = ['Google Search', 'Facebook Group', 'YouTube channel', 'E-commerce Website', 'E-commerce Mobile App','Email khách hàng (CRM)','Số điện thoại khách hàng (CRM)','Cửa hàng bán lẻ','Đường sách']
         var journeyStageMetrics = { 'Mua sách' : 'đơn hàng' }
@@ -465,6 +642,7 @@
              ]
         };
 
-        var objSankey = sk.createSankey('#sankeyChart', configSankey, datajson);
+        var objSankey = sk.createSankey(placeholderSelector, configSankey, datajson);
+        
     }
 </script>

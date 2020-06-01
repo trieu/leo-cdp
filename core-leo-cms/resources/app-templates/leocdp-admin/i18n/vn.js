@@ -3,14 +3,19 @@ window.i18nLeoAdminData = window.i18nLeoAdminData || function () {
 	
 	//customer journey map view
 	data["target_customer_name"] = "Tên khách hàng mục tiêu";
-	data["persona_attributes"] = "1) Thuộc tính cá nhân";
-	data["persona_expectations"] = "2) Nhu cầu và vấn đề của khách hàng"; // Pain-points, expectations and problems 
-	data["persona_interests"] = "3) Sở thích cá nhân và động lực hành động"; // Personal motivation and interests
-	data["business_ideas"] = "4) Ý tưởng tiếp cận vấn đề khách hàng"; // Concepts & Ideas 
-	data["business_solutions"] = "5) Giải pháp kinh doanh, sản phẩm và dịch vụ"; // Practical solutions 
-	data["persona_touchpoints"] = "6) Điểm tiếp xúc thông tin và trải nghiệm";
-	data["conversion_actions"] = "7) Những hành động của khách hàng tiềm năng (Lead)";
-	data["key_business_action"] = "8) Hành động chính để trở thành khách hàng";
+	data["persona_attributes"] = "Thuộc tính cá nhân";
+	data["persona_expectations"] = "Nhu cầu và vấn đề của khách hàng"; // Pain-points, expectations and problems 
+	data["persona_interests"] = "Sở thích cá nhân cho động lực mua hàng"; // Personal motivation and interests
+	data["business_ideas"] = "Ý tưởng tiếp cận vấn đề khách hàng"; // Concepts & Ideas 
+	data["business_solutions"] = "Giải pháp kinh doanh, sản phẩm và dịch vụ"; // Practical solutions 
+	data["lead_generation_keywords"] = "Từ khoá SEO để tạo khách hàng tiềm năng (Lead)";
+	data["conversion_actions"] = "Những hành động của khách hàng tiềm năng (Lead)";
+	data["key_business_action"] = "Hành động chính để trở thành khách hàng";
+	
+	data["touchpoints_demand_generation"] = "Điểm tiếp xúc thông tin marketing";
+	data["touchpoints_experience_for_lead"] = "Điểm tiếp xúc thông tin của sản phẩm";
+	data["touchpoints_business_transaction"] = "Điểm tiếp xúc giao dịch mua hàng";
+	data["touchpoints_experience_for_customer"] = "Điểm tiếp xúc dịch vụ sau mua hàng";
 	
 	//profile 360 analytics view
 	
