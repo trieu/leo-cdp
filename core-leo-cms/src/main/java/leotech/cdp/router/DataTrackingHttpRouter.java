@@ -23,7 +23,7 @@ import rfx.core.util.StringUtil;
 
 /**
  * @author Trieu Nguyen diagram:
- *         https://github.com/USPA-Technology/leotech-final-build/blob/master/leo-cdp-event-observer-data-flow.md
+ * https://github.com/USPA-Technology/leotech-final-build/blob/master/leo-cdp-event-observer-data-flow.md
  *
  */
 public class DataTrackingHttpRouter extends BaseHttpRouter {

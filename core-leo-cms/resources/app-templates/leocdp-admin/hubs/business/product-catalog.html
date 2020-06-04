@@ -11,7 +11,7 @@ data = [
     [1, 'Classe C', 'Oranges', 0, '2017-01-12'],
 ];
 
-var urlDataSource = "/public/uploaded-files/sample-jexcel-data.json?_=" + new Date().getTime();
+var urlDataSource = "/public/sample-data/sample-jexcel-data.json?_=" + new Date().getTime();
 $('#my').jexcel({
     data:data,
     colHeaders:  [ 'Country', 'Description', 'Type', 'Stock', 'Next purchase' ],

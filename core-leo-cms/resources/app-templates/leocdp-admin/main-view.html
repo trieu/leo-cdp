@@ -48,21 +48,30 @@
 					Business Data Hub <i id="business_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
 				<ul  id="business_hub_menu" class="collapse in" aria-expanded="true">
-					<li>
+					<li style="display: none;">
 						<a href="#calljs-loadBusinessAnalytics360()"> <i class="fa fa-fw fa-snowflake-o"></i> Business Analytics 360 </a>
 					</li>
+					
+					<li>
+						<a href="#calljs-loadJourneyMapStudio()"> <i class="fa fa-fw fa-map-o"></i> Customer Journey List </a>
+					</li>
+					
 					<li>
 						<a href="#calljs-loadSalesDashboard()"> <i class="fa fa-fw fa-line-chart"></i> Sales Dashboard </a>
 					</li>	
+					
 					<li>
-						<a href="#calljs-loadJourneyMapStudio()"> <i class="fa fa-fw fa-map-o"></i> Journey Map Studio </a>
+						<a href="#calljs-loadProductCatalogManagement()"> <i class="fa fa-fw fa-list-ul"></i> Product Catalog</a>
 					</li>
 					<li>
-						<a href="#calljs-loadProductCatalogManagement()"> <i class="fa fa-fw fa-cubes"></i> Product Catalog</a>
+						<a href="#calljs-loadServiceCatalogManagement()"> <i class="fa fa-fw fa-list-ul"></i> Service Catalog</a>
 					</li>
 					<li>
-						<a href="#calljs-loadServiceCatalogManagement()"> <i class="fa fa-fw fa-thumbs-up"></i> Service Catalog</a>
+						<a href="#calljs-loadAudienceDataObserver()"> <i class="fa fa-fw fa-list-ul"></i>  Touchpoint Catalog </a>
 					</li>	
+					<li>
+						<a href="#calljs-loadAudienceDataObserver()"> <i class="fa fa-fw fa-list-ul"></i>  Data Observer Catalog </a>
+					</li>
 					<li>
 						<a href="#calljs-loadBusinessHubApiManagement()"> <i class="fa fa-fw fa-plug"></i> Business Data API </a>
 					</li>
@@ -76,7 +85,7 @@
 				</a>
 				<ul id="content_hub_menu" class="collapse in" aria-expanded="true">
 					<li>
-						<a href="#calljs-loadContentDashboard()"> <i class="fa fa-fw fa-snowflake-o"></i> Content Analytics 360 </a>
+						<a href="#calljs-loadContentDashboard()"> <i class="fa fa-fw fa-bar-chart"></i> Content Dashboard </a>
 					</li>
 					<li>
 						<a href="#calljs-loadCategoryList()"> <i class="fa fa-folder-open-o" aria-hidden="true"></i> Category Folder </a>
@@ -98,7 +107,7 @@
 				<ul id="audience_hub_menu" class="collapse in" aria-expanded="true">
 				
 					<li>
-						<a href="#calljs-loadAudienceDashboard()"> <i class="fa fa-fw fa-snowflake-o"></i> Customer Analytics 360 </a>
+						<a href="#calljs-loadAudienceDashboard()"> <i class="fa fa-fw fa-bar-chart"></i> Audience Dashboard </a>
 					</li>
 					
 					<li>
@@ -108,10 +117,6 @@
 						<a href="#calljs-loadAudienceSegmentation()"> <i class="fa fa-fw fa-object-group"></i> Audience Segment </a>
 					</li>
 					
-						
-					<li>
-						<a href="#calljs-loadAudienceDataObserver()"> <i class="fa fa-fw fa-camera"></i> Audience Data Observer </a>
-					</li>
 					<li>
 						<a href="#calljs-loadAudienceHubApiManagement()"> <i class="fa fa-fw fa-plug"></i> Audience Data API</a>
 					</li>
