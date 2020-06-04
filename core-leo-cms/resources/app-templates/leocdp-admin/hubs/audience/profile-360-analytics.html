@@ -86,8 +86,9 @@
 
        </div>
        
-       <div class="line" ></div>
-       <div class="row" >
+       
+       <div class="row" style="display: none;" >
+       		<div class="line" ></div>
             <h3 style="text-align:center;width: 100%;">Customer Attribution Matrix of Profile and Persona </h3>
 
             <div id="attribution_description"></div> <br>
@@ -103,14 +104,16 @@
 				<div class="col-md-3 "></div>
 			</div>
 			
-			
             <div id="profile_attribution" class="col-md-12 bar-module" style="text-align: center;"></div>
-        </div>
+       </div>
+       
+       
        
        <br>
        <div class="line"></div>
        <div class="row">
        		<h3 style="text-align: center"> Customer Journey Map </h3>
+       		<div id="customerJourneyDiv" class="experience_journey_flow row" ></div>
        	 	<div id="sankeyChart" style="height:580px; width:98%;"></div>
        </div>
        
@@ -274,7 +277,7 @@
                                    <p class="editable_text"> Cửa hàng bán lẻ </p>
                                </li>
                                <li>
-                                   <p class="editable_text"> Đường sách </p>
+                                   <p class="editable_text"> Shopping Mall </p>
                                </li>
                            </ol>
                        </td>
@@ -306,6 +309,30 @@
    </div>
     <br><br><br><br>
 
+<textarea id="customer_flow_code" style="display: none;" >
+journey
+    title Experience Flow
+    section {{touchpoints_demand_generation}}
+    	Google Search:3: Lead
+      	Facebook Group:3: Lead
+      	YouTube channel:3: Lead
+      	Shopping Mall : 3: Lead
+    section {{touchpoints_experience_for_lead}}
+      	Website:3:  Lead
+      	Mobile app:3:  Lead
+      	Shopping Mall:3:  Lead
+      	Cửa hàng bán lẻ:3:  Lead 
+    section {{touchpoints_business_transaction}}
+    	E-commerce Website:1: Customer
+      	E-commerce Mobile App:4: Customer
+      	Cửa hàng bán lẻ:5: Customer
+      	Shopping Mall : 5: Customer
+    section {{touchpoints_experience_for_customer}}
+      	Website - Customer Support:3: Customer
+      	Mobile App - Customer Support:4: Customer
+      	Social Media Fan Page:4: Customer
+      	Social Group:5: Customer
+</textarea>
 
 <script type="text/javascript">
     ///Js code
@@ -319,13 +346,26 @@
             loadMediaTouchpoints()
             profilePathDiagram()
             personalityDiagram();
+            renderCustomerJourney();
         },500);
+    }
+    
+    function renderCustomerJourney(){
+        // Example of using the API
+        var placeholderSelector = "#customerJourneyDiv";
+        var graphDefinition = $('#customer_flow_code').val().trim();
+        $(placeholderSelector).find('div').remove();
+      	
+        var gid = "customer_graph_"+ new Date().getTime(); 
+        graph = mermaid.mermaidAPI.render(gid, graphDefinition, function(svgCode, bindFunctions){
+        	document.querySelector(placeholderSelector).innerHTML = '<div>'+svgCode+"</div>";
+        });
     }
 
     function profilePathDiagram() {
         var metricName = 'Reach'
-        var journeyStages = ['Google Search', 'Facebook Group', 'YouTube channel', 'E-commerce Website', 'E-commerce Mobile App','Email khách hàng (CRM)','Số điện thoại khách hàng (CRM)','Cửa hàng bán lẻ','Đường sách']
-        var journeyStageMetrics = { 'Mua sách' : 'đơn hàng' }
+        var journeyStages = ['Google Search', 'Facebook Group', 'YouTube channel', 'E-commerce Website', 'E-commerce Mobile App','Email khách hàng (CRM)','Số điện thoại khách hàng (CRM)','Cửa hàng bán lẻ','Shopping Mall']
+        var journeyStageMetrics = { 'Mua hàng' : 'đơn hàng' }
 
         var configSankey = {
             margin: {
@@ -389,10 +429,10 @@
                     name: "Cửa hàng bán lẻ"
                 }, {
                     id: 8,
-                    name: "Đường sách"
+                    name: "Shopping Mall"
                 } , {
                     id: 9,
-                    name: "Mua sách"
+                    name: "Mua hàng"
                 }
                 ],
             links: [

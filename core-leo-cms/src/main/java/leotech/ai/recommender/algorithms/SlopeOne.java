@@ -125,7 +125,6 @@ public class SlopeOne {
 				recommendedItems.add(new RecommendedItem(i, s));
 			});
 			
-
 			print(recommendedItems);
 		}
 	}

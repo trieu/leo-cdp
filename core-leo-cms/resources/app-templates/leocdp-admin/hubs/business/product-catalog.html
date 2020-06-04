@@ -1,29 +1,79 @@
 
 
 
-<div id="my"></div>
+<div id="spreadsheet"></div>
+
 
 <script>
-data = [
-    [3, 'Classe A', 'Cheese', 1, '2017-01-12'],
-    [1, 'Classe B', 'Apples', 1, '2017-01-12'],
-    [2, 'Classe A', 'Carrots', 1, '2017-01-12'],
-    [1, 'Classe C', 'Oranges', 0, '2017-01-12'],
-];
+var urlDataSource = "/public/sample-data/books.json?_=" + new Date().getTime();
 
-var urlDataSource = "/public/sample-data/sample-jexcel-data.json?_=" + new Date().getTime();
-$('#my').jexcel({
-    data:data,
-    colHeaders:  [ 'Country', 'Description', 'Type', 'Stock', 'Next purchase' ],
-    colWidths: [ 300, 80, 100, 60, 120 ],
-    columns: [
-        { type: 'autocomplete', url:urlDataSource },
-        { type: 'text' },
-        { type: 'dropdown', source:[ {'id':'1', 'name':'Fruits'}, {'id':'2', 'name':'Legumes'}, {'id':'3', 'name':'General Food'} ] },
-        { type: 'checkbox' },
-        { type: 'calendar' },
-    ]
-});
+var initProductCatalog = function() {
+    mySpreadsheet = jexcel(document.getElementById('spreadsheet'), {
+        url: urlDataSource ,
+        columns: [
+            {
+                type: 'text',
+                width: '50px',
+                title: 'Code',
+                name: 'id',
+                readOnly: true,
+                primaryKey: true
+            },
+            {
+                type: 'text',
+                width: '80px',
+                title:'Image',
+                name:'thumbnailUrl'
+            },
+            {
+                type: 'text',
+                width: '200px',
+                title:'Title',
+                name:'title'
+            },
+            {
+                type: 'text',
+                width: '55px',
+                title:'Pages',
+                name:'pageCount'
+            },
+            {
+                type: 'calendar',
+                width: '90px',
+                title:'Published',
+                name: 'publishedDate'
+            },
+            {
+                type: 'text',
+                width: '200px',
+                title:'Author',
+                name:'authors'
+            },
+            {
+                type: 'dropdown',
+                width: '180px',
+                title:'Categories',
+                name:'categories',
+                source:['Internet','Web Development', 'Java', 'Mobile', 'Open Source'],
+                multiple:true
+            },
+         ],
+         persistance: '/jexcel/v4/save',
+         updateTable: function(instance, cell, col, row, val, label, cellName) {
+             if (col == 1) {
+                 if (! val) {
+                     cell.innerHTML = '<img src="https://images-na.ssl-images-amazon.com/images/I/21%2Bwfxx2lyL._SX319_BO1,204,203,200_.jpg" style="width:30px;">';
+                 } else {
+                     cell.innerHTML = '<img src="' + val + '" style="width:30px;">';
+                 }
+             }
+
+             cell.style.overflow = 'hidden';
+         }
+    });
+};
+
+setTimeout(initProductCatalog,1000)
 </script>
 
 <br>

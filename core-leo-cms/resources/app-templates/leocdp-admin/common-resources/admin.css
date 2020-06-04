@@ -163,3 +163,7 @@ textarea {
     display: none !important;
 }
 
+.experience_journey_flow svg {
+	font: 17px / 24px "Tahoma" sans-serif !important;
+}
+
