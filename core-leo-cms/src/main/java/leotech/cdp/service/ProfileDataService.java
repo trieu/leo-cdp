@@ -33,7 +33,7 @@ public class ProfileDataService {
 			if (StringUtil.isNotEmpty(email) || StringUtil.isNotEmpty(phone) || StringUtil.isNotEmpty(loginId)) {
 				type = Profile.ProfileType.IDENTIFIED;
 			} else if (StringUtil.isNotEmpty(email) && StringUtil.isNotEmpty(phone)) {
-				type = Profile.ProfileType.CRM_USER;
+				type = Profile.ProfileType.CRM_CONTACT;
 			}
 			
 			if (type == Profile.ProfileType.ANONYMOUS) {
@@ -48,7 +48,7 @@ public class ProfileDataService {
 					pf.setIdentity(loginId, loginProvider);
 				}
 
-			} else if (type == Profile.ProfileType.CRM_USER) {
+			} else if (type == Profile.ProfileType.CRM_CONTACT) {
 				pf = Profile.newCrmProfile( observerId, srcTouchpointId, lastSeenIp, visitorId,
 						userDeviceId, email, phone, fingerprintId);
 			}

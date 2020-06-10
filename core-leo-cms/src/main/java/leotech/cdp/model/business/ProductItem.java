@@ -10,6 +10,7 @@ import com.arangodb.ArangoDatabase;
 import com.arangodb.model.FulltextIndexOptions;
 import com.arangodb.model.HashIndexOptions;
 import com.arangodb.model.PersistentIndexOptions;
+import com.google.gson.Gson;
 
 import leotech.cdp.model.CdpPersistentObject;
 import leotech.system.util.database.ArangoDbUtil;
@@ -30,8 +31,8 @@ public class ProductItem extends CdpPersistentObject {
 	protected String siteName;
 	protected String siteDomain;
 
-	protected String schemaItemCondition;
-	protected String schemaAvailability;
+	protected String itemCondition;
+	protected String availability;
 
 	protected String brand;
 	protected List<String> keywords = new ArrayList<>(20);
@@ -55,13 +56,17 @@ public class ProductItem extends CdpPersistentObject {
 			instance.ensureFulltextIndex(Arrays.asList("brand"), new FulltextIndexOptions());
 			instance.ensurePersistentIndex(Arrays.asList("sku"), new PersistentIndexOptions().unique(false));
 			instance.ensurePersistentIndex(Arrays.asList("siteDomain"), new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("updatedAt", "schemaAvailability"), new PersistentIndexOptions().unique(false));
+			instance.ensurePersistentIndex(Arrays.asList("updatedAt", "schemaAvailability"),
+					new PersistentIndexOptions().unique(false));
 
 			instance.ensurePersistentIndex(Arrays.asList("fullUrl"), new PersistentIndexOptions().unique(true));
 			instance.ensureHashIndex(Arrays.asList("keywords[*]"), new HashIndexOptions());
 
 		}
 		return instance;
+	}
+
+	public ProductItem() {
 	}
 
 	@Override
@@ -98,12 +103,23 @@ public class ProductItem extends CdpPersistentObject {
 	public void setOriginalPrice(double originalPrice) {
 		this.originalPrice = originalPrice;
 	}
+	public void setOriginalPrice(String originalPrice) {
+		this.originalPrice = StringUtil.safeParseDouble(originalPrice);
+	}
 	public double getSalePrice() {
 		return salePrice;
 	}
+	
 	public void setSalePrice(double salePrice) {
 		this.salePrice = salePrice;
 	}
+	public void setSalePrice(String salePrice) {
+		this.salePrice = StringUtil.safeParseDouble(salePrice);
+		if(this.originalPrice == 0) {
+			this.originalPrice = this.salePrice ;
+		}
+	}
+
 	public String getPriceCurrency() {
 		return priceCurrency;
 	}
@@ -128,18 +144,7 @@ public class ProductItem extends CdpPersistentObject {
 	public void setSiteDomain(String siteDomain) {
 		this.siteDomain = siteDomain;
 	}
-	public String getSchemaItemCondition() {
-		return schemaItemCondition;
-	}
-	public void setSchemaItemCondition(String schemaItemCondition) {
-		this.schemaItemCondition = schemaItemCondition;
-	}
-	public String getSchemaAvailability() {
-		return schemaAvailability;
-	}
-	public void setSchemaAvailability(String schemaAvailability) {
-		this.schemaAvailability = schemaAvailability;
-	}
+	
 	public String getBrand() {
 		return brand;
 	}
@@ -169,6 +174,27 @@ public class ProductItem extends CdpPersistentObject {
 	}
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+	
+	public String getItemCondition() {
+		return itemCondition;
+	}
+
+	public void setItemCondition(String itemCondition) {
+		this.itemCondition = itemCondition;
+	}
+
+	public String getAvailability() {
+		return availability;
+	}
+
+	public void setAvailability(String availability) {
+		this.availability = availability;
+	}
+
+	@Override
+	public String toString() {
+		return new Gson().toJson(this);
 	}
 
 }

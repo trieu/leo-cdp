@@ -32,10 +32,16 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	public static class ProfileType {
 		public final static int ANONYMOUS = 0;
 		public final static int IDENTIFIED = 1;
-		public final static int CRM_USER = 2;
-		public final static int DMP_USER = 3;
-		public final static int KOL_USER = 4;
-		public final static int VIP_USER = 5;
+		public final static int DMP_PROFILE = 2;
+		public final static int KOL_IN_NETWORK = 3;
+		
+		public final static int CRM_CONTACT = 4;
+		public final static int KEY_ACCOUNT = 5;
+		
+		public final static int PARTNER = 6;
+		public final static int INTEGRATOR = 7;
+		public final static int COMPETITOR = 8;
+		public final static int GATEKEEPER = 9;
 	}
 
 	public static final String COLLECTION_NAME = COLLECTION_PREFIX + Profile.class.getSimpleName().toLowerCase();
@@ -178,6 +184,9 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	@Expose
 	Map<String, String> personalContacts = new HashMap<>(10);
+	
+	@Expose
+	Map<String, String> businessContacts = new HashMap<>(10);
 
 	@Expose
 	Map<String, Integer> weeklyMobileUsage = new HashMap<>(7);
@@ -335,7 +344,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 			String lastSeenIp, String visitorId, String usedDeviceId, String email, String phone,
 			String fingerprintId) {
 		Profile p = new Profile();
-		p.initBaseInformation(0, visitorId, ProfileType.CRM_USER, observerId, lastTouchpointId,
+		p.initBaseInformation(0, visitorId, ProfileType.CRM_CONTACT, observerId, lastTouchpointId,
 				lastSeenIp, usedDeviceId, email, phone, fingerprintId);
 		return p;
 	}
