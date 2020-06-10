@@ -48,11 +48,11 @@
 					Business Data Hub <i id="business_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
 				<ul  id="business_hub_menu" class="collapse in" aria-expanded="true">
-					<li style="display: none;">
+					<li style="display: none;" >
 						<a href="#calljs-loadBusinessAnalytics360()"> <i class="fa fa-fw fa-snowflake-o"></i> Business Analytics 360 </a>
 					</li>
 					
-					<li>
+					<li style="display: none;" >
 						<a href="#calljs-loadJourneyMapStudio()"> <i class="fa fa-fw fa-map-o"></i> Customer Journey List </a>
 					</li>
 					
@@ -63,16 +63,16 @@
 					<li>
 						<a href="#calljs-loadProductCatalogManagement()"> <i class="fa fa-fw fa-list-ul"></i> Product Catalog</a>
 					</li>
-					<li>
+					<li style="display: none;" >
 						<a href="#calljs-loadServiceCatalogManagement()"> <i class="fa fa-fw fa-list-ul"></i> Service Catalog</a>
 					</li>
-					<li>
+					<li  >
 						<a href="#calljs-loadAudienceDataObserver()"> <i class="fa fa-fw fa-list-ul"></i>  Touchpoint Catalog </a>
 					</li>	
 					<li>
 						<a href="#calljs-loadAudienceDataObserver()"> <i class="fa fa-fw fa-list-ul"></i>  Data Observer List </a>
 					</li>
-					<li>
+					<li >
 						<a href="#calljs-loadBusinessHubApiManagement()"> <i class="fa fa-fw fa-plug"></i> Business Data API </a>
 					</li>
 				</ul>
@@ -126,7 +126,7 @@
 			</li>
 
 			<!--  4 - Personalization Content Management  -->
-			<li id="nav_personalization_hub" >
+			<li id="nav_personalization_hub" style="display: none;" >
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#personalization_hub_menu"> <i class="fa fa-fw fa-heart"></i>
 					Personalization Hub<i id="personalization_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
@@ -147,7 +147,7 @@
 			</li>
 			
 			<!--  5 - Marketing & Sales Activation Management  -->
-			<li id="nav_activation_hub" >
+			<li id="nav_activation_hub" style="display: none;" >
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#activation_hub_menu"> <i class="fa fa-fw fa-bolt"></i>
 					Sales Activation Hub <i id="activation_hub_collapse_icon" class="fa fa-fw fa-caret-left"></i>
 				</a>
@@ -170,13 +170,13 @@
 			<!--  6 - System Management  -->
 			<li id="nav_system_management" >
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#system_management_menu"> <i class="fa fa-cogs" aria-hidden="true"></i>
-					System Management <i id="system_management_collapse_icon" class="fa fa-fw fa-caret-left"></i>
+					System Management <i id="system_management_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
-				<ul id="system_management_menu" class="collapse out" aria-expanded="false">
+				<ul id="system_management_menu" class="collapse in" aria-expanded="true">
 					<li>
 						<a href="#calljs-loadUserList()"> <i class="fa fa-user-plus" aria-hidden="true"></i>  User Login Management </a>
 					</li>
-					<li>
+					<li style="display: none;" >
 						<a href="#calljs-loadSystemManagement()"> <i class="fa fa-cog" aria-hidden="true"></i> System configuration </a>
 					</li>
 				</ul>

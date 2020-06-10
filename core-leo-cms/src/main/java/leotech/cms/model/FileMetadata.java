@@ -24,173 +24,172 @@ import rfx.core.util.StringUtil;
  */
 public class FileMetadata implements PersistentArangoObject {
 
-    @DocumentField(Type.KEY)
-    private String key;
+	@DocumentField(Type.KEY)
+	private String key;
 
-    @Expose
-    String path;
+	@Expose
+	String path;
 
-    @Expose
-    String name;
+	@Expose
+	String name;
 
-    @Expose
-    long uploadedTime;
+	@Expose
+	long uploadedTime;
 
-    @Expose
-    int revision;
+	@Expose
+	int revision;
 
-    @Expose
-    String refObjectClass;
+	@Expose
+	String refObjectClass;
 
-    @Expose
-    String refObjectKey;
+	@Expose
+	String refObjectKey;
 
-    @Expose
-    boolean downloadable = true;
+	@Expose
+	boolean downloadable = true;
 
-    @Expose
-    protected String ownerLogin = ""; // the userId or botId
+	@Expose
+	protected String ownerLogin = ""; // the userId or botId
 
-    @Expose
-    int privacyStatus = 0;// 0: public, 1: protected or -1: private
+	@Expose
+	int privacyStatus = 0;// 0: public, 1: protected or -1: private
 
-    List<Long> viewerIds = new ArrayList<>();
+	List<Long> viewerIds = new ArrayList<>();
 
-    @Expose
-    long networkId = AppMetadata.DEFAULT_ID;
+	@Expose
+	long networkId = AppMetadata.DEFAULT_ID;
 
-    public FileMetadata() {
-    }
-
-    public FileMetadata(String ownerLogin, String path, String name, String refObjectClass, String refObjectKey) {
-	super();
-	this.ownerLogin = ownerLogin;
-	this.path = path;
-	this.name = name;
-	this.uploadedTime = System.currentTimeMillis();
-	this.refObjectClass = refObjectClass;
-	this.refObjectKey = refObjectKey;
-    }
-
-    public static final String COLLECTION_NAME = FileMetadata.class.getSimpleName().toLowerCase();
-    static ArangoCollection collection;
-
-    @Override
-    public ArangoCollection getCollection() {
-	if (collection == null) {
-	    ArangoDatabase arangoDatabase = ArangoDbUtil.getActiveArangoDbInstance();
-	    collection = arangoDatabase.collection(COLLECTION_NAME);
-
-	    // ensure indexing key fields
-	    collection.ensurePersistentIndex(Arrays.asList("path"), new PersistentIndexOptions().unique(true));
-	    collection.ensureHashIndex(Arrays.asList("refObjectClass", "refObjectKey"), new HashIndexOptions());
-	    collection.ensureFulltextIndex(Arrays.asList("name"), new FulltextIndexOptions().minLength(1));
-	    collection.ensureHashIndex(Arrays.asList("networkId"), new HashIndexOptions());
-	    collection.ensureHashIndex(Arrays.asList("ownerLogin"), new HashIndexOptions());
+	public FileMetadata() {
 	}
-	return collection;
-    }
 
-    @Override
-    public boolean isReadyForSave() {
-	return StringUtil.isNotEmpty(name) && uploadedTime > 0 && StringUtil.isNotEmpty(this.path);
-    }
+	public FileMetadata(String ownerLogin, String path, String name, String refObjectClass, String refObjectKey) {
+		super();
+		this.ownerLogin = ownerLogin;
+		this.path = path;
+		this.name = name;
+		this.uploadedTime = System.currentTimeMillis();
+		this.refObjectClass = refObjectClass;
+		this.refObjectKey = refObjectKey;
+	}
 
-    public String getKey() {
-	return key;
-    }
+	public static final String COLLECTION_NAME = FileMetadata.class.getSimpleName().toLowerCase();
+	static ArangoCollection collection;
 
-    public void setKey(String key) {
-	this.key = key;
-    }
+	@Override
+	public ArangoCollection getCollection() {
+		if (collection == null) {
+			ArangoDatabase arangoDatabase = ArangoDbUtil.getActiveArangoDbInstance();
+			collection = arangoDatabase.collection(COLLECTION_NAME);
 
-    public String getPath() {
-	return path;
-    }
+			// ensure indexing key fields
+			collection.ensurePersistentIndex(Arrays.asList("path"), new PersistentIndexOptions().unique(true));
+			collection.ensureHashIndex(Arrays.asList("refObjectClass", "refObjectKey"), new HashIndexOptions());
+			collection.ensureFulltextIndex(Arrays.asList("name"), new FulltextIndexOptions().minLength(1));
+			collection.ensureHashIndex(Arrays.asList("networkId"), new HashIndexOptions());
+			collection.ensureHashIndex(Arrays.asList("ownerLogin"), new HashIndexOptions());
+		}
+		return collection;
+	}
 
-    public void setPath(String path) {
-	this.path = path;
-    }
+	@Override
+	public boolean isReadyForSave() {
+		return StringUtil.isNotEmpty(name) && uploadedTime > 0 && StringUtil.isNotEmpty(this.path);
+	}
 
-    public String getName() {
-	return name;
-    }
+	public String getKey() {
+		return key;
+	}
 
-    public void setName(String name) {
-	this.name = name;
-    }
+	public void setKey(String key) {
+		this.key = key;
+	}
 
-    public long getUploadedTime() {
-	return uploadedTime;
-    }
+	public String getPath() {
+		return path;
+	}
 
-    public void setUploadedTime(long uploadedTime) {
-	this.uploadedTime = uploadedTime;
-    }
+	public void setPath(String path) {
+		this.path = path;
+	}
 
-    public int getRevision() {
-	return revision;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setRevision(int revision) {
-	this.revision = revision;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public boolean isDownloadable() {
-	return downloadable;
-    }
+	public long getUploadedTime() {
+		return uploadedTime;
+	}
 
-    public void setDownloadable(boolean downloadable) {
-	this.downloadable = downloadable;
-    }
+	public void setUploadedTime(long uploadedTime) {
+		this.uploadedTime = uploadedTime;
+	}
 
-    public int getPrivacyStatus() {
-	return privacyStatus;
-    }
+	public int getRevision() {
+		return revision;
+	}
 
-    public void setPrivacyStatus(int privacyStatus) {
-	this.privacyStatus = privacyStatus;
-    }
+	public void setRevision(int revision) {
+		this.revision = revision;
+	}
 
-    public List<Long> getViewerIds() {
-	return viewerIds;
-    }
+	public boolean isDownloadable() {
+		return downloadable;
+	}
 
-    public void setViewerIds(List<Long> viewerIds) {
-	this.viewerIds = viewerIds;
-    }
+	public void setDownloadable(boolean downloadable) {
+		this.downloadable = downloadable;
+	}
 
-    public String getRefObjectClass() {
-	return refObjectClass;
-    }
+	public int getPrivacyStatus() {
+		return privacyStatus;
+	}
 
-    public void setRefObjectClass(String refObjectClass) {
-	this.refObjectClass = refObjectClass;
-    }
+	public void setPrivacyStatus(int privacyStatus) {
+		this.privacyStatus = privacyStatus;
+	}
 
-    public String getRefObjectKey() {
-	return refObjectKey;
-    }
+	public List<Long> getViewerIds() {
+		return viewerIds;
+	}
 
-    public void setRefObjectKey(String refObjectKey) {
-	this.refObjectKey = refObjectKey;
-    }
+	public void setViewerIds(List<Long> viewerIds) {
+		this.viewerIds = viewerIds;
+	}
 
+	public String getRefObjectClass() {
+		return refObjectClass;
+	}
 
-    public String getOwnerLogin() {
-        return ownerLogin;
-    }
+	public void setRefObjectClass(String refObjectClass) {
+		this.refObjectClass = refObjectClass;
+	}
 
-    public void setOwnerLogin(String ownerLogin) {
-        this.ownerLogin = ownerLogin;
-    }
+	public String getRefObjectKey() {
+		return refObjectKey;
+	}
 
-    public long getNetworkId() {
-	return networkId;
-    }
+	public void setRefObjectKey(String refObjectKey) {
+		this.refObjectKey = refObjectKey;
+	}
 
-    public void setNetworkId(long networkId) {
-	this.networkId = networkId;
-    }
+	public String getOwnerLogin() {
+		return ownerLogin;
+	}
+
+	public void setOwnerLogin(String ownerLogin) {
+		this.ownerLogin = ownerLogin;
+	}
+
+	public long getNetworkId() {
+		return networkId;
+	}
+
+	public void setNetworkId(long networkId) {
+		this.networkId = networkId;
+	}
 
 }

@@ -34,7 +34,7 @@
         <AndroidAppId></AndroidAppId>
         <IosAppId></IosAppId>
         <AppTemplateFolder></AppTemplateFolder>
-        <ContentCategoryId></ContentCategoryId>
+        <ContentCategoryId>760499</ContentCategoryId>
         <PublicContentClass>standard</PublicContentClass>
         <PageTitle>Admin Leo CDP</PageTitle>
         <PageHeaderLogo>/public/images/leo-cdp-logo.png</PageHeaderLogo>

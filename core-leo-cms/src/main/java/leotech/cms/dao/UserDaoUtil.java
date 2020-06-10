@@ -206,7 +206,6 @@ public class UserDaoUtil {
 				user.setModificationTime(currentTime);
 				String key = user.getKey();
 				col.updateDocument(key, user);
-				System.out.println("update " + key);
 				return key;
 			}
 		} else {

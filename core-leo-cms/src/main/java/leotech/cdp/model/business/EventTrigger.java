@@ -9,32 +9,35 @@ import leotech.system.util.database.ArangoDbUtil;
 /**
  * @author Trieu Nguyen (Thomas)
  * 
- * A trigger event is any occurence that creates an opening for a marketing or sales opportunity. 
- * Sales and marketing automation workflows use trigger events to enable small organizations to scale customer interactions.
+ *         A trigger event is any occurence that creates an opening for a
+ *         marketing or sales opportunity. Sales and marketing automation
+ *         workflows use trigger events to enable small organizations to scale
+ *         customer interactions.
  *
  */
-public class EventTrigger extends CdpPersistentObject{
-    
-    public static final String COLLECTION_NAME = COLLECTION_PREFIX + EventTrigger.class.getSimpleName().toLowerCase();
-    static ArangoCollection instance;
+public class EventTrigger extends CdpPersistentObject {
 
-    @Override
-    public ArangoCollection getCollection() {
-	if (instance == null) {
-	    ArangoDatabase arangoDatabase = ArangoDbUtil.getActiveArangoDbInstance();
+	public static final String COLLECTION_NAME = COLLECTION_PREFIX
+			+ EventTrigger.class.getSimpleName().toLowerCase();
+	static ArangoCollection instance;
 
-	    instance = arangoDatabase.collection(COLLECTION_NAME);
+	@Override
+	public ArangoCollection getCollection() {
+		if (instance == null) {
+			ArangoDatabase arangoDatabase = ArangoDbUtil.getActiveArangoDbInstance();
 
-	    // ensure indexing key fields for fast lookup
-	    
+			instance = arangoDatabase.collection(COLLECTION_NAME);
+
+			// ensure indexing key fields for fast lookup
+
+		}
+		return instance;
 	}
-	return instance;
-    }
 
-    @Override
-    public boolean isReadyForSave() {
-	// TODO Auto-generated method stub
-	return false;
-    }
+	@Override
+	public boolean isReadyForSave() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }

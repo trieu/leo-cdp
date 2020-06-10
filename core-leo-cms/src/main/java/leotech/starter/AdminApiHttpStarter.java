@@ -1,10 +1,11 @@
 package leotech.starter;
 
+import leotech.system.model.LeoPackage;
 import leotech.system.util.database.SetupNewDatabase;
 import rfx.core.util.Utils;
 
 public class AdminApiHttpStarter {
-	private static final String SETUP_NEW_CMS = "setup-new-cms";
+	private static final String SETUP_NEW = "setup-new";
 
 	public static void main(String[] args) throws Exception {
 		int length = args.length;
@@ -13,8 +14,9 @@ public class AdminApiHttpStarter {
 		} else if (length == 2) {
 			String command = args[0];
 			String dbKey = args[1];
-			if (SETUP_NEW_CMS.equalsIgnoreCase(command)) {
-				SetupNewDatabase.createDbCollections("cms", dbKey);
+			if (SETUP_NEW.equalsIgnoreCase(command)) {
+				// setup-new leoCdpDbConfigs
+				SetupNewDatabase.createDbCollections(LeoPackage.LEO_CDP_FREE_VERSION, dbKey);
 				Utils.exitSystemAfterTimeout(3000);
 			} else {
 				String workerName = command;

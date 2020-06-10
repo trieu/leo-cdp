@@ -9,222 +9,213 @@ import com.google.gson.annotations.Expose;
 
 import leotech.system.util.database.ArangoDbUtil;
 
-
 /**
  * @author Trieu Nguyen
  *
  */
-public class DataObserver extends CdpPersistentObject{
+public class DataObserver extends CdpPersistentObject {
 
-    public static final String COLLECTION_NAME = COLLECTION_PREFIX + DataObserver.class.getSimpleName().toLowerCase();
-    static ArangoCollection instance;
+	public static final String COLLECTION_NAME = COLLECTION_PREFIX
+			+ DataObserver.class.getSimpleName().toLowerCase();
+	static ArangoCollection instance;
 
-    @Override
-    public ArangoCollection getCollection() {
-	if (instance == null) {
-	    ArangoDatabase arangoDatabase = ArangoDbUtil.getActiveArangoDbInstance();
+	@Override
+	public ArangoCollection getCollection() {
+		if (instance == null) {
+			ArangoDatabase arangoDatabase = ArangoDbUtil.getActiveArangoDbInstance();
 
-	    instance = arangoDatabase.collection(COLLECTION_NAME);
+			instance = arangoDatabase.collection(COLLECTION_NAME);
 
-	    // ensure indexing key fields for fast lookup
-	    
+			// ensure indexing key fields for fast lookup
+
+		}
+		return instance;
 	}
-	return instance;
-    }
 
-    @Override
-    public boolean isReadyForSave() {
-	// TODO Auto-generated method stub
-	return false;
-    }
-    
-    @Expose
-    String id;
-    
-    @Expose
-    String name;
+	@Override
+	public boolean isReadyForSave() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
-    @Expose
-    int type = 1;//observer in web
-    
-    @Expose
-    int status = 0;
-    
-    @Expose
-    long estimatedTotalEvent = 0;
-    
-    @Expose
-    String observerUri;
-    
-    @Expose
-    String touchpointId;
-    
-    
-    @Expose
-    String deviceId;
-    
-    @Expose
-    String securityAccessIp;
-    
-    @Expose
-    String securityCode;
-    
-    @Expose
-    List<String> javascriptTags;
-    
-    @Expose
-    List<String> webApiHooks;
-    
-    @Expose
-    String mobileAppId;
-    
-    @Expose
-    Date createdAt;
-    
-    @Expose
-    Date updatedAt;
+	@Expose
+	String id;
 
-    /**
-     * @param name
-     * @param type
-     * @param touchpointId
-     */
-    public DataObserver(String name, int type, String touchpointId) {
-	super();
-	String keyHint = name + type + touchpointId;
-	this.id = id(keyHint);
-	this.name = name;
-	this.type = type;
-	this.touchpointId = touchpointId;
-	this.createdAt = new Date();
-    }
-    
-    
+	@Expose
+	String name;
 
-    public String getId() {
-        return id;
-    }
+	@Expose
+	int type = 1;// observer in web
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	@Expose
+	int status = 0;
 
-    public String getName() {
-        return name;
-    }
+	@Expose
+	long estimatedTotalEvent = 0;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	@Expose
+	String observerUri;
 
-    public int getType() {
-        return type;
-    }
+	@Expose
+	String touchpointId;
 
-    public void setType(int type) {
-        this.type = type;
-    }
+	@Expose
+	String deviceId;
 
-    public int getStatus() {
-        return status;
-    }
+	@Expose
+	String securityAccessIp;
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
+	@Expose
+	String securityCode;
 
-    public long getEstimatedTotalEvent() {
-        return estimatedTotalEvent;
-    }
+	@Expose
+	List<String> javascriptTags;
 
-    public void setEstimatedTotalEvent(long estimatedTotalEvent) {
-        this.estimatedTotalEvent = estimatedTotalEvent;
-    }
+	@Expose
+	List<String> webApiHooks;
 
-    public String getObserverUri() {
-        return observerUri;
-    }
+	@Expose
+	String mobileAppId;
 
-    public void setObserverUri(String observerUri) {
-        this.observerUri = observerUri;
-    }
+	@Expose
+	Date createdAt;
 
-    public String getTouchpointId() {
-        return touchpointId;
-    }
+	@Expose
+	Date updatedAt;
 
-    public void setTouchpointId(String touchpointId) {
-        this.touchpointId = touchpointId;
-    }
+	/**
+	 * @param name
+	 * @param type
+	 * @param touchpointId
+	 */
+	public DataObserver(String name, int type, String touchpointId) {
+		super();
+		String keyHint = name + type + touchpointId;
+		this.id = id(keyHint);
+		this.name = name;
+		this.type = type;
+		this.touchpointId = touchpointId;
+		this.createdAt = new Date();
+	}
 
-    
+	public String getId() {
+		return id;
+	}
 
-    public String getDeviceId() {
-        return deviceId;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getSecurityAccessIp() {
-        return securityAccessIp;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setSecurityAccessIp(String securityAccessIp) {
-        this.securityAccessIp = securityAccessIp;
-    }
+	public int getType() {
+		return type;
+	}
 
-    public String getSecurityCode() {
-        return securityCode;
-    }
+	public void setType(int type) {
+		this.type = type;
+	}
 
-    public void setSecurityCode(String securityCode) {
-        this.securityCode = securityCode;
-    }
+	public int getStatus() {
+		return status;
+	}
 
-    public List<String> getJavascriptTags() {
-        return javascriptTags;
-    }
+	public void setStatus(int status) {
+		this.status = status;
+	}
 
-    public void setJavascriptTags(List<String> javascriptTags) {
-        this.javascriptTags = javascriptTags;
-    }
-    
-    public List<String> getWebApiHooks() {
-        return webApiHooks;
-    }
+	public long getEstimatedTotalEvent() {
+		return estimatedTotalEvent;
+	}
 
-    public void setWebApiHooks(List<String> webApiHooks) {
-        this.webApiHooks = webApiHooks;
-    }
+	public void setEstimatedTotalEvent(long estimatedTotalEvent) {
+		this.estimatedTotalEvent = estimatedTotalEvent;
+	}
 
-    public String getMobileAppId() {
-        return mobileAppId;
-    }
+	public String getObserverUri() {
+		return observerUri;
+	}
 
-    public void setMobileAppId(String mobileAppId) {
-        this.mobileAppId = mobileAppId;
-    }
+	public void setObserverUri(String observerUri) {
+		this.observerUri = observerUri;
+	}
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
+	public String getTouchpointId() {
+		return touchpointId;
+	}
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
+	public void setTouchpointId(String touchpointId) {
+		this.touchpointId = touchpointId;
+	}
 
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
+	public String getDeviceId() {
+		return deviceId;
+	}
 
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+	public void setDeviceId(String deviceId) {
+		this.deviceId = deviceId;
+	}
 
-    
-    
+	public String getSecurityAccessIp() {
+		return securityAccessIp;
+	}
+
+	public void setSecurityAccessIp(String securityAccessIp) {
+		this.securityAccessIp = securityAccessIp;
+	}
+
+	public String getSecurityCode() {
+		return securityCode;
+	}
+
+	public void setSecurityCode(String securityCode) {
+		this.securityCode = securityCode;
+	}
+
+	public List<String> getJavascriptTags() {
+		return javascriptTags;
+	}
+
+	public void setJavascriptTags(List<String> javascriptTags) {
+		this.javascriptTags = javascriptTags;
+	}
+
+	public List<String> getWebApiHooks() {
+		return webApiHooks;
+	}
+
+	public void setWebApiHooks(List<String> webApiHooks) {
+		this.webApiHooks = webApiHooks;
+	}
+
+	public String getMobileAppId() {
+		return mobileAppId;
+	}
+
+	public void setMobileAppId(String mobileAppId) {
+		this.mobileAppId = mobileAppId;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
 
 }
-

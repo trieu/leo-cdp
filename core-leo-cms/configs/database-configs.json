@@ -1,44 +1,11 @@
 {
 	"map" : {
-		"dbConfigsBluescope" : {
-			"username" : "admin_bluescope"
-			,"password" : "MobilePortal#28112018"
-			,"database" : "bluescope_cms"
-			,"host" : "61.28.231.175"					
-			,"port" : 8090
-			,"dbdriver" : "arangodb"
-			,"dbdriverclasspath" : "com.arangodb.ArangoDB"
-			,"enabled" : true
-		},		
-		
-		"dbConfigsBlueseed" : {
-			"username" : "blueseed"
-			,"password" : "Platform@123456"
-			,"database" : "bs_cms"
-			,"host" : "61.28.231.175"					
-			,"port" : 8090
-			,"dbdriver" : "arangodb"
-			,"dbdriverclasspath" : "com.arangodb.ArangoDB"
-			,"enabled" : true
-		},
-		
-		"dbConfigsXemGiDay" : {
+		"leoCdpDbConfigs" : {
 			"username" : "root"
 			,"password" : "123456"
-			,"database" : "bdvn_cms"
+			,"database" : "leo_cdp"
 			,"host" : "127.0.0.1"				
 			,"port" : 8529
-			,"dbdriver" : "arangodb"
-			,"dbdriverclasspath" : "com.arangodb.ArangoDB"
-			,"enabled" : true
-		},
-		
-		"dbConfigsVideoMonngon":{
-			"username" : "monngon"
-			,"password" : "Platform@123456"
-			,"database" : "monngon_cms"
-			,"host" : "61.28.231.175"				
-			,"port" : 8090
 			,"dbdriver" : "arangodb"
 			,"dbdriverclasspath" : "com.arangodb.ArangoDB"
 			,"enabled" : true
@@ -55,7 +22,7 @@
 			,"enabled" : true
 		},
 		
-		"leoCdpDbConfigs" : {
+		"dbConfigsXemGiDay" : {
 			"username" : "root"
 			,"password" : "123456"
 			,"database" : "bdvn_cms"

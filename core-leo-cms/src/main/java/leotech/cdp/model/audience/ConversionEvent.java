@@ -11,113 +11,114 @@ import leotech.system.util.database.ArangoDbUtil;
 
 public class ConversionEvent extends TrackingEvent {
 
-    public static final String COLLECTION_NAME = COLLECTION_PREFIX
-	    + ConversionEvent.class.getSimpleName().toLowerCase();
-    static ArangoCollection instance;
+	public static final String COLLECTION_NAME = COLLECTION_PREFIX
+			+ ConversionEvent.class.getSimpleName().toLowerCase();
+	static ArangoCollection instance;
 
-    @Override
-    public ArangoCollection getCollection() {
-	if (instance == null) {
-	    ArangoDatabase arangoDatabase = ArangoDbUtil.getActiveArangoDbInstance();
+	@Override
+	public ArangoCollection getCollection() {
+		if (instance == null) {
+			ArangoDatabase arangoDatabase = ArangoDbUtil.getActiveArangoDbInstance();
 
-	    instance = arangoDatabase.collection(COLLECTION_NAME);
+			instance = arangoDatabase.collection(COLLECTION_NAME);
 
-	    // ensure indexing key fields for fast lookup
-	    instance.ensurePersistentIndex(Arrays.asList("refProfileId"), new PersistentIndexOptions().unique(false));
+			// ensure indexing key fields for fast lookup
+			instance.ensurePersistentIndex(Arrays.asList("refProfileId"),
+					new PersistentIndexOptions().unique(false));
+		}
+		return instance;
 	}
-	return instance;
-    }
-    
 
-    @Expose
-    int timeSpent;
-    
-    @Expose
-    String srcEventKey;
+	@Expose
+	int timeSpent;
 
-    @Expose
-    String transactionCode = "";
+	@Expose
+	String srcEventKey;
 
-    @Expose
-    double transactionValue = 0;
+	@Expose
+	String transactionCode = "";
 
-    @Expose
-    String currencyCode = "";
+	@Expose
+	double transactionValue = 0;
 
-    @Expose
-    int satisfactionScore = 0;
+	@Expose
+	String currencyCode = "";
 
-    @Expose
-    int fraudScore = 0;
+	@Expose
+	int satisfactionScore = 0;
 
-    public ConversionEvent() {
-	// TODO Auto-generated constructor stub
-    }
-    
+	@Expose
+	int fraudScore = 0;
 
-    public ConversionEvent(String observerId, String sessionKey, String metricName, long metricValue, String refProfileId, int refProfileType,
-	    String srcTouchpointId, String refTouchpointId, String browserName,  String deviceId,
-	    String deviceOS, String deviceName,String deviceType, String sourceIP,int timeSpent, String srcEventKey) {
-	super(observerId, sessionKey, metricName, metricValue, refProfileId, refProfileType, srcTouchpointId, refTouchpointId, browserName,  deviceId, deviceOS, deviceName, deviceType, sourceIP);
-	this.timeSpent = timeSpent;
-	this.srcEventKey = srcEventKey;
-    }
-    
-    public ConversionEvent(String observerId, String sessionKey, String metricName, long metricValue, String refProfileId, int refProfileType,
-	    String srcTouchpointId, String refTouchpointId, String browserName,  String deviceId,
-	    String deviceOS, String deviceName,String deviceType, String sourceIP, String srcEventKey) {
-	super(observerId, sessionKey, metricName, metricValue, refProfileId, refProfileType, srcTouchpointId, refTouchpointId, browserName, deviceId, deviceOS, deviceName,deviceType, sourceIP);
-	this.srcEventKey = srcEventKey;
-    }
+	public ConversionEvent() {
+		// TODO Auto-generated constructor stub
+	}
 
+	public ConversionEvent(String observerId, String sessionKey, String metricName, long metricValue,
+			String refProfileId, int refProfileType, String srcTouchpointId, String refTouchpointId,
+			String browserName, String deviceId, String deviceOS, String deviceName, String deviceType,
+			String sourceIP, int timeSpent, String srcEventKey) {
+		super(observerId, sessionKey, metricName, metricValue, refProfileId, refProfileType, srcTouchpointId,
+				refTouchpointId, browserName, deviceId, deviceOS, deviceName, deviceType, sourceIP);
+		this.timeSpent = timeSpent;
+		this.srcEventKey = srcEventKey;
+	}
 
+	public ConversionEvent(String observerId, String sessionKey, String metricName, long metricValue,
+			String refProfileId, int refProfileType, String srcTouchpointId, String refTouchpointId,
+			String browserName, String deviceId, String deviceOS, String deviceName, String deviceType,
+			String sourceIP, String srcEventKey) {
+		super(observerId, sessionKey, metricName, metricValue, refProfileId, refProfileType, srcTouchpointId,
+				refTouchpointId, browserName, deviceId, deviceOS, deviceName, deviceType, sourceIP);
+		this.srcEventKey = srcEventKey;
+	}
 
-    public int getTimeSpent() {
-	return timeSpent;
-    }
+	public int getTimeSpent() {
+		return timeSpent;
+	}
 
-    public void setTimeSpent(int timeSpent) {
-	this.timeSpent = timeSpent;
-    }
+	public void setTimeSpent(int timeSpent) {
+		this.timeSpent = timeSpent;
+	}
 
-    public String getTransactionCode() {
-	return transactionCode;
-    }
+	public String getTransactionCode() {
+		return transactionCode;
+	}
 
-    public void setTransactionCode(String transactionCode) {
-	this.transactionCode = transactionCode;
-    }
+	public void setTransactionCode(String transactionCode) {
+		this.transactionCode = transactionCode;
+	}
 
-    public double getTransactionValue() {
-	return transactionValue;
-    }
+	public double getTransactionValue() {
+		return transactionValue;
+	}
 
-    public void setTransactionValue(double transactionValue) {
-	this.transactionValue = transactionValue;
-    }
+	public void setTransactionValue(double transactionValue) {
+		this.transactionValue = transactionValue;
+	}
 
-    public String getCurrencyCode() {
-	return currencyCode;
-    }
+	public String getCurrencyCode() {
+		return currencyCode;
+	}
 
-    public void setCurrencyCode(String currencyCode) {
-	this.currencyCode = currencyCode;
-    }
+	public void setCurrencyCode(String currencyCode) {
+		this.currencyCode = currencyCode;
+	}
 
-    public int getSatisfactionScore() {
-	return satisfactionScore;
-    }
+	public int getSatisfactionScore() {
+		return satisfactionScore;
+	}
 
-    public void setSatisfactionScore(int satisfactionScore) {
-	this.satisfactionScore = satisfactionScore;
-    }
+	public void setSatisfactionScore(int satisfactionScore) {
+		this.satisfactionScore = satisfactionScore;
+	}
 
-    public int getFraudScore() {
-	return fraudScore;
-    }
+	public int getFraudScore() {
+		return fraudScore;
+	}
 
-    public void setFraudScore(int fraudScore) {
-	this.fraudScore = fraudScore;
-    }
+	public void setFraudScore(int fraudScore) {
+		this.fraudScore = fraudScore;
+	}
 
 }
