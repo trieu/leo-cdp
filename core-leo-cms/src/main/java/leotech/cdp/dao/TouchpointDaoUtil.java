@@ -13,7 +13,7 @@ import leotech.core.config.AqlTemplate;
 import leotech.system.util.database.ArangoDbQuery;
 import leotech.system.util.database.ArangoDbUtil;
 
-public class TouchpointDaoUtil  extends BaseLeoCdpDao {
+public class TouchpointDaoUtil extends BaseLeoCdpDao {
 
 	static final String AQL_GET_TOUCHPOINT_BY_ID = AqlTemplate.get("AQL_GET_TOUCHPOINT_BY_ID");
 	static final String AQL_GET_TOUCHPOINT_BY_URL = AqlTemplate.get("AQL_GET_TOUCHPOINT_BY_URL");
@@ -64,8 +64,7 @@ public class TouchpointDaoUtil  extends BaseLeoCdpDao {
 		Map<String, Object> bindVars = new HashMap<>(2);
 		bindVars.put("startIndex", startIndex);
 		bindVars.put("numberResult", numberResult);
-		List<Touchpoint> list = new ArangoDbQuery<Touchpoint>(db, AQL_GET_TOUCHPOINTS, bindVars, Touchpoint.class)
-				.getResultsAsList();
+		List<Touchpoint> list = new ArangoDbQuery<Touchpoint>(db, AQL_GET_TOUCHPOINTS, bindVars, Touchpoint.class).getResultsAsList();
 		return list;
 	}
 	

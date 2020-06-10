@@ -6,6 +6,12 @@ import com.devskiller.friendly_id.FriendlyId;
 
 import leotech.cms.model.common.PersistentArangoObject;
 
+/**
+ * @author Trieu
+ * 
+ * common base class for all models in CDP
+ *
+ */
 public abstract class CdpPersistentObject implements PersistentArangoObject {
 
 	public final static String COLLECTION_PREFIX = "cdp_";

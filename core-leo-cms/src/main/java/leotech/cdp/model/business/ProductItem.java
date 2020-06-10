@@ -7,10 +7,13 @@ import java.util.List;
 
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
+import com.arangodb.entity.DocumentField;
+import com.arangodb.entity.DocumentField.Type;
 import com.arangodb.model.FulltextIndexOptions;
 import com.arangodb.model.HashIndexOptions;
 import com.arangodb.model.PersistentIndexOptions;
 import com.google.gson.Gson;
+import com.google.gson.annotations.Expose;
 
 import leotech.cdp.model.CdpPersistentObject;
 import leotech.system.util.database.ArangoDbUtil;
@@ -18,13 +21,22 @@ import rfx.core.util.StringUtil;
 
 public class ProductItem extends CdpPersistentObject {
 
+	@DocumentField(Type.KEY)
+	@Expose
+	String id;
+	
+	// Stock Keeping Unit
 	protected String sku;
+	
 	protected String name;
 	protected String description;
 	protected String image;
 
+	
 	protected double originalPrice;
+	
 	protected double salePrice;
+	
 	protected String priceCurrency;
 
 	protected String fullUrl;
@@ -56,8 +68,7 @@ public class ProductItem extends CdpPersistentObject {
 			instance.ensureFulltextIndex(Arrays.asList("brand"), new FulltextIndexOptions());
 			instance.ensurePersistentIndex(Arrays.asList("sku"), new PersistentIndexOptions().unique(false));
 			instance.ensurePersistentIndex(Arrays.asList("siteDomain"), new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("updatedAt", "schemaAvailability"),
-					new PersistentIndexOptions().unique(false));
+			instance.ensurePersistentIndex(Arrays.asList("updatedAt", "availability"), new PersistentIndexOptions().unique(false));
 
 			instance.ensurePersistentIndex(Arrays.asList("fullUrl"), new PersistentIndexOptions().unique(true));
 			instance.ensureHashIndex(Arrays.asList("keywords[*]"), new HashIndexOptions());
@@ -66,7 +77,9 @@ public class ProductItem extends CdpPersistentObject {
 		return instance;
 	}
 
-	public ProductItem() {
+	public ProductItem(String fullUrl) {
+		this.fullUrl = fullUrl;
+		this.id = id(fullUrl);
 	}
 
 	@Override
@@ -190,6 +203,14 @@ public class ProductItem extends CdpPersistentObject {
 
 	public void setAvailability(String availability) {
 		this.availability = availability;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	@Override

@@ -38,8 +38,8 @@ public class ProductDataCrawler {
 	}
 
 	public static abstract class ProductExtInfoParser {
-		ProductItem item;
-		Document doc;
+		protected ProductItem item;
+		protected Document doc;
 
 		public ProductExtInfoParser() {
 		}
@@ -51,20 +51,23 @@ public class ProductDataCrawler {
 
 		public abstract void process();
 	}
-
-	protected static ProductItem processWithRules(String urlStr) throws Exception {
-		
-		// new product item
-		ProductItem p = new ProductItem();
-		
+	
+	public static ProductItem parseHtmlToProductItem(String urlStr, String html) throws Exception {
 		URL url = new URL(urlStr);
 		String host = url.getHost();
-
-		//get HTML from URL
-		String html = HttpClientUtil.executeGet(url);
+		
 		Document doc = Jsoup.parse(html);
+		
+		String ogType = JsoupParserUtil.getAttr(doc, "meta[property='og:type']", "content").toLowerCase();
+		if( ! "product".equals(ogType) ) {
+			//skip if not a product
+			return null;
+		}
+		
+		// new product item
+		ProductItem p = new ProductItem(urlStr);
 
-		//start common parser for Open Graph
+		// start common parser for Open Graph
 		String title = JsoupParserUtil.getAttr(doc, "meta[property='og:title']", "content");
 		if (StringUtil.isEmpty(title)) {
 			title = JsoupParserUtil.getText(doc, "title");
@@ -72,7 +75,7 @@ public class ProductDataCrawler {
 
 		String description = JsoupParserUtil.getAttr(doc, "meta[property='og:description']", "content");
 
-		String productImage = JsoupParserUtil.getAttr(doc, "meta[property='og:image']", "content").replace("http:", "https:");
+		String productImage = JsoupParserUtil.getAttr(doc, "meta[property='og:image']", "content").replace("http:","https:");
 
 		String salePrice = JsoupParserUtil.getAttr(doc, "meta[property='og:price:amount']", "content");
 
@@ -85,7 +88,7 @@ public class ProductDataCrawler {
 		String itemCondition = JsoupParserUtil.getAttr(doc, "link[itemprop='itemCondition']", "href");
 
 		String availability = JsoupParserUtil.getAttr(doc, "link[itemprop='availability']", "href");
-		
+
 		ProductExtInfoParser parser = hostToParser.get(host);
 		if (parser != null) {
 			parser.init(p, doc);
@@ -106,6 +109,13 @@ public class ProductDataCrawler {
 		return p;
 	}
 
+	protected static ProductItem processWithRules(String urlStr) throws Exception {
+		// get HTML from URL
+		String html = HttpClientUtil.executeGet(urlStr);
+		
+		return parseHtmlToProductItem(urlStr, html);
+	}
+
 	public static ProductItem process(String url) throws Exception {
 		ProductItem p = cache.get(url);
 		return p;
@@ -116,10 +126,11 @@ public class ProductDataCrawler {
 		ProductDataCrawler.addProductExtInfoParser("eshop.guardian.vn", new ProductExtInfoParser() {
 			@Override
 			public void process() {
-				String sku =  JsoupParserUtil.getText(doc, "span[id='pro_sku']").replace("SKU:", "").trim();
+				String sku = JsoupParserUtil.getText(doc, "span[id='pro_sku']").replace("SKU:", "").trim();
 				this.item.setSku(sku);
-				
-				String originalPrice =  JsoupParserUtil.getText(doc, "div[id='price-preview'] del").replace("₫", "").replace(",", "").trim();
+
+				String originalPrice = JsoupParserUtil.getText(doc, "div[id='price-preview'] del").replace("₫", "")
+						.replace(",", "").trim();
 				this.item.setOriginalPrice(originalPrice);
 			}
 		});
