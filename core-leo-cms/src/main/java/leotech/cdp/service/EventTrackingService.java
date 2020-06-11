@@ -39,9 +39,9 @@ public class EventTrackingService {
 
 		// touch-point info process
 		Touchpoint refTouchPoint = TouchpointDataService.getOrCreateWebTouchpoint(touchpointRefDomain,
-				Touchpoint.TouchpointType.WEBSITE, refTouchpointUrl, isFromOwnedMedia);
+				Touchpoint.TouchpointType.WEB_URL, refTouchpointUrl, isFromOwnedMedia);
 		Touchpoint srcTouchpoint = TouchpointDataService.getOrCreateWebTouchpoint(srcTouchpointName,
-				Touchpoint.TouchpointType.WEBSITE, srcTouchpointUrl);
+				Touchpoint.TouchpointType.WEB_URL, srcTouchpointUrl);
 		String refTouchpointId = refTouchPoint.getId();
 		String srcTouchpointId = srcTouchpoint.getId();
 
@@ -75,9 +75,9 @@ public class EventTrackingService {
 
 		// touch-point info process
 		Touchpoint refTouchPoint = TouchpointDataService.getOrCreateWebTouchpoint(touchpointRefDomain,
-				Touchpoint.TouchpointType.WEBSITE, refTouchpointUrl, isFromOwnedMedia);
+				Touchpoint.TouchpointType.WEB_URL, refTouchpointUrl, isFromOwnedMedia);
 		Touchpoint srcTouchpoint = TouchpointDataService.getOrCreateWebTouchpoint(srcTouchpointName,
-				Touchpoint.TouchpointType.WEBSITE, srcTouchpointUrl);
+				Touchpoint.TouchpointType.WEB_URL, srcTouchpointUrl);
 		String refTouchpointId = refTouchPoint.getId();
 		String srcTouchpointId = srcTouchpoint.getId();
 
@@ -114,9 +114,9 @@ public class EventTrackingService {
 
 		// touch-point info process
 		Touchpoint refTouchPoint = TouchpointDataService.getOrCreateWebTouchpoint(touchpointRefDomain,
-				Touchpoint.TouchpointType.WEBSITE, refTouchpointUrl, isFromOwnedMedia);
+				Touchpoint.TouchpointType.WEB_URL, refTouchpointUrl, isFromOwnedMedia);
 		Touchpoint srcTouchpoint = TouchpointDataService.getOrCreateWebTouchpoint(srcTouchpointName,
-				Touchpoint.TouchpointType.WEBSITE, srcTouchpointUrl);
+				Touchpoint.TouchpointType.WEB_URL, srcTouchpointUrl);
 		String refTouchpointId = refTouchPoint.getId();
 		String srcTouchpointId = srcTouchpoint.getId();
 

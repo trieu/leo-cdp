@@ -12,7 +12,6 @@ public class DataFilter {
 	int start;
 	
 	public DataFilter() {
-		
 	}
 	
 	public DataFilter(String uri, JsonObject paramJson) {

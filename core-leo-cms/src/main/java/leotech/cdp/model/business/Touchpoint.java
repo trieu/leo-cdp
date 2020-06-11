@@ -31,16 +31,16 @@ public class Touchpoint extends CdpPersistentObject {
 
 	public static final class TouchpointType {
 		//online
-		public static final int ECOMMERCE_PLATFORM = 1;
+		public static final int WEB_URL = 1;
 		public static final int WEBSITE = 2;
 		public static final int MOBILE_APP = 3;
 		public static final int SMART_TV_APP = 4;
 		public static final int IOT_APP = 5;
 		public static final int OTT_APP = 6;
-		public static final int SOCIAL_MEDIA_PLATFORM = 7;
+		public static final int ECOMMERCE_PLATFORM = 7;
+		public static final int SOCIAL_MEDIA_PLATFORM = 8;
 		
-		//offline retail
-		public static final int URBAN_MARKET = 8;
+		//offline retail store
 		public static final int RETAIL_STORE = 9;
 		
 		//offline
@@ -134,7 +134,7 @@ public class Touchpoint extends CdpPersistentObject {
 	List<String> keywords = new ArrayList<>();
 
 	@Expose
-	String collectionId = "";
+	String collectionId = "";// IAB-17 or category topics ...
 
 	@Expose
 	String parentId = "";

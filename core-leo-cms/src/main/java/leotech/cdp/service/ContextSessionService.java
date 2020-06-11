@@ -48,8 +48,8 @@ public class ContextSessionService {
 		boolean isFromOwnedMedia = mediaHost.equals(touchpointRefDomain);
 		
 		// touch-point info process
-		Touchpoint refTouchPoint = TouchpointDataService.getOrCreateWebTouchpoint(touchpointRefDomain, Touchpoint.TouchpointType.WEBSITE, touchpointRefUrl, isFromOwnedMedia);
-		Touchpoint srcTouchpoint = TouchpointDataService.getOrCreateWebTouchpoint(touchpointName, Touchpoint.TouchpointType.WEBSITE, touchpointUrl);
+		Touchpoint refTouchPoint = TouchpointDataService.getOrCreateWebTouchpoint(touchpointRefDomain, Touchpoint.TouchpointType.WEB_URL, touchpointRefUrl, isFromOwnedMedia);
+		Touchpoint srcTouchpoint = TouchpointDataService.getOrCreateWebTouchpoint(touchpointName, Touchpoint.TouchpointType.WEB_URL, touchpointUrl);
 		String refTouchpointId = refTouchPoint.getId();
 		String srcTouchpointId = srcTouchpoint.getId();
 		

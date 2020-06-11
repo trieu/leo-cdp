@@ -9,13 +9,11 @@ import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
 
 import leotech.cdp.model.audience.Profile;
-import leotech.cdp.model.business.Touchpoint;
 import leotech.cdp.query.ProfileMatchingResult;
 import leotech.core.config.AqlTemplate;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataTablePayload;
 import leotech.system.util.database.ArangoDbQuery;
-import leotech.system.util.database.ArangoDbUtil;
 
 public class ProfileDaoUtil  extends BaseLeoCdpDao {
 
@@ -100,7 +98,7 @@ public class ProfileDaoUtil  extends BaseLeoCdpDao {
 	public static JsonDataTablePayload filter(DataFilter filter) {
 		ArangoDatabase db = getCdpDbInstance();
 		
-		System.out.println("==> before apply DataFilter " + filter);
+		//System.out.println("==> before apply DataFilter " + filter);
 		
 		//TODO dynamic query builder for filtering data
 		Map<String, Object> bindVars = new HashMap<>(2);

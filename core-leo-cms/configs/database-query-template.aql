@@ -163,6 +163,18 @@ AQL_GET_TOUCHPOINT_BY_URL =>
 	RETURN e
 ;
 
+AQL_GET_TOUCHPOINT_BY_NAME =>
+	FOR e in cdp_touchpoint FILTER e.name == @name  
+	RETURN e
+;
+
+AQL_GET_TOUCHPOINTS_BY_FILTER =>
+	FOR p in cdp_touchpoint  
+	SORT p.createdAt DESC
+	LIMIT @startIndex,@numberResult 
+	RETURN p
+;
+
 AQL_GET_TOP_100_TOUCHPOINTS_BY_PROFILE =>
 	FOR p in cdp_profile FILTER p._key == @profileId
 	    FOR t IN cdp_touchpoint
