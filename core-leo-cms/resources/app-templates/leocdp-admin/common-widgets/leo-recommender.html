@@ -1,11 +1,11 @@
-<div class="modal fade" id="irisBotDialog" role="dialog">
+<div class="modal fade" id="leoBotDialog" role="dialog">
     <div class="modal-dialog  modal-lg">
         <!-- Modal content-->
 
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title text-center"> Iris Bot </h4>
+                <h4 class="modal-title text-center"> Leo Recommender </h4>
             </div>
             <div class="modal-body">
                 <div class="botui-app-container" id="iris_chatbot">
@@ -92,8 +92,8 @@
 
 
 
-    function callIrisBot(context) {
-        $('#irisBotDialog').modal({
+    function callLeoBotForIdeasRecommender(context) {
+        $('#leoBotDialog').modal({
             backdrop: 'static',
             keyboard: false
         });
@@ -103,7 +103,7 @@
     }
 
     var showChat = function () {
-        botui.message.bot('Hi ' + currentUserProfile.displayName + ', how can Iris help you ?')
+        botui.message.bot('Hi ' + currentUserProfile.displayName + ', how can Leo help you ?')
             .then(function () {
                 return botui.action.button({
                     delay: 1000,
