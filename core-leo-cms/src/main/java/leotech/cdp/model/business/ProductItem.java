@@ -212,6 +212,10 @@ public class ProductItem extends CdpPersistentObject {
 	public void setId(String id) {
 		this.id = id;
 	}
+	
+	public boolean isEmpty() {
+		return StringUtil.isEmpty(this.fullUrl);
+	}
 
 	@Override
 	public String toString() {

@@ -1,8 +1,8 @@
 package leotech.crawler.util;
 
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 
 import org.jsoup.Jsoup;
@@ -21,17 +21,11 @@ public class ProductDataCrawler {
 	static final LoadingCache<String, ProductItem> cache = CacheBuilder.newBuilder().maximumSize(100000)
 			.expireAfterWrite(2, TimeUnit.HOURS).build(new CacheLoader<String, ProductItem>() {
 				public ProductItem load(String url) {
-					ProductItem p = null;
-					try {
-						p = processWithRules(url);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					return p;
+					return process(url);
 				}
 			});
 
-	static Map<String, ProductExtInfoParser> hostToParser = new HashMap<>();
+	static ConcurrentMap<String, ProductExtInfoParser> hostToParser = new ConcurrentHashMap<>();
 
 	public static void addProductExtInfoParser(String host, ProductExtInfoParser parser) {
 		hostToParser.put(host, parser);
@@ -51,19 +45,19 @@ public class ProductDataCrawler {
 
 		public abstract void process();
 	}
-	
+
 	public static ProductItem parseHtmlToProductItem(String urlStr, String html) throws Exception {
 		URL url = new URL(urlStr);
 		String host = url.getHost();
-		
+
 		Document doc = Jsoup.parse(html);
-		
+
 		String ogType = JsoupParserUtil.getAttr(doc, "meta[property='og:type']", "content").toLowerCase();
-		if( ! "product".equals(ogType) ) {
-			//skip if not a product
+		if (!"product".equals(ogType)) {
+			// skip if not a product
 			return null;
 		}
-		
+
 		// new product item
 		ProductItem p = new ProductItem(urlStr);
 
@@ -75,7 +69,8 @@ public class ProductDataCrawler {
 
 		String description = JsoupParserUtil.getAttr(doc, "meta[property='og:description']", "content");
 
-		String productImage = JsoupParserUtil.getAttr(doc, "meta[property='og:image']", "content").replace("http:","https:");
+		String productImage = JsoupParserUtil.getAttr(doc, "meta[property='og:image']", "content").replace("http:",
+				"https:");
 
 		String salePrice = JsoupParserUtil.getAttr(doc, "meta[property='og:price:amount']", "content");
 
@@ -109,14 +104,21 @@ public class ProductDataCrawler {
 		return p;
 	}
 
-	protected static ProductItem processWithRules(String urlStr) throws Exception {
+	public static ProductItem process(String urlStr) {
 		// get HTML from URL
-		String html = HttpClientUtil.executeGet(urlStr);
-		
-		return parseHtmlToProductItem(urlStr, html);
+		try {
+			String html = HttpClientUtil.executeGet(urlStr);
+			if(html.equals("404")) {
+				return new ProductItem("");
+			}
+			return parseHtmlToProductItem(urlStr, html);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ProductItem("");
 	}
 
-	public static ProductItem process(String url) throws Exception {
+	public static ProductItem processWithCache(String url) throws Exception {
 		ProductItem p = cache.get(url);
 		return p;
 	}
@@ -135,9 +137,12 @@ public class ProductDataCrawler {
 			}
 		});
 
-		String url = "https://eshop.guardian.vn/products/bo-my-pham-du-lich-botaneco-garden-trio-oil-60ml-x-4";
-		ProductItem p = ProductDataCrawler.process(url);
-		System.out.println(p);
+		String url = "https://eshop.guardian.vn/products/mat-na-toc-tsubaki-phuc-hoi-hu-ton-180g";
+		ProductItem p = ProductDataCrawler.processWithCache(url);
+		if(! p.isEmpty() ) {
+			System.out.println(p);
+		}
+		
 	}
 
 }

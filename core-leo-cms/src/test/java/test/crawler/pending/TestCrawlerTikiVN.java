@@ -16,7 +16,7 @@ import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 import edu.uci.ics.crawler4j.url.WebURL;
 import leotech.cdp.model.business.ProductItem;
 import leotech.crawler.util.JsoupParserUtil;
-import test.crawler.TestProductDataCrawlerForTiki.ProductExtInfoParser;
+
 
 public class TestCrawlerTikiVN extends WebCrawler {
 
@@ -68,7 +68,7 @@ public class TestCrawlerTikiVN extends WebCrawler {
 		
 		System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
 		
-		TestProductDataCrawlerForTiki.addProductExtInfoParser("eshop.guardian.vn", new ProductExtInfoParser() {
+		TestProductDataCrawlerForTiki.addProductExtInfoParser("eshop.guardian.vn", new test.crawler.pending.TestProductDataCrawlerForTiki.ProductExtInfoParser() {
 			@Override
 			public void process() {
 				String sku = JsoupParserUtil.getText(doc, "span[itemprop='sku']").replace("SKU:", "").trim();
