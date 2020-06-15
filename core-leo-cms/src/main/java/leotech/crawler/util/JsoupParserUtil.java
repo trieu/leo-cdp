@@ -31,11 +31,11 @@ public class JsoupParserUtil {
 	public static List<String> getTexts(Document doc, String selector) {
 		List<String> data = new ArrayList<>();
 		Elements dataNodes = doc.select(selector);
-		for (int i = 0; i < dataNodes.size(); ++i) {
-			if (dataNodes.get(i) == null)
+		for (Element dataItem : dataNodes) {
+			if (dataItem == null)
 				continue;
 			else
-				data.add(dataNodes.get(i).text());
+				data.add(dataItem.text());
 		}
 		
 		return data;

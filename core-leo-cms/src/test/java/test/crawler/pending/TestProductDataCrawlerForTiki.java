@@ -1,4 +1,4 @@
-package test.crawler;
+package test.crawler.pending;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -18,7 +18,7 @@ import leotech.crawler.util.JsoupParserUtil;
 import rfx.core.util.HttpClientUtil;
 import rfx.core.util.StringUtil;
 
-public class TestProductDataCrawler {
+public class TestProductDataCrawlerForTiki {
 
 	static final LoadingCache<String, ProductItem> cache = CacheBuilder.newBuilder().maximumSize(100000)
 			.expireAfterWrite(2, TimeUnit.HOURS).build(new CacheLoader<String, ProductItem>() {
@@ -133,7 +133,7 @@ public class TestProductDataCrawler {
 
 	public static void main(String[] args) throws Exception {
 
-		TestProductDataCrawler.addProductExtInfoParser("tiki.vn", new ProductExtInfoParser() {
+		TestProductDataCrawlerForTiki.addProductExtInfoParser("tiki.vn", new ProductExtInfoParser() {
 			@Override
 			public void process() {
 				String sku = JsoupParserUtil.getText(doc, "span[itemprop='sku']").replace("SKU:", "").trim();
@@ -146,8 +146,8 @@ public class TestProductDataCrawler {
 			}
 		});
 
-		String url = "https://tiki.vn/khung-nan-chinh-dinh-hinh-keo-dan-cot-song-co-dien-chuan-chuyen-thoai-hoa-dot-song-co-dau-moi-nhuc-co-p44060751.html";
-		ProductItem p = TestProductDataCrawler.process(url);
+		String url = "https://tiki.vn/man-hinh-dell-u2419h-24inch-fullhd-8ms-60hz-ips-hang-chinh-hang-p7986170.html?spid=7986171&src=home-deal-hot";
+		ProductItem p = TestProductDataCrawlerForTiki.process(url);
 		System.out.println(p);
 	}
 

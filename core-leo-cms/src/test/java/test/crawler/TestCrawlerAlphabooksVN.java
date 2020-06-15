@@ -1,8 +1,6 @@
 package test.crawler;
 
 import java.util.List;
-
-import com.arangodb.ArangoDBException;
 import java.util.regex.Pattern;
 
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
@@ -19,7 +17,7 @@ import leotech.crawler.util.JsoupParserUtil;
 import leotech.crawler.util.ProductDataCrawler;
 import leotech.crawler.util.ProductDataCrawler.ProductExtInfoParser;
 
-public class TestCrawlerGuardianVN extends WebCrawler {
+public class TestCrawlerAlphabooksVN extends WebCrawler {
 
 	private final static Pattern FILTERS = Pattern.compile(".*(\\.(css|js|gif|jpg" + "|png|mp3|mp4|zip|gz))$");
 
@@ -27,7 +25,7 @@ public class TestCrawlerGuardianVN extends WebCrawler {
 	@Override
 	public boolean shouldVisit(Page referringPage, WebURL url) {
 		String href = url.getURL().toLowerCase();
-		return !FILTERS.matcher(href).matches() && href.startsWith("https://eshop.guardian.vn/products/");
+		return !FILTERS.matcher(href).matches() && href.startsWith("https://alphabooks.vn");
 	}
 
 	/**
@@ -47,11 +45,8 @@ public class TestCrawlerGuardianVN extends WebCrawler {
 				ProductItem item = ProductDataCrawler.parseHtmlToProductItem(urlStr, html);
 				if(item != null) {
 					System.out.println("Item: " + item);	
-					TestProductDao.save(item);
 				}
-			} catch (ArangoDBException e) {
-				// TODO fix Response: 409, Error: 1210 - unique constraint violated
-				// Due to multi-thread running
+				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -65,7 +60,7 @@ public class TestCrawlerGuardianVN extends WebCrawler {
 			public void process() {
 				String sku = JsoupParserUtil.getText(doc, "span[id='pro_sku']").replace("SKU:", "").trim();
 				this.item.setSku(sku);
-				
+
 				String originalPrice = JsoupParserUtil.getText(doc, "div[id='price-preview'] del").replace("₫", "").replace(",", "").trim();
 				this.item.setOriginalPrice(originalPrice);
 				
@@ -80,11 +75,9 @@ public class TestCrawlerGuardianVN extends WebCrawler {
 		});
 		
         String crawlStorageFolder = "./CRAWLER_CACHE";
-        int maxDepthOfCrawling = 5;
-        int numberOfCrawlers = 3;
+        int numberOfCrawlers = 4;
 
         CrawlConfig config = new CrawlConfig();
-        config.setMaxDepthOfCrawling(maxDepthOfCrawling);
         config.setCrawlStorageFolder(crawlStorageFolder);
 
         // Instantiate the controller for this crawl.
@@ -98,11 +91,11 @@ public class TestCrawlerGuardianVN extends WebCrawler {
         // For each crawl, you need to add some seed urls. These are the first
         // URLs that are fetched and then the crawler starts following links
         // which are found in these pages
-        controller.addSeed("https://eshop.guardian.vn/collections/all");
+        controller.addSeed("https://eshop.guardian.vn");
     	
     	
     	// The factory which creates instances of crawlers.
-        CrawlController.WebCrawlerFactory<TestCrawlerGuardianVN> factory = TestCrawlerGuardianVN::new;
+        CrawlController.WebCrawlerFactory<TestCrawlerAlphabooksVN> factory = TestCrawlerAlphabooksVN::new;
         
         // Start the crawl. This is a blocking operation, meaning that your code
         // will reach the line after this only when crawling is finished.
