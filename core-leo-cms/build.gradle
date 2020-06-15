@@ -210,18 +210,65 @@ task CopyShellScripts(type: Copy) {
 /////////////////////////// END COPY TASKS ///////////////////////////////
 
 /////////////////////////// BEGIN BUILD FOR DEPLOYED JAR ///////////////////////////////
-
-task BuildDeliveryHttpStarter(type: Jar) {	
+task buildMainHttpStarter(type: Jar) {	
 	dependsOn classes   
     from(sourceSets.main.output) {
         include "**"
     }
     version = '1.0'
-    baseName = 'leocms-delivery-starter'
+    baseName = 'leo-main-starter'
     manifest {
-   		attributes ('Implementation-Title': 'DeliveryHttpStarter', 
+   		attributes ('Implementation-Title': 'MainHttpStarter', 
         			'Implementation-Version': version ,
-        			'Main-Class': ' leotech.starter.DeliveryHttpStarter',
+        			'Main-Class': ' leotech.starter.MainHttpStarter',
+        			'Class-Path' : getClasspathStringJars() 
+        			)
+	}
+} 
+
+task buildDataObserverStarter(type: Jar) {	
+	dependsOn classes   
+    from(sourceSets.main.output) {
+        include "**"
+    }
+    version = '1.0'
+    baseName = 'leo-data-observer'
+    manifest {
+   		attributes ('Implementation-Title': 'DataObserverStarter', 
+        			'Implementation-Version': version ,
+        			'Main-Class': ' leotech.starter.DataObserverStarter',
+        			'Class-Path' : getClasspathStringJars() 
+        			)
+	}
+}
+
+task buildUploadFileHttpStarter(type: Jar) {	
+	dependsOn classes   
+    from(sourceSets.main.output) {
+        include "**"
+    }
+    version = '1.0'
+    baseName = 'leo-uploader'
+    manifest {
+   		attributes ('Implementation-Title': 'UploadFileHttpStarter', 
+        			'Implementation-Version': version ,
+        			'Main-Class': ' leotech.starter.UploadFileHttpStarter',
+        			'Class-Path' : getClasspathStringJars() 
+        			)
+	}
+}
+
+task buildInfoDeliveryHttpStarter(type: Jar) {	
+	dependsOn classes   
+    from(sourceSets.main.output) {
+        include "**"
+    }
+    version = '1.0'
+    baseName = 'leo-info-delivery'
+    manifest {
+   		attributes ('Implementation-Title': 'InfoDeliveryHttpStarter', 
+        			'Implementation-Version': version ,
+        			'Main-Class': ' leotech.starter.InfoDeliveryHttpStarter',
         			'Class-Path' : getClasspathStringJars() 
         			)
 	}
@@ -233,7 +280,7 @@ task BuildAdminApiHttpStarter(type: Jar) {
         include "**"
     }
     version = '1.0'
-    baseName = 'leocms-admin-api-starter'
+    baseName = 'leo-admin-system-api'
     manifest {
    		attributes ('Implementation-Title': 'AdminApiHttpStarter', 
         			'Implementation-Version': version ,
@@ -243,53 +290,7 @@ task BuildAdminApiHttpStarter(type: Jar) {
 	}
 }
 
-task BuildEventLogHttpStarter(type: Jar) {	
-	dependsOn classes   
-    from(sourceSets.main.output) {
-        include "**"
-    }
-    version = '1.0'
-    baseName = 'leocms-collector-starter'
-    manifest {
-   		attributes ('Implementation-Title': 'EventLogHttpStarter', 
-        			'Implementation-Version': version ,
-        			'Main-Class': ' leotech.starter.EventLogHttpStarter',
-        			'Class-Path' : getClasspathStringJars() 
-        			)
-	}
-}
 
-task BuildMainHttpStarter(type: Jar) {	
-	dependsOn classes   
-    from(sourceSets.main.output) {
-        include "**"
-    }
-    version = '1.0'
-    baseName = 'leocms-main-starter'
-    manifest {
-   		attributes ('Implementation-Title': 'MainHttpStarter', 
-        			'Implementation-Version': version ,
-        			'Main-Class': ' leotech.starter.MainHttpStarter',
-        			'Class-Path' : getClasspathStringJars() 
-        			)
-	}
-} 
-
-task BuildUploadFileHttpStarter(type: Jar) {	
-	dependsOn classes   
-    from(sourceSets.main.output) {
-        include "**"
-    }
-    version = '1.0'
-    baseName = 'leocms-upload-file-starter'
-    manifest {
-   		attributes ('Implementation-Title': 'UploadFileHttpStarter', 
-        			'Implementation-Version': version ,
-        			'Main-Class': ' leotech.starter.UploadFileHttpStarter',
-        			'Class-Path' : getClasspathStringJars() 
-        			)
-	}
-}
 
 /////////////////////////// END BUILD FOR DEPLOYED JAR ///////////////////////////////
 

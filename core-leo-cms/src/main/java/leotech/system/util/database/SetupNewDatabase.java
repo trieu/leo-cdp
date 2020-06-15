@@ -87,6 +87,7 @@ public class SetupNewDatabase {
 		for (String colName : list) {
 			try {
 				dbInstance.createCollection(colName, options);
+				System.out.println("=> Successfully createCollection " + colName);
 			} catch (ArangoDBException e) {
 				System.err.println("=> Failed to createCollection " + colName);
 				e.printStackTrace();

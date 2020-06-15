@@ -10,7 +10,7 @@
 			"sockJsHandlerEnabled": true
 		},
 		
-		"------------ mainAdminLeoCDP ------------" : {"notes" : "Admin Leo CDP" },
+		"------------ Local mainAdminLeoCDP ------------" : {"notes" : "Local Leo CDP - Admin Dashboard System" },
 		"mainAdminLeoCDP": {
 			"name": "MainHttpWorker",
 			"host": "127.0.0.1",
@@ -20,6 +20,40 @@
 			"sockJsHandlerEnabled": true,
 			"defaultDbConfig" : "leoCdpDbConfigs"
 		},
+		
+		"------------ Local dataObserverWorker ------------" : {"notes" : "Local Leo CDP - Data Observer System" },
+		"dataObserverWorker": {
+			"name": "dataObserverWorker",
+			"host": "127.0.0.1",
+			"port": 9080,
+			"classNameHttpRouter": "leotech.cdp.router.DataObserverHttpRouter",
+			"bodyHandlerEnabled": true,
+			"sockJsHandlerEnabled": false,
+			"defaultDbConfig" : "leoCdpDbConfigs"
+		},
+		
+		"------------ DEV Cloud awsMainAdminLeoCDP ------------" : {"notes" : "AWS Cloud - Admin Leo CDP" },
+		"devMainAdminLeoCDP": {
+			"name": "awsMainAdminLeoCDP",
+			"host": "127.0.0.1",
+			"port": 9070,
+			"classNameHttpRouter": "leotech.cms.router.MainHttpRouter",
+			"bodyHandlerEnabled": true,
+			"sockJsHandlerEnabled": true,
+			"defaultDbConfig" : "awsLeoCdpDbConfigs"
+		},
+		
+		"------------ DEV Cloud dataObserverWorker ------------" : {"notes" : "AWS Cloud Leo CDP - Data Observer System" },
+		"devDataObserverWorker": {
+			"name": "awsDataObserverWorker",
+			"host": "127.0.0.1",
+			"port": 9080,
+			"classNameHttpRouter": "leotech.cdp.router.DataObserverHttpRouter",
+			"bodyHandlerEnabled": true,
+			"sockJsHandlerEnabled": false,
+			"defaultDbConfig" : "awsLeoCdpDbConfigs"
+		},
+		
 		
 		"------------ adminApiWorker ------------" : {"notes" : "Leo CMS - Admin API System" },
 		"adminApiWorker": {
@@ -32,8 +66,8 @@
 			"defaultDbConfig" : "leoCdpDbConfigs"
 		},
 		
-		"------------ deliveryApiWorker ------------" : {"notes" : "Leo CMS - Content Delivery System" },
-		"deliveryApiWorker": {
+		"------------ infoDeliveryApiWorker ------------" : {"notes" : "Leo CMS - Information Delivery System" },
+		"infoDeliveryApiWorker": {
 			"name": "DeliveryApiWorker",
 			"host": "127.0.0.1",
 			"port": 9090,
@@ -50,17 +84,6 @@
 			"classNameHttpRouter": "leotech.cms.router.UploadFileHttpRouter",
 			"bodyHandlerEnabled": true,
 			"sockJsHandlerEnabled": false
-		},
-		
-		"------------ dataTrackingWorker ------------" : {"notes" : "Leo CDP - Event Data Tracking System" },
-		"dataTrackingWorker": {
-			"name": "dataTrackingWorker",
-			"host": "127.0.0.1",
-			"port": 9080,
-			"classNameHttpRouter": "leotech.cdp.router.DataTrackingHttpRouter",
-			"bodyHandlerEnabled": true,
-			"sockJsHandlerEnabled": false,
-			"defaultDbConfig" : "leoCdpDbConfigs"
 		},
 		
 		"------------ mainHttpBookstore ------------" : {"notes" : "Leo CMS -  Demo Retail Bookstore E-Commerce for testing CDP" },

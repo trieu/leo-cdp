@@ -26,7 +26,7 @@ import rfx.core.util.StringUtil;
  * https://github.com/USPA-Technology/leotech-final-build/blob/master/leo-cdp-event-observer-data-flow.md
  *
  */
-public class DataTrackingHttpRouter extends BaseHttpRouter {
+public class DataObserverHttpRouter extends BaseHttpRouter {
 
 	public static final String INVALID = "invalid";
 	public static final String FAILED = "failed";
@@ -40,7 +40,7 @@ public class DataTrackingHttpRouter extends BaseHttpRouter {
 	public static final String PREFIX_EVENT_ACTION = "/eta";
 	public static final String PREFIX_EVENT_CONVERSION = "/etc";
 
-	public DataTrackingHttpRouter(RoutingContext context) {
+	public DataObserverHttpRouter(RoutingContext context) {
 		super(context);
 	}
 

@@ -1,10 +1,11 @@
 package leotech.starter;
 
+import leotech.system.HttpWorker;
 import leotech.system.model.LeoPackage;
 import leotech.system.util.database.SetupNewDatabase;
 import rfx.core.util.Utils;
 
-public class AdminApiHttpStarter {
+public class AdminSystemStarter {
 	private static final String SETUP_NEW = "setup-new";
 
 	public static void main(String[] args) throws Exception {

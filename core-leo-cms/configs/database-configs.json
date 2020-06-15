@@ -11,6 +11,17 @@
 			,"enabled" : true
 		},
 		
+		"awsLeoCdpDbConfigs" : {
+			"username" : "leodev"
+			,"password" : "SocialCEO@12345"
+			,"database" : "leo_cdp"
+			,"host" : "52.71.136.239"				
+			,"port" : 8529
+			,"dbdriver" : "arangodb"
+			,"dbdriverclasspath" : "com.arangodb.ArangoDB"
+			,"enabled" : true
+		},
+		
 		"defaultDbConfigs" : {
 			"username" : "root"
 			,"password" : "123456"
