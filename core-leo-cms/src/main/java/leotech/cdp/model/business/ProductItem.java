@@ -1,5 +1,6 @@
 package leotech.cdp.model.business;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -19,7 +20,12 @@ import leotech.cdp.model.CdpPersistentObject;
 import leotech.system.util.database.ArangoDbUtil;
 import rfx.core.util.StringUtil;
 
-public class ProductItem extends CdpPersistentObject {
+public class ProductItem extends CdpPersistentObject implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@DocumentField(Type.KEY)
 	@Expose
