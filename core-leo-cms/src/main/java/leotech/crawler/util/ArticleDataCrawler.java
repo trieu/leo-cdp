@@ -106,7 +106,7 @@ public class ArticleDataCrawler {
 	}
 
 	public static void main(String[] args) throws Exception {
-		String urlStr = "https://cafebiz.vn/binh-thuong-hoa-chuyen-doi-so-huong-di-tat-yeu-cho-doanh-nghiep-ban-le-viet-nam-20200529164007855.chn";
+		String urlStr = "https://cafef.vn/bo-xay-dung-de-xuat-cho-phep-nguoi-nuoc-ngoai-duoc-mua-bat-dong-san-du-lich-2020061709381489.chn";
 
 		ArticleData articleData = ArticleDataCrawler.process(urlStr);
 		articleData = ArticleDataCrawler.process(urlStr);
