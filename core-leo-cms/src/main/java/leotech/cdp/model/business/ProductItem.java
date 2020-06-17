@@ -22,10 +22,7 @@ import rfx.core.util.StringUtil;
 
 public class ProductItem extends CdpPersistentObject implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -3618110544243923554L;
 
 	@DocumentField(Type.KEY)
 	@Expose
