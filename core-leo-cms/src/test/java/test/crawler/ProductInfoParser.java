@@ -80,8 +80,10 @@ public class ProductInfoParser implements Runnable {
 	
 	@Override
 	public void run() {
+		System.out.println(Thread.currentThread().getName() + " STARTs ");
 		String input;
-        try {
+        try {        	
+        	outOOS.writeObject(null);
 			while ((input = inBR.readLine().trim()) != null) {
 				if (process(input) != null) {
 					System.out.println(Thread.currentThread().getName() + " sends out => " + currentProductItem.getName());
@@ -89,20 +91,15 @@ public class ProductInfoParser implements Runnable {
 					outOOS.flush();
 				}
 			}
+			System.out.println(Thread.currentThread().getName() + " ENDs ");
+			outOOS.close();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			try {
-				outOOS.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		} 
 		
 	}
 	
@@ -125,27 +122,32 @@ public class ProductInfoParser implements Runnable {
 			@Override
 			public void run() {
 				ObjectInputStream objectInputStream;
+				System.out.println(Thread.currentThread().getName() + " STARTs ");
 				try {
 					objectInputStream = new ObjectInputStream(pipedInputStream);
-					ProductItem currentItem = null;
-					Thread.sleep(5000);
+					ProductItem currentItem = (ProductItem) objectInputStream.readObject();
+//					Thread.sleep(5000);
 					do {		
 						currentItem = (ProductItem) objectInputStream.readObject();
 						System.out.println(Thread.currentThread().getName() + " receives <= " + currentItem.getName());						
 					} while (currentItem != null);
-					
-				} catch (IOException | ClassNotFoundException | InterruptedException e) {
+					System.out.println(Thread.currentThread().getName() + " ENDs ");
+					objectInputStream.close();
+				} catch (IOException | ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}			
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
 		
 //		Thread t0 = new Thread(new ProductInfoParser("eshop.guardian.vn",new InputStreamReader(System.in),null));
 		Thread t0 = new Thread(new ProductInfoParser("tiki.vn",new InputStreamReader(System.in),pipedOutputStream));
 		t0.start();
+		
+//		Thread.sleep(1000);
 		pipeReader.start();
-		Thread.sleep(1000);
 		System.out.print("Enter link: ");	
 		/* copy following links and paste to terminal when test:
 		 
