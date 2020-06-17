@@ -10,6 +10,7 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.io.Reader;
 import java.net.URL;
+import java.util.concurrent.CountDownLatch;
 
 import org.apache.commons.lang3.SerializationUtils;
 import org.jsoup.Jsoup;
@@ -28,6 +29,8 @@ public class ProductInfoParser implements Runnable {
 	private ProductInfoDocParser currentProductItemDocParser;
 	private BufferedReader inBR;
 	private ObjectOutputStream outOOS;
+	private CountDownLatch outReadyLatch;
+	private CountDownLatch outAliveLatch;
 	
 	
 	public String getHostName() {
@@ -83,8 +86,12 @@ public class ProductInfoParser implements Runnable {
 		System.out.println(Thread.currentThread().getName() + " STARTs ");
 		String input;
         try {        	
-        	outOOS.writeObject(null);
-			while ((input = inBR.readLine().trim()) != null) {
+        	if (outReadyLatch.getCount() > 0) {
+        		outOOS.writeObject(null);
+        		outOOS.flush();
+        		outReadyLatch.countDown();
+        	}        	
+			while ((input = inBR.readLine().trim()) != null && !input.isEmpty()) {
 				if (process(input) != null) {
 					System.out.println(Thread.currentThread().getName() + " sends out => " + currentProductItem.getName());
 					outOOS.writeObject(SerializationUtils.clone(currentProductItem));
@@ -92,30 +99,42 @@ public class ProductInfoParser implements Runnable {
 				}
 			}
 			System.out.println(Thread.currentThread().getName() + " ENDs ");
-			outOOS.close();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		} finally {
+			outAliveLatch.countDown();
+			try {
+				if (outAliveLatch.getCount() == 0)
+					outOOS.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 	}
 	
-	public ProductInfoParser(String aHostName, Reader in, PipedOutputStream out) throws Exception {
+	public ProductInfoParser(String aHostName, Reader in, PipedOutputStream out, CountDownLatch readyLatch, CountDownLatch aliveLatch) throws Exception {
 		this.setHostName(aHostName);
 		this.inBR = new BufferedReader(in);
 		this.outOOS =  new ObjectOutputStream(out);
+		this.outReadyLatch = readyLatch;
+		this.outAliveLatch = aliveLatch;
 	}
 
 
 	public static void main(String[] args) throws Exception {
 		System.out.println("Main thread is- " + Thread.currentThread().getName()); 
-		@SuppressWarnings("resource")
 		PipedInputStream pipedInputStream=new PipedInputStream();
 		PipedOutputStream pipedOutputStream=new PipedOutputStream();
 		pipedInputStream.connect(pipedOutputStream);
+		
+		CountDownLatch readyLatch = new CountDownLatch(1);
+		CountDownLatch aliveLatch = new CountDownLatch(1);
 		
 		/*Thread for reading data from pipe*/
 		Thread pipeReader=new Thread(new Runnable() {
@@ -125,28 +144,38 @@ public class ProductInfoParser implements Runnable {
 				System.out.println(Thread.currentThread().getName() + " STARTs ");
 				try {
 					objectInputStream = new ObjectInputStream(pipedInputStream);
-					ProductItem currentItem = (ProductItem) objectInputStream.readObject();
-//					Thread.sleep(5000);
+					readyLatch.await();
+					if (objectInputStream.readObject() == null)
+						System.out.println(Thread.currentThread().getName() + " connect OK ");
+					ProductItem currentItem;
 					do {		
 						currentItem = (ProductItem) objectInputStream.readObject();
 						System.out.println(Thread.currentThread().getName() + " receives <= " + currentItem.getName());						
 					} while (currentItem != null);
 					System.out.println(Thread.currentThread().getName() + " ENDs ");
-					objectInputStream.close();
+					
+				} catch (java.io.EOFException eof) {
+					// Do nothing, out pipe closed
 				} catch (IOException | ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (Exception e) {
 					e.printStackTrace();
+				} finally {
+					try {
+						pipedInputStream.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		});
 		
 //		Thread t0 = new Thread(new ProductInfoParser("eshop.guardian.vn",new InputStreamReader(System.in),null));
-		Thread t0 = new Thread(new ProductInfoParser("tiki.vn",new InputStreamReader(System.in),pipedOutputStream));
+		Thread t0 = new Thread(new ProductInfoParser("tiki.vn",new InputStreamReader(System.in),pipedOutputStream,readyLatch,aliveLatch));
 		t0.start();
 		
-//		Thread.sleep(1000);
 		pipeReader.start();
 		System.out.print("Enter link: ");	
 		/* copy following links and paste to terminal when test:
@@ -159,11 +188,10 @@ public class ProductInfoParser implements Runnable {
 		 https://tiki.vn/bo-05-noi-trang-men-nap-kinh-mishio-mk153-p25033902.html?spid=25033911&src=home-deal-hot
 		 https://tiki.vn/dien-thoai-iphone-xr-64gb-hang-nhap-khau-chinh-hang-p4529255.html?src=personalization
 		 
-		 
-		
-		 
 		  
 		 */
+		aliveLatch.await();
+		System.out.println("Main thread ends !!!");
 	}
 
 }
