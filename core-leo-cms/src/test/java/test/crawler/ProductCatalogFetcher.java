@@ -1,6 +1,7 @@
 package test.crawler;
 
 import java.io.BufferedWriter;
+import java.io.PipedWriter;
 
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -13,7 +14,7 @@ public class ProductCatalogFetcher {
 	WebDriverWait wait = null;
 	BufferedWriter outBW = null;
 	
-	public ProductCatalogFetcher(PipedWriter out) {
+	public ProductCatalogFetcher() {
 		System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
 		
 		options = new ChromeOptions();
