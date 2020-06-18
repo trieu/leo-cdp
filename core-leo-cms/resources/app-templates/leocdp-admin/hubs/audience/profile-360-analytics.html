@@ -30,38 +30,76 @@
 </style>
 
 <div class="row" id="breadcrumb_header" >
-      	<div class="col-md-12" >
-           <h2 class="page-header" > <a href="javascript:"> Audience Hub </a> 
-           &#8594; <a href="#calljs-loadAudienceProfiles()"> Audience Profiles </a>
-           &#8594; <a href="javascript:"> Profile 360 Analytics </a> </h2>
-       </div>
-       
-   </div>
+	<div class="col-md-12" >
+    	<h4 class="page-header" > <a href="javascript:"> Unified Marketing Hub </a> 
+          &#8594; <a href="#calljs-loadAudienceProfiles()"> Audience Profiles </a>
+          &#8594; <a href="javascript:"> Profile Analytics </a> </h4>
+    </div>   
+</div>
 
-   <h2 id="journey_map_name" >Hành trình của khách hàng </h2>
-
-   <div class="container-fluid">
+<div class="container-fluid">
 
        <!-- MAIN BODY here -->
 
        <div class="row">
-           <div class="col-md-4">
-               <div class="text-center">
-                   <h3>Avatar</h3>
-                   <img src="https://randomuser.me/api/portraits/men/90.jpg"
-                       alt="Profile Avatar" class="rounded mx-auto d-block avatar">
-               </div>
+           <div class="col-md-5">
+               <table border=0 class="underlined" style="width: 100%;">
+                   <tr>
+                       <td>
+                           <ol id="visitor_attributes" data-field="visitor_attributes">
+                               <li>
+                                   <b> Profile UUID </b> 
+                                   <p> dsadsa231 </p>
+                               </li>
+                               <li>
+                                   <b> Last seen touchpoint </b> 
+                                   <p> bookstore.bigdatavietnam.org  </p>
+                               </li>
+                               <li>
+                                   <b> Device ID </b> 
+                                   <p > dsadsa231 </p>
+                               </li>
+                               <li>
+                                   <b> Visitor Location </b> 
+                                   <p> TP.HCM, Việt Nam  </p>
+                               </li>
+                               <li>
+                                   <b> Browser </b> 
+                                   <p> Safari  </p>
+                               </li>
+                               <li>
+                                   <b> Device </b> 
+                                   <p> iPhone 7  </p>
+                               </li>
+                               <li>
+                                   <b> OS </b> 
+                                   <p> iOS 11  </p>
+                               </li>
+                               
+                           </ol>
+                       </td>
+                   </tr>
+               </table>
            </div>
-           <div class="col-md-8">
-
-               <div>
-                   <h3> {{profile_full_name}} </h3>
-                   <strong class="editable_text"> Nguyen Van A </strong>
-               </div>
-               <br>
+           <div class="col-md-7">
+                <div class="row">
+	           		
+	               <div class="col-md-6 text-center" >
+	                   <h3> {{profile_full_name}} </h3>
+	                   <strong class="editable_text"> Nguyen Van A </strong>
+	               </div>
+	               
+	               <div class="col-md-6 text-center" >
+	                   <h3>Avatar</h3>
+	                   <img src="https://randomuser.me/api/portraits/men/90.jpg"
+	                       alt="Profile Avatar" class="rounded mx-auto d-block avatar">
+	               </div>
+                </div>
+             
                <h3> {{profile_attributes}}
                    <span class="editable_add_item" data-target="personal_attributes"  ></span>  
                </h3>
+               
                <table border=0 class="underlined" style="width: 100%;">
                    <tr>
                        <td>
@@ -75,16 +113,103 @@
                                    <p data-persona="value" class="editable_text" > 30 </p>
                                </li>
                                <li>
-                                   <b data-persona="key" class="editable_text" > Vùng địa lý </b> 
+                                   <b data-persona="key" class="editable_text" > Khu vực sinh sống </b> 
                                    <p data-persona="value" class="editable_text" > TP.HCM, Việt Nam  </p>
                                </li>
                            </ol>
                        </td>
                    </tr>
                </table>
+               
            </div>
 
        </div>
+       
+       <!--  Tab Navigation Items -->
+       <ul class="nav nav-tabs" >
+		  <li class="active"><a href="javascript: " data-target-tab="panel_profile_journey" > Journey Flow </a></li>
+		  <li><a href="javascript:" data-target-tab="panel_profile_activities" >Activities</a></li>
+		  <li><a href="javascript:" data-target-tab="panel_profile_ext_attributes" > Extended Attributes </a></li>
+		  <li><a href="javascript:"data-target-tab="panel_business_transactions" >Business Transactions</a></li>
+	   </ul>
+	   
+	   <!-- Tab Contents  -->
+       <div class="tab-content">
+			<div class="tab-pane active" id="panel_profile_journey" >
+		     	<h2 id="journey_map_name" >Hành trình của khách hàng </h2>
+		     	
+		     	<div class="row">
+		       		<div id="customerJourneyDiv" class="experience_journey_flow row" ></div>
+		       	 	<div id="sankeyChart" style="height:580px; width:98%;"></div>
+		       	</div>
+		       	
+		       	<div class="row" >
+		            <div class="col-md-6 bar-module">
+		                <div id="venn_two" style=float:left>
+		                    <h3 style="text-align: center">Media Touchpoints</h3>
+		                </div>
+		            </div>
+		            <div class="col-md-6 ">
+		                <div>
+		                    <h3>Predictive Personality Traits(OCEAN Model) </h3>
+		                </div>
+		                <div class="pairs">
+		                    <div id="chart_persornality">
+		                    </div>
+		                </div>
+		            </div>
+			     </div>
+		       
+			</div>
+		 	<div class="tab-pane " id="panel_profile_activities" >
+	     		<ul class="list-group list-group-dividered list-group-full">
+				   <li class="list-group-item">
+				      <div class="row">
+				         <div class="col-md-1 text-center">  <img class="rounded mx-auto d-block" src="https://cdn2.iconfinder.com/data/icons/picol-vector/32/view-32.png" alt="icon" > </div>
+				         <div class="col-md-11">
+				            <small class="text-muted pull-right">Just now</small>
+				            <h4 class="media-heading">viewed </h4>
+				            <div>Lorem ipsum Veniam aliquip culpa laboris minim tempor labore
+				               commodo officia veniam non in in in.
+				            </div>
+				         </div>
+				      </div>
+				   </li>
+				   <li class="list-group-item">
+				      <div class="row">
+				         <div class="col-md-1 text-center">  <img class="rounded mx-auto d-block" src="https://cdn2.iconfinder.com/data/icons/picol-vector/32/view-32.png" alt="icon" > </div>
+				         <div class="col-md-11">
+				            <small class="text-muted pull-right">38 minutes ago</small>
+				            <h4 class="media-heading">watched </h4>
+				            <div>Lorem ipsum Laborum sit laborum cillum proident dolore culpa
+				               reprehenderit qui enim labore do mollit in.
+				            </div>
+				         </div>
+				      </div>
+				   </li>
+				   <li class="list-group-item">
+				      <div class="row">
+				         <div class="col-md-1 text-center"> <img class="rounded mx-auto d-block" src="https://cdn2.iconfinder.com/data/icons/picol-vector/32/view-32.png" alt="icon" > </div>
+				         <div class="col-md-11">
+				            <small class="text-muted pull-right">2 hours ago</small>
+				            <h4 class="media-heading">clicked </h4>
+				            <div>Lorem ipsum Culpa mollit ex mollit magna dolore dolore dolore
+				               tempor velit magna enim ad dolore dolore dolore.
+				            </div>
+				         </div>
+				      </div>
+				   </li>
+				</ul>
+			</div>
+			<div class="tab-pane" id="panel_profile_ext_attributes" >
+			      <h3>attributes</h3>
+			      
+			      
+			</div>
+		    <div class="tab-pane" id="panel_business_transactions" >
+		     	<h3>transactions</h3>
+			</div>
+	   </div>
        
        
        <div class="row" style="display: none;" >
@@ -107,207 +232,17 @@
             <div id="profile_attribution" class="col-md-12 bar-module" style="text-align: center;"></div>
        </div>
        
-       
-       
-       <br>
-       <div class="line"></div>
-       <div class="row">
-       		<h3 style="text-align: center"> Customer Journey Map </h3>
-       		<div id="customerJourneyDiv" class="experience_journey_flow row" ></div>
-       	 	<div id="sankeyChart" style="height:580px; width:98%;"></div>
-       </div>
-       
-       <br><br>
-       <div class="line"></div>
-       <div class="row" >
-            <div class="col-md-6 bar-module">
-                <div id="venn_two" style=float:left>
-                    <h3 style="text-align: center">Media Touchpoints</h3>
-                </div>
-            </div>
-            <div class="col-md-6 ">
-                <div>
-                    <h3>Predictive Personality Traits(OCEAN Model) </h3>
-                </div>
-                <div class="pairs">
-                    <div id="chart_persornality">
-                    </div>
-                </div>
-            </div>
-       </div>
+   
 
-       <div class="row">
-
-           <div class="col-md-6">
-               <h3> {{profile_expectations}} 
-                   <span class="editable_add_item" data-target="personal_expectations"  ></span>  
-               </h3> 
-               
-               <table style="width: 100%;" class="plain">
-                   <tr>
-                       <td>
-                           <ol id="personal_expectations" data-field="personal_expectations" >
-                               <li>
-                                   <p class="editable_text"> đọc thử nội dung trước khi mua  </p>
-                               </li>
-                               <li>
-                                   <p class="editable_text"> kiến thức phù hợp thực tế </p>
-                               </li>
-                               <li>
-                                   <p class="editable_text"> tăng doanh thu bán hàng online </p>
-                               </li>
-                           </ol>
-                       </td>
-                   </tr>
-               </table>
-           </div>
-
-           <div class="col-md-6">
-               <h3> {{profile_interests}}  
-                   <span class="editable_add_item" data-target="personal_interests"  ></span>  
-               </h3>
-               <table style="width: 100%;" class="plain">
-                   <tr>
-                       <td>
-                           <ol id="personal_interests" data-field="personal_interests" >
-                               <li>
-                                   <p class="editable_text"> học hỏi kiến thức mới về công nghệ </p>
-                               </li>
-                               <li>
-                                   <p class="editable_text"> phát triển kinh doanh, doanh nghiệp </p>
-                               </li>
-                               <li>
-                                   <p class="editable_text"> cảm thấy tự tin, đủ kiến thức cho công việc </p>
-                               </li>
-
-                           </ol>
-                       </td>
-                   </tr>
-               </table>
-           </div>
-
-       </div>
-
-       <div class="line"></div>
-
-       <div class="row">
-
-           <div class="col-md-6">
-               <h3> {{profile_recommended_ideas}} 
-                   <span class="editable_add_item" data-target="business_ideas"  ></span> 
-               </h3>
-               <table class="plain" style="width: 100%;">
-                   <tr>
-                       <td>
-                           <ol id="business_ideas" data-field="business_ideas" >
-                               <li>
-                                   <p class="editable_text"> Chủ đề sách về marketing 4.0 </p>
-                               </li>
-                               <li>
-                                   <p class="editable_text"> Chủ đề sách về nền tảng công nghệ (Technology Platform) </p>
-                               </li>
-                               <li>
-                                   <p class="editable_text"> Chủ đề sách về nghệ thuật bán hàng online </p>
-                               </li>
-                           </ol>
-                       </td>
-                   </tr>
-               </table>
-           </div>
-
-           <div class="col-md-6">
-               <h3> {{profile_recommended_solutions}}
-                   <span class="editable_add_item" data-target="business_solutions"  ></span> 
-               </h3>
-               <table class="plain" style="width: 100%;">
-                   <tr>
-                       <td>
-                           <ol id="business_solutions" data-field="business_solutions" >
-                               <li>
-                                   <p class="editable_text"> Chạy marketing  "Marketing Cuộc Cách Mạng Công Nghệ 4.0" của Philip Kotler </p>
-                               </li>
-                               <li>
-                                   <p class="editable_text"> Chạy marketing cuốn Platform Ứng Dụng </p>
-                               </li>
-                               <li>
-                                   <p class="editable_text"> Tìm kiếm các chuyên gia và đặt hàng họ viết sách  </p>
-                               </li>
-                           </ol>
-                       </td>
-                   </tr>
-               </table>
-           </div>
-
-       </div>
-
+      
        <div class="line"></div>
 
 
-       <div class="row">
-           <div class="col-md-6">
-               <h3> {{profile_touchpoints}}
-                   <span class="editable_add_item" data-target="personal_touchpoints"  ></span>
-               </h3>
-               <table class="plain">
-                   <tr>
-                       <td>
-                           <ol id="personal_touchpoints" data-field="personal_touchpoints" >
-                            	<li>
-                                   <p class="editable_text"> Google Search </p>
-                               </li>
-                               <li>
-                                   <p class="editable_text"> Facebook Group </p>
-                               </li>
-                               <li>
-                                   <p class="editable_text"> YouTube channel </p>
-                               </li>
-                               <li>
-                                   <p class="editable_text"> E-commerce Website </p>
-                               </li>
-                               <li>
-                                   <p class="editable_text"> E-commerce Mobile App </p>
-                               </li>
-                               <li>
-                                   <p class="editable_text"> Email khách hàng (CRM) </p>
-                               </li>
-                               <li>
-                                   <p class="editable_text"> Số điện thoại khách hàng (CRM) </p>
-                               </li>
-                               <li>
-                                   <p class="editable_text"> Cửa hàng bán lẻ </p>
-                               </li>
-                               <li>
-                                   <p class="editable_text"> Shopping Mall </p>
-                               </li>
-                           </ol>
-                       </td>
-                   </tr>
-               </table>
-           </div>
-           <div class="col-md-6">
-           	<h3> {{profile_actions}} <span class="editable_add_item" data-target="conversion_actions" ></span> </h3>
-               <table class="plain" style="width: 100%;">
-                   <tr>
-                       <td>
-                           <ol id="conversion_actions" data-field="conversion_actions" >
-                               <li>
-                                   <p class="editable_text"> Add To Cart </p>
-                               </li>
-                               <li>
-                                   <p class="editable_text"> Ghé nhà sách </p>
-                               </li>
-                               <li>
-                                   <p class="editable_text"> Đọc thử </p>
-                               </li>
-                           </ol>
-                       </td>
-                   </tr>
-               </table>
-           </div>
-       </div>
+  
 
-   </div>
-    <br><br><br><br>
+</div>
+
+    <br><br><br>
 
 <textarea id="customer_flow_code" style="display: none;" >
 journey
@@ -340,7 +275,8 @@ journey
     
     function initProfile360Analytics() {
     	//setup editable node
-
+		setupTabPanels();
+    	
         setTimeout(function(){
         	loadProfileAttribution();
             loadMediaTouchpoints()

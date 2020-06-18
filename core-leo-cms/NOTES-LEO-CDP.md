@@ -66,3 +66,8 @@ http://log.xemgiday.com/eta?observer=tester&media=xemgiday.com&itouchid=homepage
 * Cohort Visualization library https://github.com/restorando/cornelius
 * https://github.com/kiransunkari/retention-graph-using-D3-cohort-analysis-
 * User Journey, Gantt, Sequence https://github.com/mermaid-js/mermaid
+
+## Profile UI/UX
+* Ref https://piwik.pro/customer-data-platform/
+* Ref https://www.hull.io/
+* infinite scrolling for event stream https://jscroll.com/#/

@@ -59,9 +59,6 @@ $(window).on('hashchange', function () {
 
 
 
-
-
-
 //////////////////////////////////////////////////// COMMON ////////////////////////////////////////////////
 
 function loadMediaInfoView(mediaInfo, type, editMode) {
@@ -180,6 +177,18 @@ function toggleDiv(aNode, divSelector) {
     }
 }
 
+var setupTabPanels = function(){
+	$('ul[class="nav nav-tabs"] a').click(function(){ 
+		//clear active element
+        $('ul[class="nav nav-tabs"] li').removeClass('active'); 
+        $('div[class*="tab-pane"]').removeClass('active');
+        //set active element    
+        $(this).parent().addClass('active');
+        var targetTab = $(this).data('target-tab');
+        $('#'+targetTab).addClass('active');
+	})
+}
+
 var loadModalboxHtml = function (uri) {
     $.ajax({
         url: uri,
@@ -200,6 +209,8 @@ var makeNodeEditable = function(selector){
         inputclass: 'editable_text_editor'
     })
 }
+
+
 
 document.addEventListener("trix-file-accept", function(event) {
   event.preventDefault();

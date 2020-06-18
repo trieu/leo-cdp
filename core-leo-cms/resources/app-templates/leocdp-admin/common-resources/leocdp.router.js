@@ -1,7 +1,7 @@
 
 // ###################### Business Hub ######################
 
-function loadSalesDashboard() {
+function loadCustomer360Analytics() {
     loadView('/view/hubs/business/sales-dashboard.html?admin=1', pageDomSelector, function () {
     	initSalesDashboard();
     });
@@ -25,7 +25,7 @@ function loadServiceCatalogManagement(){
     });
 }
 
-function loadBusinessHubApiManagement(){
+function loadMarketingHubApiManagement(){
 	loadView('/view/hubs/in-development.html?admin=1', pageDomSelector, function () {
 		//TODO
     });

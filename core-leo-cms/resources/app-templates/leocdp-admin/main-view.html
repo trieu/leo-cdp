@@ -42,74 +42,74 @@
 	<div id="main-navbar" class="collapse navbar-collapse navbar-ex1-collapse">
 		<ul class="nav navbar-nav side-nav">
 		
-			<!--  1 - Journey Management  -->
+			<!--  1 - Customer Journey Menu  -->
 			<li>
-				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#audience_hub_menu"> <i class="fa fa-fw fa-database"></i>
-					Data Journey Map <i id="audience_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
+				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#journey_hub_menu"> <i class="fa fa-fw fa-map-o"></i>
+				 	Customer Journey Hub<i id="journey_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
-				<ul id="audience_hub_menu" class="collapse in" aria-expanded="true">
+				<ul id="journey_hub_menu" class="collapse in" aria-expanded="true">
 					
 					<li>
-						<a href="#calljs-loadAudienceDataObserver()"> <i class="fa fa-fw fa-list-ul"></i>  Ideal Customer Profiles </a>
+						<a href="#calljs-loadAudienceDataObserver()"> <i class="fa fa-fw fa-list-ol"></i>  Customer Personas </a>
 					</li>					
 					
 					<li>
-						<a href="#calljs-loadJourneyMapStudio()"> <i class="fa fa-fw fa-map-o"></i> Customer Journey List </a>
+						<a href="#calljs-loadJourneyMapStudio()"> <i class="fa fa-fw fa-map-o"></i> Customer Journeys </a>
 					</li>
 					
 					<li>
-						<a href="#calljs-loadAudienceDataObserver()"> <i class="fa fa-fw fa-list-ul"></i>  Data Touchpoint List </a>
+						<a href="#calljs-loadAudienceDataObserver()"> <i class="fa fa-fw fa-list-ol"></i>  Data Touchpoints </a>
 					</li>
 						
 					<li>
-						<a href="#calljs-loadAudienceDataObserver()"> <i class="fa fa-fw fa-list-ul"></i>  Data Observer List </a>
+						<a href="#calljs-loadAudienceDataObserver()"> <i class="fa fa-fw fa-list-ol"></i>  Data Observers </a>
 					</li>
 					
 					<li>
-						<a href="#calljs-loadAudienceHubApiManagement()"> <i class="fa fa-fw fa-plug"></i> Data Journey Map API</a>
+						<a href="#calljs-loadAudienceHubApiManagement()"> <i class="fa fa-fw fa-plug"></i> Customer Journey API</a>
 					</li>
 				
 					
 				</ul>
 			</li>
 		
-			<!--  2 - Marketing Data Management  -->
+			<!--  2 - Unified Marketing Menu  -->
 			<li>
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#marketing_hub_menu"> <i class="fa fa-fw fa-briefcase"></i>
-					Marketing Data Hub <i id="marketing_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
+					Unified Marketing Hub <i id="marketing_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
 				<ul  id="marketing_hub_menu" class="collapse in" aria-expanded="true">
 					<li >
-						<a href="#calljs-loadMarketing360Analytics()"> <i class="fa fa-fw fa-pie-chart"></i> Marketing 360 Analytics </a>
+						<a href="#calljs-loadMarketing360Analytics()"> <i class="fa fa-fw fa-line-chart"></i> Marketing 360 Analytics </a>
 					</li>
 					
 					<li>
-						<a href="#calljs-loadSales360Analytics()"> <i class="fa fa-fw fa-line-chart"></i> Sales 360 Analytics </a>
+						<a href="#calljs-loadCustomer360Analytics()"> <i class="fa fa-fw fa-pie-chart"></i> Customer 360 Analytics </a>
 					</li>	
 					
 					<li>
-						<a href="#calljs-loadProductCatalogManagement()"> <i class="fa fa-fw fa-list-ul"></i> Product Catalog</a>
+						<a href="#calljs-loadAudienceProfiles()"> <i class="fa fa-fw fa-users"></i> Audience Profiles </a>
 					</li>
 					
 					<li>
-						<a href="#calljs-loadServiceCatalogManagement()"> <i class="fa fa-fw fa-list-ul"></i> Service Catalog</a>
+						<a href="#calljs-loadAudienceSegmentation()"> <i class="fa fa-fw fa-object-group"></i> Audience Segments </a>
 					</li>
 					
 					<li>
-						<a href="#calljs-loadAudienceProfiles()"> <i class="fa fa-fw fa-users"></i> Audience Profile </a>
+						<a href="#calljs-loadProductCatalogManagement()"> <i class="fa fa-fw fa-database"></i> Product Catalog </a>
 					</li>
 					
 					<li>
-						<a href="#calljs-loadAudienceSegmentation()"> <i class="fa fa-fw fa-object-group"></i> Audience Segment </a>
+						<a href="#calljs-loadServiceCatalogManagement()"> <i class="fa fa-fw fa-database"></i> Service Catalog </a>
 					</li>
 					
 					<li >
-						<a href="#calljs-loadBusinessHubApiManagement()"> <i class="fa fa-fw fa-plug"></i> Marketing Data API </a>
+						<a href="#calljs-loadMarketingHubApiManagement()"> <i class="fa fa-fw fa-plug"></i> Marketing Hub API </a>
 					</li>
 				</ul>
 			</li>
 
-			<!--  3 - Creative Content Management  -->
+			<!--  3 - Creative Content Menu  -->
 			<li>
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#content_hub_menu"> <i class="fa fa-fw fa-sitemap"></i>
 					Creative Content Hub <i id="content_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
@@ -119,10 +119,10 @@
 						<a href="#calljs-loadContent360Analytics()"> <i class="fa fa-fw fa-bar-chart"></i> Content 360 Analytics </a>
 					</li>
 					<li>
-						<a href="#calljs-loadCategoryList()"> <i class="fa fa-folder-open-o" aria-hidden="true"></i> Category Folder </a>
+						<a href="#calljs-loadCategoryList()"> <i class="fa fa-fw fa-database" ></i> Category Catalog </a>
 					</li>
 					<li>
-						<a href="#calljs-loadContentHubApiManagement()"> <i class="fa fa-fw fa-plug"></i> Content Data API </a>
+						<a href="#calljs-loadContentHubApiManagement()"> <i class="fa fa-fw fa-plug"></i> Content Hub API </a>
 					</li>
 					<li>
 						<a href="#calljs-loadMediaMarketplace()"> <i class="fa fa-fw fa-exchange"></i> Media Marketplace </a>
@@ -131,43 +131,42 @@
 			</li>
 
 			<!--  4 - Personalization Content Management  -->
-			<li id="nav_personalization_hub" style="display: none;" >
+			<li id="nav_personalization_hub" style="display: ;" >
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#personalization_hub_menu"> <i class="fa fa-fw fa-heart"></i>
-					Personalization Hub<i id="personalization_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
+					Personalization Engine <i id="personalization_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
 				<ul id="personalization_hub_menu" class="collapse in" aria-expanded="true">					
 					<li>
-						<a href="#calljs-loadLeoPredictionModel()"> <i class="fa fa-fw fa-user-circle"></i> Leo A.I Prediction Model </a>
+						<a href="#calljs-loadLeoPredictionModel()"> <i class="fa fa-fw fa-user-circle"></i> Personalization AI Models </a>
 					</li>	
 					<li>
-						<a href="#calljs-loadRecommenderWidget()"> <i class="fa fa-fw fa-internet-explorer"></i> Recommender Widget </a>
+						<a href="#calljs-loadRecommenderWidget()"> <i class="fa fa-fw fa-internet-explorer"></i> Recommendation Widget </a>
 					</li>
 					<li>
-						<a href="#calljs-loadRecommenderApiManagement()"> <i class="fa fa-fw fa-plug"></i> Recommender API</a>
+						<a href="#calljs-loadRecommenderApiManagement()"> <i class="fa fa-fw fa-plug"></i> Recommendation API</a>
 					</li>
-					<li >
-						<a href="#calljs-loadAiModelMarketplace()"> <i class="fa fa-fw fa-exchange"></i> A.I Model Marketplace </a>
-					</li>	
+					
 				</ul>
 			</li>
 			
 			<!--  5 - Marketing & Sales Activation Management  -->
 			<li id="nav_activation_hub"  >
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#activation_hub_menu"> <i class="fa fa-fw fa-bolt"></i>
-					Sales Activation Hub <i id="activation_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
+					Activation Campaign<i id="activation_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
 				<ul id="activation_hub_menu" class="collapse in" aria-expanded="true" >
+					
 					<li>
-						<a href="#calljs-loadCampaignManagement()"> <i class="fa fa-fw fa-list-ol"></i> Campaign Management </a>
+						<a href="#calljs-loadAdvertisingMarketplace()"> <i class="fa fa-fw fa-exchange"></i> Branding Campaign </a>
 					</li>
 					<li>
-						<a href="#calljs-loadAdvertisingMarketplace()"> <i class="fa fa-fw fa-exchange"></i> Advertising Marketplace </a>
+						<a href="#calljs-loadAffiliateMarketplace()"> <i class="fa fa-fw fa-exchange"></i> Performance Campaign </a>
 					</li>
 					<li>
-						<a href="#calljs-loadAffiliateMarketplace()"> <i class="fa fa-fw fa-exchange"></i> Affiliate Marketplace </a>
+						<a href="#calljs-loadCampaignManagement()"> <i class="fa fa-fw fa-exchange"></i> Push Message Campaign </a>
 					</li>
 					<li>
-						<a href="#calljs-loadActivationApiManagement()"> <i class="fa fa-fw fa-plug"></i> Activation Data API</a>
+						<a href="#calljs-loadActivationApiManagement()"> <i class="fa fa-fw fa-plug"></i> Activation Campaign API</a>
 					</li>
 				</ul>
 			</li>
@@ -179,7 +178,7 @@
 				</a>
 				<ul id="system_management_menu" class="collapse in" aria-expanded="true">
 					<li>
-						<a href="#calljs-loadUserList()"> <i class="fa fa-user-plus" aria-hidden="true"></i>  User Login Management </a>
+						<a href="#calljs-loadUserList()"> <i class="fa fa-user-plus" aria-hidden="true"></i>  User Login Accounts </a>
 					</li>
 					<li style="display: none;" >
 						<a href="#calljs-loadSystemManagement()"> <i class="fa fa-cog" aria-hidden="true"></i> System configuration </a>
@@ -328,11 +327,11 @@
         });
          
      	// audience menu
-		$("#audience_hub_menu").on("hide.bs.collapse", function(){
-        	$("#audience_hub_collapse_icon").attr('class','fa fa-fw fa-caret-left');
+		$("#journey_hub_menu").on("hide.bs.collapse", function(){
+        	$("#journey_hub_collapse_icon").attr('class','fa fa-fw fa-caret-left');
         });
-        $("#audience_hub_menu").on("show.bs.collapse", function(){
-         	$("#audience_hub_collapse_icon").attr('class','fa fa-fw fa-caret-down');
+        $("#journey_hub_menu").on("show.bs.collapse", function(){
+         	$("#journey_hub_collapse_icon").attr('class','fa fa-fw fa-caret-down');
         });
         
      	// personalization menu
