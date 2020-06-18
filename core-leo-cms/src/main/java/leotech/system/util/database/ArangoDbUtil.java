@@ -107,7 +107,7 @@ public class ArangoDbUtil {
 
 	public static boolean isExistedDocument(String collectionName, String id) {
 		String aql = "RETURN LENGTH(FOR d IN " + collectionName + " FILTER d._key == @id LIMIT 1 RETURN true) > 0";
-		System.out.println("isExistedDocument " + aql);
+//		System.out.println("isExistedDocument " + aql);
 		Map<String, Object> bindKeys = new HashMap<>(1);
 		bindKeys.put("id", id);
 		ArangoCursor<Boolean> cursor = ArangoDbUtil.getActiveArangoDbInstance().query(aql, bindKeys, null, Boolean.class);

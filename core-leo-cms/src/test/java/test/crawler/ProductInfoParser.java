@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.io.Reader;
@@ -31,8 +32,8 @@ public class ProductInfoParser implements Runnable {
 	private Map<String, ProductInfoDocParser> hostNameToDocParser = new HashMap<>();
 	private BufferedReader inBR;
 	private ObjectOutputStream outOOS;
-	private CountDownLatch outReadyLatch;
-	private CountDownLatch outAliveLatch;
+	private CountDownLatch latchPipeInit;
+	private CountDownLatch latchPipeClose;
 	
 	
 	public String getHostName() {
@@ -86,7 +87,7 @@ public class ProductInfoParser implements Runnable {
 		String htmlStr;
 		if (!(htmlStr = HttpClientUtil.executeGet(urlStr)).equals("404")) {
 			this.setCurrentHTML(htmlStr);
-			this.currentProductItem = new ProductItem("");
+			this.currentProductItem = new ProductItem(urlStr);
 			currentProductItem.setSiteDomain(hostName);
 			if (currentProductItemDocParser.parse(currentDoc, currentProductItem))
 				return currentProductItem;		
@@ -99,26 +100,28 @@ public class ProductInfoParser implements Runnable {
 //		System.out.println(Thread.currentThread().getName() + " STARTs ");
 		String input;
         try {        	
-        	if (outReadyLatch.getCount() > 0) {
+        	if (latchPipeInit.getCount() > 0) {
+        		latchPipeInit.countDown();
         		outOOS.writeObject(null);
-        		outOOS.flush();
-        		outReadyLatch.countDown();
+        		outOOS.flush();        		
         	}        	
 			while ((input = inBR.readLine().trim()) != null && !input.isEmpty()) {
 				if (process(input) != null) {
 //					System.out.println(Thread.currentThread().getName() + " sends out => " + currentProductItem.getName());
 					outOOS.writeObject(currentProductItem);
-					outOOS.flush();
+//					outOOS.flush();
 				}
 			}
 //			System.out.println(Thread.currentThread().getName() + " ENDs ");
+        } catch (NullPointerException e) {
+			// Do nothing, the sender has closed the pipe
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			outAliveLatch.countDown();
+			latchPipeClose.countDown();
 			try {
-				if (outAliveLatch.getCount() == 0)
+				if (latchPipeClose.getCount() == 0)
 					outOOS.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -128,11 +131,11 @@ public class ProductInfoParser implements Runnable {
 		
 	}
 	
-	public ProductInfoParser(Reader in, PipedOutputStream out, CountDownLatch readyLatch, CountDownLatch aliveLatch) throws Exception {
+	public ProductInfoParser(Reader in, OutputStream out, CountDownLatch latchPipeReady, CountDownLatch latchPipeClosed) throws Exception {
 		this.inBR = new BufferedReader(in);
 		this.outOOS =  new ObjectOutputStream(out);
-		this.outReadyLatch = readyLatch;
-		this.outAliveLatch = aliveLatch;
+		this.latchPipeInit = latchPipeReady;
+		this.latchPipeClose = latchPipeClosed;
 	}
 	
 	
@@ -154,13 +157,13 @@ public class ProductInfoParser implements Runnable {
 		pipedInputStream.connect(pipedOutputStream);
 		
 		CountDownLatch readyLatch = new CountDownLatch(1);
-		CountDownLatch aliveLatch = new CountDownLatch(1);
+		CountDownLatch endLatch = new CountDownLatch(1);
 		
 		/*Thread for reading data from pipe*/
 		Thread pipeReader=new Thread(new Runnable() {
 			@Override
 			public void run() {
-				ObjectInputStream objectInputStream;
+				ObjectInputStream objectInputStream = null;
 				System.out.println(Thread.currentThread().getName() + " STARTs ");
 				try {
 					objectInputStream = new ObjectInputStream(pipedInputStream);
@@ -170,27 +173,31 @@ public class ProductInfoParser implements Runnable {
 					ProductItem currentItem;
 					do {		
 						currentItem = (ProductItem) objectInputStream.readObject();
-						System.out.println(Thread.currentThread().getName() + " receives <= " + currentItem);
+						System.out.println(Thread.currentThread().getName() + " receives <= " + currentItem);	
 						try { TestProductDao.save(currentItem);} catch (Exception e) {}
 					} while (currentItem != null);
-					
 				} catch (java.io.EOFException eof) {
-					// Do nothing, out pipe closed
+					// Do nothing, the sender has closed the pipe
 				} catch (Exception e) {
 					e.printStackTrace();
 				} finally {
 					try {
 						pipedInputStream.close();
+						objectInputStream.close();						
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					System.out.println(Thread.currentThread().getName() + " ENDs ");
 				}
 			}
 		});
 		
-		Thread t1 = new Thread(new ProductInfoParser(new InputStreamReader(System.in),pipedOutputStream,readyLatch,aliveLatch));
+		Thread t1 = new Thread(new ProductInfoParser(new InputStreamReader(System.in),pipedOutputStream,readyLatch,endLatch));
+		Thread t2 = new Thread(new ProductInfoParser(new InputStreamReader(System.in),pipedOutputStream,readyLatch,endLatch));
+		
 		t1.start();
+		t2.start();
 		
 		pipeReader.start();
 		System.out.println("Enter Any Link to test (empty line = terminate)");	
@@ -205,10 +212,10 @@ public class ProductInfoParser implements Runnable {
 		 https://eshop.guardian.vn/products/bioderma-kem-duong-phuc-hoi-da-mun-30ml
 		 https://tiki.vn/bo-05-noi-trang-men-nap-kinh-mishio-mk153-p25033902.html?spid=25033911&src=home-deal-hot
 		 https://tiki.vn/dien-thoai-iphone-xr-64gb-hang-nhap-khau-chinh-hang-p4529255.html?src=personalization
-		 https://eshops.guardian.vn/products/tui-thom-bell-duc-huong-vana-15g
+		 https://eshop.guardian.vn/products/tui-thom-bell-duc-huong-vana-15g
 		 
 		 */
-		aliveLatch.await();
+		endLatch.await();
 		System.out.println("Test Finishes !!!");
 	}
 

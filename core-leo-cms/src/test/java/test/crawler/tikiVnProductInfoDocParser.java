@@ -48,11 +48,12 @@ public class tikiVnProductInfoDocParser implements ProductInfoDocParser{
 		
 		List<String> categories = JsoupParserUtil.getTexts(srcDoc, "a[class='Breadcrumb__Item-sc-1a3qw0s-1 hjpGLl']:gt(0):not(a[href='#'])");
 		
-		String sku = JsoupParserUtil.getText(srcDoc, "span[itemprop='sku']").replace("SKU:", "").trim();
-
+		String sku = JsoupParserUtil.getText(srcDoc, "span[itemprop='sku']");
 
 		String originalPrice = JsoupParserUtil.getText(srcDoc, "p[class='original-price']").replace("GiÃ¡ thá»‹ trÆ°á»�ng:", "").replace("â‚«", "")
 				.replace(".", "").trim();
+		
+		String sellerName = JsoupParserUtil.getText(srcDoc, "a[class='seller-name']");
 
 
 		dstProductItem.setSku(sku);
@@ -68,6 +69,7 @@ public class tikiVnProductInfoDocParser implements ProductInfoDocParser{
 		dstProductItem.setOriginalPrice(originalPrice);
 		dstProductItem.setCategories(categories);
 		dstProductItem.setBrand(brand);
+		dstProductItem.setSellerName(sellerName);
 
 		return true;
 	}

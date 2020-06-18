@@ -50,6 +50,9 @@ public class ProductItem extends CdpPersistentObject implements Serializable {
 	protected String availability;
 
 	protected String brand;
+	
+	protected String sellerName;
+	
 	protected List<String> keywords = new ArrayList<>(20);
 	protected List<String> categories = new ArrayList<>(10);
 	protected List<String> promoCodes = new ArrayList<>(10);
@@ -223,6 +226,14 @@ public class ProductItem extends CdpPersistentObject implements Serializable {
 	@Override
 	public String toString() {
 		return new Gson().toJson(this);
+	}
+	
+	public String getSellerName() {
+		return sellerName;
+	}
+	
+	public void setSellerName(String sellerName) {
+		this.sellerName = sellerName;
 	}
 
 }
