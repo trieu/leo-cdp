@@ -39,7 +39,7 @@ public class CrawlerGuardianVN extends WebCrawler {
 
 			String html = htmlParseData.getHtml();
 			try {
-				ProductItem item = ProductDataCrawler.parseHtmlToProductItem(urlStr, html);
+				ProductItem item = ProductDataCrawler.parseHtmlToProductItem(page.getWebURL().getDomain(), urlStr, html);
 				if(item != null) {
 					System.out.println("Item: " + item);	
 				}

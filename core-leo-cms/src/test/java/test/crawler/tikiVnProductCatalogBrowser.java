@@ -53,7 +53,7 @@ public class tikiVnProductCatalogBrowser implements ProductCatalogBrowser {
         	e.printStackTrace();
         } finally {
             //driver.quit();
-            out.close();
+           // out.close();
             System.out.println(Thread.currentThread().getName() + " ENDs");
         }
 

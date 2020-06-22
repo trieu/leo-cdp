@@ -7,10 +7,14 @@ import java.util.concurrent.TimeUnit;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import leotech.cdp.model.business.ProductItem;
 import rfx.core.util.HttpClientUtil;
@@ -34,8 +38,14 @@ public class ProductDataCrawler {
 	public static abstract class ProductExtInfoParser {
 		protected ProductItem item;
 		protected Document doc;
+		protected final boolean isSeleniumJsParser;
+
+		public ProductExtInfoParser(boolean isSeleniumJsParser) {
+			this.isSeleniumJsParser = isSeleniumJsParser;
+		}
 
 		public ProductExtInfoParser() {
+			this.isSeleniumJsParser = false;
 		}
 
 		public void init(ProductItem item, Document doc) {
@@ -46,72 +56,107 @@ public class ProductDataCrawler {
 		public abstract void process();
 	}
 
-	public static ProductItem parseHtmlToProductItem(String urlStr, String html) throws Exception {
-		URL url = new URL(urlStr);
-		String host = url.getHost();
+	public static ProductItem parseHtmlToProductItem(String host, String urlStr, String html) throws Exception {
+		return parseHtmlToProductItem(host, urlStr, html, null);
+	}
 
+	public static ProductItem parseHtmlToProductItem(String host, String urlStr, String html,
+			ProductExtInfoParser parser) throws Exception {
 		Document doc = Jsoup.parse(html);
 
-		String ogType = JsoupParserUtil.getAttr(doc, "meta[property='og:type']", "content").toLowerCase();
-		if (!"product".equals(ogType)) {
-			// skip if not a product
-			return null;
-		}
+		//String ogType = JsoupParserUtil.getAttr(doc, "meta[property='og:type']", "content").toLowerCase();
 
 		// new product item
 		ProductItem p = new ProductItem(urlStr);
+		
+		p.setSiteDomain(host);
 
 		// start common parser for Open Graph
 		String title = JsoupParserUtil.getAttr(doc, "meta[property='og:title']", "content");
 		if (StringUtil.isEmpty(title)) {
 			title = JsoupParserUtil.getText(doc, "title");
 		}
+		p.setName(title);
 
 		String description = JsoupParserUtil.getAttr(doc, "meta[property='og:description']", "content");
+		p.setDescription(description);
 
-		String productImage = JsoupParserUtil.getAttr(doc, "meta[property='og:image']", "content").replace("http:",
-				"https:");
+		String productImage = JsoupParserUtil.getAttr(doc, "meta[property='og:image']", "content").replace("http:","https:");
+		p.setImage(productImage);
 
 		String salePrice = JsoupParserUtil.getAttr(doc, "meta[property='og:price:amount']", "content");
+		p.setSalePrice(salePrice);
 
 		String priceCurrency = JsoupParserUtil.getAttr(doc, "meta[property='og:price:currency']", "content");
+		p.setPriceCurrency(priceCurrency);
 
 		String fullUrl = JsoupParserUtil.getAttr(doc, "meta[property='og:url']", "content");
+		p.setFullUrl(fullUrl);
 
 		String siteName = JsoupParserUtil.getAttr(doc, "meta[property='og:site_name']", "content");
+		p.setSiteName(siteName);
 
 		String itemCondition = JsoupParserUtil.getAttr(doc, "link[itemprop='itemCondition']", "href");
+		p.setItemCondition(itemCondition);
 
 		String availability = JsoupParserUtil.getAttr(doc, "link[itemprop='availability']", "href");
+		p.setAvailability(availability);
 
-		ProductExtInfoParser parser = hostToParser.get(host);
+		// call parser for ext info
 		if (parser != null) {
 			parser.init(p, doc);
 			parser.process();
 		}
 
-		p.setName(title);
-		p.setDescription(description);
-		p.setImage(productImage);
-		p.setSalePrice(salePrice);
-		p.setPriceCurrency(priceCurrency);
-		p.setFullUrl(fullUrl);
-		p.setSiteDomain(host);
-		p.setSiteName(siteName);
-		p.setItemCondition(itemCondition);
-		p.setAvailability(availability);
-
 		return p;
+	}
+
+	public static String getHtmlBySelenium(String urlStr) {
+		ChromeOptions options = new ChromeOptions();
+		options.addArguments("disable-extensions");
+		options.addArguments("--headless");
+
+		ChromeDriver driver = new ChromeDriver(options);
+		driver.get(urlStr);
+
+		String html = driver.getPageSource();
+		
+		// TODO add run ext JS for get data
+//		Object rs = driver.executeScript(" return jQuery('script[type=\"application/ld+json\"').text() ;");
+//		// System.out.println(rs);
+//		JsonObject ldJsonObj = new JsonParser().parse(rs.toString().trim().split("\n")[0]).getAsJsonObject();
+//		System.out.println(ldJsonObj);
+		
+		return html;
 	}
 
 	public static ProductItem process(String urlStr) {
 		// get HTML from URL
 		try {
-			String html = HttpClientUtil.executeGet(urlStr);
-			if(html.equals("404")) {
+			URL url = new URL(urlStr);
+			String host = url.getHost();
+
+			String html = "404";
+			ProductExtInfoParser parser = hostToParser.get(host);
+			if (parser != null) {
+				if (parser.isSeleniumJsParser) {
+					html = getHtmlBySelenium(urlStr); // for AJAX web page that
+														// require JavaScript
+														// executor
+				} else {
+					html = HttpClientUtil.executeGet(urlStr); // for normal web
+																// page
+				}
+			} else {
+				html = HttpClientUtil.executeGet(urlStr); // for normal web page
+			}
+
+			System.out.println("process html.length" + html.length());
+
+			if (html.equals("404")) {
 				return new ProductItem("");
 			}
-			return parseHtmlToProductItem(urlStr, html);
+			return parseHtmlToProductItem(host, urlStr, html, parser);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -125,24 +170,43 @@ public class ProductDataCrawler {
 
 	public static void main(String[] args) throws Exception {
 
+		System.setProperty("webdriver.chrome.driver", "/Users/mac/programs/webdriver/chromedriver");
+
 		ProductDataCrawler.addProductExtInfoParser("eshop.guardian.vn", new ProductExtInfoParser() {
 			@Override
 			public void process() {
 				String sku = JsoupParserUtil.getText(doc, "span[id='pro_sku']").replace("SKU:", "").trim();
 				this.item.setSku(sku);
 
-				String originalPrice = JsoupParserUtil.getText(doc, "div[id='price-preview'] del").replace("₫", "")
-						.replace(",", "").trim();
+				String originalPrice = JsoupParserUtil.getNumber(doc, "div[id='price-preview'] del");
 				this.item.setOriginalPrice(originalPrice);
 			}
 		});
 
-		String url = "https://eshop.guardian.vn/products/mat-na-toc-tsubaki-phuc-hoi-hu-ton-180g";
-		ProductItem p = ProductDataCrawler.processWithCache(url);
-		if(! p.isEmpty() ) {
+		ProductDataCrawler.addProductExtInfoParser("www.fahasa.com", new ProductExtInfoParser(true) {
+			@Override
+			public void process() {
+				String originalPrice = JsoupParserUtil.getNumber(doc,
+						"div[id='catalog-product-details-price'] .old-price .price");
+				System.out.println("originalPrice " + originalPrice);
+				this.item.setOriginalPrice(originalPrice);
+
+				String salePrice = JsoupParserUtil.getNumber(doc,
+						"div[id='catalog-product-details-price'] .special-price .price");
+				System.out.println("salePrice " + salePrice);
+				this.item.setSalePrice(salePrice);
+			}
+		});
+
+		// String url =
+		// "https://eshop.guardian.vn/products/dau-goi-tresemme-keratin-smooth-vao-nep-suon-muot-650g";
+
+		String url = "https://www.fahasa.com/chu-nghia-khac-ky-phong-cach-song-ban-linh-va-binh-than.html";
+		ProductItem p = ProductDataCrawler.process(url);
+		if (!p.isEmpty()) {
 			System.out.println(p);
 		}
-		
+
 	}
 
 }

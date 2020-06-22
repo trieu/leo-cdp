@@ -130,7 +130,8 @@ dependencies {
 		,'org.docx4j.org.capaxit.textimage:TextImageGen:1.9'
 		,'com.github.jai-imageio:jai-imageio-core:1.4.0'
 		
-		// Video Media Generator
+		// Web Crawler for Ajax website, need correct version of Chromedriver at https://chromedriver.chromium.org/downloads
+		,'org.seleniumhq.selenium:selenium-java:3.141.59'
     ) 
     	
     testCompile (

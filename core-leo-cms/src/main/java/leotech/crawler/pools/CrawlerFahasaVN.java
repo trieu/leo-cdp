@@ -1,23 +1,25 @@
-package test.crawler;
+package leotech.crawler.pools;
 
-import java.util.List;
 import java.util.regex.Pattern;
+
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
 import edu.uci.ics.crawler4j.crawler.CrawlController;
 import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
-import edu.uci.ics.crawler4j.fetcher.PageFetcher;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 import edu.uci.ics.crawler4j.url.WebURL;
 import leotech.cdp.model.business.ProductItem;
+import leotech.crawler.model.AjaxPageFetcher;
 import leotech.crawler.util.JsoupParserUtil;
 import leotech.crawler.util.ProductDataCrawler;
 import leotech.crawler.util.ProductDataCrawler.ProductExtInfoParser;
 
-public class TestCrawlerAlphabooksVN extends WebCrawler {
+public class CrawlerFahasaVN extends WebCrawler {
 
 	private final static Pattern FILTERS = Pattern.compile(".*(\\.(css|js|gif|jpg" + "|png|mp3|mp4|zip|gz))$");
 
@@ -25,7 +27,9 @@ public class TestCrawlerAlphabooksVN extends WebCrawler {
 	@Override
 	public boolean shouldVisit(Page referringPage, WebURL url) {
 		String href = url.getURL().toLowerCase();
-		return !FILTERS.matcher(href).matches() && href.startsWith("https://alphabooks.vn");
+		boolean checked = !FILTERS.matcher(href).matches() && (href.startsWith("https://www.fahasa.com") || href.startsWith("https://fahasa.com")) && href.endsWith(".html");
+		System.out.println("shouldVisit " + href + " checked " + checked);
+		return checked;
 	}
 
 	/**
@@ -36,15 +40,19 @@ public class TestCrawlerAlphabooksVN extends WebCrawler {
 	public void visit(Page page) {
 		String urlStr = page.getWebURL().getURL();
 		System.out.println("URL: " + urlStr);
+		//System.out.println("getParseData: " + page.getParseData().getClass());
 
 		if (page.getParseData() instanceof HtmlParseData) {
 			HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
 
 			String html = htmlParseData.getHtml();
+			//System.out.println(html);
 			try {
 				ProductItem item = ProductDataCrawler.parseHtmlToProductItem(page.getWebURL().getDomain(), urlStr, html);
 				if(item != null) {
 					System.out.println("Item: " + item);	
+				} else {
+					System.out.println("Item is NULL");	
 				}
 				
 			} catch (Exception e) {
@@ -55,47 +63,43 @@ public class TestCrawlerAlphabooksVN extends WebCrawler {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		ProductDataCrawler.addProductExtInfoParser("eshop.guardian.vn", new ProductExtInfoParser() {
-			@Override
-			public void process() {
-				String sku = JsoupParserUtil.getText(doc, "span[id='pro_sku']").replace("SKU:", "").trim();
-				this.item.setSku(sku);
-
-				String originalPrice = JsoupParserUtil.getText(doc, "div[id='price-preview'] del").replace("₫", "").replace(",", "").trim();
-				this.item.setOriginalPrice(originalPrice);
-				
-				List<String> categories = JsoupParserUtil.getTexts(doc, "ol[itemtype='http://schema.org/BreadcrumbList'] span[itemprop='name']");
-				try {
-					// remove redundant categories
-					categories.remove(0); //Trang Chu
-					categories.remove(categories.size() - 1); //Ten san pham da lay roi
-				} catch(Exception e){}
-				this.item.setCategories(categories);
-			}
-		});
 		
-        String crawlStorageFolder = "./CRAWLER_CACHE";
-        int numberOfCrawlers = 4;
+		// TODO move to config file for ChromeDriver
+		System.setProperty("webdriver.chrome.driver", "/Users/mac/programs/webdriver/chromedriver");
+		ChromeOptions options = new ChromeOptions();
+		options.addArguments("disable-extensions");
+		options.addArguments("--headless");
+		ChromeDriver driver = new ChromeDriver(options);
+		
+		
+        String crawlStorageFolder = "/Users/mac/projects/leo-cms-framework/core-leo-cms/CRAWLER_CACHE";
+        int numberOfCrawlers = 1;
 
         CrawlConfig config = new CrawlConfig();
         config.setCrawlStorageFolder(crawlStorageFolder);
 
         // Instantiate the controller for this crawl.
-        PageFetcher pageFetcher = new PageFetcher(config);
+        AjaxPageFetcher ajaxPageFetcher = new AjaxPageFetcher(config, driver);
         RobotstxtConfig robotstxtConfig = new RobotstxtConfig();
        
         
-        RobotstxtServer robotstxtServer = new RobotstxtServer(robotstxtConfig, pageFetcher);
-        CrawlController controller = new CrawlController(config, pageFetcher, robotstxtServer);
+        RobotstxtServer robotstxtServer = new RobotstxtServer(robotstxtConfig, ajaxPageFetcher);
+        CrawlController controller = new CrawlController(config, ajaxPageFetcher, robotstxtServer);
 
-        // For each crawl, you need to add some seed urls. These are the first
-        // URLs that are fetched and then the crawler starts following links
-        // which are found in these pages
-        controller.addSeed("https://eshop.guardian.vn");
+      
+        controller.addSeed("https://www.fahasa.com/sach-trong-nuoc/tam-ly-ky-nang-song/ky-nang-song.html");
+        
+        ProductDataCrawler.addProductExtInfoParser("www.fahasa.com", new ProductExtInfoParser(true) {
+			@Override
+			public void process() {
+				String originalPrice = JsoupParserUtil.getText(doc, "#catalog-product-details-price p.old-price span.price").replace("₫", "").replace(".", "").trim();
+				this.item.setOriginalPrice(originalPrice);
+			}
+		});
     	
     	
     	// The factory which creates instances of crawlers.
-        CrawlController.WebCrawlerFactory<TestCrawlerAlphabooksVN> factory = TestCrawlerAlphabooksVN::new;
+        CrawlController.WebCrawlerFactory<CrawlerFahasaVN> factory = CrawlerFahasaVN::new;
         
         // Start the crawl. This is a blocking operation, meaning that your code
         // will reach the line after this only when crawling is finished.

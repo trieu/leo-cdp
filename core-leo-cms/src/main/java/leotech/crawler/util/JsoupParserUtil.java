@@ -28,6 +28,15 @@ public class JsoupParserUtil {
 		return data;
 	}
 	
+	public static String getNumber(Document doc, String selector) {
+		String data = "";
+		Element dataNode = doc.selectFirst(selector);
+		if (dataNode != null) {
+			data = dataNode.text().trim().replaceAll("[-+.^:,]","").replaceAll("[^0-9.]", "");
+		}
+		return data;
+	}
+	
 	public static List<String> getTexts(Document doc, String selector) {
 		List<String> data = new ArrayList<>();
 		Elements dataNodes = doc.select(selector);
