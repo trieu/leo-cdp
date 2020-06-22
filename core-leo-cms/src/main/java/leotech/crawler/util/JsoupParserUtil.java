@@ -7,7 +7,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import rfx.core.util.StringUtil;
+
 public class JsoupParserUtil {
+
+	private static final String REGEX_FOR_KEEP_NUMBER = "[^0-9.]";
+	private static final String REGEX_FOR_SPECIAL_CHARS = "[-+.^:,]";
 
 	public static String getAttr(Document doc, String selector, String attrName) {
 		String data = "";
@@ -28,13 +33,22 @@ public class JsoupParserUtil {
 		return data;
 	}
 	
-	public static String getNumber(Document doc, String selector) {
+	public static double getDoubleNumber(Document doc, String selector) {
 		String data = "";
 		Element dataNode = doc.selectFirst(selector);
 		if (dataNode != null) {
-			data = dataNode.text().trim().replaceAll("[-+.^:,]","").replaceAll("[^0-9.]", "");
+			data = dataNode.text().trim().replaceAll(REGEX_FOR_SPECIAL_CHARS,"").replaceAll(REGEX_FOR_KEEP_NUMBER, "");
 		}
-		return data;
+		return StringUtil.safeParseDouble(data);
+	}
+	
+	public static int getIntegerNumber(Document doc, String selector) {
+		String data = "";
+		Element dataNode = doc.selectFirst(selector);
+		if (dataNode != null) {
+			data = dataNode.text().trim().replaceAll(REGEX_FOR_SPECIAL_CHARS,"").replaceAll(REGEX_FOR_KEEP_NUMBER, "");
+		}
+		return StringUtil.safeParseInt(data);
 	}
 	
 	public static List<String> getTexts(Document doc, String selector) {

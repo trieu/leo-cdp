@@ -12,12 +12,24 @@ import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 import edu.uci.ics.crawler4j.url.WebURL;
 import leotech.cdp.model.business.ProductItem;
+import leotech.crawler.util.JsoupParserUtil;
 import leotech.crawler.util.ProductDataCrawler;
+import leotech.crawler.util.ProductDataCrawler.ProductExtInfoParser;
 
 public class CrawlerGuardianVN extends WebCrawler {
 
 	private final static Pattern FILTERS = Pattern.compile(".*(\\.(css|js|gif|jpg" + "|png|mp3|mp4|zip|gz))$");
 
+	ProductExtInfoParser parser = new ProductExtInfoParser() {
+		@Override
+		public void process() {
+			String sku = JsoupParserUtil.getText(doc, "span[id='pro_sku']").replace("SKU:", "").trim();
+			this.item.setSku(sku);
+
+			double originalPrice = JsoupParserUtil.getDoubleNumber(doc, "div[id='price-preview'] del");
+			this.item.setOriginalPrice(originalPrice);
+		}
+	};
 	
 	@Override
 	public boolean shouldVisit(Page referringPage, WebURL url) {
@@ -39,7 +51,7 @@ public class CrawlerGuardianVN extends WebCrawler {
 
 			String html = htmlParseData.getHtml();
 			try {
-				ProductItem item = ProductDataCrawler.parseHtmlToProductItem(page.getWebURL().getDomain(), urlStr, html);
+				ProductItem item = ProductDataCrawler.parseHtmlToProductItem(page.getWebURL().getDomain(), urlStr, html, parser);
 				if(item != null) {
 					System.out.println("Item: " + item);	
 				}
@@ -53,7 +65,7 @@ public class CrawlerGuardianVN extends WebCrawler {
 	
 	public static void main(String[] args) throws Exception {
         String crawlStorageFolder = "/Users/mac/projects/leo-cms-framework/core-leo-cms/CRAWLER_CACHE";
-        int numberOfCrawlers = 4;
+        int numberOfCrawlers = 1;
 
         CrawlConfig config = new CrawlConfig();
         config.setCrawlStorageFolder(crawlStorageFolder);

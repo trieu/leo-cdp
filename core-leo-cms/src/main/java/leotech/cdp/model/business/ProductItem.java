@@ -120,7 +120,9 @@ public class ProductItem extends CdpPersistentObject implements Serializable {
 		return originalPrice;
 	}
 	public void setOriginalPrice(double originalPrice) {
-		this.originalPrice = originalPrice;
+		if(originalPrice > 0) {
+			this.originalPrice = originalPrice;
+		}
 	}
 	public void setOriginalPrice(String originalPrice) {
 		this.originalPrice = StringUtil.safeParseDouble(originalPrice);
@@ -131,9 +133,15 @@ public class ProductItem extends CdpPersistentObject implements Serializable {
 	
 	public void setSalePrice(double salePrice) {
 		this.salePrice = salePrice;
+		
+		if(this.originalPrice == 0) {
+			this.originalPrice = this.salePrice ;
+		}
 	}
 	public void setSalePrice(String salePrice) {
 		this.salePrice = StringUtil.safeParseDouble(salePrice);
+		
+		// because originalPrice can not be zero if sale price is larger than zero
 		if(this.originalPrice == 0) {
 			this.originalPrice = this.salePrice ;
 		}

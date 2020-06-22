@@ -22,13 +22,26 @@ import leotech.crawler.util.ProductDataCrawler.ProductExtInfoParser;
 public class CrawlerFahasaVN extends WebCrawler {
 
 	private final static Pattern FILTERS = Pattern.compile(".*(\\.(css|js|gif|jpg" + "|png|mp3|mp4|zip|gz))$");
+	
+	ProductExtInfoParser parser = new ProductExtInfoParser(true) {
+		@Override
+		public void process() {
+			double originalPrice = JsoupParserUtil.getDoubleNumber(doc,"div[id='catalog-product-details-price'] .old-price .price");
+			System.out.println("originalPrice " + originalPrice);
+			this.item.setOriginalPrice(originalPrice);
+
+			double salePrice = JsoupParserUtil.getDoubleNumber(doc,"div[id='catalog-product-details-price'] .special-price .price");
+			System.out.println("salePrice " + salePrice);
+			this.item.setSalePrice(salePrice);
+		}
+	};
 
 	
 	@Override
 	public boolean shouldVisit(Page referringPage, WebURL url) {
 		String href = url.getURL().toLowerCase();
-		boolean checked = !FILTERS.matcher(href).matches() && (href.startsWith("https://www.fahasa.com") || href.startsWith("https://fahasa.com")) && href.endsWith(".html");
-		System.out.println("shouldVisit " + href + " checked " + checked);
+		boolean checked = !FILTERS.matcher(href).matches() && href.endsWith(".html") && (href.startsWith("https://www.fahasa.com") || href.startsWith("https://fahasa.com"));
+		//System.out.println("shouldVisit " + href + " checked " + checked);
 		return checked;
 	}
 
@@ -39,7 +52,7 @@ public class CrawlerFahasaVN extends WebCrawler {
 	@Override
 	public void visit(Page page) {
 		String urlStr = page.getWebURL().getURL();
-		System.out.println("URL: " + urlStr);
+		System.out.println("visit URL: " + urlStr);
 		//System.out.println("getParseData: " + page.getParseData().getClass());
 
 		if (page.getParseData() instanceof HtmlParseData) {
@@ -48,9 +61,12 @@ public class CrawlerFahasaVN extends WebCrawler {
 			String html = htmlParseData.getHtml();
 			//System.out.println(html);
 			try {
-				ProductItem item = ProductDataCrawler.parseHtmlToProductItem(page.getWebURL().getDomain(), urlStr, html);
+				ProductItem item = ProductDataCrawler.parseHtmlToProductItem(page.getWebURL().getDomain(), urlStr, html, parser);
 				if(item != null) {
-					System.out.println("Item: " + item);	
+					if(! item.isEmpty()) {
+						System.out.println("ProductItem: " + item);	
+					}
+					
 				} else {
 					System.out.println("Item is NULL");	
 				}
@@ -87,16 +103,8 @@ public class CrawlerFahasaVN extends WebCrawler {
         CrawlController controller = new CrawlController(config, ajaxPageFetcher, robotstxtServer);
 
       
-        controller.addSeed("https://www.fahasa.com/sach-trong-nuoc/tam-ly-ky-nang-song/ky-nang-song.html");
+        controller.addSeed("https://www.fahasa.com/");
         
-        ProductDataCrawler.addProductExtInfoParser("www.fahasa.com", new ProductExtInfoParser(true) {
-			@Override
-			public void process() {
-				String originalPrice = JsoupParserUtil.getText(doc, "#catalog-product-details-price p.old-price span.price").replace("₫", "").replace(".", "").trim();
-				this.item.setOriginalPrice(originalPrice);
-			}
-		});
-    	
     	
     	// The factory which creates instances of crawlers.
         CrawlController.WebCrawlerFactory<CrawlerFahasaVN> factory = CrawlerFahasaVN::new;

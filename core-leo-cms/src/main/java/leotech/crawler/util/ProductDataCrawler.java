@@ -13,8 +13,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import leotech.cdp.model.business.ProductItem;
 import rfx.core.util.HttpClientUtil;
@@ -25,7 +23,7 @@ public class ProductDataCrawler {
 	static final LoadingCache<String, ProductItem> cache = CacheBuilder.newBuilder().maximumSize(100000)
 			.expireAfterWrite(2, TimeUnit.HOURS).build(new CacheLoader<String, ProductItem>() {
 				public ProductItem load(String url) {
-					return process(url);
+					return processProductUrl(url);
 				}
 			});
 
@@ -60,11 +58,13 @@ public class ProductDataCrawler {
 		return parseHtmlToProductItem(host, urlStr, html, null);
 	}
 
-	public static ProductItem parseHtmlToProductItem(String host, String urlStr, String html,
-			ProductExtInfoParser parser) throws Exception {
+	public static ProductItem parseHtmlToProductItem(String host, String urlStr, String html, ProductExtInfoParser parser) throws Exception {
 		Document doc = Jsoup.parse(html);
 
-		//String ogType = JsoupParserUtil.getAttr(doc, "meta[property='og:type']", "content").toLowerCase();
+		String ogType = JsoupParserUtil.getAttr(doc, "meta[property=\"og:type\"]", "content").toLowerCase();
+		if(! ogType.equals("product") ) {
+			return new ProductItem("");
+		}
 
 		// new product item
 		ProductItem p = new ProductItem(urlStr);
@@ -130,7 +130,7 @@ public class ProductDataCrawler {
 		return html;
 	}
 
-	public static ProductItem process(String urlStr) {
+	public static ProductItem processProductUrl(String urlStr) {
 		// get HTML from URL
 		try {
 			URL url = new URL(urlStr);
@@ -178,7 +178,7 @@ public class ProductDataCrawler {
 				String sku = JsoupParserUtil.getText(doc, "span[id='pro_sku']").replace("SKU:", "").trim();
 				this.item.setSku(sku);
 
-				String originalPrice = JsoupParserUtil.getNumber(doc, "div[id='price-preview'] del");
+				double originalPrice = JsoupParserUtil.getDoubleNumber(doc, "div[id='price-preview'] del");
 				this.item.setOriginalPrice(originalPrice);
 			}
 		});
@@ -186,12 +186,12 @@ public class ProductDataCrawler {
 		ProductDataCrawler.addProductExtInfoParser("www.fahasa.com", new ProductExtInfoParser(true) {
 			@Override
 			public void process() {
-				String originalPrice = JsoupParserUtil.getNumber(doc,
+				double originalPrice = JsoupParserUtil.getDoubleNumber(doc,
 						"div[id='catalog-product-details-price'] .old-price .price");
 				System.out.println("originalPrice " + originalPrice);
 				this.item.setOriginalPrice(originalPrice);
 
-				String salePrice = JsoupParserUtil.getNumber(doc,
+				double salePrice = JsoupParserUtil.getDoubleNumber(doc,
 						"div[id='catalog-product-details-price'] .special-price .price");
 				System.out.println("salePrice " + salePrice);
 				this.item.setSalePrice(salePrice);
@@ -202,7 +202,7 @@ public class ProductDataCrawler {
 		// "https://eshop.guardian.vn/products/dau-goi-tresemme-keratin-smooth-vao-nep-suon-muot-650g";
 
 		String url = "https://www.fahasa.com/chu-nghia-khac-ky-phong-cach-song-ban-linh-va-binh-than.html";
-		ProductItem p = ProductDataCrawler.process(url);
+		ProductItem p = ProductDataCrawler.processProductUrl(url);
 		if (!p.isEmpty()) {
 			System.out.println(p);
 		}
