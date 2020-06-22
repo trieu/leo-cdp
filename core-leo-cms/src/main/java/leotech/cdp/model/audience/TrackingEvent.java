@@ -29,7 +29,7 @@ public class TrackingEvent extends CdpPersistentObject {
     @Override
     public ArangoCollection getCollection() {
 	if (instance == null) {
-	    ArangoDatabase arangoDatabase = ArangoDbUtil.getActiveArangoDbInstance();
+	    ArangoDatabase arangoDatabase = cdpDbInstance();
 
 	    instance = arangoDatabase.collection(COLLECTION_NAME);
 
@@ -128,7 +128,6 @@ public class TrackingEvent extends CdpPersistentObject {
 
     @Expose
     protected String browserName;
-
 
     @Expose
     protected String deviceId;

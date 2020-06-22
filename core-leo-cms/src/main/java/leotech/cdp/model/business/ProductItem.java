@@ -65,7 +65,7 @@ public class ProductItem extends CdpPersistentObject implements Serializable {
 	@Override
 	public ArangoCollection getCollection() {
 		if (instance == null) {
-			ArangoDatabase arangoDatabase = ArangoDbUtil.getActiveArangoDbInstance();
+			ArangoDatabase arangoDatabase = cdpDbInstance();
 
 			instance = arangoDatabase.collection(COLLECTION_NAME);
 
@@ -76,21 +76,33 @@ public class ProductItem extends CdpPersistentObject implements Serializable {
 			instance.ensurePersistentIndex(Arrays.asList("siteDomain"), new PersistentIndexOptions().unique(false));
 			instance.ensurePersistentIndex(Arrays.asList("updatedAt", "availability"), new PersistentIndexOptions().unique(false));
 
-			instance.ensurePersistentIndex(Arrays.asList("fullUrl"), new PersistentIndexOptions().unique(true));
+			instance.ensurePersistentIndex(Arrays.asList("fullUrl"), new PersistentIndexOptions().unique(false));
 			instance.ensureHashIndex(Arrays.asList("keywords[*]"), new HashIndexOptions());
 
 		}
 		return instance;
 	}
-
+	
+	public ProductItem() {
+		this.fullUrl = "";
+	}
+	
 	public ProductItem(String fullUrl) {
-		this.fullUrl = fullUrl;
+		this.fullUrl = "";
 		this.id = id(fullUrl);
+	}
+
+	public ProductItem(String fullUrl, String name, String siteDomain) {
+		this.fullUrl = fullUrl;
+		this.name = name;
+		this.siteDomain = siteDomain;
+		String keyHint = name + siteDomain + sku;
+		this.id = id(keyHint);
 	}
 
 	@Override
 	public boolean isReadyForSave() {
-		return StringUtil.isNotEmpty(this.name) && StringUtil.isNotEmpty(this.fullUrl);
+		return StringUtil.isNotEmpty(this.name) && StringUtil.isNotEmpty(this.fullUrl) && StringUtil.isNotEmpty(this.id) && StringUtil.isNotEmpty(this.siteDomain);
 	}
 	public String getSku() {
 		return sku;
@@ -228,7 +240,7 @@ public class ProductItem extends CdpPersistentObject implements Serializable {
 	}
 	
 	public boolean isEmpty() {
-		return StringUtil.isEmpty(this.fullUrl);
+		return StringUtil.isEmpty(this.id);
 	}
 
 	@Override

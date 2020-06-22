@@ -175,7 +175,7 @@ AQL_GET_TOUCHPOINTS_BY_FILTER =>
 	RETURN p
 ;
 
-AQL_GET_TOP_100_TOUCHPOINTS_BY_PROFILE =>
+AQL_GET_TOP_1000_TOUCHPOINTS_BY_PROFILE =>
 	FOR p in cdp_profile FILTER p._key == @profileId
 	    FOR t IN cdp_touchpoint
 	        FILTER t._key IN p.top1000Touchpoints
@@ -289,5 +289,33 @@ FOR e in cdp_trackingevent FILTER e.refProfileId == @profileId
                 "refTouchpoint":refTouchpoint, 
                 "srcTouchpoint": srcTouchpoint}
 ;
+
+########### AQL LEO CDP - PRODUCT ITEM COLLECTION ########################################################################################################;
+
+AQL_GET_PRODUCT_ITEM_BY_ID =>
+	FOR e in cdp_productitem FILTER e._key == @id  
+	RETURN e
+;
+
+AQL_GET_PRODUCT_ITEMS => 
+	FOR e in cdp_productitem 
+	SORT e.createdAt DESC
+	LIMIT @startIndex,@numberResult 
+	RETURN e
+;
+
+AQL_GET_PRODUCT_ITEM_BY_FULL_URL =>
+	FOR e in cdp_productitem FILTER e.fullUrl == @fullUrl  
+	RETURN e
+;
+
+
+AQL_GET_PRODUCT_ITEMS_BY_FILTER =>
+	FOR p in cdp_productitem  
+	SORT p.createdAt DESC
+	LIMIT @startIndex,@numberResult 
+	RETURN p
+;
+
 
 ############################################### END AQL  #####################################################################################

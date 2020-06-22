@@ -39,7 +39,7 @@ public class ObserverDaoUtil extends BaseLeoCdpDao {
 	}
 
 	public static DataObserver getById(String id) {
-		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
+		ArangoDatabase db = getCdpDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("id", id);
 		DataObserver p = new ArangoDbQuery<DataObserver>(db, AQL_GET_OBSERVER_BY_ID, bindVars, DataObserver.class)
@@ -48,7 +48,7 @@ public class ObserverDaoUtil extends BaseLeoCdpDao {
 	}
 
 	public static List<DataObserver> list(int startIndex, int numberResult) {
-		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
+		ArangoDatabase db = getCdpDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(2);
 		bindVars.put("startIndex", startIndex);
 		bindVars.put("numberResult", numberResult);

@@ -83,8 +83,8 @@ public class CrawlerFahasaVN extends WebCrawler {
 		// TODO move to config file for ChromeDriver
 		System.setProperty("webdriver.chrome.driver", "/Users/mac/programs/webdriver/chromedriver");
 		ChromeOptions options = new ChromeOptions();
-		options.addArguments("disable-extensions");
-		options.addArguments("--headless");
+		options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1200","--ignore-certificate-errors");
+
 		ChromeDriver driver = new ChromeDriver(options);
 		
 		

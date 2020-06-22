@@ -105,12 +105,15 @@ public class ArangoDbUtil {
 		return null;
 	}
 
-	public static boolean isExistedDocument(String collectionName, String id) {
+	public static boolean isExistedDocument(String collectionName, String id) {	
+		return isExistedDocument(ArangoDbUtil.getActiveArangoDbInstance(), collectionName, id);
+	}
+	
+	public static boolean isExistedDocument(ArangoDatabase db, String collectionName, String id) {
 		String aql = "RETURN LENGTH(FOR d IN " + collectionName + " FILTER d._key == @id LIMIT 1 RETURN true) > 0";
-//		System.out.println("isExistedDocument " + aql);
 		Map<String, Object> bindKeys = new HashMap<>(1);
 		bindKeys.put("id", id);
-		ArangoCursor<Boolean> cursor = ArangoDbUtil.getActiveArangoDbInstance().query(aql, bindKeys, null, Boolean.class);
+		ArangoCursor<Boolean> cursor = db.query(aql, bindKeys, null, Boolean.class);
 		while (cursor.hasNext()) {
 			return cursor.next();
 		}

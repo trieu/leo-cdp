@@ -74,7 +74,7 @@ public class eshopGuardianVnProductInfoDocParser implements ProductInfoDocParser
 	public static void main(String[] args) throws Exception {
 		ProductInfoDocParser test = new eshopGuardianVnProductInfoDocParser();
 		String url = "https://eshop.guardian.vn/products/mat-na-toc-tsubaki-phuc-hoi-hu-ton-180g";
-		ProductItem p = new ProductItem("");
+		ProductItem p = new ProductItem();
 		p.setSiteDomain("eshop.guardian.vn");
 		if( test.parse(Jsoup.connect(url).get(), p) && !p.isEmpty()) {
 			System.out.println(p);

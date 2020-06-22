@@ -63,20 +63,16 @@ public class ProductDataCrawler {
 
 		String ogType = JsoupParserUtil.getAttr(doc, "meta[property=\"og:type\"]", "content").toLowerCase();
 		if(! ogType.equals("product") ) {
-			return new ProductItem("");
+			return new ProductItem();
 		}
-
-		// new product item
-		ProductItem p = new ProductItem(urlStr);
-		
-		p.setSiteDomain(host);
 
 		// start common parser for Open Graph
-		String title = JsoupParserUtil.getAttr(doc, "meta[property='og:title']", "content");
-		if (StringUtil.isEmpty(title)) {
-			title = JsoupParserUtil.getText(doc, "title");
+		String name = JsoupParserUtil.getAttr(doc, "meta[property='og:title']", "content");
+		if (StringUtil.isEmpty(name)) {
+			name = JsoupParserUtil.getText(doc, "title");
 		}
-		p.setName(title);
+		// new product item
+		ProductItem p = new ProductItem(urlStr, name, host);
 
 		String description = JsoupParserUtil.getAttr(doc, "meta[property='og:description']", "content");
 		p.setDescription(description);
@@ -113,8 +109,7 @@ public class ProductDataCrawler {
 
 	public static String getHtmlBySelenium(String urlStr) {
 		ChromeOptions options = new ChromeOptions();
-		options.addArguments("disable-extensions");
-		options.addArguments("--headless");
+		options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1200","--ignore-certificate-errors");
 
 		ChromeDriver driver = new ChromeDriver(options);
 		driver.get(urlStr);
@@ -154,13 +149,13 @@ public class ProductDataCrawler {
 			System.out.println("process html.length" + html.length());
 
 			if (html.equals("404")) {
-				return new ProductItem("");
+				return new ProductItem();
 			}
 			return parseHtmlToProductItem(host, urlStr, html, parser);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return new ProductItem("");
+		return new ProductItem();
 	}
 
 	public static ProductItem processWithCache(String url) throws Exception {

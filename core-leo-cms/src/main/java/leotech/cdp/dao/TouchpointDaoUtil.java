@@ -24,7 +24,7 @@ public class TouchpointDaoUtil extends BaseLeoCdpDao {
 	static final String AQL_GET_TOUCHPOINTS_BY_FILTER  = AqlTemplate.get("AQL_GET_TOUCHPOINTS_BY_FILTER");
 	
 	static final String AQL_GET_TOUCHPOINTS = AqlTemplate.get("AQL_GET_TOUCHPOINTS");
-	static final String AQL_GET_TOP_100_TOUCHPOINTS_BY_PROFILE  = AqlTemplate.get("AQL_GET_TOP_100_TOUCHPOINTS_BY_PROFILE");
+	static final String AQL_GET_TOP_1000_TOUCHPOINTS_BY_PROFILE  = AqlTemplate.get("AQL_GET_TOP_1000_TOUCHPOINTS_BY_PROFILE");
 	static final String AQL_GET_TOUCHPOINT_FLOW_BY_PROFILE  = AqlTemplate.get("AQL_GET_TOUCHPOINT_FLOW_BY_PROFILE");
 	
 	
@@ -33,10 +33,11 @@ public class TouchpointDaoUtil extends BaseLeoCdpDao {
 
 	public static String save(Touchpoint tp) {
 		if (tp.isReadyForSave()) {
+			ArangoDatabase db = getCdpDbInstance();
 			ArangoCollection col = tp.getCollection();
 			if (col != null) {
 				String id = tp.getId();
-				boolean isExisted = ArangoDbUtil.isExistedDocument(Touchpoint.COLLECTION_NAME, id);
+				boolean isExisted = ArangoDbUtil.isExistedDocument(db,Touchpoint.COLLECTION_NAME, id);
 				if (isExisted) {
 					tp.setUpdatedAt(new Date());
 					col.updateDocument(id, tp);
@@ -84,14 +85,13 @@ public class TouchpointDaoUtil extends BaseLeoCdpDao {
 		return list;
 	}
 	
-	public static List<Touchpoint> top100ByProfile(String profileId) {
+	public static List<Touchpoint> getTop1000ByProfile(String profileId) {
 		ArangoDatabase db = getCdpDbInstance();
 		
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("profileId", profileId);
 		
-		List<Touchpoint> list = new ArangoDbQuery<Touchpoint>(db, AQL_GET_TOP_100_TOUCHPOINTS_BY_PROFILE, bindVars, Touchpoint.class)
-				.getResultsAsList();
+		List<Touchpoint> list = new ArangoDbQuery<Touchpoint>(db, AQL_GET_TOP_1000_TOUCHPOINTS_BY_PROFILE, bindVars, Touchpoint.class).getResultsAsList();
 		return list;
 	}
 	

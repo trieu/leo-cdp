@@ -11,6 +11,7 @@ import edu.uci.ics.crawler4j.parser.HtmlParseData;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 import edu.uci.ics.crawler4j.url.WebURL;
+import leotech.cdp.dao.ProductItemDaoUtil;
 import leotech.cdp.model.business.ProductItem;
 import leotech.crawler.util.JsoupParserUtil;
 import leotech.crawler.util.ProductDataCrawler;
@@ -51,9 +52,13 @@ public class CrawlerGuardianVN extends WebCrawler {
 
 			String html = htmlParseData.getHtml();
 			try {
-				ProductItem item = ProductDataCrawler.parseHtmlToProductItem(page.getWebURL().getDomain(), urlStr, html, parser);
+				String domain = page.getWebURL().getDomain();
+				ProductItem item = ProductDataCrawler.parseHtmlToProductItem(domain, urlStr, html, parser);
 				if(item != null) {
 					System.out.println("Item: " + item);	
+					if(item.isReadyForSave()) {
+						ProductItemDaoUtil.save(item);
+					}
 				}
 				
 			} catch (Exception e) {
@@ -65,7 +70,7 @@ public class CrawlerGuardianVN extends WebCrawler {
 	
 	public static void main(String[] args) throws Exception {
         String crawlStorageFolder = "/Users/mac/projects/leo-cms-framework/core-leo-cms/CRAWLER_CACHE";
-        int numberOfCrawlers = 1;
+        int numberOfCrawlers = 3;
 
         CrawlConfig config = new CrawlConfig();
         config.setCrawlStorageFolder(crawlStorageFolder);
@@ -81,8 +86,10 @@ public class CrawlerGuardianVN extends WebCrawler {
         // For each crawl, you need to add some seed urls. These are the first
         // URLs that are fetched and then the crawler starts following links
         // which are found in these pages
-        controller.addSeed("https://eshop.guardian.vn/collections/cham-soc-da");
-        controller.addSeed("https://eshop.guardian.vn/collections/cham-soc-ca-nhan");
+        controller.addSeed("https://eshop.guardian.vn/");
+        controller.addSeed("https://eshop.guardian.vn/collections/thuong-hieu-guardian");
+        
+        
     	
     	
     	// The factory which creates instances of crawlers.
