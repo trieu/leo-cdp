@@ -30,7 +30,7 @@ $(document).ready(function () {
                 mainViewReady();
                 
                 // TODO allow config here 
-                setTimeout(loadSalesDashboard,1234)
+                setTimeout(loadCustomer360Analytics,1234)
                 
                 
                 $(pageDomSelector).show();

@@ -31,9 +31,9 @@
 
 <div class="row" id="breadcrumb_header" >
 	<div class="col-md-12" >
-    	<h4 class="page-header" > <a href="javascript:"> Unified Marketing Hub </a> 
+    	<h3 class="page-header" > <a href="javascript:"> Unified Marketing Hub </a> 
           &#8594; <a href="#calljs-loadAudienceProfiles()"> Audience Profiles </a>
-          &#8594; <a href="javascript:"> Profile Analytics </a> </h4>
+          &#8594; <a href="javascript:"> Profile Analytics </a> </h3>
     </div>   
 </div>
 
@@ -43,6 +43,7 @@
 
        <div class="row">
            <div class="col-md-5">
+           	   <h4> Last session details </h4>
                <table border=0 class="underlined" style="width: 100%;">
                    <tr>
                        <td>
@@ -54,6 +55,10 @@
                                <li>
                                    <b> Last seen touchpoint </b> 
                                    <p> bookstore.bigdatavietnam.org  </p>
+                               </li>
+                               <li>
+                                   <b> Session length </b> 
+                                   <p> 12 minutes  </p>
                                </li>
                                <li>
                                    <b> Device ID </b> 
@@ -83,38 +88,41 @@
            </div>
            <div class="col-md-7">
                 <div class="row">
-	           		
-	               <div class="col-md-6 text-center" >
-	                   <h3> {{profile_full_name}} </h3>
-	                   <strong class="editable_text"> Nguyen Van A </strong>
-	               </div>
-	               
-	               <div class="col-md-6 text-center" >
-	                   <h3>Avatar</h3>
+	               <div class="text-center" >
 	                   <img src="https://randomuser.me/api/portraits/men/90.jpg"
 	                       alt="Profile Avatar" class="rounded mx-auto d-block avatar">
 	               </div>
                 </div>
              
-               <h3> {{profile_attributes}}
-                   <span class="editable_add_item" data-target="personal_attributes"  ></span>  
-               </h3>
+               <h4> Personal information </h4>
                
                <table border=0 class="underlined" style="width: 100%;">
                    <tr>
                        <td>
                            <ol id="personal_attributes" data-field="personal_attributes">
+                           	   <li>
+                                   <b data-persona="key" class="editable_text" > Full name </b> 
+                                   <p data-persona="value" class="editable_text" > Nguyen Thanh Trung </p>
+                               </li>
                                <li>
-                                   <b data-persona="key" class="editable_text" > Giới tính </b> 
+                                   <b data-persona="key" class="editable_text" > Gender </b> 
                                    <p data-persona="value" class="editable_text" > Nam </p>
                                </li>
                                <li>
-                                   <b data-persona="key" class="editable_text" > Độ tuổi </b> 
+                                   <b data-persona="key" class="editable_text" > Age </b> 
                                    <p data-persona="value" class="editable_text" > 30 </p>
                                </li>
                                <li>
-                                   <b data-persona="key" class="editable_text" > Khu vực sinh sống </b> 
+                                   <b data-persona="key" class="editable_text" > Living location </b> 
                                    <p data-persona="value" class="editable_text" > TP.HCM, Việt Nam  </p>
+                               </li>
+                               <li>
+                                   <b data-persona="key" class="editable_text" > Email </b> 
+                                   <p data-persona="value" class="editable_text" > trungtn@bigdatavietnam.org </p>
+                               </li>
+                               <li>
+                                   <b data-persona="key" class="editable_text" > Mobile phone </b> 
+                                   <p data-persona="value" class="editable_text" > 0903122299 </p>
                                </li>
                            </ol>
                        </td>
@@ -146,12 +154,12 @@
 		       	<div class="row" >
 		            <div class="col-md-6 bar-module">
 		                <div id="venn_two" style=float:left>
-		                    <h3 style="text-align: center">Media Touchpoints</h3>
+		                    <h4 style="text-align: center">Media Touchpoints</h4>
 		                </div>
 		            </div>
 		            <div class="col-md-6 ">
 		                <div>
-		                    <h3>Predictive Personality Traits(OCEAN Model) </h3>
+		                    <h4>Predictive Personality Traits(OCEAN Model) </h4>
 		                </div>
 		                <div class="pairs">
 		                    <div id="chart_persornality">
@@ -202,19 +210,19 @@
 				</ul>
 			</div>
 			<div class="tab-pane" id="panel_profile_ext_attributes" >
-			      <h3>attributes</h3>
+			      <h4>attributes</h4>
 			      
 			      
 			</div>
 		    <div class="tab-pane" id="panel_business_transactions" >
-		     	<h3>transactions</h3>
+		     	<h4>transactions</h4>
 			</div>
 	   </div>
        
        
        <div class="row" style="display: none;" >
        		<div class="line" ></div>
-            <h3 style="text-align:center;width: 100%;">Customer Attribution Matrix of Profile and Persona </h3>
+            <h4 style="text-align:center;width: 100%;">Customer Attribution Matrix of Profile and Persona </h4>
 
             <div id="attribution_description"></div> <br>
 			
@@ -231,43 +239,12 @@
 			
             <div id="profile_attribution" class="col-md-12 bar-module" style="text-align: center;"></div>
        </div>
-       
-   
-
       
        <div class="line"></div>
 
-
-  
-
 </div>
 
-    <br><br><br>
 
-<textarea id="customer_flow_code" style="display: none;" >
-journey
-    title Experience Flow
-    section {{touchpoints_demand_generation}}
-    	Google Search:3: Lead
-      	Facebook Group:3: Lead
-      	YouTube channel:3: Lead
-      	Shopping Mall : 3: Lead
-    section {{touchpoints_experience_for_lead}}
-      	Website:3:  Lead
-      	Mobile app:3:  Lead
-      	Shopping Mall:3:  Lead
-      	Cửa hàng bán lẻ:3:  Lead 
-    section {{touchpoints_business_transaction}}
-    	E-commerce Website:1: Customer
-      	E-commerce Mobile App:4: Customer
-      	Cửa hàng bán lẻ:5: Customer
-      	Shopping Mall : 5: Customer
-    section {{touchpoints_experience_for_customer}}
-      	Website - Customer Support:3: Customer
-      	Mobile App - Customer Support:4: Customer
-      	Social Media Fan Page:4: Customer
-      	Social Group:5: Customer
-</textarea>
 
 <script type="text/javascript">
     ///Js code
@@ -282,20 +259,8 @@ journey
             loadMediaTouchpoints()
             profilePathDiagram()
             personalityDiagram();
-            renderCustomerJourney();
+            
         },500);
-    }
-    
-    function renderCustomerJourney(){
-        // Example of using the API
-        var placeholderSelector = "#customerJourneyDiv";
-        var graphDefinition = $('#customer_flow_code').val().trim();
-        $(placeholderSelector).find('div').remove();
-      	
-        var gid = "customer_graph_"+ new Date().getTime(); 
-        graph = mermaid.mermaidAPI.render(gid, graphDefinition, function(svgCode, bindFunctions){
-        	document.querySelector(placeholderSelector).innerHTML = '<div>'+svgCode+"</div>";
-        });
     }
 
     function profilePathDiagram() {
