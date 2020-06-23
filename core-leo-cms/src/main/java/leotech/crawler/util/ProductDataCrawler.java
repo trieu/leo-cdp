@@ -146,7 +146,7 @@ public class ProductDataCrawler {
 				html = HttpClientUtil.executeGet(urlStr); // for normal web page
 			}
 
-			System.out.println("process html.length" + html.length());
+			System.out.println("process html" + html );
 
 			if (html.equals("404")) {
 				return new ProductItem();
@@ -196,7 +196,7 @@ public class ProductDataCrawler {
 		// String url =
 		// "https://eshop.guardian.vn/products/dau-goi-tresemme-keratin-smooth-vao-nep-suon-muot-650g";
 
-		String url = "https://www.fahasa.com/chu-nghia-khac-ky-phong-cach-song-ban-linh-va-binh-than.html";
+		String url = "https://www.bachhoaxanh.com/sua-cong-thuc-pha-san/sua-dinh-duong-nan-optipro-hop-185ml-thung-24";
 		ProductItem p = ProductDataCrawler.processProductUrl(url);
 		if (!p.isEmpty()) {
 			System.out.println(p);

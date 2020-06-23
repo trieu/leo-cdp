@@ -1,33 +1,47 @@
 
 
 
-<div id="my"></div>
+<div id="jsGrid"></div>
+
 
 <script>
-data = [
-    [3, 'Classe A', 'Cheese', 1, '2017-01-12'],
-    [1, 'Classe B', 'Apples', 1, '2017-01-12'],
-    [2, 'Classe A', 'Carrots', 1, '2017-01-12'],
-    [1, 'Classe C', 'Oranges', 0, '2017-01-12'],
+var clients = [
+    { "Name": "Otto Clay", "Age": 25, "Country": 1, "Address": "Ap #897-1459 Quam Avenue", "Married": false },
+    { "Name": "Connor Johnston", "Age": 45, "Country": 2, "Address": "Ap #370-4647 Dis Av.", "Married": true },
+    { "Name": "Lacey Hess", "Age": 29, "Country": 3, "Address": "Ap #365-8835 Integer St.", "Married": false },
+    { "Name": "Timothy Henson", "Age": 56, "Country": 1, "Address": "911-5143 Luctus Ave", "Married": true },
+    { "Name": "Ramona Benton", "Age": 32, "Country": 3, "Address": "Ap #614-689 Vehicula Street", "Married": false }
 ];
 
-var urlDataSource = "/public/uploaded-files/sample-jexcel-data.json?_=" + new Date().getTime();
-$('#my').jexcel({
-    data:data,
-    colHeaders:  [ 'Country', 'Description', 'Type', 'Stock', 'Next purchase' ],
-    colWidths: [ 300, 80, 100, 60, 120 ],
-    columns: [
-        { type: 'autocomplete', url:urlDataSource },
-        { type: 'text' },
-        { type: 'dropdown', source:[ {'id':'1', 'name':'Fruits'}, {'id':'2', 'name':'Legumes'}, {'id':'3', 'name':'General Food'} ] },
-        { type: 'checkbox' },
-        { type: 'calendar' },
+var countries = [
+    { Name: "", Id: 0 },
+    { Name: "United States", Id: 1 },
+    { Name: "Canada", Id: 2 },
+    { Name: "United Kingdom", Id: 3 }
+];
+
+$("#jsGrid").jsGrid({
+    width: "100%",
+    height: "400px",
+
+    inserting: true,
+    editing: true,
+    sorting: true,
+    paging: true,
+
+    data: clients,
+
+    fields: [
+        { name: "Name", type: "text", width: 150, validate: "required" },
+        { name: "Age", type: "number", width: 50 },
+        { name: "Address", type: "text", width: 200 },
+        { name: "Country", type: "select", items: countries, valueField: "Id", textField: "Name" },
+        { name: "Married", type: "checkbox", title: "Is Married", sorting: false },
+        { type: "control" }
     ]
 });
 </script>
 
 <br>
 
-https://bossanova.uk/jexcel/v4/examples/datatables
-
-https://bossanova.uk/jexcel/v4/examples/events
+http://js-grid.com/getting-started/
