@@ -56,6 +56,10 @@ public class ProductItem extends CdpPersistentObject implements Serializable {
 	protected List<String> keywords = new ArrayList<>(20);
 	protected List<String> categories = new ArrayList<>(10);
 	protected List<String> promoCodes = new ArrayList<>(10);
+	protected List<Double> promoPrices = new ArrayList<>(10);
+	
+	protected List<String> optionFields = new ArrayList<>(10);
+	protected List<String> optionValues = new ArrayList<>(10);
 
 	Date updatedAt;
 
@@ -208,6 +212,15 @@ public class ProductItem extends CdpPersistentObject implements Serializable {
 	public void setPromoCodes(List<String> promoCodes) {
 		this.promoCodes = promoCodes;
 	}
+	
+	public List<Double> getPromoPrices() {
+		return promoPrices;
+	}
+
+	public void setPromoPrices(List<Double> promoPrices) {
+		this.promoPrices = promoPrices;
+	}
+	
 	public Date getUpdatedAt() {
 		return updatedAt;
 	}
@@ -255,5 +268,20 @@ public class ProductItem extends CdpPersistentObject implements Serializable {
 	public void setSellerName(String sellerName) {
 		this.sellerName = sellerName;
 	}
+	
+	public List<String> getOptionFields() {
+		return optionFields;
+	}
 
+	public void setOptionFields(List<String> otherOptionFields) {
+		this.optionFields = otherOptionFields;
+	}
+	
+	public List<String> getOptionValues() {
+		return optionValues;
+	}
+
+	public void setOptionValues(List<String> otherOptionValues) {
+		this.optionValues = otherOptionValues;
+	}
 }

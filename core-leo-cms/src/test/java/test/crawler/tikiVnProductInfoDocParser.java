@@ -1,6 +1,7 @@
 package test.crawler;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -39,7 +40,7 @@ public class tikiVnProductInfoDocParser implements ProductInfoDocParser{
 
 		String siteName = JsoupParserUtil.getAttr(srcDoc, "meta[property='og:site_name']", "content");
 
-		// tiki.vn khÃ´ng cÃ³ info nÃ y
+		// tiki.vn khÃƒÂ´ng cÃƒÂ³ info nÃƒÂ y
 //		String itemCondition = JsoupParserUtil.getAttr(doc, "link[itemprop='itemCondition']", "href");
 
 		String availability = JsoupParserUtil.getAttr(srcDoc, "link[itemprop='availability']", "href");
@@ -50,11 +51,18 @@ public class tikiVnProductInfoDocParser implements ProductInfoDocParser{
 		
 		String sku = JsoupParserUtil.getText(srcDoc, "span[itemprop='sku']");
 
-		String originalPrice = JsoupParserUtil.getText(srcDoc, "p[class='original-price']").replace("GiÃ¡ thá»‹ trÆ°á»�ng:", "").replace("â‚«", "")
+		String originalPrice = JsoupParserUtil.getText(srcDoc, "p[class='original-price']").replace("Giá thị trường:", "").replace("₫", "")
 				.replace(".", "").trim();
 		
 		String sellerName = JsoupParserUtil.getText(srcDoc, "a[class='seller-name']");
-
+		
+		List<String> promoCodes = JsoupParserUtil.getTexts(srcDoc, "div.coupon span[class='coupon-code']");
+		dstProductItem.setPromoCodes(promoCodes);
+		
+		List<Double> promoPrices = JsoupParserUtil.getTexts(srcDoc, "div.coupon span[class='coupon-price']").stream()
+														.map(priceStr -> Double.valueOf(priceStr.replace("₫", "").replace(".", "").trim()))
+														.collect(Collectors.toList());
+		dstProductItem.setPromoPrices(promoPrices);
 
 		dstProductItem.setSku(sku);
 		dstProductItem.setName(title);
