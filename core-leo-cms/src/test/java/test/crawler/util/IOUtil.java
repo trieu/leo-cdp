@@ -1,4 +1,4 @@
-package test.crawler;
+package test.crawler.util;
 
 import java.io.BufferedWriter;
 import java.io.InputStream;

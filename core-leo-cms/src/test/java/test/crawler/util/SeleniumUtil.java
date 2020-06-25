@@ -1,4 +1,4 @@
-package test.crawler;
+package test.crawler.util;
 
 import static org.junit.Assert.assertEquals;
 

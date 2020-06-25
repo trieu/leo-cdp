@@ -1,4 +1,4 @@
-package test.crawler;
+package test.crawler.pending;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,19 +8,19 @@ import org.jsoup.nodes.Document;
 
 import leotech.cdp.model.business.ProductItem;
 import leotech.crawler.util.JsoupParserUtil;
+import rfx.core.util.HttpClientUtil;
 import rfx.core.util.StringUtil;
+import test.crawler.ProductJsoupDocToProductItem;
 
-public class tikiVnProductInfoDocParser implements ProductInfoDocParser{
+public class tikiVn_ProductJsoupDocToProductItem implements ProductJsoupDocToProductItem{
 	
 	public boolean parse(Document srcDoc, ProductItem dstProductItem) throws Exception {		
-
+		
 		String ogType = JsoupParserUtil.getAttr(srcDoc, "meta[property='og:type']", "content").toLowerCase();
 		if( ! "website".equals(ogType) ) {
 			//skip if not a product
 			return false;
 		}
-		
-
 
 		// start common parser for Open Graph
 		String title = JsoupParserUtil.getAttr(srcDoc, "meta[property='og:title']", "content");
@@ -40,7 +40,7 @@ public class tikiVnProductInfoDocParser implements ProductInfoDocParser{
 
 		String siteName = JsoupParserUtil.getAttr(srcDoc, "meta[property='og:site_name']", "content");
 
-		// tiki.vn khÃƒÂ´ng cÃƒÂ³ info nÃƒÂ y
+		// No itemCondition property
 //		String itemCondition = JsoupParserUtil.getAttr(doc, "link[itemprop='itemCondition']", "href");
 
 		String availability = JsoupParserUtil.getAttr(srcDoc, "link[itemprop='availability']", "href");
@@ -51,7 +51,7 @@ public class tikiVnProductInfoDocParser implements ProductInfoDocParser{
 		
 		String sku = JsoupParserUtil.getText(srcDoc, "span[itemprop='sku']");
 
-		String originalPrice = JsoupParserUtil.getText(srcDoc, "p[class='original-price']").replace("Giá thị trường:", "").replace("₫", "")
+		String originalPrice = JsoupParserUtil.getText(srcDoc, "p[class='original-price']").replace("GiÃ¡ thá»‹ trÆ°á»�ng:", "").replace("â‚«", "")
 				.replace(".", "").trim();
 		
 		String sellerName = JsoupParserUtil.getText(srcDoc, "a[class='seller-name']");
@@ -60,7 +60,7 @@ public class tikiVnProductInfoDocParser implements ProductInfoDocParser{
 		dstProductItem.setPromoCodes(promoCodes);
 		
 		List<Double> promoPrices = JsoupParserUtil.getTexts(srcDoc, "div.coupon span[class='coupon-price']").stream()
-														.map(priceStr -> Double.valueOf(priceStr.replace("₫", "").replace(".", "").trim()))
+														.map(priceStr -> Double.valueOf(priceStr.replace("â‚«", "").replace(".", "").trim()))
 														.collect(Collectors.toList());
 		dstProductItem.setPromoPrices(promoPrices);
 
@@ -83,7 +83,7 @@ public class tikiVnProductInfoDocParser implements ProductInfoDocParser{
 	}
 
 	public static void main(String[] args) throws Exception {
-		ProductInfoDocParser test = new tikiVnProductInfoDocParser();
+		ProductJsoupDocToProductItem test = new tikiVn_ProductJsoupDocToProductItem();
 		String url = "https://tiki.vn/man-hinh-dell-u2419h-24inch-fullhd-8ms-60hz-ips-hang-chinh-hang-p7986170.html?spid=7986171&src=home-deal-hot";
 		ProductItem p = new ProductItem("");
 		p.setSiteDomain("tiki.vn");

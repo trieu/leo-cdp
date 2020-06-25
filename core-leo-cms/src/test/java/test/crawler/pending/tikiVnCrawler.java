@@ -1,4 +1,4 @@
-package test.crawler;
+package test.crawler.pending;
 
 import static org.junit.Assert.assertTrue;
 
@@ -29,6 +29,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import leotech.cdp.model.business.ProductItem;
+import test.crawler.ProductJsoupDocToProductItem;
+import test.crawler.util.SeleniumUtil;
 
 public class tikiVnCrawler {
 	
@@ -50,7 +52,7 @@ public class tikiVnCrawler {
 		return true;
 	}
 	
-	public static void acquireProductItemFromProductURL(String productURL, ChromeDriver readyDriver, WebDriverWait readyWait, ProductInfoDocParser readyParser) throws Exception {
+	public static void acquireProductItemFromProductURL(String productURL, ChromeDriver readyDriver, WebDriverWait readyWait, ProductJsoupDocToProductItem readyParser) throws Exception {
 		
 		readyDriver.get(productURL);
 		
@@ -211,7 +213,7 @@ public class tikiVnCrawler {
 		
 		ConcurrentHashMap<Long,List<Object>> threadId2ListOfDriverAndWait = new ConcurrentHashMap<>();
 		
-		ProductInfoDocParser parser = new tikiVnProductInfoDocParser();
+		ProductJsoupDocToProductItem parser = new tikiVn_ProductJsoupDocToProductItem();
 		
 		PipedWriter pipeOut = new PipedWriter();		
 		PipedReader pipeIn = new PipedReader(pipeOut);
