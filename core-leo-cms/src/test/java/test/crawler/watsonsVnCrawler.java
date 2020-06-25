@@ -1,6 +1,8 @@
 package test.crawler;
 
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Proxy;
 import java.util.ArrayList;
@@ -92,10 +94,9 @@ public class watsonsVnCrawler {
 		ForkJoinPool forkJoinPool = null;
 		String currentPageUrl = "product-categories/c/1?q=%3AigcBestSeller&page=" + (startPageIndex<0?0:startPageIndex) + "&resultsForPage=64&text=&sort=igcBestSeller&deliveryType=";
 		Document page = null;
+		int count = 0;
 		try {								
-			forkJoinPool = new ForkJoinPool(PARALLELISM);
-			
-			int count = 0;
+			forkJoinPool = new ForkJoinPool(PARALLELISM);			
 			
 			do {
 				currentPageUrl = "https://www.watsons.vn/" + currentPageUrl.replaceFirst("^\\s*\\/", "");				
@@ -119,22 +120,27 @@ public class watsonsVnCrawler {
 				if ((++count) >= pageCount)
 					break;
 			} while (!(currentPageUrl = JsoupParserUtil.getAttr(page, "a.next", "href")).isEmpty());
-			
-			if (isOnCloud) {
-				ObjectOutputStream toFile = new ObjectOutputStream(new FileOutputStream(
-						"watsonsVn_BlockingDequeOfProductItem_" + count + "Pages_fromPage" + startPageIndex));
-				toFile.writeObject(productItems);				
-				toFile.close();
-				System.out.println("=> Saved into watsonsVn_BlockingDequeOfProductItem_" + count + "Pages_fromPage" + startPageIndex);
-			}			
-			
-			System.out.println("=> DONE !");
+	
 		} catch (Exception e) {
 			System.out.println("=> PAGE <= " + currentPageUrl);
 			e.printStackTrace();
 		} finally {
+			if (isOnCloud) {				
+				try {
+					ObjectOutputStream toFile;
+					toFile = new ObjectOutputStream(new FileOutputStream(
+							"watsonsVn_BlockingDequeOfProductItem_" + count + "Pages_fromPage" + startPageIndex));
+					toFile.writeObject(productItems);				
+					toFile.close();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}				
+				System.out.println("=> Saved into watsonsVn_BlockingDequeOfProductItem_" + count + "Pages_fromPage" + startPageIndex);
+			}
 			if (forkJoinPool != null)
                 forkJoinPool.shutdown();
+			System.out.println("=> DONE !");
 		}
 	}
 
