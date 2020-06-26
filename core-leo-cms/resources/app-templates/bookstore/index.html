@@ -190,7 +190,7 @@
     </script>
     
     <script>
-    	//Leo Web Event Observer for Data Hub Analytics
+    	//Leo Web Observer for Marketing Data Analytics
     	window.leoObserverLogDomain = "cdp.bigdatavietnam.org";
 		window.leoObserverId = "bookstore_web_observer";
 		window.srcTouchpointName = encodeURIComponent(document.title);
@@ -207,11 +207,9 @@
 		
 		function leoObserverProxyReady() {
 			
-			
 		    //Leo is ready, record view data
 		    LeoObserverProxy.recordViewEvent("pageview");
 		    
- 
 		    // record action data
 		    $('a[href^="/html/post"]').click(function(event) {
 		        //event.preventDefault(); // Don't follow the link
@@ -219,9 +217,10 @@
 		        var url = location.href.substring(0, location.href.length - 1) + $(this).attr('href');
 		        console.log(url);
 		        LeoObserverProxy.recordActionEvent("click", {
-		            post_url: url
+		            post_url: url, product_id: '4545'
 		        });
 		    });
+		    
 		    $('a[href^="/html/page"]').click(function(event) {
 		        // Don't follow the link
 		        //event.preventDefault();
@@ -229,7 +228,7 @@
 		        var url = location.href.substring(0, location.href.length - 1) + $(this).attr('href');
 		        console.log(url);
 		        LeoObserverProxy.recordActionEvent("click", {
-		            page_url: url
+		        	post_url: url, category_id: '5435' 
 		        });
 		    });
 		    $('iframe').iframeTracker({
