@@ -1,9 +1,8 @@
 package test.crawler;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +31,8 @@ public class watsonsVnCrawler {
 	
 	private static final String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36";
 	
-//	private static final Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("91.67.240.45",3128));
-	private static final Proxy proxy = null;
+	private static final Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("91.67.240.45",3128));
+//	private static final Proxy proxy = null;
 	
 	private static final int minThreadSleepMSec = 3000;
 	

@@ -92,7 +92,7 @@ public class ProductItemDao extends BaseLeoCdpDao {
 	
 	public static void main(String[] args) {
 		List<String> filePaths = new ArrayList<>();
-		filePaths.add("watsonsVn_BlockingDequeOfProductItem_1Pages_fromPage0");
+		filePaths.add("watsonsVn_BlockingDequeOfProductItem_0Pages_fromPage10");
 		importProductItems(filePaths);
 	}
 	

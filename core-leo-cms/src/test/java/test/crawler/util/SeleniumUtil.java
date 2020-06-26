@@ -24,6 +24,16 @@ public class SeleniumUtil {
 		return null;
 	}
 	
+	public static WebElement findElement(WebElement parentEle, By locator) {
+		try {
+			return parentEle.findElement(locator);
+		} catch (NoSuchElementException e) {
+			// Do Nothing
+		}
+		return null;
+	}
+
+	
 	public static WebElement findElementByCssSelector(ChromeDriver driver, String using) {
 		try {
 			return driver.findElementByCssSelector(using);
@@ -31,6 +41,10 @@ public class SeleniumUtil {
 			// Do Nothing
 		}
 		return null;
+	}		
+	
+	public static WebElement findElementByCssSelector(WebElement parentEle, String using) {
+		return findElement(parentEle,By.cssSelector(using));
 	}	
 	
 	public static List<WebElement> findElementsByCssSelector(ChromeDriver driver, String using) {
