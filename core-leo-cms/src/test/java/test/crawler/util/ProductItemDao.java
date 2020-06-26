@@ -47,14 +47,14 @@ public class ProductItemDao extends BaseLeoCdpDao {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}			
 		}		
 		return true;
 	}
 	
-	public static boolean isExistedDocument(String id, String sku, String siteDomain) {
+	public static String isExistedDocument(String id, String sku, String siteDomain) {
 		Map<String, Object> bindKeys = new HashMap<>(2);
-		String aql = "RETURN LENGTH(FOR d IN " + ProductItem.COLLECTION_NAME + " FILTER ";
+		String aql = "FOR d IN " + ProductItem.COLLECTION_NAME + " FILTER ";
 		if (sku == null || sku.isEmpty()) {
 			aql += "d._key == @id";
 			bindKeys.put("id", id);
@@ -62,38 +62,43 @@ public class ProductItemDao extends BaseLeoCdpDao {
 			aql += "d.sku == @sku";
 			bindKeys.put("sku", sku);
 		}
-		aql += " AND d.siteDomain == @siteDomain LIMIT 1 RETURN true) > 0";
+		aql += " AND d.siteDomain == @siteDomain LIMIT 1 RETURN d._key";
 		bindKeys.put("siteDomain", siteDomain);		
-		ArangoCursor<Boolean> cursor = ArangoDbUtil.getActiveArangoDbInstance().query(aql, bindKeys, null, Boolean.class);
-		while (cursor.hasNext()) {
+		
+		ArangoCursor<String> cursor = ArangoDbUtil.getActiveArangoDbInstance().query(aql, bindKeys, null, String.class);
+		
+		if (cursor.hasNext())
 			return cursor.next();
-		}
-		return false;
+		return null;
 	}
 
 	public static String save(ProductItem item) {
+		String id = null;
 		if (item.isReadyForSave()) {
 			ArangoCollection col = item.getCollection();
 			if (col != null) {
-				String id = item.getId();
-				boolean isExisted = isExistedDocument(id,item.getSku(),item.getSiteDomain());
-				System.out.println("existence " + isExisted);
-				if (isExisted) {
+				String productId = item.getId();
+				id = isExistedDocument(productId,item.getSku(),item.getSiteDomain());				
+				if (id == null) {								
+					col.insertDocument(item);
+					System.out.println("add " + productId);
+				} else {					
+					item.setId(id);
 					item.setUpdatedAt(new Date());
 					col.updateDocument(id, item);
-				} else {
-					col.insertDocument(item);
+					System.out.println("update " + productId);
 				}
-				return id;
 			}
 		}
-		return "";
+		return null;
 	}
 	
 	public static void main(String[] args) {
 		List<String> filePaths = new ArrayList<>();
-		filePaths.add("watsonsVn_BlockingDequeOfProductItem_0Pages_fromPage10");
-		importProductItems(filePaths);
+		filePaths.add("watsonsVn_BlockingDequeOfProductItem_72Pages_fromPage12");
+		if (importProductItems(filePaths))
+			System.out.println("DONE !");;
+		
 	}
 	
 }

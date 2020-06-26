@@ -163,7 +163,7 @@ public class watsonsVnSeleniumCrawler {
 				e.printStackTrace();
 			}				
 			System.out.println("=> Saved into watsonsVn_BlockingDequeOfProductItem_" + count + "Pages_fromPage" + startPageIndex);
-//			driver.quit();
+			driver.quit();
 			System.out.println("=> END !");
 		}
 	}
@@ -191,8 +191,8 @@ public class watsonsVnSeleniumCrawler {
 		
 		driver.get("https://www.google.com/");	
 		
-		// wait 60s to finish manually establishment VPN connection
-		// code dnl-es57m-em
+		// wait 60s to finish MANUALLY establishment VPN connection
+		// code byp-4t4iy-su
 		Thread.sleep(30000);
 		
 		// close the tab openned by extension
