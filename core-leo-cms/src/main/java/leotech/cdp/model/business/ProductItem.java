@@ -95,12 +95,21 @@ public class ProductItem extends CdpPersistentObject implements Serializable {
 		this.fullUrl = "";
 		this.id = id(fullUrl);
 	}
-
+	
 	public ProductItem(String fullUrl, String name, String siteDomain) {
 		this.fullUrl = fullUrl;
 		this.name = name;
 		this.siteDomain = siteDomain;
-		String keyHint = name + siteDomain + sku;
+		String keyHint = fullUrl +  name + siteDomain;
+		this.id = id(keyHint);
+	}
+
+	public ProductItem(String fullUrl, String name, String siteDomain, String sku) {
+		this.fullUrl = fullUrl;
+		this.name = name;
+		this.siteDomain = siteDomain;
+		this.sku = sku;
+		String keyHint = fullUrl +  name + siteDomain + sku;
 		this.id = id(keyHint);
 	}
 

@@ -54,18 +54,18 @@
 					</li>					
 					
 					<li>
-						<a href="#calljs-loadJourneyMapStudio()"> <i class="fa fa-fw fa-map-o"></i> Customer Journeys </a>
+						<a href="#calljs-loadJourneyMapStudio()"> <i class="fa fa-fw fa-map-o"></i> Customer Journey Map </a>
 					</li>
 					
 					<li>
-						<a href="#calljs-loadAudienceDataObserver()"> <i class="fa fa-fw fa-list-ol"></i>  Data Touchpoints </a>
+						<a href="#calljs-loadAudienceDataObserver()"> <i class="fa fa-fw fa-list-ol"></i>  Data Touchpoint List </a>
 					</li>
 						
 					<li>
-						<a href="#calljs-loadAudienceDataObserver()"> <i class="fa fa-fw fa-list-ol"></i>  Data Observers </a>
+						<a href="#calljs-loadAudienceDataObserver()"> <i class="fa fa-fw fa-list-ol"></i>  Data Observer List </a>
 					</li>
 					
-					<li>
+					<li style="display: none;" >
 						<a href="#calljs-loadAudienceHubApiManagement()"> <i class="fa fa-fw fa-plug"></i> Customer Journey API</a>
 					</li>
 				
@@ -80,12 +80,8 @@
 				</a>
 				<ul  id="marketing_hub_menu" class="collapse in" aria-expanded="true">
 					<li >
-						<a href="#calljs-loadMarketing360Analytics()"> <i class="fa fa-fw fa-line-chart"></i> Marketing 360 Analytics </a>
+						<a href="#calljs-loadCustomer360Analytics()"> <i class="fa fa-fw fa-line-chart"></i> Marketing 360 Analytics </a>
 					</li>
-					
-					<li>
-						<a href="#calljs-loadCustomer360Analytics()"> <i class="fa fa-fw fa-pie-chart"></i> Customer 360 Analytics </a>
-					</li>	
 					
 					<li>
 						<a href="#calljs-loadAudienceProfiles()"> <i class="fa fa-fw fa-users"></i> Audience Profiles </a>
@@ -99,11 +95,11 @@
 						<a href="#calljs-loadProductCatalogManagement()"> <i class="fa fa-fw fa-database"></i> Product Catalog </a>
 					</li>
 					
-					<li>
+					<li style="display: none;" >
 						<a href="#calljs-loadServiceCatalogManagement()"> <i class="fa fa-fw fa-database"></i> Service Catalog </a>
 					</li>
 					
-					<li >
+					<li style="display: none;" >
 						<a href="#calljs-loadMarketingHubApiManagement()"> <i class="fa fa-fw fa-plug"></i> Marketing Hub API </a>
 					</li>
 				</ul>
@@ -119,13 +115,13 @@
 						<a href="#calljs-loadContent360Analytics()"> <i class="fa fa-fw fa-bar-chart"></i> Content 360 Analytics </a>
 					</li>
 					<li>
-						<a href="#calljs-loadCategoryList()"> <i class="fa fa-fw fa-database" ></i> Category Catalog </a>
+						<a href="#calljs-loadCategoryList()"> <i class="fa fa-fw fa-database" ></i> Content Catalog </a>
 					</li>
-					<li>
-						<a href="#calljs-loadContentHubApiManagement()"> <i class="fa fa-fw fa-plug"></i> Content Hub API </a>
+					<li style="display: none;" >
+						<a href="#calljs-loadContentHubApiManagement()"  > <i class="fa fa-fw fa-plug"></i> Content Hub API </a>
 					</li>
-					<li>
-						<a href="#calljs-loadMediaMarketplace()"> <i class="fa fa-fw fa-exchange"></i> Media Marketplace </a>
+					<li style="display: none;" >
+						<a href="#calljs-loadMediaMarketplace()"  > <i class="fa fa-fw fa-exchange"></i> Media Marketplace </a>
 					</li>
 				</ul>
 			</li>
@@ -137,13 +133,13 @@
 				</a>
 				<ul id="personalization_hub_menu" class="collapse in" aria-expanded="true">					
 					<li>
-						<a href="#calljs-loadLeoPredictionModel()"> <i class="fa fa-fw fa-user-circle"></i> Personalization AI Models </a>
+						<a href="#calljs-loadLeoPredictionModel()"> <i class="fa fa-fw fa-user-circle"></i> Personalization Model </a>
 					</li>	
 					<li>
 						<a href="#calljs-loadRecommenderWidget()"> <i class="fa fa-fw fa-internet-explorer"></i> Recommendation Widget </a>
 					</li>
-					<li>
-						<a href="#calljs-loadRecommenderApiManagement()"> <i class="fa fa-fw fa-plug"></i> Recommendation API</a>
+					<li style="display: none;" >
+						<a href="#calljs-loadRecommenderApiManagement()"  > <i class="fa fa-fw fa-plug"></i> Recommendation API</a>
 					</li>
 					
 				</ul>
@@ -156,17 +152,20 @@
 				</a>
 				<ul id="activation_hub_menu" class="collapse in" aria-expanded="true" >
 					
-					<li>
-						<a href="#calljs-loadAdvertisingMarketplace()"> <i class="fa fa-fw fa-exchange"></i> Branding Campaign </a>
+					<li style="display: none;" >
+						<a href="#calljs-"  > <i class="fa fa-fw fa-exchange"></i> Branding Campaign </a>
 					</li>
-					<li>
-						<a href="#calljs-loadAffiliateMarketplace()"> <i class="fa fa-fw fa-exchange"></i> Performance Campaign </a>
+					<li style="display: none;" >
+						<a href="#calljs-" > <i class="fa fa-fw fa-exchange"></i> Performance Campaign </a>
 					</li>
 					<li>
 						<a href="#calljs-loadCampaignManagement()"> <i class="fa fa-fw fa-exchange"></i> Push Message Campaign </a>
 					</li>
 					<li>
-						<a href="#calljs-loadActivationApiManagement()"> <i class="fa fa-fw fa-plug"></i> Activation Campaign API</a>
+						<a href="#calljs-loadCampaignManagement()"> <i class="fa fa-fw fa-exchange"></i> Email Marketing Campaign </a>
+					</li>
+					<li style="display: none;" >
+						<a href="#calljs-loadActivationApiManagement()"  > <i class="fa fa-fw fa-plug"></i> Activation Campaign API</a>
 					</li>
 				</ul>
 			</li>
@@ -178,9 +177,9 @@
 				</a>
 				<ul id="system_management_menu" class="collapse in" aria-expanded="true">
 					<li>
-						<a href="#calljs-loadUserList()"> <i class="fa fa-user-plus" aria-hidden="true"></i>  User Login Accounts </a>
+						<a href="#calljs-loadUserList()"> <i class="fa fa-user-plus" aria-hidden="true"></i>  Login Account List </a>
 					</li>
-					<li style="display: none;" >
+					<li  >
 						<a href="#calljs-loadSystemManagement()"> <i class="fa fa-cog" aria-hidden="true"></i> System configuration </a>
 					</li>
 				</ul>

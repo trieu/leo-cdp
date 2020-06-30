@@ -25,13 +25,12 @@
     margin:auto;
     font-weight: bold;
 }
-
 -->
 </style>
 
 <div class="row" id="breadcrumb_header" >
 	<div class="col-md-12" >
-    	<h3 class="page-header" > <a href="javascript:"> Unified Marketing Hub </a> 
+    	<h3 class="page-header"> <a href="javascript:"> Unified Marketing Hub </a> 
           &#8594; <a href="#calljs-loadAudienceProfiles()"> Audience Profiles </a>
           &#8594; <a href="javascript:"> Profile Analytics </a> </h3>
     </div>   
@@ -137,8 +136,8 @@
        <ul class="nav nav-tabs" >
 		  <li class="active"><a href="javascript: " data-target-tab="panel_profile_journey" > Journey Flow </a></li>
 		  <li><a href="javascript:" data-target-tab="panel_profile_activities" >Activities</a></li>
-		  <li><a href="javascript:" data-target-tab="panel_profile_ext_attributes" > Extended Attributes </a></li>
-		  <li><a href="javascript:"data-target-tab="panel_business_transactions" >Business Transactions</a></li>
+		  <li style="display: none;" ><a href="javascript:" data-target-tab="panel_profile_ext_attributes" > Extended Attributes </a></li>
+		  <li style="display: none;" ><a href="javascript:"data-target-tab="panel_business_transactions" >Business Transactions</a></li>
 	   </ul>
 	   
 	   <!-- Tab Contents  -->
@@ -151,7 +150,7 @@
 		       	 	<div id="sankeyChart" style="height:580px; width:98%;"></div>
 		       	</div>
 		       	
-		       	<div class="row" >
+		       	<div class="row" style="display: none;" >
 		            <div class="col-md-6 bar-module">
 		                <div id="venn_two" style=float:left>
 		                    <h4 style="text-align: center">Media Touchpoints</h4>
@@ -255,10 +254,10 @@
 		setupTabPanels();
     	
         setTimeout(function(){
-        	loadProfileAttribution();
-            loadMediaTouchpoints()
-            profilePathDiagram()
-            personalityDiagram();
+        	 profilePathDiagram();
+        	//loadProfileAttribution();
+            //loadMediaTouchpoints();
+            //personalityDiagram();
             
         },500);
     }

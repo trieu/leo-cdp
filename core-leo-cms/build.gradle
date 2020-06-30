@@ -27,9 +27,6 @@ configurations.all {
 
 dependencies {
 	
-	// AWS Java SDK for Amazon S3
-	// compile group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.11.534'
-	
 	// Joda Time https://www.joda.org/joda-time/index.html
 	compile group: 'joda-time', name: 'joda-time', version: '2.10.6'
 	
@@ -41,12 +38,14 @@ dependencies {
 	compile group: 'com.google.oauth-client', name: 'google-oauth-client', version: '1.30.6'    
 	compile group: 'com.google.oauth-client', name: 'google-oauth-client-jetty', version: '1.30.6'    
 	
-	// YouTube API	
+	// YouTube Data API	
 	compile group: 'com.google.apis', name: 'google-api-services-youtube', version: 'v3-rev222-1.25.0'
 	
-	// Facebook API
-	compile group: 'com.restfb', name: 'restfb', version: '3.6.0'
+	// Blogger Data API
+	compile group: 'com.google.apis', name: 'google-api-services-blogger', version: 'v3-rev82-1.25.0'
 	
+	// Facebook API
+	compile group: 'com.restfb', name: 'restfb', version: '3.7.0'
 	
 	// Boilerpipe Text Extraction library
 	compile group: 'net.htmlparser.jericho', name: 'jericho-html', version: '3.4'
@@ -66,14 +65,14 @@ dependencies {
 	// PDF utils
 	compile group: 'org.apache.pdfbox', name: 'pdfbox', version: '2.0.19'
 	
-	// Stream summarizer and cardinality estimator (real-time analytics)
-	compile group: 'com.clearspring.analytics', name: 'stream', version: '2.9.8'
-	
 	// Google Analytics API
 	compile group: 'com.brsanthu', name: 'google-analytics-java', version: '2.0.0'	
 	
 	// simple, stupid rules engine 
-	compile group: 'org.jeasy', name: 'easy-rules-core', version: '3.4.0'
+	compile group: 'org.jeasy', name: 'easy-rules-core', version: '4.0.0'
+	
+	// To backup database, we can use AWS Amazon S3 for raw data storage
+	compile group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.11.812'
 	
     compile (	   
 		fileTree(dir: 'ext-lib', include: '**/*.jar') 	
@@ -97,8 +96,8 @@ dependencies {
 		,'org.apache.httpcomponents:httpclient:4.5.9'
 		,'com.google.guava:guava:23.0'
 		,'org.databene:contiperf:2.3.4'
-		,'com.google.javascript:closure-compiler:v20200426'
-		,'com.github.jknack:handlebars:4.1.2'
+		,'com.google.javascript:closure-compiler:v20200614'
+		,'com.github.jknack:handlebars:4.2.0'
 		,'com.github.spullara.mustache.java:compiler:0.9.6'
 		,'org.yaml:snakeyaml:1.18' 
 				
@@ -110,7 +109,7 @@ dependencies {
 		,'net.gcardone.junidecode:junidecode:0.4.1'   
 			
 		// Maxmind Geolocation
-		,'com.maxmind.geoip2:geoip2:2.13.1'	
+		,'com.maxmind.geoip2:geoip2:2.14.0'	
 		,'com.google.openlocationcode:openlocationcode:1.0.4'
 
 		// for targeting, user profile and url topic database, using ArangoDB driver
