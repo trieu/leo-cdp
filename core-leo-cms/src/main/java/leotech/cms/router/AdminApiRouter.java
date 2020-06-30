@@ -50,7 +50,9 @@ public class AdminApiRouter extends BaseApiRouter {
 			//
 			else if (uri.startsWith(SYSTEM_PREFIX)) {
 				payload = new AdminSystemApiHandler().httpPostApiHandler(userSession, uri, paramJson);
-			} else if (uri.startsWith(BOT_PREFIX)) {
+			} 
+			//
+			else if (uri.startsWith(BOT_PREFIX)) {
 				payload = new BotApiHandler().httpPostApiHandler(userSession, uri, paramJson);
 			}
 		} catch (Throwable e) {

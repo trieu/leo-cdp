@@ -1,3 +1,14 @@
+var leoCdpNavigationRouters = {
+		"Unified Marketing Hub" : {
+			"calljs" : "",
+			"routers" : {
+				"Audience Profiles" : { 
+					"calljs" : "#calljs-loadAudienceProfiles()" 
+				}
+			}
+		}
+};
+
 
 // ###################### Business Hub ######################
 

@@ -179,7 +179,7 @@ public class MainHttpRouter extends BaseHttpRouter {
 			outHeaders.set(CONTENT_TYPE, MIME_TYPE_HTML);
 			resp.end(PONG);
 		} else {
-			// JSON data API handler for administrator web-app
+			// JSON data API handler for Leo Content Hub 
 			AdminApiRouter adminApiRouter = new AdminApiRouter(context);
 			adminApiRouter.enableAutoRedirectToHomeIf404();
 			boolean rs = adminApiRouter.handle();

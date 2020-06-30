@@ -5,13 +5,14 @@ import leotech.system.model.LeoPackage;
 import leotech.system.util.database.SetupNewDatabase;
 import rfx.core.util.Utils;
 
-public class AdminSystemStarter {
+public class AdminLeoCdpStarter {
 	private static final String SETUP_NEW = "setup-new";
 
 	public static void main(String[] args) throws Exception {
 		int length = args.length;
 		if (length == 0) {
-			HttpWorker.start("adminApiWorker");
+			//HttpWorker.start("adminApiWorker");
+			HttpWorker.start("mainAdminLeoCDP");
 		} else if (length == 2) {
 			String command = args[0];
 			String dbKey = args[1];
