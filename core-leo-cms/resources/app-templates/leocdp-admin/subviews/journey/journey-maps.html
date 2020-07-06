@@ -1,0 +1,30 @@
+<div id="jsGrid"></div>
+
+
+<script>
+	$("#jsGrid").jsGrid({
+	  width: "100%",
+	  height: "auto",
+	
+	  autoload:   true,
+	  paging:     true,
+	  pageSize:   5,
+	  pageButtonCount: 5,
+	  pageIndex:  1,
+	
+	  controller: {
+	    loadData: function(filter) {
+	      return $.ajax({
+	        url: "https://api.github.com/repositories",
+	        dataType: "json"
+	      });
+	    }
+	  },
+	  fields: [
+	    {name: "name", width: 50},
+	    {name: "full_name", width: 100}
+	  ]
+	});
+</script>
+
+<br>

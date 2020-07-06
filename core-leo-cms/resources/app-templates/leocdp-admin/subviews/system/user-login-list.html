@@ -3,13 +3,13 @@
     <!-- MAIN BODY here -->
     <div class="row">
         <div class="col-lg-12">
-            <h3 class="page-header">User Management </h3>
+            <h3 class="page-header">User Login Management </h3>
         </div>
     </div>
 
     <p>
-        <a href="#calljs-loadUserProfileForm(false)" class="btn btn-primary">
-            <i class="fa fa-fw fa-play"></i> New User
+        <a href="#calljs-leoCdpRouter('User_Login_Editor','newuser')" class="btn btn-primary">
+            <i class="fa fa-fw fa-play"></i> New User Login
         </a>
     </p>
 
@@ -64,7 +64,7 @@
                 },
                 "columnDefs": [{
                         "render": function (data, type, row) {
-                            var callJsStr = "#calljs-loadUserProfileForm('" + row.key + "')";
+                            var callJsStr = "#calljs-leoCdpRouter('User_Login_Editor','" + row.key + "')";
                             return '<a title="' + data + '" href="' + callJsStr + '" >' + data + '</a>';
                         },
                         "targets": 0

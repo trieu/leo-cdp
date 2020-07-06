@@ -76,7 +76,7 @@
 
 <script>
     function loadDataProfileList() {
-        var usersession = lscache.get('usersession');
+        var usersession = getUserSession();
         if (usersession) {
             $('#profile-list').DataTable({
             	'processing': true,

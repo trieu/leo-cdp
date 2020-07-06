@@ -8,7 +8,7 @@ $(document).ready(function () {
         //find action js
         var idx = location.hash.indexOf(prefixCallJs);
         if (idx >= 0) {
-            loadView(defaultPath, '#wrapper', function () {
+            LeoCdpAdmin.loadView(defaultPath, '#wrapper', function () {
                 mainViewReady();
                 setTimeout(function () {
                     try {
@@ -25,20 +25,20 @@ $(document).ready(function () {
             }, true);
         } else {
             var uri = location.hash.length === 0 ? defaultPath : location.hash.substring(1);
-            loadView(uri, '#wrapper', function () {
+            LeoCdpAdmin.loadView(uri, '#wrapper', function () {
                 //default view
                 mainViewReady();
                 
-                // TODO allow config here 
-                setTimeout(loadCustomer360Analytics,1234)
-                
+                setTimeout(function(){
+                	leoCdpRouter('defaultRouter')
+                },1200)  
                 
                 $(pageDomSelector).show();
                 
             }, true);
         }
     } else {
-        loadView('/view/login.html?admin=1', '#wrapper');
+        LeoCdpAdmin.loadView('/view/login.html?admin=1', '#wrapper');
     }
 });
 
@@ -53,7 +53,7 @@ $(window).on('hashchange', function () {
             console.error(error);
         }
     } else {
-        loadView(location.hash, '#wrapper');
+        LeoCdpAdmin.loadView(location.hash, '#wrapper');
     }
 });
 
@@ -149,7 +149,7 @@ function getHeadLinesImagsObject() {
 function searchContent(keywords) {
     $('#main_search').val(keywords);
     window.currentSearchKeywords = keywords;
-    loadView('/view/search-view.html?admin=1', pageDomSelector, function () {
+    LeoCdpAdmin.loadView('/view/search-view.html?admin=1', pageDomSelector, function () {
         loadSearchingByKeywords(keywords);
     });
 }

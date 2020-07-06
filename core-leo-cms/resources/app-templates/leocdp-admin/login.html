@@ -10,7 +10,7 @@
                 <div>
                     <fieldset>
                         <div id="legend">
-                            <legend class="">CMS Login</legend>
+                            <legend class="">Login information</legend>
                         </div>
 
                         <div class="form-group">
@@ -76,10 +76,6 @@
                     encryptionkey = json.data;
                     lscache.set('usersession', session, 10080);
                     lscache.set('encryptionkey', encryptionkey, 10080);
-                    LeoCmsCookieUtil.set('leousersession', usersession, {
-                        expires: 10080
-                    }); //Expires in 7 days
-                    // console.log(encryptionkey);
 
                     //OK
                     setTimeout(function () {

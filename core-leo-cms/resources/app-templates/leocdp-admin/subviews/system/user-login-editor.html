@@ -38,10 +38,12 @@
                     <label> Department </label>
                     <select name="customData_department" data-placeholder="Choose Department" class="select">
                         <option value=""> No information</option>
-                        <option value="Lysaght"> Lysaght</option>
-                        <option value="Retail"> Retail</option>
-                        <option value="Coated"> Coated</option>
-                        <option value="Marketing"> Marketing</option>
+                         <option value="bod"> Board of Directors </option>
+                        <option value="marketing"> Marketing </option>
+                        <option value="finance"> Finance </option>
+                        <option value="operation"> Operation </option>
+                        <option value="sales"> Sales </option>
+                         <option value="tech"> IT / Tech Support </option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -107,48 +109,50 @@
     var userModel = false;
 
     function loadDataUserProfile(key) {
-        var urlStr = baseAdminApi + '/user/get-info';
-        LeoCmsApiUtil.callPostAdminApi(urlStr, {
-            'key': key || 'newuser'
-        }, function (json) {
-            if (json.httpCode === 0 && json.errorMessage === '') {
-                if (json.data) {
-                    userModel = json.data;
-                    var date = LeoCmsApiUtil.formater.toDateString(userModel.creationTime);
+    	
+         var urlStr = baseAdminApi + '/user/get-info';
+         LeoCmsApiUtil.callPostAdminApi(urlStr, {
+             'key': key || 'newuser'
+         }, function (json) {
+             if (json.httpCode === 0 && json.errorMessage === '') {
+                 if (json.data) {
+                     userModel = json.data;
+                     var date = LeoCmsApiUtil.formater.toDateString(userModel.creationTime);
 
-                    var node = $('#user_form');
-                    if (typeof userModel.key === 'string') {
-                        node.find('input[name="userLogin"]').val(userModel.userLogin).attr('disabled', '');
-                        node.find('input[name="status"][value=' + userModel.status + ']').attr('checked', '');
-                        node.find('input[name="role"][value=' + userModel.role + ']').attr('checked', '');
-                    } else {
-                        node.find('input[name="userLogin"]').val(userModel.userLogin);
-                        node.find('input[name="status"][value=1]').attr('checked', '');
-                        node.find('input[name="role"][value=1]').attr('checked', '');
-                    }
-                    node.find('input[name="displayName"]').val(userModel.displayName);
-                    node.find('input[name="userEmail"]').val(userModel.userEmail);
+                     var node = $('#user_form');
+                     if (typeof userModel.key === 'string') {
+                         node.find('input[name="userLogin"]').val(userModel.userLogin).attr('disabled', '');
+                         node.find('input[name="status"][value=' + userModel.status + ']').attr('checked', '');
+                         node.find('input[name="role"][value=' + userModel.role + ']').attr('checked', '');
+                     } else {
+                         node.find('input[name="userLogin"]').val(userModel.userLogin);
+                         node.find('input[name="status"][value=1]').attr('checked', '');
+                         node.find('input[name="role"][value=1]').attr('checked', '');
+                     }
+                     node.find('input[name="displayName"]').val(userModel.displayName);
+                     node.find('input[name="userEmail"]').val(userModel.userEmail);
 
-                    //customData
-                    var position = userModel.customData.position ? userModel.customData.position : '';
-                    node.find('input[name="customData_position"]').val(position);
+                     //customData
+                     var position = userModel.customData.position ? userModel.customData.position : '';
+                     node.find('input[name="customData_position"]').val(position);
 
-                    var department = userModel.customData.department ? userModel.customData.department : '';
-                    node.find('select[name="customData_department"] option[value="' + department + '"]').attr('selected', 'selected');
-                    node.find('select[name="customData_department"]').chosen({
-                        width: "100%",
-                        no_results_text: "Oops, nothing found!"
-                    }).trigger("chosen:updated").change(function () {
-                        //TODO
-                    });
+                     var department = userModel.customData.department ? userModel.customData.department : '';
+                     node.find('select[name="customData_department"] option[value="' + department + '"]').attr('selected', 'selected');
+                     node.find('select[name="customData_department"]').chosen({
+                         width: "100%",
+                         no_results_text: "Oops, nothing found!"
+                     }).trigger("chosen:updated").change(function () {
+                         //TODO
+                     });
 
-                    //can not delete superadmin
-                    if(userModel.userLogin === 'superadmin'){
-                        $('#btn_delete').hide();                        
-                    }
-                }
-            }
-        });
+                     //can not delete superadmin
+                     if(userModel.userLogin === 'superadmin'){
+                         $('#btn_delete').hide();                        
+                     }
+                 }
+             }
+         });
+
     }
 
     function saveUserProfile() {
@@ -170,7 +174,7 @@
         var onSaveOk = function (data) {
             console.log('=====> saveUserProfile ', data);
             setTimeout(function () {
-                location.hash = "calljs-loadUserList()";
+                location.hash = "calljs-leoCdpRouter('User_Login_List')";
             }, 500);
         }
 
@@ -195,7 +199,7 @@
             var onSaveOk = function (data) {
                 console.log('=====> saveUserProfile ', data);
                 setTimeout(function () {
-                    location.hash = "calljs-loadUserList()";
+                    location.hash = "calljs-leoCdpRouter('User_Login_List')";
                 }, 500);
             }
             var urlStr = baseAdminApi + '/user/delete';

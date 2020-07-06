@@ -1,186 +1,11 @@
-/**
- * ################### Cookie util functions ##################
- */
-(function (global, undefined) {
-	'use strict';
-
-	var factory = function (window) {
-		if (typeof window.document !== 'object') {
-			throw new Error(
-				'LeoCmsCookieUtil.js requires a `window` with a `document` object');
-		}
-
-		var LeoCmsCookieUtil = function (key, value, options) {
-			return arguments.length === 1 ? LeoCmsCookieUtil.get(key) :
-				LeoCmsCookieUtil.set(key, value, options);
-		};
-
-		// Allows for setter injection in unit tests
-		LeoCmsCookieUtil._document = window.document;
-
-		// Used to ensure cookie keys do not collide with built-in `Object`
-		// properties
-		LeoCmsCookieUtil._cacheKeyPrefix = 'cookey.';
-
-		LeoCmsCookieUtil._maxExpireDate = new Date('Fri, 31 Dec 9999 23:59:59 UTC');
-
-		LeoCmsCookieUtil.defaults = {
-			path: '/',
-			secure: false
-		};
-
-		LeoCmsCookieUtil.get = function (key) {
-			if (LeoCmsCookieUtil._cachedDocumentCookie !== LeoCmsCookieUtil._document.cookie) {
-				LeoCmsCookieUtil._renewCache();
-			}
-
-			return LeoCmsCookieUtil._cache[LeoCmsCookieUtil._cacheKeyPrefix + key];
-		};
-
-		LeoCmsCookieUtil.set = function (key, value, options) {
-			options = LeoCmsCookieUtil._getExtendedOptions(options);
-			options.expires = LeoCmsCookieUtil
-				._getExpiresDate(value === undefined ? -1 : options.expires);
-
-			LeoCmsCookieUtil._document.cookie = LeoCmsCookieUtil
-				._generateAdCookiestring(key, value, options);
-
-			return LeoCmsCookieUtil;
-		};
-
-		LeoCmsCookieUtil.expire = function (key, options) {
-			return LeoCmsCookieUtil.set(key, undefined, options);
-		};
-
-		LeoCmsCookieUtil._getExtendedOptions = function (options) {
-			return {
-				path: options && options.path || LeoCmsCookieUtil.defaults.path,
-				domain: options && options.domain ||
-					LeoCmsCookieUtil.defaults.domain,
-				expires: options && options.expires ||
-					LeoCmsCookieUtil.defaults.expires,
-				secure: options && options.secure !== undefined ? options.secure : LeoCmsCookieUtil.defaults.secure
-			};
-		};
-
-		LeoCmsCookieUtil._isValidDate = function (date) {
-			return Object.prototype.toString.call(date) === '[object Date]' &&
-				!isNaN(date.getTime());
-		};
-
-		LeoCmsCookieUtil._getExpiresDate = function (expires, now) {
-			now = now || new Date();
-
-			if (typeof expires === 'number') {
-				expires = expires === Infinity ? LeoCmsCookieUtil._maxExpireDate :
-					new Date(now.getTime() + expires * 1000);
-			} else if (typeof expires === 'string') {
-				expires = new Date(expires);
-			}
-
-			if (expires && !LeoCmsCookieUtil._isValidDate(expires)) {
-				throw new Error(
-					'`expires` parameter cannot be converted to a valid Date instance');
-			}
-
-			return expires;
-		};
-
-		LeoCmsCookieUtil._generateAdCookiestring = function (key, value,
-			options) {
-			key = key.replace(/[^#$&+\^`|]/g, encodeURIComponent);
-			key = key.replace(/\(/g, '%28').replace(/\)/g, '%29');
-			value = (value + '').replace(/[^!#$&-+\--:<-\[\]-~]/g,
-				encodeURIComponent);
-			options = options || {};
-
-			var AdCookiestring = key + '=' + value;
-			AdCookiestring += options.path ? ';path=' + options.path : '';
-			AdCookiestring += options.domain ? ';domain=' + options.domain :
-				'';
-			AdCookiestring += options.expires ? ';expires=' +
-				options.expires.toUTCString() : '';
-			AdCookiestring += options.secure ? ';secure' : '';
-
-			return AdCookiestring;
-		};
-
-		LeoCmsCookieUtil._getCacheFromString = function (documentCookie) {
-			var cookieCache = {};
-			var AdCookiesArray = documentCookie ? documentCookie
-				.split('; ') : [];
-
-			for (var i = 0; i < AdCookiesArray.length; i++) {
-				var cookieKvp = LeoCmsCookieUtil
-					._getKeyValuePairFromAdCookiestring(AdCookiesArray[i]);
-
-				if (cookieCache[LeoCmsCookieUtil._cacheKeyPrefix + cookieKvp.key] === undefined) {
-					cookieCache[LeoCmsCookieUtil._cacheKeyPrefix + cookieKvp.key] = cookieKvp.value;
-				}
-			}
-
-			return cookieCache;
-		};
-
-		LeoCmsCookieUtil._getKeyValuePairFromAdCookiestring = function (
-			AdCookiestring) {
-			// "=" is a valid character in a cookie value according to RFC6265,
-			// so cannot `split('=')`
-			var separatorIndex = AdCookiestring.indexOf('=');
-
-			// IE omits the "=" when the cookie value is an empty string
-			separatorIndex = separatorIndex < 0 ? AdCookiestring.length :
-				separatorIndex;
-
-			return {
-				key: decodeURIComponent(AdCookiestring.substr(0,
-					separatorIndex)),
-				value: decodeURIComponent(AdCookiestring
-					.substr(separatorIndex + 1))
-			};
-		};
-
-		LeoCmsCookieUtil._renewCache = function () {
-			LeoCmsCookieUtil._cache = LeoCmsCookieUtil
-				._getCacheFromString(LeoCmsCookieUtil._document.cookie);
-			LeoCmsCookieUtil._cachedDocumentCookie = LeoCmsCookieUtil._document.cookie;
-		};
-
-		LeoCmsCookieUtil._areEnabled = function () {
-			var testKey = 'LeoCmsCookieUtil.js';
-			var areEnabled = LeoCmsCookieUtil.set(testKey, 1).get(testKey) === '1';
-			LeoCmsCookieUtil.expire(testKey);
-			return areEnabled;
-		};
-
-		LeoCmsCookieUtil.enabled = LeoCmsCookieUtil._areEnabled();
-
-		return LeoCmsCookieUtil;
-	};
-
-	var AdCookiesExport = typeof global.document === 'object' ? factory(global) :
-		factory;
-
-	// AMD support
-	if (typeof define === 'function' && define.amd) {
-		define(function () {
-			return AdCookiesExport;
-		});
-		// CommonJS/Node.js support
-	} else if (typeof exports === 'object') {
-		// But always support CommonJS module 1.1.1 spec (`exports` cannot be a
-		// function)
-		exports.LeoCmsCookieUtil = AdCookiesExport;
-	} else {
-		global.LeoCmsCookieUtil = AdCookiesExport;
-	}
-})(typeof window === 'undefined' ? this : window);
 
 /**
  * ################## common utils functions ####################
  */
 
-window.loadView = window.loadView || function (uri, divSelector, callback, i18nTurnOff ) {
+var LeoCdpAdmin = window.LeoCdpAdmin || {}
+
+LeoCdpAdmin.loadView = LeoCdpAdmin.loadView || function(uri, divSelector, callback, i18nTurnOff ) {
 	//caching view in LocalStorage
 	var time2Live = typeof window.apiCacheTime2Live === 'number' ? window.apiCacheTime2Live : 1; // in munute
 	var apiCacheEnabled = typeof window.apiCacheEnabled === 'boolean' ? window.apiCacheEnabled : true;
@@ -220,10 +45,11 @@ window.loadView = window.loadView || function (uri, divSelector, callback, i18nT
 				}
 				$(window).scrollTop(0);
 				
+				console.log(LeoCdpAdmin);
+				
 				if (typeof callback === 'function') {
 					try {
 						callback.apply();
-						
 					} catch (error) {
 						console.error(error);
 					}
@@ -294,7 +120,6 @@ function toTitleCase(str) {
 	return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
 
-
 function toDateStringVN(date) {
 	var dd = date.getDate();
 	var mm = date.getMonth() + 1; //January is 0!
@@ -328,6 +153,16 @@ function isMobileDevice() {
 	return isMobile;
 }
 
+function getUserSession() {
+	var usersession = lscache.get('usersession');
+	if (usersession) {
+		return usersession;
+	} else {
+		console.error('usersession is empty');
+		return "";
+	}
+}
+
 /**
  * ################## LeoCmsApiUtil functions ####################
  * 
@@ -343,24 +178,7 @@ if (LeoCmsApiUtil.isLoaded !== true) {
 			baseUploadApi: window.baseUploadApi || 'http://localhost:9070'
 		};
 
-		function getUserSession() {
-			var key = 'leousersession';
-			var usersession = LeoCmsCookieUtil.get(key);
-			if (!usersession) {
-				usersession = lscache.get('usersession');
-				if (usersession) {
-					LeoCmsCookieUtil.set(key, usersession, {
-						expires: 10080
-					}); // Expires
-					// in 7
-					// days
-				} else {
-					console.error('getUserSession is empty');
-					return "";
-				}
-			}
-			return usersession;
-		}
+		
 
 		obj.callPostApi = function (urlStr, data, callback) {
 			if (typeof callback !== 'function') {
@@ -549,7 +367,6 @@ if (LeoCmsApiUtil.isLoaded !== true) {
 
 		obj.logout = function (callback) {
 			lscache.flush();
-			LeoCmsCookieUtil.expire('leousersession');
 			setTimeout(function () {
 				if (typeof callback === 'function') callback();
 				else window.location = '/';

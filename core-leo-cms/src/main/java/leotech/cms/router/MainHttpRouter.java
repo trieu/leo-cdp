@@ -24,16 +24,15 @@ import leotech.system.model.DeviceInfo;
 import leotech.system.service.AppMetadataService;
 import leotech.system.template.HandlebarsTemplateUtil;
 import leotech.system.template.TemplateUtil;
-import leotech.system.util.CookieUserSessionUtil;
 import leotech.system.util.DeviceInfoUtil;
 import leotech.system.util.HttpTrackingUtil;
 import rfx.core.configs.WorkerConfigs;
 import rfx.core.util.StringUtil;
 
 /**
- * @author trieu
+ * @author tantrieuf31
  * 
- *         Main Ad Delivery Handler for Display, Instream and Outstream
+ *  Main HTTP Server Router 
  *
  */
 public class MainHttpRouter extends BaseHttpRouter {
@@ -77,8 +76,7 @@ public class MainHttpRouter extends BaseHttpRouter {
 		String origin = StringUtil.safeString(reqHeaders.get(BaseApiHandler.ORIGIN), "*");
 
 		// User Info
-		String userSession = CookieUserSessionUtil.getUserSession(context,
-				StringUtil.safeString(reqHeaders.get(BaseApiRouter.HEADER_SESSION)));
+		String userSession = StringUtil.safeString(reqHeaders.get(BaseApiRouter.HEADER_SESSION));
 
 		// ---------------------------------------------------------------------------------------------------
 		String url = req.absoluteURI();
@@ -189,8 +187,7 @@ public class MainHttpRouter extends BaseHttpRouter {
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
-	// utils //
-
+	// utilities //
 	
 
 	void viewRoutingHandler(HttpServerRequest req, HttpServerResponse resp, String path, String networkDomain) {
