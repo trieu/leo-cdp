@@ -42,27 +42,27 @@
 	<div id="main-navbar" class="collapse navbar-collapse navbar-ex1-collapse">
 		<ul class="nav navbar-nav side-nav">
 		
-			<!--  1 - Customer Journey Menu  -->
+			<!--  1 - Customer Journey Map Menu  -->
 			<li>
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#journey_hub_menu"> <i class="fa fa-fw fa-map-o"></i>
-				 	Customer Journey Hub<i id="journey_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
+				 	Customer Journey Map<i id="journey_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
 				<ul id="journey_hub_menu" class="collapse in" aria-expanded="true">
 					
 					<li>
-						<a href="#calljs-leoCdpRouter('Customer_Personas')"> <i class="fa fa-fw fa-list-ol"></i> Customer Personas </a>
+						<a href="#calljs-leoCdpRouter('Customer_Persona_List')"> <i class="fa fa-fw fa-users"></i> Customer Persona List</a>
 					</li>					
 					
 					<li>
-						<a href="#calljs-leoCdpRouter('Journey_Maps')"> <i class="fa fa-fw fa-map-o"></i> Journey Maps </a>
+						<a href="#calljs-leoCdpRouter('Customer_Journey_List')"> <i class="fa fa-fw fa-map-o"></i> Customer Journey List </a>
 					</li>
 					
 					<li>
-						<a href="#calljs-leoCdpRouter('Touchpoint_List')"> <i class="fa fa-fw fa-list-ol"></i> Touch-point List </a>
+						<a href="#calljs-leoCdpRouter('Customer_Touchpoint_List')"> <i class="fa fa-fw fa-random"></i> Customer Touchpoint List </a>
 					</li>
 						
 					<li>
-						<a href="#calljs-leoCdpRouter('Data_Observer_List')"> <i class="fa fa-fw fa-list-ol"></i> Data Observer List </a>
+						<a href="#calljs-leoCdpRouter('Data_Observer_List')"> <i class="fa fa-fw fa-camera"></i> Data Observer List </a>
 					</li>
 					
 					<li style="display: none;" >
@@ -72,7 +72,7 @@
 				</ul>
 			</li>
 		
-			<!--  2 - Unified Marketing Menu  -->
+			<!--  2 - Unified Marketing Hub Menu  -->
 			<li>
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#marketing_hub_menu"> <i class="fa fa-fw fa-briefcase"></i>
 					Unified Marketing Hub <i id="marketing_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
@@ -83,19 +83,15 @@
 					</li>
 					
 					<li>
-						<a href="#calljs-leoCdpRouter('Audience_Profiles')"> <i class="fa fa-fw fa-users"></i> Audience Profiles </a>
+						<a href="#calljs-leoCdpRouter('Audience_Profiles')"> <i class="fa fa-fw fa-users"></i> Audience Profile List </a>
 					</li>
 					
 					<li>
-						<a href="#calljs-leoCdpRouter('Audience_Segments')"> <i class="fa fa-fw fa-object-group"></i> Audience Segments </a>
+						<a href="#calljs-leoCdpRouter('Audience_Segments')"> <i class="fa fa-fw fa-object-group"></i> Audience Segment List </a>
 					</li>
 					
 					<li>
-						<a href="#calljs-leoCdpRouter('Product_Catalog')"> <i class="fa fa-fw fa-database"></i> Product Catalog </a>
-					</li>
-					
-					<li style="display: none;" >
-						<a href="#calljs-leoCdpRouter('Service_Catalog')"> <i class="fa fa-fw fa-database"></i> Service Catalog </a>
+						<a href="#calljs-leoCdpRouter('Product_Catalog')"> <i class="fa fa-fw fa-database"></i> Product & Service Catalog </a>
 					</li>
 					
 					<li style="display: none;" >
@@ -104,7 +100,7 @@
 				</ul>
 			</li>
 
-			<!--  3 - Creative Content Menu  -->
+			<!--  3 - Creative Content Hub Menu  -->
 			<li>
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#content_hub_menu"> <i class="fa fa-fw fa-sitemap"></i>
 					Creative Content Hub <i id="content_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
@@ -128,26 +124,26 @@
 			<!--  4 - Personalization Content Management  -->
 			<li id="nav_personalization_hub" style="display: ;" >
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#personalization_hub_menu"> <i class="fa fa-fw fa-heart"></i>
-					Personalization Engine <i id="personalization_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
+					Personalization AI Hub <i id="personalization_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
 				<ul id="personalization_hub_menu" class="collapse in" aria-expanded="true">					
 					<li>
-						<a href="#calljs-leoCdpRouter('Personalization_Model')"> <i class="fa fa-fw fa-user-circle"></i> Personalization Model </a>
+						<a href="#calljs-leoCdpRouter('Personalization_Model')"> <i class="fa fa-fw fa-user-circle"></i> Personalization Models </a>
 					</li>	
 					<li>
-						<a href="#calljs-leoCdpRouter('Recommendation_Widget')"> <i class="fa fa-fw fa-internet-explorer"></i> Recommendation Widget </a>
+						<a href="#calljs-leoCdpRouter('Recommendation_Widget')"> <i class="fa fa-fw fa-internet-explorer"></i> Personalization Widgets </a>
 					</li>
 					<li style="display: none;" >
-						<a href="#calljs-leoCdpRouter('')"  > <i class="fa fa-fw fa-plug"></i> Recommendation API </a>
+						<a href="#calljs-leoCdpRouter('')"  > <i class="fa fa-fw fa-plug"></i> Personalization API </a>
 					</li>
 					
 				</ul>
 			</li>
 			
-			<!--  5 - Marketing & Sales Activation Management  -->
+			<!--  5 - Marketing & Sales Campaign Activation Management  -->
 			<li id="nav_activation_hub"  >
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#activation_hub_menu"> <i class="fa fa-fw fa-bolt"></i>
-					Activation Campaign<i id="activation_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
+					Marketing Activation <i id="activation_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
 				<ul id="activation_hub_menu" class="collapse in" aria-expanded="true" >
 					
@@ -155,13 +151,13 @@
 						<a href="#calljs-leoCdpRouter('')"  > <i class="fa fa-fw fa-exchange"></i> Branding Campaigns </a>
 					</li>
 					<li style="display: none;" >
-						<a href="#calljs-leoCdpRouter('')" > <i class="fa fa-fw fa-exchange"></i> Lead Generation </a>
+						<a href="#calljs-leoCdpRouter('')" > <i class="fa fa-fw fa-exchange"></i> Performance Campaigns </a>
 					</li>
 					<li>
-						<a href="#calljs-leoCdpRouter('Email_Marketing')"> <i class="fa fa-fw fa-exchange"></i> Email Marketing </a>
+						<a href="#calljs-leoCdpRouter('Email_Marketing')"> <i class="fa fa-fw fa-exchange"></i> Email Campaigns </a>
 					</li>
 					<li style="display: none;" >
-						<a href="#calljs-leoCdpRouter('')"> <i class="fa fa-fw fa-exchange"></i> Push Notification </a>
+						<a href="#calljs-leoCdpRouter('')"> <i class="fa fa-fw fa-exchange"></i> Push Campaigns </a>
 					</li>
 					
 					<li style="display: none;" >

@@ -3,21 +3,168 @@ LeoCdpAdmin.navRouters = {
 		"defaultRouter" : {
 			"functionName" : "loadMarketing360Report"
 		},
-		"Customer_Personas" : {
-			"menuName" : "Customer Personas",
-			"functionName" : "loadCustomerPersonas",
-			"breadcrumb" : ["Customer_Journey_Hub", "Customer_Personas"]
+		
+		// 1.1 Targeted Persona
+		"Customer_Persona_List" : {
+			"menuName" : "Customer Persona List",
+			"functionName" : "loadCustomerPersonaList",
+			"breadcrumb" : ["Customer Journey Map", "Customer Persona List"]
 		},
-		"Journey_Maps" : {
-			"menuName" : "Journey Maps",
-			"functionName" : "loadJourneyMaps",
-			"breadcrumb" : ["Customer_Journey_Hub", "Journey_Maps"]
+		"Customer_Persona_Report" : {
+			"menuName" : "Customer Persona Report",
+			"functionName" : "loadCustomerPersonaReport",
+			"breadcrumb" : ["Customer Journey Map", "Customer Persona List", "Customer Persona Report"]
+		},
+		"Customer_Persona_Details" : {
+			"menuName" : "Customer Persona Details",
+			"functionName" : "loadCustomerPersonaDetails",
+			"breadcrumb" : ["Customer Journey Map", "Customer Persona List", "Customer Persona Details"]
+		},
+		
+		// 1.2 Journey Map
+		"Customer_Journey_List" : {
+			"menuName" : "Customer Journey List",
+			"functionName" : "loadCustomerJourneyList",
+			"breadcrumb" : ["Customer Journey Map", "Customer Journey List"]
+		},
+		"Journey_Map_Report" : {
+			"menuName" : "Journey Map Report",
+			"functionName" : "loadJourneyMapReport",
+			"breadcrumb" : ["Customer Journey Map", "Customer Journey List", "Journey Map Report"]
 		},
 		"Journey_Map_Studio" : {
 			"menuName" : "Journey Map Studio",
 			"functionName" : "loadJourneyMapStudio",
-			"breadcrumb" : ["Customer_Journey_Hub", "Journey_Maps","Journey_Map_Studio"]
+			"breadcrumb" : ["Customer Journey Map", "Customer Journey List","Journey Map Studio"]
 		},
+		
+		// 1.3 Touchpoint
+		"Customer_Touchpoint_List" : {
+			"menuName" : "Customer Touchpoint List",
+			"functionName" : "loadCustomerTouchpointList",
+			"breadcrumb" : ["Customer Journey Map", "Touchpoint List"]
+		},
+		"Customer_Touchpoint_Report" : {
+			"menuName" : "Touchpoint Report",
+			"functionName" : "loadCustomerTouchpointReport",
+			"breadcrumb" : ["Customer Journey Map", "Touchpoint List" , "Touchpoint Report" ]
+		},
+		
+		// 1.4 Data Observer
+		"Data_Observer_List" : {
+			"menuName" : "Data Observer List",
+			"functionName" : "loadDataObserverList",
+			"breadcrumb" : ["Customer Journey Map", "Data Observer List"]
+		},
+		"Data_Observer_Report" : {
+			"menuName" : "Data Observer Report",
+			"functionName" : "loadDataObserverReport",
+			"breadcrumb" : ["Customer Journey Map", "Data Observer List", "Data Observer Report"]
+		},
+		"Data_Observer_Datails" : {
+			"menuName" : "Data Observer Details",
+			"functionName" : "loadDataObserverDetails",
+			"breadcrumb" : ["Customer Journey Map", "Data Observer List", "Data Observer Details"]
+		},
+		
+		// 2.1 Audience Profile 
+		"Audience_Profile_List" : {
+			"menuName" : "Audience Profile List",
+			"functionName" : "loadAudienceProfileList",
+			"breadcrumb" : ["Unified Marketing Hub", "Audience Profile List"]
+		},
+		"Audience_Profile_Report" : {
+			"menuName" : "Data Observer Report",
+			"functionName" : "loadAudienceProfileReport",
+			"breadcrumb" : ["Unified Marketing Hub", "Data Observer List", "Data Observer Report"]
+		},
+		"Audience_Profile_Editor" : {
+			"menuName" : "Audience Profile Editor",
+			"functionName" : "loadAudienceProfileEditor",
+			"breadcrumb" : ["Unified Marketing Hub", "Data Observer List", "Data Observer Details"]
+		},
+		
+		// 2.2 Audience Segmentation
+		"Audience_Profile_List" : {
+			"menuName" : "Data Observer List",
+			"functionName" : "loadDataObserverList",
+			"breadcrumb" : ["Unified Marketing Hub", "Data Observer List"]
+		},
+		"Audience_Profile_Report" : {
+			"menuName" : "Data Observer Report",
+			"functionName" : "loadAudienceProfileReport",
+			"breadcrumb" : ["Unified Marketing Hub", "Data Observer List", "Data Observer Report"]
+		},
+		"Audience_Profile_Editor" : {
+			"menuName" : "Audience Profile Editor",
+			"functionName" : "loadAudienceProfileDatails",
+			"breadcrumb" : ["Unified Marketing Hub", "Data Observer List", "Data Observer Details"]
+		},
+		
+		// 2.3 Product and Service Catalog
+		"" : {
+			"menuName" : "",
+			"functionName" : "",
+			"breadcrumb" : ["Unified Marketing Hub", "Product & Service Catalog"]
+		},
+		"" : {
+			"menuName" : "",
+			"functionName" : "",
+			"breadcrumb" : ["Unified Marketing Hub", "Product & Service Catalog", "Product Report"]
+		},
+		"" : {
+			"menuName" : "",
+			"functionName" : "",
+			"breadcrumb" : ["Unified Marketing Hub", "Product & Service Catalog", "Service Report"]
+		},
+		"" : {
+			"menuName" : "",
+			"functionName" : "",
+			"breadcrumb" : ["Unified Marketing Hub", "Product & Service Catalog", "Product Information Editor"]
+		},
+		"" : {
+			"menuName" : "",
+			"functionName" : "",
+			"breadcrumb" : ["Unified Marketing Hub", "Product & Service Catalog", "Service Information Editor"]
+		},
+		
+		// 3.1 Creative Content Hub
+		"Content_Category_List" : {
+			"menuName" : "Content Category List",
+			"functionName" : "loadContentCategoryList",
+			"breadcrumb" : ["Creative Content Hub", "Content Category List"]
+		},
+		
+		// 4.1 Personalization AI Model & Widget Hub
+		"Personalization_AI_Models" : {
+			"menuName" : "Personalization AI Models",
+			"functionName" : "loadPersonalizationAIModels",
+			"breadcrumb" : ["Personalization AI Hub", "Personalization AI Models"]
+		},
+		"Personalization_Widgets" : {
+			"menuName" : "Personalization Widget",
+			"functionName" : "loadPersonalizationWidgetList",
+			"breadcrumb" : ["Personalization AI Hub", "Personalization Widgets"]
+		},
+		
+		// 5.1 Email Marketing Activation Campaigns
+		"Email_Campaigns" : {
+			"menuName" : "Email Campaigns",
+			"functionName" : "loadEmailCampaigns",
+			"breadcrumb" : ["Marketing Activation", "Email Campaigns"]
+		},
+		"Email_Campaign_Report" : {
+			"menuName" : "Email Campaign Report",
+			"functionName" : "loadEmailCampaignReport",
+			"breadcrumb" : ["Marketing Activation", "Email Campaigns", "Email Campaign Report"]
+		},
+		"Email_Campaign_Editor" : {
+			"menuName" : "Email Campaign Editor",
+			"functionName" : "loadEmailCampaignEditor",
+			"breadcrumb" : ["Marketing Activation", "Email Campaigns", "Email Campaign Editor"]
+		},
+		
+		// User Login Management
 		"User_Login_List" : {
 			"menuName" : "User Login List",
 			"functionName" : "loadUserLoginList",
