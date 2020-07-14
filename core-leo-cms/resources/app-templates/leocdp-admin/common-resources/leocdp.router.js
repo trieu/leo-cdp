@@ -1,3 +1,10 @@
+/**
+ * 
+ * @author tantrieuf31 (Thomas)
+ * 
+ * this script contains all functional web-app routers for CDP end-users
+ * 
+ */
 
 LeoCdpAdmin.navRouters = {
 		"defaultRouter" : {
@@ -67,6 +74,13 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Customer Journey Map", "Data Observer List", "Data Observer Details"]
 		},
 		
+		// Unified Marketing Hub
+		"Marketing_360_Dashboard": {
+			"menuName" : "Marketing 360 Dashboard",
+			"functionName" : "loadMarketing360Dashboard",
+			"breadcrumb" : ["Unified Marketing Hub", "Marketing 360 Dashboard"]
+		},
+		
 		// 2.1 Audience Profile 
 		"Audience_Profile_List" : {
 			"menuName" : "Audience Profile List",
@@ -102,8 +116,8 @@ LeoCdpAdmin.navRouters = {
 		},
 		
 		// 2.3 Product and Service Catalog
-		"" : {
-			"menuName" : "",
+		"Products_Services_List" : {
+			"menuName" : "Products/Services List",
 			"functionName" : "",
 			"breadcrumb" : ["Unified Marketing Hub", "Product & Service Catalog"]
 		},
@@ -149,7 +163,7 @@ LeoCdpAdmin.navRouters = {
 		
 		// 5.1 Email Marketing Activation Campaigns
 		"Email_Campaigns" : {
-			"menuName" : "Email Campaigns",
+			"menuName" : "Email Campaign List",
 			"functionName" : "loadEmailCampaigns",
 			"breadcrumb" : ["Marketing Activation", "Email Campaigns"]
 		},
@@ -173,7 +187,7 @@ LeoCdpAdmin.navRouters = {
 		"User_Login_Editor" : {
 			"menuName" : "User Login Editor",
 			"functionName" : "loadUserLoginEditor",
-			"breadcrumb" : ["System Management", "User Login Management"]
+			"breadcrumb" : ["System Management", "User Login Management","User Login Profile Editor"]
 		},
 		"System_Configuration" : {
 			"menuName" : "System Configuration",
@@ -186,7 +200,18 @@ LeoCdpAdmin.navRouters = {
 function leoCdpRouter(objKey,objId){
 	var obj = LeoCdpAdmin.navRouters[objKey];
 	console.log( obj );
-	var breadcrumbHtml = '<span> Business Hub </span> &#8594; <span> Sales Dashboard </span>';
+	
+	// generate breadcrumb navigation
+	var breadcrumbHtml = '';
+	var breadcrumbList = obj.breadcrumb;
+	var len = breadcrumbList.length;
+	for(var i=0; i< len; i++ ){
+		breadcrumbHtml = breadcrumbHtml + '<a href="javascript:"> ' + breadcrumbList[i] + ' </a> ';
+		if( i < (len - 1) ){
+			breadcrumbHtml = breadcrumbHtml + ' &#8594; ';
+		}
+	}
+	
 	if(objId){
 		console.log(objKey + " objId " + objId)
 		LeoCdpAdmin.navFunctions[obj.functionName].apply(null,[objId,breadcrumbHtml]);
@@ -208,8 +233,8 @@ function loadJourneyMaps(){
 
 // ###################### Business Hub ######################
 
-LeoCdpAdmin.navFunctions.loadMarketing360Report = function(breadcrumbHtml) {
-    LeoCdpAdmin.loadView('/view/subviews/marketing/marketing-360-report.html?admin=1', pageDomSelector, function () {
+LeoCdpAdmin.navFunctions.loadMarketing360Dashboard = function(breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/subviews/marketing/marketing-360-dashboard.html?admin=1', pageDomSelector, function () {
     	console.log("breadcrumbHtml" + breadcrumbHtml)
     	$('#page_breadcrumb').html(breadcrumbHtml);
     	initSalesDashboard();
@@ -262,7 +287,7 @@ function pageEditor(id, categoryKey) {
 	 console.log('pageEditor');
 	 document.title = 'Page Editor';
 	
-	 LeoCdpAdmin.loadView('/view/page-editor.html?admin=1', pageDomSelector, function () {
+	 LeoCdpAdmin.loadView('/view/subviews/content/page-editor.html?admin=1', pageDomSelector, function () {
 	     if (id) {
 	         console.log('edit page ' + id);
 	         loadDataPageEditor({
@@ -282,7 +307,7 @@ function pageEditor(id, categoryKey) {
 function pageInfo(pageId, pageName, categoryKey) {
 	 document.title = 'Page Info: ' + decodeURIComponent(pageName);
 	 console.log('pageInfo');
-	 LeoCdpAdmin.loadView('/view/page-info-with-posts.html?admin=1', pageDomSelector, function () {
+	 LeoCdpAdmin.loadView('/view/subviews/content/page-info-with-posts.html?admin=1', pageDomSelector, function () {
 	     pageInfoCallback(pageId, pageName, categoryKey);
 	 });
 }
@@ -317,7 +342,7 @@ function deletePage() {
 
 function postEditor(id, pageId, categoryKey) {
 	 console.log('postEditor' + id);
-	 LeoCdpAdmin.loadView('/view/post/post-editor.html?admin=1', pageDomSelector, function () {
+	 LeoCdpAdmin.loadView('/view/subviews/content/post-editor.html?admin=1', pageDomSelector, function () {
 	     console.log('edit post ' + id);
 	     initPostEditor({
 	         'postId': id,
@@ -329,7 +354,7 @@ function postEditor(id, pageId, categoryKey) {
 
 function postInfo(id) {
 	 if (id) {
-	     LeoCdpAdmin.loadView('/view/post/post-info.html?admin=1', pageDomSelector, function () {
+	     LeoCdpAdmin.loadView('/view/subviews/content/post-info.html?admin=1', pageDomSelector, function () {
 	     	initPostInfoView({
 	             postId: id
 	         });
@@ -374,13 +399,13 @@ function loadContentHubApiManagement(){
 
 
 function loadPagesOfCategory(catKey, catName) {
-    LeoCdpAdmin.loadView('/view/page-list.html?admin=1', pageDomSelector, function () {
+    LeoCdpAdmin.loadView('/view/subviews/content/page-list.html?admin=1', pageDomSelector, function () {
         loadPageList(catKey, catName);
     });
 }
 
 function loadCategoryList() {
-    LeoCdpAdmin.loadView('/view/category-list.html?admin=1', pageDomSelector, function () {
+    LeoCdpAdmin.loadView('/view/subviews/content/category-list.html?admin=1', pageDomSelector, function () {
         loadDataCategoryList();
     });
 }
@@ -388,7 +413,7 @@ function loadCategoryList() {
 
 
 function loadCategoryForm(id) {
-    LeoCdpAdmin.loadView('/view/category-form.html?admin=1', pageDomSelector, function () {
+    LeoCdpAdmin.loadView('/view/subviews/content/category-form.html?admin=1', pageDomSelector, function () {
         if (id) {
             // load from API
             loadDataCategoryInfo(id);
@@ -439,8 +464,6 @@ function loadAudienceHubApiManagement(){
     });
 }
 
-
-
 function loadProfile360Analytics() {
     LeoCdpAdmin.loadView('/view/subviews/audience/profile-360-analytics.html?admin=1', pageDomSelector, function () {
     	initProfile360Analytics();
@@ -458,6 +481,7 @@ function loadProfileDataEditor() {
 
 LeoCdpAdmin.navFunctions.loadUserLoginList = function(breadcrumbHtml) {
     LeoCdpAdmin.loadView('/view/subviews/system/user-login-list.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
         loadDataUserList();
     });
 }
@@ -465,12 +489,14 @@ LeoCdpAdmin.navFunctions.loadUserLoginList = function(breadcrumbHtml) {
 LeoCdpAdmin.navFunctions.loadUserLoginEditor = function(id, breadcrumbHtml) {
     LeoCdpAdmin.loadView('/view/subviews/system/user-login-editor.html?admin=1', pageDomSelector, function () {
         // load data from API
+    	$('#page_breadcrumb').html(breadcrumbHtml);
         loadDataUserProfile(id);
     });
 }
 
-LeoCdpAdmin.navFunctions.loadSystemInfoConfigs = function() {
+LeoCdpAdmin.navFunctions.loadSystemInfoConfigs = function(breadcrumbHtml) {
     LeoCdpAdmin.loadView('/view/subviews/system/system-info-configs.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
         systemManagementReady();
     });
 }
