@@ -8,7 +8,9 @@
 
 LeoCdpAdmin.navRouters = {
 		"defaultRouter" : {
-			"functionName" : "loadMarketing360Report"
+			"menuName" : "Marketing 360 Dashboard",
+			"functionName" : "loadMarketing360Dashboard",
+			"breadcrumb" : ["Unified Marketing Hub", "Marketing 360 Dashboard"]
 		},
 		
 		// 1.1 Targeted Persona
@@ -182,12 +184,12 @@ LeoCdpAdmin.navRouters = {
 		"User_Login_List" : {
 			"menuName" : "User Login List",
 			"functionName" : "loadUserLoginList",
-			"breadcrumb" : ["System Management", "User Login Management"]
+			"breadcrumb" : ["System Management", "User Login List"]
 		},
 		"User_Login_Editor" : {
 			"menuName" : "User Login Editor",
 			"functionName" : "loadUserLoginEditor",
-			"breadcrumb" : ["System Management", "User Login Management","User Login Profile Editor"]
+			"breadcrumb" : ["System Management", "User Login List","User Login Profile Editor"]
 		},
 		"System_Configuration" : {
 			"menuName" : "System Configuration",
@@ -206,7 +208,10 @@ function leoCdpRouter(objKey,objId){
 	var breadcrumbList = obj.breadcrumb;
 	var len = breadcrumbList.length;
 	for(var i=0; i< len; i++ ){
-		breadcrumbHtml = breadcrumbHtml + '<a href="javascript:"> ' + breadcrumbList[i] + ' </a> ';
+		var name = breadcrumbList[i];
+		var key = name.replace(/ /g, "_");
+		var jsFunc = LeoCdpAdmin.navRouters[key] ? "leoCdpRouter('"+ key + "')"  : "";
+		breadcrumbHtml = breadcrumbHtml + '<a href="#calljs-' + jsFunc + '"> ' + breadcrumbList[i] + ' </a> ';
 		if( i < (len - 1) ){
 			breadcrumbHtml = breadcrumbHtml + ' &#8594; ';
 		}
