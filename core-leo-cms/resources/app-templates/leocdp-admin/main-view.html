@@ -22,13 +22,10 @@
 					<i class="fa fa-user"></i> <span id="userDisplayName"></span> <b class="caret"></b>
 				</a>
 				<ul class="dropdown-menu">
-					<li><a href="#"> <i class="fa fa-fw fa-user"></i> Profile
-						</a></li>
+					<li><a href="#"> <i class="fa fa-fw fa-user"></i> Profile </a> </li>
 						
-					<li style="display: none;" ><a href="#"> <i class="fa fa-fw fa-envelope"></i> Inbox
-						</a></li>
-					<li style="display: none;" ><a href="#"> <i class="fa fa-fw fa-gear"></i> Settings
-						</a></li>
+					<li style="display: none;" > <a href="#"> <i class="fa fa-fw fa-envelope"></i> Inbox </a> </li>
+					<li style="display: none;" > <a href="#"> <i class="fa fa-fw fa-gear"></i> Settings </a> </li>
 						
 					<li class="divider"></li>
 					<li>
@@ -79,9 +76,10 @@
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#marketing_hub_menu"> <i class="fa fa-fw fa-snowflake-o"></i>
 					Unified Marketing Hub <i id="marketing_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
-				<ul  id="marketing_hub_menu" class="collapse in" aria-expanded="true">
+				<ul id="marketing_hub_menu" class="collapse in" aria-expanded="true">
+					
 					<li>
-						<a href="#calljs-leoCdpRouter('Marketing_360_Dashboard')"> <i class="fa fa-fw fa-line-chart"></i> Marketing Dashboard</a>
+						<a href="#calljs-leoCdpRouter('Marketing_Dashboard')"> <i class="fa fa-fw fa-line-chart"></i> Marketing Dashboard</a>
 					</li>
 					
 					<li>
@@ -99,6 +97,7 @@
 					<li style="display: none;" >
 						<a href="#calljs-leoCdpRouter('Marketing_Hub_API')"> <i class="fa fa-fw fa-plug"></i> Marketing Hub API</a>
 					</li>
+					
 				</ul>
 			</li>
 
@@ -108,18 +107,23 @@
 					Creative Content Hub <i id="content_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
 				<ul id="content_hub_menu" class="collapse in" aria-expanded="true">
+				
 					<li>
-						<a href="#calljs-leoCdpRouter('Content360_Analytics')"> <i class="fa fa-fw fa-bar-chart"></i> Content Dashboard</a>
+						<a href="#calljs-leoCdpRouter('Content_Dashboard')"> <i class="fa fa-fw fa-bar-chart"></i> Content Dashboard</a>
 					</li>
+					
 					<li>
-						<a href="#calljs-leoCdpRouter('Content_Catalog')"> <i class="fa fa-fw fa-list-ol" ></i> Content Category List</a>
+						<a href="#calljs-leoCdpRouter('Content_Category_List')"> <i class="fa fa-fw fa-list-ol" ></i> Content Category List</a>
 					</li>
+					
 					<li style="display: none;" >
 						<a href="#calljs-leoCdpRouter('Creative_Content_Hub_API')"  > <i class="fa fa-fw fa-plug"></i> Creative Content Hub API</a>
 					</li>
+					
 					<li style="display: none;" >
-						<a href="#calljs-leoCdpRouter('')"  > <i class="fa fa-fw fa-exchange"></i> Media Marketplace</a>
+						<a href="#calljs-leoCdpRouter('Copywriting_Marketplace')"  > <i class="fa fa-fw fa-exchange"></i> Copywriting Marketplace</a>
 					</li>
+					
 				</ul>
 			</li>
 
@@ -128,16 +132,20 @@
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#personalization_hub_menu"> <i class="fa fa-fw fa-heart"></i>
 					Personalization AI Hub <i id="personalization_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
-				<ul id="personalization_hub_menu" class="collapse in" aria-expanded="true">					
+				<ul id="personalization_hub_menu" class="collapse in" aria-expanded="true">		
+							
 					<li>
 						<a href="#calljs-leoCdpRouter('Personalization_Model')"> <i class="fa fa-fw fa-user-circle"></i> Personalization Models</a>
 					</li>	
+					
 					<li>
 						<a href="#calljs-leoCdpRouter('Recommendation_Widget')"> <i class="fa fa-fw fa-internet-explorer"></i> Personalization Widgets</a>
 					</li>
+					
 					<li style="display: none;" >
 						<a href="#calljs-leoCdpRouter('')"  > <i class="fa fa-fw fa-plug"></i> Personalization API</a>
 					</li>
+					
 				</ul>
 			</li>
 			
@@ -148,15 +156,18 @@
 				</a>
 				<ul id="activation_hub_menu" class="collapse in" aria-expanded="true" >
 					
+					<li>
+						<a href="#calljs-leoCdpRouter('Email_Marketing')"> <i class="fa fa-fw fa-envelope"></i> Email Campaigns</a>
+					</li>
+					
 					<li style="display: none;" >
 						<a href="#calljs-leoCdpRouter('')"  > <i class="fa fa-fw fa-list-ol"></i> Branding Campaigns</a>
 					</li>
+					
 					<li style="display: none;" >
 						<a href="#calljs-leoCdpRouter('')" > <i class="fa fa-fw fa-list-ol"></i> Performance Campaigns</a>
 					</li>
-					<li>
-						<a href="#calljs-leoCdpRouter('Email_Marketing')"> <i class="fa fa-fw fa-list-ol"></i> Email Campaigns</a>
-					</li>
+					
 					<li style="display: none;" >
 						<a href="#calljs-leoCdpRouter('')"> <i class="fa fa-fw fa-list-ol"></i> Push Campaigns </a>
 					</li>
@@ -164,6 +175,7 @@
 					<li style="display: none;" >
 						<a href="#calljs-leoCdpRouter('')"  > <i class="fa fa-fw fa-plug"></i> Activation Campaign API </a>
 					</li>
+					
 				</ul>
 			</li>
 
@@ -174,10 +186,10 @@
 				</a>
 				<ul id="system_management_menu" class="collapse in" aria-expanded="true">
 					<li>
-						<a href="#calljs-leoCdpRouter('User_Login_List')"> <i class="fa fa-user-plus" aria-hidden="true"></i>  User Login List </a>
+						<a href="#calljs-leoCdpRouter('User_Login_List')"> <i class="fa fa-user-plus" aria-hidden="true"></i>  User Login List</a>
 					</li>
 					<li  >
-						<a href="#calljs-leoCdpRouter('System_Configuration')"> <i class="fa fa-cog" aria-hidden="true"></i> System Configuration </a>
+						<a href="#calljs-leoCdpRouter('System_Configuration')"> <i class="fa fa-cog" aria-hidden="true"></i> System Configuration</a>
 					</li>
 				</ul>
 			</li>
@@ -187,8 +199,7 @@
 	<!-- /.navbar-collapse -->
 </nav>
 
-<div id="page-main-notification" style="display: none;">
-</div>
+<div id="page-main-notification" style="display: none;"> </div>
 
 <div id="page-wrapper" >
 	<!-- page data here -->
@@ -214,7 +225,7 @@
 		$('#page-wrapper').attr('style', 'width:'+($(window).width() - 234 ) + 'px!important');
 	}
 	
-	$( window ).resize(function() {
+	$(window).resize(function() {
 		pageWrapperResize();
 	});
 	
