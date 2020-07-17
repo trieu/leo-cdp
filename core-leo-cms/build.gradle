@@ -72,7 +72,16 @@ dependencies {
 	compile group: 'org.jeasy', name: 'easy-rules-core', version: '4.0.0'
 	
 	// To backup database, we can use AWS Amazon S3 for raw data storage
-	compile group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.11.812'
+	compile group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.11.821'
+	
+	// To backup database, we can use Google Cloud Storage for raw data storage, FIXME depends on gson 2.8.6, causes error Expose Annotation
+	//compile group: 'com.google.cloud', name: 'google-cloud-storage', version: '1.111.2'
+	
+	// Sendgrid API for email marketing
+	compile group: 'com.sendgrid', name: 'sendgrid-java', version: '4.6.1'
+	
+	// A library for summarizing data in streams for which it is infeasible to store all events 
+	compile group: 'com.clearspring.analytics', name: 'stream', version: '2.9.8'
 	
     compile (	   
 		fileTree(dir: 'ext-lib', include: '**/*.jar') 	
@@ -112,8 +121,8 @@ dependencies {
 		,'com.maxmind.geoip2:geoip2:2.14.0'	
 		,'com.google.openlocationcode:openlocationcode:1.0.4'
 
-		// for targeting, user profile and url topic database, using ArangoDB driver
-		,'com.arangodb:arangodb-java-driver:6.6.3'
+		// primary database of core system
+		,'com.arangodb:arangodb-java-driver:6.7.1'
             
 		// for Math library
 		,'org.apache.commons:commons-math3:3.6.1'			
