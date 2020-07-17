@@ -9,6 +9,8 @@ window.i18nLeoAdminData = window.i18nLeoAdminData || function () {
 	data["business_ideas"] = "Ý tưởng tiếp cận vấn đề khách hàng"; // Concepts & Ideas 
 	data["business_solutions"] = "Giải pháp kinh doanh, sản phẩm và dịch vụ"; // Practical solutions 
 	data["lead_generation_keywords"] = "Từ khoá SEO để tạo khách hàng tiềm năng (Lead)";
+	
+	data["persona_touchpoints"] = "Điểm tiếp xúc thông tin marketing";
 	data["conversion_actions"] = "Những hành động của khách hàng tiềm năng (Lead)";
 	data["key_business_action"] = "Hành động chính để trở thành khách hàng";
 	

@@ -3,7 +3,7 @@
     <!-- MAIN BODY here -->
      <div class="row">
         <div class="col-lg-9">
-            <h2 class="page-header" > <a href="javascript:"> Audience Hub </a> &#8594; <a href="#calljs-loadAudienceProfiles()"> Audience Profiles </a> </h2>
+            <h4 class="page-header" id="page_breadcrumb" > </h4>
         </div>
         <div class="col-lg-3 text-center" style="padding: 10px">
         	<button type="button" class="btn btn-primary" onclick="loadDataProfileList()" > New Profile </button>
@@ -96,8 +96,8 @@
                 'columnDefs': [
                 	{
                         "render": function (data, type, row) {
-                        	var callJsViewStr = "#calljs-loadProfile360Analytics('" + row.id + "')";
-                            return '<a title="Profile 360 Analytics" href="' + callJsViewStr + '" >'+data.substr(0,8)+'...</a>';
+                        	var callJsViewStr = "#calljs-leoCdpRouter('Audience_Profile_Report','" + row.id + "')";
+                            return '<a title="Profile Report" href="' + callJsViewStr + '" >'+data.substr(0,8)+'...</a>';
                         },
                         "targets": 0
                     },
@@ -117,9 +117,9 @@
                     },
                     {
                         "render": function (data, type, row) {
-                        	var callJsViewStr = "#calljs-loadProfile360Analytics('" + row.id + "')";
-                            var callJsEditStr = "#calljs-loadProfileDataEditor('" + row.id + "')";
-                            return '<a title="Profile 360 Analytics" href="' + callJsViewStr + '" >View</a> <br> <a title="Profile Data Editor" href="' + callJsEditStr + '" >Edit</a>';
+                        	var callJsViewStr = "#calljs-leoCdpRouter('Audience_Profile_Report','" + row.id + "')";
+                            var callJsEditStr ="#calljs-leoCdpRouter('Audience_Profile_Editor','" + row.id + "')";
+                            return '<a title="Profile Report" href="' + callJsViewStr + '" >View</a> <br> <a title="Profile Data Editor" href="' + callJsEditStr + '" >Edit</a>';
                         },
                         "targets": 8
                     }

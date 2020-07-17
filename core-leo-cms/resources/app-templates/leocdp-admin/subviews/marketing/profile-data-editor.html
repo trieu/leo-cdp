@@ -2,9 +2,7 @@
 
 <div class="row" id="breadcrumb_header" >
       	<div class="col-md-10" >
-           <h2 class="page-header" > <a href="javascript:"> Audience Hub </a> 
-           &#8594; <a href="#calljs-loadAudienceProfiles()"> Audience Profiles </a>
-           &#8594; <a href="javascript:"> Profile Editor </a> </h2>
+           <h4 class="page-header" id="page_breadcrumb" > </h4>
        </div>
        <div class="col-md-2" >
        	<button type="button" class="btn btn-primary btn-lg">Save</button>
@@ -238,7 +236,9 @@
 <script type="text/javascript">
     ///Js code
     
-    function initProfileDataEditor() {
+    function initProfileDataEditor(profileId) {
+    	console.log(profileId);
+    	
     	//setup editable node
         $('.editable_text').each(function(){
             makeNodeEditable($(this))

@@ -30,9 +30,7 @@
 
 <div class="row" id="breadcrumb_header" >
 	<div class="col-md-12" >
-    	<h3 class="page-header"> <a href="javascript:"> Unified Marketing Hub </a> 
-          &#8594; <a href="#calljs-loadAudienceProfiles()"> Audience Profiles </a>
-          &#8594; <a href="javascript:"> Profile Analytics </a> </h3>
+    	<h4 class="page-header" id="page_breadcrumb" > </h4>
     </div>   
 </div>
 
@@ -249,7 +247,8 @@
     ///Js code
 
     
-    function initProfile360Analytics() {
+    function initProfile360Analytics(profileId) {
+    	console.log(profileId);
     	//setup editable node
 		setupTabPanels();
     	

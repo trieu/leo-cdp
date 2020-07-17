@@ -30,7 +30,7 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Customer Journey Map", "Customer Persona List", "Customer Persona Details"]
 		},
 		
-		// 1.2 Journey Map
+		// 1.2 Journey Map List, Report and Editor
 		"Customer_Journey_List" : {
 			"menuName" : "Customer Journey List",
 			"functionName" : "loadCustomerJourneyList",
@@ -47,7 +47,7 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Customer Journey Map", "Customer Journey List","Journey Map Studio"]
 		},
 		
-		// 1.3 Touchpoint
+		// 1.3 Customer Touchpoint
 		"Customer_Touchpoint_List" : {
 			"menuName" : "Customer Touchpoint List",
 			"functionName" : "loadCustomerTouchpointList",
@@ -59,7 +59,7 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Customer Journey Map", "Touchpoint List" , "Touchpoint Report" ]
 		},
 		
-		// 1.4 Data Observer
+		// 1.4 Data Observer for touchpoint
 		"Data_Observer_List" : {
 			"menuName" : "Data Observer List",
 			"functionName" : "loadDataObserverList",
@@ -76,48 +76,48 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Customer Journey Map", "Data Observer List", "Data Observer Details"]
 		},
 		
-		// Unified Marketing Hub
+		// 2.1 Unified Marketing Hub
 		"Marketing_360_Dashboard": {
 			"menuName" : "Marketing 360 Dashboard",
 			"functionName" : "loadMarketing360Dashboard",
 			"breadcrumb" : ["Unified Marketing Hub", "Marketing 360 Dashboard"]
 		},
 		
-		// 2.1 Audience Profile 
+		// 2.2 Audience Profile 
 		"Audience_Profile_List" : {
 			"menuName" : "Audience Profile List",
 			"functionName" : "loadAudienceProfileList",
 			"breadcrumb" : ["Unified Marketing Hub", "Audience Profile List"]
 		},
 		"Audience_Profile_Report" : {
-			"menuName" : "Data Observer Report",
+			"menuName" : "Data Profile Report",
 			"functionName" : "loadAudienceProfileReport",
-			"breadcrumb" : ["Unified Marketing Hub", "Data Observer List", "Data Observer Report"]
+			"breadcrumb" : ["Unified Marketing Hub", "Audience Profile List", "Audience Profile Report"]
 		},
 		"Audience_Profile_Editor" : {
 			"menuName" : "Audience Profile Editor",
 			"functionName" : "loadAudienceProfileEditor",
-			"breadcrumb" : ["Unified Marketing Hub", "Data Observer List", "Data Observer Details"]
+			"breadcrumb" : ["Unified Marketing Hub", "Audience Profile List", "Audience Profile Details"]
 		},
 		
-		// 2.2 Audience Segmentation
-		"Audience_Profile_List" : {
-			"menuName" : "Data Observer List",
-			"functionName" : "loadDataObserverList",
-			"breadcrumb" : ["Unified Marketing Hub", "Data Observer List"]
+		// 2.3 Audience Segmentation
+		"Audience_Segment_List" : {
+			"menuName" : "Audience Segment List",
+			"functionName" : "loadAudienceSegmentList",
+			"breadcrumb" : ["Unified Marketing Hub", "Audience Segment List"]
 		},
-		"Audience_Profile_Report" : {
-			"menuName" : "Data Observer Report",
-			"functionName" : "loadAudienceProfileReport",
-			"breadcrumb" : ["Unified Marketing Hub", "Data Observer List", "Data Observer Report"]
+		"Audience_Segment_Report" : {
+			"menuName" : "Audience Segment Report",
+			"functionName" : "loadAudienceSegmentReport",
+			"breadcrumb" : ["Unified Marketing Hub", "Audience Segment List", "Audience Segment Report"]
 		},
-		"Audience_Profile_Editor" : {
-			"menuName" : "Audience Profile Editor",
-			"functionName" : "loadAudienceProfileDatails",
-			"breadcrumb" : ["Unified Marketing Hub", "Data Observer List", "Data Observer Details"]
+		"Audience_Segment_Editor" : {
+			"menuName" : "Audience Segment Editor",
+			"functionName" : "loadAudienceSegmentEditor",
+			"breadcrumb" : ["Unified Marketing Hub", "Audience Segment List", "Audience Segment Editor"]
 		},
 		
-		// 2.3 Product and Service Catalog
+		// 2.4 Product and Service Catalog
 		"Products_Services_List" : {
 			"menuName" : "Products/Services List",
 			"functionName" : "",
@@ -217,14 +217,20 @@ function leoCdpRouter(objKey,objId){
 		}
 	}
 	
-	if(objId){
-		console.log(objKey + " objId " + objId)
-		LeoCdpAdmin.navFunctions[obj.functionName].apply(null,[objId,breadcrumbHtml]);
-	} else {
-		console.log(objKey + " ")
-		LeoCdpAdmin.navFunctions[obj.functionName].apply(null,[breadcrumbHtml]);
-	}
+	var vf = LeoCdpAdmin.navFunctions[obj.functionName];
 	
+	if(typeof vf === 'function') {
+		if(objId){
+			console.log(objKey + " objId " + objId)
+			vf.apply(null,[objId,breadcrumbHtml]);
+		} else {
+			console.log(objKey + " ")
+			vf.apply(null,[breadcrumbHtml]);
+		}
+	} else {
+		console.error( " LeoCdpAdmin.navFunctions[obj.functionName] is not a function " );
+		console.error( obj );
+	}
 	console.log( objId );
 }
 
@@ -439,45 +445,48 @@ function loadMediaMarketplace(){
 //###################### Audience Hub ######################
 
 function loadAudienceDashboard() {
-    LeoCdpAdmin.loadView('/view/subviews/audience/audience-dashboard.html?admin=1', pageDomSelector, function () {
+    LeoCdpAdmin.loadView('/view/subviews/marketing/audience-dashboard.html?admin=1', pageDomSelector, function () {
     	initSalesDashboard();
     });
 }
 
 function loadAudienceDataObserver(){
-	LeoCdpAdmin.loadView('/view/subviews/audience/audience-data-observer.html?admin=1', pageDomSelector, function () {
+	LeoCdpAdmin.loadView('/view/subviews/marketing/audience-data-observer.html?admin=1', pageDomSelector, function () {
         //TODO
     });
 }
 
-function loadAudienceProfiles() {
-    LeoCdpAdmin.loadView('/view/subviews/audience/audience-profile-list.html?admin=1', pageDomSelector, function () {
+LeoCdpAdmin.navFunctions.loadAudienceProfileList = function (breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/subviews/marketing/audience-profile-list.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
     	loadDataProfileList();
     });
 }
 
-function loadAudienceSegmentation() {
-    LeoCdpAdmin.loadView('/view/subviews/audience/audience-segment-list.html?admin=1', pageDomSelector, function () {
+LeoCdpAdmin.navFunctions.loadAudienceSegmentation = function (breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/subviews/marketing/audience-segment-list.html?admin=1', pageDomSelector, function () {
     	//TODO
     });
 }
 
 
-function loadAudienceHubApiManagement(){
+LeoCdpAdmin.navFunctions.loadAudienceHubApiManagement = function (breadcrumbHtml) {
 	LeoCdpAdmin.loadView('/view/subviews/in-development.html?admin=1', pageDomSelector, function () {
         //TODO
     });
 }
 
-function loadProfile360Analytics() {
-    LeoCdpAdmin.loadView('/view/subviews/audience/profile-360-analytics.html?admin=1', pageDomSelector, function () {
-    	initProfile360Analytics();
+LeoCdpAdmin.navFunctions.loadAudienceProfileReport = function (profileId , breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/subviews/marketing/profile-360-analytics.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+    	initProfile360Analytics(profileId);
     });
 }
 
-function loadProfileDataEditor() {
-    LeoCdpAdmin.loadView('/view/subviews/audience/profile-data-editor.html?admin=1', pageDomSelector, function () {
-    	initProfileDataEditor();
+LeoCdpAdmin.navFunctions.loadAudienceProfileEditor = function (profileId, breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/subviews/marketing/profile-data-editor.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+    	initProfileDataEditor(profileId);
     });
 }
 
