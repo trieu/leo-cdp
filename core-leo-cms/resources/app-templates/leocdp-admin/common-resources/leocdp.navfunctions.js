@@ -19,17 +19,29 @@ LeoCdpAdmin.navFunctions.loadJourneyMapStudio = function(journeyId) {
 }
 
 function loadJourneyMaps(){
-	LeoCdpAdmin.loadView('/view//subviews/journey/journey-maps.html?admin=1', pageDomSelector, function () {
+	LeoCdpAdmin.loadView('/view/subviews/journey/journey-maps.html?admin=1', pageDomSelector, function () {
 		//TODO
     });
 }
 
+LeoCdpAdmin.navFunctions.loadCustomerTouchpointList  = function(breadcrumbHtml) {
+	LeoCdpAdmin.loadView('/view/subviews/journey/customer-touchpoint-list.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+    	initCustomerTouchpointList();
+    });
+}
+
+LeoCdpAdmin.navFunctions.loadDataObserverList  = function(breadcrumbHtml) {
+	LeoCdpAdmin.loadView('/view/subviews/journey/data-observer-list.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+    	initDataObserverList();
+    });
+}
 
 //###################### Unified Marketing Hub ######################
 
 LeoCdpAdmin.navFunctions.loadMarketing360Dashboard = function(breadcrumbHtml) {
     LeoCdpAdmin.loadView('/view/subviews/marketing/marketing-360-dashboard.html?admin=1', pageDomSelector, function () {
-    	console.log("breadcrumbHtml" + breadcrumbHtml)
     	$('#page_breadcrumb').html(breadcrumbHtml);
     	initSalesDashboard();
     });
@@ -74,13 +86,27 @@ LeoCdpAdmin.navFunctions.loadAudienceProfileEditor = function (profileId, breadc
 
 //BEGIN Segment functions
 
-LeoCdpAdmin.navFunctions.loadAudienceSegmentation = function (breadcrumbHtml) {
+LeoCdpAdmin.navFunctions.loadAudienceSegmentList = function (breadcrumbHtml) {
     LeoCdpAdmin.loadView('/view/subviews/marketing/audience-segment-list.html?admin=1', pageDomSelector, function () {
-    	//TODO
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+    	initAudienceSegmentList();
     });
 }
 
 //END Segment functions
+
+//BEGIN Products and Services functions
+
+LeoCdpAdmin.navFunctions.loadProductsAndServices = function (breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/subviews/marketing/products-services-list.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+    	initProductsAndServices();
+    });
+}
+
+//END Products and Services functions
+
+loadProductsAndServices
 
 
 LeoCdpAdmin.navFunctions.loadAudienceHubApiManagement = function (breadcrumbHtml) {

@@ -2,11 +2,13 @@
 
     <!-- MAIN BODY here -->
      <div class="row">
-        <div class="col-lg-10">
+        <div class="col-lg-9">
             <h4 class="page-header" id="page_breadcrumb" > </h4>
         </div>
-        <div class="col-lg-2 text-center" style="padding: 10px">
-        	<button type="button" class="btn btn-primary" onclick="" > New Segment </button>
+        <div class="col-lg-3 text-center" style="padding: 10px">
+        	<button type="button" class="btn btn-primary" onclick="" > New Product </button>
+        	&nbsp;
+        	<button type="button" class="btn btn-primary" onclick="" > New Service </button>
         </div>
     </div>
     
@@ -75,7 +77,7 @@
 </div>
 
 <script>
-    function initAudienceSegmentList() {
+    function initProductsAndServices() {
         var usersession = getUserSession();
         if (usersession) {
             $('#profile-list').DataTable({

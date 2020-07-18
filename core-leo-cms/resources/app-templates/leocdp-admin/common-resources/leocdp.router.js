@@ -123,30 +123,30 @@ LeoCdpAdmin.navRouters = {
 		},
 		
 		// 2.4 Product and Service Catalog
-		"Products_Services_List" : {
-			"menuName" : "Products/Services List",
-			"functionName" : "",
-			"breadcrumb" : ["Unified Marketing Hub", "Product & Service Catalog"]
+		"Products_and_Services" : {
+			"menuName" : "Products and Services",
+			"functionName" : "loadProductsAndServices",
+			"breadcrumb" : ["Unified Marketing Hub", "Products & Services"]
 		},
 		"Product_Report" : {
 			"menuName" : "Product Report",
 			"functionName" : "loadProductReport",
-			"breadcrumb" : ["Unified Marketing Hub", "Product & Service Catalog", "Product Report"]
+			"breadcrumb" : ["Unified Marketing Hub", "Products & Services", "Product Report"]
 		},
 		"Service_Report" : {
 			"menuName" : "Service Report",
 			"functionName" : "loadServiceReport",
-			"breadcrumb" : ["Unified Marketing Hub", "Product & Service Catalog", "Service Report"]
+			"breadcrumb" : ["Unified Marketing Hub", "Products & Services", "Service Report"]
 		},
 		"Product_Data_Editor" : {
 			"menuName" : "Product Data Editor",
 			"functionName" : "loadProductDataEditor",
-			"breadcrumb" : ["Unified Marketing Hub", "Product & Service Catalog", "Product Data Editor"]
+			"breadcrumb" : ["Unified Marketing Hub", "Products & Services", "Product Data Editor"]
 		},
 		"Product_Data_Editor" : {
 			"menuName" : "Service Data Editor",
 			"functionName" : "loadServiceDataEditor",
-			"breadcrumb" : ["Unified Marketing Hub", "Product & Service Catalog", "Service Data Editor"]
+			"breadcrumb" : ["Unified Marketing Hub", "Products & Services", "Service Data Editor"]
 		},
 		
 		// 3.1 Creative Content Hub
