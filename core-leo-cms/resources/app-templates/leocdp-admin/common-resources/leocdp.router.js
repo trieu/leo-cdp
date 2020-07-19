@@ -149,7 +149,14 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Unified Marketing Hub", "Products & Services", "Service Data Editor"]
 		},
 		
-		// 3.1 Creative Content Hub
+		// 3.1 Content Dashboard
+		"Content_Dashboard" : {
+			"menuName" : "Content Dashboard",
+			"functionName" : "loadContentDashboard",
+			"breadcrumb" : ["Creative Content Hub", "Content Dashboard"]
+		},
+		
+		// 3.2 Creative Content Category
 		"Content_Category_List" : {
 			"menuName" : "Content Category List",
 			"functionName" : "loadContentCategoryList",

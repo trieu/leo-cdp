@@ -106,7 +106,6 @@ LeoCdpAdmin.navFunctions.loadProductsAndServices = function (breadcrumbHtml) {
 
 //END Products and Services functions
 
-loadProductsAndServices
 
 
 LeoCdpAdmin.navFunctions.loadAudienceHubApiManagement = function (breadcrumbHtml) {
@@ -142,9 +141,9 @@ function loadBusinessAnalytics360() {
 
 //###################### Content Hub ######################
 
-function loadContentDashboard() {
-	document.title = 'Content Dashboard';
+LeoCdpAdmin.navFunctions.loadContentDashboard = function (breadcrumbHtml) {
 	LeoCdpAdmin.loadView('/view/subviews/content/content-dashboard.html?admin=1', pageDomSelector, function () {
+		$('#page_breadcrumb').html(breadcrumbHtml);
 		initContentDashboard();
     });
 }
@@ -200,7 +199,7 @@ function deletePage() {
 	 }
 }
 
-//Post functions 
+// Post functions 
 
 function postEditor(id, pageId, categoryKey) {
 	 console.log('postEditor' + id);
@@ -253,7 +252,14 @@ function loadContentHubApiManagement(){
     });
 }
 
-//------------ Category Controllers ---------------------
+// Category functions
+
+LeoCdpAdmin.navFunctions.loadContentCategoryList = function (breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/subviews/content/category-list.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+        loadDataCategoryList();
+    });
+}
 
 
 function loadPagesOfCategory(catKey, catName) {
@@ -262,11 +268,7 @@ function loadPagesOfCategory(catKey, catName) {
     });
 }
 
-function loadCategoryList() {
-    LeoCdpAdmin.loadView('/view/subviews/content/category-list.html?admin=1', pageDomSelector, function () {
-        loadDataCategoryList();
-    });
-}
+
 
 function loadCategoryForm(id) {
     LeoCdpAdmin.loadView('/view/subviews/content/category-form.html?admin=1', pageDomSelector, function () {
