@@ -18,13 +18,14 @@ LeoCdpAdmin.navFunctions.loadJourneyMapStudio = function(journeyId) {
     });
 }
 
-function loadJourneyMaps(){
-	LeoCdpAdmin.loadView('/view/subviews/journey/journey-maps.html?admin=1', pageDomSelector, function () {
-		//TODO
+LeoCdpAdmin.navFunctions.loadJourneyMapList = function(breadcrumbHtml) {
+	LeoCdpAdmin.loadView('/view/subviews/journey/journey-map-list.html?admin=1', pageDomSelector, function () {
+		$('#page_breadcrumb').html(breadcrumbHtml);
+		initJourneyMapList();
     });
 }
 
-LeoCdpAdmin.navFunctions.loadCustomerTouchpointList  = function(breadcrumbHtml) {
+LeoCdpAdmin.navFunctions.loadCustomerTouchpointList = function(breadcrumbHtml) {
 	LeoCdpAdmin.loadView('/view/subviews/journey/customer-touchpoint-list.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
     	initCustomerTouchpointList();
@@ -59,7 +60,7 @@ function loadAudienceDataObserver(){
     });
 }
 
-// BEGIN Profile functions
+// Profile functions
 
 LeoCdpAdmin.navFunctions.loadAudienceProfileList = function (breadcrumbHtml) {
     LeoCdpAdmin.loadView('/view/subviews/marketing/audience-profile-list.html?admin=1', pageDomSelector, function () {
@@ -82,9 +83,7 @@ LeoCdpAdmin.navFunctions.loadAudienceProfileEditor = function (profileId, breadc
     });
 }
 
-//END Profile functions
-
-//BEGIN Segment functions
+// Segment functions
 
 LeoCdpAdmin.navFunctions.loadAudienceSegmentList = function (breadcrumbHtml) {
     LeoCdpAdmin.loadView('/view/subviews/marketing/audience-segment-list.html?admin=1', pageDomSelector, function () {
@@ -93,9 +92,8 @@ LeoCdpAdmin.navFunctions.loadAudienceSegmentList = function (breadcrumbHtml) {
     });
 }
 
-//END Segment functions
 
-//BEGIN Products and Services functions
+// Products and Services functions
 
 LeoCdpAdmin.navFunctions.loadProductsAndServices = function (breadcrumbHtml) {
     LeoCdpAdmin.loadView('/view/subviews/marketing/products-services-list.html?admin=1', pageDomSelector, function () {
@@ -104,34 +102,12 @@ LeoCdpAdmin.navFunctions.loadProductsAndServices = function (breadcrumbHtml) {
     });
 }
 
-//END Products and Services functions
-
-
-
-LeoCdpAdmin.navFunctions.loadAudienceHubApiManagement = function (breadcrumbHtml) {
+LeoCdpAdmin.navFunctions.loadUnifiedMarketingHubApiManagement = function (breadcrumbHtml) {
 	LeoCdpAdmin.loadView('/view/subviews/in-development.html?admin=1', pageDomSelector, function () {
         //TODO
     });
 }
 
-
-function loadProductCatalogManagement(){
-	LeoCdpAdmin.loadView('/view/subviews/business/product-catalog.html?admin=1', pageDomSelector, function () {
-		//TODO
-    });
-}
-
-function loadServiceCatalogManagement(){
-	LeoCdpAdmin.loadView('/view/subviews/business/service-catalog.html?admin=1', pageDomSelector, function () {
-		//TODO
-    });
-}
-
-function loadMarketingHubApiManagement(){
-	LeoCdpAdmin.loadView('/view/subviews/in-development.html?admin=1', pageDomSelector, function () {
-		//TODO
-    });
-}
 
 function loadBusinessAnalytics360() {
 	LeoCdpAdmin.loadView('/view/subviews/in-development.html?admin=1', pageDomSelector, function () {
@@ -245,8 +221,7 @@ function deletePost() {
 	 }
 }
 
-
-function loadContentHubApiManagement(){
+LeoCdpAdmin.navFunctions.loadContentHubApiManagement = function (breadcrumbHtml) {
 	LeoCdpAdmin.loadView('/view/subviews/in-development.html?admin=1', pageDomSelector, function () {
         //TODO
     });
@@ -269,7 +244,6 @@ function loadPagesOfCategory(catKey, catName) {
 }
 
 
-
 function loadCategoryForm(id) {
     LeoCdpAdmin.loadView('/view/subviews/content/category-form.html?admin=1', pageDomSelector, function () {
         if (id) {
@@ -288,8 +262,60 @@ function loadMediaMarketplace(){
     });
 }
 
+//###################### Personalization AI Hub navigation ######################
 
-//###################### System Management Controllers ######################
+LeoCdpAdmin.navFunctions.loadPersonalizationModels = function(breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/subviews/personalization/personalization-model-list.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+    	initPersonalizationModels();
+    });
+}
+
+LeoCdpAdmin.navFunctions.loadPersonalizationWidgets = function(breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/subviews/personalization/personalization-widget-list.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+    	initPersonalizationWidgets();
+    });
+}
+
+//###################### Customer Activation Hub navigation ######################
+
+LeoCdpAdmin.navFunctions.loadCouponManagement = function(breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/subviews/activation/coupon-management.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+    	initCouponManagement();
+    });
+}
+
+LeoCdpAdmin.navFunctions.loadCouponReport = function(id, breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/subviews/activation/coupon-report.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+    	initCouponReport(id);
+    });
+}
+
+LeoCdpAdmin.navFunctions.loadEmailCampaigns = function(breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/subviews/activation/email-campaign-list.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+    	initEmailCampaigns();
+    });
+}
+
+LeoCdpAdmin.navFunctions.loadEmailCampaignReport = function(id, breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/subviews/activation/email-campaign-report.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+    	initEmailCampaignReport(id);
+    });
+}
+
+LeoCdpAdmin.navFunctions.loadEmailCampaignEditor = function(id, breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/subviews/activation/email-campaign-editor.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+    	initEmailCampaignEditor(id);
+    });
+}
+
+//###################### System Management navigation ######################
 
 LeoCdpAdmin.navFunctions.loadUserLoginList = function(breadcrumbHtml) {
     LeoCdpAdmin.loadView('/view/subviews/system/user-login-list.html?admin=1', pageDomSelector, function () {

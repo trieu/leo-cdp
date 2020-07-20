@@ -163,33 +163,45 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Creative Content Hub", "Content Category List"]
 		},
 		
-		// 4.1 Personalization AI Model & Widget Hub
-		"Personalization_AI_Models" : {
-			"menuName" : "Personalization AI Models",
-			"functionName" : "loadPersonalizationAIModels",
+		// 4.1 Personalization AI Models & Widgets
+		"Personalization_Models" : {
+			"menuName" : "Personalization Models",
+			"functionName" : "loadPersonalizationModels",
 			"breadcrumb" : ["Personalization AI Hub", "Personalization AI Models"]
 		},
 		"Personalization_Widgets" : {
-			"menuName" : "Personalization Widget",
-			"functionName" : "loadPersonalizationWidgetList",
+			"menuName" : "Personalization Widgets",
+			"functionName" : "loadPersonalizationWidgets",
 			"breadcrumb" : ["Personalization AI Hub", "Personalization Widgets"]
 		},
 		
-		// 5.1 Email Marketing Activation Campaigns
+		// 5.1 Voucher/Coupon Management
+		"Coupon_Management" : {
+			"menuName" : "Coupon Management",
+			"functionName" : "loadCouponManagement",
+			"breadcrumb" : ["Customer Activation", "Coupon Management"]
+		},
+		"Coupon_Report" : {
+			"menuName" : "Coupon Report",
+			"functionName" : "loadCouponReport",
+			"breadcrumb" : ["Customer Activation", "Coupon Management", "Coupon Report"]
+		}
+		
+		// 5.2 Email Marketing Activation Campaigns
 		"Email_Campaigns" : {
 			"menuName" : "Email Campaign List",
 			"functionName" : "loadEmailCampaigns",
-			"breadcrumb" : ["Marketing Activation", "Email Campaigns"]
+			"breadcrumb" : ["Customer Activation", "Email Campaigns"]
 		},
 		"Email_Campaign_Report" : {
 			"menuName" : "Email Campaign Report",
 			"functionName" : "loadEmailCampaignReport",
-			"breadcrumb" : ["Marketing Activation", "Email Campaigns", "Email Campaign Report"]
+			"breadcrumb" : ["Customer Activation", "Email Campaigns", "Email Campaign Report"]
 		},
 		"Email_Campaign_Editor" : {
 			"menuName" : "Email Campaign Editor",
 			"functionName" : "loadEmailCampaignEditor",
-			"breadcrumb" : ["Marketing Activation", "Email Campaigns", "Email Campaign Editor"]
+			"breadcrumb" : ["Customer Activation", "Email Campaigns", "Email Campaign Editor"]
 		},
 		
 		// User Login Management
@@ -218,10 +230,12 @@ function leoCdpRouter(objKey,objId){
 	
 	// generate breadcrumb navigation
 	var breadcrumbHtml = '';
+	var titleNav = '';
 	var breadcrumbList = obj.breadcrumb;
 	var len = breadcrumbList.length;
 	for(var i=0; i< len; i++ ){
 		var name = breadcrumbList[i];
+		titleNav  = titleNav + name + " - ";
 		var key = name.replace(/ /g, "_");
 		var jsFunc = LeoCdpAdmin.navRouters[key] ? "leoCdpRouter('"+ key + "')"  : "";
 		breadcrumbHtml = breadcrumbHtml + '<a title="'+ name +'" href="#calljs-' + jsFunc + '"> ' + breadcrumbList[i] + ' </a> ';
@@ -240,6 +254,7 @@ function leoCdpRouter(objKey,objId){
 			console.log(objKey + " ")
 			vf.apply(null,[breadcrumbHtml]);
 		}
+		document.title = titleNav;
 	} else {
 		console.error( " LeoCdpAdmin.navFunctions[obj.functionName] is not a function " );
 		console.error( obj );
