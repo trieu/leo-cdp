@@ -116,10 +116,10 @@ LeoCdpAdmin.navRouters = {
 			"functionName" : "loadAudienceSegmentReport",
 			"breadcrumb" : ["Unified Marketing Hub", "Audience Segment List", "Audience Segment Report"]
 		},
-		"Audience_Segment_Editor" : {
-			"menuName" : "Audience Segment Editor",
-			"functionName" : "loadAudienceSegmentEditor",
-			"breadcrumb" : ["Unified Marketing Hub", "Audience Segment List", "Audience Segment Editor"]
+		"Audience_Segment_Builder" : {
+			"menuName" : "Audience Segment Builder",
+			"functionName" : "loadAudienceSegmentBuilder",
+			"breadcrumb" : ["Unified Marketing Hub", "Audience Segment List", "Audience Segment Builder"]
 		},
 		
 		// 2.4 Product and Service Catalog
@@ -163,12 +163,14 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Creative Content Hub", "Content Category List"]
 		},
 		
-		// 4.1 Personalization AI Models & Widgets
+		// 4.1 Personalization AI Models 
 		"Personalization_Models" : {
 			"menuName" : "Personalization Models",
 			"functionName" : "loadPersonalizationModels",
 			"breadcrumb" : ["Personalization AI Hub", "Personalization AI Models"]
 		},
+		
+		// 4.1 Personalization AI Widgets
 		"Personalization_Widgets" : {
 			"menuName" : "Personalization Widgets",
 			"functionName" : "loadPersonalizationWidgets",
@@ -185,7 +187,7 @@ LeoCdpAdmin.navRouters = {
 			"menuName" : "Coupon Report",
 			"functionName" : "loadCouponReport",
 			"breadcrumb" : ["Customer Activation", "Coupon Management", "Coupon Report"]
-		}
+		},
 		
 		// 5.2 Email Marketing Activation Campaigns
 		"Email_Campaigns" : {
@@ -202,6 +204,23 @@ LeoCdpAdmin.navRouters = {
 			"menuName" : "Email Campaign Editor",
 			"functionName" : "loadEmailCampaignEditor",
 			"breadcrumb" : ["Customer Activation", "Email Campaigns", "Email Campaign Editor"]
+		},
+		
+		// 5.3 SMS Marketing Activation Campaigns
+		"SMS_Campaigns" : {
+			"menuName" : "SMS Campaign List",
+			"functionName" : "loadSMSCampaigns",
+			"breadcrumb" : ["Customer Activation", "SMS Campaigns"]
+		},
+		"SMS_Campaign_Report" : {
+			"menuName" : "SMS Campaign Report",
+			"functionName" : "loadSMSCampaignReport",
+			"breadcrumb" : ["Customer Activation", "SMS Campaigns", "SMS Campaign Report"]
+		},
+		"SMS_Campaign_Editor" : {
+			"menuName" : "SMS Campaign Editor",
+			"functionName" : "loadSMSCampaignEditor",
+			"breadcrumb" : ["Customer Activation", "SMS Campaigns", "SMS Campaign Editor"]
 		},
 		
 		// User Login Management
