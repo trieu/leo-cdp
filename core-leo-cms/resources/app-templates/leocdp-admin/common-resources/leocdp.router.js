@@ -251,6 +251,11 @@ LeoCdpAdmin.navRouters = {
 			"functionName" : "loadUserLoginEditor",
 			"breadcrumb" : ["System Management", "User Login List","User Login Profile Editor"]
 		},
+		"My_Login_Info" : {
+			"menuName" : "My Login Information",
+			"functionName" : "loadMyLoginInfo",
+			"breadcrumb" : ["My Login Information"]
+		},
 		"System_Configuration" : {
 			"menuName" : "System Configuration",
 			"functionName" : "loadSystemInfoConfigs",

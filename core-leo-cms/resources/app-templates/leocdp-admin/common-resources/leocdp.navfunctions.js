@@ -341,6 +341,14 @@ LeoCdpAdmin.navFunctions.loadUserLoginEditor = function(id, breadcrumbHtml) {
     });
 }
 
+LeoCdpAdmin.navFunctions.loadMyLoginInfo = function(breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/subviews/system/user-login-info.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+    	initMyLoginInfo();
+    });
+}
+
+
 LeoCdpAdmin.navFunctions.loadSystemInfoConfigs = function(breadcrumbHtml) {
     LeoCdpAdmin.loadView('/view/subviews/system/system-info-configs.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
