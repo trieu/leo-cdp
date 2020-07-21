@@ -11,7 +11,7 @@ import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.RoutingContext;
 import leotech.cdp.router.api.TrackingApi;
 import leotech.cdp.model.audience.ContextSession;
-import leotech.cdp.router.api.ApiParamKey;
+import leotech.cdp.router.api.TrackingApiParam;
 import leotech.cdp.service.ContextSessionService;
 import leotech.core.api.BaseApiHandler;
 import leotech.core.api.BaseHttpRouter;
@@ -86,8 +86,8 @@ public class DataObserverHttpRouter extends BaseHttpRouter {
 			
 
 			// init core params
-			String eventName = StringUtil.safeString(params.get(ApiParamKey.EVENT_METRIC_NAME)).toLowerCase();
-			String clientSessionKey = StringUtil.safeString(params.get(ApiParamKey.CTX_SESSION_KEY));
+			String eventName = StringUtil.safeString(params.get(TrackingApiParam.EVENT_METRIC_NAME)).toLowerCase();
+			String clientSessionKey = StringUtil.safeString(params.get(TrackingApiParam.CTX_SESSION_KEY));
 
 			if (uri.startsWith(PREFIX_CONTEXT_SESSION_PROFILE_INIT) && StringUtil.isEmpty(clientSessionKey)) {
 				

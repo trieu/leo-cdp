@@ -8,8 +8,7 @@ import java.util.Map;
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
 
-import leotech.cdp.model.audience.Profile;
-import leotech.cdp.model.business.MediaChannel;
+
 import leotech.cdp.model.business.Touchpoint;
 import leotech.core.config.AqlTemplate;
 import leotech.system.model.DataFilter;
@@ -27,9 +26,6 @@ public class TouchpointDaoUtil extends BaseLeoCdpDao {
 	static final String AQL_GET_TOUCHPOINTS = AqlTemplate.get("AQL_GET_TOUCHPOINTS");
 	static final String AQL_GET_TOP_1000_TOUCHPOINTS_BY_PROFILE  = AqlTemplate.get("AQL_GET_TOP_1000_TOUCHPOINTS_BY_PROFILE");
 	static final String AQL_GET_TOUCHPOINT_FLOW_BY_PROFILE  = AqlTemplate.get("AQL_GET_TOUCHPOINT_FLOW_BY_PROFILE");
-	
-	
-	
 	
 
 	public static String save(Touchpoint tp) {
@@ -51,11 +47,11 @@ public class TouchpointDaoUtil extends BaseLeoCdpDao {
 		return "";
 	}
 
-	public static MediaChannel getById(String id) {
+	public static Touchpoint getById(String id) {
 		ArangoDatabase db = getCdpDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("id", id);
-		MediaChannel p = new ArangoDbQuery<Touchpoint>(db, AQL_GET_TOUCHPOINT_BY_ID, bindVars, Touchpoint.class)
+		Touchpoint p = new ArangoDbQuery<Touchpoint>(db, AQL_GET_TOUCHPOINT_BY_ID, bindVars, Touchpoint.class)
 				.getResultsAsObject();
 		return p;
 	}

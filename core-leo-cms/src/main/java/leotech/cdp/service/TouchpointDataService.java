@@ -1,7 +1,7 @@
 package leotech.cdp.service;
 
 import leotech.cdp.dao.TouchpointDaoUtil;
-import leotech.cdp.model.business.MediaChannel;
+
 import leotech.cdp.model.business.MediaChannelType;
 import leotech.cdp.model.business.Touchpoint;
 import leotech.system.model.DataFilter;
@@ -61,7 +61,7 @@ public class TouchpointDataService {
 		return DIRECT_TRAFFIC_WEB;
 	}
 	
-	public static MediaChannel getOrCreateWebTouchpoint(int type, String touchpointUrl, boolean isOwnedMedia) {
+	public static Touchpoint getOrCreateWebTouchpoint(int type, String touchpointUrl, boolean isOwnedMedia) {
 		if (StringUtil.isNotEmpty(touchpointUrl)) {
 			Touchpoint tp = TouchpointDaoUtil.getByUrl(touchpointUrl);
 			if (tp == null) {

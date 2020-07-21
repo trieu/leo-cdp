@@ -16,7 +16,7 @@ public class CdpProfileApiHandler extends BaseSecuredDataApi {
 	
 	
 	static final String API_LIST_ALL = "/cdp/profiles";
-	static final String API_LIST_AND_FILTER = "/cdp/profiles/filter";
+	static final String API_LIST_WITH_FILTER = "/cdp/profiles/filter";
 	static final String API_CREATE_NEW = "/cdp/profile/new";
 	static final String API_UPDATE_INFO = "/cdp/profile/update";
 	static final String API_MERGE = "/cdp/profile/merge";
@@ -29,7 +29,7 @@ public class CdpProfileApiHandler extends BaseSecuredDataApi {
 		if (loginUser != null) {
 			if (isAdminRole(loginUser)) {
 				switch (uri) {
-					case API_LIST_AND_FILTER : {
+					case API_LIST_WITH_FILTER : {
 						DataFilter filter = new DataFilter(uri, paramJson);
 						return ProfileDataService.filter(filter);
 					}

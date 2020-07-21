@@ -132,10 +132,5 @@ public class JsonDataPayload {
 		}
 		return gson.toJson(this);
 	}
-
-	
-	
-	
-	
 	
 }

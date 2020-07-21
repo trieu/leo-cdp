@@ -8,12 +8,14 @@ import java.util.Map;
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
 
+import leotech.cdp.dao.singleview.ProfileSingleDataView;
 import leotech.cdp.model.audience.Profile;
 import leotech.cdp.query.ProfileMatchingResult;
 import leotech.core.config.AqlTemplate;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataTablePayload;
 import leotech.system.util.database.ArangoDbQuery;
+import leotech.system.util.database.ArangoDbQuery.CallbackQuery;
 
 public class ProfileDaoUtil  extends BaseLeoCdpDao {
 
@@ -105,7 +107,15 @@ public class ProfileDaoUtil  extends BaseLeoCdpDao {
 		bindVars.put("startIndex", filter.getStart());
 		bindVars.put("numberResult", filter.getLength());
 		
-		List<Profile> list = new ArangoDbQuery<Profile>(db, AQL_GET_PROFILES_BY_PAGINATION, bindVars, Profile.class).getResultsAsList();
+		CallbackQuery<ProfileSingleDataView> callback = new CallbackQuery<ProfileSingleDataView>() {
+			@Override
+			public ProfileSingleDataView apply(ProfileSingleDataView obj) {
+				obj.unifyDataToSinpleView();
+				return obj;
+			}
+		};
+		List<ProfileSingleDataView> list = new ArangoDbQuery<ProfileSingleDataView>(db, AQL_GET_PROFILES_BY_PAGINATION, 
+				bindVars, ProfileSingleDataView.class, callback).getResultsAsList();
 		
 		long recordsTotal = countTotalOfProfiles();
 		int recordsFiltered = list.size();

@@ -18,7 +18,6 @@ import com.arangodb.model.PersistentIndexOptions;
 import com.google.gson.annotations.Expose;
 
 import leotech.cdp.model.CdpPersistentObject;
-import leotech.system.util.database.ArangoDbUtil;
 import rfx.core.util.StringUtil;
 
 /**
@@ -83,158 +82,158 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	@DocumentField(Type.KEY)
 	@Expose
-	String id;
+	protected String id;
 
 	@Expose
-	int type = ProfileType.ANONYMOUS;
+	protected int type = ProfileType.ANONYMOUS;
 
 	@Expose
-	Set<String> identities = new HashSet<>(100);
+	protected Set<String> identities = new HashSet<>(100);
 
 	@Expose
-	Date createdAt = new Date();
+	protected Date createdAt = new Date();
 
 	// the main ID after Identity Resolution process
 	@Expose
 	String rootProfileId = "";
 
 	@Expose
-	Set<String> inCollections = new HashSet<String>(10);
+	protected Set<String> inCollections = new HashSet<String>(10);
 
 	@Expose
-	Set<String> inSegments = new HashSet<String>(20);
+	protected Set<String> inSegments = new HashSet<String>(20);
 
 	@Expose
-	Set<String> inJourneyMaps = new HashSet<String>(20);
+	protected Set<String> inJourneyMaps = new HashSet<String>(20);
 
 	@Expose
-	Set<String> top1000Touchpoints = new HashSet<String>(1000);
+	protected Set<String> top1000Touchpoints = new HashSet<String>(1000);
 
 	@Expose
-	int status = 1;
+	protected int status = 1;
 
 	@Expose
-	String lastObserverId = "unknown";
+	protected String lastObserverId = "unknown";
 
 	@Expose
-	String lastTouchpointId = "";
+	protected String lastTouchpointId = "";
 
 	@Expose
-	String lastChannelId = "";
+	protected String lastChannelId = "";
 
 	@Expose
-	String lastSeenIp = "";
+	protected String lastSeenIp = "";
 
 	@Expose
-	String lastUsedDeviceId = "";
+	protected String lastUsedDeviceId = "";
 
 	@Expose
-	String lastWebCookies = "";
+	protected String lastWebCookies = "";
 
 	@Expose
-	String visitorId = "";
+	protected String visitorId = "";
 
 	@Expose
-	String firstName = "";
+	protected String firstName = "";
 	
 	@Expose
-	String lastName = "";
+	protected String lastName = "";
 	
 	@Expose
-	String primaryUsername = "";
+	protected String primaryUsername = "";
 	
 	@Expose
-	String primaryEmail = "";
+	protected String primaryEmail = "";
 
 	@Expose
-	String primaryPhone = "";
+	protected String primaryPhone = "";
 
 	@Expose
-	String primaryAvatar = "";
+	protected String primaryAvatar = "";
 
 	@Expose
-	int gender = 0;
+	protected int gender = 0;
 
 	@Expose
-	int age = 0;
+	protected int age = 0;
 
 	@Expose
-	int genderProbability = 50;
+	protected int genderProbability = 50;
 
 	@Expose
-	int ageGroup = 0;
+	protected int ageGroup = 0;
 
 	@Expose
-	Set<String> usedDeviceIds = new HashSet<>(10);
+	protected Set<String> usedDeviceIds = new HashSet<>(10);
 
 	@Expose
-	Set<String> workingHistory = new HashSet<>(20);
+	protected Set<String> workingHistory = new HashSet<>(20);
 
 	@Expose
-	Map<String, Integer> referrerChannels = new HashMap<>(20);
+	protected Map<String, Integer> referrerChannels = new HashMap<>(20);
 
 	@Expose
-	List<String> viewedContents = new ArrayList<String>(100);
+	protected List<String> viewedContents = new ArrayList<String>(100);
 
 	@Expose
-	Map<String, String> personalAttributes = new HashMap<>(30);
+	protected Map<String, String> personalAttributes = new HashMap<>(30);
 
 	@Expose
-	Map<String, String> socialMediaProfiles = new HashMap<>(10);
+	protected Map<String, String> socialMediaProfiles = new HashMap<>(10);
 
 	@Expose
-	Map<String, String> personalContacts = new HashMap<>(10);
+	protected Map<String, String> personalContacts = new HashMap<>(10);
 	
 	@Expose
-	Map<String, String> businessContacts = new HashMap<>(10);
+	protected Map<String, String> businessContacts = new HashMap<>(10);
 
 	@Expose
-	Map<String, Integer> weeklyMobileUsage = new HashMap<>(7);
+	protected Map<String, Integer> weeklyMobileUsage = new HashMap<>(7);
 
 	@Expose
-	Map<String, Integer> mediaInterests = new HashMap<>(20);
+	protected Map<String, Integer> mediaInterests = new HashMap<>(20);
 
 	@Expose
-	Map<String, Integer> personalInterests = new HashMap<>(20);
+	protected Map<String, Integer> personalInterests = new HashMap<>(20);
 
 	@Expose
-	Map<String, String> subscribedChannels = new HashMap<>(100);
+	protected Map<String, String> subscribedChannels = new HashMap<>(100);
 
 	@Expose
-	Set<String> businessTransactions = new HashSet<String>();
+	protected Set<String> businessTransactions = new HashSet<String>();
 
 	@Expose
-	Set<String> supportHistory = new HashSet<String>();
+	protected Set<String> supportHistory = new HashSet<String>();
 
 	@Expose
-	int socialCreditScore = 0;
+	protected int socialCreditScore = 0;
 
 	@Expose
-	int satisfactionScore = 0;
+	protected int satisfactionScore = 0;
 
 	@Expose
-	int totalCAC = 0;
+	protected int totalCAC = 0;
 
 	@Expose
-	int totalCLV = 0;
+	protected int totalCLV = 0;
 
 	@Expose
-	Date updatedAt;
+	protected Date updatedAt;
 
 	@Expose
-	int mergeCode = 0;
+	protected int mergeCode = 0;
 
 	@Expose
-	String personaUri = "";
+	protected String personaUri = "";
 
 	@Expose
-	int partitionId = 0;
+	protected int partitionId = 0;
 	
 	@Expose
-	Map<String, Map<String,String>> extData = new HashMap<>();
+	protected Map<String, Map<String,String>> extData = new HashMap<>();
 	
 	@Expose
-	Map<String, Map<String,String>> predictionMetrics = new HashMap<>();
+	protected Map<String, Map<String,String>> predictionMetrics = new HashMap<>();
 
 	@Override
 	public int compareTo(Profile o) {

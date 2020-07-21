@@ -13,7 +13,7 @@ import leotech.cdp.model.audience.ContextSession;
 import leotech.cdp.model.audience.Profile;
 import leotech.cdp.model.business.MediaChannelType;
 import leotech.cdp.model.business.Touchpoint;
-import leotech.cdp.router.api.ApiParamKey;
+import leotech.cdp.router.api.TrackingApiParam;
 import leotech.system.model.DeviceInfo;
 import leotech.system.model.GeoLocation;
 import leotech.system.util.GeoLocationUtil;
@@ -35,16 +35,16 @@ public class ContextSessionService {
 		String ip = RequestInfoUtil.getRemoteIP(req);
 		GeoLocation loc = GeoLocationUtil.getGeoLocation(ip);
 
-		String observerId = StringUtil.safeString(params.get(ApiParamKey.OBSERVER_ID));
+		String observerId = StringUtil.safeString(params.get(TrackingApiParam.OBSERVER_ID));
 		String userDeviceId = DeviceDataService.getDeviceId(params, dv);
-		String mediaHost = StringUtil.safeString(params.get(ApiParamKey.MEDIA_HOST));
-		String appId = StringUtil.safeString(params.get(ApiParamKey.APP_ID));
+		String mediaHost = StringUtil.safeString(params.get(TrackingApiParam.MEDIA_HOST));
+		String appId = StringUtil.safeString(params.get(TrackingApiParam.APP_ID));
 
 		// touchpoint params
-		String touchpointName = StringUtil.decodeUrlUTF8(params.get(ApiParamKey.TOUCHPOINT_NAME));
-		String touchpointUrl = StringUtil.decodeUrlUTF8(params.get(ApiParamKey.TOUCHPOINT_URL));
-		String touchpointRefUrl = StringUtil.decodeUrlUTF8(params.get(ApiParamKey.TOUCHPOINT_REFERRER_URL));
-		String touchpointRefDomain = StringUtil.decodeUrlUTF8(params.get(ApiParamKey.TOUCHPOINT_REFERRER_DOMAIN));
+		String touchpointName = StringUtil.decodeUrlUTF8(params.get(TrackingApiParam.TOUCHPOINT_NAME));
+		String touchpointUrl = StringUtil.decodeUrlUTF8(params.get(TrackingApiParam.TOUCHPOINT_URL));
+		String touchpointRefUrl = StringUtil.decodeUrlUTF8(params.get(TrackingApiParam.TOUCHPOINT_REFERRER_URL));
+		String touchpointRefDomain = StringUtil.decodeUrlUTF8(params.get(TrackingApiParam.TOUCHPOINT_REFERRER_DOMAIN));
 		// owned media has data from itself , earned media is from facebook or google or youtube
 		boolean isFromOwnedMedia = mediaHost.equals(touchpointRefDomain);
 		
@@ -56,8 +56,8 @@ public class ContextSessionService {
 		
 		
 		// profile params
-		String visitorId = StringUtil.safeString(params.get(ApiParamKey.VISITOR_ID));
-		String fingerprintId = StringUtil.safeString(params.get(ApiParamKey.FINGERPRINT_ID))+"_"+ip;
+		String visitorId = StringUtil.safeString(params.get(TrackingApiParam.VISITOR_ID));
+		String fingerprintId = StringUtil.safeString(params.get(TrackingApiParam.FINGERPRINT_ID))+"_"+ip;
 		
 //		String email = StringUtil.safeString(params.get(ApiParamKey.EMAIL));
 //		String phone = StringUtil.safeString(params.get(ApiParamKey.PHONE));
@@ -65,7 +65,7 @@ public class ContextSessionService {
 //		String loginId = StringUtil.safeString(params.get(ApiParamKey.LOGIN_ID));
 //		String loginIdProvider = StringUtil.safeString(params.get(ApiParamKey.LOGIN_PROVIDER));
 
-		String env = StringUtil.safeString(params.get(ApiParamKey.DATA_ENVIRONMENT), ApiParamKey.DEV_ENV);
+		String env = StringUtil.safeString(params.get(TrackingApiParam.DATA_ENVIRONMENT), TrackingApiParam.DEV_ENV);
 		String locationCode = loc.getLocationCode();
 
 		
@@ -164,7 +164,7 @@ public class ContextSessionService {
 		
 		MultiMap formAttributes = req.formAttributes();
 		
-		Map<String, String> profileData = RequestInfoUtil.getHashMapFromRequestParams(formAttributes,ApiParamKey.PROFILE_DATA);
+		Map<String, String> profileData = RequestInfoUtil.getHashMapFromRequestParams(formAttributes,TrackingApiParam.PROFILE_DATA);
 		System.out.println(profileData);
 		
 		String email = profileData.getOrDefault("email", "");

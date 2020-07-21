@@ -19,17 +19,17 @@ public class TrackingApi {
 			ContextSession ctxSession, String eventName) {
 		String sourceIP = RequestInfoUtil.getRemoteIP(req);
 
-		String srcObserverId = params.get(ApiParamKey.OBSERVER_ID);
-		String srcTouchpointName = StringUtil.decodeUrlUTF8(params.get(ApiParamKey.TOUCHPOINT_NAME));
-		String srcTouchpointUrl = StringUtil.decodeUrlUTF8(params.get(ApiParamKey.TOUCHPOINT_URL));
-		String refTouchpointUrl = StringUtil.decodeUrlUTF8(params.get(ApiParamKey.TOUCHPOINT_REFERRER_URL));
-		String touchpointRefDomain = StringUtil.decodeUrlUTF8(params.get(ApiParamKey.TOUCHPOINT_REFERRER_DOMAIN));
+		String srcObserverId = params.get(TrackingApiParam.OBSERVER_ID);
+		String srcTouchpointName = StringUtil.decodeUrlUTF8(params.get(TrackingApiParam.TOUCHPOINT_NAME));
+		String srcTouchpointUrl = StringUtil.decodeUrlUTF8(params.get(TrackingApiParam.TOUCHPOINT_URL));
+		String refTouchpointUrl = StringUtil.decodeUrlUTF8(params.get(TrackingApiParam.TOUCHPOINT_REFERRER_URL));
+		String touchpointRefDomain = StringUtil.decodeUrlUTF8(params.get(TrackingApiParam.TOUCHPOINT_REFERRER_DOMAIN));
 		
 		String deviceId = DeviceDataService.getDeviceId(params, device);
-		String environment = StringUtil.safeString(params.get(ApiParamKey.DATA_ENVIRONMENT),
-				ApiParamKey.DEV_ENV);
+		String environment = StringUtil.safeString(params.get(TrackingApiParam.DATA_ENVIRONMENT),
+				TrackingApiParam.DEV_ENV);
 		Map<String, String> eventJsonData = RequestInfoUtil.getHashMapFromRequestParams(params,
-				ApiParamKey.EVENT_JSON_DATA);
+				TrackingApiParam.EVENT_JSON_DATA);
 
 		//System.out.println(new Gson().toJson(eventJsonData));
 
@@ -41,18 +41,18 @@ public class TrackingApi {
 			ContextSession ctxSession, String eventName) {
 		String sourceIP = RequestInfoUtil.getRemoteIP(req);
 
-		String srcObserverId = params.get(ApiParamKey.OBSERVER_ID);
-		String srcTouchpointName = StringUtil.decodeUrlUTF8(params.get(ApiParamKey.TOUCHPOINT_NAME));
-		String srcTouchpointUrl = StringUtil.decodeUrlUTF8(params.get(ApiParamKey.TOUCHPOINT_URL));
-		String refTouchpointUrl = StringUtil.decodeUrlUTF8(params.get(ApiParamKey.TOUCHPOINT_REFERRER_URL));
-		String touchpointRefDomain = StringUtil.decodeUrlUTF8(params.get(ApiParamKey.TOUCHPOINT_REFERRER_DOMAIN));
+		String srcObserverId = params.get(TrackingApiParam.OBSERVER_ID);
+		String srcTouchpointName = StringUtil.decodeUrlUTF8(params.get(TrackingApiParam.TOUCHPOINT_NAME));
+		String srcTouchpointUrl = StringUtil.decodeUrlUTF8(params.get(TrackingApiParam.TOUCHPOINT_URL));
+		String refTouchpointUrl = StringUtil.decodeUrlUTF8(params.get(TrackingApiParam.TOUCHPOINT_REFERRER_URL));
+		String touchpointRefDomain = StringUtil.decodeUrlUTF8(params.get(TrackingApiParam.TOUCHPOINT_REFERRER_DOMAIN));
 		
 		String deviceId = DeviceDataService.getDeviceId(params, device);
-		String environment = StringUtil.safeString(params.get(ApiParamKey.DATA_ENVIRONMENT),
-				ApiParamKey.DEV_ENV);
+		String environment = StringUtil.safeString(params.get(TrackingApiParam.DATA_ENVIRONMENT),
+				TrackingApiParam.DEV_ENV);
 
 		Map<String, String> eventJsonData = RequestInfoUtil.getHashMapFromRequestParams(params,
-				ApiParamKey.EVENT_JSON_DATA);
+				TrackingApiParam.EVENT_JSON_DATA);
 		int eventCount = 1;
 
 		return EventTrackingService.recordActionEvent(ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
@@ -63,23 +63,23 @@ public class TrackingApi {
 			ContextSession ctxSession, String eventName) {
 		String sourceIP = RequestInfoUtil.getRemoteIP(req);
 
-		String srcEventKey = StringUtil.safeString(params.get(ApiParamKey.SRC_EVENT_KEY));
+		String srcEventKey = StringUtil.safeString(params.get(TrackingApiParam.SRC_EVENT_KEY));
 		
-		String srcObserverId = params.get(ApiParamKey.OBSERVER_ID);
-		String srcTouchpointName = StringUtil.decodeUrlUTF8(params.get(ApiParamKey.TOUCHPOINT_NAME));
-		String srcTouchpointUrl = StringUtil.decodeUrlUTF8(params.get(ApiParamKey.TOUCHPOINT_URL));
-		String refTouchpointUrl = StringUtil.decodeUrlUTF8(params.get(ApiParamKey.TOUCHPOINT_REFERRER_URL));
-		String touchpointRefDomain = StringUtil.decodeUrlUTF8(params.get(ApiParamKey.TOUCHPOINT_REFERRER_DOMAIN));
+		String srcObserverId = params.get(TrackingApiParam.OBSERVER_ID);
+		String srcTouchpointName = StringUtil.decodeUrlUTF8(params.get(TrackingApiParam.TOUCHPOINT_NAME));
+		String srcTouchpointUrl = StringUtil.decodeUrlUTF8(params.get(TrackingApiParam.TOUCHPOINT_URL));
+		String refTouchpointUrl = StringUtil.decodeUrlUTF8(params.get(TrackingApiParam.TOUCHPOINT_REFERRER_URL));
+		String touchpointRefDomain = StringUtil.decodeUrlUTF8(params.get(TrackingApiParam.TOUCHPOINT_REFERRER_DOMAIN));
 		
 		String deviceId = DeviceDataService.getDeviceId(params, device);
 		
 		Map<String, String> eventJsonData = RequestInfoUtil.getHashMapFromRequestParams(params,
-				ApiParamKey.EVENT_JSON_DATA);
+				TrackingApiParam.EVENT_JSON_DATA);
 
 		int eventCount = 1;
-		String transactionCode = StringUtil.safeString(params.get(ApiParamKey.TRANSACTION_CODE));
-		String environment = StringUtil.safeString(params.get(ApiParamKey.DATA_ENVIRONMENT),
-				ApiParamKey.DEV_ENV);
+		String transactionCode = StringUtil.safeString(params.get(TrackingApiParam.TRANSACTION_CODE));
+		String environment = StringUtil.safeString(params.get(TrackingApiParam.DATA_ENVIRONMENT),
+				TrackingApiParam.DEV_ENV);
 
 		return EventTrackingService.recordConversionEvent(ctxSession, srcObserverId, environment, srcEventKey, deviceId, sourceIP,
 				device, srcTouchpointName, srcTouchpointUrl, refTouchpointUrl, touchpointRefDomain, eventName, eventCount, transactionCode, "", eventJsonData);

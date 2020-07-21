@@ -109,6 +109,12 @@
                     },
                     {
                         "render": function (data, type, row) {
+                            return row.lastTouchpoint.name;
+                        },
+                        "targets": 7
+                    },
+                    {
+                        "render": function (data, type, row) {
                         	var callJsViewStr = "#calljs-leoCdpRouter('Audience_Profile_Report','" + row.id + "')";
                             var callJsEditStr ="#calljs-leoCdpRouter('Audience_Profile_Editor','" + row.id + "')";
                             return '<a title="Profile Report" href="' + callJsViewStr + '" >View</a> <br> <a title="Profile Data Editor" href="' + callJsEditStr + '" >Edit</a>';
