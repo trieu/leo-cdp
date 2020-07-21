@@ -1,20 +1,18 @@
 <div class="container-fluid">
 
-    <!-- MAIN BODY here -->
-     <div class="row">
+    <div class="row">
         <div class="col-lg-10">
             <h4 class="page-header" id="page_breadcrumb" > </h4>
         </div>
         <div class="col-lg-2 text-center" style="padding: 10px">
-        	<button type="button" class="btn btn-success" onclick="" > New Segment </button>
+        	<button type="button" class="btn btn-success" onclick="" > New Media Channel </button>
         </div>
     </div>
-    
 
-    <div class="row gridholder">
+    <div class="row gridholder" >
         <div class="col-lg-12">
             <div class="table-responsive">
-                <table id="profile-list" class="display" style="width:100%">
+                <table id="profile-list" class="display" style="width:100%;">
                     <thead>
                         <tr>
                             <th>Profile UUID</th>
@@ -36,7 +34,7 @@
 </div>
 
 <script>
-    function initAudienceSegmentList() {
+    function initMediaChannelList() {
         var usersession = getUserSession();
         if (usersession) {
             $('#profile-list').DataTable({

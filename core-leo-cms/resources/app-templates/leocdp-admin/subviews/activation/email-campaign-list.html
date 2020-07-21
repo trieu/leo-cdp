@@ -6,51 +6,13 @@
             <h4 class="page-header" id="page_breadcrumb" > </h4>
         </div>
         <div class="col-lg-2 text-center" style="padding: 10px">
-        	<button type="button" class="btn btn-primary" onclick="" > New Observer </button>
+        	<button type="button" class="btn btn-success" onclick="" > New Email Campaign </button>
         </div>
     </div>
     
-    <div class="row float-right" style="display: none">
-		<div class='col-md-7  col-xs-12 text-center'>
-			<h4> Data from <span> January 12, 2020 </span> to  <span> May 11, 2020 </span></h4> 
-		</div>
-		 
-        <div class='col-md-2 col-xs-12'>
-            <div class="form-group">
-                <div class='input-group date' id='beginFilterDate'>
-                    <input type='text' class="form-control" autocomplete="off" /> <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                </div>
-            </div>
-        </div>
-        
-        <div class='col-md-2 col-xs-12'>
-            <div class="form-group">
-                <div class='input-group date' id='endFilterDate'>
-                    <input type='text' class="form-control" autocomplete="off" /> <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                </div>
-            </div>
-        </div>
-        
-        <div class='col-md-1 col-xs-12'>
-        	<button type="button" class="btn btn-primary" onclick="loadDataProfileList()" > Filter </button>
-        </div>
-        
-    </div>
 
-	<div class="row">
-		<div class='col-md-9  col-xs-12 text-center'>
-		</div>
-		 <div class='col-md-3 col-xs-12'>
-			
-        </div>
-	</div>
-	<hr>
 
-    <div class="row">
+    <div class="row gridholder">
         <div class="col-lg-12">
             <div class="table-responsive">
                 <table id="profile-list" class="display" style="width:100%">
@@ -75,7 +37,7 @@
 </div>
 
 <script>
-    function initDataObserverList() {
+    function initEmailCampaigns() {
         var usersession = getUserSession();
         if (usersession) {
             $('#profile-list').DataTable({

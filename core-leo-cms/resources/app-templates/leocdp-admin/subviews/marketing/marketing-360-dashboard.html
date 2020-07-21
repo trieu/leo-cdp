@@ -87,7 +87,7 @@
         </div>
         
         <div class='col-md-1 col-xs-12'>
-        	<button type="button" class="btn btn-primary"> OK </button>
+        	<button type="button" class="btn btn-info"> OK </button>
          </div>
         
     </div>
@@ -132,26 +132,25 @@
                     <div id="profile_funnel"></div>
                 </div>
                 <div class="col-md-6">
-                    <div id="audience_source" >
-                        <h4 class="chart_header" >Audience Media Sources</h4>
-                    </div>
+                    <h4 class="chart_header" >Event Conversion Funnel</h4>
+		            <div class="summary_metric">
+		                <div class="vcenter">
+		                   <div id="event_funnel"></div>
+		                </div>
+		            </div>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="row chart_box">
-     	<div class="col-md-3 ">
-     	
-     		<h4 class="chart_header" >Event Conversion Funnel</h4>
-            <div class="summary_metric">
-                <div class="vcenter">
-                   <div id="event_funnel"></div>
-                </div>
+     	<div class="col-md-3" style="display: none;">
+     		<div id="audience_source" >
+                <h4 class="chart_header" >Audience Media Sources</h4>
             </div>
      	</div>
-    	<div class="col-md-9">
-	        <h4 class="chart_header" style="width: 100%;" > Sales channel's performance from purchasing data </h4>
+    	<div class="col-md-12">
+	        <h4 class="chart_header" style="width: 100%;" > Media channel's visitor </h4>
 	        <div id="chart" style="text-align:center;">
 	            <svg></svg>
 	        </div>
@@ -163,23 +162,13 @@
 
 <script>
 	//select date
-	var end = new moment().format("YYYY-MM-DD");
-	var begin = new moment().subtract(120, 'days').format("YYYY-MM-DD");
 	
-	$('#beginFilterDate').datetimepicker({
-	    format: 'YYYY-MM-DD',
-	        defaultDate: begin
-	});
-    $('#endFilterDate').datetimepicker({
-        useCurrent: false, 
-        format: 'YYYY-MM-DD',
-        defaultDate: end
-    });
 
     function initSalesDashboard() {
+    	initDateFilterComponent();
         loadProfileFunnel();
         loadEventFunnel();
-        loadAudienceVenn();
+        //loadAudienceVenn();
         loadChannelPerformance();
     }
 
@@ -270,7 +259,7 @@
     function loadProfileFunnel() {
         var data = [
             ['Visitor', 21981, '#008080'],
-            ['Follower', 7423, '#4AADC6'],
+            ['Fan', 7423, '#4AADC6'],
             ['Lead', 2319, '#702963'],
             ['Customer', 1489, '#C46511'],
             ['Repeat Customer', 589, '#3f2ae2']
@@ -291,7 +280,7 @@
                 enabled: true
             },
             label: {
-                fontSize: '14px'
+                fontSize: '12px'
             },
             events: {
                 click: {
@@ -307,9 +296,9 @@
     
     function loadEventFunnel() {
         var data = [
-            ['product info view', 8152, '#008080'],
-            ['product video view', 7548, '#4AADC6'],
-            ['add-to-cart click', 2262, '#702963'],
+            ['product view', 8152, '#008080'],
+            ['social interaction', 7548, '#4AADC6'],
+            ['add-to-cart', 2262, '#702963'],
             ['purchase', 1782, '#C46511'],
             ['repeat purchase', 861, '#3f2ae2']
         ];
@@ -318,18 +307,18 @@
       			highlight: true
       	    },
             chart: {
-                curve: {
+            	curve: {
                     enabled: true,
-                    height: 16
+                    height: 20
                 },
-                bottomWidth : 0.64,
-                height: 322
+                bottomWidth : 0.52,
+                height: 360
             },
             tooltip: {
                 enabled: true
             },
             label: {
-                fontSize: '14px'
+                fontSize: '12px'
             },
             events: {
                 click: {

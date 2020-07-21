@@ -167,3 +167,6 @@ textarea {
 	font: 17px / 24px "Tahoma" sans-serif !important;
 }
 
+div.gridholder {
+	margin-top: 16px;
+}

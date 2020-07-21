@@ -32,6 +32,15 @@ LeoCdpAdmin.navFunctions.loadCustomerTouchpointList = function(breadcrumbHtml) {
     });
 }
 
+LeoCdpAdmin.navFunctions.loadMediaChannelList = function(breadcrumbHtml) {
+	LeoCdpAdmin.loadView('/view/subviews/journey/media-channel-list.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+    	initMediaChannelList();
+    });
+}
+
+
+
 LeoCdpAdmin.navFunctions.loadDataObserverList  = function(breadcrumbHtml) {
 	LeoCdpAdmin.loadView('/view/subviews/journey/data-observer-list.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);

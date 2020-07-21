@@ -58,7 +58,6 @@ $(window).on('hashchange', function () {
 });
 
 
-
 //////////////////////////////////////////////////// COMMON ////////////////////////////////////////////////
 
 function loadMediaInfoView(mediaInfo, type, editMode) {
@@ -210,6 +209,20 @@ var makeNodeEditable = function(selector){
     })
 }
 
+var initDateFilterComponent = function(){
+	var end = new moment().format("YYYY-MM-DD");
+	var begin = new moment().subtract(120, 'days').format("YYYY-MM-DD");
+	
+	$('#beginFilterDate').datetimepicker({
+	    format: 'YYYY-MM-DD',
+	        defaultDate: begin
+	});
+    $('#endFilterDate').datetimepicker({
+        useCurrent: false, 
+        format: 'YYYY-MM-DD',
+        defaultDate: end
+    });
+}
 
 
 document.addEventListener("trix-file-accept", function(event) {
