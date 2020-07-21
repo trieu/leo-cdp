@@ -69,13 +69,11 @@ public class ContextSessionService {
 		String locationCode = loc.getLocationCode();
 
 		
-		
 		// load profile ID from DB
 		Profile profile = ProfileDataService.updateOrCreateFromWebTouchpoint(observerId, srcTouchpointId, refTouchpointId, touchpointRefDomain, ip, visitorId, userDeviceId, fingerprintId);
 		String profileId = profile.getId();
 		visitorId = profile.getVisitorId();
 		int profileType = profile.getType();
-		
 
 		// create new
 		ContextSession ctxSession = new ContextSession(observerId, dateTime, dateTimeKey, locationCode,

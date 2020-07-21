@@ -555,7 +555,7 @@ img {
 }
 
 #page_main_content {
-	padding: 20px 18px 0 18px;
+	padding: 10px 5px 0 5px;
 	margin-bottom: 60px;
 }
 
@@ -678,7 +678,7 @@ ul.alert-dropdown {
 		position: fixed;
 		top: 51px;
 		left: 198px;
-    	width: 234px;
+    	width: 230px;
 		height: 100%;
 		margin-left: -200px;
 		padding-bottom: 60px;

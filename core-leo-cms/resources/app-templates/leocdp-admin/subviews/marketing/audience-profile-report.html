@@ -132,41 +132,17 @@
        
        <!--  Tab Navigation Items -->
        <ul class="nav nav-tabs" >
-		  <li class="active"><a href="javascript: " data-target-tab="panel_profile_journey" > Overview </a></li>
-		  <li><a href="javascript:" data-target-tab="panel_profile_activities" >Activities</a></li>
+       	  <li class="active" ><a href="javascript:" data-target-tab="panel_profile_activities" >Activities</a></li>
+		  <li style="display: none;" ><a href="javascript: " data-target-tab="panel_profile_journey" > Overview </a></li>
+		  
 		  <li style="display: none;" ><a href="javascript:" data-target-tab="panel_profile_ext_attributes" > Extended Attributes </a></li>
 		  <li style="display: none;" ><a href="javascript:"data-target-tab="panel_business_transactions" >Business Transactions</a></li>
 	   </ul>
 	   
 	   <!-- Tab Contents  -->
        <div class="tab-content">
-			<div class="tab-pane active" id="panel_profile_journey" >
-		     	<h4 id="journey_map_name" > Experience Journey Flow </h4>
-		     	
-		     	<div class="row">
-		       		<div id="customerJourneyDiv" class="experience_journey_flow row" ></div>
-		       	 	<div id="sankeyChart" style="height:580px; width:98%;"></div>
-		       	</div>
-		       	
-		       	<div class="row" style="display: none;" >
-		            <div class="col-md-6 bar-module">
-		                <div id="venn_two" style=float:left>
-		                    <h4 style="text-align: center">Media Touchpoints</h4>
-		                </div>
-		            </div>
-		            <div class="col-md-6 ">
-		                <div>
-		                    <h4>Predictive Personality Traits(OCEAN Model) </h4>
-		                </div>
-		                <div class="pairs">
-		                    <div id="chart_persornality">
-		                    </div>
-		                </div>
-		            </div>
-			     </div>
-		       
-			</div>
-		 	<div class="tab-pane " id="panel_profile_activities" >
+			
+		 	<div class="tab-pane active" id="panel_profile_activities" >
 	     		<ul class="list-group list-group-dividered list-group-full">
 				   <li class="list-group-item">
 				      <div class="row">
@@ -206,6 +182,33 @@
 				   </li>
 				</ul>
 			</div>
+			
+			<div class="tab-pane" id="panel_profile_journey" style="display: none;" >
+		     	<h4 id="journey_map_name" > Experience Journey Flow </h4>
+		     	
+		     	<div class="row">
+		       		<div id="customerJourneyDiv" class="experience_journey_flow row" ></div>
+		       	 	<div id="sankeyChart" style="height:580px; width:98%;"></div>
+		       	</div>
+		       	
+		       	<div class="row" style="display: none;" >
+		            <div class="col-md-6 bar-module">
+		                <div id="venn_two" style=float:left>
+		                    <h4 style="text-align: center">Media Touchpoints</h4>
+		                </div>
+		            </div>
+		            <div class="col-md-6 ">
+		                <div>
+		                    <h4>Predictive Personality Traits(OCEAN Model) </h4>
+		                </div>
+		                <div class="pairs">
+		                    <div id="chart_persornality">
+		                    </div>
+		                </div>
+		            </div>
+			     </div>   
+			</div>
+			
 			<div class="tab-pane" id="panel_profile_ext_attributes" >
 			      <h4>attributes</h4>
 			      
@@ -253,7 +256,7 @@
 		setupTabPanels();
     	
         setTimeout(function(){
-        	 profilePathDiagram();
+        	//profilePathDiagram();
         	//loadProfileAttribution();
             //loadMediaTouchpoints();
             //personalityDiagram();

@@ -19,6 +19,23 @@ public class ProfileDataService {
 			String visitorId, String userDeviceId, String fingerprintId) {
 		return updateOrCreate( observerId, srcTouchpointId, refTouchpointId, touchpointRefDomain,lastSeenIp, visitorId, userDeviceId, fingerprintId, "", "", "", "");
 	}
+	
+	public static void updateProfileFromEvent(String profileId, String observerId, String srcTouchpointId, String touchpointRefDomain, String lastSeenIp, String userDeviceId) {
+		Profile pf = ProfileDaoUtil.getById(profileId);
+	
+		if(pf != null) {
+			
+			pf.engageAtTouchpoint(srcTouchpointId);
+			pf.updateReferrerChannel(touchpointRefDomain);
+			pf.setLastObserverId(observerId);
+			pf.setLastTouchpointId(srcTouchpointId);
+			pf.setLastSeenIp(lastSeenIp);
+			pf.setLastUsedDeviceId(userDeviceId);
+			
+			// TODO run in a thread to commit to database
+			ProfileDaoUtil.update(pf);
+		}
+	}
 
 	public static Profile updateOrCreate( String observerId, String srcTouchpointId,
 			String refTouchpointId, String touchpointRefDomain, String lastSeenIp, String visitorId,
@@ -57,7 +74,7 @@ public class ProfileDataService {
 			pf.updateReferrerChannel(touchpointRefDomain);
 			pf.updateReferrerChannel(loginProvider);
 
-			// TODO run in a thread
+			// TODO run in a thread to commit to database
 			ProfileDaoUtil.create(pf);
 		} else {
 			pf.engageAtTouchpoint(refTouchpointId);
@@ -72,6 +89,7 @@ public class ProfileDataService {
 			pf.setLastUsedDeviceId(userDeviceId);
 			pf.setUpdatedAt(new Date());
 
+			// TODO run in a thread to commit to database
 			ProfileDaoUtil.update(pf);
 		}
 
@@ -83,9 +101,7 @@ public class ProfileDataService {
 		Profile p = ProfileDaoUtil.getById(profileId);
 
 		p.updateReferrerChannel(loginProvider);
-		
 		p.setIdentity(loginId, loginProvider);
-		
 		
 		if(StringUtil.isNotEmpty(email)) {
 			p.setPrimaryEmail(email);
@@ -98,13 +114,12 @@ public class ProfileDataService {
 		if(StringUtil.isNotEmpty(usedDeviceId)) {
 			p.setLastUsedDeviceId(usedDeviceId);
 		}
-		
+
 		p.setLastObserverId(observerId);
-		
 		p.setLastSeenIp(lastSeenIp);
-		
 		p.setUpdatedAt(new Date());
 
+		// TODO run in a thread to commit to database
 		ProfileDaoUtil.update(p);
 		return p;
 	}
@@ -126,7 +141,6 @@ public class ProfileDataService {
 	}
 	
 	public static Profile createNewCrmProfile(JsonObject paramJson, User loginUser) {
-		
 		String firstName = paramJson.getString("firstName", "");
 		String lastName = paramJson.getString("lastName", "");
 		String email = paramJson.getString("email", "");
@@ -135,6 +149,8 @@ public class ProfileDataService {
 		Profile pf = Profile.newCrmProfile( CRM_IMPORT, "", "", "","", email, phone, "");
 		pf.setFirstName(firstName);
 		pf.setLastName(lastName);
+		
+		// TODO run in a thread to commit to database
 		ProfileDaoUtil.create(pf);
 		return pf;
 	}
@@ -165,7 +181,7 @@ public class ProfileDataService {
 			pf.setPrimaryPhone(phone);
 		}
 		
-		//TODO
+		// TODO run in a thread to commit to database
 		ProfileDaoUtil.update(pf);
 		return pf;
 	}
@@ -174,6 +190,8 @@ public class ProfileDataService {
 		String profileId = paramJson.getString("profileId", "");
 		Profile pf = ProfileDaoUtil.getById(profileId);
 		pf.setStatus(-1);
+		
+		// TODO run in a thread to commit to database
 		ProfileDaoUtil.update(pf);
 		return pf != null;
 	}
