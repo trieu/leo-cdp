@@ -11,6 +11,7 @@ import io.vertx.core.http.HttpServerRequest;
 import leotech.cdp.dao.ContextSessionDaoUtil;
 import leotech.cdp.model.audience.ContextSession;
 import leotech.cdp.model.audience.Profile;
+import leotech.cdp.model.business.MediaChannelType;
 import leotech.cdp.model.business.Touchpoint;
 import leotech.cdp.router.api.ApiParamKey;
 import leotech.system.model.DeviceInfo;
@@ -48,8 +49,8 @@ public class ContextSessionService {
 		boolean isFromOwnedMedia = mediaHost.equals(touchpointRefDomain);
 		
 		// touch-point info process
-		Touchpoint refTouchPoint = TouchpointDataService.getOrCreateWebTouchpoint(touchpointRefDomain, Touchpoint.TouchpointType.WEB_URL, touchpointRefUrl, isFromOwnedMedia);
-		Touchpoint srcTouchpoint = TouchpointDataService.getOrCreateWebTouchpoint(touchpointName, Touchpoint.TouchpointType.WEB_URL, touchpointUrl);
+		Touchpoint refTouchPoint = TouchpointDataService.getOrCreateWebTouchpoint(touchpointRefDomain, MediaChannelType.WEB_URL, touchpointRefUrl, isFromOwnedMedia);
+		Touchpoint srcTouchpoint = TouchpointDataService.getOrCreateWebTouchpoint(touchpointName, MediaChannelType.WEB_URL, touchpointUrl);
 		String refTouchpointId = refTouchPoint.getId();
 		String srcTouchpointId = srcTouchpoint.getId();
 		

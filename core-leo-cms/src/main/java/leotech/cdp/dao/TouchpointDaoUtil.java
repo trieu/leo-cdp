@@ -9,6 +9,7 @@ import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
 
 import leotech.cdp.model.audience.Profile;
+import leotech.cdp.model.business.MediaChannel;
 import leotech.cdp.model.business.Touchpoint;
 import leotech.core.config.AqlTemplate;
 import leotech.system.model.DataFilter;
@@ -50,11 +51,11 @@ public class TouchpointDaoUtil extends BaseLeoCdpDao {
 		return "";
 	}
 
-	public static Touchpoint getById(String id) {
+	public static MediaChannel getById(String id) {
 		ArangoDatabase db = getCdpDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("id", id);
-		Touchpoint p = new ArangoDbQuery<Touchpoint>(db, AQL_GET_TOUCHPOINT_BY_ID, bindVars, Touchpoint.class)
+		MediaChannel p = new ArangoDbQuery<Touchpoint>(db, AQL_GET_TOUCHPOINT_BY_ID, bindVars, Touchpoint.class)
 				.getResultsAsObject();
 		return p;
 	}

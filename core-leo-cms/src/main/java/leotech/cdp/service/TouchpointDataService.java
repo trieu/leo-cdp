@@ -1,6 +1,8 @@
 package leotech.cdp.service;
 
 import leotech.cdp.dao.TouchpointDaoUtil;
+import leotech.cdp.model.business.MediaChannel;
+import leotech.cdp.model.business.MediaChannelType;
 import leotech.cdp.model.business.Touchpoint;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataTablePayload;
@@ -9,7 +11,7 @@ import rfx.core.util.StringUtil;
 
 public class TouchpointDataService {
 	
-	static final Touchpoint DIRECT_TRAFFIC_WEB = new Touchpoint("DIRECT_TRAFFIC_WEB", Touchpoint.TouchpointType.WEB_URL, "DIRECT_TRAFFIC_WEB");
+	static final Touchpoint DIRECT_TRAFFIC_WEB = new Touchpoint("DIRECT_TRAFFIC_WEB", MediaChannelType.WEB_URL, "DIRECT_TRAFFIC_WEB");
 	static {
 		TouchpointDaoUtil.save(DIRECT_TRAFFIC_WEB);
 	}
@@ -18,7 +20,7 @@ public class TouchpointDataService {
 		String hostname = UrlUtil.getHostName(touchpointUrl);
 		Touchpoint tp = TouchpointDaoUtil.getByName(hostname);
 		if(tp == null) {
-			tp = new Touchpoint(hostname, Touchpoint.TouchpointType.WEBSITE, hostname);
+			tp = new Touchpoint(hostname, MediaChannelType.WEBSITE, hostname);
 			tp.setOwnedMedia(isOwnedMedia);
 			TouchpointDaoUtil.save(tp);
 		}
@@ -59,7 +61,7 @@ public class TouchpointDataService {
 		return DIRECT_TRAFFIC_WEB;
 	}
 	
-	public static Touchpoint getOrCreateWebTouchpoint(int type, String touchpointUrl, boolean isOwnedMedia) {
+	public static MediaChannel getOrCreateWebTouchpoint(int type, String touchpointUrl, boolean isOwnedMedia) {
 		if (StringUtil.isNotEmpty(touchpointUrl)) {
 			Touchpoint tp = TouchpointDaoUtil.getByUrl(touchpointUrl);
 			if (tp == null) {

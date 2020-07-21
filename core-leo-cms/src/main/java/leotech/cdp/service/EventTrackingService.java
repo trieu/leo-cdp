@@ -7,6 +7,7 @@ import leotech.cdp.dao.TrackingEventDaoUtil;
 import leotech.cdp.model.audience.ContextSession;
 import leotech.cdp.model.audience.ConversionEvent;
 import leotech.cdp.model.audience.TrackingEvent;
+import leotech.cdp.model.business.MediaChannelType;
 import leotech.cdp.model.business.Touchpoint;
 import leotech.system.model.DeviceInfo;
 
@@ -39,9 +40,9 @@ public class EventTrackingService {
 
 		// touch-point info process
 		Touchpoint refTouchPoint = TouchpointDataService.getOrCreateWebTouchpoint(touchpointRefDomain,
-				Touchpoint.TouchpointType.WEB_URL, refTouchpointUrl, isFromOwnedMedia);
+				MediaChannelType.WEB_URL, refTouchpointUrl, isFromOwnedMedia);
 		Touchpoint srcTouchpoint = TouchpointDataService.getOrCreateWebTouchpoint(srcTouchpointName,
-				Touchpoint.TouchpointType.WEB_URL, srcTouchpointUrl);
+				MediaChannelType.WEB_URL, srcTouchpointUrl);
 		String refTouchpointId = refTouchPoint.getId();
 		String srcTouchpointId = srcTouchpoint.getId();
 
@@ -75,9 +76,9 @@ public class EventTrackingService {
 
 		// touch-point info process
 		Touchpoint refTouchPoint = TouchpointDataService.getOrCreateWebTouchpoint(touchpointRefDomain,
-				Touchpoint.TouchpointType.WEB_URL, refTouchpointUrl, isFromOwnedMedia);
+				MediaChannelType.WEB_URL, refTouchpointUrl, isFromOwnedMedia);
 		Touchpoint srcTouchpoint = TouchpointDataService.getOrCreateWebTouchpoint(srcTouchpointName,
-				Touchpoint.TouchpointType.WEB_URL, srcTouchpointUrl);
+				MediaChannelType.WEB_URL, srcTouchpointUrl);
 		String refTouchpointId = refTouchPoint.getId();
 		String srcTouchpointId = srcTouchpoint.getId();
 
@@ -114,9 +115,9 @@ public class EventTrackingService {
 
 		// touch-point info process
 		Touchpoint refTouchPoint = TouchpointDataService.getOrCreateWebTouchpoint(touchpointRefDomain,
-				Touchpoint.TouchpointType.WEB_URL, refTouchpointUrl, isFromOwnedMedia);
+				MediaChannelType.WEB_URL, refTouchpointUrl, isFromOwnedMedia);
 		Touchpoint srcTouchpoint = TouchpointDataService.getOrCreateWebTouchpoint(srcTouchpointName,
-				Touchpoint.TouchpointType.WEB_URL, srcTouchpointUrl);
+				MediaChannelType.WEB_URL, srcTouchpointUrl);
 		String refTouchpointId = refTouchPoint.getId();
 		String srcTouchpointId = srcTouchpoint.getId();
 
