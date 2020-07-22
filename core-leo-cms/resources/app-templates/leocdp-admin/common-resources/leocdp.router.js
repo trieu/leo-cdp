@@ -17,85 +17,92 @@ LeoCdpAdmin.navRouters = {
 		"Customer_Persona_List" : {
 			"menuName" : "Customer Persona List",
 			"functionName" : "loadCustomerPersonaList",
-			"breadcrumb" : ["Journey Map Data Hub", "Customer Persona List"]
+			"breadcrumb" : ["Customer Journey Hub", "Customer Persona List"]
 		},
 		"Customer_Persona_Report" : {
 			"menuName" : "Customer Persona Report",
 			"functionName" : "loadCustomerPersonaReport",
-			"breadcrumb" : ["Journey Map Data Hub", "Customer Persona List", "Persona Report"]
+			"breadcrumb" : ["Customer Journey Hub", "Customer Persona List", "Persona Report"]
 		},
 		"Customer_Persona_Editor" : {
 			"menuName" : "Customer Persona Details",
 			"functionName" : "loadCustomerPersonaDetails",
-			"breadcrumb" : ["Journey Map Data Hub", "Customer Persona List", "Persona Editor"]
+			"breadcrumb" : ["Customer Journey Hub", "Customer Persona List", "Persona Editor"]
 		},
 		
 		// 1.2 Media Channel 
 		"Media_Channel_List" : {
 			"menuName" : "Media Channel List",
 			"functionName" : "loadMediaChannelList",
-			"breadcrumb" : ["Journey Map Data Hub", "Media Channel List"]
+			"breadcrumb" : ["Customer Journey Hub", "Media Channel List"]
 		},
 		"Media_Channel_Report" : {
 			"menuName" : "Media Channel Report",
 			"functionName" : "loadMediaChannelReport",
-			"breadcrumb" : ["Journey Map Data Hub", "Media Channel List" , "Media Channel Report" ]
+			"breadcrumb" : ["Customer Journey Hub", "Media Channel List" , "Media Channel Report" ]
 		},
 		"Media_Channel_Editor" : {
 			"menuName" : "Media Channel Editor",
 			"functionName" : "loadMediaChannelEditor",
-			"breadcrumb" : ["Journey Map Data Hub", "Media Channel List" , "Media Channel Editor" ]
+			"breadcrumb" : ["Customer Journey Hub", "Media Channel List" , "Media Channel Editor" ]
 		},
 		
 		// 1.3 Customer Touchpoint
 		"Customer_Touchpoint_List" : {
 			"menuName" : "Customer Touchpoint List",
 			"functionName" : "loadCustomerTouchpointList",
-			"breadcrumb" : ["Journey Map Data Hub", "Touchpoint List"]
+			"breadcrumb" : ["Customer Journey Hub", "Touchpoint List"]
 		},
 		"Customer_Touchpoint_Report" : {
 			"menuName" : "Touchpoint Report",
 			"functionName" : "loadCustomerTouchpointReport",
-			"breadcrumb" : ["Journey Map Data Hub", "Customer Touchpoint List" , "Customer Touchpoint Report" ]
+			"breadcrumb" : ["Customer Journey Hub", "Customer Touchpoint List" , "Customer Touchpoint Report" ]
 		},
 		"Customer_Touchpoint_Editor" : {
 			"menuName" : "Touchpoint Report",
 			"functionName" : "loadCustomerTouchpointEditor",
-			"breadcrumb" : ["Journey Map Data Hub", "Customer Touchpoint List" , "Customer Touchpoint Editor" ]
+			"breadcrumb" : ["Customer Journey Hub", "Customer Touchpoint List" , "Customer Touchpoint Editor" ]
 		},
 		
-		// 1.4 Journey Map List, Report and Editor
-		"Customer_Journey_List" : {
-			"menuName" : "Customer Journey List",
-			"functionName" : "loadCustomerJourneyList",
-			"breadcrumb" : ["Journey Map Data Hub", "Customer Journey List"]
-		},
-		"Journey_Map_Report" : {
-			"menuName" : "Journey Map Report",
-			"functionName" : "loadJourneyMapReport",
-			"breadcrumb" : ["Journey Map Data Hub", "Customer Journey List", "Journey Map Report"]
-		},
-		"Journey_Map_Studio" : {
-			"menuName" : "Journey Map Studio",
-			"functionName" : "loadJourneyMapStudio",
-			"breadcrumb" : ["Journey Map Data Hub", "Customer Journey List","Journey Map Studio"]
+		// 1.4 Event Metrics for Media Channel and Touchpoint
+		"Event_Metrics" : {
+			"menuName" : "Event Metrics",
+			"functionName" : "loadEventMetrics",
+			"breadcrumb" : ["Customer Journey Hub", "Event Metrics"]
 		},
 		
 		// 1.5 Data Observer for touchpoint and media channel
 		"Data_Observer_List" : {
 			"menuName" : "Data Observer List",
 			"functionName" : "loadDataObserverList",
-			"breadcrumb" : ["Journey Map Data Hub", "Data Observer List"]
+			"breadcrumb" : ["Customer Journey Hub", "Data Observer List"]
 		},
 		"Data_Observer_Report" : {
 			"menuName" : "Data Observer Report",
 			"functionName" : "loadDataObserverReport",
-			"breadcrumb" : ["Journey Map Data Hub", "Data Observer List", "Data Observer Report"]
+			"breadcrumb" : ["Customer Journey Hub", "Data Observer List", "Data Observer Report"]
 		},
 		"Data_Observer_Configs" : {
 			"menuName" : "Data Observer Configs",
 			"functionName" : "loadDataObserverConfigs",
-			"breadcrumb" : ["Journey Map Data Hub", "Data Observer List", "Data Observer Configs"]
+			"breadcrumb" : ["Customer Journey Hub", "Data Observer List", "Data Observer Configs"]
+		},
+		
+		// 1.6 Journey Map List, Report and Editor
+		"Customer_Journey_List" : {
+			"menuName" : "Customer Journey List",
+			"functionName" : "loadCustomerJourneyList",
+			"breadcrumb" : ["Customer Journey Hub", "Customer Journey List"]
+		},
+		"Journey_Map_Report" : {
+			"menuName" : "Journey Map Report",
+			"functionName" : "loadJourneyMapReport",
+			"breadcrumb" : ["Customer Journey Hub", "Customer Journey List", "Journey Map Report"]
+		},
+		"Journey_Map_Studio" : {
+			"menuName" : "Journey Map Studio",
+			"functionName" : "loadJourneyMapStudio",
+			"breadcrumb" : ["Customer Journey Hub", "Customer Journey List","Journey Map Studio"]
 		},
 		
 		// 2.1 Unified Marketing Hub
@@ -139,7 +146,14 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Unified Marketing Hub", "Audience Segment List", "Audience Segment Builder"]
 		},
 		
-		// 2.4 Product and Service Catalog
+		// 2.4 Audience Data Export
+		"Audience_Data_Export" : {
+			"menuName" : "Audience Data Export",
+			"functionName" : "loadAudienceDataExport",
+			"breadcrumb" : ["Unified Marketing Hub", "Audience Data Export"]
+		},
+		
+		// 2.5 Product and Service Catalog
 		"Products_and_Services" : {
 			"menuName" : "Products and Services",
 			"functionName" : "loadProductsAndServices",
