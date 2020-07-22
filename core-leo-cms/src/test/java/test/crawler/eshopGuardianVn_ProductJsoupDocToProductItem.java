@@ -1,5 +1,6 @@
 package test.crawler;
 
+import java.io.FileWriter;
 import java.util.List;
 
 import org.jsoup.Jsoup;
@@ -61,12 +62,14 @@ public class eshopGuardianVn_ProductJsoupDocToProductItem implements ProductJsou
 		String originalPrice = JsoupParserUtil.getText(srcDoc, "div[id='price-preview'] del").replace("\u20AB", "").replace(",", "").trim();
 		dstProductItem.setOriginalPrice(originalPrice);
 		
-		List<String> categories = JsoupParserUtil.getTexts(srcDoc, "ol[itemtype='http://schema.org/BreadcrumbList'] span[itemprop='name']");
-		try {
-			categories.remove(0); //Trang Chu
-			categories.remove(categories.size() - 1); //Product Title
-			dstProductItem.setCategories(categories);	
-		} catch (Exception __) {}
+		if (dstProductItem.getCategories() == null || dstProductItem.getCategories().size() == 0) {
+			List<String> categories = JsoupParserUtil.getTexts(srcDoc, "ol[itemtype='http://schema.org/BreadcrumbList'] span[itemprop='name']");
+			try {
+				categories.remove(0); //Trang Chu
+				categories.remove(categories.size() - 1); //Product Title
+				dstProductItem.setCategories(categories);	
+			} catch (Exception __) {}
+		}
 
 		return true;
 	}
@@ -77,6 +80,10 @@ public class eshopGuardianVn_ProductJsoupDocToProductItem implements ProductJsou
 		if( commonParser.parse(Jsoup.connect(url).get(), p) && !p.isEmpty()) {
 			System.out.println(p);
 		}
+		
+		FileWriter a = new FileWriter("C:\\Users\\Administrator\\Downloads\\test.html");
+		a.write(Jsoup.connect("https://eshop.guardian.vn/").get().html());
+		a.close();
 	}
 
 }
