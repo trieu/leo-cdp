@@ -65,10 +65,7 @@ public class ProfileDataService {
 					pf.setIdentity(loginId, loginProvider);
 				}
 
-			} else if (type == Profile.ProfileType.CRM_CONTACT) {
-				pf = Profile.newCrmProfile( observerId, srcTouchpointId, lastSeenIp, visitorId,
-						userDeviceId, email, phone, fingerprintId);
-			}
+			} 
 
 			pf.engageAtTouchpoint(refTouchpointId);
 			pf.updateReferrerChannel(touchpointRefDomain);
@@ -145,12 +142,12 @@ public class ProfileDataService {
 		String lastName = paramJson.getString("lastName", "");
 		String email = paramJson.getString("email", "");
 		String phone = paramJson.getString("phone", "");
+		String crmRefId = paramJson.getString("crmRefId", "");
 		
-		Profile pf = Profile.newCrmProfile( CRM_IMPORT, "", "", "","", email, phone, "");
+		Profile pf = Profile.newCrmProfile( CRM_IMPORT, email, phone, crmRefId);
 		pf.setFirstName(firstName);
 		pf.setLastName(lastName);
 		
-		// TODO run in a thread to commit to database
 		ProfileDaoUtil.create(pf);
 		return pf;
 	}

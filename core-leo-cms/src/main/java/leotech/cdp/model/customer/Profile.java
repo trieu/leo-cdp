@@ -346,9 +346,9 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	 * @param crmRefId
 	 * @return
 	 */
-	public static Profile newCrmProfile(String importingObserverId, String email, String phone, String crmRefId) {
+	public static Profile newCrmProfile(String observerId, String email, String phone, String crmRefId) {
 		Profile p = new Profile();
-		p.initBaseInformation(0, "", ProfileType.CRM_CONTACT, importingObserverId, "", "", "", email, phone, "", crmRefId);
+		p.initBaseInformation(0, "", ProfileType.CRM_CONTACT, observerId, "", "", "", email, phone, "", crmRefId);
 		return p;
 	}
 
