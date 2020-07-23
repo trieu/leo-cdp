@@ -62,7 +62,7 @@
                 'columnDefs': [
                 	{
                         "render": function (data, type, row) {
-                        	var callJsViewStr = "#calljs-leoCdpRouter('Audience_Profile_Report','" + row.id + "')";
+                        	var callJsViewStr = "#calljs-leoCdpRouter('Customer_Profile_Report','" + row.id + "')";
                             return '<a title="Profile Report" href="' + callJsViewStr + '" >'+data.substr(0,8)+'...</a>';
                         },
                         "targets": 0
@@ -83,8 +83,8 @@
                     },
                     {
                         "render": function (data, type, row) {
-                        	var callJsViewStr = "#calljs-leoCdpRouter('Audience_Profile_Report','" + row.id + "')";
-                            var callJsEditStr ="#calljs-leoCdpRouter('Audience_Profile_Editor','" + row.id + "')";
+                        	var callJsViewStr = "#calljs-leoCdpRouter('Customer_Profile_Report','" + row.id + "')";
+                            var callJsEditStr ="#calljs-leoCdpRouter('Customer_Profile_Editor','" + row.id + "')";
                             return '<a title="Profile Report" href="' + callJsViewStr + '" >View</a> <br> <a title="Profile Data Editor" href="' + callJsEditStr + '" >Edit</a>';
                         },
                         "targets": 8

@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import leotech.ai.recommender.model.Item;
-import leotech.cdp.model.audience.Profile;
+import leotech.cdp.model.customer.Profile;
 
 public class InputData {
 

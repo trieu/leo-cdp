@@ -5,7 +5,7 @@ import java.util.List;
 
 import io.vertx.core.json.JsonObject;
 import leotech.cdp.dao.ProfileDaoUtil;
-import leotech.cdp.model.audience.Profile;
+import leotech.cdp.model.customer.Profile;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataTablePayload;
 import leotech.system.model.User;

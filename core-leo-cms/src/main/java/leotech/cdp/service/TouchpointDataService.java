@@ -1,9 +1,8 @@
 package leotech.cdp.service;
 
 import leotech.cdp.dao.TouchpointDaoUtil;
-
-import leotech.cdp.model.business.MediaChannelType;
-import leotech.cdp.model.business.Touchpoint;
+import leotech.cdp.model.marketing.MediaChannelType;
+import leotech.cdp.model.marketing.Touchpoint;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataTablePayload;
 import leotech.system.util.UrlUtil;

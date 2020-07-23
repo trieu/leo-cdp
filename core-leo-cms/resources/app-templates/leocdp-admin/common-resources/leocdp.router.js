@@ -8,176 +8,176 @@
 
 LeoCdpAdmin.navRouters = {
 		"defaultRouter" : {
-			"menuName" : "Marketing Dashboard",
-			"functionName" : "loadMarketing360Dashboard",
-			"breadcrumb" : ["Unified Marketing Hub", "Marketing Dashboard"]
+			"menuName" : "Customer Profile List",
+			"functionName" : "loadCustomerProfileList",
+			"breadcrumb" : ["Customer Data Hub", "Customer Profile List"]
 		},
 		
 		// 1.1 Targeted Persona
 		"Customer_Persona_List" : {
 			"menuName" : "Customer Persona List",
 			"functionName" : "loadCustomerPersonaList",
-			"breadcrumb" : ["Customer Journey Hub", "Customer Persona List"]
+			"breadcrumb" : ["Journey Data Hub", "Customer Persona List"]
 		},
 		"Customer_Persona_Report" : {
 			"menuName" : "Customer Persona Report",
 			"functionName" : "loadCustomerPersonaReport",
-			"breadcrumb" : ["Customer Journey Hub", "Customer Persona List", "Persona Report"]
+			"breadcrumb" : ["Journey Data Hub", "Customer Persona List", "Persona Report"]
 		},
 		"Customer_Persona_Editor" : {
 			"menuName" : "Customer Persona Details",
 			"functionName" : "loadCustomerPersonaDetails",
-			"breadcrumb" : ["Customer Journey Hub", "Customer Persona List", "Persona Editor"]
+			"breadcrumb" : ["Journey Data Hub", "Customer Persona List", "Persona Editor"]
 		},
 		
 		// 1.2 Media Channel 
 		"Media_Channel_List" : {
 			"menuName" : "Media Channel List",
 			"functionName" : "loadMediaChannelList",
-			"breadcrumb" : ["Customer Journey Hub", "Media Channel List"]
+			"breadcrumb" : ["Journey Data Hub", "Media Channel List"]
 		},
 		"Media_Channel_Report" : {
 			"menuName" : "Media Channel Report",
 			"functionName" : "loadMediaChannelReport",
-			"breadcrumb" : ["Customer Journey Hub", "Media Channel List" , "Media Channel Report" ]
+			"breadcrumb" : ["Journey Data Hub", "Media Channel List" , "Media Channel Report" ]
 		},
 		"Media_Channel_Editor" : {
 			"menuName" : "Media Channel Editor",
 			"functionName" : "loadMediaChannelEditor",
-			"breadcrumb" : ["Customer Journey Hub", "Media Channel List" , "Media Channel Editor" ]
+			"breadcrumb" : ["Journey Data Hub", "Media Channel List" , "Media Channel Editor" ]
 		},
 		
 		// 1.3 Customer Touchpoint
 		"Customer_Touchpoint_List" : {
 			"menuName" : "Customer Touchpoint List",
 			"functionName" : "loadCustomerTouchpointList",
-			"breadcrumb" : ["Customer Journey Hub", "Touchpoint List"]
+			"breadcrumb" : ["Journey Data Hub", "Touchpoint List"]
 		},
 		"Customer_Touchpoint_Report" : {
 			"menuName" : "Touchpoint Report",
 			"functionName" : "loadCustomerTouchpointReport",
-			"breadcrumb" : ["Customer Journey Hub", "Customer Touchpoint List" , "Customer Touchpoint Report" ]
+			"breadcrumb" : ["Journey Data Hub", "Customer Touchpoint List" , "Customer Touchpoint Report" ]
 		},
 		"Customer_Touchpoint_Editor" : {
 			"menuName" : "Touchpoint Report",
 			"functionName" : "loadCustomerTouchpointEditor",
-			"breadcrumb" : ["Customer Journey Hub", "Customer Touchpoint List" , "Customer Touchpoint Editor" ]
+			"breadcrumb" : ["Journey Data Hub", "Customer Touchpoint List" , "Customer Touchpoint Editor" ]
 		},
 		
 		// 1.4 Event Metrics for Media Channel and Touchpoint
 		"Event_Metrics" : {
 			"menuName" : "Event Metrics",
 			"functionName" : "loadEventMetrics",
-			"breadcrumb" : ["Customer Journey Hub", "Event Metrics"]
+			"breadcrumb" : ["Journey Data Hub", "Event Metrics"]
 		},
 		
 		// 1.5 Data Observer for touchpoint and media channel
 		"Data_Observer_List" : {
 			"menuName" : "Data Observer List",
 			"functionName" : "loadDataObserverList",
-			"breadcrumb" : ["Customer Journey Hub", "Data Observer List"]
+			"breadcrumb" : ["Journey Data Hub", "Data Observer List"]
 		},
 		"Data_Observer_Report" : {
 			"menuName" : "Data Observer Report",
 			"functionName" : "loadDataObserverReport",
-			"breadcrumb" : ["Customer Journey Hub", "Data Observer List", "Data Observer Report"]
+			"breadcrumb" : ["Journey Data Hub", "Data Observer List", "Data Observer Report"]
 		},
 		"Data_Observer_Configs" : {
 			"menuName" : "Data Observer Configs",
 			"functionName" : "loadDataObserverConfigs",
-			"breadcrumb" : ["Customer Journey Hub", "Data Observer List", "Data Observer Configs"]
+			"breadcrumb" : ["Journey Data Hub", "Data Observer List", "Data Observer Configs"]
 		},
 		
 		// 1.6 Journey Map List, Report and Editor
 		"Customer_Journey_List" : {
 			"menuName" : "Customer Journey List",
 			"functionName" : "loadCustomerJourneyList",
-			"breadcrumb" : ["Customer Journey Hub", "Customer Journey List"]
+			"breadcrumb" : ["Journey Data Hub", "Customer Journey List"]
 		},
 		"Journey_Map_Report" : {
 			"menuName" : "Journey Map Report",
 			"functionName" : "loadJourneyMapReport",
-			"breadcrumb" : ["Customer Journey Hub", "Customer Journey List", "Journey Map Report"]
+			"breadcrumb" : ["Journey Data Hub", "Customer Journey List", "Journey Map Report"]
 		},
 		"Journey_Map_Studio" : {
 			"menuName" : "Journey Map Studio",
 			"functionName" : "loadJourneyMapStudio",
-			"breadcrumb" : ["Customer Journey Hub", "Customer Journey List","Journey Map Studio"]
+			"breadcrumb" : ["Journey Data Hub", "Customer Journey List","Journey Map Studio"]
 		},
 		
-		// 2.1 Unified Marketing Hub
-		"Marketing_Dashboard": {
+		// 2.1 Customer Data Hub
+		"Analytics_Dashboard": {
 			"menuName" : "Marketing Dashboard",
 			"functionName" : "loadMarketing360Dashboard",
-			"breadcrumb" : ["Unified Marketing Hub", "Marketing Dashboard"]
+			"breadcrumb" : ["Customer Data Hub", "Analytics Dashboard"]
 		},
 		
-		// 2.2 Audience Profile 
-		"Audience_Profile_List" : {
-			"menuName" : "Audience Profile List",
-			"functionName" : "loadAudienceProfileList",
-			"breadcrumb" : ["Unified Marketing Hub", "Audience Profile List"]
+		// 2.2 Customer Profile 
+		"Customer_Profile_List" : {
+			"menuName" : "Customer Profile List",
+			"functionName" : "loadCustomerProfileList",
+			"breadcrumb" : ["Customer Data Hub", "Customer Profile List"]
 		},
-		"Audience_Profile_Report" : {
-			"menuName" : "Audience Profile Report",
-			"functionName" : "loadAudienceProfileReport",
-			"breadcrumb" : ["Unified Marketing Hub", "Audience Profile List", "Audience Profile Report"]
+		"Customer_Profile_Report" : {
+			"menuName" : "Customer Profile Report",
+			"functionName" : "loadCustomerProfileReport",
+			"breadcrumb" : ["Customer Data Hub", "Customer Profile List", "Customer Profile Report"]
 		},
-		"Audience_Profile_Editor" : {
-			"menuName" : "Audience Profile Editor",
-			"functionName" : "loadAudienceProfileEditor",
-			"breadcrumb" : ["Unified Marketing Hub", "Audience Profile List", "Audience Profile Editor"]
-		},
-		
-		// 2.3 Audience Segmentation
-		"Audience_Segment_List" : {
-			"menuName" : "Audience Segment List",
-			"functionName" : "loadAudienceSegmentList",
-			"breadcrumb" : ["Unified Marketing Hub", "Audience Segment List"]
-		},
-		"Audience_Segment_Report" : {
-			"menuName" : "Audience Segment Report",
-			"functionName" : "loadAudienceSegmentReport",
-			"breadcrumb" : ["Unified Marketing Hub", "Audience Segment List", "Audience Segment Report"]
-		},
-		"Audience_Segment_Builder" : {
-			"menuName" : "Audience Segment Builder",
-			"functionName" : "loadAudienceSegmentBuilder",
-			"breadcrumb" : ["Unified Marketing Hub", "Audience Segment List", "Audience Segment Builder"]
+		"Customer_Profile_Editor" : {
+			"menuName" : "Customer Profile Editor",
+			"functionName" : "loadCustomerProfileEditor",
+			"breadcrumb" : ["Customer Data Hub", "Customer Profile List", "Customer Profile Editor"]
 		},
 		
-		// 2.4 Audience Data Export
-		"Audience_Data_Export" : {
-			"menuName" : "Audience Data Export",
-			"functionName" : "loadAudienceDataExport",
-			"breadcrumb" : ["Unified Marketing Hub", "Audience Data Export"]
+		// 2.3 Customer Segmentation
+		"Customer_Segment_List" : {
+			"menuName" : "Customer Segment List",
+			"functionName" : "loadCustomerSegmentList",
+			"breadcrumb" : ["Customer Data Hub", "Customer Segment List"]
+		},
+		"Customer_Segment_Report" : {
+			"menuName" : "Customer Segment Report",
+			"functionName" : "loadCustomerSegmentReport",
+			"breadcrumb" : ["Customer Data Hub", "Customer Segment List", "Customer Segment Report"]
+		},
+		"Customer_Segment_Builder" : {
+			"menuName" : "Customer Segment Builder",
+			"functionName" : "loadCustomerSegmentBuilder",
+			"breadcrumb" : ["Customer Data Hub", "Customer Segment List", "Customer Segment Builder"]
+		},
+		
+		// 2.4 Customer Data Export
+		"Customer_Data_Export" : {
+			"menuName" : "Customer Data Export",
+			"functionName" : "loadCustomerDataExport",
+			"breadcrumb" : ["Customer Data Hub", "Customer Data Export"]
 		},
 		
 		// 2.5 Product and Service Catalog
 		"Products_and_Services" : {
 			"menuName" : "Products and Services",
 			"functionName" : "loadProductsAndServices",
-			"breadcrumb" : ["Unified Marketing Hub", "Products & Services"]
+			"breadcrumb" : ["Customer Data Hub", "Products & Services"]
 		},
 		"Product_Report" : {
 			"menuName" : "Product Report",
 			"functionName" : "loadProductReport",
-			"breadcrumb" : ["Unified Marketing Hub", "Products & Services", "Product Report"]
+			"breadcrumb" : ["Customer Data Hub", "Products & Services", "Product Report"]
 		},
 		"Service_Report" : {
 			"menuName" : "Service Report",
 			"functionName" : "loadServiceReport",
-			"breadcrumb" : ["Unified Marketing Hub", "Products & Services", "Service Report"]
+			"breadcrumb" : ["Customer Data Hub", "Products & Services", "Service Report"]
 		},
 		"Product_Data_Editor" : {
 			"menuName" : "Product Data Editor",
 			"functionName" : "loadProductDataEditor",
-			"breadcrumb" : ["Unified Marketing Hub", "Products & Services", "Product Data Editor"]
+			"breadcrumb" : ["Customer Data Hub", "Products & Services", "Product Data Editor"]
 		},
 		"Product_Data_Editor" : {
 			"menuName" : "Service Data Editor",
 			"functionName" : "loadServiceDataEditor",
-			"breadcrumb" : ["Unified Marketing Hub", "Products & Services", "Service Data Editor"]
+			"breadcrumb" : ["Customer Data Hub", "Products & Services", "Service Data Editor"]
 		},
 		
 		// 3.1 Content Dashboard
@@ -293,9 +293,12 @@ function leoCdpRouter(objKey,objId){
 		titleNav  = titleNav + name + " - ";
 		var key = name.replace(/ /g, "_");
 		var jsFunc = LeoCdpAdmin.navRouters[key] ? "leoCdpRouter('"+ key + "')"  : "";
-		breadcrumbHtml = breadcrumbHtml + '<a title="'+ name +'" href="#calljs-' + jsFunc + '"> ' + breadcrumbList[i] + ' </a> ';
+		
 		if( i < (len - 1) ){
+			breadcrumbHtml = breadcrumbHtml + '<a title="'+ name +'" href="#calljs-' + jsFunc + '"> ' + breadcrumbList[i] + ' </a> ';
 			breadcrumbHtml = breadcrumbHtml + ' &#8594; ';
+		} else {
+			breadcrumbHtml = breadcrumbHtml + '<a title="'+ name +'" href="#calljs-"> ' + breadcrumbList[i] + ' </a> ';
 		}
 	}
 	

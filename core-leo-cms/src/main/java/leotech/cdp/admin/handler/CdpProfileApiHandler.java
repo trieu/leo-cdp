@@ -4,7 +4,7 @@ import java.util.List;
 
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
-import leotech.cdp.model.audience.Profile;
+import leotech.cdp.model.customer.Profile;
 import leotech.cdp.service.ProfileDataService;
 import leotech.core.api.BaseSecuredDataApi;
 import leotech.system.model.DataFilter;

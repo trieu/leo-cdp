@@ -39,12 +39,12 @@
 	    padding: 5px;
     }
     
-    #audience_source {
+    #customer_source {
     	width: 100%;
     	float: left;
     }
     
-    #chart text, #audience_source text {
+    #chart text, #customer_source text {
     	font-size: 14px;
     }
     
@@ -97,19 +97,20 @@
     <div class="row">
         <div class="col-md-3">
         	<div class="row chart_box">
-	        	<h4 class="chart_header" >Audience Statistics</h4>
+	        	<h4 class="chart_header" > Customer Data Statistics</h4>
 	            <div class="summary_metric">
 	                <div class="vcenter">
 	                   
-	                    <h5> <span class="label label-default"> 33,801 </span> &nbsp; profiles </h5>
+	                    <h5> <span class="label label-default"> 33,801 </span> &nbsp; human profiles </h5>
 	                    <h5> <span class="label label-default"> 63 </span> &nbsp; segments </h5>
 	                    <h5> <span class="label label-default"> 1,489 </span> &nbsp; customers </h5>
 	                    <h5> <span class="label label-default"> 900 </span> &nbsp; new customers </h5>
+	                    <h5> <span class="label label-default"> 589 </span> &nbsp; repeat customers </h5>
 	 
 	                </div>
 	            </div>
 	            
-	            <h4 class="chart_header" >Event Tracking Statistics</h4>
+	            <h4 class="chart_header" >Event Metrics Statistics </h4>
 	            <div class="summary_metric">
 	                <div class="vcenter">
 	                
@@ -145,8 +146,8 @@
 
     <div class="row chart_box">
      	<div class="col-md-3" style="display: none;">
-     		<div id="audience_source" >
-                <h4 class="chart_header" >Audience Media Sources</h4>
+     		<div id="customer_source" >
+                <h4 class="chart_header" > Media Sources</h4>
             </div>
      	</div>
     	<div class="col-md-12">
@@ -168,7 +169,7 @@
     	initDateFilterComponent();
         loadProfileFunnel();
         loadEventFunnel();
-        //loadAudienceVenn();
+        //loadcustomerVenn();
         loadChannelPerformance();
     }
 
@@ -332,7 +333,7 @@
         chart.draw(data, options);
     }
 
-    function loadAudienceVenn() {
+    function loadcustomerVenn() {
         var sets = [{
                 sets: ["Email"],
                 figure: 27.92,
@@ -378,10 +379,10 @@
         ];
 
         var chart = venn.VennDiagram()
-            .width($('#audience_source').width())
+            .width($('#customer_source').width())
             .height(360)
 
-        var div2 = d3.select("#audience_source").datum(sets).call(chart);
+        var div2 = d3.select("#customer_source").datum(sets).call(chart);
         div2.selectAll("text").style("fill", "white");
         div2.selectAll(".venn-circle path")
             .style("fill-opacity", .8)
@@ -399,7 +400,7 @@
 
                 // Display a tooltip with the current size
                 tooltip.transition().duration(40).style("opacity", 1);
-                tooltip.text(d.size + "% of Audience Two saw " + d.label);
+                tooltip.text(d.size + "% of Segment Two saw " + d.label);
 
                 // highlight the current path
                 var selection = d3.select(this).transition("tooltip").duration(400);

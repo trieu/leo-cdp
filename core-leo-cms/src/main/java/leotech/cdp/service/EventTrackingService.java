@@ -4,11 +4,11 @@ import java.util.Map;
 
 import leotech.cdp.dao.ConversionEventDaoUtil;
 import leotech.cdp.dao.TrackingEventDaoUtil;
-import leotech.cdp.model.audience.ContextSession;
-import leotech.cdp.model.audience.ConversionEvent;
-import leotech.cdp.model.audience.TrackingEvent;
-import leotech.cdp.model.business.MediaChannelType;
-import leotech.cdp.model.business.Touchpoint;
+import leotech.cdp.model.customer.ContextSession;
+import leotech.cdp.model.customer.ConversionEvent;
+import leotech.cdp.model.customer.TrackingEvent;
+import leotech.cdp.model.marketing.MediaChannelType;
+import leotech.cdp.model.marketing.Touchpoint;
 import leotech.system.model.DeviceInfo;
 
 /**

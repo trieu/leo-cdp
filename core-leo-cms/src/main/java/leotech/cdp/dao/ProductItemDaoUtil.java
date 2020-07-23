@@ -10,7 +10,7 @@ import com.arangodb.ArangoCursor;
 import com.arangodb.ArangoDatabase;
 
 import leotech.cdp.model.business.ProductItem;
-import leotech.cdp.model.business.Touchpoint;
+import leotech.cdp.model.marketing.Touchpoint;
 import leotech.core.config.AqlTemplate;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataTablePayload;

@@ -4,8 +4,8 @@ import com.google.gson.annotations.Expose;
 
 import leotech.cdp.dao.TouchpointDaoUtil;
 import leotech.cdp.model.SingleDataView;
-import leotech.cdp.model.audience.Profile;
-import leotech.cdp.model.business.Touchpoint;
+import leotech.cdp.model.customer.Profile;
+import leotech.cdp.model.marketing.Touchpoint;
 
 public class ProfileSingleDataView extends Profile implements SingleDataView {
 

@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 
 import io.vertx.core.MultiMap;
 import io.vertx.core.http.HttpServerRequest;
-import leotech.cdp.model.audience.ContextSession;
+import leotech.cdp.model.customer.ContextSession;
 import leotech.cdp.service.DeviceDataService;
 import leotech.cdp.service.EventTrackingService;
 import leotech.system.model.DeviceInfo;

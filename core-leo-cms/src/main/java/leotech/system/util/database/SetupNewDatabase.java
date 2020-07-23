@@ -10,19 +10,19 @@ import com.arangodb.ArangoDatabase;
 import com.arangodb.model.CollectionCreateOptions;
 
 import leotech.cdp.model.DataObserver;
-import leotech.cdp.model.audience.ContextSession;
-import leotech.cdp.model.audience.ConversionEvent;
-import leotech.cdp.model.audience.Profile;
-import leotech.cdp.model.audience.Segment;
-import leotech.cdp.model.audience.TrackingEvent;
-import leotech.cdp.model.audience.UserDevice;
-import leotech.cdp.model.business.Campaign;
-import leotech.cdp.model.business.Creative;
-import leotech.cdp.model.business.EventTrigger;
 import leotech.cdp.model.business.ProductItem;
 import leotech.cdp.model.business.ReportUnit;
 import leotech.cdp.model.business.ScheduledJob;
-import leotech.cdp.model.business.Touchpoint;
+import leotech.cdp.model.customer.ContextSession;
+import leotech.cdp.model.customer.ConversionEvent;
+import leotech.cdp.model.customer.Profile;
+import leotech.cdp.model.customer.Segment;
+import leotech.cdp.model.customer.TrackingEvent;
+import leotech.cdp.model.customer.UserDevice;
+import leotech.cdp.model.marketing.Campaign;
+import leotech.cdp.model.marketing.Creative;
+import leotech.cdp.model.marketing.EventTrigger;
+import leotech.cdp.model.marketing.Touchpoint;
 import leotech.cms.dao.CategoryDaoUtil;
 import leotech.cms.dao.PageDaoUtil;
 import leotech.cms.dao.UserDaoUtil;
@@ -58,7 +58,7 @@ public class SetupNewDatabase {
 		contentDataHubCollections.add(Post.COLLECTION_NAME);
 		contentDataHubCollections.add(FileMetadata.COLLECTION_NAME);
 
-		// Audience Data Hub
+		// Customer Data Hub
 		audienceDataHubCollections.add(ContextSession.COLLECTION_NAME);
 		audienceDataHubCollections.add(Profile.COLLECTION_NAME);
 		audienceDataHubCollections.add(TrackingEvent.COLLECTION_NAME);

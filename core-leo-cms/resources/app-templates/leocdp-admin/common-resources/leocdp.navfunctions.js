@@ -51,42 +51,42 @@ LeoCdpAdmin.navFunctions.loadDataObserverList  = function(breadcrumbHtml) {
 //###################### Unified Marketing Hub ######################
 
 LeoCdpAdmin.navFunctions.loadMarketing360Dashboard = function(breadcrumbHtml) {
-    LeoCdpAdmin.loadView('/view/subviews/marketing/marketing-360-dashboard.html?admin=1', pageDomSelector, function () {
+    LeoCdpAdmin.loadView('/view/subviews/customer/analytics-360-dashboard.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
     	initSalesDashboard();
     });
 }
 
-function loadAudienceDashboard() {
-    LeoCdpAdmin.loadView('/view/subviews/marketing/audience-dashboard.html?admin=1', pageDomSelector, function () {
+function loadCustomerDashboard() {
+    LeoCdpAdmin.loadView('/view/subviews/customer/customer-dashboard.html?admin=1', pageDomSelector, function () {
     	initSalesDashboard();
     });
 }
 
-function loadAudienceDataObserver(){
-	LeoCdpAdmin.loadView('/view/subviews/marketing/audience-data-observer.html?admin=1', pageDomSelector, function () {
+function loadCustomerDataObserver(){
+	LeoCdpAdmin.loadView('/view/subviews/customer/customer-data-observer.html?admin=1', pageDomSelector, function () {
         //TODO
     });
 }
 
 // Profile functions
 
-LeoCdpAdmin.navFunctions.loadAudienceProfileList = function (breadcrumbHtml) {
-    LeoCdpAdmin.loadView('/view/subviews/marketing/audience-profile-list.html?admin=1', pageDomSelector, function () {
+LeoCdpAdmin.navFunctions.loadCustomerProfileList = function (breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/subviews/customer/customer-profile-list.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
     	loadDataProfileList();
     });
 }
 
-LeoCdpAdmin.navFunctions.loadAudienceProfileReport = function (profileId , breadcrumbHtml) {
-    LeoCdpAdmin.loadView('/view/subviews/marketing/audience-profile-report.html?admin=1', pageDomSelector, function () {
+LeoCdpAdmin.navFunctions.loadCustomerProfileReport = function (profileId , breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/subviews/customer/customer-profile-report.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
     	initProfile360Analytics(profileId);
     });
 }
 
-LeoCdpAdmin.navFunctions.loadAudienceProfileEditor = function (profileId, breadcrumbHtml) {
-    LeoCdpAdmin.loadView('/view/subviews/marketing/audience-profile-editor.html?admin=1', pageDomSelector, function () {
+LeoCdpAdmin.navFunctions.loadCustomerProfileEditor = function (profileId, breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/subviews/customer/customer-profile-editor.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
     	initProfileDataEditor(profileId);
     });
@@ -94,10 +94,10 @@ LeoCdpAdmin.navFunctions.loadAudienceProfileEditor = function (profileId, breadc
 
 // Segment functions
 
-LeoCdpAdmin.navFunctions.loadAudienceSegmentList = function (breadcrumbHtml) {
-    LeoCdpAdmin.loadView('/view/subviews/marketing/audience-segment-list.html?admin=1', pageDomSelector, function () {
+LeoCdpAdmin.navFunctions.loadCustomerSegmentList = function (breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/subviews/customer/customer-segment-list.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
-    	initAudienceSegmentList();
+    	initCustomerSegmentList();
     });
 }
 
@@ -105,7 +105,7 @@ LeoCdpAdmin.navFunctions.loadAudienceSegmentList = function (breadcrumbHtml) {
 // Products and Services functions
 
 LeoCdpAdmin.navFunctions.loadProductsAndServices = function (breadcrumbHtml) {
-    LeoCdpAdmin.loadView('/view/subviews/marketing/products-services-list.html?admin=1', pageDomSelector, function () {
+    LeoCdpAdmin.loadView('/view/subviews/customer/products-services-list.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
     	initProductsAndServices();
     });

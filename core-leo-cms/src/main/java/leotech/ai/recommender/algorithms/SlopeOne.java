@@ -11,7 +11,7 @@ import java.util.TreeSet;
 import leotech.ai.recommender.input.InputData;
 import leotech.ai.recommender.model.Item;
 import leotech.ai.recommender.model.RecommendedItem;
-import leotech.cdp.model.audience.Profile;
+import leotech.cdp.model.customer.Profile;
 
 /**
  * https://en.wikipedia.org/wiki/Slope_One

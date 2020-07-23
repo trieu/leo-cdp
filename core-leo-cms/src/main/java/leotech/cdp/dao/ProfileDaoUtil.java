@@ -9,7 +9,7 @@ import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
 
 import leotech.cdp.dao.singleview.ProfileSingleDataView;
-import leotech.cdp.model.audience.Profile;
+import leotech.cdp.model.customer.Profile;
 import leotech.cdp.query.ProfileMatchingResult;
 import leotech.core.config.AqlTemplate;
 import leotech.system.model.DataFilter;

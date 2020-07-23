@@ -1,4 +1,4 @@
-package leotech.cdp.model.audience;
+package leotech.cdp.model.customer;
 
 import com.arangodb.ArangoCollection;
 
