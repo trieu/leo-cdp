@@ -42,11 +42,15 @@
 		<ul class="nav navbar-nav side-nav">
 		
 			<!--  1 - Customer Journey Map Menu  -->
-			<li id="nav_content_hub" style="display: ;" >
+			<li id="nav_content_hub" style="display: none;" >
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#journey_hub_menu"> <i class="fa fa-fw fa-map-o"></i>
 				 	Journey Data Hub<i id="journey_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
 				<ul id="journey_hub_menu" class="collapse in" aria-expanded="true">
+				
+					<li>
+						<a href="#calljs-leoCdpRouter('Analytics_Dashboard')"> <i class="fa fa-fw fa-line-chart"></i> Analytics Dashboard</a>
+					</li>
 					
 					<li style="display: none;" >
 						<a href="#calljs-leoCdpRouter('Customer_Persona_List')"> <i class="fa fa-fw fa-users"></i> Customer Persona List</a>
@@ -74,43 +78,9 @@
 					
 				</ul>
 			</li>
-		
-			<!--  2 - Unified Marketing Hub Menu  -->
-			<li>
-				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#customer_data_hub_menu"> <i class="fa fa-fw fa-snowflake-o"></i>
-					Customer Data Hub <i id="customer_data_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
-				</a>
-				<ul id="customer_data_hub_menu" class="collapse in" aria-expanded="true">
-					
-					<li style="display: ;" >
-						<a href="#calljs-leoCdpRouter('Analytics_Dashboard')"> <i class="fa fa-fw fa-line-chart"></i> Analytics Dashboard</a>
-					</li>
-					
-					<li>
-						<a href="#calljs-leoCdpRouter('Customer_Profile_List')"> <i class="fa fa-fw fa-users"></i> Customer Profile List</a>
-					</li>
-					
-					<li>
-						<a href="#calljs-leoCdpRouter('Customer_Segment_List')"> <i class="fa fa-fw fa-object-group"></i> Customer Segment List</a>
-					</li>
-					
-					<li>
-						<a href="#calljs-leoCdpRouter('Customer_Data_Export')"> <i class="fa fa-fw fa-file-excel-o"></i> Customer Data Export</a>
-					</li>
-					
-					<li style="display: ;" >
-						<a href="#calljs-leoCdpRouter('Products_and_Services')"> <i class="fa fa-fw fa-database"></i> Products and Services</a>
-					</li>
-					
-					<li style="display: none;" >
-						<a href="#calljs-leoCdpRouter('Marketing_Hub_API')"> <i class="fa fa-fw fa-plug"></i> Marketing Hub API</a>
-					</li>
-					
-				</ul>
-			</li>
-
-			<!--  3 - Creative Content Hub Menu  -->
-			<li id="nav_content_hub" style="display: ;" >
+			
+			<!--  2 - Creative Content Hub Menu  -->
+			<li id="nav_content_hub" style="display: none;" >
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#content_hub_menu"> <i class="fa fa-fw fa-sitemap"></i>
 					Creative Content Hub <i id="content_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
@@ -134,9 +104,43 @@
 					
 				</ul>
 			</li>
+		
+			<!--  3 - Customer Data Hub Menu  -->
+			<li>
+				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#customer_data_hub_menu"> <i class="fa fa-fw fa-snowflake-o"></i>
+					Customer Data Hub <i id="customer_data_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
+				</a>
+				<ul id="customer_data_hub_menu" class="collapse in" aria-expanded="true">
+					
+					
+					
+					<li>
+						<a href="#calljs-leoCdpRouter('Customer_Profile_List')"> <i class="fa fa-fw fa-users"></i> Customer Profile List</a>
+					</li>
+					
+					<li>
+						<a href="#calljs-leoCdpRouter('Customer_Segment_List')"> <i class="fa fa-fw fa-object-group"></i> Customer Segment List</a>
+					</li>
+					
+					<li>
+						<a href="#calljs-leoCdpRouter('Customer_Data_Export')"> <i class="fa fa-fw fa-file-excel-o"></i> Customer Data Export</a>
+					</li>
+					
+					<li style="display: none;" >
+						<a href="#calljs-leoCdpRouter('Products_and_Services')"> <i class="fa fa-fw fa-database"></i> Products and Services</a>
+					</li>
+					
+					<li style="display: none;" >
+						<a href="#calljs-leoCdpRouter('Marketing_Hub_API')"> <i class="fa fa-fw fa-plug"></i> Marketing Hub API</a>
+					</li>
+					
+				</ul>
+			</li>
+
+			
 
 			<!--  4 - Personalization Content Management  -->
-			<li id="nav_personalization_hub" style="display: ;"  >
+			<li id="nav_personalization_hub" style="display: none;"  >
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#personalization_hub_menu"> <i class="fa fa-fw fa-heart"></i>
 					Personalization AI Hub <i id="personalization_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
@@ -158,7 +162,7 @@
 			</li>
 			
 			<!--  5 - Marketing & Sales Campaign Activation Management  -->
-			<li id="nav_activation_hub" style="display: ;" >
+			<li id="nav_activation_hub" style="display: none;" >
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#activation_hub_menu"> <i class="fa fa-fw fa-bolt"></i>
 					Customer Activation <i id="activation_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>

@@ -35,7 +35,7 @@
  	 </div> 
      <div class="col-lg-3 text-center" style="padding: 10px">
      	<button type="button" class="btn btn-success" onclick="loadDataProfileList()" > Edit </button>
-      	<button type="button" class="btn btn-success" onclick="loadDataProfileList()" > Delete </button>
+      	<button type="button" class="btn btn-danger" onclick="loadDataProfileList()" > Delete </button>
      </div>
 </div>
 
@@ -45,49 +45,105 @@
 
        <div class="row">
            <div class="col-md-5">
-           	   <h4> Last session details </h4>
-               <table border=0 class="underlined" style="width: 100%;">
-                   <tr>
-                       <td>
-                           <ol id="visitor_attributes" data-field="visitor_attributes">
-                               <li>
-                                   <b> Profile UUID </b> 
-                                   <p> dsadsa231 </p>
-                               </li>
-                               <li>
-                                   <b> Last seen touchpoint </b> 
-                                   <p> bookstore.bigdatavietnam.org  </p>
-                               </li>
-                               <li>
-                                   <b> Session length </b> 
-                                   <p> 12 minutes  </p>
-                               </li>
-                               <li>
-                                   <b> Device ID </b> 
-                                   <p > dsadsa231 </p>
-                               </li>
-                               <li>
-                                   <b> Visitor Location </b> 
-                                   <p> TP.HCM, Việt Nam  </p>
-                               </li>
-                               <li>
-                                   <b> Browser </b> 
-                                   <p> Safari  </p>
-                               </li>
-                               <li>
-                                   <b> Device </b> 
-                                   <p> iPhone 7  </p>
-                               </li>
-                               <li>
-                                   <b> OS </b> 
-                                   <p> iOS 11  </p>
-                               </li>
-                               
-                           </ol>
-                       </td>
-                   </tr>
-               </table>
+           	   <ul class="nav nav-tabs" data-tab-content="profile_summary_tabs" >
+		       	  <li class="active" > <a href="javascript:" data-target-tab="panel_profile_summary" > Profile summary </a> </li>
+		       	  <li> <a href="javascript:" data-target-tab="panel_last_session_details" > Last session details</a> </li>
+			   </ul>
+			   <div class="tab-content" id="profile_summary_tabs" >
+
+			    	<!-- tab 1  -->
+			    	<div class="tab-pane active" id="panel_profile_summary" >
+			     		<table border=0 class="underlined" style="width: 100%;">
+		                   <tr>
+		                       <td>
+		                           <ol id="visitor_attributes" data-field="visitor_attributes">
+		                               <li>
+		                                   <b> Profile ID </b> 
+		                                   <p> dsadsa231 </p>
+		                               </li>
+		                               <li>
+		                                   <b> Profile Type </b> 
+		                                   <p> CRM_CONTACT </p>
+		                               </li>
+		                               <li>
+		                                   <b> Creation Date </b> 
+		                                   <p> 2020-06-11 09:35:37  </p>
+		                               </li>
+		                               <li>
+		                                   <b> Modification Date </b> 
+		                                   <p> 2020-06-11 09:35:37  </p>
+		                               </li>
+		                               <li>
+		                                   <b> Data Completion Score </b> 
+		                                   <p> 80 </p>
+		                               </li>
+		                                <li>
+		                                   <b> Business Credit Score </b> 
+		                                   <p> 80 </p>
+		                               </li>
+		                               <li>
+		                                   <b> Customer Satisfaction Score </b> 
+		                                   <p> 80 </p>
+		                               </li>
+		                               <li>
+		                                   <b> Customer Lifetime Value </b> 
+		                                   <p> _ </p>
+		                               </li>
+		                               
+		                           </ol>
+		                       </td>
+		                   </tr>
+		               </table>
+					</div>
+					
+					<!-- tab 2  -->
+       				<div class="tab-pane " id="panel_last_session_details" >
+			     		 <table border=0 class="underlined" style="width: 100%;">
+		                   <tr>
+		                       <td>
+		                           <ol id="visitor_attributes" data-field="visitor_attributes">
+		                               <li>
+		                                   <b> Last seen at the media channel </b> 
+		                                   <p> bookstore.bigdatavietnam.org  </p>
+		                               </li>
+		                               <li>
+		                                   <b> Last seen at the touchpoint </b> 
+		                                   <p> https://bookstore.bigdatavietnam.org/html/page/artificial-intelligence-books  </p>
+		                               </li>
+		                               <li>
+		                                   <b> Last seen at the location </b> 
+		                                   <p> TP.HCM, Việt Nam  </p>
+		                               </li>
+		                               <li>
+		                                   <b> Session length </b> 
+		                                   <p> 12 minutes  </p>
+		                               </li>
+		                               <li>
+		                                   <b> Device ID </b> 
+		                                   <p> dsadsa231 </p>
+		                               </li>
+		                               <li>
+		                                   <b> Browser </b> 
+		                                   <p> Safari  </p>
+		                               </li>
+		                               <li>
+		                                   <b> Device type</b> 
+		                                   <p> iPhone 7  </p>
+		                               </li>
+		                               <li>
+		                                   <b> Device OS </b> 
+		                                   <p> iOS 11  </p>
+		                               </li>
+		                               
+		                           </ol>
+		                       </td>
+		                   </tr>
+		               </table>
+					</div>
+					
+           		</div>
            </div>
+           
            <div class="col-md-7">
                 <div class="row">
 	               <div class="text-center" >
@@ -119,11 +175,11 @@
                                    <p data-persona="value" class="editable_text" > TP.HCM, Việt Nam  </p>
                                </li>
                                <li>
-                                   <b data-persona="key" class="editable_text" > Email </b> 
+                                   <b data-persona="key" class="editable_text" > Primary email </b> 
                                    <p data-persona="value" class="editable_text" > trungtn@bigdatavietnam.org </p>
                                </li>
                                <li>
-                                   <b data-persona="key" class="editable_text" > Mobile phone </b> 
+                                   <b data-persona="key" class="editable_text" > Primary mobile phone </b> 
                                    <p data-persona="value" class="editable_text" > 0903122299 </p>
                                </li>
                            </ol>
@@ -136,18 +192,38 @@
        </div>
        
        <!--  Tab Navigation Items -->
-       <ul class="nav nav-tabs" >
-       	  <li class="active" ><a href="javascript:" data-target-tab="panel_profile_activities" >Activities</a></li>
-		  <li style="display: none;" ><a href="javascript: " data-target-tab="panel_profile_journey" > Overview </a></li>
+       <ul class="nav nav-tabs" data-tab-content="profile_ext_data_tabs" >
+       	  <li class="active" ><a href="javascript:" data-target-tab="panel_profile_business_data" > Business Data</a></li>
+       	  <li ><a href="javascript:" data-target-tab="panel_profile_activities" > Engagement Activities</a></li>
+       	  
+		  <li style="display: none;" ><a href="javascript: " data-target-tab="panel_profile_journey" > Journey </a></li>
 		  
 		  <li style="display: none;" ><a href="javascript:" data-target-tab="panel_profile_ext_attributes" > Extended Attributes </a></li>
-		  <li style="display: none;" ><a href="javascript:"data-target-tab="panel_business_transactions" >Business Transactions</a></li>
+		  <li style="display: none;" ><a href="javascript:"data-target-tab="panel_business_transactions" > Business Transactions</a></li>
 	   </ul>
 	   
 	   <!-- Tab Contents  -->
-       <div class="tab-content">
+       <div class="tab-content" id="profile_ext_data_tabs" >
+       
+       		<div class="tab-pane active" id="panel_profile_business_data" >
+	     		<ul class="list-group list-group-dividered list-group-full">
+				   <li class="list-group-item">
+			            <h4 class="media-heading">viewed </h4>
+			            <div>Lorem ipsum Veniam aliquip culpa laboris minim tempor labore
+			               commodo officia veniam non in in in.
+			            </div>
+				   </li>
+				   <li class="list-group-item">
+			            <h4 class="media-heading">viewed </h4>
+			            <div>Lorem ipsum Veniam aliquip culpa laboris minim tempor labore
+			               commodo officia veniam non in in in.
+			            </div>
+				   </li>
+				   
+				</ul>
+			</div>
 			
-		 	<div class="tab-pane active" id="panel_profile_activities" >
+		 	<div class="tab-pane " id="panel_profile_activities" >
 	     		<ul class="list-group list-group-dividered list-group-full">
 				   <li class="list-group-item">
 				      <div class="row">

@@ -1516,7 +1516,7 @@ translateX
 }
 
 .tab-content>.tab-pane {
-	padding-bottom: 50px;
+	padding-bottom: 6px;
 }
 
 #chartRealTime, #chart-daily-ar {

@@ -13,7 +13,14 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Customer Data Hub", "Customer Profile List"]
 		},
 		
-		// 1.1 Targeted Persona
+		// 1.1 Main Analytics Dashboard
+		"Analytics_Dashboard": {
+			"menuName" : "Marketing Dashboard",
+			"functionName" : "loadMarketing360Dashboard",
+			"breadcrumb" : ["Customer Data Hub", "Analytics Dashboard"]
+		},
+		
+		// 1.2 Targeted Persona
 		"Customer_Persona_List" : {
 			"menuName" : "Customer Persona List",
 			"functionName" : "loadCustomerPersonaList",
@@ -30,7 +37,7 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Journey Data Hub", "Customer Persona List", "Persona Editor"]
 		},
 		
-		// 1.2 Media Channel 
+		// 1.3 Media Channel 
 		"Media_Channel_List" : {
 			"menuName" : "Media Channel List",
 			"functionName" : "loadMediaChannelList",
@@ -47,7 +54,7 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Journey Data Hub", "Media Channel List" , "Media Channel Editor" ]
 		},
 		
-		// 1.3 Customer Touchpoint
+		// 1.4 Customer Touchpoint
 		"Customer_Touchpoint_List" : {
 			"menuName" : "Customer Touchpoint List",
 			"functionName" : "loadCustomerTouchpointList",
@@ -64,14 +71,14 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Journey Data Hub", "Customer Touchpoint List" , "Customer Touchpoint Editor" ]
 		},
 		
-		// 1.4 Event Metrics for Media Channel and Touchpoint
+		// 1.5 Event Metrics for Media Channel and Touchpoint
 		"Event_Metrics" : {
 			"menuName" : "Event Metrics",
 			"functionName" : "loadEventMetrics",
 			"breadcrumb" : ["Journey Data Hub", "Event Metrics"]
 		},
 		
-		// 1.5 Data Observer for touchpoint and media channel
+		// 1.6 Data Observer for touchpoint and media channel
 		"Data_Observer_List" : {
 			"menuName" : "Data Observer List",
 			"functionName" : "loadDataObserverList",
@@ -88,7 +95,7 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Journey Data Hub", "Data Observer List", "Data Observer Configs"]
 		},
 		
-		// 1.6 Journey Map List, Report and Editor
+		// 1.7 Journey Map List, Report and Editor
 		"Customer_Journey_List" : {
 			"menuName" : "Customer Journey List",
 			"functionName" : "loadCustomerJourneyList",
@@ -105,14 +112,23 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Journey Data Hub", "Customer Journey List","Journey Map Studio"]
 		},
 		
-		// 2.1 Customer Data Hub
-		"Analytics_Dashboard": {
-			"menuName" : "Marketing Dashboard",
-			"functionName" : "loadMarketing360Dashboard",
-			"breadcrumb" : ["Customer Data Hub", "Analytics Dashboard"]
+		
+		// 3.1 Content Dashboard
+		"Content_Dashboard" : {
+			"menuName" : "Content Dashboard",
+			"functionName" : "loadContentDashboard",
+			"breadcrumb" : ["Creative Content Hub", "Content Dashboard"]
 		},
 		
-		// 2.2 Customer Profile 
+		// 3.2 Creative Content Category
+		"Content_Category_List" : {
+			"menuName" : "Content Category List",
+			"functionName" : "loadContentCategoryList",
+			"breadcrumb" : ["Creative Content Hub", "Content Category List"]
+		},
+		
+		
+		// 3.1 Customer Profile 
 		"Customer_Profile_List" : {
 			"menuName" : "Customer Profile List",
 			"functionName" : "loadCustomerProfileList",
@@ -129,7 +145,7 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Customer Data Hub", "Customer Profile List", "Customer Profile Editor"]
 		},
 		
-		// 2.3 Customer Segmentation
+		// 3.2 Customer Segmentation
 		"Customer_Segment_List" : {
 			"menuName" : "Customer Segment List",
 			"functionName" : "loadCustomerSegmentList",
@@ -146,14 +162,14 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Customer Data Hub", "Customer Segment List", "Customer Segment Builder"]
 		},
 		
-		// 2.4 Customer Data Export
+		// 3.3 Customer Data Export
 		"Customer_Data_Export" : {
 			"menuName" : "Customer Data Export",
 			"functionName" : "loadCustomerDataExport",
 			"breadcrumb" : ["Customer Data Hub", "Customer Data Export"]
 		},
 		
-		// 2.5 Product and Service Catalog
+		// 3.4 Product and Service Catalog
 		"Products_and_Services" : {
 			"menuName" : "Products and Services",
 			"functionName" : "loadProductsAndServices",
@@ -178,20 +194,6 @@ LeoCdpAdmin.navRouters = {
 			"menuName" : "Service Data Editor",
 			"functionName" : "loadServiceDataEditor",
 			"breadcrumb" : ["Customer Data Hub", "Products & Services", "Service Data Editor"]
-		},
-		
-		// 3.1 Content Dashboard
-		"Content_Dashboard" : {
-			"menuName" : "Content Dashboard",
-			"functionName" : "loadContentDashboard",
-			"breadcrumb" : ["Creative Content Hub", "Content Dashboard"]
-		},
-		
-		// 3.2 Creative Content Category
-		"Content_Category_List" : {
-			"menuName" : "Content Category List",
-			"functionName" : "loadContentCategoryList",
-			"breadcrumb" : ["Creative Content Hub", "Content Category List"]
 		},
 		
 		// 4.1 Personalization AI Models 

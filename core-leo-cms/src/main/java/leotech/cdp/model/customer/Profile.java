@@ -23,20 +23,23 @@ import rfx.core.util.StringUtil;
 /**
  * @author Trieu Nguyen (Thomas)
  * 
- *         the entity for storing human profile information
+ *   general data entity for storing customer profile information
  *
  */
 public class Profile extends CdpPersistentObject implements Comparable<Profile> {
 
 	public static class ProfileType {
+		// DMP
 		public final static int ANONYMOUS = 0;
 		public final static int IDENTIFIED = 1;
 		public final static int DMP_PROFILE = 2;
 		public final static int KOL_IN_NETWORK = 3;
 		
+		// CRM
 		public final static int CRM_CONTACT = 4;
 		public final static int KEY_ACCOUNT = 5;
 		
+		// Professional network
 		public final static int PARTNER = 6;
 		public final static int INTEGRATOR = 7;
 		public final static int COMPETITOR = 8;
@@ -132,6 +135,9 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	@Expose
 	protected String visitorId = "";
+	
+	@Expose
+	protected String crmRefId = "";
 
 	@Expose
 	protected String firstName = "";
@@ -206,7 +212,10 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	protected Set<String> supportHistory = new HashSet<String>();
 
 	@Expose
-	protected int socialCreditScore = 0;
+	protected int dataCompletionScore = 0;
+	
+	@Expose
+	protected int businessCreditScore = 0;
 
 	@Expose
 	protected int satisfactionScore = 0;
@@ -230,10 +239,10 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	protected int partitionId = 0;
 	
 	@Expose
-	protected Map<String, Map<String,String>> extData = new HashMap<>();
+	protected Map<String, Map<String,Object>> extBusinessData = new HashMap<>();
 	
 	@Expose
-	protected Map<String, Map<String,String>> predictionMetrics = new HashMap<>();
+	protected Map<String, Map<String,Integer>> predictionMetrics = new HashMap<>();
 
 	@Override
 	public int compareTo(Profile o) {
@@ -258,7 +267,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	protected void initBaseInformation(int partitionId, String visitorId, int type,
 			String observerId, String lastTouchpointId, String lastSeenIp, String usedDeviceId, String email,
-			String phone, String fingerprintId) {
+			String phone, String fingerprintId, String crmRefId) {
 		// hash for unique id key
 
 		this.partitionId = partitionId;
@@ -270,14 +279,17 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		this.lastSeenIp = lastSeenIp;
 		this.lastUsedDeviceId = usedDeviceId;
 
-		System.out.println("initBaseInformation visitorId " + visitorId);
 		this.visitorId = visitorId;
+		this.crmRefId = crmRefId;
 		this.primaryEmail = email;
 		this.primaryPhone = phone;
 
-		// add 4 primary identity data for indexing
+		// add 5 primary identity data for indexing
 		if (StringUtil.isNotEmpty(visitorId)) {
 			this.identities.add(visitorId);
+		}
+		if (StringUtil.isNotEmpty(crmRefId)) {
+			this.identities.add(crmRefId);
 		}
 		if (StringUtil.isNotEmpty(email)) {
 			this.identities.add(email);
@@ -321,30 +333,22 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	public static Profile newIdentifiedProfile( String observerId, String lastTouchpointId,
 			String lastSeenIp, String visitorId, String usedDeviceId, String email, String fingerprintId) {
 		Profile p = new Profile();
-		p.initBaseInformation(0, visitorId, ProfileType.IDENTIFIED, observerId, lastTouchpointId,
-				lastSeenIp, usedDeviceId, email, "", fingerprintId);
+		p.initBaseInformation(0, visitorId, ProfileType.IDENTIFIED, observerId, lastTouchpointId, lastSeenIp, usedDeviceId, email, "", fingerprintId, "");
 		return p;
 	}
 
 	/**
-	 * new CRM_USER profile with email and phone
+	 * new CRM_USER profile with email, phone and crm Ref ID
 	 * 
-	 * @param sessionKey
-	 * @param visitorId
 	 * @param observerId
-	 * @param lastTouchpointId
-	 * @param lastSeenIp
-	 * @param usedDeviceId
 	 * @param email
 	 * @param phone
+	 * @param crmRefId
 	 * @return
 	 */
-	public static Profile newCrmProfile( String observerId, String lastTouchpointId,
-			String lastSeenIp, String visitorId, String usedDeviceId, String email, String phone,
-			String fingerprintId) {
+	public static Profile newCrmProfile(String importingObserverId, String email, String phone, String crmRefId) {
 		Profile p = new Profile();
-		p.initBaseInformation(0, visitorId, ProfileType.CRM_CONTACT, observerId, lastTouchpointId,
-				lastSeenIp, usedDeviceId, email, phone, fingerprintId);
+		p.initBaseInformation(0, "", ProfileType.CRM_CONTACT, importingObserverId, "", "", "", email, phone, "", crmRefId);
 		return p;
 	}
 
@@ -359,8 +363,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	public static Profile newAnonymousProfile( String observerId, String lastTouchpointId,
 			String lastSeenIp, String visitorId, String usedDeviceId, String fingerprintId) {
 		Profile p = new Profile();
-		p.initBaseInformation(0,  visitorId, ProfileType.ANONYMOUS, observerId, lastTouchpointId,
-				lastSeenIp, usedDeviceId, "", "", fingerprintId);
+		p.initBaseInformation(0,  visitorId, ProfileType.ANONYMOUS, observerId, lastTouchpointId, lastSeenIp, usedDeviceId, "", "", fingerprintId, "");
 		return p;
 	}
 
@@ -591,12 +594,44 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		this.subscribedChannels = subscribedChannels;
 	}
 
-	public int getSocialCreditScore() {
-		return socialCreditScore;
+	public Map<String, String> getBusinessContacts() {
+		return businessContacts;
 	}
 
-	public void setSocialCreditScore(int socialCreditScore) {
-		this.socialCreditScore = socialCreditScore;
+	public void setBusinessContacts(Map<String, String> businessContacts) {
+		this.businessContacts = businessContacts;
+	}
+
+	public int getDataCompletionScore() {
+		return dataCompletionScore;
+	}
+
+	public void setDataCompletionScore(int dataCompletionScore) {
+		this.dataCompletionScore = dataCompletionScore;
+	}
+
+	public int getBusinessCreditScore() {
+		return businessCreditScore;
+	}
+
+	public void setBusinessCreditScore(int businessCreditScore) {
+		this.businessCreditScore = businessCreditScore;
+	}
+
+	public Map<String, Map<String, Object>> getExtBusinessData() {
+		return extBusinessData;
+	}
+
+	public void setExtBusinessData(Map<String, Map<String, Object>> extBusinessData) {
+		this.extBusinessData = extBusinessData;
+	}
+
+	public Map<String, Map<String, Integer>> getPredictionMetrics() {
+		return predictionMetrics;
+	}
+
+	public void setPredictionMetrics(Map<String, Map<String, Integer>> predictionMetrics) {
+		this.predictionMetrics = predictionMetrics;
 	}
 
 	public int getSatisfactionScore() {
