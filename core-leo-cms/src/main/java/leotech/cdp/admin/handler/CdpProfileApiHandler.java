@@ -42,7 +42,7 @@ public class CdpProfileApiHandler extends BaseSecuredDataApi {
 						return JsonDataPayload.ok(uri, key, true);
 					}
 					case API_DISABLE : {
-						boolean rs = ProfileDataService.disable(paramJson, loginUser);
+						boolean rs = ProfileDataService.remove(paramJson, loginUser);
 						return JsonDataPayload.ok(uri, rs, true);
 					}
 					default : {

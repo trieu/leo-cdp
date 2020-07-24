@@ -50,7 +50,7 @@ LeoCdpAdmin.navFunctions.loadDataObserverList  = function(breadcrumbHtml) {
 
 //###################### Unified Marketing Hub ######################
 
-LeoCdpAdmin.navFunctions.loadMarketing360Dashboard = function(breadcrumbHtml) {
+LeoCdpAdmin.navFunctions.loadMarketingDashboard = function(breadcrumbHtml) {
     LeoCdpAdmin.loadView('/view/subviews/customer/analytics-360-dashboard.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
     	initSalesDashboard();

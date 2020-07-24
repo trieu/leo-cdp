@@ -14,10 +14,10 @@ LeoCdpAdmin.navRouters = {
 		},
 		
 		// 1.1 Main Analytics Dashboard
-		"Analytics_Dashboard": {
+		"Marketing_Dashboard": {
 			"menuName" : "Marketing Dashboard",
-			"functionName" : "loadMarketing360Dashboard",
-			"breadcrumb" : ["Customer Data Hub", "Analytics Dashboard"]
+			"functionName" : "loadMarketingDashboard",
+			"breadcrumb" : ["Analytics 360 Hub", "Marketing 360 Dashboard"]
 		},
 		
 		// 1.2 Targeted Persona

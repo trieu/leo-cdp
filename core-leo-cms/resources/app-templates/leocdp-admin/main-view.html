@@ -40,17 +40,24 @@
 	<!-- Sidebar Menu Items -->
 	<div id="main-navbar" class="collapse navbar-collapse navbar-ex1-collapse">
 		<ul class="nav navbar-nav side-nav">
+			<li id="nav_data_analytics_hub" style="display: ;" >
+				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#data_analytics_hub_menu"> <i class="fa fa-fw fa-line-chart"></i>
+				 	Analytics 360 Hub <i id="data_analytics_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
+				</a>
+				<ul id="data_analytics_hub_menu" class="collapse in" aria-expanded="true">
+					<li>
+						<a href="#calljs-leoCdpRouter('Marketing_Dashboard')"> <i class="fa fa-fw fa-pie-chart"></i> Marketing Dashboard </a>
+					</li>
+				</ul>
+			</li>
 		
 			<!--  1 - Customer Journey Map Menu  -->
-			<li id="nav_content_hub" style="display: none;" >
+			<li id="nav_content_hub" style="display: ;" >
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#journey_hub_menu"> <i class="fa fa-fw fa-map-o"></i>
 				 	Journey Data Hub<i id="journey_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
 				<ul id="journey_hub_menu" class="collapse in" aria-expanded="true">
 				
-					<li>
-						<a href="#calljs-leoCdpRouter('Analytics_Dashboard')"> <i class="fa fa-fw fa-line-chart"></i> Analytics Dashboard</a>
-					</li>
 					
 					<li style="display: none;" >
 						<a href="#calljs-leoCdpRouter('Customer_Persona_List')"> <i class="fa fa-fw fa-users"></i> Customer Persona List</a>
@@ -70,6 +77,10 @@
 					
 					<li style="display: none;" >
 						<a href="#calljs-leoCdpRouter('Customer_Journey_List')"> <i class="fa fa-fw fa-map-o"></i> Customer Journey List</a>
+					</li>
+					
+					<li style="display: none;" >
+						<a href="#calljs-leoCdpRouter('Products_and_Services')"> <i class="fa fa-fw fa-database"></i> Products and Services</a>
 					</li>
 					
 					<li style="display: none;" >
@@ -123,12 +134,14 @@
 					</li>
 					
 					<li>
-						<a href="#calljs-leoCdpRouter('Customer_Data_Export')"> <i class="fa fa-fw fa-file-excel-o"></i> Customer Data Export</a>
+						<a href="#calljs-leoCdpRouter('Customer_Data_Export')"> <i class="fa fa-fw fa-download"></i> Customer Data Import</a>
 					</li>
 					
-					<li style="display: none;" >
-						<a href="#calljs-leoCdpRouter('Products_and_Services')"> <i class="fa fa-fw fa-database"></i> Products and Services</a>
+					<li>
+						<a href="#calljs-leoCdpRouter('Customer_Data_Export')"> <i class="fa fa-fw fa-upload"></i> Customer Data Export</a>
 					</li>
+					
+					
 					
 					<li style="display: none;" >
 						<a href="#calljs-leoCdpRouter('Marketing_Hub_API')"> <i class="fa fa-fw fa-plug"></i> Marketing Hub API</a>
@@ -162,7 +175,7 @@
 			</li>
 			
 			<!--  5 - Marketing & Sales Campaign Activation Management  -->
-			<li id="nav_activation_hub" style="display: none;" >
+			<li id="nav_activation_hub" style="display: ;" >
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#activation_hub_menu"> <i class="fa fa-fw fa-bolt"></i>
 					Customer Activation <i id="activation_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
@@ -333,6 +346,14 @@
 	}
 	
 	function navigationSetup(){
+		
+		//data_analytics_hub menu
+		$("#data_analytics_hub_menu").on("hide.bs.collapse", function(){
+        	$("#data_analytics_hub_collapse_icon").attr('class','fa fa-fw fa-caret-left');
+        });
+        $("#data_analytics_hub_menu").on("show.bs.collapse", function(){
+        	$("#data_analytics_hub_collapse_icon").attr('class','fa fa-fw fa-caret-down');
+        });
 		
 		//business menu
 		$("#customer_data_hub_menu").on("hide.bs.collapse", function(){

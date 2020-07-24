@@ -183,7 +183,7 @@ public class ProfileDataService {
 		return pf;
 	}
 	
-	public static boolean disable(JsonObject paramJson, User loginUser) {
+	public static boolean remove(JsonObject paramJson, User loginUser) {
 		String profileId = paramJson.getString("profileId", "");
 		Profile pf = ProfileDaoUtil.getById(profileId);
 		pf.setStatus(-1);
