@@ -4,19 +4,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.testng.annotations.Test;
 
-import leotech.cdp.utils.VoucherCodeConfig;
-import leotech.cdp.utils.VoucherCodeConfig.Charset;
-import leotech.cdp.utils.VoucherCodesUtil;
+import leotech.system.util.RamdomCodesUtil;
+import static leotech.system.util.RamdomCodesUtil.RandomCodeConfig;
+import static leotech.system.util.RamdomCodesUtil.Charset;
 
 public class VoucherCodesTest {
 
     @Test
     public void shouldGenerateCodeOfGivenLength() {
         // given
-        VoucherCodeConfig config = VoucherCodeConfig.length(10);
+        RandomCodeConfig config = RandomCodeConfig.length(10);
         
         // when
-        String code = VoucherCodesUtil.generate(config);
+        String code = RamdomCodesUtil.generate(config);
         
         // then
         assertThat(code.length()).isEqualTo(10);
@@ -25,10 +25,10 @@ public class VoucherCodesTest {
     @Test
     public void shouldGenerateNumericCode() {
         // given
-        VoucherCodeConfig config = VoucherCodeConfig.length(8).withCharset(Charset.NUMBERS);
+        RandomCodeConfig config = RandomCodeConfig.length(8).withCharset(Charset.NUMBERS);
         
         // when
-        String code = VoucherCodesUtil.generate(config);
+        String code = RamdomCodesUtil.generate(config);
         
         // then
         assertThat(code).matches("^([0-9]){8}$");
@@ -37,10 +37,10 @@ public class VoucherCodesTest {
     @Test
     public void shouldGenerateCodeWithPrefix() {
         // given
-        VoucherCodeConfig config = VoucherCodeConfig.length(8).withPrefix("TEST-");
+        RandomCodeConfig config = RandomCodeConfig.length(8).withPrefix("TEST-");
         
         // when
-        String code = VoucherCodesUtil.generate(config);
+        String code = RamdomCodesUtil.generate(config);
         
         // then
         assertThat(code).startsWith("TEST-");
@@ -50,10 +50,10 @@ public class VoucherCodesTest {
     @Test
     public void shouldGenerateCodeWithPostfix() {
         // given
-        VoucherCodeConfig config = VoucherCodeConfig.length(8).withPostfix("-TEST");
+        RandomCodeConfig config = RandomCodeConfig.length(8).withPostfix("-TEST");
         
         // when
-        String code = VoucherCodesUtil.generate(config);
+        String code = RamdomCodesUtil.generate(config);
         
         // then
         assertThat(code).endsWith("-TEST");
@@ -63,10 +63,10 @@ public class VoucherCodesTest {
     @Test
     public void shouldGenerateCodeWithPrefixAndPostfix() {
         // given
-        VoucherCodeConfig config = VoucherCodeConfig.length(8).withPrefix("TE-").withPostfix("-ST");
+        RandomCodeConfig config = RandomCodeConfig.length(8).withPrefix("TE-").withPostfix("-ST");
         
         // when
-        String code = VoucherCodesUtil.generate(config);
+        String code = RamdomCodesUtil.generate(config);
         
         System.out.println(code);
         
@@ -79,20 +79,20 @@ public class VoucherCodesTest {
     @Test
     public void shouldGenerateCodeFromGivenPattern() {
         // given
-        VoucherCodeConfig config = VoucherCodeConfig.pattern("##-###-##");
+        RandomCodeConfig config = RandomCodeConfig.pattern("##-###-##");
         
         // when
-        String code = VoucherCodesUtil.generate(config);
+        String code = RamdomCodesUtil.generate(config);
         
         // then
         assertThat(code).matches("^([0-9a-zA-Z]){2}-([0-9a-zA-Z]){3}-([0-9a-zA-Z]){2}$");
     }
     
     public static void main(String[] args) {
-    	 VoucherCodeConfig config = VoucherCodeConfig.length(8).withCharset(Charset.NUMBERS).withPrefix("LEO-").withPostfix("-VN");
+    	 RandomCodeConfig config = RandomCodeConfig.length(10).withCharset(Charset.NUMBERS);
          
          // when
-         String code = VoucherCodesUtil.generate(config);
+         String code = RamdomCodesUtil.generate(config);
          
          System.out.println(code);
 	}

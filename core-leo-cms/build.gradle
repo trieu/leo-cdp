@@ -77,8 +77,8 @@ dependencies {
 	// To backup database, we can use Google Cloud Storage for raw data storage, FIXME depends on gson 2.8.6, causes error Expose Annotation
 	//compile group: 'com.google.cloud', name: 'google-cloud-storage', version: '1.111.2'
 	
-	// Sendgrid API for email marketing
-	compile group: 'com.sendgrid', name: 'sendgrid-java', version: '4.6.1'
+	// STMP client for email marketing
+	compile group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
 	
 	// A library for summarizing data in streams for which it is infeasible to store all events 
 	compile group: 'com.clearspring.analytics', name: 'stream', version: '2.9.8'
@@ -152,6 +152,9 @@ dependencies {
 		
 		// Performance Testing
 		,'org.databene:contiperf:2.3.4'
+		
+		// Email Test
+		,'com.sun.mail:javax.mail:1.6.2'
     )
 }
 
