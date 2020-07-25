@@ -8,7 +8,23 @@
 
 LeoCdpAdmin.navFunctions = {};
 
-//###################### Customer Journey Map ######################
+//###################### Analytics 360 Hub ######################
+
+LeoCdpAdmin.navFunctions.loadMarketingDashboard = function(breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/subviews/analytics/marketing-dashboard.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+    	initSalesDashboard();
+    });
+}
+
+LeoCdpAdmin.navFunctions.loadContentDashboard = function (breadcrumbHtml) {
+	LeoCdpAdmin.loadView('/view/subviews/analytics/content-dashboard.html?admin=1', pageDomSelector, function () {
+		$('#page_breadcrumb').html(breadcrumbHtml);
+		initContentDashboard();
+    });
+}
+
+//###################### Journey Data Hub ######################
 
 
 LeoCdpAdmin.navFunctions.loadJourneyMapStudio = function(journeyId) {
@@ -48,14 +64,8 @@ LeoCdpAdmin.navFunctions.loadDataObserverList  = function(breadcrumbHtml) {
     });
 }
 
-//###################### Unified Marketing Hub ######################
+//###################### Customer Data Hub ######################
 
-LeoCdpAdmin.navFunctions.loadMarketingDashboard = function(breadcrumbHtml) {
-    LeoCdpAdmin.loadView('/view/subviews/customer/analytics-360-dashboard.html?admin=1', pageDomSelector, function () {
-    	$('#page_breadcrumb').html(breadcrumbHtml);
-    	initSalesDashboard();
-    });
-}
 
 function loadCustomerDashboard() {
     LeoCdpAdmin.loadView('/view/subviews/customer/customer-dashboard.html?admin=1', pageDomSelector, function () {
@@ -124,14 +134,9 @@ function loadBusinessAnalytics360() {
     });
 }
 
-//###################### Content Hub ######################
+//###################### Content Data Hub ######################
 
-LeoCdpAdmin.navFunctions.loadContentDashboard = function (breadcrumbHtml) {
-	LeoCdpAdmin.loadView('/view/subviews/content/content-dashboard.html?admin=1', pageDomSelector, function () {
-		$('#page_breadcrumb').html(breadcrumbHtml);
-		initContentDashboard();
-    });
-}
+
 
 // Page functions 
 

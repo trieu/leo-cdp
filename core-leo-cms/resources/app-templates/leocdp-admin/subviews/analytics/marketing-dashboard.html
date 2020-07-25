@@ -163,14 +163,13 @@
 
 <script>
 	//select date
-	
 
     function initSalesDashboard() {
     	initDateFilterComponent();
         loadProfileFunnel();
         loadEventFunnel();
-        //loadcustomerVenn();
         loadChannelPerformance();
+      	//loadCustomerVenn();
     }
 
     function loadChannelPerformance() {
@@ -260,10 +259,10 @@
     function loadProfileFunnel() {
         var data = [
             ['Visitor', 21981, '#008080'],
-            ['Fan', 7423, '#4AADC6'],
-            ['Lead', 2319, '#702963'],
-            ['Customer', 1489, '#C46511'],
-            ['Repeat Customer', 589, '#3f2ae2']
+            ['Fan', 7423, '#6497b1'],
+            ['Lead', 2319, '#005b96'],
+            ['Customer', 1489, '#03396c'],
+            ['Repeat Customer', 589, '#011f4b']
         ];
         var options = {
       		block: {
@@ -295,13 +294,14 @@
         chart.draw(data, options);
     }
     
+    //https://www.color-hex.com/color-palette/309
     function loadEventFunnel() {
         var data = [
-            ['product view', 8152, '#008080'],
-            ['social interaction', 7548, '#4AADC6'],
-            ['add-to-cart', 2262, '#702963'],
-            ['purchase', 1782, '#C46511'],
-            ['repeat purchase', 861, '#3f2ae2']
+            ['product view', 8152, '#011f4b'],
+            ['social interaction', 7548, '#03396c'],
+            ['add-to-cart', 2262, '#005b96'],
+            ['purchase', 1782, '#5f9ea0'],
+            ['repeat purchase', 861, '#49796b']
         ];
         var options = {
       		block: {
@@ -333,7 +333,7 @@
         chart.draw(data, options);
     }
 
-    function loadcustomerVenn() {
+    function loadCustomerVenn() {
         var sets = [{
                 sets: ["Email"],
                 figure: 27.92,

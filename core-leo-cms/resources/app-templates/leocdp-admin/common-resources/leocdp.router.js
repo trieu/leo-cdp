@@ -17,7 +17,7 @@ LeoCdpAdmin.navRouters = {
 		"Marketing_Dashboard": {
 			"menuName" : "Marketing Dashboard",
 			"functionName" : "loadMarketingDashboard",
-			"breadcrumb" : ["Analytics 360 Hub", "Marketing 360 Dashboard"]
+			"breadcrumb" : ["Analytics 360 Hub", "Marketing Dashboard"]
 		},
 		
 		// 1.2 Targeted Persona
@@ -239,21 +239,21 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Customer Activation", "Email Campaigns", "Email Campaign Editor"]
 		},
 		
-		// 5.3 SMS Marketing Activation Campaigns
-		"SMS_Campaigns" : {
-			"menuName" : "SMS Campaign List",
-			"functionName" : "loadSMSCampaigns",
-			"breadcrumb" : ["Customer Activation", "SMS Campaigns"]
+		// 5.3 Push Message Marketing Activation Campaigns
+		"Push_Message_Campaigns" : {
+			"menuName" : "Push Message Campaigns",
+			"functionName" : "loadPushMessageCampaigns",
+			"breadcrumb" : ["Customer Activation", "Push Message Campaigns"]
 		},
-		"SMS_Campaign_Report" : {
-			"menuName" : "SMS Campaign Report",
-			"functionName" : "loadSMSCampaignReport",
-			"breadcrumb" : ["Customer Activation", "SMS Campaigns", "SMS Campaign Report"]
+		"Push_Message_Campaign_Report" : {
+			"menuName" : "Push Message Campaign Report",
+			"functionName" : "loadPushMessageCampaignReport",
+			"breadcrumb" : ["Customer Activation", "Push Message Campaigns", "Campaign Report"]
 		},
-		"SMS_Campaign_Editor" : {
-			"menuName" : "SMS Campaign Editor",
-			"functionName" : "loadSMSCampaignEditor",
-			"breadcrumb" : ["Customer Activation", "SMS Campaigns", "SMS Campaign Editor"]
+		"Push_Message_Campaign_Editor" : {
+			"menuName" : "Push Message Campaign Editor",
+			"functionName" : "loadPushMessageCampaignEditor",
+			"breadcrumb" : ["Customer Activation", "Push Message Campaigns", "Campaign Editor"]
 		},
 		
 		// User Login Management
