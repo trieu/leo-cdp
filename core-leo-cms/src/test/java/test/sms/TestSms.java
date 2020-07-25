@@ -15,7 +15,7 @@ public class TestSms {
 
 	public static void main(String[] args) throws Exception {
 		RandomCodeConfig config = RandomCodeConfig.length(4).withCharset(Charset.NUMBERS);
-        String code = RamdomCodesUtil.generate(config) + " "+RamdomCodesUtil.generate(config) + " "+RamdomCodesUtil.generate(config) + " "+RamdomCodesUtil.generate(config);
+        String code = RamdomCodesUtil.generate(config) + " "+RamdomCodesUtil.generate(config) + " "+RamdomCodesUtil.generate(config) ;
         System.out.println(code);
 		
 		OkHttpClient client = new OkHttpClient();
@@ -29,7 +29,7 @@ public class TestSms {
 		MediaType mediaType = MediaType.parse("application/json");
 		RequestBody body = RequestBody.create(
 		    mediaType,
-		    "{\"from\":\"USPA\",\"to\":[\"84903122290\"],\"type\":\"Text\",\"content\":\""+code+"\"}"
+		    "{\"from\":\"USPA\",\"to\":[\"84935863696\"],\"type\":\"Text\",\"content\":\""+code+"\"}"
 		    );
 		Request request2 = new Request.Builder()
 		  .url("https://restapi.bulksmsonline.com/rest/api/v1/sms/send")
