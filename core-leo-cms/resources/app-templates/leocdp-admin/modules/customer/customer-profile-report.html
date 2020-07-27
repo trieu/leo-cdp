@@ -34,8 +34,8 @@
  		<h4 class="page-header" id="page_breadcrumb" > </h4>
  	 </div> 
      <div class="col-lg-3 text-center" style="padding: 10px">
-     	<button type="button" class="btn btn-success" onclick="loadDataProfileList()" > Edit </button>
-      	<button type="button" class="btn btn-danger" onclick="loadDataProfileList()" > Remove </button>
+     	<button type="button" class="btn btn-success" onclick="editCurrentProfile()" > Edit </button>
+      	<button type="button" class="btn btn-danger" onclick="removeCurrentProfile()" > Remove </button>
      </div>
 </div>
 
@@ -87,7 +87,7 @@
 		                               </li>
 		                               <li>
 		                                   <b> Customer Lifetime Value </b> 
-		                                   <p> _ </p>
+		                                   <p> 10,000,000 VND </p>
 		                               </li>
 		                               
 		                           </ol>
@@ -331,7 +331,8 @@
 
 <script type="text/javascript">
     ///Js code
-
+	
+     
     
     function initProfile360Analytics(profileId) {
     	console.log(profileId);
@@ -345,6 +346,14 @@
             //personalityDiagram();
             
         },500);
+    }
+    
+    function editCurrentProfile(){
+    	gotoLeoCdpRouter('Customer_Profile_Editor', LeoCdpAdmin.routerContext.objId );
+    }
+    
+    function removeCurrentProfile(){
+    	alert('TODO')
     }
 
     function profilePathDiagram() {
@@ -399,7 +408,6 @@
                 }, {
                     id: 3,
                     name: "E-commerce Website",
-
                 }, {
                     id: 4,
                     name: "E-commerce Mobile App"

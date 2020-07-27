@@ -1,56 +1,58 @@
 
 
-<div class="row" id="breadcrumb_header" >
-      	<div class="col-md-10" >
-           <h4 class="page-header" id="page_breadcrumb" > </h4>
-       </div>
-       <div class="col-md-2" >
-       	<button type="button" class="btn btn-primary btn-lg">Save</button>
-		<button type="button" class="btn btn-secondary btn-lg">Cancel</button>
-       </div>
-   </div>
+<div>
+     <div class="col-md-9" >
+ 		<h4 class="page-header" id="page_breadcrumb" > </h4>
+ 	 </div> 
+     <div class="col-lg-3 text-center" style="padding: 10px">
+     	<button type="button" class="btn btn-success" onclick="saveCurrentProfile()" > Save </button>
+      	<button type="button" class="btn btn-danger" onclick="cancelAndGotoCustomerList()" > Cancel </button>
+     </div>
+</div>
 
-<h2 id="journey_map_name" >Hành trình chung của khách hàng cho hệ thống bán lẻ sách</h2>
+<div class="container-fluid">
 
-   <div class="container-fluid">
-
-       <!-- MAIN BODY here -->
+     <!-- MAIN BODY here -->
 
     <div class="row">
         <div class="col-md-4">
             <div class="text-center">
                 <h3>Avatar</h3>
-                <img src="/public/images/avatars/profile-default-avatar.png"
-                    alt="Profile Avatar" class="rounded mx-auto d-block avatar">
+                <img src="https://randomuser.me/api/portraits/men/90.jpg"
+	                       alt="Profile Avatar" class="rounded mx-auto d-block avatar">
             </div>
         </div>
         <div class="col-md-8">
-
-            <div>
-                <h3> {{target_customer_name}} </h3>
-                <strong class="editable_text"> nhóm mê sách kinh doanh </strong>
-            </div>
-            <br>
-            <h3> {{persona_attributes}}
-                <span class="editable_add_item" data-target="persona_attributes"  ></span>  
-            </h3>
+            <h3> {{persona_attributes}} </h3>
             <table border=0 class="underlined" style="width: 100%;">
                 <tr>
                     <td>
-                        <ol id="persona_attributes" data-field="persona_attributes">
-                            <li>
-                                <b data-persona="key" class="editable_text" > Giới tính </b> 
-                                <p data-persona="value" class="editable_text" > Nam và nữ </p>
-                            </li>
-                            <li>
-                                <b data-persona="key" class="editable_text" > Độ tuổi </b> 
-                                <p data-persona="value" class="editable_text" > 16 - 60 </p>
-                            </li>
-                            <li>
-                                <b data-persona="key" class="editable_text" > Vùng địa lý </b> 
-                                <p data-persona="value" class="editable_text" > Việt Nam  </p>
-                            </li>
-                        </ol>
+                       <ol id="personal_attributes" data-field="personal_attributes">
+                       	   <li>
+                               <b data-persona="key" class="editable_text" > Full name </b> <i class="fa fa-fw fa-id-badge"></i>
+                               <p data-persona="value" class="editable_text" > Nguyen Thanh Trung </p>
+                           </li>
+                           <li>
+                               <b data-persona="key" class="editable_text" > Gender </b> <i class="fa fa-fw fa-male"></i> 
+                               <p data-persona="value" class="editable_text" > Male </p>
+                           </li>
+                           <li>
+                               <b data-persona="key" class="editable_text" > Age </b> <i class="fa fa-fw fa-user-circle-o"></i>
+                               <p data-persona="value" class="editable_text" > 30 </p> 
+                           </li>
+                           <li>
+                               <b data-persona="key" class="editable_text" > Living location  </b> <i class="fa fa-fw fa-map-marker"></i>
+                               <p data-persona="value" class="editable_text" > TP.HCM, Việt Nam  </p>
+                           </li>
+                           <li>
+                               <b data-persona="key" class="editable_text" > Primary email </b> <i class="fa fa-fw fa-envelope"></i>
+                               <p data-persona="value" class="editable_text" >trungtn@bigdatavietnam.org</p>
+                           </li>
+                           <li>
+                               <b data-persona="key" class="editable_text" > Primary mobile phone  </b> <i class="fa fa-fw fa-mobile"></i>
+                               <p data-persona="value" class="editable_text" >  0903122299 </p>
+                           </li>
+                       </ol>
                     </td>
                 </tr>
             </table>
@@ -63,9 +65,9 @@
     <div class="row">
 
         <div class="col-md-6">
-            <h3> {{persona_expectations}} 
+            <h4> {{persona_expectations}} 
                 <span class="editable_add_item" data-target="persona_expectations"  ></span>  
-            </h3> 
+            </h4> 
             
             <table style="width: 100%;" class="plain">
                 <tr>
@@ -87,9 +89,9 @@
         </div>
 
         <div class="col-md-6">
-            <h3> {{persona_interests}}  
+            <h4> {{persona_interests}}  
                 <span class="editable_add_item" data-target="persona_interests"  ></span>  
-            </h3>
+            </h4>
             <table style="width: 100%;" class="plain">
                 <tr>
                     <td>
@@ -117,9 +119,9 @@
     <div class="row">
 
         <div class="col-md-6">
-            <h3> {{business_ideas}} 
+            <h4> {{business_ideas}} 
                 <span class="editable_add_item" data-target="business_ideas"  ></span> 
-            </h3>
+            </h4>
             <table class="plain" style="width: 100%;">
                 <tr>
                     <td>
@@ -140,9 +142,9 @@
         </div>
 
         <div class="col-md-6">
-            <h3> {{business_solutions}}
+            <h4> {{business_solutions}}
                 <span class="editable_add_item" data-target="business_solutions"  ></span> 
-            </h3>
+            </h4>
             <table class="plain" style="width: 100%;">
                 <tr>
                     <td>
@@ -169,9 +171,9 @@
 
     <div class="row">
         <div class="col-md-6">
-            <h3> {{persona_touchpoints}}
+            <h4> {{persona_touchpoints}}
                 <span class="editable_add_item" data-target="persona_touchpoints"  ></span>
-            </h3>
+            </h4>
             <table class="plain">
                 <tr>
                     <td>
@@ -209,7 +211,7 @@
             </table>
         </div>
         <div class="col-md-6">
-        	<h3> {{conversion_actions}} <span class="editable_add_item" data-target="conversion_actions" ></span> </h3>
+        	<h4> {{conversion_actions}} <span class="editable_add_item" data-target="conversion_actions" ></span> </h4>
             <table class="plain" style="width: 100%;">
                 <tr>
                     <td>

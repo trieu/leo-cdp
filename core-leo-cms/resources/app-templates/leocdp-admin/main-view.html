@@ -40,24 +40,28 @@
 	<!-- Sidebar Menu Items -->
 	<div id="main-navbar" class="collapse navbar-collapse navbar-ex1-collapse">
 		<ul class="nav navbar-nav side-nav">
-			<li id="nav_data_analytics_hub" style="display: ;" >
-				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#data_analytics_hub_menu"> <i class="fa fa-fw fa-line-chart"></i>
-				 	Unified Analytics Hub <i id="data_analytics_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
+		
+			<!--  1 - Start with the goals and dashboard of key vision Menu  -->
+			<li id="nav_analytics_hub" style="display: ;" >
+				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#analytics_hub_menu"> <i class="fa fa-fw fa-line-chart"></i>
+				 	Unified Analytics Hub <i id="data_analytics_hub_collapse_icon" class="fa fa-fw fa-caret-down"> </i>
 				</a>
-				<ul id="data_analytics_hub_menu" class="collapse in" aria-expanded="true">
+				<ul id="analytics_hub_menu" class="collapse in" aria-expanded="true">
 					<li>
 						<a href="#calljs-leoCdpRouter('Marketing_Dashboard')"> <i class="fa fa-fw fa-pie-chart"></i> Marketing Dashboard </a>
+					</li>
+					<li>
+						<a href="#calljs-leoCdpRouter('Analytics_360_Notebooks')"> <i class="fa fa-fw fa-book"></i> Analytics 360 Notebooks</a>
 					</li>
 				</ul>
 			</li>
 		
-			<!--  1 - Customer Journey Map Menu  -->
-			<li id="nav_content_hub" style="display: ;" >
+			<!--  2 - Customer Journey Map Menu  -->
+			<li id="nav_journey_hub" style="display: ;" >
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#journey_hub_menu"> <i class="fa fa-fw fa-map-o"></i>
 				 	Customer Journey Hub<i id="journey_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
 				<ul id="journey_hub_menu" class="collapse in" aria-expanded="true">
-				
 					
 					<li style="display: none;" >
 						<a href="#calljs-leoCdpRouter('Customer_Persona_List')"> <i class="fa fa-fw fa-users"></i> Customer Persona List</a>
@@ -90,7 +94,7 @@
 				</ul>
 			</li>
 			
-			<!--  2 - Creative Content Hub Menu  -->
+			<!--  3 - Creative Content Hub Menu  -->
 			<li id="nav_content_hub" style="display: none;" >
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#content_hub_menu"> <i class="fa fa-fw fa-sitemap"></i>
 					Creative Content Hub <i id="content_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
@@ -116,14 +120,12 @@
 				</ul>
 			</li>
 		
-			<!--  3 - Customer Data Hub Menu  -->
-			<li>
-				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#customer_data_hub_menu"> <i class="fa fa-fw fa-users"></i>
+			<!--  4 - Customer Data Hub Menu  -->
+			<li id="nav_customer_hub" >
+				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#customer_hub_menu"> <i class="fa fa-fw fa-users"></i>
 					Customer Data Hub <i id="customer_data_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
-				<ul id="customer_data_hub_menu" class="collapse in" aria-expanded="true">
-					
-					
+				<ul id="customer_hub_menu" class="collapse in" aria-expanded="true">
 					
 					<li>
 						<a href="#calljs-leoCdpRouter('Customer_Profile_List')"> <i class="fa fa-fw fa-address-card-o"></i> Customer Profile List</a>
@@ -141,8 +143,6 @@
 						<a href="#calljs-leoCdpRouter('Customer_Data_Export')"> <i class="fa fa-fw fa-upload"></i> Customer Data Export</a>
 					</li>
 					
-					
-					
 					<li style="display: none;" >
 						<a href="#calljs-leoCdpRouter('Marketing_Hub_API')"> <i class="fa fa-fw fa-plug"></i> Marketing Hub API</a>
 					</li>
@@ -150,9 +150,7 @@
 				</ul>
 			</li>
 
-			
-
-			<!--  4 - Personalization Content Management  -->
+			<!--  5 - Personalization A.I Models Management  -->
 			<li id="nav_personalization_hub" style="display: none;"  >
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#personalization_hub_menu"> <i class="fa fa-fw fa-user-circle-o "></i>
 					Personalization AI Hub <i id="personalization_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
@@ -174,7 +172,7 @@
 				</ul>
 			</li>
 			
-			<!--  5 - Marketing & Sales Campaign Activation Management  -->
+			<!--  6 - Marketing & Sales Campaign Activation Management  -->
 			<li id="nav_activation_hub" style="display: ;" >
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#activation_hub_menu"><i class="fa fa-fw fa-heart"></i>
 					Customer Activation <i id="activation_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
@@ -208,7 +206,7 @@
 				</ul>
 			</li>
 
-			<!--  6 - Core System Management  -->
+			<!--  7 - Core System Management  -->
 			<li id="nav_system_management" >
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#system_management_menu"> <i class="fa fa-cogs" aria-hidden="true"></i>
 					System Management <i id="system_management_collapse_icon" class="fa fa-fw fa-caret-down"></i>
@@ -347,20 +345,20 @@
 	
 	function navigationSetup(){
 		
-		//data_analytics_hub menu
-		$("#data_analytics_hub_menu").on("hide.bs.collapse", function(){
+		// analytics menu
+		$("#analytics_hub_menu").on("hide.bs.collapse", function(){
         	$("#data_analytics_hub_collapse_icon").attr('class','fa fa-fw fa-caret-left');
         });
-        $("#data_analytics_hub_menu").on("show.bs.collapse", function(){
+        $("#analytics_hub_menu").on("show.bs.collapse", function(){
         	$("#data_analytics_hub_collapse_icon").attr('class','fa fa-fw fa-caret-down');
         });
-		
-		//business menu
-		$("#customer_data_hub_menu").on("hide.bs.collapse", function(){
-        	$("#customer_data_hub_collapse_icon").attr('class','fa fa-fw fa-caret-left');
+        
+     	// journey menu
+		$("#journey_hub_menu").on("hide.bs.collapse", function(){
+        	$("#journey_hub_collapse_icon").attr('class','fa fa-fw fa-caret-left');
         });
-        $("#customer_data_hub_menu").on("show.bs.collapse", function(){
-        	$("#customer_data_hub_collapse_icon").attr('class','fa fa-fw fa-caret-down');
+        $("#journey_hub_menu").on("show.bs.collapse", function(){
+         	$("#journey_hub_collapse_icon").attr('class','fa fa-fw fa-caret-down');
         });
          
         // content menu
@@ -371,13 +369,13 @@
          	$("#content_hub_collapse_icon").attr('class','fa fa-fw fa-caret-down');
         });
          
-     	// journey hub menu
-		$("#journey_hub_menu").on("hide.bs.collapse", function(){
-        	$("#journey_hub_collapse_icon").attr('class','fa fa-fw fa-caret-left');
+		// customer menu
+		$("#customer_hub_menu").on("hide.bs.collapse", function(){
+        	$("#customer_data_hub_collapse_icon").attr('class','fa fa-fw fa-caret-left');
         });
-        $("#journey_hub_menu").on("show.bs.collapse", function(){
-         	$("#journey_hub_collapse_icon").attr('class','fa fa-fw fa-caret-down');
-        });
+        $("#customer_hub_menu").on("show.bs.collapse", function(){
+        	$("#customer_data_hub_collapse_icon").attr('class','fa fa-fw fa-caret-down');
+        });    	
         
      	// personalization menu
 		$("#personalization_hub_menu").on("hide.bs.collapse", function(){
