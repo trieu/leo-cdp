@@ -1,5 +1,4 @@
 
-
 <div>
      <div class="col-md-9" >
  		<h4 class="page-header" id="page_breadcrumb" > </h4>
@@ -29,27 +28,27 @@
                     <td>
                        <ol id="personal_attributes" data-field="personal_attributes">
                        	   <li>
-                               <b data-persona="key" class="editable_text" > Full name </b> <i class="fa fa-fw fa-id-badge"></i>
+                               <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-id-badge"></i> Full name </b> 
                                <p data-persona="value" class="editable_text" > Nguyen Thanh Trung </p>
                            </li>
                            <li>
-                               <b data-persona="key" class="editable_text" > Gender </b> <i class="fa fa-fw fa-male"></i> 
+                               <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-male"></i>  Gender </b> 
                                <p data-persona="value" class="editable_text" > Male </p>
                            </li>
                            <li>
-                               <b data-persona="key" class="editable_text" > Age </b> <i class="fa fa-fw fa-user-circle-o"></i>
+                               <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-user-circle-o"></i> Age </b> 
                                <p data-persona="value" class="editable_text" > 30 </p> 
                            </li>
                            <li>
-                               <b data-persona="key" class="editable_text" > Living location  </b> <i class="fa fa-fw fa-map-marker"></i>
+                               <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-map-marker"></i> Living location  </b> 
                                <p data-persona="value" class="editable_text" > TP.HCM, Việt Nam  </p>
                            </li>
                            <li>
-                               <b data-persona="key" class="editable_text" > Primary email </b> <i class="fa fa-fw fa-envelope"></i>
+                               <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-envelope"></i> Primary email </b> 
                                <p data-persona="value" class="editable_text" >trungtn@bigdatavietnam.org</p>
                            </li>
                            <li>
-                               <b data-persona="key" class="editable_text" > Primary mobile phone  </b> <i class="fa fa-fw fa-mobile"></i>
+                               <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-mobile"></i> Primary mobile phone  </b> 
                                <p data-persona="value" class="editable_text" >  0903122299 </p>
                            </li>
                        </ol>
@@ -60,177 +59,160 @@
 
     </div>
 
-    <div class="line"></div>
+    <!--  Tab Navigation Items -->
+       <ul class="nav nav-tabs" data-tab-content="profile_ext_data_tabs" >
+       	  <li class="active" ><a href="javascript:" data-target-tab="panel_profile_business_data" > Business Data</a></li>
+       	  <li ><a href="javascript:" data-target-tab="panel_profile_marketing_data" > Marketing Data</a></li>
+       	  
+		
+	   </ul>
+	    <!-- Tab Contents  -->
+       <div class="tab-content" id="profile_ext_data_tabs" >
+       
+       		<div class="tab-pane active" id="panel_profile_business_data" >
+       		
+       		</div>
+			
+		 	<div class="tab-pane " id="panel_profile_marketing_data" >
+		 		<!--  research -->
+		 		    <div class="row">
+				        <div class="col-md-6">
+				            <h4> {{persona_expectations}} 
+				                <span class="editable_add_item" data-target="persona_expectations"  ></span>  
+				            </h4> 
+				            
+				            <table style="width: 100%;" class="plain">
+				                <tr>
+				                    <td>
+				                        <ol id="persona_expectations" data-field="persona_expectations" >
+				                            <li>
+				                                <p class="editable_text"> đọc thử nội dung trước khi mua  </p>
+				                            </li>
+				                            <li>
+				                                <p class="editable_text"> kiến thức phù hợp thực tế </p>
+				                            </li>
+				                            <li>
+				                                <p class="editable_text"> tăng doanh thu bán hàng online </p>
+				                            </li>
+				                        </ol>
+				                    </td>
+				                </tr>
+				            </table>
+				        </div>
+				
+				        <div class="col-md-6">
+				            <h4> {{persona_interests}}  
+				                <span class="editable_add_item" data-target="persona_interests"  ></span>  
+				            </h4>
+				            <table style="width: 100%;" class="plain">
+				                <tr>
+				                    <td>
+				                        <ol id="persona_interests" data-field="persona_interests" >
+				                            <li>
+				                                <p class="editable_text"> học hỏi kiến thức mới về công nghệ </p>
+				                            </li>
+				                            <li>
+				                                <p class="editable_text"> phát triển kinh doanh, doanh nghiệp </p>
+				                            </li>
+				                            
+				                        </ol>
+				                    </td>
+				                </tr>
+				            </table>
+				        </div>
+				    </div>
+				    <div class="line"></div>
+				    
+				    <!--  -->
+				    <div class="row">
 
-    <div class="row">
-
-        <div class="col-md-6">
-            <h4> {{persona_expectations}} 
-                <span class="editable_add_item" data-target="persona_expectations"  ></span>  
-            </h4> 
-            
-            <table style="width: 100%;" class="plain">
-                <tr>
-                    <td>
-                        <ol id="persona_expectations" data-field="persona_expectations" >
-                            <li>
-                                <p class="editable_text"> đọc thử nội dung trước khi mua  </p>
-                            </li>
-                            <li>
-                                <p class="editable_text"> kiến thức phù hợp thực tế </p>
-                            </li>
-                            <li>
-                                <p class="editable_text"> tăng doanh thu bán hàng online </p>
-                            </li>
-                        </ol>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="col-md-6">
-            <h4> {{persona_interests}}  
-                <span class="editable_add_item" data-target="persona_interests"  ></span>  
-            </h4>
-            <table style="width: 100%;" class="plain">
-                <tr>
-                    <td>
-                        <ol id="persona_interests" data-field="persona_interests" >
-                            <li>
-                                <p class="editable_text"> học hỏi kiến thức mới về công nghệ </p>
-                            </li>
-                            <li>
-                                <p class="editable_text"> phát triển kinh doanh, doanh nghiệp </p>
-                            </li>
-                            <li>
-                                <p class="editable_text"> cảm thấy tự tin, đủ kiến thức cho công việc </p>
-                            </li>
-
-                        </ol>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-    </div>
-
-    <div class="line"></div>
-
-    <div class="row">
-
-        <div class="col-md-6">
-            <h4> {{business_ideas}} 
-                <span class="editable_add_item" data-target="business_ideas"  ></span> 
-            </h4>
-            <table class="plain" style="width: 100%;">
-                <tr>
-                    <td>
-                        <ol id="business_ideas" data-field="business_ideas" >
-                            <li>
-                                <p class="editable_text"> Chủ đề sách về marketing 4.0 </p>
-                            </li>
-                            <li>
-                                <p class="editable_text"> Chủ đề sách về nền tảng công nghệ (Technology Platform) </p>
-                            </li>
-                            <li>
-                                <p class="editable_text"> Chủ đề sách về nghệ thuật bán hàng online </p>
-                            </li>
-                        </ol>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="col-md-6">
-            <h4> {{business_solutions}}
-                <span class="editable_add_item" data-target="business_solutions"  ></span> 
-            </h4>
-            <table class="plain" style="width: 100%;">
-                <tr>
-                    <td>
-                        <ol id="business_solutions" data-field="business_solutions" >
-                            <li>
-                                <p class="editable_text"> Chạy marketing  "Marketing Cuộc Cách Mạng Công Nghệ 4.0" của Philip Kotler </p>
-                            </li>
-                            <li>
-                                <p class="editable_text"> Chạy marketing cuốn Platform Ứng Dụng </p>
-                            </li>
-                            <li>
-                                <p class="editable_text"> Tìm kiếm các chuyên gia và đặt hàng họ viết sách  </p>
-                            </li>
-                        </ol>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-    </div>
-
-    <div class="line"></div>
-
-
-    <div class="row">
-        <div class="col-md-6">
-            <h4> {{persona_touchpoints}}
-                <span class="editable_add_item" data-target="persona_touchpoints"  ></span>
-            </h4>
-            <table class="plain">
-                <tr>
-                    <td>
-                        <ol id="persona_touchpoints" data-field="persona_touchpoints" >
-                         	<li>
-                                <p class="editable_text"> Google Search </p>
-                            </li>
-                            <li>
-                                <p class="editable_text"> Facebook Group </p>
-                            </li>
-                            <li>
-                                <p class="editable_text"> YouTube channel </p>
-                            </li>
-                            <li>
-                                <p class="editable_text"> E-commerce Website </p>
-                            </li>
-                            <li>
-                                <p class="editable_text"> E-commerce Mobile App </p>
-                            </li>
-                            <li>
-                                <p class="editable_text"> Email khách hàng (CRM) </p>
-                            </li>
-                            <li>
-                                <p class="editable_text"> Số điện thoại khách hàng (CRM) </p>
-                            </li>
-                            <li>
-                                <p class="editable_text"> Cửa hàng bán lẻ </p>
-                            </li>
-                            <li>
-                                <p class="editable_text"> Đường sách </p>
-                            </li>
-                        </ol>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="col-md-6">
-        	<h4> {{conversion_actions}} <span class="editable_add_item" data-target="conversion_actions" ></span> </h4>
-            <table class="plain" style="width: 100%;">
-                <tr>
-                    <td>
-                        <ol id="conversion_actions" data-field="conversion_actions" >
-                            <li>
-                                <p class="editable_text"> Add To Cart </p>
-                            </li>
-                            <li>
-                                <p class="editable_text"> Ghé nhà sách </p>
-                            </li>
-                            <li>
-                                <p class="editable_text"> Đọc thử </p>
-                            </li>
-                        </ol>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
+				        <div class="col-md-6">
+				            <h4> {{business_ideas}} 
+				                <span class="editable_add_item" data-target="business_ideas"  ></span> 
+				            </h4>
+				            <table class="plain" style="width: 100%;">
+				                <tr>
+				                    <td>
+				                        <ol id="business_ideas" data-field="business_ideas" >
+				                            <li>
+				                                <p class="editable_text"> Chủ đề sách về marketing 4.0 </p>
+				                            </li>
+				                            <li>
+				                                <p class="editable_text"> Chủ đề sách về nền tảng công nghệ (Technology Platform) </p>
+				                            </li>
+				
+				                        </ol>
+				                    </td>
+				                </tr>
+				            </table>
+				        </div>
+				
+				        <div class="col-md-6">
+				            <h4> {{business_solutions}}
+				                <span class="editable_add_item" data-target="business_solutions"  ></span> 
+				            </h4>
+				            <table class="plain" style="width: 100%;">
+				                <tr>
+				                    <td>
+				                        <ol id="business_solutions" data-field="business_solutions" >
+				                            <li>
+				                                <p class="editable_text"> Chạy marketing  "Marketing Cuộc Cách Mạng Công Nghệ 4.0" của Philip Kotler </p>
+				                            </li>
+				                            <li>
+				                                <p class="editable_text"> Chạy marketing cuốn Platform Ứng Dụng </p>
+				                            </li>
+				                        </ol>
+				                    </td>
+				                </tr>
+				            </table>
+				        </div>
+				
+				    </div>
+				    <div class="line"></div>
+				    
+				    <!--  -->
+				    <div class="row">
+				        <div class="col-md-6">
+				            <h4> {{persona_touchpoints}}
+				                <span class="editable_add_item" data-target="persona_touchpoints"  ></span>
+				            </h4>
+				            <table class="plain">
+				                <tr>
+				                    <td>
+				                        <ol id="persona_touchpoints" data-field="persona_touchpoints" >
+				                         	
+				                            <li>
+				                                <p class="editable_text"> YouTube channel </p>
+				                            </li>
+				                            <li>
+				                                <p class="editable_text"> E-commerce Website </p>
+				                            </li>
+				                           
+				                        </ol>
+				                    </td>
+				                </tr>
+				            </table>
+				        </div>
+				        <div class="col-md-6">
+				        	<h4> {{conversion_actions}} <span class="editable_add_item" data-target="conversion_actions" ></span> </h4>
+				            <table class="plain" style="width: 100%;">
+				                <tr>
+				                    <td>
+				                        <ol id="conversion_actions" data-field="conversion_actions" >
+				                            <li>
+				                                <p class="editable_text"> Add To Cart </p>
+				                            </li>
+				                            <li>
+				                                <p class="editable_text"> Đọc thử </p>
+				                            </li>
+				                        </ol>
+				                    </td>
+				                </tr>
+				            </table>
+				        </div>
+				    </div>
+		 	</div>
+		</div>
 
 </div>
 <br><br><br>
@@ -240,6 +222,7 @@
     
     function initProfileDataEditor(profileId) {
     	console.log(profileId);
+    	setupTabPanels();
     	
     	//setup editable node
         $('.editable_text').each(function(){
