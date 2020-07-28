@@ -14,14 +14,13 @@ import leotech.system.util.RequestInfoUtil;
 
 public class CdpProfileApiHandler extends BaseSecuredDataApi {
 	
-	
 	static final String API_LIST_ALL = "/cdp/profiles";
 	static final String API_LIST_WITH_FILTER = "/cdp/profiles/filter";
 	static final String API_CREATE_NEW = "/cdp/profile/new";
-	static final String API_UPDATE_INFO = "/cdp/profile/update";
+	static final String API_UPDATE_MODEL = "/cdp/profile/update";
 	static final String API_MERGE = "/cdp/profile/merge";
-	static final String API_GET_INFO = "/cdp/profile/get";
-	static final String API_DISABLE = "/cdp/profile/disable";
+	static final String API_GET_MODEL = "/cdp/profile/get";
+	static final String API_REMOVE = "/cdp/profile/remove";
 
 	@Override
 	public JsonDataPayload httpPostApiHandler(String userSession, String uri, JsonObject paramJson) throws Exception {
@@ -33,15 +32,19 @@ public class CdpProfileApiHandler extends BaseSecuredDataApi {
 						DataFilter filter = new DataFilter(uri, paramJson);
 						return ProfileDataService.filter(filter);
 					}
-					case API_CREATE_NEW : {
-						Profile pf = ProfileDataService.createNewCrmProfile(paramJson, loginUser);
-						return JsonDataPayload.ok(uri, pf.getId(), true);
+					case API_GET_MODEL : {
+						String id = paramJson.getString("id", "0");
+						Profile pf = ProfileDataService.getSingleViewById(id);
+						if(pf == null) {
+							pf = new Profile();
+						}
+						return JsonDataPayload.ok(uri, pf, true);
 					}
-					case API_UPDATE_INFO : {
+					case API_UPDATE_MODEL : {
 						String key = ProfileDataService.update(paramJson, loginUser).getId();
 						return JsonDataPayload.ok(uri, key, true);
 					}
-					case API_DISABLE : {
+					case API_REMOVE : {
 						boolean rs = ProfileDataService.remove(paramJson, loginUser);
 						return JsonDataPayload.ok(uri, rs, true);
 					}
@@ -70,14 +73,14 @@ public class CdpProfileApiHandler extends BaseSecuredDataApi {
 						List<Profile> list = ProfileDataService.list(startIndex, numberResult);
 						return JsonDataPayload.ok(uri, list, true);
 					}
-					case API_GET_INFO : {
+					case API_GET_MODEL : {
 						String id = RequestInfoUtil.getString(params,"id", "");
 						if (!id.isEmpty()) {
 							Profile profile;
 							if (id.equals("new")) {
 								profile = new Profile();
 							} else {
-								profile = ProfileDataService.getById(id);
+								profile = ProfileDataService.getSingleViewById(id);
 							}
 							return JsonDataPayload.ok(uri, profile, false);
 						}

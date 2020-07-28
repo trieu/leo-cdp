@@ -281,7 +281,6 @@ LeoCdpAdmin.navRouters = {
 
 //###############################################################################################################################
 
-LeoCdpAdmin.routerContext = {}
 
 function leoCdpRouter(objKey,objId){
 	var obj = LeoCdpAdmin.navRouters[objKey];
@@ -309,11 +308,17 @@ function leoCdpRouter(objKey,objId){
 	var vf = LeoCdpAdmin.navFunctions[obj.functionName];
 	
 	if(typeof vf === 'function') {
-		if(objId){
+		// init context for view router
+		LeoCdpAdmin.routerContext = {};
+		
+		if(objId)
+		{
 			console.log(objKey + " objId " + objId)
 			LeoCdpAdmin.routerContext.objId = objId;
 			vf.apply(null,[objId,breadcrumbHtml]);
-		} else {
+		} 
+		else 
+		{
 			console.log(objKey + " ")
 			LeoCdpAdmin.routerContext.objId = false;
 			vf.apply(null,[breadcrumbHtml]);

@@ -1,30 +1,30 @@
 <style>
 <!--
-#attribution_description {
-    text-align: center;
-    font-size: 18px;
-    width: 100%;
-    font-weight: bold;
-}
-.user_profile_attrs {
-    background-color: #463CC4;
-    width: 50px;
-    height: 20px;
-    display: inline;
-}
-.persona_profile_attrs {
-    background-color: #E91E0D;
-    width: 50px;
-    height: 20px;
-    display: inline;
-}
-#attribution_description {
-    text-align: center;
-    font-size: 18px;
-    width: 80%;
-    margin:auto;
-    font-weight: bold;
-}
+	#attribution_description {
+	    text-align: center;
+	    font-size: 18px;
+	    width: 100%;
+	    font-weight: bold;
+	}
+	.user_profile_attrs {
+	    background-color: #463CC4;
+	    width: 50px;
+	    height: 20px;
+	    display: inline;
+	}
+	.persona_profile_attrs {
+	    background-color: #E91E0D;
+	    width: 50px;
+	    height: 20px;
+	    display: inline;
+	}
+	#attribution_description {
+	    text-align: center;
+	    font-size: 18px;
+	    width: 80%;
+	    margin:auto;
+	    font-weight: bold;
+	}
 -->
 </style>
 
@@ -39,7 +39,7 @@
      </div>
 </div>
 
-<div class="container-fluid">
+<div class="container-fluid" id="page_data_holder" >
 
        <!-- MAIN BODY here -->
 
@@ -59,35 +59,35 @@
 		                           <ol id="visitor_attributes" data-field="visitor_attributes">
 		                               <li>
 		                                   <b> Profile ID </b> 
-		                                   <p> dsadsa231 </p>
+		                                   <p data-field="id" data-fieldholder="html" > </p>
 		                               </li>
 		                               <li>
 		                                   <b> Profile Type </b> 
-		                                   <p> CRM_CONTACT </p>
+		                                   <p data-field="typeAsText" data-fieldholder="html" > CRM_CONTACT </p>
 		                               </li>
 		                               <li>
 		                                   <b> Creation Date </b> 
-		                                   <p> 2020-06-11 09:35:37  </p>
+		                                   <p data-field="createdAt" data-fieldholder="html" > 2020-06-11 09:35:37  </p>
 		                               </li>
 		                               <li>
 		                                   <b> Modification Date </b> 
-		                                   <p> 2020-06-11 09:35:37  </p>
+		                                   <p data-field="updatedAt" data-fieldholder="html" > 2020-06-11 09:35:37  </p>
 		                               </li>
 		                               <li>
 		                                   <b> Data Completion Score </b> 
-		                                   <p> 80 </p>
+		                                   <p data-field="dataCompletionScore" data-fieldholder="html" > 80 </p>
 		                               </li>
 		                                <li>
 		                                   <b> Business Credit Score </b> 
-		                                   <p> 80 </p>
+		                                   <p data-field="businessCreditScore" data-fieldholder="html" > 80 </p>
 		                               </li>
 		                               <li>
 		                                   <b> Customer Satisfaction Score </b> 
-		                                   <p> 80 </p>
+		                                   <p data-field="satisfactionScore" data-fieldholder="html" > 80 </p>
 		                               </li>
 		                               <li>
 		                                   <b> Customer Lifetime Value </b> 
-		                                   <p> 10,000,000 VND </p>
+		                                   <p data-field="totalCLV" data-fieldholder="html" > 10,000,000 VND </p>
 		                               </li>
 		                               
 		                           </ol>
@@ -103,12 +103,12 @@
 		                       <td>
 		                           <ol id="visitor_attributes" data-field="visitor_attributes">
 		                               <li>
-		                                   <b> Last seen at the media channel </b> 
-		                                   <p> bookstore.bigdatavietnam.org  </p>
+		                                   <b> Last seen at the touchpoint name </b> 
+		                                   <p data-field="lastTouchpoint.name" data-fieldholder="html" >   </p>
 		                               </li>
 		                               <li>
-		                                   <b> Last seen at the touchpoint </b> 
-		                                   <p> https://bookstore.bigdatavietnam.org/html/page/artificial-intelligence-books  </p>
+		                                   <b> Last seen at the touchpoint url </b> 
+		                                   <p data-field="lastTouchpoint.url" data-fieldholder="html" >   </p>
 		                               </li>
 		                               <li>
 		                                   <b> Last seen at the location </b> 
@@ -158,29 +158,32 @@
                        <td>
                            <ol id="personal_attributes" data-field="personal_attributes">
                            	   <li>
-                                   <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-id-badge"></i> Full name </b> 
-                                   <p data-persona="value" class="editable_text" >  Nguyen Thanh Trung </p>
+                                   <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-id-badge"></i> First name </b> 
+                                   <p data-field="firstName" data-fieldholder="html" class="editable_text" >   Trung </p>
+                               </li>
+                               <li>
+                                   <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-id-badge"></i> Last name </b> 
+                                   <p data-field="lastName" data-fieldholder="html" >  Nguyen Thanh  </p>
                                </li>
                                <li>
                                    <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-male"></i> Gender </b> 
-                                   <p data-persona="value" class="editable_text" >  Male </p>
+                                   <p data-field="genderAsText" data-fieldholder="html" >  Male </p>
                                </li>
                                <li>
                                    <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-user-circle-o"></i> Age </b> 
-                                   <p data-persona="value" class="editable_text" >  30 </p> 
+                                   <p data-field="age" data-fieldholder="html" >  30 </p> 
                                </li>
                                <li>
                                    <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-map-marker"></i> Living location  </b> 
-                                   <p data-persona="value" class="editable_text" >  TP.HCM, Việt Nam  </p>
+                                   <p data-field="livingLocation" data-fieldholder="html" >  TP.HCM, Việt Nam  </p>
                                </li>
                                <li>
                                    <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-envelope"></i> Primary email </b> 
-                                   <p data-persona="value" class="editable_text" >  trungtn@bigdatavietnam.org </p>
+                                   <p data-field="primaryEmail" data-fieldholder="html" >  trungtn@bigdatavietnam.org </p>
                                </li>
                                <li>
                                    <b data-persona="key" class="editable_text" >  <i class="fa fa-fw fa-mobile"></i> Primary mobile phone </b> 
-                                  
-                                   <p data-persona="value" class="editable_text" > 0903122299 </p>
+                                   <p data-field="primaryPhone" data-fieldholder="html" > 0903122299 </p>
                                </li>
                            </ol>
                        </td>
@@ -329,13 +332,13 @@
 
 <script type="text/javascript">
     ///Js code
-	
-     
+    
     
     function initProfile360Analytics(profileId) {
     	console.log(profileId);
     	//setup editable node
 		setupTabPanels();
+		loadCurrentProfile(profileId)
     	
         setTimeout(function(){
         	//profilePathDiagram();
@@ -352,6 +355,40 @@
     
     function removeCurrentProfile(){
     	alert('TODO')
+    }
+    
+    function loadCurrentProfile(profileId) {
+         console.log('loadCurrentProfile profileId ' + profileId);
+
+         var urlStr = baseAdminApi + '/cdp/profile/get';
+         var params = {
+             'id': profileId
+         };
+         
+         LeoCmsApiUtil.callPostAdminApi(urlStr, params, function (json) {
+             if (json.httpCode === 0 && json.errorMessage === '') {
+             	LeoCdpAdmin.routerContext.profileData = json.data;
+             	
+             	$('#page_data_holder').find('*[data-field]').each(function(){
+             		var field = $(this).data('field');
+             		var toks = field.split('.');
+             		if(toks.length === 1){
+             			var value = LeoCdpAdmin.routerContext.profileData[toks[0]];
+                 		$(this).html(value)
+                 		console.log( value )  
+             		} 
+             		else if(toks.length === 2){
+             			var value = LeoCdpAdmin.routerContext.profileData[toks[0]][toks[1]];
+                 		$(this).html(value)
+                 		console.log( value )  
+             		}
+             		
+             	});
+             	
+             } else {
+                 LeoCmsApiUtil.logErrorPayload(json);
+             }
+         });
     }
 
     function profilePathDiagram() {

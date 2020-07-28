@@ -5,7 +5,9 @@ import java.util.List;
 
 import io.vertx.core.json.JsonObject;
 import leotech.cdp.dao.ProfileDaoUtil;
+import leotech.cdp.dao.singleview.ProfileSingleDataView;
 import leotech.cdp.model.customer.Profile;
+import leotech.cdp.model.customer.ProfileType;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataTablePayload;
 import leotech.system.model.User;
@@ -46,17 +48,17 @@ public class ProfileDataService {
 		
 		if (pf == null) {
 			
-			int type = Profile.ProfileType.ANONYMOUS;
+			int type = ProfileType.ANONYMOUS;
 			if (StringUtil.isNotEmpty(email) || StringUtil.isNotEmpty(phone) || StringUtil.isNotEmpty(loginId)) {
-				type = Profile.ProfileType.IDENTIFIED;
+				type = ProfileType.IDENTIFIED;
 			} else if (StringUtil.isNotEmpty(email) && StringUtil.isNotEmpty(phone)) {
-				type = Profile.ProfileType.CRM_CONTACT;
+				type = ProfileType.CRM_CONTACT;
 			}
 			
-			if (type == Profile.ProfileType.ANONYMOUS) {
+			if (type == ProfileType.ANONYMOUS) {
 				pf = Profile.newAnonymousProfile( observerId, srcTouchpointId, lastSeenIp, visitorId,
 						userDeviceId, fingerprintId);
-			} else if (type == Profile.ProfileType.IDENTIFIED) {
+			} else if (type == ProfileType.IDENTIFIED) {
 
 				pf = Profile.newIdentifiedProfile( observerId, srcTouchpointId, lastSeenIp, visitorId,
 						userDeviceId, email, fingerprintId);
@@ -132,10 +134,11 @@ public class ProfileDataService {
 		return rs;
 	}
 	
-	public static Profile getById(String id) {
-		Profile profile = ProfileDaoUtil.getById(id);
+	public static ProfileSingleDataView getSingleViewById(String id) {
+		ProfileSingleDataView profile = ProfileDaoUtil.getSingleViewById(id);
 		return profile;
 	}
+	
 	
 	public static Profile createNewCrmProfile(JsonObject paramJson, User loginUser) {
 		String firstName = paramJson.getString("firstName", "");

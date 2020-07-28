@@ -28,23 +28,7 @@ import rfx.core.util.StringUtil;
  */
 public class Profile extends CdpPersistentObject implements Comparable<Profile> {
 
-	public static class ProfileType {
-		// DMP
-		public final static int ANONYMOUS = 0;
-		public final static int IDENTIFIED = 1;
-		public final static int DMP_PROFILE = 2;
-		public final static int KOL_IN_NETWORK = 3;
-		
-		// CRM
-		public final static int CRM_CONTACT = 4;
-		public final static int KEY_ACCOUNT = 5;
-		
-		// Professional network
-		public final static int PARTNER = 6;
-		public final static int INTEGRATOR = 7;
-		public final static int COMPETITOR = 8;
-		public final static int GATEKEEPER = 9;
-	}
+	
 
 	public static final String COLLECTION_NAME = COLLECTION_PREFIX + Profile.class.getSimpleName().toLowerCase();
 	static ArangoCollection instance;
@@ -57,13 +41,30 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 			instance = arangoDatabase.collection(COLLECTION_NAME);
 
 			// ensure indexing key fields for fast lookup
+			instance.ensureHashIndex(Arrays.asList("rootProfileId"), new HashIndexOptions());
+			instance.ensurePersistentIndex(Arrays.asList("visitorId"),
+					new PersistentIndexOptions().unique(false));
+			instance.ensurePersistentIndex(Arrays.asList("type"),
+					new PersistentIndexOptions().unique(false));
+			
 			instance.ensurePersistentIndex(Arrays.asList("primaryEmail"),
 					new PersistentIndexOptions().unique(false));
 			instance.ensurePersistentIndex(Arrays.asList("primaryPhone"),
 					new PersistentIndexOptions().unique(false));
 			instance.ensurePersistentIndex(Arrays.asList("primaryAvatar"),
 					new PersistentIndexOptions().unique(false));
-			instance.ensureHashIndex(Arrays.asList("rootProfileId"), new HashIndexOptions());
+			instance.ensurePersistentIndex(Arrays.asList("crmRefId"),
+					new PersistentIndexOptions().unique(false));
+			
+			instance.ensurePersistentIndex(Arrays.asList("lastChannelId"),
+					new PersistentIndexOptions().unique(false));
+			instance.ensurePersistentIndex(Arrays.asList("lastSeenIp"),
+					new PersistentIndexOptions().unique(false));
+			instance.ensurePersistentIndex(Arrays.asList("lastTouchpointId"),
+					new PersistentIndexOptions().unique(false));
+			instance.ensurePersistentIndex(Arrays.asList("lastUsedDeviceId"),
+					new PersistentIndexOptions().unique(false));
+			
 			instance.ensurePersistentIndex(Arrays.asList("identities[*]"),
 					new PersistentIndexOptions().unique(false));
 			instance.ensurePersistentIndex(Arrays.asList("usedDeviceIds[*]"),
@@ -72,12 +73,16 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 					new PersistentIndexOptions().unique(false));
 			instance.ensurePersistentIndex(Arrays.asList("inSegments[*]"),
 					new PersistentIndexOptions().unique(false));
+			instance.ensurePersistentIndex(Arrays.asList("funnelStage"),
+					new PersistentIndexOptions().unique(false));
+			instance.ensurePersistentIndex(Arrays.asList("locationCode"),
+					new PersistentIndexOptions().unique(false));
+			
 			instance.ensurePersistentIndex(Arrays.asList("top1000Touchpoints[*]"),
 					new PersistentIndexOptions().unique(false));
 			instance.ensurePersistentIndex(Arrays.asList("inCollections[*]"),
 					new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("visitorId"),
-					new PersistentIndexOptions().unique(false));
+			
 			instance.ensureHashIndex(Arrays.asList("personaUri"), new HashIndexOptions());
 		}
 		return instance;
@@ -95,8 +100,11 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	@Expose
 	protected Date createdAt = new Date();
+	
+	@Expose
+	protected Date updatedAt;
 
-	// the main ID after Identity Resolution process
+	// the main ID after Identity Resolution processing
 	@Expose
 	String rootProfileId = "";
 
@@ -139,6 +147,8 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	@Expose
 	protected String crmRefId = "";
 
+	// --- BEGIN key Personal attributes
+	
 	@Expose
 	protected String firstName = "";
 	
@@ -156,9 +166,18 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	@Expose
 	protected String primaryAvatar = "";
+	
+	@Expose
+	protected String livingLocation = "";
+	
+	@Expose
+	protected String locationCode = "";
+	
+	@Expose
+	protected String mainNationality = "";
 
 	@Expose
-	protected int gender = 0;
+	protected int gender = -1;
 
 	@Expose
 	protected int age = 0;
@@ -168,6 +187,60 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	@Expose
 	protected int ageGroup = 0;
+	
+	@Expose
+	protected Map<String, String> personalContacts = new HashMap<>(10);
+	
+	@Expose
+	protected Map<String, String> businessContacts = new HashMap<>(10);
+	
+	@Expose
+	protected Map<String, String> socialMediaProfiles = new HashMap<>(10);
+	
+	@Expose
+	protected Map<String, String> extPersonalAttributes = new HashMap<>(30);
+	
+	
+	// --- END key Personal attributes
+	
+	
+	// --- BEGIN Marketing Data Model
+	
+	@Expose
+	protected Set<String> personalProblems = new HashSet<>(20);
+	
+	@Expose
+	protected Set<String> personalInterests = new HashSet<>(20);
+	
+	@Expose
+	protected Set<String> ideasForBusiness = new HashSet<>(20);
+	
+	@Expose
+	protected Set<String> solutionsForCustomer  = new HashSet<>(20);
+	
+	@Expose
+	protected Set<String> mediaChannels  = new HashSet<>(30);
+	
+	@Expose
+	protected Set<String> marketingKeywords = new HashSet<>(50);
+	
+	@Expose
+	protected Set<String> funnelMetrics  = new HashSet<>(20);
+	
+	@Expose
+	protected String funnelStage = "";
+	
+	
+	// --- END Marketing Data Model
+	
+	
+	// --- BEGIN Business Data Model
+	
+	@Expose
+	protected Map<String, String> businessData = new HashMap<>();
+	
+	@Expose
+	protected Map<String, Integer> referrerChannels = new HashMap<>(50);
 
 	@Expose
 	protected Set<String> usedDeviceIds = new HashSet<>(10);
@@ -176,31 +249,10 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	protected Set<String> workingHistory = new HashSet<>(20);
 
 	@Expose
-	protected Map<String, Integer> referrerChannels = new HashMap<>(20);
-
-	@Expose
 	protected List<String> viewedContents = new ArrayList<String>(100);
 
 	@Expose
-	protected Map<String, String> personalAttributes = new HashMap<>(30);
-
-	@Expose
-	protected Map<String, String> socialMediaProfiles = new HashMap<>(10);
-
-	@Expose
-	protected Map<String, String> personalContacts = new HashMap<>(10);
-	
-	@Expose
-	protected Map<String, String> businessContacts = new HashMap<>(10);
-
-	@Expose
 	protected Map<String, Integer> weeklyMobileUsage = new HashMap<>(7);
-
-	@Expose
-	protected Map<String, Integer> mediaInterests = new HashMap<>(20);
-
-	@Expose
-	protected Map<String, Integer> personalInterests = new HashMap<>(20);
 
 	@Expose
 	protected Map<String, String> subscribedChannels = new HashMap<>(100);
@@ -210,6 +262,8 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	@Expose
 	protected Set<String> supportHistory = new HashSet<String>();
+	
+	// --- END Business Data Model
 
 	@Expose
 	protected int dataCompletionScore = 0;
@@ -226,8 +280,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	@Expose
 	protected int totalCLV = 0;
 
-	@Expose
-	protected Date updatedAt;
+	
 
 	@Expose
 	protected int mergeCode = 0;
@@ -238,8 +291,6 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	@Expose
 	protected int partitionId = 0;
 	
-	@Expose
-	protected Map<String, Map<String,Object>> extBusinessData = new HashMap<>();
 	
 	@Expose
 	protected Map<String, Map<String,Integer>> predictionMetrics = new HashMap<>();
@@ -546,20 +597,14 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		this.usedDeviceIds = usedDeviceIds;
 	}
 
-	public Map<String, Integer> getMediaInterests() {
-		return mediaInterests;
+	
+
+	public Map<String, String> getExtPersonalAttributes() {
+		return extPersonalAttributes;
 	}
 
-	public void setMediaInterests(Map<String, Integer> mediaInterests) {
-		this.mediaInterests = mediaInterests;
-	}
-
-	public Map<String, String> getPersonalAttributes() {
-		return personalAttributes;
-	}
-
-	public void setPersonalAttributes(Map<String, String> personalAttributes) {
-		this.personalAttributes = personalAttributes;
+	public void setExtPersonalAttributes(Map<String, String> extPersonalAttributes) {
+		this.extPersonalAttributes = extPersonalAttributes;
 	}
 
 	public Map<String, String> getSocialMediaProfiles() {
@@ -578,14 +623,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		this.personalContacts = personalContacts;
 	}
 
-	public Map<String, Integer> getPersonalInterests() {
-		return personalInterests;
-	}
-
-	public void setPersonalInterests(Map<String, Integer> personalInterests) {
-		this.personalInterests = personalInterests;
-	}
-
+	
 	public Map<String, String> getSubscribedChannels() {
 		return subscribedChannels;
 	}
@@ -618,13 +656,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		this.businessCreditScore = businessCreditScore;
 	}
 
-	public Map<String, Map<String, Object>> getExtBusinessData() {
-		return extBusinessData;
-	}
-
-	public void setExtBusinessData(Map<String, Map<String, Object>> extBusinessData) {
-		this.extBusinessData = extBusinessData;
-	}
+	
 
 	public Map<String, Map<String, Integer>> getPredictionMetrics() {
 		return predictionMetrics;
@@ -779,6 +811,116 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	public String getVisitorId() {
 		return visitorId;
+	}
+	
+	
+
+	public String getLivingLocation() {
+		return livingLocation;
+	}
+
+	public void setLivingLocation(String livingLocation) {
+		this.livingLocation = livingLocation;
+	}
+
+	public String getLocationCode() {
+		return locationCode;
+	}
+
+	public void setLocationCode(String locationCode) {
+		this.locationCode = locationCode;
+	}
+
+	public String getMainNationality() {
+		return mainNationality;
+	}
+
+	public void setMainNationality(String mainNationality) {
+		this.mainNationality = mainNationality;
+	}
+
+	public Set<String> getPersonalProblems() {
+		return personalProblems;
+	}
+
+	public void setPersonalProblems(Set<String> personalProblems) {
+		this.personalProblems = personalProblems;
+	}
+
+	public Set<String> getPersonalInterests() {
+		return personalInterests;
+	}
+
+	public void setPersonalInterests(Set<String> personalInterests) {
+		this.personalInterests = personalInterests;
+	}
+
+	public Set<String> getIdeasForBusiness() {
+		return ideasForBusiness;
+	}
+
+	public void setIdeasForBusiness(Set<String> ideasForBusiness) {
+		this.ideasForBusiness = ideasForBusiness;
+	}
+
+	public Set<String> getSolutionsForCustomer() {
+		return solutionsForCustomer;
+	}
+
+	public void setSolutionsForCustomer(Set<String> solutionsForCustomer) {
+		this.solutionsForCustomer = solutionsForCustomer;
+	}
+
+	public Set<String> getMediaChannels() {
+		return mediaChannels;
+	}
+
+	public void setMediaChannels(Set<String> mediaChannels) {
+		this.mediaChannels = mediaChannels;
+	}
+
+	public Set<String> getMarketingKeywords() {
+		return marketingKeywords;
+	}
+
+	public void setMarketingKeywords(Set<String> marketingKeywords) {
+		this.marketingKeywords = marketingKeywords;
+	}
+
+	public Set<String> getFunnelMetrics() {
+		return funnelMetrics;
+	}
+
+	public void setFunnelMetrics(Set<String> funnelMetrics) {
+		this.funnelMetrics = funnelMetrics;
+	}
+
+	public String getFunnelStage() {
+		return funnelStage;
+	}
+
+	public void setFunnelStage(String funnelStage) {
+		this.funnelStage = funnelStage;
+	}
+
+	public Map<String, String> getBusinessData() {
+		return businessData;
+	}
+
+	public void setBusinessData(Map<String, String> businessData) {
+		this.businessData = businessData;
+	}
+
+	public String getCrmRefId() {
+		return crmRefId;
+	}
+
+	public void setCrmRefId(String crmRefId) {
+		this.crmRefId = crmRefId;
+	}
+
+	public void setTop1000Touchpoints(Set<String> top1000Touchpoints) {
+		this.top1000Touchpoints = top1000Touchpoints;
 	}
 
 	public void setVisitorId(String visitorId) {

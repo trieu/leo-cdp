@@ -1,14 +1,11 @@
 package leotech.cms.service;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.io.FileUtils;
 
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
@@ -21,7 +18,6 @@ import leotech.cms.query.SearchPostUtil;
 import leotech.crawler.model.CrawledYouTubeVideo;
 import leotech.system.model.AppMetadata;
 import leotech.system.model.User;
-import leotech.system.util.seach.LuceneSearchPostUtil;
 
 public class PostDataService {
 
@@ -57,7 +53,7 @@ public class PostDataService {
 		return saveId;
 	}
 
-	public static String savePostInfo(JsonObject paramJson, User loginUser) {
+	public static String savePost(JsonObject paramJson, User loginUser) {
 		String ownerId = loginUser.getKey();
 		String postId = paramJson.getString("postId", "");
 		String pageId = paramJson.getString("pageId", "");

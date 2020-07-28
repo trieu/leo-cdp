@@ -88,6 +88,21 @@ public class ProfileDaoUtil  extends BaseLeoCdpDao {
 		return p;
 	}
 	
+	public static ProfileSingleDataView getSingleViewById(String id) {
+		ArangoDatabase db = getCdpDbInstance();
+		Map<String, Object> bindVars = new HashMap<>(1);
+		bindVars.put("id", id);
+		CallbackQuery<ProfileSingleDataView> callback = new CallbackQuery<ProfileSingleDataView>() {
+			@Override
+			public ProfileSingleDataView apply(ProfileSingleDataView obj) {
+				obj.unifyDataToSinpleView();
+				return obj;
+			}
+		};
+		ProfileSingleDataView p = new ArangoDbQuery<ProfileSingleDataView>(db, AQL_GET_PROFILE_BY_ID, bindVars, ProfileSingleDataView.class, callback).getResultsAsObject();
+		return p;
+	}
+	
 	public static List<Profile> list(int startIndex, int numberResult) {
 		ArangoDatabase db = getCdpDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(2);

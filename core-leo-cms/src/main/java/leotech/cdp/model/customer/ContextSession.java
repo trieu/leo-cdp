@@ -13,10 +13,8 @@ import com.arangodb.entity.DocumentField;
 import com.arangodb.entity.DocumentField.Type;
 import com.arangodb.model.PersistentIndexOptions;
 import com.arangodb.model.TtlIndexOptions;
-import com.google.gson.annotations.Expose;
 
 import leotech.cdp.model.CdpPersistentObject;
-import leotech.system.util.database.ArangoDbUtil;
 import rfx.core.util.StringUtil;
 
 /**
@@ -93,7 +91,7 @@ public class ContextSession extends CdpPersistentObject {
 	String observerId;
 	String profileId;
 	String visitorId;
-	int profileType = Profile.ProfileType.ANONYMOUS;
+	int profileType = ProfileType.ANONYMOUS;
 	
 	Date createAt;
 	Date updatedAt;

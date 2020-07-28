@@ -46,7 +46,7 @@ public class AdminPostApiHandler extends BaseSecuredDataApi {
 				} else if (uri.equalsIgnoreCase(API_SAVE)) {
 					String key = null;
 					try {
-						key = PostDataService.savePostInfo(paramJson, loginUser);
+						key = PostDataService.savePost(paramJson, loginUser);
 					} catch (Throwable e) {
 						return JsonDataPayload.fail(e, 500);
 					}
