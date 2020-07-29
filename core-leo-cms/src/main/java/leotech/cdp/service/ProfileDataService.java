@@ -3,6 +3,8 @@ package leotech.cdp.service;
 import java.util.Date;
 import java.util.List;
 
+import com.google.gson.Gson;
+
 import io.vertx.core.json.JsonObject;
 import leotech.cdp.dao.ProfileDaoUtil;
 import leotech.cdp.dao.singleview.ProfileSingleDataView;
@@ -129,9 +131,13 @@ public class ProfileDataService {
 	}
 	
 	public static JsonDataTablePayload filter(DataFilter filter){
-		JsonDataTablePayload rs  = ProfileDaoUtil.filter(filter);
+		List<ProfileSingleDataView> list  = ProfileDaoUtil.filter(filter);
+		long recordsTotal = ProfileDaoUtil.countTotalOfProfiles();
+		int recordsFiltered = list.size();
+		int draw = filter.getDraw();
+		JsonDataTablePayload payload =  JsonDataTablePayload.data(filter.getUri(), list, recordsTotal, recordsFiltered, draw);
 		//TODO caching
-		return rs;
+		return payload;
 	}
 	
 	public static ProfileSingleDataView getSingleViewById(String id) {
@@ -156,40 +162,47 @@ public class ProfileDataService {
 	}
 	
 	public static Profile update(JsonObject paramJson, User loginUser) {
-		String profileId = paramJson.getString("profileId", "");
-		Profile pf = ProfileDaoUtil.getById(profileId);
 		
-		String firstName = paramJson.getString("firstName", "");
-		String lastName = paramJson.getString("lastName", "");
-		String email = paramJson.getString("email", "");
-		String phone = paramJson.getString("phone", "");
+		String id = paramJson.getString("dataObjectId", "");
+		String json = paramJson.getString("dataObjectJson", "{}");
+		ProfileSingleDataView dataObj = new Gson().fromJson(json, ProfileSingleDataView.class);
+		System.out.println(id);
+		System.out.println(dataObj);
 		
 		
-		if(!firstName.isEmpty()) {
-			pf.setLastName(firstName);
-		}
-		
-		if(!lastName.isEmpty()) {
-			pf.setLastName(lastName);
-		}
-		
-		if(!email.isEmpty()) {
-			pf.setPrimaryEmail(email);
-		}
-		
-		if(!phone.isEmpty()) {
-			pf.setPrimaryPhone(phone);
-		}
+//		Profile pf = ProfileDaoUtil.getById(profileId);
+//		
+//		String firstName = paramJson.getString("firstName", "");
+//		String lastName = paramJson.getString("lastName", "");
+//		String email = paramJson.getString("email", "");
+//		String phone = paramJson.getString("phone", "");
+//		
+//		
+//		if(!firstName.isEmpty()) {
+//			pf.setLastName(firstName);
+//		}
+//		
+//		if(!lastName.isEmpty()) {
+//			pf.setLastName(lastName);
+//		}
+//		
+//		if(!email.isEmpty()) {
+//			pf.setPrimaryEmail(email);
+//		}
+//		
+//		if(!phone.isEmpty()) {
+//			pf.setPrimaryPhone(phone);
+//		}
 		
 		// TODO run in a thread to commit to database
-		ProfileDaoUtil.update(pf);
-		return pf;
+		//ProfileDaoUtil.update(pf);
+		return dataObj;
 	}
 	
 	public static boolean remove(JsonObject paramJson, User loginUser) {
 		String profileId = paramJson.getString("profileId", "");
 		Profile pf = ProfileDaoUtil.getById(profileId);
-		pf.setStatus(-1);
+		pf.setStatus(-4);
 		
 		// TODO run in a thread to commit to database
 		ProfileDaoUtil.update(pf);

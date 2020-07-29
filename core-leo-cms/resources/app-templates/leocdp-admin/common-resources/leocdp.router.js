@@ -72,10 +72,10 @@ LeoCdpAdmin.navRouters = {
 		},
 		
 		// 1.5 Event Metrics for Media Channel and Touchpoint
-		"Event_Metrics" : {
-			"menuName" : "Event Metrics",
-			"functionName" : "loadEventMetrics",
-			"breadcrumb" : ["Customer Journey Hub", "Event Metrics"]
+		"Funnel_Metrics" : {
+			"menuName" : "Funnel Metrics",
+			"functionName" : "loadFunnelMetrics",
+			"breadcrumb" : ["Customer Journey Hub", "Funnel Metrics"]
 		},
 		
 		// 1.6 Data Observer for touchpoint and media channel

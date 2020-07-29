@@ -3,7 +3,7 @@ package leotech.cms.router;
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
-import leotech.cdp.admin.handler.CdpProfileApiHandler;
+import leotech.cdp.admin.handler.CdpProfileHandler;
 import leotech.cms.handler.admin.AdminCategoryApiHandler;
 import leotech.cms.handler.admin.AdminPageApiHandler;
 import leotech.cms.handler.admin.AdminPostApiHandler;
@@ -15,6 +15,7 @@ import leotech.core.api.BaseApiRouter;
 import leotech.system.model.JsonDataPayload;
 
 public class AdminApiRouter extends BaseApiRouter {
+	public static final String CDP_PROFILE_PREFIX = "/cdp/profile";
 
 	public AdminApiRouter(RoutingContext context) {
 		super(context);
@@ -33,7 +34,7 @@ public class AdminApiRouter extends BaseApiRouter {
 			}
 			//
 			else if (uri.startsWith(CDP_PROFILE_PREFIX)) {
-				payload = new CdpProfileApiHandler().httpPostApiHandler(userSession, uri, paramJson);
+				payload = new CdpProfileHandler().httpPostApiHandler(userSession, uri, paramJson);
 			}
 			//
 			else if (uri.startsWith(CATEGORY_PREFIX)) {
@@ -75,7 +76,7 @@ public class AdminApiRouter extends BaseApiRouter {
 			}
 			//
 			else if (uri.startsWith(CDP_PROFILE_PREFIX)) {
-				payload = new CdpProfileApiHandler().httpGetApiHandler(userSession, uri, params);
+				payload = new CdpProfileHandler().httpGetApiHandler(userSession, uri, params);
 			}
 			//
 			else if (uri.startsWith(CATEGORY_PREFIX)) {

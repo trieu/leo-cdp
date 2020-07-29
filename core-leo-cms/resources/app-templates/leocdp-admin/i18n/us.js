@@ -1,6 +1,8 @@
 window.i18nLeoAdminData = window.i18nLeoAdminData || function () {
 	var data = {};
 	
+	data["currency_code"] = "VND";
+	
 	//customer journey map view
 	data["target_customer_name"] = "Fullname";
 	data["persona_attributes"] = "Personal attributes";

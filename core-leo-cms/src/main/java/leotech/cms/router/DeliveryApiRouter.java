@@ -19,6 +19,10 @@ import leotech.system.model.JsonDataPayload;
  *
  */
 public class DeliveryApiRouter extends BaseApiRouter {
+	
+	public static final String COMMENT_PREFIX = "/comment";
+	public static final String BOOKMARK_PREFIX = "/bookmark";
+	public static final String ADS_PREFIX = "/ads";
 
 	public DeliveryApiRouter(RoutingContext context) {
 		super(context);

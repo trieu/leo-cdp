@@ -3,6 +3,8 @@ package leotech.cdp.dao.singleview;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 
 import leotech.cdp.dao.TouchpointDaoUtil;
@@ -96,5 +98,11 @@ public class ProfileSingleDataView extends Profile implements SingleDataView {
 
 	public DeviceInfo getLastUsedDevice() {
 		return lastUsedDevice;
+	}
+	
+	@Override
+	public String toString() {
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		return gson.toJson(this);
 	}
 }

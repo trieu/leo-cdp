@@ -112,7 +112,7 @@ public class ProfileDaoUtil  extends BaseLeoCdpDao {
 		return list;
 	}
 	
-	public static JsonDataTablePayload filter(DataFilter filter) {
+	public static List<ProfileSingleDataView> filter(DataFilter filter) {
 		ArangoDatabase db = getCdpDbInstance();
 		
 		//System.out.println("==> before apply DataFilter " + filter);
@@ -132,11 +132,7 @@ public class ProfileDaoUtil  extends BaseLeoCdpDao {
 		List<ProfileSingleDataView> list = new ArangoDbQuery<ProfileSingleDataView>(db, AQL_GET_PROFILES_BY_PAGINATION, 
 				bindVars, ProfileSingleDataView.class, callback).getResultsAsList();
 		
-		long recordsTotal = countTotalOfProfiles();
-		int recordsFiltered = list.size();
-		int draw = filter.getDraw();
-		JsonDataTablePayload payload =  JsonDataTablePayload.data(filter.getUri(), list, recordsTotal, recordsFiltered, draw);
-		return payload;
+		return list;
 	}
 
 	public static long countTotalOfProfiles() {

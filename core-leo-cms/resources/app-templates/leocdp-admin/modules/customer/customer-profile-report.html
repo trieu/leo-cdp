@@ -59,35 +59,35 @@
 		                           <ol id="visitor_attributes" data-field="visitor_attributes">
 		                               <li>
 		                                   <b> Profile ID </b> 
-		                                   <p data-field="id" data-fieldholder="html" > </p>
+		                                   <p data-field="id" data-fieldholder="html"  data-fieldtype="string"  > </p>
 		                               </li>
 		                               <li>
 		                                   <b> Profile Type </b> 
-		                                   <p data-field="typeAsText" data-fieldholder="html" > CRM_CONTACT </p>
+		                                   <p data-field="typeAsText" data-fieldholder="html"  data-fieldtype="string"  > CRM_CONTACT </p>
 		                               </li>
 		                               <li>
 		                                   <b> Creation Date </b> 
-		                                   <p data-field="createdAt" data-fieldholder="html" > 2020-06-11 09:35:37  </p>
+		                                   <p data-field="createdAt" data-fieldholder="html"  data-fieldtype="date"  > 2020-06-11 09:35:37  </p>
 		                               </li>
 		                               <li>
 		                                   <b> Modification Date </b> 
-		                                   <p data-field="updatedAt" data-fieldholder="html" > 2020-06-11 09:35:37  </p>
+		                                   <p data-field="updatedAt" data-fieldholder="html"  data-fieldtype="date"  > 2020-06-11 09:35:37  </p>
 		                               </li>
 		                               <li>
 		                                   <b> Data Completion Score </b> 
-		                                   <p data-field="dataCompletionScore" data-fieldholder="html" > 80 </p>
+		                                   <p data-field="dataCompletionScore" data-fieldholder="html"  data-fieldtype="int"  > 80 </p>
 		                               </li>
 		                                <li>
 		                                   <b> Business Credit Score </b> 
-		                                   <p data-field="businessCreditScore" data-fieldholder="html" > 80 </p>
+		                                   <p data-field="businessCreditScore" data-fieldholder="html"  data-fieldtype="int"  > 80 </p>
 		                               </li>
 		                               <li>
 		                                   <b> Customer Satisfaction Score </b> 
-		                                   <p data-field="satisfactionScore" data-fieldholder="html" > 80 </p>
+		                                   <p data-field="satisfactionScore" data-fieldholder="html"  data-fieldtype="int"  > 80 </p>
 		                               </li>
 		                               <li>
-		                                   <b> Customer Lifetime Value </b> 
-		                                   <p data-field="totalCLV" data-fieldholder="html" > 10,000,000 VND </p>
+		                                   <b> Customer Lifetime Value in {{currency_code}}</b> 
+		                                   <p data-field="totalCLV" data-fieldholder="html"  data-fieldtype="int"  > 10,000,000 </p>
 		                               </li>
 		                               
 		                           </ol>
@@ -104,11 +104,11 @@
 		                           <ol id="visitor_attributes" data-field="visitor_attributes">
 		                               <li>
 		                                   <b> Last seen at the touchpoint name </b> 
-		                                   <p data-field="lastTouchpoint.name" data-fieldholder="html" >   </p>
+		                                   <p data-field="lastTouchpoint.name" data-fieldholder="html"  data-fieldtype="string"  >   </p>
 		                               </li>
 		                               <li>
 		                                   <b> Last seen at the touchpoint url </b> 
-		                                   <p data-field="lastTouchpoint.url" data-fieldholder="html" >   </p>
+		                                   <p data-field="lastTouchpoint.url" data-fieldholder="html"  data-fieldtype="string"  >   </p>
 		                               </li>
 		                               <li>
 		                                   <b> Last seen at the location </b> 
@@ -159,31 +159,32 @@
                            <ol id="personal_attributes" data-field="personal_attributes">
                            	   <li>
                                    <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-id-badge"></i> First name </b> 
-                                   <p data-field="firstName" data-fieldholder="html" class="editable_text" >   Trung </p>
+                                   <p data-field="firstName" data-fieldholder="html"  data-fieldtype="string"  class="editable_text" >  - </p>
+                                   <input type="text" data-field="firstName" data-fieldholder="inputvalue" value=""><br>
                                </li>
                                <li>
                                    <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-id-badge"></i> Last name </b> 
-                                   <p data-field="lastName" data-fieldholder="html" >  Nguyen Thanh  </p>
+                                   <p data-field="lastName" data-fieldholder="html"  data-fieldtype="string"  >  - </p>
                                </li>
                                <li>
                                    <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-male"></i> Gender </b> 
-                                   <p data-field="genderAsText" data-fieldholder="html" >  Male </p>
+                                   <p data-field="genderAsText" data-fieldholder="html"  data-fieldtype="string" > - </p>
                                </li>
                                <li>
                                    <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-user-circle-o"></i> Age </b> 
-                                   <p data-field="age" data-fieldholder="html" >  30 </p> 
+                                   <p data-field="age" data-fieldholder="html"  data-fieldtype="int"  > - </p> 
                                </li>
                                <li>
                                    <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-map-marker"></i> Living location  </b> 
-                                   <p data-field="livingLocation" data-fieldholder="html" >  TP.HCM, Việt Nam  </p>
+                                   <p data-field="livingLocation" data-fieldholder="html"  data-fieldtype="string"  >  - </p>
                                </li>
                                <li>
                                    <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-envelope"></i> Primary email </b> 
-                                   <p data-field="primaryEmail" data-fieldholder="html" >  trungtn@bigdatavietnam.org </p>
+                                   <p data-field="primaryEmail" data-fieldholder="html"  data-fieldtype="string"  >  - </p>
                                </li>
                                <li>
                                    <b data-persona="key" class="editable_text" >  <i class="fa fa-fw fa-mobile"></i> Primary mobile phone </b> 
-                                   <p data-field="primaryPhone" data-fieldholder="html" > 0903122299 </p>
+                                   <p data-field="primaryPhone" data-fieldholder="html"  data-fieldtype="string"  > - </p>
                                </li>
                            </ol>
                        </td>
@@ -333,7 +334,6 @@
 <script type="text/javascript">
     ///Js code
     
-    
     function initProfile360Analytics(profileId) {
     	console.log(profileId);
     	//setup editable node
@@ -367,28 +367,68 @@
          
          LeoCmsApiUtil.callPostAdminApi(urlStr, params, function (json) {
              if (json.httpCode === 0 && json.errorMessage === '') {
-             	LeoCdpAdmin.routerContext.profileData = json.data;
+             	LeoCdpAdmin.routerContext.dataObject = json.data;
              	
              	$('#page_data_holder').find('*[data-field]').each(function(){
              		var field = $(this).data('field');
+             		var fieldholder = $(this).data('fieldholder');
              		var toks = field.split('.');
              		if(toks.length === 1){
-             			var value = LeoCdpAdmin.routerContext.profileData[toks[0]];
-                 		$(this).html(value)
-                 		console.log( value )  
+             			var value = LeoCdpAdmin.routerContext.dataObject[toks[0]];
+             			if(fieldholder === 'html'){
+             				$(this).html(value)
+             			}
+             			else if(fieldholder === 'inputvalue'){
+             				$(this).val(value)
+             			}
              		} 
              		else if(toks.length === 2){
-             			var value = LeoCdpAdmin.routerContext.profileData[toks[0]][toks[1]];
-                 		$(this).html(value)
-                 		console.log( value )  
+             			var value = LeoCdpAdmin.routerContext.dataObject[toks[0]][toks[1]];
+             			if(fieldholder === 'html'){
+             				$(this).html(value)
+             			}
+             			else if(fieldholder === 'inputvalue'){
+             				$(this).val(value)
+             			}
              		}
-             		
              	});
              	
              } else {
                  LeoCmsApiUtil.logErrorPayload(json);
              }
          });
+    }
+    
+    var updateDataObject = function(){
+    	$('#page_data_holder').find('*[data-field]').each(function(){
+         	var field = $(this).data('field'); 
+         	var fieldholder = $(this).data('fieldholder'); 
+         	var fieldtype = $(this).data('fieldtype'); 
+         	var value = '';
+            if(fieldholder === 'html'){
+                 value = $(this).html().trim(); 
+            } else if(fieldholder === 'inputvalue'){
+                 value = $(this).val();
+            }
+            if(fieldtype === 'int') {
+            	value = parseInt(value)
+            }
+            else if(fieldtype === 'float') {
+            	value = parseFloat(value)
+            }
+            else if(fieldtype === 'date') {
+            	value = new Date(value)
+            }
+            console.log(value);
+            
+            var toks = field.split('.');
+     		if(toks.length === 1){
+     			LeoCdpAdmin.routerContext.dataObject[toks[0]] = value;
+     		}
+     		else if(toks.length === 2){
+     			LeoCdpAdmin.routerContext.dataObject[toks[0]][toks[1]] = value;
+     		}
+		})
     }
 
     function profilePathDiagram() {

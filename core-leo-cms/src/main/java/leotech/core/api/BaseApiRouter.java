@@ -21,7 +21,6 @@ public abstract class BaseApiRouter extends BaseHttpRouter {
 
 	private static final String P_USER_SESSION = "usersession";
 	
-
 	////////////
 	public static final String START_DATE = "/start-date";
 	public static final String REQ_INFO = "/req-info";
@@ -40,12 +39,7 @@ public abstract class BaseApiRouter extends BaseHttpRouter {
 
 	public static final String BOT_PREFIX = "/bot";
 	public static final String SYSTEM_PREFIX = "/system";
-
-	public static final String COMMENT_PREFIX = "/comment";
-	public static final String BOOKMARK_PREFIX = "/bookmark";
-	public static final String ADS_PREFIX = "/ads";
 	
-	public static final String CDP_PROFILE_PREFIX = "/cdp/profile";
 
 	private JsonDataPayload defaultDataHttpGet = JsonDataPayload.fail("No HTTP GET handler found", 404);
 	private JsonDataPayload defaultDataHttpPost = JsonDataPayload.fail("No HTTP POST handler found", 404);
@@ -55,11 +49,13 @@ public abstract class BaseApiRouter extends BaseHttpRouter {
 		super(context);
 	}
 
-	abstract protected JsonDataPayload callHttpPostApiProcessor(String userSession, String uri,
-			JsonObject paramJson);
+	// for implemented POST method
+	abstract protected JsonDataPayload callHttpPostApiProcessor(String userSession, String uri, JsonObject paramJson);
 
+	// for implemented GET method
 	abstract protected JsonDataPayload callHttpGetApiProcessor(String userSession, String uri, MultiMap params);
-
+	
+	
 	public void enableAutoRedirectToHomeIf404() {
 		defaultDataHttpGet = JsonDataPayload.ok("/", "");
 		defaultDataHttpGet.setHttpCode(301);
