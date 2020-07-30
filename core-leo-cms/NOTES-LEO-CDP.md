@@ -20,12 +20,13 @@ ArangoDB cost: 8 GB	20 GB (or more)	$ 0.52/hr at https://cloud.arangodb.com/home
 Cloud compute cost: https://cloud.google.com/products/calculator/#id=1f054b6b-d785-4f8d-b8ea-145a0127c4fb
 
 ## Cost for On-premise Platform Deployment in Vietnam for Retail Industry
-* License cost for each profile = $0.019
+
 * (5000000 - 2,781,600) / 5000
-* AWS Cost details https://calculator.aws/#/estimate?id=7a610640c1dd17871c6342c6c670be9044102eaa
+* License cost for each profile = $0.12
+* Cost details for Amazon https://calculator.aws/#/estimate?id=7a610640c1dd17871c6342c6c670be9044102eaa
 * One year of AWS = 1500 USD, Total monthly = 120 USD
-* if a company have 20,000 contact profiles, 5,000 first profile is free, total cost for one year = $3,495
-=> Total cost = cloud + license = $1500 + $3,495 = $4,495 / year 
+* if a company have 20,000 contact profiles, 5,000 first profile is free, total cost for one year = $1,800
+=> Total cost = cloud + license + email marketing = $1500 + $1,800 + $300= $3,600 / year  = 83,439,000 VND
 
 
 ## Slide

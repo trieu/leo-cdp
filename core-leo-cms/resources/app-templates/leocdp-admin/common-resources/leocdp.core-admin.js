@@ -88,8 +88,7 @@ function loadMediaInfoView(mediaInfo, type, editMode) {
         //VIDEO from Google Drive
         if (mediaInfo.indexOf('https://drive.google.com/open') >= 0) {
             var vid = getQueryMapFromUrl(postModel.mediaInfo).id;
-            html =
-                '<div class="embed-responsive embed-responsive-4by3"><iframe class="embed-responsive-item" frameborder="0" src="https://drive.google.com/file/d/' +
+            html = '<div class="embed-responsive embed-responsive-4by3"><iframe class="embed-responsive-item" frameborder="0" src="https://drive.google.com/file/d/' +
                 vid + '/preview"></iframe></div>';
         } else if (mediaInfo.indexOf('https://drive.google.com/file/d/') >= 0) {
             var url = mediaInfo.replace('/view', '/preview');
@@ -230,7 +229,110 @@ var initDateFilterComponent = function(){
     });
 }
 
-
 document.addEventListener("trix-file-accept", function(event) {
   event.preventDefault();
 });
+
+// Page Router ##################################################################################
+
+
+function leoCdpRouter(objKey,objId){
+	var obj = LeoCdpAdmin.navRouters[objKey];
+	console.log( obj );
+	
+	// generate breadcrumb navigation
+	var breadcrumbHtml = '';
+	var titleNav = '';
+	var breadcrumbList = obj.breadcrumb;
+	var len = breadcrumbList.length;
+	for(var i=0; i< len; i++ ){
+		var name = breadcrumbList[i];
+		titleNav  = titleNav + name + " - ";
+		var key = name.replace(/ /g, "_");
+		var jsFunc = LeoCdpAdmin.navRouters[key] ? "leoCdpRouter('"+ key + "')"  : "";
+		
+		if( i < (len - 1) ){
+			breadcrumbHtml = breadcrumbHtml + '<a title="'+ name +'" href="#calljs-' + jsFunc + '"> ' + breadcrumbList[i] + ' </a> ';
+			breadcrumbHtml = breadcrumbHtml + ' &#8594; ';
+		} else {
+			breadcrumbHtml = breadcrumbHtml + '<a title="'+ name +'" href="#calljs-"> ' + breadcrumbList[i] + ' </a> ';
+		}
+	}
+	
+	var vf = LeoCdpAdmin.navFunctions[obj.functionName];
+	
+	if(typeof vf === 'function') {
+		// init context for view router
+		LeoCdpAdmin.routerContext = {};
+		
+		if(objId)
+		{
+			console.log(objKey + " objId " + objId)
+			LeoCdpAdmin.routerContext.objId = objId;
+			vf.apply(null,[objId,breadcrumbHtml]);
+		} 
+		else 
+		{
+			console.log(objKey + " ")
+			LeoCdpAdmin.routerContext.objId = false;
+			vf.apply(null,[breadcrumbHtml]);
+		}
+		document.title = titleNav;
+	} else {
+		console.error( " LeoCdpAdmin.navFunctions[obj.functionName] is not a function " );
+		console.error( obj );
+	}
+	console.log( objId );
+}
+
+function gotoLeoCdpRouter(){
+	var paramStr = '';
+	for(var i=0; i < arguments.length; i++){
+		paramStr = paramStr +  "'" +  arguments[i];
+		if( i+1 < arguments.length ){
+			paramStr +=  "'," ;
+		} else {
+			paramStr +=  "'" ;
+		}
+	}
+	var hash = 'calljs-leoCdpRouter(' + paramStr  + ")";
+	location.hash = hash;
+}
+
+var loadDataAndUpdatePageView = function(urlStr, params, callback){
+	LeoCmsApiUtil.callPostAdminApi(urlStr, params, function (json) {
+        if (json.httpCode === 0 && json.errorMessage === '') {
+        	LeoCdpAdmin.routerContext.dataObject = json.data;
+        	
+        	$('#page_data_holder').find('*[data-field]').each(function(){
+        		var field = $(this).data('field');
+        		var fieldholder = $(this).data('fieldholder');
+        		var toks = field.split('.');
+        		if(toks.length === 1){
+        			var value = LeoCdpAdmin.routerContext.dataObject[toks[0]];
+        			if(fieldholder === 'html'){
+        				$(this).html(value)
+        			}
+        			else if(fieldholder === 'inputvalue'){
+        				$(this).val(value)
+        			}
+        		} 
+        		else if(toks.length === 2){
+        			var value = LeoCdpAdmin.routerContext.dataObject[toks[0]][toks[1]];
+        			if(fieldholder === 'html'){
+        				$(this).html(value)
+        			}
+        			else if(fieldholder === 'inputvalue'){
+        				$(this).val(value)
+        			}
+        		}
+        	}).promise().done( function() {
+    			console.log('Done loadDataAndUpdatePageView ' + urlStr);
+    			if(typeof callback === 'function') callback();
+    	    });
+        	
+        } else {
+            LeoCmsApiUtil.logErrorPayload(json);
+        }
+    });
+}

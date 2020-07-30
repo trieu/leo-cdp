@@ -161,46 +161,18 @@ public class ProfileDataService {
 		return pf;
 	}
 	
-	public static Profile update(JsonObject paramJson, User loginUser) {
+	public static Profile updateFromJson(String json) {
 		
-		String id = paramJson.getString("dataObjectId", "");
-		String json = paramJson.getString("dataObjectJson", "{}");
 		ProfileSingleDataView dataObj = new Gson().fromJson(json, ProfileSingleDataView.class);
-		System.out.println(id);
+		
 		System.out.println(dataObj);
 		
-		
-//		Profile pf = ProfileDaoUtil.getById(profileId);
-//		
-//		String firstName = paramJson.getString("firstName", "");
-//		String lastName = paramJson.getString("lastName", "");
-//		String email = paramJson.getString("email", "");
-//		String phone = paramJson.getString("phone", "");
-//		
-//		
-//		if(!firstName.isEmpty()) {
-//			pf.setLastName(firstName);
-//		}
-//		
-//		if(!lastName.isEmpty()) {
-//			pf.setLastName(lastName);
-//		}
-//		
-//		if(!email.isEmpty()) {
-//			pf.setPrimaryEmail(email);
-//		}
-//		
-//		if(!phone.isEmpty()) {
-//			pf.setPrimaryPhone(phone);
-//		}
-		
 		// TODO run in a thread to commit to database
-		//ProfileDaoUtil.update(pf);
+		ProfileDaoUtil.update(dataObj);
 		return dataObj;
 	}
 	
-	public static boolean remove(JsonObject paramJson, User loginUser) {
-		String profileId = paramJson.getString("profileId", "");
+	public static boolean remove(String profileId) {
 		Profile pf = ProfileDaoUtil.getById(profileId);
 		pf.setStatus(-4);
 		

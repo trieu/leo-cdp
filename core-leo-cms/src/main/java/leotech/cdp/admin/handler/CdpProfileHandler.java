@@ -37,13 +37,13 @@ public class CdpProfileHandler extends BaseSecuredDataApi {
 			if (isAdminRole(loginUser)) {
 				switch (uri) {
 					case API_LIST_WITH_FILTER : {
-						// the list-view component at datatables.net needs Ajax POST method to avoid long URL 
+						// the list-view component at datatables.net needs AJAX POST method to avoid long URL 
 						DataFilter filter = new DataFilter(uri, paramJson);
 						return ProfileDataService.filter(filter);
 					}
 					case API_GET_MODEL : {
 						String id = paramJson.getString("id", "0");
-						Profile pf = ProfileDataService.getSingleViewById(id);
+						ProfileSingleDataView pf = ProfileDataService.getSingleViewById(id);
 						if(pf == null) {
 							// in case create new model, the schema data model must be returned from server 
 							pf = new ProfileSingleDataView();
@@ -51,12 +51,14 @@ public class CdpProfileHandler extends BaseSecuredDataApi {
 						return JsonDataPayload.ok(uri, pf, true);
 					}
 					case API_UPDATE_MODEL : {
-						String key = ProfileDataService.update(paramJson, loginUser).getId();
-						return JsonDataPayload.ok(uri, key, true);
+						String json = paramJson.getString("objectJson", "{}");
+						String id = ProfileDataService.updateFromJson(json).getId();
+						return JsonDataPayload.ok(uri, id, true);
 					}
 					case API_REMOVE : {
 						// the data is not deleted, we need to remove it from valid data view, set status of object = -4
-						boolean rs = ProfileDataService.remove(paramJson, loginUser);
+						String id = paramJson.getString("id", "");
+						boolean rs = ProfileDataService.remove(id);
 						return JsonDataPayload.ok(uri, rs, true);
 					}
 					case API_IDENTITY_RESOLUTION : {
@@ -94,7 +96,7 @@ public class CdpProfileHandler extends BaseSecuredDataApi {
 						return JsonDataPayload.ok(uri, list, true);
 					}
 					case API_GET_MODEL : {
-						String id = RequestInfoUtil.getString(params,"id", "");
+						String id = RequestInfoUtil.getString(params,"id", "new");
 						if (!id.isEmpty()) {
 							Profile pf;
 							if (id.equals("new")) {

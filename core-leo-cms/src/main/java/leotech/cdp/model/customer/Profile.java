@@ -31,61 +31,61 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	
 
 	public static final String COLLECTION_NAME = COLLECTION_PREFIX + Profile.class.getSimpleName().toLowerCase();
-	static ArangoCollection instance;
+	static ArangoCollection dbCollection;
 
 	@Override
 	public ArangoCollection getCollection() {
-		if (instance == null) {
+		if (dbCollection == null) {
 			ArangoDatabase arangoDatabase = cdpDbInstance();
 
-			instance = arangoDatabase.collection(COLLECTION_NAME);
+			dbCollection = arangoDatabase.collection(COLLECTION_NAME);
 
 			// ensure indexing key fields for fast lookup
-			instance.ensureHashIndex(Arrays.asList("rootProfileId"), new HashIndexOptions());
-			instance.ensurePersistentIndex(Arrays.asList("visitorId"),
+			dbCollection.ensureHashIndex(Arrays.asList("rootProfileId"), new HashIndexOptions());
+			dbCollection.ensurePersistentIndex(Arrays.asList("visitorId"),
 					new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("type"),
-					new PersistentIndexOptions().unique(false));
-			
-			instance.ensurePersistentIndex(Arrays.asList("primaryEmail"),
-					new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("primaryPhone"),
-					new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("primaryAvatar"),
-					new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("crmRefId"),
+			dbCollection.ensurePersistentIndex(Arrays.asList("type"),
 					new PersistentIndexOptions().unique(false));
 			
-			instance.ensurePersistentIndex(Arrays.asList("lastChannelId"),
+			dbCollection.ensurePersistentIndex(Arrays.asList("primaryEmail"),
 					new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("lastSeenIp"),
+			dbCollection.ensurePersistentIndex(Arrays.asList("primaryPhone"),
 					new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("lastTouchpointId"),
+			dbCollection.ensurePersistentIndex(Arrays.asList("primaryAvatar"),
 					new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("lastUsedDeviceId"),
-					new PersistentIndexOptions().unique(false));
-			
-			instance.ensurePersistentIndex(Arrays.asList("identities[*]"),
-					new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("usedDeviceIds[*]"),
-					new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("sessionKeys[*]"),
-					new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("inSegments[*]"),
-					new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("funnelStage"),
-					new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("locationCode"),
+			dbCollection.ensurePersistentIndex(Arrays.asList("crmRefId"),
 					new PersistentIndexOptions().unique(false));
 			
-			instance.ensurePersistentIndex(Arrays.asList("top1000Touchpoints[*]"),
+			dbCollection.ensurePersistentIndex(Arrays.asList("lastChannelId"),
 					new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("inCollections[*]"),
+			dbCollection.ensurePersistentIndex(Arrays.asList("lastSeenIp"),
+					new PersistentIndexOptions().unique(false));
+			dbCollection.ensurePersistentIndex(Arrays.asList("lastTouchpointId"),
+					new PersistentIndexOptions().unique(false));
+			dbCollection.ensurePersistentIndex(Arrays.asList("lastUsedDeviceId"),
 					new PersistentIndexOptions().unique(false));
 			
-			instance.ensureHashIndex(Arrays.asList("personaUri"), new HashIndexOptions());
+			dbCollection.ensurePersistentIndex(Arrays.asList("identities[*]"),
+					new PersistentIndexOptions().unique(false));
+			dbCollection.ensurePersistentIndex(Arrays.asList("usedDeviceIds[*]"),
+					new PersistentIndexOptions().unique(false));
+			dbCollection.ensurePersistentIndex(Arrays.asList("sessionKeys[*]"),
+					new PersistentIndexOptions().unique(false));
+			dbCollection.ensurePersistentIndex(Arrays.asList("inSegments[*]"),
+					new PersistentIndexOptions().unique(false));
+			dbCollection.ensurePersistentIndex(Arrays.asList("funnelStage"),
+					new PersistentIndexOptions().unique(false));
+			dbCollection.ensurePersistentIndex(Arrays.asList("locationCode"),
+					new PersistentIndexOptions().unique(false));
+			
+			dbCollection.ensurePersistentIndex(Arrays.asList("top1000Touchpoints[*]"),
+					new PersistentIndexOptions().unique(false));
+			dbCollection.ensurePersistentIndex(Arrays.asList("inCollections[*]"),
+					new PersistentIndexOptions().unique(false));
+			
+			dbCollection.ensureHashIndex(Arrays.asList("personaUri"), new HashIndexOptions());
 		}
-		return instance;
+		return dbCollection;
 	}
 
 	@DocumentField(Type.KEY)
@@ -426,6 +426,10 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	public String getId() {
 		return id;
+	}
+	
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public void setType(int type) {
@@ -951,6 +955,10 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		this.primaryUsername = primaryUsername;
 	}
 	
+	
+	
+	
+
 	@Override
 	public String toString() {
 		return StringUtil.join(this.identities.toArray(),"-");

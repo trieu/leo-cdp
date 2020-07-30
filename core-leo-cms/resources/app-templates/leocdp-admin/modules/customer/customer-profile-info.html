@@ -160,7 +160,6 @@
                            	   <li>
                                    <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-id-badge"></i> First name </b> 
                                    <p data-field="firstName" data-fieldholder="html"  data-fieldtype="string"  class="editable_text" >  - </p>
-                                   <input type="text" data-field="firstName" data-fieldholder="inputvalue" value=""><br>
                                </li>
                                <li>
                                    <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-id-badge"></i> Last name </b> 
@@ -365,38 +364,9 @@
              'id': profileId
          };
          
-         LeoCmsApiUtil.callPostAdminApi(urlStr, params, function (json) {
-             if (json.httpCode === 0 && json.errorMessage === '') {
-             	LeoCdpAdmin.routerContext.dataObject = json.data;
-             	
-             	$('#page_data_holder').find('*[data-field]').each(function(){
-             		var field = $(this).data('field');
-             		var fieldholder = $(this).data('fieldholder');
-             		var toks = field.split('.');
-             		if(toks.length === 1){
-             			var value = LeoCdpAdmin.routerContext.dataObject[toks[0]];
-             			if(fieldholder === 'html'){
-             				$(this).html(value)
-             			}
-             			else if(fieldholder === 'inputvalue'){
-             				$(this).val(value)
-             			}
-             		} 
-             		else if(toks.length === 2){
-             			var value = LeoCdpAdmin.routerContext.dataObject[toks[0]][toks[1]];
-             			if(fieldholder === 'html'){
-             				$(this).html(value)
-             			}
-             			else if(fieldholder === 'inputvalue'){
-             				$(this).val(value)
-             			}
-             		}
-             	});
-             	
-             } else {
-                 LeoCmsApiUtil.logErrorPayload(json);
-             }
-         });
+         loadDataAndUpdatePageView(urlStr, params, function(){
+        	 console.log(LeoCdpAdmin.routerContext.dataObject);
+         })
     }
     
     var updateDataObject = function(){
@@ -419,7 +389,6 @@
             else if(fieldtype === 'date') {
             	value = new Date(value)
             }
-            console.log(value);
             
             var toks = field.split('.');
      		if(toks.length === 1){
@@ -428,7 +397,20 @@
      		else if(toks.length === 2){
      			LeoCdpAdmin.routerContext.dataObject[toks[0]][toks[1]] = value;
      		}
-		})
+		}).promise().done( function() {
+			console.log(LeoCdpAdmin.routerContext.dataObject);
+			var urlStr = baseAdminApi + '/cdp/profile/update';
+	        var params = {
+	             'objectJson': JSON.stringify(LeoCdpAdmin.routerContext.dataObject)
+	        };
+	        LeoCmsApiUtil.callPostAdminApi(urlStr, params, function (json) {
+	             if (json.httpCode === 0 && json.errorMessage === '') {
+	            	 console.log(json);
+	             } else {
+	                 LeoCmsApiUtil.logErrorPayload(json);
+	             }
+	        });
+	    });
     }
 
     function profilePathDiagram() {

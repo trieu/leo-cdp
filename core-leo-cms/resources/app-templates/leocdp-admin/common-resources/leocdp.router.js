@@ -134,9 +134,9 @@ LeoCdpAdmin.navRouters = {
 			"functionName" : "loadCustomerProfileList",
 			"breadcrumb" : ["Customer Data Hub", "Customer Profile List"]
 		},
-		"Customer_Profile_Report" : {
+		"Customer_Profile_Info" : {
 			"menuName" : "Customer Profile Report",
-			"functionName" : "loadCustomerProfileReport",
+			"functionName" : "loadCustomerProfileInfo",
 			"breadcrumb" : ["Customer Data Hub", "Customer Profile List", "Customer Profile Report"]
 		},
 		"Customer_Profile_Editor" : {
@@ -278,70 +278,4 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["System Management", "System Configuration"]
 		}
 };
-
-//###############################################################################################################################
-
-
-function leoCdpRouter(objKey,objId){
-	var obj = LeoCdpAdmin.navRouters[objKey];
-	console.log( obj );
-	
-	// generate breadcrumb navigation
-	var breadcrumbHtml = '';
-	var titleNav = '';
-	var breadcrumbList = obj.breadcrumb;
-	var len = breadcrumbList.length;
-	for(var i=0; i< len; i++ ){
-		var name = breadcrumbList[i];
-		titleNav  = titleNav + name + " - ";
-		var key = name.replace(/ /g, "_");
-		var jsFunc = LeoCdpAdmin.navRouters[key] ? "leoCdpRouter('"+ key + "')"  : "";
-		
-		if( i < (len - 1) ){
-			breadcrumbHtml = breadcrumbHtml + '<a title="'+ name +'" href="#calljs-' + jsFunc + '"> ' + breadcrumbList[i] + ' </a> ';
-			breadcrumbHtml = breadcrumbHtml + ' &#8594; ';
-		} else {
-			breadcrumbHtml = breadcrumbHtml + '<a title="'+ name +'" href="#calljs-"> ' + breadcrumbList[i] + ' </a> ';
-		}
-	}
-	
-	var vf = LeoCdpAdmin.navFunctions[obj.functionName];
-	
-	if(typeof vf === 'function') {
-		// init context for view router
-		LeoCdpAdmin.routerContext = {};
-		
-		if(objId)
-		{
-			console.log(objKey + " objId " + objId)
-			LeoCdpAdmin.routerContext.objId = objId;
-			vf.apply(null,[objId,breadcrumbHtml]);
-		} 
-		else 
-		{
-			console.log(objKey + " ")
-			LeoCdpAdmin.routerContext.objId = false;
-			vf.apply(null,[breadcrumbHtml]);
-		}
-		document.title = titleNav;
-	} else {
-		console.error( " LeoCdpAdmin.navFunctions[obj.functionName] is not a function " );
-		console.error( obj );
-	}
-	console.log( objId );
-}
-
-function gotoLeoCdpRouter(){
-	var paramStr = '';
-	for(var i=0; i < arguments.length; i++){
-		paramStr = paramStr +  "'" +  arguments[i];
-		if( i+1 < arguments.length ){
-			paramStr +=  "'," ;
-		} else {
-			paramStr +=  "'" ;
-		}
-	}
-	var hash = 'calljs-leoCdpRouter(' + paramStr  + ")";
-	location.hash = hash;
-}
 

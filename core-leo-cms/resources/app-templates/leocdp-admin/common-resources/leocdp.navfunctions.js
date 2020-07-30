@@ -88,8 +88,8 @@ LeoCdpAdmin.navFunctions.loadCustomerProfileList = function (breadcrumbHtml) {
     });
 }
 
-LeoCdpAdmin.navFunctions.loadCustomerProfileReport = function (profileId , breadcrumbHtml) {
-    LeoCdpAdmin.loadView('/view/modules/customer/customer-profile-report.html?admin=1', pageDomSelector, function () {
+LeoCdpAdmin.navFunctions.loadCustomerProfileInfo = function (profileId , breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/modules/customer/customer-profile-info.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
     	initProfile360Analytics(profileId);
     });

@@ -100,6 +100,34 @@ public class ProfileSingleDataView extends Profile implements SingleDataView {
 		return lastUsedDevice;
 	}
 	
+	public String getTypeAsText() {
+		return typeAsText;
+	}
+
+	public void setTypeAsText(String typeAsText) {
+		this.typeAsText = typeAsText;
+	}
+
+	public String getGenderAsText() {
+		return genderAsText;
+	}
+
+	public void setGenderAsText(String genderAsText) {
+		this.genderAsText = genderAsText;
+	}
+
+	public void setLastTouchpoint(Touchpoint lastTouchpoint) {
+		this.lastTouchpoint = lastTouchpoint;
+	}
+
+	public void setTopEngagedTouchpoints(Set<Touchpoint> topEngagedTouchpoints) {
+		this.topEngagedTouchpoints = topEngagedTouchpoints;
+	}
+
+	public void setLastUsedDevice(DeviceInfo lastUsedDevice) {
+		this.lastUsedDevice = lastUsedDevice;
+	}
+
 	@Override
 	public String toString() {
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
