@@ -164,12 +164,12 @@ function getUserSession() {
 }
 
 /**
- * ################## LeoCmsApiUtil functions ####################
+ * ################## LeoAdminApiUtil functions ####################
  * 
  */
-var LeoCmsApiUtil = window.LeoCmsApiUtil || {};
+var LeoAdminApiUtil = window.LeoAdminApiUtil || {};
 
-if (LeoCmsApiUtil.isLoaded !== true) {
+if (LeoAdminApiUtil.isLoaded !== true) {
 	(function () {
 		var obj = {
 			isLoaded: false,
@@ -297,7 +297,7 @@ if (LeoCmsApiUtil.isLoaded !== true) {
 
 			//build with client cache busting
 			var urlStr = baseDeliveryApi + apiURI;
-			LeoCmsApiUtil.getSecuredData(urlStr, objParams, function (json) {
+			LeoAdminApiUtil.getSecuredData(urlStr, objParams, function (json) {
 				var stUrl = json.staticBaseUrl || '';
 				if (json.httpCode === 0 && json.errorMessage === '' && json.data) {
 					var data = json.data;
@@ -379,8 +379,8 @@ if (LeoCmsApiUtil.isLoaded !== true) {
 			}
 		}
 
-		LeoCmsApiUtil = obj;
-		LeoCmsApiUtil.isLoaded = true;
+		LeoAdminApiUtil = obj;
+		LeoAdminApiUtil.isLoaded = true;
 	}());
 }
 

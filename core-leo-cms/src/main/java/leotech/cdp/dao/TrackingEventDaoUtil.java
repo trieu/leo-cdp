@@ -8,10 +8,12 @@ import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
 import com.google.gson.Gson;
 
+import leotech.cdp.dao.singleview.EventSingleDataView;
 import leotech.cdp.model.customer.TrackingEvent;
 import leotech.core.config.AqlTemplate;
+import leotech.system.model.DataFilter;
 import leotech.system.util.database.ArangoDbQuery;
-import leotech.system.util.database.ArangoDbUtil;
+import leotech.system.util.database.ArangoDbQuery.CallbackQuery;
 import rfx.core.util.LogUtil;
 
 public class TrackingEventDaoUtil  extends BaseLeoCdpDao{
@@ -37,12 +39,23 @@ public class TrackingEventDaoUtil  extends BaseLeoCdpDao{
 		return false;
 	}
 
-	public static List<TrackingEvent> getEventsByProfileId(String refProfileId) {
+	public static List<EventSingleDataView> getEventsByProfileId(String refProfileId, DataFilter filter) {
 		ArangoDatabase db = getCdpDbInstance();
-		Map<String, Object> bindVars = new HashMap<>(1);
+		
+		Map<String, Object> bindVars = new HashMap<>(3);
 		bindVars.put("refProfileId", refProfileId);
-		List<TrackingEvent> list = new ArangoDbQuery<TrackingEvent>(db, AQL_GET_TRACKING_EVENTS_BY_PROFILE_ID,
-				bindVars, TrackingEvent.class).getResultsAsList();
+		bindVars.put("startIndex", filter.getStart());
+		bindVars.put("numberResult", filter.getLength());
+		
+		CallbackQuery<EventSingleDataView> callback = new CallbackQuery<EventSingleDataView>() {
+			@Override
+			public EventSingleDataView apply(EventSingleDataView obj) {
+				obj.unifyDataView();
+				return obj;
+			}
+		};
+		List<EventSingleDataView> list = new ArangoDbQuery<EventSingleDataView>(db, AQL_GET_TRACKING_EVENTS_BY_PROFILE_ID,bindVars, 
+				EventSingleDataView.class, callback).getResultsAsList();
 		return list;
 	}
 

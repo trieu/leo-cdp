@@ -72,7 +72,7 @@
             var params = {
                 'postId': postId
             };
-            LeoCmsApiUtil.callPostAdminApi(urlStr, params, function (json) {
+            LeoAdminApiUtil.callPostAdminApi(urlStr, params, function (json) {
                 if (json.httpCode === 0 && json.errorMessage === '') {
                     postModel = json.data;
                     document.title = 'Post Information - ' + postModel.title;
@@ -141,7 +141,7 @@
                     }
 
                 } else {
-                    LeoCmsApiUtil.logErrorPayload(json);
+                    LeoAdminApiUtil.logErrorPayload(json);
                 }
             });
         }

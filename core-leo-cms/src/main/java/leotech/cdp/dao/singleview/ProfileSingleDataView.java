@@ -20,16 +20,16 @@ public class ProfileSingleDataView extends Profile implements SingleDataView {
 	Touchpoint lastTouchpoint;
 	
 	@Expose
-	Set<Touchpoint> topEngagedTouchpoints = new HashSet<Touchpoint>(1000);
+	Set<Touchpoint> topEngagedTouchpoints ;
 	
 	@Expose
 	DeviceInfo lastUsedDevice;
 	
 	@Expose
-	String typeAsText = "ANONYMOUS";
+	String typeAsText ;
 	
 	@Expose
-	String genderAsText = "unknown";
+	String genderAsText;
 	
 	//TODO 
 	
@@ -46,46 +46,62 @@ public class ProfileSingleDataView extends Profile implements SingleDataView {
 		this.createdAt = pf.getCreatedAt();
 		this.updatedAt = pf.getUpdatedAt();
 		this.lastTouchpointId = pf.getLastTouchpointId();
-
 		//TODO
 	}
 	
 	@Override
-	public void unifyDataToSinpleView() {
-		//touchpoint model
-		this.lastTouchpoint = TouchpointDaoUtil.getById(this.lastTouchpointId);
-		for (String tpId : top1000Touchpoints) {
-			Touchpoint tp = TouchpointDaoUtil.getById(tpId);
-			if(tp != null) {
-				topEngagedTouchpoints.add(tp);
+	public void unifyDataView() {
+		//TODO 
+		
+		// touchpoint model
+		if(this.lastTouchpoint == null) {
+			this.lastTouchpoint = TouchpointDaoUtil.getById(this.lastTouchpointId);
+		}
+		
+		if(this.topEngagedTouchpoints == null) {
+			topEngagedTouchpoints = new HashSet<Touchpoint>(1000);
+			for (String tpId : this.topEngagedTouchpointIds) {
+				Touchpoint tp = TouchpointDaoUtil.getById(tpId);
+				if(tp != null) {
+					topEngagedTouchpoints.add(tp);
+				}
 			}
 		}
 		
-		if(type == ProfileType.CRM_CONTACT) {
-			typeAsText = "CRM_CONTACT";
-		} else if(type == ProfileType.KEY_ACCOUNT) {
-			typeAsText = "KEY_ACCOUNT";
-		} else if(type == ProfileType.DMP_PROFILE) {
-			typeAsText = "DMP_PROFILE";
-		} else if(type == ProfileType.IDENTIFIED) {
-			typeAsText = "IDENTIFIED";
+		// profile type
+		if(typeAsText == null) {
+			typeAsText = "ANONYMOUS";
+			if(type == ProfileType.CRM_CONTACT) {
+				typeAsText = "CRM_CONTACT";
+			} else if(type == ProfileType.KEY_ACCOUNT) {
+				typeAsText = "KEY_ACCOUNT";
+			} else if(type == ProfileType.DMP_PROFILE) {
+				typeAsText = "DMP_PROFILE";
+			} else if(type == ProfileType.IDENTIFIED) {
+				typeAsText = "IDENTIFIED";
+			}
 		}
 		
-		if(this.genderProbability == 100) {
-			if(this.gender == 1) {
-				genderAsText = "Male";
-			}
-			else if(this.gender == 0) {
-				genderAsText = "Female";
-			}
-		} else {
-			if(this.gender == 1) {
-				genderAsText = "Male with probability " + this.genderProbability + " %";
-			}
-			else if(this.gender == 0) {
-				genderAsText = "Female with probability " + this.genderProbability + " %";
+		// gender 
+		if(genderAsText == null) {
+			genderAsText = "unknown";
+			if(this.genderProbability == 100) {
+				if(this.gender == 1) {
+					genderAsText = "Male";
+				}
+				else if(this.gender == 0) {
+					genderAsText = "Female";
+				}
+			} else {
+				if(this.gender == 1) {
+					genderAsText = "Male with probability " + this.genderProbability + " %";
+				}
+				else if(this.gender == 0) {
+					genderAsText = "Female with probability " + this.genderProbability + " %";
+				}
 			}
 		}
+		
 	}
 
 	public Touchpoint getLastTouchpoint() {
@@ -127,6 +143,8 @@ public class ProfileSingleDataView extends Profile implements SingleDataView {
 	public void setLastUsedDevice(DeviceInfo lastUsedDevice) {
 		this.lastUsedDevice = lastUsedDevice;
 	}
+
+	
 
 	@Override
 	public String toString() {

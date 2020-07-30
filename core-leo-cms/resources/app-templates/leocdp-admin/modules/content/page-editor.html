@@ -135,7 +135,7 @@
 
             var urlStr = baseAdminApi + '/page/get-info';
 
-            LeoCmsApiUtil.callPostAdminApi(urlStr, params, function (json) {
+            LeoAdminApiUtil.callPostAdminApi(urlStr, params, function (json) {
                 if (json.httpCode === 0 && json.errorMessage === '') {
                     pageModel = json.data;
 
@@ -174,7 +174,7 @@
                     loadWidgetsOfPageForm();
                     console.log(pageModel);
                 } else {
-                    LeoCmsApiUtil.logErrorPayload(json);
+                    LeoAdminApiUtil.logErrorPayload(json);
                 }
             });
         }
@@ -199,13 +199,13 @@
             pageModel.rankingScore = parseInt(form.find('input[name="rankingScore"]').val());            
 
             var urlStr = baseAdminApi + '/page/save';
-            LeoCmsApiUtil.callPostAdminApi(urlStr, pageModel, function (json) {
+            LeoAdminApiUtil.callPostAdminApi(urlStr, pageModel, function (json) {
                 if (json.httpCode === 0 && json.errorMessage === '') {
                     if (typeof callback === 'function') {
                         callback(json.data);
                     }
                 } else {
-                    LeoCmsApiUtil.logErrorPayload(json);
+                    LeoAdminApiUtil.logErrorPayload(json);
                 }
             });
         }
@@ -271,7 +271,7 @@
     }
 
     function loadContentFilterSelection() {
-        var promise = LeoCmsApiUtil.httpGetDataJson('/filter/list');
+        var promise = LeoAdminApiUtil.httpGetDataJson('/filter/list');
         $('#filter').empty();
         promise.success(function (data) {
             if (data != null) {

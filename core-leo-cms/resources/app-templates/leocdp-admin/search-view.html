@@ -45,7 +45,7 @@
             'keywords': keywords
         };
         var url = window.baseAdminApi + '/post/search';
-        LeoCmsApiUtil.getSecuredData(url, paramObj, function (json) {
+        LeoAdminApiUtil.getSecuredData(url, paramObj, function (json) {
             if (json.httpCode === 0 && json.errorMessage === '' && json.data) {
                 
                 //set page metadata

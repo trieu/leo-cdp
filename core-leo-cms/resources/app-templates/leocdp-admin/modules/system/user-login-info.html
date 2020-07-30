@@ -111,13 +111,13 @@
     function initMyLoginInfo() {
     	 var key = currentUserProfile.key;
          var urlStr = baseAdminApi + '/user/get-info';
-         LeoCmsApiUtil.callPostAdminApi(urlStr, {
+         LeoAdminApiUtil.callPostAdminApi(urlStr, {
              'key': key || 'newuser'
          }, function (json) {
              if (json.httpCode === 0 && json.errorMessage === '') {
                  if (json.data) {
                      userModel = json.data;
-                     var date = LeoCmsApiUtil.formater.toDateString(userModel.creationTime);
+                     var date = LeoAdminApiUtil.formater.toDateString(userModel.creationTime);
 
                      var node = $('#user_form');
                      if (typeof userModel.key === 'string') {
@@ -177,7 +177,7 @@
             }, 500);
         }
 
-        LeoCmsApiUtil.callPostAdminApi(urlStr, userModel, function (json) {
+        LeoAdminApiUtil.callPostAdminApi(urlStr, userModel, function (json) {
             if (json.httpCode === 0 && json.errorMessage === '') {
                 if (json.data === '') {
                     $('#error-on-save').html('Data is not valid !').show().delay(6000).fadeOut('slow');
@@ -186,7 +186,7 @@
                 }
             } else {
                 $('#error-on-save').html(json.errorMessage).show().delay(6000).fadeOut('slow');
-                LeoCmsApiUtil.logErrorPayload(json);
+                LeoAdminApiUtil.logErrorPayload(json);
             }
         });
         console.log(userModel);

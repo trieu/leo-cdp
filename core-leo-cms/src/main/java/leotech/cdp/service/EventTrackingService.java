@@ -1,14 +1,17 @@
 package leotech.cdp.service;
 
+import java.util.List;
 import java.util.Map;
 
 import leotech.cdp.dao.ConversionEventDaoUtil;
 import leotech.cdp.dao.TrackingEventDaoUtil;
+import leotech.cdp.dao.singleview.EventSingleDataView;
 import leotech.cdp.model.customer.ContextSession;
 import leotech.cdp.model.customer.ConversionEvent;
 import leotech.cdp.model.customer.TrackingEvent;
 import leotech.cdp.model.marketing.MediaChannelType;
 import leotech.cdp.model.marketing.Touchpoint;
+import leotech.system.model.DataFilter;
 import leotech.system.model.DeviceInfo;
 
 /**
@@ -19,8 +22,8 @@ public class EventTrackingService {
 
 	//
 
-	public static int recordViewEvent(ContextSession ctxSession, String srcObserverId, String environment, String deviceId,
-			String sourceIP, DeviceInfo dv, String srcTouchpointName, String srcTouchpointUrl,
+	public static int recordViewEvent(ContextSession ctxSession, String srcObserverId, String environment,
+			String deviceId, String sourceIP, DeviceInfo dv, String srcTouchpointName, String srcTouchpointUrl,
 			String refTouchpointUrl, String touchpointRefDomain, String eventName, Map<String, String> eventData) {
 		String deviceName = dv.deviceName;
 		String deviceOS = dv.deviceOs;
@@ -52,15 +55,16 @@ public class EventTrackingService {
 		e.setEventData(eventData);
 
 		TrackingEventDaoUtil.record(e);
-		
-		//FIXME
+
+		// FIXME
 		String userDeviceId = "";
-		ProfileDataService.updateProfileFromEvent(refProfileId, srcObserverId, srcTouchpointId, touchpointRefDomain, sourceIP, userDeviceId);
+		ProfileDataService.updateProfileFromEvent(refProfileId, srcObserverId, srcTouchpointId, touchpointRefDomain,
+				sourceIP, userDeviceId);
 		return 201;
 	}
 
-	public static int recordActionEvent(ContextSession ctxSession, String srcObserverId, String environment, String deviceId,
-			String sourceIP, DeviceInfo dv, String srcTouchpointName, String srcTouchpointUrl,
+	public static int recordActionEvent(ContextSession ctxSession, String srcObserverId, String environment,
+			String deviceId, String sourceIP, DeviceInfo dv, String srcTouchpointName, String srcTouchpointUrl,
 			String refTouchpointUrl, String touchpointRefDomain, String eventName, long eventCount,
 			String feedbackText, Map<String, String> eventData) {
 
@@ -73,7 +77,7 @@ public class EventTrackingService {
 		int refProfileType = ctxSession.getProfileType();
 		String refProfileId = ctxSession.getProfileId();
 		String sessionKey = ctxSession.getSessionKey();
-		
+
 		// owned media has data from itself
 		boolean isFromOwnedMedia = ctxSession.getMediaHost().equals(touchpointRefDomain);
 
@@ -93,16 +97,17 @@ public class EventTrackingService {
 		e.setEventData(eventData);
 
 		TrackingEventDaoUtil.record(e);
-		
+
 		String userDeviceId = "";
-		ProfileDataService.updateProfileFromEvent(refProfileId, srcObserverId, srcTouchpointId, touchpointRefDomain, sourceIP, userDeviceId);
+		ProfileDataService.updateProfileFromEvent(refProfileId, srcObserverId, srcTouchpointId, touchpointRefDomain,
+				sourceIP, userDeviceId);
 		return 221;
 	}
 
-	public static int recordConversionEvent(ContextSession ctxSession, String srcObserverId, String environment, String srcEventKey,
-			String deviceId, String sourceIP, DeviceInfo dv, String srcTouchpointName, String srcTouchpointUrl,
-			String refTouchpointUrl, String touchpointRefDomain, String eventName, long eventCount,
-			String transactionCode, String feedbackText, Map<String, String> eventData) {
+	public static int recordConversionEvent(ContextSession ctxSession, String srcObserverId, String environment,
+			String srcEventKey, String deviceId, String sourceIP, DeviceInfo dv, String srcTouchpointName,
+			String srcTouchpointUrl, String refTouchpointUrl, String touchpointRefDomain, String eventName,
+			long eventCount, String transactionCode, String feedbackText, Map<String, String> eventData) {
 		String deviceName = dv.deviceName;
 		String deviceOS = dv.deviceOs;
 
@@ -135,9 +140,18 @@ public class EventTrackingService {
 		e.setEventData(eventData);
 
 		ConversionEventDaoUtil.record(e);
-		
+
 		String userDeviceId = "";
-		ProfileDataService.updateProfileFromEvent(refProfileId, srcObserverId, srcTouchpointId, touchpointRefDomain, sourceIP, userDeviceId);
+		ProfileDataService.updateProfileFromEvent(refProfileId, srcObserverId, srcTouchpointId, touchpointRefDomain,
+				sourceIP, userDeviceId);
 		return 241;
+	}
+
+	public static List<EventSingleDataView> getEventActivityFlowOfProfile(String profileId, int startIndex,
+			int numberResults) {
+		// Engagement Event Activities
+		List<EventSingleDataView> eventActivities = TrackingEventDaoUtil.getEventsByProfileId(profileId,
+				new DataFilter(startIndex, numberResults));
+		return eventActivities;
 	}
 }

@@ -4,8 +4,10 @@ import java.util.List;
 
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
+import leotech.cdp.dao.singleview.EventSingleDataView;
 import leotech.cdp.dao.singleview.ProfileSingleDataView;
 import leotech.cdp.model.customer.Profile;
+import leotech.cdp.service.EventTrackingService;
 import leotech.cdp.service.ProfileDataService;
 import leotech.core.api.BaseSecuredDataApi;
 import leotech.system.model.DataFilter;
@@ -24,6 +26,10 @@ public class CdpProfileHandler extends BaseSecuredDataApi {
 	static final String API_UPDATE_MODEL = "/cdp/profile/update";
 	static final String API_GET_MODEL = "/cdp/profile/get";
 	static final String API_REMOVE = "/cdp/profile/remove";
+	
+	// event view
+	static final String API_GET_TRACKING_EVENTS = "/cdp/profile/tracking-events";
+	static final String API_GET_CONVERSION_EVENTS = "/cdp/profile/conversion-events";
 	
 	// for identity resolution and profile data processing
 	static final String API_IDENTITY_RESOLUTION = "/cdp/profiles/identityresolution";
@@ -52,7 +58,7 @@ public class CdpProfileHandler extends BaseSecuredDataApi {
 					}
 					case API_UPDATE_MODEL : {
 						String json = paramJson.getString("objectJson", "{}");
-						String id = ProfileDataService.updateFromJson(json).getId();
+						String id = ProfileDataService.updateSingleDataViewFromJson(json).getId();
 						return JsonDataPayload.ok(uri, id, true);
 					}
 					case API_REMOVE : {
@@ -107,6 +113,14 @@ public class CdpProfileHandler extends BaseSecuredDataApi {
 							return JsonDataPayload.ok(uri, pf, false);
 						}
 					}
+					case API_GET_TRACKING_EVENTS : {
+						String profileId = RequestInfoUtil.getString(params,"id", "");
+						int startIndex =   RequestInfoUtil.getInteger(params,"startIndex", 0);
+						int numberResult = RequestInfoUtil.getInteger(params,"numberResult", 20);
+						List<EventSingleDataView> list = EventTrackingService.getEventActivityFlowOfProfile(profileId, startIndex, numberResult);
+						return JsonDataPayload.ok(uri, list, true);
+					}
+					
 					case API_EXPORT : {
 						//TODO
 						return JsonDataPayload.ok(uri, null, true);

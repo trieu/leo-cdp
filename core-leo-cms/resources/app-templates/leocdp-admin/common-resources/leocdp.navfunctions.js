@@ -175,7 +175,7 @@ function deletePage() {
 	         var params = {
 	             'pageId': pageModel.id
 	         };
-	         LeoCmsApiUtil.callPostAdminApi(urlStr, params, function (json) {
+	         LeoAdminApiUtil.callPostAdminApi(urlStr, params, function (json) {
 	             if (json.httpCode === 0 && json.errorMessage === '') {
 	                 if (json.data) {
 	                     location.href = '/admin';
@@ -221,7 +221,7 @@ function deletePost() {
 	         var params = {
 	             'postId': postModel.id
 	         };
-	         LeoCmsApiUtil.callPostAdminApi(urlStr, params, function (json) {
+	         LeoAdminApiUtil.callPostAdminApi(urlStr, params, function (json) {
 	             if (json.httpCode === 0 && json.errorMessage === '') {
 	                 if (json.data) {
 	                     location.href = '/admin';

@@ -87,7 +87,7 @@
         var params = {
             'pageId': pageId
         };
-        LeoCmsApiUtil.callPostAdminApi(urlStr, params, function (json) {
+        LeoAdminApiUtil.callPostAdminApi(urlStr, params, function (json) {
             if (json.httpCode === 0 && json.errorMessage === '') {
                 pageModel = json.data;
 
@@ -113,7 +113,7 @@
                     }   
                 }
             } else {
-                LeoCmsApiUtil.logErrorPayload(json);
+                LeoAdminApiUtil.logErrorPayload(json);
             }
         });
 
@@ -189,14 +189,14 @@
                     },
                     {
                         "render": function (data, type, row) {
-                            var date = LeoCmsApiUtil.formater.toDateString(data);
+                            var date = LeoAdminApiUtil.formater.toDateString(data);
                             return date;
                         },
                         "targets": 4
                     },
                     {
                         "render": function (data, type, row) {
-                            var date = LeoCmsApiUtil.formater.toDateString(data);
+                            var date = LeoAdminApiUtil.formater.toDateString(data);
                             return date;
                         },
                         "targets": 5

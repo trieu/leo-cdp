@@ -29,7 +29,7 @@
 						
 					<li class="divider"></li>
 					<li>
-						<a href="javascript:LeoCmsApiUtil.logout()"> <i class="fa fa-fw fa-power-off"></i> Log Out</a>
+						<a href="javascript:LeoAdminApiUtil.logout()"> <i class="fa fa-fw fa-power-off"></i> Log Out</a>
 					</li>
 				</ul>
 			</li>
@@ -257,7 +257,7 @@
 	});
 	
 	function loadCategoryNavigation() {
-	    LeoCmsApiUtil.callPostAdminApi(baseAdminApi + '/category/list-all', {}, function (rs) {
+	    LeoAdminApiUtil.callPostAdminApi(baseAdminApi + '/category/list-all', {}, function (rs) {
 	        if (rs.data && rs.httpCode === 0) {
 	            var raw_template = $('#category-navigation-tpl').html();
 	            var template = Handlebars.compile(raw_template);
@@ -288,7 +288,7 @@
 	window.currentUserProfile = {'displayName':''};
 	function loadUserInfoWidget() {
 	    var urlStr = baseAdminApi + '/user/get-info';
-	    LeoCmsApiUtil.callPostAdminApi(urlStr, {}, function (json) {
+	    LeoAdminApiUtil.callPostAdminApi(urlStr, {}, function (json) {
 	        if (json.httpCode === 0 && json.errorMessage === '') {
 	            if (json.data) {
 	                var user = json.data;

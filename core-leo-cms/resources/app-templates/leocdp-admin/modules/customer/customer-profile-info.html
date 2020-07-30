@@ -196,8 +196,8 @@
        
        <!--  Tab Navigation Items -->
        <ul class="nav nav-tabs" data-tab-content="profile_ext_data_tabs" >
-       	  <li class="active" ><a href="javascript:" data-target-tab="panel_profile_business_data" > Business Data</a></li>
-       	  <li ><a href="javascript:" data-target-tab="panel_profile_activities" > Engagement Activities</a></li>
+       	  <li class="active" ><a href="javascript:" data-target-tab="panel_profile_business_data" > Business Data </a></li>
+       	  <li ><a href="javascript:" data-target-tab="panel_profile_activitiy_flow" > Activity Flow </a></li>
        	  
 		  <li style="display: none;" ><a href="javascript: " data-target-tab="panel_profile_journey" > Journey </a></li>
 		  
@@ -226,44 +226,13 @@
 				</ul>
 			</div>
 			
-		 	<div class="tab-pane " id="panel_profile_activities" >
+		 	<div class="tab-pane " id="panel_profile_activitiy_flow" >
 	     		<ul class="list-group list-group-dividered list-group-full">
-				   <li class="list-group-item">
-				      <div class="row">
-				         <div class="col-md-1 text-center">  <img class="rounded mx-auto d-block" src="https://cdn2.iconfinder.com/data/icons/picol-vector/32/view-32.png" alt="icon" > </div>
-				         <div class="col-md-11">
-				            <small class="text-muted pull-right">Just now</small>
-				            <h4 class="media-heading">viewed </h4>
-				            <div>Lorem ipsum Veniam aliquip culpa laboris minim tempor labore
-				               commodo officia veniam non in in in.
-				            </div>
-				         </div>
-				      </div>
-				   </li>
-				   <li class="list-group-item">
-				      <div class="row">
-				         <div class="col-md-1 text-center">  <img class="rounded mx-auto d-block" src="https://cdn2.iconfinder.com/data/icons/picol-vector/32/view-32.png" alt="icon" > </div>
-				         <div class="col-md-11">
-				            <small class="text-muted pull-right">38 minutes ago</small>
-				            <h4 class="media-heading">watched </h4>
-				            <div>Lorem ipsum Laborum sit laborum cillum proident dolore culpa
-				               reprehenderit qui enim labore do mollit in.
-				            </div>
-				         </div>
-				      </div>
-				   </li>
-				   <li class="list-group-item">
-				      <div class="row">
-				         <div class="col-md-1 text-center"> <img class="rounded mx-auto d-block" src="https://cdn2.iconfinder.com/data/icons/picol-vector/32/view-32.png" alt="icon" > </div>
-				         <div class="col-md-11">
-				            <small class="text-muted pull-right">2 hours ago</small>
-				            <h4 class="media-heading">clicked </h4>
-				            <div>Lorem ipsum Culpa mollit ex mollit magna dolore dolore dolore
-				               tempor velit magna enim ad dolore dolore dolore.
-				            </div>
-				         </div>
-				      </div>
-				   </li>
+	     		
+				   
+				   
+				   
+				   
 				</ul>
 			</div>
 			
@@ -328,7 +297,19 @@
 
 </div>
 
-
+<script id='tracking-event-tpl' type="text/html" >
+<li class="list-group-item">
+   <div class="row">
+      <div class="col-md-1 text-center">  <img class="rounded mx-auto d-block" src="https://cdn2.iconfinder.com/data/icons/picol-vector/32/view-32.png" alt="icon" > </div>
+      <div class="col-md-11">
+         <small class="text-muted pull-right"> <%- createdAt %> </small>
+         <h4 class="media-heading"> <%- metricName %> </h4>
+         <div> <%- srcTouchpoint.url %>
+         </div>
+      </div>
+   </div>
+</li>
+</script>
 
 <script type="text/javascript">
     ///Js code
@@ -354,64 +335,26 @@
     
     function removeCurrentProfile(){
     	alert('TODO')
+
     }
     
     function loadCurrentProfile(profileId) {
          console.log('loadCurrentProfile profileId ' + profileId);
 
-         var urlStr = baseAdminApi + '/cdp/profile/get';
+         var urlStr = '/cdp/profile/get';
          var params = {
              'id': profileId
          };
          
-         loadDataAndUpdatePageView(urlStr, params, function(){
+         LeoCdpAdmin.loadDataAndUpdateView(urlStr, params, function(){
         	 console.log(LeoCdpAdmin.routerContext.dataObject);
+        	 LeoAdminApiUtil.getSecuredData('/cdp/profile/tracking-events',{id:profileId,startIndex:0,numberResult:50},function(events){ 
+        		 console.log(events) 
+        		 eventTpl = _.template($('#tracking-event-tpl').html());
+        	 } )
          })
     }
     
-    var updateDataObject = function(){
-    	$('#page_data_holder').find('*[data-field]').each(function(){
-         	var field = $(this).data('field'); 
-         	var fieldholder = $(this).data('fieldholder'); 
-         	var fieldtype = $(this).data('fieldtype'); 
-         	var value = '';
-            if(fieldholder === 'html'){
-                 value = $(this).html().trim(); 
-            } else if(fieldholder === 'inputvalue'){
-                 value = $(this).val();
-            }
-            if(fieldtype === 'int') {
-            	value = parseInt(value)
-            }
-            else if(fieldtype === 'float') {
-            	value = parseFloat(value)
-            }
-            else if(fieldtype === 'date') {
-            	value = new Date(value)
-            }
-            
-            var toks = field.split('.');
-     		if(toks.length === 1){
-     			LeoCdpAdmin.routerContext.dataObject[toks[0]] = value;
-     		}
-     		else if(toks.length === 2){
-     			LeoCdpAdmin.routerContext.dataObject[toks[0]][toks[1]] = value;
-     		}
-		}).promise().done( function() {
-			console.log(LeoCdpAdmin.routerContext.dataObject);
-			var urlStr = baseAdminApi + '/cdp/profile/update';
-	        var params = {
-	             'objectJson': JSON.stringify(LeoCdpAdmin.routerContext.dataObject)
-	        };
-	        LeoCmsApiUtil.callPostAdminApi(urlStr, params, function (json) {
-	             if (json.httpCode === 0 && json.errorMessage === '') {
-	            	 console.log(json);
-	             } else {
-	                 LeoCmsApiUtil.logErrorPayload(json);
-	             }
-	        });
-	    });
-    }
 
     function profilePathDiagram() {
         var metricName = 'Reach'

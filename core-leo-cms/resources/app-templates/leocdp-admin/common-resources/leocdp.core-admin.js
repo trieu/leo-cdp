@@ -2,7 +2,7 @@ var prefixCallJs = '#calljs-';
 var pageDomSelector = '#page_main_content';
 
 $(document).ready(function () {
-    if (LeoCmsApiUtil.isLoginSessionOK()) {
+    if (LeoAdminApiUtil.isLoginSessionOK()) {
         var defaultPath = '/view/main-view.html?admin=1';
 
         //find action js
@@ -299,8 +299,9 @@ function gotoLeoCdpRouter(){
 	location.hash = hash;
 }
 
-var loadDataAndUpdatePageView = function(urlStr, params, callback){
-	LeoCmsApiUtil.callPostAdminApi(urlStr, params, function (json) {
+LeoCdpAdmin.loadDataAndUpdateView = function(urlStr, params, callback){
+	var url = baseAdminApi + urlStr;
+	LeoAdminApiUtil.callPostAdminApi(url, params, function (json) {
         if (json.httpCode === 0 && json.errorMessage === '') {
         	LeoCdpAdmin.routerContext.dataObject = json.data;
         	
@@ -332,7 +333,48 @@ var loadDataAndUpdatePageView = function(urlStr, params, callback){
     	    });
         	
         } else {
-            LeoCmsApiUtil.logErrorPayload(json);
+            LeoAdminApiUtil.logErrorPayload(json);
         }
+    });
+}
+
+LeoCdpAdmin.updateDataObjectOfView = function(urlStr, params, callback) {
+	$('#page_data_holder').find('*[data-field]').each(function(){
+     	var field = $(this).data('field'); 
+     	var fieldholder = $(this).data('fieldholder'); 
+     	var fieldtype = $(this).data('fieldtype'); 
+     	var value = '';
+        if(fieldholder === 'html'){
+             value = $(this).html().trim(); 
+        } else if(fieldholder === 'inputvalue'){
+             value = $(this).val();
+        }
+        if(fieldtype === 'int') {
+        	value = parseInt(value)
+        }
+        else if(fieldtype === 'float') {
+        	value = parseFloat(value)
+        }
+        else if(fieldtype === 'date') {
+        	value = new Date(value)
+        }
+        
+        var toks = field.split('.');
+ 		if(toks.length === 1){
+ 			LeoCdpAdmin.routerContext.dataObject[toks[0]] = value;
+ 		}
+ 		else if(toks.length === 2){
+ 			LeoCdpAdmin.routerContext.dataObject[toks[0]][toks[1]] = value;
+ 		}
+	}).promise().done(function() {   
+        LeoAdminApiUtil.callPostAdminApi(urlStr, params, function (json) {
+             if (json.httpCode === 0 && json.errorMessage === '') {
+   
+            	 console.log('Done updateDataObjectOfView ' + urlStr);
+     			if(typeof callback === 'function') callback(json);
+             } else {
+                 LeoAdminApiUtil.logErrorPayload(json);
+             }
+        });
     });
 }

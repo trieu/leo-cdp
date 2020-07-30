@@ -34,6 +34,8 @@ public class TrackingEvent extends CdpPersistentObject {
 	    instance = arangoDatabase.collection(COLLECTION_NAME);
 
 	    // ensure indexing key fields for fast lookup
+	    instance.ensurePersistentIndex(Arrays.asList("refChannelId", "timestamp"),
+			    new PersistentIndexOptions().unique(false));
 	    instance.ensurePersistentIndex(Arrays.asList("refJourneyId", "timestamp"),
 		    new PersistentIndexOptions().unique(false));
 	    instance.ensurePersistentIndex(Arrays.asList("refProfileId", "timestamp"),
@@ -150,8 +152,7 @@ public class TrackingEvent extends CdpPersistentObject {
     
     @Expose
     protected Map<String,String> eventData;
-
-    @Expose
+  
     protected int partitionId = 0;
 
     @Override

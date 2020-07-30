@@ -212,7 +212,7 @@
             }
             var urlStr = baseAdminApi + '/post/get-info';
 
-            LeoCmsApiUtil.callPostAdminApi(urlStr, params, function (json) {
+            LeoAdminApiUtil.callPostAdminApi(urlStr, params, function (json) {
                 if (json.httpCode === 0 && json.errorMessage === '') {
                     postModel = json.data;
                     document.title = postModel.title ? 'Post Editor - ' + postModel.title : 'New Content Post';
@@ -269,7 +269,7 @@
                     }
                     loadWidgetsOfPostForm();
                 } else {
-                    LeoCmsApiUtil.logErrorPayload(json);
+                    LeoAdminApiUtil.logErrorPayload(json);
                 }
             });
         }
@@ -313,7 +313,7 @@
 
             //done set data model, POST to API
             var urlStr = baseAdminApi + '/post/save';
-            LeoCmsApiUtil.callPostAdminApi(urlStr, postModel, function (json) {
+            LeoAdminApiUtil.callPostAdminApi(urlStr, postModel, function (json) {
                 if (json.httpCode === 0 && json.errorMessage === '') {
                     if (typeof callback === 'function') {
                         if(json.data === ''){
@@ -324,7 +324,7 @@
                     }
                 } else {
                     $('#error-on-save').html(json.errorMessage).show().delay(6000).fadeOut('slow');
-                    LeoCmsApiUtil.logErrorPayload(json);
+                    LeoAdminApiUtil.logErrorPayload(json);
                 }
             });
         }
@@ -522,7 +522,7 @@
                 $('input[name="related_product_ids"]').parent().hide();
                 var paramObj = {'contentClass':'product'};
                 var url = window.baseAdminApi + '/post/by-content-class-and-keywords';
-                LeoCmsApiUtil.getSecuredData(url, paramObj, function (json) {
+                LeoAdminApiUtil.getSecuredData(url, paramObj, function (json) {
                     var stUrl = json.staticBaseUrl || '';
                     if (json.httpCode === 0 && json.errorMessage === '' && json.data) { 
                         json.label = "Related Products";

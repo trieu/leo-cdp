@@ -77,13 +77,13 @@
 
 	function loadDataCategoryInfo(key) {
 		var urlStr = baseAdminApi + '/category/get-info';
-		LeoCmsApiUtil.callPostAdminApi(urlStr, {
+		LeoAdminApiUtil.callPostAdminApi(urlStr, {
 			'key' : key || 'newcategory'
 		}, function(json) {
 			if (json.httpCode === 0 && json.errorMessage === '') {
 				if (json.data) {
 					categoryModel = json.data;
-					var date = LeoCmsApiUtil.formater.toDateString(categoryModel.creationTime);
+					var date = LeoAdminApiUtil.formater.toDateString(categoryModel.creationTime);
 
 					var node = $('#category_form');
 					if (typeof categoryModel.key === 'string') {
@@ -119,7 +119,7 @@
 			}, 500);
 		}
 
-		LeoCmsApiUtil.callPostAdminApi(urlStr, categoryModel, function(json) {
+		LeoAdminApiUtil.callPostAdminApi(urlStr, categoryModel, function(json) {
 			if (json.httpCode === 0 && json.errorMessage === '') {
 				if (json.data === '') {
 					$('#error-on-save').html('Data is not valid !').show().delay(6000).fadeOut('slow');
@@ -128,7 +128,7 @@
 				}
 			} else {
 				$('#error-on-save').html(json.errorMessage).show().delay(6000).fadeOut('slow');
-				LeoCmsApiUtil.logErrorPayload(json);
+				LeoAdminApiUtil.logErrorPayload(json);
 			}
 		});
 		console.log(categoryModel);
@@ -144,7 +144,7 @@
 				}, 500);
 			}
 			var urlStr = baseAdminApi + '/category/delete';
-			LeoCmsApiUtil.callPostAdminApi(urlStr, categoryModel,
+			LeoAdminApiUtil.callPostAdminApi(urlStr, categoryModel,
 					function(json) {
 						if (json.httpCode === 0 && json.errorMessage === '') {
 							if (json.data === '') {
@@ -154,7 +154,7 @@
 							}
 						} else {
 							$('#error-on-save').html(json.errorMessage).show().delay(6000).fadeOut('slow');
-							LeoCmsApiUtil.logErrorPayload(json);
+							LeoAdminApiUtil.logErrorPayload(json);
 						}
 					});
 		}

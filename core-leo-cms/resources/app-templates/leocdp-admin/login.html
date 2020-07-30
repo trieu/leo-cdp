@@ -47,13 +47,13 @@
 
     function getLoginSession() {
         var urlStr = baseAdminApi + '/user/login-session';
-        LeoCmsApiUtil.callPostApi(urlStr, {}, function (json) {
+        LeoAdminApiUtil.callPostApi(urlStr, {}, function (json) {
             if (json.httpCode === 0 && json.errorMessage === '') {
                 usersession = json.data;
                 loginFormHandler(usersession);
                 console.log(usersession);
             } else {
-                LeoCmsApiUtil.logErrorPayload(json);
+                LeoAdminApiUtil.logErrorPayload(json);
             }
         });
     }
@@ -71,7 +71,7 @@
                 'userpass': pass,
                 'usersession': session
             };
-            LeoCmsApiUtil.callPostApi(urlStr, data, function (json) {
+            LeoAdminApiUtil.callPostApi(urlStr, data, function (json) {
                 if (json.httpCode === 0 && json.errorMessage === '') {
                     encryptionkey = json.data;
                     lscache.set('usersession', session, 10080);
@@ -82,7 +82,7 @@
                         window.location = '/admin';
                     }, 1222);
                 } else {
-                    LeoCmsApiUtil.logErrorPayload(json);
+                    LeoAdminApiUtil.logErrorPayload(json);
                     $('#error-login').html(json.errorMessage).show();
                 }
             });

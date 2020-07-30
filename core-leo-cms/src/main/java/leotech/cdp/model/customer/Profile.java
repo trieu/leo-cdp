@@ -78,7 +78,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 			dbCollection.ensurePersistentIndex(Arrays.asList("locationCode"),
 					new PersistentIndexOptions().unique(false));
 			
-			dbCollection.ensurePersistentIndex(Arrays.asList("top1000Touchpoints[*]"),
+			dbCollection.ensurePersistentIndex(Arrays.asList("topEngagedTouchpointIds[*]"),
 					new PersistentIndexOptions().unique(false));
 			dbCollection.ensurePersistentIndex(Arrays.asList("inCollections[*]"),
 					new PersistentIndexOptions().unique(false));
@@ -118,7 +118,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	protected Set<String> inJourneyMaps = new HashSet<String>(20);
 
 	@Expose
-	protected Set<String> top1000Touchpoints = new HashSet<String>(1000);
+	protected Set<String> topEngagedTouchpointIds = new HashSet<String>(1000);
 
 	@Expose
 	protected int status = 1;
@@ -326,7 +326,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 		this.lastObserverId = observerId;
 		this.lastTouchpointId = lastTouchpointId;
-		this.top1000Touchpoints.add(lastTouchpointId);
+		this.topEngagedTouchpointIds.add(lastTouchpointId);
 		this.lastSeenIp = lastSeenIp;
 		this.lastUsedDeviceId = usedDeviceId;
 
@@ -467,15 +467,20 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	public void setInJourneyMaps(Set<String> inJourneyMaps) {
 		this.inJourneyMaps = inJourneyMaps;
 	}
+	
+	
 
-	public Set<String> getTop1000Touchpoints() {
-		return top1000Touchpoints;
+	public Set<String> getTopEngagedTouchpointIds() {
+		return topEngagedTouchpointIds;
 	}
 
+	public void setTopEngagedTouchpointIds(Set<String> topEngagedTouchpointIds) {
+		this.topEngagedTouchpointIds = topEngagedTouchpointIds;
+	}
 	
-	public void engageAtTouchpoint(String atTouchpointId) {
-		if(this.top1000Touchpoints.size()<1000) {
-			this.top1000Touchpoints.add(atTouchpointId);
+	public void engageAtTouchpointId(String atTouchpointId) {
+		if(this.topEngagedTouchpointIds.size()<1000) {
+			this.topEngagedTouchpointIds.add(atTouchpointId);
 		}
 	}
 
@@ -921,10 +926,6 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	public void setCrmRefId(String crmRefId) {
 		this.crmRefId = crmRefId;
-	}
-
-	public void setTop1000Touchpoints(Set<String> top1000Touchpoints) {
-		this.top1000Touchpoints = top1000Touchpoints;
 	}
 
 	public void setVisitorId(String visitorId) {

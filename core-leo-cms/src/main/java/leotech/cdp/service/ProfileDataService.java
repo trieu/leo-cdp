@@ -29,7 +29,7 @@ public class ProfileDataService {
 	
 		if(pf != null) {
 			
-			pf.engageAtTouchpoint(srcTouchpointId);
+			pf.engageAtTouchpointId(srcTouchpointId);
 			pf.updateReferrerChannel(touchpointRefDomain);
 			pf.setLastObserverId(observerId);
 			pf.setLastTouchpointId(srcTouchpointId);
@@ -71,14 +71,14 @@ public class ProfileDataService {
 
 			} 
 
-			pf.engageAtTouchpoint(refTouchpointId);
+			pf.engageAtTouchpointId(refTouchpointId);
 			pf.updateReferrerChannel(touchpointRefDomain);
 			pf.updateReferrerChannel(loginProvider);
 
 			// TODO run in a thread to commit to database
 			ProfileDaoUtil.create(pf);
 		} else {
-			pf.engageAtTouchpoint(refTouchpointId);
+			pf.engageAtTouchpointId(refTouchpointId);
 			pf.updateReferrerChannel(touchpointRefDomain);
 			pf.updateReferrerChannel(loginProvider);
 			pf.setIdentity(loginId, loginProvider);
@@ -145,7 +145,6 @@ public class ProfileDataService {
 		return profile;
 	}
 	
-	
 	public static Profile createNewCrmProfile(JsonObject paramJson, User loginUser) {
 		String firstName = paramJson.getString("firstName", "");
 		String lastName = paramJson.getString("lastName", "");
@@ -161,16 +160,14 @@ public class ProfileDataService {
 		return pf;
 	}
 	
-	public static Profile updateFromJson(String json) {
-		
+	public static Profile updateSingleDataViewFromJson(String json) {
 		ProfileSingleDataView dataObj = new Gson().fromJson(json, ProfileSingleDataView.class);
-		
-		System.out.println(dataObj);
 		
 		// TODO run in a thread to commit to database
 		ProfileDaoUtil.update(dataObj);
 		return dataObj;
 	}
+	
 	
 	public static boolean remove(String profileId) {
 		Profile pf = ProfileDaoUtil.getById(profileId);

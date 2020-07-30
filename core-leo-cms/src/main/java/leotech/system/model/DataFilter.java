@@ -8,15 +8,24 @@ public class DataFilter {
 
 	String uri;
 	int draw;
-	int length;
+	
 	int start;
+	int length;
 	
 	public DataFilter() {
+		this.start =  0;
+		this.length = 20;
 	}
 	
+	public DataFilter(int start, int length) {
+		super();
+		this.start = start;
+		this.length = length;
+	}
+
 	public DataFilter(String uri, JsonObject paramJson) {
 		this.uri = uri;
-		System.out.println("==> new DataFilter: "+new Gson().toJson(paramJson));
+		//System.out.println("==> new DataFilter: "+new Gson().toJson(paramJson));
 		this.start =  paramJson.getInteger("start", 0);
 		this.length = paramJson.getInteger("length", 20);
 		this.draw = paramJson.getInteger("draw", 1);

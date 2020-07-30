@@ -95,7 +95,7 @@ public class ProfileDaoUtil  extends BaseLeoCdpDao {
 		CallbackQuery<ProfileSingleDataView> callback = new CallbackQuery<ProfileSingleDataView>() {
 			@Override
 			public ProfileSingleDataView apply(ProfileSingleDataView obj) {
-				obj.unifyDataToSinpleView();
+				obj.unifyDataView();
 				return obj;
 			}
 		};
@@ -125,7 +125,7 @@ public class ProfileDaoUtil  extends BaseLeoCdpDao {
 		CallbackQuery<ProfileSingleDataView> callback = new CallbackQuery<ProfileSingleDataView>() {
 			@Override
 			public ProfileSingleDataView apply(ProfileSingleDataView obj) {
-				obj.unifyDataToSinpleView();
+				obj.unifyDataView();
 				return obj;
 			}
 		};

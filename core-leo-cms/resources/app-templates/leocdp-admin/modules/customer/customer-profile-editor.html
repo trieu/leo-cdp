@@ -242,7 +242,7 @@
             
             var ele = false;
             if(target === 'persona_attributes'){
-            	ele = $('<li> <b data-persona="key" class="editable_text" > </b> <p data-persona="value" class="editable_text" > </p> </li>');
+            	ele = $('<li> <b data-persona="key" class="editable_text" ></b> <p data-persona="value" class="editable_text" ></p> </li>');
             	$('#' + target ).append(ele);
                 makeNodeEditable(ele.find('b'));
                 makeNodeEditable(ele.find('p'));
@@ -252,5 +252,10 @@
                 makeNodeEditable(ele.find('p'));
             }
         });
+    }
+    
+    function saveProfileData(){
+    	var urlStr = baseAdminApi + '/cdp/profile/update';
+        var params = {'objectJson': JSON.stringify(LeoCdpAdmin.routerContext.dataObject) };
     }
 </script>

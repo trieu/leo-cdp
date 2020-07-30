@@ -280,7 +280,7 @@
     function loadSessionUserInfo(callback) {
         if (window.usersession != '') {
             var urlStr = '/user/get-info';
-            LeoCmsApiUtil.callPostAdminApi(urlStr, {}, function (json) {
+            LeoAdminApiUtil.callPostAdminApi(urlStr, {}, function (json) {
                 if (json.httpCode === 0 && json.errorMessage === '') {
                     if (json.data) {
                         var user = json.data;
