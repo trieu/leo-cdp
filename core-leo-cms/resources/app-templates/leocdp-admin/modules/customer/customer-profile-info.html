@@ -227,12 +227,8 @@
 			</div>
 			
 		 	<div class="tab-pane " id="panel_profile_activitiy_flow" >
-	     		<ul class="list-group list-group-dividered list-group-full">
-	     		
-				   
-				   
-				   
-				   
+	     		<ul id="profile_activitiy_flow" class="list-group list-group-dividered list-group-full">
+	     			<!-- data  -->
 				</ul>
 			</div>
 			
@@ -264,7 +260,6 @@
 			
 			<div class="tab-pane" id="panel_profile_ext_attributes" >
 			      <h4>attributes</h4>
-			      
 			      
 			</div>
 		    <div class="tab-pane" id="panel_business_transactions" >
@@ -300,12 +295,11 @@
 <script id='tracking-event-tpl' type="text/html" >
 <li class="list-group-item">
    <div class="row">
-      <div class="col-md-1 text-center">  <img class="rounded mx-auto d-block" src="https://cdn2.iconfinder.com/data/icons/picol-vector/32/view-32.png" alt="icon" > </div>
+      <div class="col-md-1 text-center">  <i class="fa fa-arrow-right fa-2" aria-hidden="true" ></i> </div>
       <div class="col-md-11">
          <small class="text-muted pull-right"> <%- createdAt %> </small>
          <h4 class="media-heading"> <%- metricName %> </h4>
-         <div> <%- srcTouchpoint.url %>
-         </div>
+         <div> <a target="_blank" href="<%- srcTouchpoint.url %>" > <%- srcTouchpoint.name %> </a> </div>
       </div>
    </div>
 </li>
@@ -348,10 +342,15 @@
          
          LeoCdpAdmin.loadDataAndUpdateView(urlStr, params, function(){
         	 console.log(LeoCdpAdmin.routerContext.dataObject);
-        	 LeoAdminApiUtil.getSecuredData('/cdp/profile/tracking-events',{id:profileId,startIndex:0,numberResult:50},function(events){ 
-        		 console.log(events) 
+        	 LeoAdminApiUtil.getSecuredData('/cdp/profile/tracking-events',{id:profileId,startIndex:0,numberResult:50},function(json){ 
+        		 console.log(json.data) 
         		 eventTpl = _.template($('#tracking-event-tpl').html());
-        	 } )
+        		 var node = $('#profile_activitiy_flow');
+        		 _.forEach(json.data,function(e,i){
+        			 var html = eventTpl(e);
+        			 node.append(html);
+       			});
+        	 })
          })
     }
     

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<base href="//{{baseStaticUrl}}/admin">
+	<base href="{{baseStaticUrl}}/admin">
 
 	<link id="page_favicon" href="data:image/png;base64,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"
 	 rel="icon" type="image/x-icon" />
@@ -34,9 +34,13 @@
 	<!-- Custom CSS -->
 	<link href="/public/css/sb-admin.css" rel="stylesheet" />
 	<link href="/view/common-resources/admin.css?admin=1" rel="stylesheet" />
+	
+	<!-- Remix Icon -->
+	<link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+	
 
 	<!-- MediaPlayer CSS -->
-	<link rel="stylesheet" href="//{{baseStaticUrl}}/public/mediaplayer/mediaplayer.one.css">
+	<link rel="stylesheet" href="/public/mediaplayer/mediaplayer.one.css">
 
 	<!-- Custom Fonts and Icons -->
 	<link href="/public/css/font-awesome.min.css" rel="stylesheet" />
@@ -49,10 +53,8 @@
 	<script src="/public/js/utils/handlebars.min.js"></script>
 
 	<!-- lodash library -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.19/lodash.min.js"></script>
+	<script src="/public/js/utils/lodash.min.js"></script>
 	
-	
-
 	<!-- Bootstrap Core JavaScript -->
 	<script src="/public/js/utils/bootstrap-transition.js"></script>
 	<script src="/public/js/utils/bootstrap-collapse.js"></script>
@@ -84,15 +86,15 @@
 	<script src="/public/js/utils/lscache.js"></script>	
 
 	<!-- Trix - Rich Text Editor -->
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.1/trix.css" rel="stylesheet">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.1/trix.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.3/trix.min.css" rel="stylesheet">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.3/trix.min.js"></script>
 
 	<!-- CSS File Uploader with Filepond -->
 	<link href="/public/js/filepond/filepond.css" rel="stylesheet">
 	<link href="/public/js/filepond/filepond-plugin-image-preview.css" rel="stylesheet">
 	
 	<!-- D3.JS -->
-	<script src="https://cdn.jsdelivr.net/npm/d3@4.13.0/build/d3.min.js"></script>
+	<script src="/public/js/utils/d3.min.js"></script>
 	
 	<!-- Sankey Diagrams JS -->
 	<link href="/public/js/skd3/sk.d3.css" rel="stylesheet" type="text/css" />
@@ -206,7 +208,7 @@
 	    });
     </script>
 	
-	<!-- Leo admin js -->
+	<!-- Leo Admin -->
 	<script src="//{{baseStaticUrl}}/view/common-resources/leo.admin.common.js?admin=1"></script>
 	<script src="//{{baseStaticUrl}}/view/common-resources/leocdp.router.js?admin=1"></script>
 	<script src="//{{baseStaticUrl}}/view/common-resources/leocdp.navfunctions.js?admin=1"></script>
