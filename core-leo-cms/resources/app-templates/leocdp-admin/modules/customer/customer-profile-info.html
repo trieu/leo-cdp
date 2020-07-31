@@ -45,9 +45,15 @@
 
        <div class="row">
            <div class="col-md-5">
+           	    <div class="row">
+	               <div class="text-center" >
+	                   <img id="profile_avatar" src="/public/images/avatars/profile-default-avatar.png" alt="Profile Avatar" class="rounded mx-auto d-block avatar">
+	               </div>
+               </div>
+                
            	   <ul class="nav nav-tabs" data-tab-content="profile_summary_tabs" >
-		       	  <li class="active" > <a href="javascript:" data-target-tab="panel_profile_summary" > Profile summary </a> </li>
-		       	  <li> <a href="javascript:" data-target-tab="panel_last_session_details" > Last session details</a> </li>
+		       	  <li class="active" > <a href="javascript:" data-target-tab="panel_profile_summary" > <i class="fa  fa-user-circle-o" aria-hidden="true"></i> Profile Summary </a> </li>
+		       	  <li> <a href="javascript:" data-target-tab="panel_last_session_details" > <i class="fa fa-info-circle" aria-hidden="true"></i> Last Session Details</a> </li>
 			   </ul>
 			   <div class="tab-content" id="profile_summary_tabs" >
 
@@ -58,36 +64,40 @@
 		                       <td>
 		                           <ol id="visitor_attributes" data-field="visitor_attributes">
 		                               <li>
-		                                   <b> Profile ID </b> 
+		                                   <b> <i class="fa fa-id-badge" aria-hidden="true"></i> Profile UUID </b> 
 		                                   <p data-field="id" data-fieldholder="html"  data-fieldtype="string"  > </p>
 		                               </li>
 		                               <li>
-		                                   <b> Profile Type </b> 
+		                                   <b> <i class="fa fa-id-card-o" aria-hidden="true"></i> Profile Type </b> 
 		                                   <p data-field="typeAsText" data-fieldholder="html"  data-fieldtype="string"  > CRM_CONTACT </p>
 		                               </li>
 		                               <li>
-		                                   <b> Creation Date </b> 
+		                                   <b> <i class="fa fa-clock-o" aria-hidden="true"></i> Creation Date </b> 
 		                                   <p data-field="createdAt" data-fieldholder="html"  data-fieldtype="date"  > 2020-06-11 09:35:37  </p>
 		                               </li>
 		                               <li>
-		                                   <b> Modification Date </b> 
+		                                   <b> <i class="fa fa-clock-o" aria-hidden="true"></i> Modification Date </b> 
 		                                   <p data-field="updatedAt" data-fieldholder="html"  data-fieldtype="date"  > 2020-06-11 09:35:37  </p>
 		                               </li>
 		                               <li>
-		                                   <b> Data Completion Score </b> 
-		                                   <p data-field="dataCompletionScore" data-fieldholder="html"  data-fieldtype="int"  > 80 </p>
-		                               </li>
-		                                <li>
-		                                   <b> Business Credit Score </b> 
-		                                   <p data-field="businessCreditScore" data-fieldholder="html"  data-fieldtype="int"  > 80 </p>
+		                                   <b> <i class="fa fa-usd" aria-hidden="true"></i> Customer Acquisition Cost (CAC) in {{currency_code}} </b> 
+		                                   <p data-field="totalCAC" data-fieldholder="html"  data-fieldtype="int"  > 80 </p>
 		                               </li>
 		                               <li>
-		                                   <b> Customer Satisfaction Score </b> 
+		                                   <b> <i class="fa fa-usd" aria-hidden="true"></i> Customer Lifetime Value (CLV) in {{currency_code}} </b> 
+		                                   <p data-field="totalCLV" data-fieldholder="html"  data-fieldtype="int"  > 10,000,000 </p>
+		                               </li>
+		                               <li>
+		                                   <b> <i class="fa fa-star" aria-hidden="true"></i> Data Completion Score (DCS)  </b> 
+		                                   <p data-field="dataCompletionScore" data-fieldholder="html"  data-fieldtype="int"  > 80 </p>
+		                               </li>
+		                               <li>
+		                                   <b> <i class="fa fa-star" aria-hidden="true"></i> Customer Satisfaction Score (CSC) </b> 
 		                                   <p data-field="satisfactionScore" data-fieldholder="html"  data-fieldtype="int"  > 80 </p>
 		                               </li>
 		                               <li>
-		                                   <b> Customer Lifetime Value in {{currency_code}}</b> 
-		                                   <p data-field="totalCLV" data-fieldholder="html"  data-fieldtype="int"  > 10,000,000 </p>
+		                                   <b> <i class="fa fa-star" aria-hidden="true"></i> Business Credit Score (BCS) </b> 
+		                                   <p data-field="businessCreditScore" data-fieldholder="html"  data-fieldtype="int"  > 80 </p>
 		                               </li>
 		                               
 		                           </ol>
@@ -111,16 +121,16 @@
 		                                   <p data-field="lastTouchpoint.url" data-fieldholder="html"  data-fieldtype="string"  >   </p>
 		                               </li>
 		                               <li>
+		                                   <b> Created at </b> 
+		                                   <p data-field="lastTouchpoint.createdAt" data-fieldholder="html"  data-fieldtype="string"  >   </p>
+		                               </li>
+		                               <li>
 		                                   <b> Last seen at the location </b> 
 		                                   <p> TP.HCM, Việt Nam  </p>
 		                               </li>
 		                               <li>
 		                                   <b> Session length </b> 
 		                                   <p> 12 minutes  </p>
-		                               </li>
-		                               <li>
-		                                   <b> Device ID </b> 
-		                                   <p> dsadsa231 </p>
 		                               </li>
 		                               <li>
 		                                   <b> Browser </b> 
@@ -134,6 +144,10 @@
 		                                   <b> Device OS </b> 
 		                                   <p> iOS 11  </p>
 		                               </li>
+		                                <li>
+		                                   <b> Device ID </b> 
+		                                   <p> - </p>
+		                               </li>
 		                           </ol>
 		                       </td>
 		                   </tr>
@@ -144,13 +158,6 @@
            </div>
            
            <div class="col-md-7">
-                <div class="row">
-	               <div class="text-center" >
-	                   <img src="https://randomuser.me/api/portraits/men/90.jpg"
-	                       alt="Profile Avatar" class="rounded mx-auto d-block avatar">
-	               </div>
-                </div>
-             
                <h4> Personal information </h4>
                
                <table border=0 class="underlined" style="width: 100%;">
@@ -185,6 +192,10 @@
                                    <b data-persona="key" class="editable_text" >  <i class="fa fa-fw fa-mobile"></i> Primary mobile phone </b> 
                                    <p data-field="primaryPhone" data-fieldholder="html"  data-fieldtype="string"  > - </p>
                                </li>
+                               <li>
+                                   <b data-persona="key" class="editable_text" >  <i class="fa fa-fw fa-mobile"></i> Social media profiles </b> 
+                                   <p data-field="socialMediaProfiles" data-fieldholder="html_hashmap"  data-fieldtype="hashmap"  > - </p>
+                               </li>
                            </ol>
                        </td>
                    </tr>
@@ -196,48 +207,20 @@
        
        <!--  Tab Navigation Items -->
        <ul class="nav nav-tabs" data-tab-content="profile_ext_data_tabs" >
-       	  <li class="active" ><a href="javascript:" data-target-tab="panel_profile_business_data" > Business Data </a></li>
-       	  <li ><a href="javascript:" data-target-tab="panel_profile_activitiy_flow" > Activity Flow </a></li>
-       	  
-		  <li style="display: none;" ><a href="javascript: " data-target-tab="panel_profile_journey" > Journey </a></li>
-		  
-		  <li style="display: none;" ><a href="javascript:" data-target-tab="panel_profile_ext_attributes" > Extended Attributes </a></li>
-		  <li style="display: none;" ><a href="javascript:"data-target-tab="panel_business_transactions" > Business Transactions</a></li>
+          <li class="active" ><a href="javascript:" data-target-tab="panel_profile_journey_flow" > <i class="fa fa-map-o" aria-hidden="true"></i> Journey Flow </a></li>
+          <li ><a href="javascript:" data-target-tab="panel_profile_activitiy_flow" > <i class="fa fa-list-ol" aria-hidden="true"></i> Activity Flow </a></li>
+       	  <li ><a href="javascript:" data-target-tab="panel_profile_business_data" > <i class="fa fa-briefcase" aria-hidden="true"></i> Business Data </a></li>
+       	  <li ><a href="javascript:"data-target-tab="panel_business_transactions" > <i class="fa fa-shopping-cart" aria-hidden="true"></i> Business Transactions</a></li>
+		  <li ><a href="javascript:" data-target-tab="panel_profile_ext_attributes" > <i class="fa fa-info-circle" aria-hidden="true"></i> Extended Attributes </a></li>
+		 
 	   </ul>
 
 	   <!-- Tab Contents  -->
        <div class="tab-content" id="profile_ext_data_tabs" >
-       
-       		<div class="tab-pane active" id="panel_profile_business_data" >
-	     		<ul class="list-group list-group-dividered list-group-full">
-				   <li class="list-group-item">
-			            <h4 class="media-heading">viewed </h4>
-			            <div>Lorem ipsum Veniam aliquip culpa laboris minim tempor labore
-			               commodo officia veniam non in in in.
-			            </div>
-				   </li>
-				   <li class="list-group-item">
-			            <h4 class="media-heading">viewed </h4>
-			            <div>Lorem ipsum Veniam aliquip culpa laboris minim tempor labore
-			               commodo officia veniam non in in in.
-			            </div>
-				   </li>
-				   
-				</ul>
-			</div>
-			
-		 	<div class="tab-pane " id="panel_profile_activitiy_flow" >
-	     		<ul id="profile_activitiy_flow" class="list-group list-group-dividered list-group-full">
-	     			<!-- data  -->
-				</ul>
-			</div>
-			
-			<div class="tab-pane" id="panel_profile_journey" style="display: none;" >
-		     	<h4 id="journey_map_name" > Experience Journey Flow </h4>
+       		<div class="tab-pane active" id="panel_profile_journey_flow" >
 		     	
 		     	<div class="row">
-		       		<div id="customerJourneyDiv" class="experience_journey_flow row" ></div>
-		       	 	<div id="sankeyChart" style="height:580px; width:98%;"></div>
+		       	 	<div id="journeyFlowChart" class="experience_journey_flow" style="height:580px;"></div>
 		       	</div>
 		       	
 		       	<div class="row" style="display: none;" >
@@ -258,13 +241,38 @@
 			     </div>   
 			</div>
 			
-			<div class="tab-pane" id="panel_profile_ext_attributes" >
-			      <h4>attributes</h4>
-			      
+			<div class="tab-pane " id="panel_profile_activitiy_flow" >
+	     		<ul id="profile_activitiy_flow" class="list-group list-group-dividered list-group-full">
+	     			<!-- data  -->
+				</ul>
 			</div>
-		    <div class="tab-pane" id="panel_business_transactions" >
+       
+       		<div class="tab-pane " id="panel_profile_business_data" >
+	     		<ul class="list-group list-group-dividered list-group-full">
+				   <li class="list-group-item">
+			            <h4 class="media-heading">viewed </h4>
+			            <div>Lorem ipsum Veniam aliquip culpa laboris minim tempor labore
+			               commodo officia veniam non in in in.
+			            </div>
+				   </li>
+				   <li class="list-group-item">
+			            <h4 class="media-heading">viewed </h4>
+			            <div>Lorem ipsum Veniam aliquip culpa laboris minim tempor labore
+			               commodo officia veniam non in in in.
+			            </div>
+				   </li>
+				   
+				</ul>
+			</div>
+			
+			<div class="tab-pane" id="panel_business_transactions" >
 		     	<h4>transactions</h4>
 			</div>
+			
+			<div class="tab-pane" id="panel_profile_ext_attributes" >
+			      <h4>attributes</h4>
+			</div>
+		    
 	   </div>
        
        
@@ -314,13 +322,7 @@
 		setupTabPanels();
 		loadCurrentProfile(profileId)
     	
-        setTimeout(function(){
-        	//profilePathDiagram();
-        	//loadProfileAttribution();
-            //loadMediaTouchpoints();
-            //personalityDiagram();
-            
-        },500);
+        
     }
     
     function editCurrentProfile(){
@@ -341,8 +343,19 @@
          };
          
          LeoCdpAdmin.loadDataAndUpdateView(urlStr, params, function(){
-        	 console.log(LeoCdpAdmin.routerContext.dataObject);
-        	 LeoAdminApiUtil.getSecuredData('/cdp/profile/tracking-events',{id:profileId,startIndex:0,numberResult:50},function(json){ 
+        	 //console.log(LeoCdpAdmin.routerContext.dataObject);
+        	 var profileData = LeoCdpAdmin.routerContext.dataObject;
+        	 if(profileData.primaryAvatar != ''){
+        		 $('#profile_avatar').attr('src',profileData.primaryAvatar);
+        	 }
+        	 
+        	 
+        	 renderJourneyFlowChart();
+        	//loadProfileAttribution();
+             //loadMediaTouchpoints();
+             //personalityDiagram();
+        	 
+        	 LeoAdminApiUtil.getSecuredData('/cdp/profile/tracking-events',{id:profileId,startIndex:0,numberResult:50}, function(json){ 
         		 console.log(json.data) 
         		 eventTpl = _.template($('#tracking-event-tpl').html());
         		 var node = $('#profile_activitiy_flow');
@@ -355,7 +368,7 @@
     }
     
 
-    function profilePathDiagram() {
+    function renderJourneyFlowChart() {
         var metricName = 'Reach'
         var journeyStages = ['Google Search', 'Facebook Group', 'YouTube channel', 'E-commerce Website', 'E-commerce Mobile App','Email khách hàng (CRM)','Số điện thoại khách hàng (CRM)','Cửa hàng bán lẻ','Shopping Mall']
         var journeyStageMetrics = { 'Mua hàng' : 'đơn hàng' }
@@ -500,7 +513,7 @@
                 ]
         };
 
-        var objSankey = sk.createSankey('#sankeyChart', configSankey, datajson);
+        var objSankey = sk.createSankey('#journeyFlowChart', configSankey, datajson);
     }
     
     function loadMediaTouchpoints() {

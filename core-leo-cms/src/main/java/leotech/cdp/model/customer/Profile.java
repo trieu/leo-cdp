@@ -467,8 +467,6 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	public void setInJourneyMaps(Set<String> inJourneyMaps) {
 		this.inJourneyMaps = inJourneyMaps;
 	}
-	
-	
 
 	public Set<String> getTopEngagedTouchpointIds() {
 		return topEngagedTouchpointIds;

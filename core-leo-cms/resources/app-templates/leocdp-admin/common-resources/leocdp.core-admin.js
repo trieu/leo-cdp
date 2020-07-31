@@ -299,23 +299,57 @@ function gotoLeoCdpRouter(){
 	location.hash = hash;
 }
 
-LeoCdpAdmin.loadDataAndUpdateView = function(urlStr, params, callback){
+LeoCdpAdmin.loadDataAndUpdateView = function(urlStr, params, callback) {
 	var url = baseAdminApi + urlStr;
 	LeoAdminApiUtil.callPostAdminApi(url, params, function (json) {
         if (json.httpCode === 0 && json.errorMessage === '') {
         	LeoCdpAdmin.routerContext.dataObject = json.data;
         	
         	$('#page_data_holder').find('*[data-field]').each(function(){
-        		var field = $(this).data('field');
         		var fieldholder = $(this).data('fieldholder');
+        		var fieldtype = $(this).data('fieldtype'); 
+        		
+        		var field = $(this).data('field');
         		var toks = field.split('.');
         		if(toks.length === 1){
         			var value = LeoCdpAdmin.routerContext.dataObject[toks[0]];
+        			
         			if(fieldholder === 'html'){
+        				if(fieldtype === 'int' || fieldtype === 'float' ){
+            				value = value.toLocaleString();
+            			}
         				$(this).html(value)
         			}
         			else if(fieldholder === 'inputvalue'){
         				$(this).val(value)
+        			}
+        			else if(fieldholder === 'html_hashmap'){
+        				var ulHtml = '<ul class="list-group" >';
+        				_.forOwn(value,function(value, key) {
+        					var icon = '';
+        					if(key === 'twitter'){
+        						icon = 'Twitter <i class="fa fa-twitter-square" aria-hidden="true"></i> ';
+        					}
+        					else if(key === 'linkedin'){
+        						icon = 'LinkedIn <i class="fa fa-linkedin-square" aria-hidden="true"></i> ';
+        					}
+        					else if(key === 'facebook'){
+        						icon = 'Facebook <i class="fa fa-facebook-square" aria-hidden="true"></i> ';
+        					}
+        					else if(key === 'instagram'){
+        						icon = 'Instagram <i class="fa fa-instagram" aria-hidden="true"></i> ';
+        					}
+        					else if(key === 'skype'){
+        						icon = 'Skype <i class="fa fa-skype" aria-hidden="true"></i> ';
+        					}
+        					else if(key === 'github'){
+        						icon = 'Github <i class="fa fa-github" aria-hidden="true"></i> ';
+        					}
+        					ulHtml = ulHtml + '<li class="list-group-item" > ' + icon + value + '</li>';
+              			});
+        				
+        				ulHtml += '</ul>';
+        				$(this).html(ulHtml)
         			}
         		} 
         		else if(toks.length === 2){
@@ -350,10 +384,10 @@ LeoCdpAdmin.updateDataObjectOfView = function(urlStr, params, callback) {
              value = $(this).val();
         }
         if(fieldtype === 'int') {
-        	value = parseInt(value)
+        	value = parseInt(value.replace(/,/g,''))
         }
         else if(fieldtype === 'float') {
-        	value = parseFloat(value)
+        	value = parseFloat(value.replace(/,/g,''))
         }
         else if(fieldtype === 'date') {
         	value = new Date(value)

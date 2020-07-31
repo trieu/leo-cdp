@@ -163,8 +163,12 @@ textarea {
     display: none !important;
 }
 
+.experience_journey_flow {
+	width:96%!important;
+	margin: auto;
+}
 .experience_journey_flow svg {
-	font: 17px / 24px "Tahoma" sans-serif !important;
+	font: 14px / 18px "Tahoma" sans-serif !important;
 }
 
 div.gridholder {
