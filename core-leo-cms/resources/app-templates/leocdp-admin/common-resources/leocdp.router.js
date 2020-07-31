@@ -112,7 +112,6 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Customer Journey Hub", "Customer Journey List","Journey Map Studio"]
 		},
 		
-		
 		// 3.1 Content Dashboard
 		"Content_Dashboard" : {
 			"menuName" : "Content Dashboard",
@@ -126,7 +125,6 @@ LeoCdpAdmin.navRouters = {
 			"functionName" : "loadContentCategoryList",
 			"breadcrumb" : ["Creative Content Hub", "Content Category List"]
 		},
-		
 		
 		// 3.1 Customer Profile 
 		"Customer_Profile_List" : {

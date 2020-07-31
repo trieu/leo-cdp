@@ -91,7 +91,7 @@ public class ContextSession extends CdpPersistentObject {
 	String observerId;
 	String profileId;
 	String visitorId;
-	int profileType = ProfileType.ANONYMOUS;
+	int profileType = ProfileConstant.TYPE_ANONYMOUS;
 	
 	Date createAt;
 	Date updatedAt;

@@ -10,7 +10,7 @@ import com.google.gson.annotations.Expose;
 import leotech.cdp.dao.TouchpointDaoUtil;
 import leotech.cdp.model.SingleDataView;
 import leotech.cdp.model.customer.Profile;
-import leotech.cdp.model.customer.ProfileType;
+import leotech.cdp.model.customer.ProfileConstant;
 import leotech.cdp.model.marketing.Touchpoint;
 import leotech.system.model.DeviceInfo;
 
@@ -71,13 +71,13 @@ public class ProfileSingleDataView extends Profile implements SingleDataView {
 		// profile type
 		if(typeAsText == null) {
 			typeAsText = "ANONYMOUS";
-			if(type == ProfileType.CRM_CONTACT) {
+			if(type == ProfileConstant.TYPE_CRM_CONTACT) {
 				typeAsText = "CRM_CONTACT";
-			} else if(type == ProfileType.KEY_ACCOUNT) {
+			} else if(type == ProfileConstant.TYPE_KEY_ACCOUNT) {
 				typeAsText = "KEY_ACCOUNT";
-			} else if(type == ProfileType.DMP_PROFILE) {
+			} else if(type == ProfileConstant.TYPE_DMP_PROFILE) {
 				typeAsText = "DMP_PROFILE";
-			} else if(type == ProfileType.IDENTIFIED) {
+			} else if(type == ProfileConstant.TYPE_IDENTIFIED) {
 				typeAsText = "IDENTIFIED";
 			}
 		}

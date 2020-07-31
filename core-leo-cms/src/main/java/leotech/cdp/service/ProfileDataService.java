@@ -9,7 +9,7 @@ import io.vertx.core.json.JsonObject;
 import leotech.cdp.dao.ProfileDaoUtil;
 import leotech.cdp.dao.singleview.ProfileSingleDataView;
 import leotech.cdp.model.customer.Profile;
-import leotech.cdp.model.customer.ProfileType;
+import leotech.cdp.model.customer.ProfileConstant;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataTablePayload;
 import leotech.system.model.User;
@@ -50,17 +50,17 @@ public class ProfileDataService {
 		
 		if (pf == null) {
 			
-			int type = ProfileType.ANONYMOUS;
+			int type = ProfileConstant.TYPE_ANONYMOUS;
 			if (StringUtil.isNotEmpty(email) || StringUtil.isNotEmpty(phone) || StringUtil.isNotEmpty(loginId)) {
-				type = ProfileType.IDENTIFIED;
+				type = ProfileConstant.TYPE_IDENTIFIED;
 			} else if (StringUtil.isNotEmpty(email) && StringUtil.isNotEmpty(phone)) {
-				type = ProfileType.CRM_CONTACT;
+				type = ProfileConstant.TYPE_CRM_CONTACT;
 			}
 			
-			if (type == ProfileType.ANONYMOUS) {
+			if (type == ProfileConstant.TYPE_ANONYMOUS) {
 				pf = Profile.newAnonymousProfile( observerId, srcTouchpointId, lastSeenIp, visitorId,
 						userDeviceId, fingerprintId);
-			} else if (type == ProfileType.IDENTIFIED) {
+			} else if (type == ProfileConstant.TYPE_IDENTIFIED) {
 
 				pf = Profile.newIdentifiedProfile( observerId, srcTouchpointId, lastSeenIp, visitorId,
 						userDeviceId, email, fingerprintId);

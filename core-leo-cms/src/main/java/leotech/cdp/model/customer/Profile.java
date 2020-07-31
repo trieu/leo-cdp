@@ -28,8 +28,6 @@ import rfx.core.util.StringUtil;
  */
 public class Profile extends CdpPersistentObject implements Comparable<Profile> {
 
-	
-
 	public static final String COLLECTION_NAME = COLLECTION_PREFIX + Profile.class.getSimpleName().toLowerCase();
 	static ArangoCollection dbCollection;
 
@@ -93,7 +91,10 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	protected String id;
 
 	@Expose
-	protected int type = ProfileType.ANONYMOUS;
+	protected int type = ProfileConstant.TYPE_ANONYMOUS;
+	
+	@Expose
+	protected String schemaType = ProfileConstant.SCHEMA_TYPE_GENERAL;
 
 	@Expose
 	protected Set<String> identities = new HashSet<>(100);
@@ -124,7 +125,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	protected int status = 1;
 
 	@Expose
-	protected String lastObserverId = "unknown";
+	protected String lastObserverId = ProfileConstant.UNKNOWN;
 
 	@Expose
 	protected String lastTouchpointId = "";
@@ -222,7 +223,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	protected Set<String> mediaChannels  = new HashSet<>(30);
 	
 	@Expose
-	protected Set<String> marketingKeywords = new HashSet<>(50);
+	protected Set<String> contentKeywords = new HashSet<>(50);
 	
 	@Expose
 	protected Set<String> funnelMetrics  = new HashSet<>(20);
@@ -384,7 +385,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	public static Profile newIdentifiedProfile( String observerId, String lastTouchpointId,
 			String lastSeenIp, String visitorId, String usedDeviceId, String email, String fingerprintId) {
 		Profile p = new Profile();
-		p.initBaseInformation(0, visitorId, ProfileType.IDENTIFIED, observerId, lastTouchpointId, lastSeenIp, usedDeviceId, email, "", fingerprintId, "");
+		p.initBaseInformation(0, visitorId, ProfileConstant.TYPE_IDENTIFIED, observerId, lastTouchpointId, lastSeenIp, usedDeviceId, email, "", fingerprintId, "");
 		return p;
 	}
 
@@ -399,7 +400,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	 */
 	public static Profile newCrmProfile(String observerId, String email, String phone, String crmRefId) {
 		Profile p = new Profile();
-		p.initBaseInformation(0, "", ProfileType.CRM_CONTACT, observerId, "", "", "", email, phone, "", crmRefId);
+		p.initBaseInformation(0, "", ProfileConstant.TYPE_CRM_CONTACT, observerId, "", "", "", email, phone, "", crmRefId);
 		return p;
 	}
 
@@ -414,7 +415,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	public static Profile newAnonymousProfile( String observerId, String lastTouchpointId,
 			String lastSeenIp, String visitorId, String usedDeviceId, String fingerprintId) {
 		Profile p = new Profile();
-		p.initBaseInformation(0,  visitorId, ProfileType.ANONYMOUS, observerId, lastTouchpointId, lastSeenIp, usedDeviceId, "", "", fingerprintId, "");
+		p.initBaseInformation(0,  visitorId, ProfileConstant.TYPE_ANONYMOUS, observerId, lastTouchpointId, lastSeenIp, usedDeviceId, "", "", fingerprintId, "");
 		return p;
 	}
 
@@ -556,8 +557,8 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	public void setPrimaryEmail(String primaryEmail) {
 		this.primaryEmail = primaryEmail;
-		if (this.type == ProfileType.ANONYMOUS) {
-			this.type = ProfileType.IDENTIFIED;
+		if (this.type == ProfileConstant.TYPE_ANONYMOUS) {
+			this.type = ProfileConstant.TYPE_IDENTIFIED;
 		}
 	}
 
@@ -567,8 +568,8 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	public void setPrimaryPhone(String primaryPhone) {
 		this.primaryPhone = primaryPhone;
-		if (this.type == ProfileType.ANONYMOUS) {
-			this.type = ProfileType.IDENTIFIED;
+		if (this.type == ProfileConstant.TYPE_ANONYMOUS) {
+			this.type = ProfileConstant.TYPE_IDENTIFIED;
 		}
 	}
 
@@ -885,13 +886,21 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	public void setMediaChannels(Set<String> mediaChannels) {
 		this.mediaChannels = mediaChannels;
 	}
-
-	public Set<String> getMarketingKeywords() {
-		return marketingKeywords;
+	
+	public String getSchemaType() {
+		return schemaType;
 	}
 
-	public void setMarketingKeywords(Set<String> marketingKeywords) {
-		this.marketingKeywords = marketingKeywords;
+	public void setSchemaType(String schemaType) {
+		this.schemaType = schemaType;
+	}
+
+	public Set<String> getContentKeywords() {
+		return contentKeywords;
+	}
+
+	public void setContentKeywords(Set<String> contentKeywords) {
+		this.contentKeywords = contentKeywords;
 	}
 
 	public Set<String> getFunnelMetrics() {
