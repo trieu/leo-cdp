@@ -17,7 +17,7 @@ import com.google.gson.annotations.Expose;
 
 import leotech.cdp.model.CdpPersistentObject;
 import rfx.core.util.StringUtil;
-public  class MediaChannel extends CdpPersistentObject {
+public class MediaChannel extends CdpPersistentObject {
 	
 	
 	public static final String COLLECTION_NAME = COLLECTION_PREFIX + MediaChannel.class.getSimpleName().toLowerCase();
@@ -33,10 +33,12 @@ public  class MediaChannel extends CdpPersistentObject {
 			// ensure indexing key fields for fast lookup
 			instance.ensureFulltextIndex(Arrays.asList("name"), new FulltextIndexOptions());
 			instance.ensurePersistentIndex(Arrays.asList("url"), new PersistentIndexOptions().unique(false));
+			instance.ensurePersistentIndex(Arrays.asList("type"), new PersistentIndexOptions().unique(false));
 			
+			instance.ensurePersistentIndex(Arrays.asList("countryCode"),new PersistentIndexOptions().unique(false));
 			instance.ensurePersistentIndex(Arrays.asList("locationCode"),new PersistentIndexOptions().unique(false));
-			instance.ensureHashIndex(Arrays.asList("keywords[*]"), new HashIndexOptions());
 			instance.ensureGeoIndex(Arrays.asList("latitude", "longitude"), new GeoIndexOptions());
+			instance.ensureHashIndex(Arrays.asList("keywords[*]"), new HashIndexOptions());
 		}
 		return instance;
 	}
@@ -53,7 +55,7 @@ public  class MediaChannel extends CdpPersistentObject {
 	@Expose
 	protected String name;
 	@Expose
-	protected int type = -1;
+	protected int type = MediaChannelType.UNKNOWN;
 	@Expose
 	protected boolean isOwnedMedia = true;
 	@Expose

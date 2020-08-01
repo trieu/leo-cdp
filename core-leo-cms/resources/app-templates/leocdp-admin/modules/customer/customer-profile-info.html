@@ -25,6 +25,9 @@
 	    margin:auto;
 	    font-weight: bold;
 	}
+	#profile_key_info .fa {
+		font-size: 1.2em !important;
+	}
 -->
 </style>
 
@@ -43,7 +46,8 @@
 
        <!-- MAIN BODY here -->
 
-       <div class="row">
+       <div id="profile_key_info" class="row">
+       	   <!--  Begin Profile Key Information -->
            <div class="col-md-5">
            	    <div class="row">
 	               <div class="text-center" >
@@ -203,9 +207,8 @@
                        </td>
                    </tr>
                </table>
-               
            </div>
-
+           <!--  End Profile Key Information -->
        </div>
        
        <!--  Tab Navigation Items -->
@@ -303,18 +306,52 @@
 
 </div>
 
-<script id='tracking-event-tpl' type="text/html" >
+<script id='view-event-tpl' type="text/html" >
 <li class="list-group-item">
    <div class="row">
-      <div class="col-md-1 text-center">  <i class="fa fa-arrow-right fa-2" aria-hidden="true" ></i> </div>
+      <div class="col-md-1 text-center">  <i class="fa fa-internet-explorer" aria-hidden="true" style="font-size:2em" ></i> </div>
       <div class="col-md-11">
          <small class="text-muted pull-right"> <%- createdAt %> </small>
-         <h4 class="media-heading"> <%- metricName %> </h4>
-         <div> <a target="_blank" href="<%- srcTouchpoint.url %>" > <%- srcTouchpoint.name %> </a> </div>
+         <h5 class="media-heading"> <a target="_blank" href="<%- srcTouchpoint.url %>" > <%- srcTouchpoint.name %> </a> </h5>
+         <div class="text-nowrap " >  
+			<b><%- metricName %></b> at <span ><%- srcTouchpoint.truncatedUrl %></span> 
+		 </div>
       </div>
    </div>
 </li>
 </script>
+
+<script id='action-event-tpl' type="text/html" >
+<li class="list-group-item">
+   <div class="row">
+      <div class="col-md-1 text-center">  <i class="fa fa-sign-in" aria-hidden="true" style="font-size:2em" ></i> </div>
+      <div class="col-md-11">
+         <small class="text-muted pull-right"> <%- createdAt %> </small>
+         <h5 class="media-heading"> <a target="_blank" href="<%- srcTouchpoint.url %>" > <%- srcTouchpoint.name %> </a> </h5>
+         <div class="text-nowrap " >  
+			<b><%- metricName %></b> at <span ><%- srcTouchpoint.truncatedUrl %></span> 
+		 </div>
+      </div>
+   </div>
+</li>
+</script>
+
+<script id='conversion-event-tpl' type="text/html" >
+<li class="list-group-item">
+   <div class="row">
+      <div class="col-md-1 text-center">  <i class="fa fa-cart-plus" aria-hidden="true" style="font-size:2em" ></i> </div>
+      <div class="col-md-11">
+         <small class="text-muted pull-right"> <%- createdAt %> </small>
+         <h5 class="media-heading"> <a target="_blank" href="<%- srcTouchpoint.url %>" > <%- srcTouchpoint.name %> </a> </h5>
+         <div class="text-nowrap " >  
+			<b><%- metricName %></b> at <span ><%- srcTouchpoint.truncatedUrl %></span> 
+		 </div>
+      </div>
+   </div>
+</li>
+</script>
+
+
 
 <script type="text/javascript">
     ///Js code
@@ -334,7 +371,6 @@
     
     function removeCurrentProfile(){
     	alert('TODO')
-
     }
     
     function loadCurrentProfile(profileId) {
@@ -352,17 +388,24 @@
         		 $('#profile_avatar').attr('src',profileData.primaryAvatar);
         	 }
         	 
-        	 
         	 renderJourneyFlowChart();
         	//loadProfileAttribution();
              //loadMediaTouchpoints();
              //personalityDiagram();
         	 
-        	 LeoAdminApiUtil.getSecuredData('/cdp/profile/tracking-events',{id:profileId,startIndex:0,numberResult:50}, function(json){ 
-        		 console.log(json.data) 
-        		 eventTpl = _.template($('#tracking-event-tpl').html());
+        	 LeoAdminApiUtil.getSecuredData('/cdp/profile/tracking-events',{id:profileId,startIndex:0,numberResult:100}, function(json){ 
+        		 console.log(json.data) ;
+        		
         		 var node = $('#profile_activitiy_flow');
         		 _.forEach(json.data,function(e,i){
+        			 e.srcTouchpoint.name = textTruncate(e.srcTouchpoint.name,120);
+        			 e.srcTouchpoint.truncatedUrl = textTruncate(e.srcTouchpoint.url,120);
+        			 
+        			 var tplName = 'view-event-tpl';
+            		 if(e.metricName === 'click'){
+            			 tplName = 'action-event-tpl';
+            		 }
+            		 eventTpl = _.template($('#'+tplName).html());
         			 var html = eventTpl(e);
         			 node.append(html);
        			});

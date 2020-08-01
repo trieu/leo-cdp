@@ -1,6 +1,8 @@
 package leotech.cdp.model.marketing;
 
 public class MediaChannelType {
+	public static final int UNKNOWN = -1;
+	
 	// online
 	public static final int WEB_URL = 1;
 	public static final int WEBSITE = 2;

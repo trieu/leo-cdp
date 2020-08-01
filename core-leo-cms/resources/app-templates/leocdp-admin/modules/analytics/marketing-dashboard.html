@@ -103,6 +103,7 @@
 	                   
 	                    <h5> <span class="label label-default"> 33,801 </span> &nbsp; human profiles </h5>
 	                    <h5> <span class="label label-default"> 63 </span> &nbsp; segments </h5>
+	                    <h5> <span class="label label-default"> 12,432 </span> &nbsp; identified users </h5>
 	                    <h5> <span class="label label-default"> 1,489 </span> &nbsp; customers </h5>
 	                    <h5> <span class="label label-default"> 900 </span> &nbsp; new customers </h5>
 	                    <h5> <span class="label label-default"> 589 </span> &nbsp; repeat customers </h5>
@@ -129,11 +130,11 @@
         <div class="col-md-9">
             <div class="row chart_box">
                 <div class="col-md-6 ">
-                    <h4 class="chart_header" >Profile Conversion Funnel</h4>
+                    <h4 class="chart_header" >Customer Data Funnel</h4>
                     <div id="profile_funnel"></div>
                 </div>
                 <div class="col-md-6">
-                    <h4 class="chart_header" >Event Conversion Funnel</h4>
+                    <h4 class="chart_header" >Event Flow Funnel</h4>
 		            <div class="summary_metric">
 		                <div class="vcenter">
 		                   <div id="event_funnel"></div>
@@ -259,9 +260,9 @@
     function loadProfileFunnel() {
         var data = [
             ['Visitor', 21981, '#008080'],
-            ['Fan', 7423, '#6497b1'],
+            ['Identified User', 7423, '#6497b1'],
             ['Lead', 2319, '#005b96'],
-            ['Customer', 1489, '#03396c'],
+            ['First-time Customer', 1489, '#03396c'],
             ['Repeat Customer', 589, '#011f4b']
         ];
         var options = {
@@ -297,10 +298,10 @@
     //https://www.color-hex.com/color-palette/309
     function loadEventFunnel() {
         var data = [
-            ['product view', 8152, '#011f4b'],
-            ['social interaction', 7548, '#03396c'],
-            ['add-to-cart', 2262, '#005b96'],
-            ['purchase', 1782, '#5f9ea0'],
+            ['information-view', 8152, '#011f4b'],
+            ['interaction', 7548, '#03396c'],
+            ['purchase intent', 2262, '#005b96'],
+            ['first purchase', 1782, '#5f9ea0'],
             ['repeat purchase', 861, '#49796b']
         ];
         var options = {
