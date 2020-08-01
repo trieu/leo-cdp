@@ -55,6 +55,12 @@ LeoCdpAdmin.navFunctions.loadMediaChannelList = function(breadcrumbHtml) {
     });
 }
 
+LeoCdpAdmin.navFunctions.loadFunnelAnalyticsMetrics = function(breadcrumbHtml) {
+	LeoCdpAdmin.loadView('/view/modules/journey/funnel-analytics-metrics.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+    	initFunnelAnalyticsMetrics();
+    });
+}	
 
 
 LeoCdpAdmin.navFunctions.loadDataObserverList  = function(breadcrumbHtml) {

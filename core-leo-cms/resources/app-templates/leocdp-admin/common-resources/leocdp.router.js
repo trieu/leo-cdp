@@ -20,7 +20,7 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Unified Analytics Hub", "Marketing Dashboard"]
 		},
 		
-		// 1.2 Targeted Persona
+		// 2.1 Targeted Persona
 		"Customer_Persona_List" : {
 			"menuName" : "Customer Persona List",
 			"functionName" : "loadCustomerPersonaList",
@@ -37,7 +37,7 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Customer Journey Hub", "Customer Persona List", "Persona Editor"]
 		},
 		
-		// 1.3 Media Channel 
+		// 2.2 Media Channel 
 		"Media_Channel_List" : {
 			"menuName" : "Media Channel List",
 			"functionName" : "loadMediaChannelList",
@@ -54,7 +54,7 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Customer Journey Hub", "Media Channel List" , "Media Channel Editor" ]
 		},
 		
-		// 1.4 Customer Touchpoint
+		// 2.3 Customer Touchpoint
 		"Customer_Touchpoint_List" : {
 			"menuName" : "Customer Touchpoint List",
 			"functionName" : "loadCustomerTouchpointList",
@@ -71,14 +71,14 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Customer Journey Hub", "Customer Touchpoint List" , "Customer Touchpoint Editor" ]
 		},
 		
-		// 1.5 Event Metrics for Media Channel and Touchpoint
-		"Funnel_Metrics" : {
-			"menuName" : "Funnel Metrics",
-			"functionName" : "loadFunnelMetrics",
-			"breadcrumb" : ["Customer Journey Hub", "Funnel Metrics"]
+		// 2.4 Event Metrics for Media Channel and Touchpoint
+		"Funnel_Analytics_Metrics" : {
+			"menuName" : "Funnel Analytics Metrics",
+			"functionName" : "loadFunnelAnalyticsMetrics",
+			"breadcrumb" : ["Customer Journey Hub", "Funnel Analytics Metrics"]
 		},
 		
-		// 1.6 Data Observer for touchpoint and media channel
+		// 2.5 Data Observer for touchpoint and media channel
 		"Data_Observer_List" : {
 			"menuName" : "Data Observer List",
 			"functionName" : "loadDataObserverList",
@@ -95,7 +95,7 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Customer Journey Hub", "Data Observer List", "Data Observer Configs"]
 		},
 		
-		// 1.7 Journey Map List, Report and Editor
+		// 2.6 Journey Map List, Report and Editor
 		"Customer_Journey_List" : {
 			"menuName" : "Customer Journey List",
 			"functionName" : "loadCustomerJourneyList",
