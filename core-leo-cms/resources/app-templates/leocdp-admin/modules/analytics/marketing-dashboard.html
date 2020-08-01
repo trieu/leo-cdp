@@ -29,7 +29,8 @@
     }
     
     .chart_box  {
-    	margin-top: 5px;
+    	margin-top: 4px;
+    	padding-left: 4px;
     }
     .chart_header {
 	    margin: 15px auto 8px;
@@ -51,6 +52,7 @@
     svg {
     	margin: auto; display: block;
     }
+    
 </style>
 
 <div class="container-fluid">
@@ -62,42 +64,59 @@
         </div>
     </div>
     
-    <div class="row float-right">
-		<div class='col-md-7 col-xs-12 text-center'>
-			<h4>Reporting date: <span> January 12, 2020 </span> &#8594;  <span> May 11, 2020 </span></h4> 
-		</div>
-		 
-        <div class='col-md-2 col-xs-12'>
-            <div class="form-group">
-                <div class='input-group date' id='beginFilterDate'>
-                    <input type='text' class="form-control" autocomplete="off" /> <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                </div>
-            </div>
-        </div>
-        <div class='col-md-2 col-xs-12'>
-            <div class="form-group">
-                <div class='input-group date' id='endFilterDate'>
-                    <input type='text' class="form-control" autocomplete="off" /> <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                </div>
-            </div>
-        </div>
-        
-        <div class='col-md-1 col-xs-12'>
-        	<button type="button" class="btn btn-info"> OK </button>
-         </div>
-        
-    </div>
-
     <!-- MAIN BODY here -->
 
     <div class="row">
+        
+        <div class="col-md-9 highlight_box">
+        
+         	<div class='text-center'>
+				<h4>Reporting date: <span> January 12, 2020 </span> &#8594;  <span> May 11, 2020 </span></h4> 
+			</div>
+			
+        	<div class="row float-right">
+		        <div class='col-md-5 col-xs-12'>
+		            <div class="form-group">
+		                <div class='input-group date' id='beginFilterDate'>
+		                    <input type='text' class="form-control" autocomplete="off" /> <span class="input-group-addon">
+		                        <span class="glyphicon glyphicon-calendar"></span>
+		                    </span>
+		                </div>
+		            </div>
+		        </div>
+		        <div class='col-md-5 col-xs-12'>
+		            <div class="form-group">
+		                <div class='input-group date' id='endFilterDate'>
+		                    <input type='text' class="form-control" autocomplete="off" /> <span class="input-group-addon">
+		                        <span class="glyphicon glyphicon-calendar"></span>
+		                    </span>
+		                </div>
+		            </div>
+		        </div>
+		        <div class='col-md-2 col-xs-12 text-center'>
+		        	<button type="button" class="btn btn-info" style="width: 80%"> OK </button>
+		        </div>
+		    </div>
+	       
+            <div class="row chart_box">
+                <div class="col-md-6 ">
+                    <h4 class="chart_header" >Customer Flow Funnel</h4>
+                    <div id="profile_funnel"></div>
+                </div>
+                <div class="col-md-6">
+                    <h4 class="chart_header" >Event Flow Funnel</h4>
+		            <div class="summary_metric">
+		                <div class="vcenter">
+		                   <div id="event_funnel"></div>
+		                </div>
+		            </div>
+                </div>
+            </div>
+        </div>
+        
         <div class="col-md-3">
         	<div class="row chart_box">
-	        	<h4 class="chart_header" > Customer Data Statistics</h4>
+	        	<h4 class="chart_header" > Total Customer Statistics</h4>
 	            <div class="summary_metric">
 	                <div class="vcenter">
 	                   
@@ -111,7 +130,7 @@
 	                </div>
 	            </div>
 	            
-	            <h4 class="chart_header" >Event Metrics Statistics </h4>
+	            <h4 class="chart_header" > Total Event Statistics </h4>
 	            <div class="summary_metric">
 	                <div class="vcenter">
 	                
@@ -127,22 +146,7 @@
 	            </div>
         	</div>
         </div>
-        <div class="col-md-9">
-            <div class="row chart_box">
-                <div class="col-md-6 ">
-                    <h4 class="chart_header" >Customer Data Funnel</h4>
-                    <div id="profile_funnel"></div>
-                </div>
-                <div class="col-md-6">
-                    <h4 class="chart_header" >Event Flow Funnel</h4>
-		            <div class="summary_metric">
-		                <div class="vcenter">
-		                   <div id="event_funnel"></div>
-		                </div>
-		            </div>
-                </div>
-            </div>
-        </div>
+        
     </div>
 
     <div class="row chart_box">
@@ -152,7 +156,7 @@
             </div>
      	</div>
     	<div class="col-md-12">
-	        <h4 class="chart_header" style="width: 100%;" > Visitor Statistics of Media Channels </h4>
+	        <h4 class="chart_header" style="width: 100%;" > Total Visitor Statistics of Media Channels </h4>
 	        <div id="chart" style="text-align:center;">
 	            <svg></svg>
 	        </div>
@@ -298,11 +302,11 @@
     //https://www.color-hex.com/color-palette/309
     function loadEventFunnel() {
         var data = [
-            ['information-view', 8152, '#011f4b'],
-            ['interaction', 7548, '#03396c'],
-            ['purchase intent', 2262, '#005b96'],
-            ['first purchase', 1782, '#5f9ea0'],
-            ['repeat purchase', 861, '#49796b']
+            ['Content View', 8152, '#011f4b'],
+            ['Active Action', 7548, '#03396c'],
+            ['Purchase Intent', 2262, '#005b96'],
+            ['First Purchase', 1782, '#5f9ea0'],
+            ['Repeat Purchase', 861, '#49796b']
         ];
         var options = {
       		block: {

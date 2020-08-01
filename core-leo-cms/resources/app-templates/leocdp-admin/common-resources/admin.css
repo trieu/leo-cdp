@@ -175,4 +175,8 @@ div.gridholder {
 	margin-top: 16px;
 }
 
-
+.highlight_box {
+	background-color: #e8e8e8;
+    border-radius: 10px;
+    padding: 8px;
+}
