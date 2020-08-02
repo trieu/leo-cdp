@@ -74,11 +74,17 @@ dependencies {
 	// To backup database, we can use AWS Amazon S3 for raw data storage
 	compile group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.11.826'
 	
-	// STMP client for email marketing
+	// core STMP client for email marketing
 	compile group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
 	
 	// A library for summarizing data in streams for which it is infeasible to store all events 
 	compile group: 'com.clearspring.analytics', name: 'stream', version: '2.9.8'
+	
+	// for Java batch processing system
+	compile group: 'org.jobrunr', name: 'jobrunr', version: '0.9.13'
+	
+	// high-quality thumbnails from existing images
+	compile group: 'net.coobird', name: 'thumbnailator', version: '0.4.11'
 	
     compile (	   
 		fileTree(dir: 'ext-lib', include: '**/*.jar') 	
@@ -149,6 +155,9 @@ dependencies {
 		
 		// Performance Testing
 		,'org.databene:contiperf:2.3.4'
+		
+		// generates fake data for testing
+		,'com.github.javafaker:javafaker:1.0.2'
 		
 		// Email Test
 		,'com.sun.mail:javax.mail:1.6.2'
