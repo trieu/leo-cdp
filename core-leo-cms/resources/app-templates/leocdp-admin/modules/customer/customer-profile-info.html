@@ -310,12 +310,12 @@
 <script id='view-event-tpl' type="text/html" >
 <li class="list-group-item">
    <div class="row">
-      <div class="col-md-1 text-center">  <i class="fa fa-internet-explorer" aria-hidden="true" style="font-size:2em" ></i> </div>
+      <div class="col-md-1 text-center"> <i class="fa fa-internet-explorer" aria-hidden="true" style="font-size:2em" ></i> <br> <b><%- metricName %></b> </div>
       <div class="col-md-11">
          <small class="text-muted pull-right"> <%- createdAt %> </small>
          <h5 class="media-heading"> <a target="_blank" href="<%- srcTouchpoint.url %>" > <%- srcTouchpoint.name %> </a> </h5>
          <div class="text-nowrap " >  
-			<b><%- metricName %></b> at <span ><%- srcTouchpoint.truncatedUrl %></span> 
+			 <span ><%- srcTouchpoint.truncatedUrl %></span> 
 		 </div>
       </div>
    </div>
@@ -325,12 +325,12 @@
 <script id='action-event-tpl' type="text/html" >
 <li class="list-group-item">
    <div class="row">
-      <div class="col-md-1 text-center">  <i class="fa fa-sign-in" aria-hidden="true" style="font-size:2em" ></i> </div>
+      <div class="col-md-1 text-center">  <i class="fa fa-sign-in" aria-hidden="true" style="font-size:2em" ></i> <br> <b><%- metricName %></b> </div>
       <div class="col-md-11">
          <small class="text-muted pull-right"> <%- createdAt %> </small>
          <h5 class="media-heading"> <a target="_blank" href="<%- srcTouchpoint.url %>" > <%- srcTouchpoint.name %> </a> </h5>
          <div class="text-nowrap " >  
-			<b><%- metricName %></b> at <span ><%- srcTouchpoint.truncatedUrl %></span> 
+			 <span ><%- srcTouchpoint.truncatedUrl %></span> 
 		 </div>
       </div>
    </div>
@@ -340,12 +340,12 @@
 <script id='conversion-event-tpl' type="text/html" >
 <li class="list-group-item">
    <div class="row">
-      <div class="col-md-1 text-center">  <i class="fa fa-cart-plus" aria-hidden="true" style="font-size:2em" ></i> </div>
+      <div class="col-md-1 text-center">  <i class="fa fa-cart-plus" aria-hidden="true" style="font-size:2em" ></i> <br> <b><%- metricName %></b> </div>
       <div class="col-md-11">
          <small class="text-muted pull-right"> <%- createdAt %> </small>
          <h5 class="media-heading"> <a target="_blank" href="<%- srcTouchpoint.url %>" > <%- srcTouchpoint.name %> </a> </h5>
          <div class="text-nowrap " >  
-			<b><%- metricName %></b> at <span ><%- srcTouchpoint.truncatedUrl %></span> 
+			<span ><%- srcTouchpoint.truncatedUrl %></span> 
 		 </div>
       </div>
    </div>
