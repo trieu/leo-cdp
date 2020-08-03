@@ -10,14 +10,21 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import rfx.core.util.HashUtil;
 
 public class TestSms {
 
 	public static void main(String[] args) throws Exception {
 		RandomCodeConfig config = RandomCodeConfig.length(4).withCharset(Charset.NUMBERS);
-        String code = RamdomCodesUtil.generate(config) + " "+RamdomCodesUtil.generate(config) + " "+RamdomCodesUtil.generate(config) ;
-        System.out.println(code);
+		long hash1 = HashUtil.hashUrlCrc64("leocdp.com");
+		long hash2 = HashUtil.hashUrlCrc64("tantrieuf31@gmail.com");
+        String code = RamdomCodesUtil.generate(config) + " "+RamdomCodesUtil.generate(config) + " "+RamdomCodesUtil.generate(config) + " "+RamdomCodesUtil.generate(config);
+        System.out.println(hash1 + " " +code + " " + hash2);
 		
+		//sendSms(code);
+	}
+
+	static void sendSms(String code) throws IOException {
 		OkHttpClient client = new OkHttpClient();
 
 		/** 
@@ -29,7 +36,7 @@ public class TestSms {
 		MediaType mediaType = MediaType.parse("application/json");
 		RequestBody body = RequestBody.create(
 		    mediaType,
-		    "{\"from\":\"USPA\",\"to\":[\"84935863696\"],\"type\":\"Text\",\"content\":\""+code+"\"}"
+		    "{\"from\":\"USPA\",\"to\":[\"84903122290\"],\"type\":\"Text\",\"content\":\""+code+"\"}"
 		    );
 		Request request2 = new Request.Builder()
 		  .url("https://restapi.bulksmsonline.com/rest/api/v1/sms/send")
@@ -43,7 +50,7 @@ public class TestSms {
 		System.out.println(response2.body().string());
 	}
 
-	private static OkHttpClient getToken() throws IOException {
+	static OkHttpClient getToken() throws IOException {
 		/** 
 		* :: How to generate Token in JAVA using our Restful API
 		**/

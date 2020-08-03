@@ -238,7 +238,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	// --- BEGIN Business Data Model
 	
 	@Expose
-	protected Map<String, String> businessData = new HashMap<>();
+	protected Map<String, Set<String>> businessData = new HashMap<>();
 	
 	@Expose
 	protected Map<String, Integer> referrerChannels = new HashMap<>(50);
@@ -280,8 +280,6 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	@Expose
 	protected int totalCLV = 0;
-
-	
 
 	@Expose
 	protected int mergeCode = 0;
@@ -919,11 +917,11 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		this.funnelStage = funnelStage;
 	}
 
-	public Map<String, String> getBusinessData() {
+	public Map<String, Set<String>> getBusinessData() {
 		return businessData;
 	}
 
-	public void setBusinessData(Map<String, String> businessData) {
+	public void setBusinessData(Map<String, Set<String>> businessData) {
 		this.businessData = businessData;
 	}
 
