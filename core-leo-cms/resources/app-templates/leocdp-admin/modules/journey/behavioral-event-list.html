@@ -1,0 +1,181 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h4 class="page-header" id="page_breadcrumb" > </h4>
+        </div>
+    </div>
+
+    <div class="row" >
+  		<div class="row col-lg-12 text-center">
+  			<div class="col-md-2"></div>
+  			<div class="col-md-4">
+                 <h4 class="chart_header text-center" >Event Funnel</h4>
+	           	 <div class="summary_metric">
+	               <div class="vcenter">
+	                  <div id="event_funnel"></div>
+	               </div>
+	           	</div>
+             </div>
+             <div class="col-md-4 ">
+                 <h4 class="chart_header text-center" >Customer Funnel</h4>
+                 <div id="profile_funnel"></div>
+             </div>
+             <div class="col-md-2"></div>
+        </div>
+        
+        <div class="col-lg-12">
+        	<br>
+            <div class="table-responsive">
+                <div id="behavioral-metrics-table"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+function initBehavioralEventList(){
+	
+	function loadProfileFunnel() {
+	    var data = [
+	        ['Visitor', 0, '#008080'],
+	        ['Identified Person', 0, '#6497b1'],
+	        ['Customer Lead', 0, '#005b96'],
+	        ['First-time Customer', 0, '#03396c'],
+	        ['Repeat Customer', 0, '#011f4b']
+	    ];
+	    var options = {
+	  		block: {
+	  			highlight: true
+	  	    },
+	        chart: {
+	            curve: {
+	                enabled: true,
+	                height: 20
+	            },
+	            bottomWidth : 0.52,
+	            height: 280
+	        },
+	        tooltip: {
+	            enabled: true
+	        },
+	        label: {
+	            fontSize: '12px'
+	        },
+	        events: {
+	            click: {
+	                block: function (data) {
+	                    console.log(data.label.raw);
+	                }
+	            }
+	        }
+	    };
+	    var chart = new D3Funnel('#profile_funnel');
+	    chart.draw(data, options);
+	}
+
+	function loadEventFunnel() {
+	    var data = [
+	        ['Content View', 0, '#011f4b'],
+	        ['Interaction', 0, '#03396c'],
+	        ['Purchase Intent', 0, '#005b96'],
+	        ['First Purchase', 0, '#5f9ea0'],
+	        ['Repeat Purchase', 0, '#49796b']
+	    ];
+	    var options = {
+	  		block: {
+	  			highlight: true
+	  	    },
+	        chart: {
+	        	curve: {
+	                enabled: true,
+	                height: 20
+	            },
+	            bottomWidth : 0.52,
+	            height: 280
+	        },
+	        tooltip: {
+	            enabled: true
+	        },
+	        label: {
+	            fontSize: '12px'
+	        },
+	        events: {
+	            click: {
+	                block: function (data) {
+	                    console.log(data.label.raw);
+	                }
+	            }
+	        }
+	    };
+	    var chart = new D3Funnel('#event_funnel');
+	    chart.draw(data, options);
+	}
+	
+	loadProfileFunnel();
+    loadEventFunnel();
+	$("#behavioral-metrics-table").jsGrid({
+		
+	    width: "100%",
+	    height: "350px",
+
+	    inserting: true,
+	    editing: true,
+	    sorting: true,
+	    paging: false,
+
+	    data: behavioralDataList,
+
+	    fields: [
+	        { name: "Behavioral Event", type: "text", width: 50, validate: "required" },
+	        { name: "Score", type: "number",  width: 30, validate: "required" },
+	        { name: "Event Funnel Stage", type: "select", items: eventFunnelStages, valueField: "Id", textField: "Name" },
+	        { name: "Customer Funnel Stage", type: "select", items: customerFunnelStages, valueField: "Id", textField: "Name" },
+	        { name: "Data Type", type: "select", items: eventDataTypes, valueField: "Id", textField: "Name" },
+	        { type: "control" }
+	    ]
+	
+	});  
+}
+
+var eventFunnelStages = [
+	{ Name: "Content View", Id: 1 },
+    { Name: "Interaction", Id: 2 },
+    { Name: "Purchase Intent", Id: 3 },
+    { Name: "First Purchase", Id: 4 },
+    { Name: "Repeat Purchase", Id: 5 }
+   
+];
+
+var behavioralDataList = [
+    { "Behavioral Event" : "pageview", "Score":1, "Event Funnel Stage": 1, "Customer Funnel Stage": 1, "Data Type": 1 },
+    { "Behavioral Event" : "login", "Score":3 , "Event Funnel Stage": 2, "Customer Funnel Stage": 2, "Data Type": 1 },
+    { "Behavioral Event" : "playvideo", "Score":5, "Event Funnel Stage": 2, "Customer Funnel Stage": 3, "Data Type": 1 },
+    { "Behavioral Event" : "likeitem", "Score":7, "Event Funnel Stage": 2, "Customer Funnel Stage": 3, "Data Type": 1 },
+    { "Behavioral Event" : "clickitem", "Score":5, "Event Funnel Stage": 2, "Customer Funnel Stage": 3, "Data Type": 1 },
+    { "Behavioral Event" : "add2cart", "Score":10, "Event Funnel Stage": 3, "Customer Funnel Stage": 3, "Data Type": 1 },
+    { "Behavioral Event" : "buy", "Score":15, "Event Funnel Stage": 4, "Customer Funnel Stage": 4, "Data Type": 1 },
+    { "Behavioral Event" : "rebuy", "Score":18, "Event Funnel Stage": 5, "Customer Funnel Stage": 5, "Data Type": 1 }
+   
+];
+
+var customerFunnelStages = [
+    { Name: "Visitor", Id: 1 },
+    { Name: "Identified Person", Id: 2 },
+    { Name: "Customer Lead", Id: 3 },
+    { Name: "First-time Customer", Id: 4 },
+    { Name: "Repeat Customer", Id: 5 }
+];
+
+var eventDataTypes = [
+    { Name: "First-party Data", Id: 1 },
+    { Name: "Second-party Data", Id: 2 },
+    { Name: "Third-party Data", Id: 3 }
+];
+
+
+
+
+
+</script>
