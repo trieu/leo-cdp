@@ -1,4 +1,4 @@
-package leotech.cms.router;
+package leotech.admin.router;
 
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;

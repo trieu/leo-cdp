@@ -1,4 +1,4 @@
-package leotech.cms.router;
+package leotech.admin.router;
 
 import static io.netty.handler.codec.http.HttpHeaderNames.CONNECTION;
 import static io.netty.handler.codec.http.HttpHeaderNames.CONTENT_TYPE;

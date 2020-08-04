@@ -3,12 +3,15 @@ package leotech.cdp.model.marketing;
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
 
+import rfx.core.util.StringUtil;
+
 public class BehavioralEventMetric extends EventMetric {
 	
 	public static final String COLLECTION_NAME = getCollectionName(BehavioralEventMetric.class);
 	static ArangoCollection instance;
 	
-	
+	int eventFunnelStage;
+	int customerFunnelStage;
 
 	@Override
 	public ArangoCollection getCollection() {
@@ -25,7 +28,6 @@ public class BehavioralEventMetric extends EventMetric {
 
 	@Override
 	public boolean isReadyForSave() {
-		// TODO Auto-generated method stub
-		return false;
+		return StringUtil.isNotEmpty(eventName);
 	}
 }

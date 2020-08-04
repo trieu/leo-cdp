@@ -14,14 +14,14 @@ import leotech.system.util.RequestInfoUtil;
 public class CdpMediaChannelHandler extends BaseSecuredDataApi {
 	
 	// for dataList view
-	static final String API_LIST_ALL = "/cdp/touchpoints";
-	static final String API_LIST_WITH_FILTER = "/cdp/touchpoints/filter";
+	static final String API_LIST_ALL = "/cdp/mediachannels";
+	static final String API_LIST_WITH_FILTER = "/cdp/mediachannels/filter";
 	
 	// for dataList view
-	static final String API_CREATE_NEW = "/cdp/touchpoint/new";
-	static final String API_UPDATE_MODEL = "/cdp/touchpoint/update";
-	static final String API_GET_MODEL = "/cdp/touchpoint/get";
-	static final String API_REMOVE = "/cdp/touchpoint/remove";
+	static final String API_CREATE_NEW = "/cdp/mediachannel/new";
+	static final String API_UPDATE_MODEL = "/cdp/mediachannel/update";
+	static final String API_GET_MODEL = "/cdp/mediachannel/get";
+	static final String API_REMOVE = "/cdp/mediachannel/remove";
 
 	@Override
 	public JsonDataPayload httpPostApiHandler(String userSession, String uri, JsonObject paramJson) throws Exception {

@@ -11,17 +11,17 @@ import leotech.system.model.JsonDataPayload;
 import leotech.system.model.User;
 import leotech.system.util.RequestInfoUtil;
 
-public class CdpFunnelMetricHandler extends BaseSecuredDataApi {
+public class CdpObserverHandler extends BaseSecuredDataApi {
 	
 	// for dataList view
-	static final String API_LIST_ALL = "/cdp/funnelmetrics";
-	static final String API_LIST_WITH_FILTER = "/cdp/funnelmetrics/filter";
+	static final String API_LIST_ALL = "/cdp/observers";
+	static final String API_LIST_WITH_FILTER = "/cdp/observers/filter";
 	
 	// for dataList view
-	static final String API_CREATE_NEW = "/cdp/funnelmetric/new";
-	static final String API_UPDATE_MODEL = "/cdp/funnelmetric/update";
-	static final String API_GET_MODEL = "/cdp/funnelmetric/get";
-	static final String API_REMOVE = "/cdp/funnelmetric/remove";
+	static final String API_CREATE_NEW = "/cdp/observer/new";
+	static final String API_UPDATE_MODEL = "/cdp/observer/update";
+	static final String API_GET_MODEL = "/cdp/observer/get";
+	static final String API_REMOVE = "/cdp/observer/remove";
 
 	@Override
 	public JsonDataPayload httpPostApiHandler(String userSession, String uri, JsonObject paramJson) throws Exception {

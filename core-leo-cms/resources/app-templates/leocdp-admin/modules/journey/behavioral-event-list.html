@@ -115,6 +115,14 @@ function initBehavioralEventList(){
 	
 	loadProfileFunnel();
     loadEventFunnel();
+    
+    LeoAdminApiUtil.getSecuredData('/cdp/funnel/list-name-stages',{"kinds":"event_retail,customer_retail"}, function(json){ 
+		 console.log(json.data);
+		
+	 });
+    
+  
+    
 	$("#behavioral-metrics-table").jsGrid({
 		
 	    width: "100%",
@@ -173,9 +181,6 @@ var eventDataTypes = [
     { Name: "Second-party Data", Id: 2 },
     { Name: "Third-party Data", Id: 3 }
 ];
-
-
-
 
 
 </script>
