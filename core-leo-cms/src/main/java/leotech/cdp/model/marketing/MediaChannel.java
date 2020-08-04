@@ -18,9 +18,8 @@ import com.google.gson.annotations.Expose;
 import leotech.cdp.model.CdpPersistentObject;
 import rfx.core.util.StringUtil;
 public class MediaChannel extends CdpPersistentObject {
-	
-	
-	public static final String COLLECTION_NAME = COLLECTION_PREFIX + MediaChannel.class.getSimpleName().toLowerCase();
+
+	public static final String COLLECTION_NAME = getCollectionName(MediaChannel.class);
 	static ArangoCollection instance;
 
 	@Override
@@ -34,15 +33,17 @@ public class MediaChannel extends CdpPersistentObject {
 			instance.ensureFulltextIndex(Arrays.asList("name"), new FulltextIndexOptions());
 			instance.ensurePersistentIndex(Arrays.asList("url"), new PersistentIndexOptions().unique(false));
 			instance.ensurePersistentIndex(Arrays.asList("type"), new PersistentIndexOptions().unique(false));
-			
-			instance.ensurePersistentIndex(Arrays.asList("countryCode"),new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("locationCode"),new PersistentIndexOptions().unique(false));
+
+			instance.ensurePersistentIndex(Arrays.asList("countryCode"),
+					new PersistentIndexOptions().unique(false));
+			instance.ensurePersistentIndex(Arrays.asList("locationCode"),
+					new PersistentIndexOptions().unique(false));
 			instance.ensureGeoIndex(Arrays.asList("latitude", "longitude"), new GeoIndexOptions());
 			instance.ensureHashIndex(Arrays.asList("keywords[*]"), new HashIndexOptions());
 		}
 		return instance;
 	}
-	
+
 	@Override
 	public boolean isReadyForSave() {
 		return StringUtil.isNotEmpty(this.name) && this.type >= 0
@@ -88,7 +89,7 @@ public class MediaChannel extends CdpPersistentObject {
 	public MediaChannel() {
 		super();
 	}
-	
+
 	public String getId() {
 		return id;
 	}
@@ -113,8 +114,6 @@ public class MediaChannel extends CdpPersistentObject {
 		this.type = type;
 	}
 
-	
-
 	public boolean isOwnedMedia() {
 		return isOwnedMedia;
 	}
@@ -130,7 +129,7 @@ public class MediaChannel extends CdpPersistentObject {
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
-	
+
 	public Date getUpdatedAt() {
 		return updatedAt;
 	}

@@ -15,11 +15,11 @@ import leotech.system.util.database.ArangoDbUtil;
  *         customer interactions.
  *
  */
-public class EventTrigger extends CdpPersistentObject {
+public class EventTrigger extends EventMetric {
 
-	public static final String COLLECTION_NAME = COLLECTION_PREFIX
-			+ EventTrigger.class.getSimpleName().toLowerCase();
+	public static final String COLLECTION_NAME = getCollectionName(EventTrigger.class);
 	static ArangoCollection instance;
+	
 
 	@Override
 	public ArangoCollection getCollection() {

@@ -23,7 +23,7 @@ import rfx.core.util.StringUtil;
 /**
  * @author Trieu Nguyen (Thomas)
  * 
- *   general data entity for storing customer profile information
+ * general data entity for storing customer profile information
  *
  */
 public class Profile extends CdpPersistentObject implements Comparable<Profile> {
@@ -89,15 +89,31 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	@DocumentField(Type.KEY)
 	@Expose
 	protected String id;
+	
+	// the main ID after Identity Resolution processing
+	@Expose
+	String rootProfileId = "";
+	
+	@Expose
+	protected String visitorId = "";
+	
+	@Expose
+	protected String crmRefId = "";
+	
+	@Expose
+	protected Set<String> identities = new HashSet<>(50);
 
 	@Expose
 	protected int type = ProfileConstant.TYPE_ANONYMOUS;
 	
 	@Expose
 	protected String schemaType = ProfileConstant.SCHEMA_TYPE_GENERAL;
+	
+	@Expose
+	protected int mergeCode = 0;
 
 	@Expose
-	protected Set<String> identities = new HashSet<>(100);
+	protected String personaUri = "";
 
 	@Expose
 	protected Date createdAt = new Date();
@@ -105,10 +121,12 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	@Expose
 	protected Date updatedAt;
 
-	// the main ID after Identity Resolution processing
-	@Expose
-	String rootProfileId = "";
 
+	// --- BEGIN taxonomy meta data
+
+	@Expose
+	protected int status = 1;
+	
 	@Expose
 	protected Set<String> inCollections = new HashSet<String>(10);
 
@@ -117,12 +135,14 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	@Expose
 	protected Set<String> inJourneyMaps = new HashSet<String>(20);
+	
+	// --- END taxonomy meta data
+	
+	
+	// --- BEGIN metadata of business engagement 
 
 	@Expose
 	protected Set<String> topEngagedTouchpointIds = new HashSet<String>(1000);
-
-	@Expose
-	protected int status = 1;
 
 	@Expose
 	protected String lastObserverId = ProfileConstant.UNKNOWN;
@@ -141,12 +161,9 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	@Expose
 	protected String lastWebCookies = "";
-
-	@Expose
-	protected String visitorId = "";
 	
-	@Expose
-	protected String crmRefId = "";
+	// --- END metadata of business engagement 
+	
 
 	// --- BEGIN key Personal attributes
 	
@@ -199,13 +216,12 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	protected Map<String, String> socialMediaProfiles = new HashMap<>(10);
 	
 	@Expose
-	protected Map<String, String> extPersonalAttributes = new HashMap<>(30);
-	
+	protected Map<String, String> extPersonalAttributes = new HashMap<>(50);
 	
 	// --- END key Personal attributes
 	
 	
-	// --- BEGIN Marketing Data Model
+	// --- BEGIN Marketing Data Model , inputed by Marketer
 	
 	@Expose
 	protected Set<String> personalProblems = new HashSet<>(20);
@@ -230,7 +246,6 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	
 	@Expose
 	protected String funnelStage = "";
-	
 	
 	// --- END Marketing Data Model
 	
@@ -265,30 +280,38 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	protected Set<String> supportHistory = new HashSet<String>();
 	
 	// --- END Business Data Model
+	
 
+	// --- BEGIN Quantitative Data Metrics
+	
 	@Expose
 	protected int dataCompletionScore = 0;
 	
 	@Expose
-	protected int businessCreditScore = 0;
+	protected int totalLeadScore = 0;
+	
+	@Expose
+	protected int totalCreditScore = 0;
 
 	@Expose
-	protected int satisfactionScore = 0;
+	protected int totalCSAT = 0;
 
 	@Expose
 	protected int totalCAC = 0;
 
 	@Expose
 	protected int totalCLV = 0;
-
+	
 	@Expose
-	protected int mergeCode = 0;
-
+	protected int totalCES = 0;
+	
 	@Expose
-	protected String personaUri = "";
-
+	protected int totalNPS = 0;
+	
+	// --- END Quantitative Data Metrics
+	
 	@Expose
-	protected int partitionId = 0;
+	protected int partitionId = 0;// when the database has more than 500,000 profile, need a good partitioning strategy
 	
 	
 	@Expose
@@ -654,16 +677,6 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		this.dataCompletionScore = dataCompletionScore;
 	}
 
-	public int getBusinessCreditScore() {
-		return businessCreditScore;
-	}
-
-	public void setBusinessCreditScore(int businessCreditScore) {
-		this.businessCreditScore = businessCreditScore;
-	}
-
-	
-
 	public Map<String, Map<String, Integer>> getPredictionMetrics() {
 		return predictionMetrics;
 	}
@@ -671,14 +684,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	public void setPredictionMetrics(Map<String, Map<String, Integer>> predictionMetrics) {
 		this.predictionMetrics = predictionMetrics;
 	}
-
-	public int getSatisfactionScore() {
-		return satisfactionScore;
-	}
-
-	public void setSatisfactionScore(int satisfactionScore) {
-		this.satisfactionScore = satisfactionScore;
-	}
+	
 
 	public int getTotalCAC() {
 		return totalCAC;
@@ -818,8 +824,6 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	public String getVisitorId() {
 		return visitorId;
 	}
-	
-	
 
 	public String getLivingLocation() {
 		return livingLocation;
@@ -961,9 +965,46 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		this.primaryUsername = primaryUsername;
 	}
 	
-	
-	
-	
+
+	public int getTotalLeadScore() {
+		return totalLeadScore;
+	}
+
+	public void setTotalLeadScore(int totalLeadScore) {
+		this.totalLeadScore = totalLeadScore;
+	}
+
+	public int getTotalCreditScore() {
+		return totalCreditScore;
+	}
+
+	public void setTotalCreditScore(int totalCreditScore) {
+		this.totalCreditScore = totalCreditScore;
+	}
+
+	public int getTotalCSAT() {
+		return totalCSAT;
+	}
+
+	public void setTotalCSAT(int totalCSAT) {
+		this.totalCSAT = totalCSAT;
+	}
+
+	public int getTotalCES() {
+		return totalCES;
+	}
+
+	public void setTotalCES(int totalCES) {
+		this.totalCES = totalCES;
+	}
+
+	public int getTotalNPS() {
+		return totalNPS;
+	}
+
+	public void setTotalNPS(int totalNPS) {
+		this.totalNPS = totalNPS;
+	}
 
 	@Override
 	public String toString() {
