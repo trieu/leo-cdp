@@ -12,7 +12,7 @@ import leotech.system.model.AppMetadata;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.User;
 
-public class AdminCategoryApiHandler extends BaseSecuredDataApi {
+public class AdminCategoryHandler extends BaseSecuredDataApi {
 	// for Admin CMS, only for ROLE_ADMIN and ROLE_SUPER_ADMIN
 	static final String API_LIST_ALL = "/category/list-all";
 	static final String API_CREATE_NEW = "/category/create-new";

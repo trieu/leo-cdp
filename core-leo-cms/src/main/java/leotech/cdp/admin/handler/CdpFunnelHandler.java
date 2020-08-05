@@ -7,7 +7,8 @@ import java.util.Map;
 
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
-import leotech.cdp.model.marketing.FunnelNameStage;
+import leotech.cdp.model.marketing.BehavioralEventMetric;
+import leotech.cdp.model.marketing.FunnelStage;
 import leotech.core.api.BaseSecuredDataApi;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.User;
@@ -16,7 +17,7 @@ import leotech.system.util.RequestInfoUtil;
 public class CdpFunnelHandler extends BaseSecuredDataApi {
 	
 	// for dataList view
-	static final String API_LIST_FUNNEL_STAGES = "/cdp/funnel/list-name-stages";
+	static final String API_LIST_ALL_WITH_FUNNEL_TYPES = "/cdp/funnels-and-event-metrics";
 	
 	// for dataList view
 	static final String API_CREATE_NEW = "/cdp/funnel/new";
@@ -49,22 +50,26 @@ public class CdpFunnelHandler extends BaseSecuredDataApi {
 		if (user != null) {
 			if (isAdminRole(user)) {
 				switch (uri) {
-					case API_LIST_FUNNEL_STAGES : {
-						String kinds = RequestInfoUtil.getString(params, "kinds", "");
-						String[] toks = kinds.split(",");
+					case API_LIST_ALL_WITH_FUNNEL_TYPES : {
+						String funnelTypes = RequestInfoUtil.getString(params, "funnelTypes", "");
 						
-						Map<String, List<FunnelNameStage>> map = new HashMap<>(toks.length);
-						for (String kind : toks) {
-							
-							if(kind.equals("event_retail")) {
-								List<FunnelNameStage> list = FunnelNameStage.getEventRetailFunnelStages();
-								map.put(kind, list);
+						String[] toks = funnelTypes.split(",");
+						
+						Map<String, Object> map = new HashMap<>(toks.length);
+						
+						for (String funnelType : toks) {
+							if(funnelType.equals("event_retail")) {
+								List<FunnelStage> list = FunnelStage.getEventRetailFunnelStages();
+								map.put(funnelType, list);
 							}
-							else if(kind.equals("customer_retail")) {
-								List<FunnelNameStage> list = FunnelNameStage.getCustomerRetailFunnelStages();
-								map.put(kind, list);
+							else if(funnelType.equals("customer_retail")) {
+								List<FunnelStage> list = FunnelStage.getCustomerRetailFunnelStages();
+								map.put(funnelType, list);
 							}
 						}
+						
+						List<BehavioralEventMetric> metrics = new ArrayList<>();
+						map.put("behavioralData", metrics);
 						
 						return JsonDataPayload.ok(uri, map, true);
 					}

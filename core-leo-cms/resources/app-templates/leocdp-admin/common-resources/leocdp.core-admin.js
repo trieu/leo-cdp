@@ -214,6 +214,29 @@ var makeNodeEditable = function(selector){
     })
 }
 
+var getIconItemByKey = function(key){
+	var icon = '';
+	if(key === 'twitter'){
+		icon = 'Twitter <i class="fa fa-twitter-square" aria-hidden="true"></i> ';
+	}
+	else if(key === 'linkedin'){
+		icon = 'LinkedIn <i class="fa fa-linkedin-square" aria-hidden="true"></i> ';
+	}
+	else if(key === 'facebook'){
+		icon = 'Facebook <i class="fa fa-facebook-square" aria-hidden="true"></i> ';
+	}
+	else if(key === 'instagram'){
+		icon = 'Instagram <i class="fa fa-instagram" aria-hidden="true"></i> ';
+	}
+	else if(key === 'skype'){
+		icon = 'Skype <i class="fa fa-skype" aria-hidden="true"></i> ';
+	}
+	else if(key === 'github'){
+		icon = 'Github <i class="fa fa-github" aria-hidden="true"></i> ';
+	}
+	return icon;
+}
+
 var initDateFilterComponent = function(){
 	var end = new moment().format("YYYY-MM-DD");
 	var begin = new moment().subtract(120, 'days').format("YYYY-MM-DD");
@@ -312,7 +335,7 @@ LeoCdpAdmin.loadDataAndUpdateView = function(urlStr, params, callback) {
         		var field = $(this).data('field');
         		var toks = field.split('.');
         		if(toks.length === 1){
-        			var value = LeoCdpAdmin.routerContext.dataObject[toks[0]];
+        			var value = LeoCdpAdmin.routerContext.dataObject[toks[0]] || '';
         			
         			if(fieldholder === 'html'){
         				if(fieldtype === 'int' || fieldtype === 'float' ){
@@ -327,25 +350,7 @@ LeoCdpAdmin.loadDataAndUpdateView = function(urlStr, params, callback) {
         				var ulHtml = '<ul class="list-group" >';
         				_.forOwn(value,function(value, key) {
         					var icon = '';
-        					if(key === 'twitter'){
-        						icon = 'Twitter <i class="fa fa-twitter-square" aria-hidden="true"></i> ';
-        					}
-        					else if(key === 'linkedin'){
-        						icon = 'LinkedIn <i class="fa fa-linkedin-square" aria-hidden="true"></i> ';
-        					}
-        					else if(key === 'facebook'){
-        						icon = 'Facebook <i class="fa fa-facebook-square" aria-hidden="true"></i> ';
-        					}
-        					else if(key === 'instagram'){
-        						icon = 'Instagram <i class="fa fa-instagram" aria-hidden="true"></i> ';
-        					}
-        					else if(key === 'skype'){
-        						icon = 'Skype <i class="fa fa-skype" aria-hidden="true"></i> ';
-        					}
-        					else if(key === 'github'){
-        						icon = 'Github <i class="fa fa-github" aria-hidden="true"></i> ';
-        					}
-        					ulHtml = ulHtml + '<li class="list-group-item" > ' + icon + value + '</li>';
+        					ulHtml = ulHtml + '<li class="list-group-item" > ' + getIconItemByKey(key) + value + '</li>';
               			});
         				
         				ulHtml += '</ul>';

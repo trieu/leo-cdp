@@ -10,8 +10,9 @@ public class BehavioralEventMetric extends EventMetric {
 	public static final String COLLECTION_NAME = getCollectionName(BehavioralEventMetric.class);
 	static ArangoCollection instance;
 	
-	int eventFunnelStage;
-	int customerFunnelStage;
+	FunnelStage eventFunnelStage;
+	
+	FunnelStage customerFunnelStage;
 
 	@Override
 	public ArangoCollection getCollection() {
@@ -30,4 +31,6 @@ public class BehavioralEventMetric extends EventMetric {
 	public boolean isReadyForSave() {
 		return StringUtil.isNotEmpty(eventName);
 	}
+	
+	
 }

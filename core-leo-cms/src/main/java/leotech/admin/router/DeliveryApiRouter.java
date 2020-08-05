@@ -34,31 +34,31 @@ public class DeliveryApiRouter extends BaseApiRouter {
 	}
 
 	@Override
-	protected JsonDataPayload callHttpPostApiProcessor(String userSession, String uri, JsonObject paramJson) {
+	protected JsonDataPayload callHttpPostHandler(String userSession, String uri, JsonObject paramJson) {
 		JsonDataPayload payload = null;
 		try {
 
-			if (uri.startsWith(POST_PREFIX)) {
+			if (uri.startsWith(CMS_POST_PREFIX)) {
 				payload = new PostApiHandler().httpPostApiHandler(userSession, uri, paramJson);
 			}
 
-			else if (uri.equalsIgnoreCase(PAGE_PREFIX)) {
+			else if (uri.equalsIgnoreCase(CMS_PAGE_PREFIX)) {
 				payload = new PageApiHandler().httpPostApiHandler(userSession, uri, paramJson);
 			}
 
-			else if (uri.startsWith(CATEGORY_PREFIX)) {
+			else if (uri.startsWith(CMS_CATEGORY_PREFIX)) {
 				payload = new CategoryApiHandler().httpPostApiHandler(userSession, uri, paramJson);
 			}
 
-			else if (uri.startsWith(USER_PREFIX)) {
+			else if (uri.startsWith(SYSTEM_USER_PREFIX)) {
 				payload = new UserApiHandler().httpPostApiHandler(userSession, uri, paramJson);
 			}
 
-			else if (uri.startsWith(TOPIC_PREFIX)) {
+			else if (uri.startsWith(CMS_TOPIC_PREFIX)) {
 				// TODO
 			}
 
-			else if (uri.startsWith(KEYWORD_PREFIX)) {
+			else if (uri.startsWith(CMS_KEYWORD_PREFIX)) {
 				// TODO
 			}
 
@@ -85,7 +85,7 @@ public class DeliveryApiRouter extends BaseApiRouter {
 	}
 
 	@Override
-	protected JsonDataPayload callHttpGetApiProcessor(String userSession, String uri, MultiMap params) {
+	protected JsonDataPayload callHttpGetHandler(String userSession, String uri, MultiMap params) {
 		JsonDataPayload payload = null;
 
 		try {
@@ -93,19 +93,19 @@ public class DeliveryApiRouter extends BaseApiRouter {
 				payload = new ContentQueryApiHandler().httpGetApiHandler(userSession, uri, params);
 			}
 
-			else if (uri.startsWith(POST_PREFIX)) {
+			else if (uri.startsWith(CMS_POST_PREFIX)) {
 				payload = new PostApiHandler().httpGetApiHandler(userSession, uri, params);
 			}
 
-			else if (uri.startsWith(PAGE_PREFIX)) {
+			else if (uri.startsWith(CMS_PAGE_PREFIX)) {
 				payload = new PageApiHandler().httpGetApiHandler(userSession, uri, params);
 			}
 
-			else if (uri.startsWith(CATEGORY_PREFIX)) {
+			else if (uri.startsWith(CMS_CATEGORY_PREFIX)) {
 				payload = new CategoryApiHandler().httpGetApiHandler(userSession, uri, params);
 			}
 
-			else if (uri.startsWith(USER_PREFIX)) {
+			else if (uri.startsWith(SYSTEM_USER_PREFIX)) {
 				payload = new UserApiHandler().httpGetApiHandler(userSession, uri, params);
 			}
 

@@ -5,8 +5,8 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 import leotech.cdp.admin.handler.CdpFunnelHandler;
 import leotech.cdp.admin.handler.CdpProfileHandler;
-import leotech.cms.handler.admin.AdminCategoryApiHandler;
-import leotech.cms.handler.admin.AdminPageApiHandler;
+import leotech.cms.handler.admin.AdminCategoryHandler;
+import leotech.cms.handler.admin.CmsPageHandler;
 import leotech.cms.handler.admin.AdminPostApiHandler;
 import leotech.cms.handler.admin.AdminSystemApiHandler;
 import leotech.cms.handler.admin.AdminUserApiHandler;
@@ -36,29 +36,31 @@ public class AdminApiRouter extends BaseApiRouter {
 	}
 
 	@Override
-	protected JsonDataPayload callHttpPostApiProcessor(String userSession, String uri, JsonObject paramJson) {
+	protected JsonDataPayload callHttpPostHandler(String userSession, String uri, JsonObject paramJson) {
 		JsonDataPayload payload = null;
 		try {
-			if (uri.startsWith(USER_PREFIX)) {
+			
+			if (uri.startsWith(SYSTEM_USER_PREFIX)) {
 				payload = new AdminUserApiHandler().httpPostApiHandler(userSession, uri, paramJson);
 			}
 			//
 			else if (uri.startsWith(CDP_PROFILE_PREFIX)) {
 				payload = new CdpProfileHandler().httpPostApiHandler(userSession, uri, paramJson);
 			}
+			//
 			else if (uri.startsWith(CDP_FUNNEL_PREFIX)) {
 				payload = new CdpFunnelHandler().httpPostApiHandler(userSession, uri, paramJson);
 			}
 			//
-			else if (uri.startsWith(CATEGORY_PREFIX)) {
-				payload = new AdminCategoryApiHandler().httpPostApiHandler(userSession, uri, paramJson);
+			else if (uri.startsWith(CMS_CATEGORY_PREFIX)) {
+				payload = new AdminCategoryHandler().httpPostApiHandler(userSession, uri, paramJson);
 			}
 			//
-			else if (uri.startsWith(PAGE_PREFIX)) {
-				payload = new AdminPageApiHandler().httpPostApiHandler(userSession, uri, paramJson);
+			else if (uri.startsWith(CMS_PAGE_PREFIX)) {
+				payload = new CmsPageHandler().httpPostApiHandler(userSession, uri, paramJson);
 			}
 			//
-			else if (uri.startsWith(POST_PREFIX)) {
+			else if (uri.startsWith(CMS_POST_PREFIX)) {
 				payload = new AdminPostApiHandler().httpPostApiHandler(userSession, uri, paramJson);
 			}
 			//
@@ -81,10 +83,10 @@ public class AdminApiRouter extends BaseApiRouter {
 	}
 
 	@Override
-	protected JsonDataPayload callHttpGetApiProcessor(String userSession, String uri, MultiMap params) {
+	protected JsonDataPayload callHttpGetHandler(String userSession, String uri, MultiMap params) {
 		JsonDataPayload payload = null;
 		try {
-			if (uri.startsWith(USER_PREFIX)) {
+			if (uri.startsWith(SYSTEM_USER_PREFIX)) {
 				payload = new AdminUserApiHandler().httpGetApiHandler(userSession, uri, params);
 			}
 			//
@@ -95,15 +97,15 @@ public class AdminApiRouter extends BaseApiRouter {
 				payload = new CdpFunnelHandler().httpGetApiHandler(userSession, uri, params);
 			}
 			//
-			else if (uri.startsWith(CATEGORY_PREFIX)) {
-				payload = new AdminCategoryApiHandler().httpGetApiHandler(userSession, uri, params);
+			else if (uri.startsWith(CMS_CATEGORY_PREFIX)) {
+				payload = new AdminCategoryHandler().httpGetApiHandler(userSession, uri, params);
 			}
 			//
-			else if (uri.startsWith(PAGE_PREFIX)) {
-				payload = new AdminPageApiHandler().httpGetApiHandler(userSession, uri, params);
+			else if (uri.startsWith(CMS_PAGE_PREFIX)) {
+				payload = new CmsPageHandler().httpGetApiHandler(userSession, uri, params);
 			}
 			//
-			else if (uri.startsWith(POST_PREFIX)) {
+			else if (uri.startsWith(CMS_POST_PREFIX)) {
 				payload = new AdminPostApiHandler().httpGetApiHandler(userSession, uri, params);
 			}
 			//
