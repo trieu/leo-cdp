@@ -1,19 +1,39 @@
 package leotech.cdp.model.marketing;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import rfx.core.util.HashUtil;
+import com.arangodb.ArangoCollection;
+import com.arangodb.ArangoDatabase;
+import com.arangodb.entity.DocumentField;
+import com.arangodb.entity.DocumentField.Type;
+import com.arangodb.model.PersistentIndexOptions;
+import com.google.gson.annotations.Expose;
+
+import leotech.cdp.model.CdpPersistentObject;
+import rfx.core.util.StringUtil;
 
 /**
  * @author mac
  *
  */
-public class FunnelStage {
+public class FunnelStage extends CdpPersistentObject {
+	
+	public static final String COLLECTION_NAME = getCollectionName(FunnelStage.class);
+	static ArangoCollection dbCollection;
 
-	String id;
+	@DocumentField(Type.KEY)
+	@Expose
+	protected String id;
+	
+	@Expose
 	int orderIndex;
+	
+	@Expose
 	String name;
+	
+	@Expose
 	String type;
 	
 	static List<FunnelStage> eventRetailFunnelStages = new ArrayList<FunnelStage>();
@@ -51,7 +71,7 @@ public class FunnelStage {
 		this.orderIndex = orderIndex;
 		this.name = name;
 		this.type = type;
-		this.id = HashUtil.md5(orderIndex + name + type);
+		this.id = id(orderIndex + name + type);
 	}
 	
 	public int getOrderIndex() {
@@ -81,6 +101,27 @@ public class FunnelStage {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	@Override
+	public ArangoCollection getCollection() {
+		if (dbCollection == null) {
+			ArangoDatabase arangoDatabase = cdpDbInstance();
+
+			dbCollection = arangoDatabase.collection(COLLECTION_NAME);
+
+			// ensure indexing key fields for fast lookup
+			dbCollection.ensurePersistentIndex(Arrays.asList("type"),new PersistentIndexOptions().unique(false));
+
+		}
+		return dbCollection;
+	}
+
+
+	@Override
+	public boolean isReadyForSave() {
+		// TODO Auto-generated method stub
+		return StringUtil.isNotEmpty(id) && StringUtil.isNotEmpty(name);
 	}
 	
 	

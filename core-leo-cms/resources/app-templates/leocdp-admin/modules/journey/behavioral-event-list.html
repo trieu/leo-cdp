@@ -27,7 +27,7 @@
         <div class="col-lg-12">
         	<br>
             <div class="table-responsive">
-                <div id="behavioral-metrics-table"></div>
+                <div id="behavioral_metrics_table"></div>
             </div>
         </div>
     </div>
@@ -93,43 +93,55 @@ var initBehavioralEventList = initBehavioralEventList || function(){
     loadEventFunnel();
     
     LeoAdminApiUtil.getSecuredData('/cdp/funnels-and-event-metrics',{"funnelTypes":"event_retail,customer_retail"}, function(json){ 
-		 console.log(json.data);	
+		 //console.log(json.data);	
 		 var eventFunnelStages = json.data['event_retail'];
 		 var customerFunnelStages = json.data['customer_retail'];
+		 var behavioralMetricsData = json.data['behavioral_metrics'];
 		 
-		 var behavioralDataList = [
-			    { "name" : "pageview", title : "Behavioral Event", "Score":1, "Event Funnel Stage": 1, "Customer Funnel Stage": 1, "Data Type": 1 },
-			    { "name" : "login", "Score":3 , "Event Funnel Stage": 2, "Customer Funnel Stage": 2, "Data Type": 1 },
-			    { "name" : "playvideo", "Score":5, "Event Funnel Stage": 2, "Customer Funnel Stage": 3, "Data Type": 1 },
-			    { "Behavioral Event" : "likeitem", "Score":7, "Event Funnel Stage": 2, "Customer Funnel Stage": 3, "Data Type": 1 },
-			    { "Behavioral Event" : "clickitem", "Score":5, "Event Funnel Stage": 2, "Customer Funnel Stage": 3, "Data Type": 1 },
-			    { "Behavioral Event" : "add2cart", "Score":10, "Event Funnel Stage": 3, "Customer Funnel Stage": 3, "Data Type": 1 },
-			    { "Behavioral Event" : "buy", "Score":15, "Event Funnel Stage": 4, "Customer Funnel Stage": 4, "Data Type": 1 },
-			    { "Behavioral Event" : "rebuy", "Score":18, "Event Funnel Stage": 5, "Customer Funnel Stage": 5, "Data Type": 1 }
-		 ];
-		 
-		 $("#behavioral-metrics-table").jsGrid({
+		 $("#behavioral_metrics_table").jsGrid({
 		    width: "100%",
-		    height: "350px",
+		    height: "360px",
 
 		    inserting: true,
 		    editing: true,
 		    sorting: true,
 		    paging: false,
+		    
+		    deleteConfirm: function(item) {
+	            return "The event \"" + item.eventName + "\" will be removed. Are you sure?";
+	        },
 
-		    data: behavioralDataList,
+		    data: behavioralMetricsData,
+		    
+		    onItemInserting: function(args) {
+		    	//console.log(args.item)
+		    	
+		    	// TODO Ajax submit data to backend here
+		    	setTimeout(function(){
+		    		args.item.id = "";
+		    		//console.log(behavioralMetricsData)
+		    	},1000);
+		    	
+		    },      
+		    onItemInserted: function(args) {
+		    	//console.log(args.item)
+		    	//console.log(behavioralMetricsData)
+		    }, 
+		    onItemDeleting: function(args) {
+		        
+		        console.log(args.item)
+		    },
 
 		    fields: [
-		        { name: "Behavioral Event", type: "text", width: 50, validate: "required" },
-		        { name: "Score", type: "number",  width: 30, validate: "required" },
-		        { name: "Event Funnel Stage", type: "select", items: eventFunnelStages, valueField: "orderIndex", textField: "name" },
-		        { name: "Customer Funnel Stage", type: "select", items: customerFunnelStages, valueField: "orderIndex", textField: "name" },
-		        { name: "Data Type", type: "select", items: eventDataTypes, valueField: "id", textField: "name" },
+		        { name: "eventName", title : "Behavioral Event", type: "text", width: 50, validate: "required" },
+		        { name: "score", title : "Score", type: "number",  width: 30, validate: "required" },
+		        { name: "eventFunnelStageId", title : "Event Funnel Stage", type: "select", items: eventFunnelStages, valueField: "id", textField: "name" },
+		        { name: "customerFunnelStageId", title : "Customer Funnel Stage", type: "select", items: customerFunnelStages, valueField: "id", textField: "name" },
+		        { name: "dataType", type: "select", title : "Data Type", items: eventDataTypes, valueField: "id", textField: "name" },
 		        { type: "control" }
 		    ]
 		});  
 	});
-	
 }
 
 </script>

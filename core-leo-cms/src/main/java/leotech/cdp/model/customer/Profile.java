@@ -288,25 +288,25 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	protected int dataCompletionScore = 0;
 	
 	@Expose
-	protected int totalLeadScore = 0;
+	protected int totalLeadScore = 0; // sum of all score from BehavioralEventMetric data
 	
 	@Expose
 	protected int totalCreditScore = 0;
 
 	@Expose
-	protected int totalCSAT = 0;
+	protected int totalCSAT = 0; // Customer Satisfaction Score 
 
 	@Expose
-	protected int totalCAC = 0;
+	protected int totalCAC = 0; // Customer Acquisition Cost
 
 	@Expose
-	protected int totalCLV = 0;
+	protected int totalCLV = 0; // Customer lifetime value 
 	
 	@Expose
-	protected int totalCES = 0;
+	protected int totalCES = 0; // Customer Effort Score
 	
 	@Expose
-	protected int totalNPS = 0;
+	protected int totalNPS = 0; // Net Promoter Score
 	
 	// --- END Quantitative Data Metrics
 	

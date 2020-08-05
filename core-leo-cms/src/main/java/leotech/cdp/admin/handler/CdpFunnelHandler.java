@@ -1,12 +1,13 @@
 package leotech.cdp.admin.handler;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
+import leotech.cdp.dao.BehavioralEventMetricDao;
 import leotech.cdp.model.marketing.BehavioralEventMetric;
 import leotech.cdp.model.marketing.FunnelStage;
 import leotech.core.api.BaseSecuredDataApi;
@@ -68,8 +69,8 @@ public class CdpFunnelHandler extends BaseSecuredDataApi {
 							}
 						}
 						
-						List<BehavioralEventMetric> metrics = new ArrayList<>();
-						map.put("behavioralData", metrics);
+						Collection<BehavioralEventMetric> metrics = BehavioralEventMetricDao.getEventRetailMetrics();
+						map.put("behavioral_metrics", metrics);
 						
 						return JsonDataPayload.ok(uri, map, true);
 					}

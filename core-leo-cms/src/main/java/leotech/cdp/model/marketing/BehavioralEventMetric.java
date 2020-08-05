@@ -1,30 +1,50 @@
 package leotech.cdp.model.marketing;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
+import com.arangodb.model.PersistentIndexOptions;
 
 import rfx.core.util.StringUtil;
 
 public class BehavioralEventMetric extends EventMetric {
 	
 	public static final String COLLECTION_NAME = getCollectionName(BehavioralEventMetric.class);
-	static ArangoCollection instance;
+	static ArangoCollection dbCollection;
 	
-	FunnelStage eventFunnelStage;
+	String eventFunnelStageId;
 	
-	FunnelStage customerFunnelStage;
+	String customerFunnelStageId;
+	
+	
+	public BehavioralEventMetric(String eventName, int score, int dataType, String eventFunnelStageId, String customerFunnelStageId) {
+		super(eventName, score, dataType);
+		this.eventFunnelStageId = eventFunnelStageId;
+		this.customerFunnelStageId = customerFunnelStageId;
+	}
+
+	
 
 	@Override
 	public ArangoCollection getCollection() {
-		if (instance == null) {
+		if (dbCollection == null) {
 			ArangoDatabase arangoDatabase = cdpDbInstance();
 
-			instance = arangoDatabase.collection(COLLECTION_NAME);
+			dbCollection = arangoDatabase.collection(COLLECTION_NAME);
 
 			// ensure indexing key fields for fast lookup
+			dbCollection.ensurePersistentIndex(Arrays.asList("eventName"),
+					new PersistentIndexOptions().unique(true));
+			dbCollection.ensurePersistentIndex(Arrays.asList("dataType"),
+					new PersistentIndexOptions().unique(false));
 
 		}
-		return instance;
+		return dbCollection;
 	}
 
 	@Override
