@@ -8,16 +8,16 @@
 
 LeoCdpAdmin.navRouters = {
 		"defaultRouter" : {
-			"menuName" : "Customer Profile List",
-			"functionName" : "loadCustomerProfileList",
-			"breadcrumb" : ["Customer Data Hub", "Customer Profile List"]
+			"menuName" : "Primary Dashboard",
+			"functionName" : "loadPrimaryDashboard",
+			"breadcrumb" : ["Unified Analytics Hub", "Primary Dashboard"]
 		},
 		
 		// 1.1 Main Analytics Dashboard
-		"Marketing_Dashboard": {
-			"menuName" : "Marketing Dashboard",
-			"functionName" : "loadMarketingDashboard",
-			"breadcrumb" : ["Unified Analytics Hub", "Marketing Dashboard"]
+		"Primary_Dashboard": {
+			"menuName" : "Primary Dashboard",
+			"functionName" : "loadPrimaryDashboard",
+			"breadcrumb" : ["Unified Analytics Hub", "Primary Dashboard"]
 		},
 		
 		// 2.1 Targeted Persona

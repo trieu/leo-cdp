@@ -2,8 +2,6 @@ package leotech.cdp.router.api;
 
 import java.util.Map;
 
-import com.google.gson.Gson;
-
 import io.vertx.core.MultiMap;
 import io.vertx.core.http.HttpServerRequest;
 import leotech.cdp.model.customer.ContextSession;

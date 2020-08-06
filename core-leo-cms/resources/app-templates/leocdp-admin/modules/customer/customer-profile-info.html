@@ -90,9 +90,15 @@
 		                               </li>
 		                               
 		                               <li>
+		                                   <b> <i class="fa fa-usd" aria-hidden="true"></i> Customer Lifetime Value (CLV) in {{currency_code}} </b> 
+		                                   <p data-field="totalLeadScore" data-fieldholder="html"  data-fieldtype="int"  > 10,000,000 </p>
+		                               </li>
+		                               
+		                               <li>
 		                                   <b> <i class="fa fa-usd" aria-hidden="true"></i> Customer Acquisition Cost (CAC) in {{currency_code}} </b> 
 		                                   <p data-field="totalCAC" data-fieldholder="html"  data-fieldtype="int"  > 80 </p>
 		                               </li>
+		                               
 		                               <li>
 		                                   <b> <i class="fa fa-usd" aria-hidden="true"></i> Customer Lifetime Value (CLV) in {{currency_code}} </b> 
 		                                   <p data-field="totalCLV" data-fieldholder="html"  data-fieldtype="int"  > 10,000,000 </p>
@@ -100,11 +106,12 @@
 		                               
 		                               <li>
 		                                   <b> <i class="fa fa-star" aria-hidden="true"></i> Customer Satisfaction Score (CSC) </b> 
-		                                   <p data-field="satisfactionScore" data-fieldholder="html"  data-fieldtype="int"  > 80 </p>
+		                                   <p data-field="totalCSAT" data-fieldholder="html"  data-fieldtype="int"  > 80 </p>
 		                               </li>
-		                               <li>
-		                                   <b> <i class="fa fa-star" aria-hidden="true"></i> Business Credit Score (BCS) </b> 
-		                                   <p data-field="businessCreditScore" data-fieldholder="html"  data-fieldtype="int"  > 80 </p>
+		                               
+		                               <li style="display: ;" >
+		                                   <b> <i class="fa fa-star" aria-hidden="true"></i> Total Credit Score </b> 
+		                                   <p data-field="totalCreditScore" data-fieldholder="html"  data-fieldtype="int"  > 80 </p>
 		                               </li>
 		                               
 		                           </ol>
@@ -213,8 +220,9 @@
        
        <!--  Tab Navigation Items -->
        <ul class="nav nav-tabs" data-tab-content="profile_ext_data_tabs" >
-          <li class="active" ><a href="javascript:" data-target-tab="panel_profile_journey_flow" > <i class="fa fa-map-o" aria-hidden="true"></i> Journey Flow </a></li>
-          <li ><a href="javascript:" data-target-tab="panel_profile_activitiy_flow" > <i class="fa fa-list-ol" aria-hidden="true"></i> Activity Flow </a></li>
+          
+          <li class="active"><a href="javascript:" data-target-tab="panel_profile_activitiy_flow" > <i class="fa fa-list-ol" aria-hidden="true"></i> Activity Flow </a></li>
+          <li ><a href="javascript:" data-target-tab="panel_profile_journey_flow" style="display: none;" > <i class="fa fa-map-o" aria-hidden="true"></i> Journey Flow </a></li>
           
        	  <li ><a href="javascript:" data-target-tab="panel_profile_business_data" style="display: none;" > <i class="fa fa-briefcase" aria-hidden="true"></i> Business Data </a></li>
        	  <li ><a href="javascript:"data-target-tab="panel_business_transactions" style="display: none;" > <i class="fa fa-shopping-cart" aria-hidden="true"></i> Business Transactions</a></li>
@@ -224,7 +232,16 @@
 
 	   <!-- Tab Contents  -->
        <div class="tab-content" id="profile_ext_data_tabs" >
-       		<div class="tab-pane active" id="panel_profile_journey_flow" >
+
+			
+			<div class="tab-pane active" id="panel_profile_activitiy_flow" >
+				<h4>Top 100 recent activities</h4>
+	     		<ul id="profile_activitiy_flow" class="list-group list-group-dividered list-group-full">
+	     			<!-- data  -->
+				</ul>
+			</div>
+			
+			<div class="tab-pane " id="panel_profile_journey_flow" >
 		     	
 		     	<div class="row">
 		       	 	<div id="journeyFlowChart" class="experience_journey_flow" style="height:580px;"></div>
@@ -246,12 +263,6 @@
 		                </div>
 		            </div>
 			     </div>   
-			</div>
-			
-			<div class="tab-pane " id="panel_profile_activitiy_flow" >
-	     		<ul id="profile_activitiy_flow" class="list-group list-group-dividered list-group-full">
-	     			<!-- data  -->
-				</ul>
 			</div>
        
        		<div class="tab-pane " id="panel_profile_business_data" style="display: none;" >
@@ -308,7 +319,7 @@
 </div>
 
 <script id='view-event-tpl' type="text/html" >
-<li class="list-group-item">
+<li class="list-group-item" id="ev_<%- id %>">
    <div class="row">
       <div class="col-md-1 text-center"> <i class="fa fa-internet-explorer" aria-hidden="true" style="font-size:2em" ></i> <br> <b><%- metricName %></b> </div>
       <div class="col-md-11">
@@ -323,7 +334,7 @@
 </script>
 
 <script id='action-event-tpl' type="text/html" >
-<li class="list-group-item">
+<li class="list-group-item" id="ev_<%- id %>" >
    <div class="row">
       <div class="col-md-1 text-center">  <i class="fa fa-sign-in" aria-hidden="true" style="font-size:2em" ></i> <br> <b><%- metricName %></b> </div>
       <div class="col-md-11">
@@ -338,7 +349,7 @@
 </script>
 
 <script id='conversion-event-tpl' type="text/html" >
-<li class="list-group-item">
+<li class="list-group-item" id="ev_<%- id %>" >
    <div class="row">
       <div class="col-md-1 text-center">  <i class="fa fa-cart-plus" aria-hidden="true" style="font-size:2em" ></i> <br> <b><%- metricName %></b> </div>
       <div class="col-md-11">
@@ -359,9 +370,7 @@
     	console.log(profileId);
     	//setup editable node
 		setupTabPanels();
-		loadCurrentProfile(profileId)
-    	
-        
+		loadCurrentProfile(profileId);
     }
     
     function editCurrentProfile(){
@@ -387,14 +396,13 @@
         		 $('#profile_avatar').attr('src',profileData.primaryAvatar);
         	 }
         	 
-        	 renderJourneyFlowChart();
+        	 //renderJourneyFlowChart();
         	//loadProfileAttribution();
              //loadMediaTouchpoints();
              //personalityDiagram();
         	 
         	 LeoAdminApiUtil.getSecuredData('/cdp/profile/tracking-events',{id:profileId,startIndex:0,numberResult:100}, function(json){ 
         		 console.log(json.data) ;
-        		
         		 var node = $('#profile_activitiy_flow');
         		 _.forEach(json.data,function(e,i){
         			 e.srcTouchpoint.name = textTruncate(e.srcTouchpoint.name,120);

@@ -60,6 +60,8 @@ public class MediaChannel extends CdpPersistentObject {
 	@Expose
 	protected boolean isOwnedMedia = true;
 	@Expose
+	protected boolean isRootNode = false;
+	@Expose
 	protected Date createdAt;
 	@Expose
 	Date updatedAt;
@@ -225,5 +227,14 @@ public class MediaChannel extends CdpPersistentObject {
 	public void setKeywords(List<String> keywords) {
 		this.keywords = keywords;
 	}
+
+	public boolean isRootNode() {
+		return isRootNode;
+	}
+
+	public void setRootNode(boolean isRootNode) {
+		this.isRootNode = isRootNode;
+	}
+	
 
 }

@@ -14,7 +14,6 @@ import leotech.cdp.model.business.ProductItem;
 import leotech.cdp.model.business.ReportUnit;
 import leotech.cdp.model.business.ScheduledJob;
 import leotech.cdp.model.customer.ContextSession;
-import leotech.cdp.model.customer.ConversionEvent;
 import leotech.cdp.model.customer.Profile;
 import leotech.cdp.model.customer.Segment;
 import leotech.cdp.model.customer.TrackingEvent;
@@ -62,7 +61,6 @@ public class SetupNewDatabase {
 		audienceDataHubCollections.add(ContextSession.COLLECTION_NAME);
 		audienceDataHubCollections.add(Profile.COLLECTION_NAME);
 		audienceDataHubCollections.add(TrackingEvent.COLLECTION_NAME);
-		audienceDataHubCollections.add(ConversionEvent.COLLECTION_NAME);
 		audienceDataHubCollections.add(UserDevice.COLLECTION_NAME);
 		audienceDataHubCollections.add(ReportUnit.COLLECTION_NAME);
 		audienceDataHubCollections.add(Segment.COLLECTION_NAME);

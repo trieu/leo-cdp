@@ -10,7 +10,7 @@ import rfx.core.util.StringUtil;
 
 public class TouchpointDataService {
 	
-	static final Touchpoint DIRECT_TRAFFIC_WEB = new Touchpoint("DIRECT_TRAFFIC_WEB", MediaChannelType.WEB_URL, "DIRECT_TRAFFIC_WEB");
+	static final Touchpoint DIRECT_TRAFFIC_WEB = new Touchpoint("DIRECT_TRAFFIC_WEB", MediaChannelType.WEB_URL, "DIRECT_TRAFFIC_WEB",false);
 	static {
 		TouchpointDaoUtil.save(DIRECT_TRAFFIC_WEB);
 	}
@@ -21,6 +21,7 @@ public class TouchpointDataService {
 		if(tp == null) {
 			tp = new Touchpoint(hostname, MediaChannelType.WEBSITE, hostname);
 			tp.setOwnedMedia(isOwnedMedia);
+			tp.setRootNode(true);
 			TouchpointDaoUtil.save(tp);
 		}
 		return tp;

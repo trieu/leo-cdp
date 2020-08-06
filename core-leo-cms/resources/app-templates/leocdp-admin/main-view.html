@@ -11,7 +11,7 @@
 			<img id="logo-img" src="" alt="MainLogo" style="display: none;" />
 		</a>
 
-		<div style="width: 100%;">
+		<div style="width: 100%; visibility: hidden;">
 			<input id="main_search" type="text" placeholder="Enter keywords">
 		</div>
 
@@ -48,7 +48,7 @@
 				</a>
 				<ul id="analytics_hub_menu" class="collapse in" aria-expanded="true">
 					<li>
-						<a href="#calljs-leoCdpRouter('Marketing_Dashboard')"> <i class="fa fa-fw fa-pie-chart"></i> Marketing Dashboard </a>
+						<a href="#calljs-leoCdpRouter('Primary_Dashboard')"> <i class="fa fa-fw fa-pie-chart"></i>  Primary Dashboard </a>
 					</li>
 					<li>
 						<a href="#calljs-leoCdpRouter('Analytics_360_Notebooks')"> <i class="fa fa-fw fa-book"></i> Analytics 360 Notebooks</a>
@@ -71,7 +71,7 @@
 						<a href="#calljs-leoCdpRouter('Behavioral_Event_List')"> <i class="fa fa-fw fa-list-ol"></i> Behavioral Event List </a>
 					</li>
 					
-					<li>
+					<li  >
 						<a href="#calljs-leoCdpRouter('Media_Channel_List')"> <i class="fa fa-fw fa-exchange"></i> Media Channel List</a>
 					</li>
 						
@@ -131,7 +131,7 @@
 						<a href="#calljs-leoCdpRouter('Customer_Profile_List')"> <i class="fa fa-fw fa-address-card-o"></i> Customer Profile List</a>
 					</li>
 					
-					<li>
+					<li style="display: none;" >
 						<a href="#calljs-leoCdpRouter('Customer_Segment_List')"> <i class="fa fa-fw fa-object-group"></i> Customer Segment List</a>
 					</li>
 					
@@ -173,7 +173,7 @@
 			</li>
 			
 			<!--  6 - Marketing & Sales Campaign Activation Management  -->
-			<li id="nav_activation_hub" style="display: ;" >
+			<li id="nav_activation_hub" style="display: none;" >
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#activation_hub_menu"><i class="fa fa-fw fa-heart"></i>
 					Customer Activation <i id="activation_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>

@@ -23,6 +23,8 @@ public class TrackingEventDaoUtil  extends BaseLeoCdpDao{
 			.get("AQL_GET_TRACKING_EVENTS_BY_PROFILE_ID");
 	static final String AQL_GET_TRACKING_EVENTS_FOR_REPORTING_BY_PROFILE_ID = AqlTemplate
 			.get("AQL_GET_TRACKING_EVENTS_FOR_REPORTING_BY_PROFILE_ID");
+	
+	static final String AQL_GET_CONVERSION_EVENTS_BY_PROFILE_ID = AqlTemplate.get("AQL_GET_CONVERSION_EVENTS_BY_PROFILE_ID");
 
 	public static boolean record(TrackingEvent e) {
 		if (e.isReadyForSave()) {
@@ -40,6 +42,26 @@ public class TrackingEventDaoUtil  extends BaseLeoCdpDao{
 	}
 
 	public static List<EventSingleDataView> getEventsByProfileId(String refProfileId, DataFilter filter) {
+		ArangoDatabase db = getCdpDbInstance();
+		
+		Map<String, Object> bindVars = new HashMap<>(3);
+		bindVars.put("refProfileId", refProfileId);
+		bindVars.put("startIndex", filter.getStart());
+		bindVars.put("numberResult", filter.getLength());
+		
+		CallbackQuery<EventSingleDataView> callback = new CallbackQuery<EventSingleDataView>() {
+			@Override
+			public EventSingleDataView apply(EventSingleDataView obj) {
+				obj.unifyDataView();
+				return obj;
+			}
+		};
+		List<EventSingleDataView> list = new ArangoDbQuery<EventSingleDataView>(db, AQL_GET_TRACKING_EVENTS_BY_PROFILE_ID,bindVars, 
+				EventSingleDataView.class, callback).getResultsAsList();
+		return list;
+	}
+	
+	public static List<EventSingleDataView> getConversionEventsByProfileId(String refProfileId, DataFilter filter) {
 		ArangoDatabase db = getCdpDbInstance();
 		
 		Map<String, Object> bindVars = new HashMap<>(3);
