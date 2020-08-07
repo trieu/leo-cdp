@@ -335,7 +335,7 @@ LeoCdpAdmin.loadDataAndUpdateView = function(urlStr, params, callback) {
         		var field = $(this).data('field');
         		var toks = field.split('.');
         		if(toks.length === 1){
-        			var value = LeoCdpAdmin.routerContext.dataObject[toks[0]] || '';
+        			var value = LeoCdpAdmin.routerContext.dataObject[toks[0]] ;
         			
         			if(fieldholder === 'html'){
         				if(fieldtype === 'int' || fieldtype === 'float' ){

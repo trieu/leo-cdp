@@ -3,12 +3,25 @@ package test.email;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
+import leotech.cdp.model.marketing.EmailMessage;
+
 import java.util.Properties;
 
 public class TestEmail {
 
 	public static void main(String[] args) {
 
+		//sendEmail();
+		
+		String subject = "Test mail";
+		String content = "<html> <head></head> <body> Hello </body></html>";
+		EmailMessage message = new EmailMessage("contact@uspa.tech", "tantrieuf31@gmail.com", "Trieu", "ab212dsd", subject, content);
+		System.out.println(message);
+
+	}
+
+	 static void sendEmail() {
 		final String username = "tantrieuf31.database@gmail.com";
 		final String password = "Fx1gGWfL87wVEA3m";
 
@@ -40,6 +53,5 @@ public class TestEmail {
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
-
 	}
 }

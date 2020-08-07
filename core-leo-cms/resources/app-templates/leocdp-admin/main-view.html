@@ -18,7 +18,8 @@
 		<!-- Top Menu Items -->
 		<ul class="nav navbar-right top-nav">
 
-			<li class="dropdown"><a href="javascript:" class="dropdown-toggle" data-toggle="dropdown">
+			<li class="dropdown">
+				<a href="javascript:" class="dropdown-toggle" data-toggle="dropdown">
 					<i class="fa fa-user"></i> <span id="userDisplayName"></span> <b class="caret"></b>
 				</a>
 				<ul class="dropdown-menu">
@@ -67,6 +68,10 @@
 						<a href="#calljs-leoCdpRouter('Customer_Persona_List')"> <i class="fa fa-fw fa-users"></i> Customer Persona List</a>
 					</li>
 					
+					<li  >
+						<a href="#calljs-leoCdpRouter('Customer_Journey_List')"> <i class="fa fa-fw fa-map-o"></i> Customer Journey List</a>
+					</li>
+					
 					<li>
 						<a href="#calljs-leoCdpRouter('Behavioral_Event_List')"> <i class="fa fa-fw fa-list-ol"></i> Behavioral Event List </a>
 					</li>
@@ -77,10 +82,6 @@
 						
 					<li>
 						<a href="#calljs-leoCdpRouter('Data_Observer_List')"> <i class="fa fa-fw fa-camera"></i> Data Observer List</a>
-					</li>
-					
-					<li style="display: none;" >
-						<a href="#calljs-leoCdpRouter('Customer_Journey_List')"> <i class="fa fa-fw fa-map-o"></i> Customer Journey List</a>
 					</li>
 					
 					<li style="display: none;" >
@@ -131,7 +132,7 @@
 						<a href="#calljs-leoCdpRouter('Customer_Profile_List')"> <i class="fa fa-fw fa-address-card-o"></i> Customer Profile List</a>
 					</li>
 					
-					<li style="display: none;" >
+					<li>
 						<a href="#calljs-leoCdpRouter('Customer_Segment_List')"> <i class="fa fa-fw fa-object-group"></i> Customer Segment List</a>
 					</li>
 					

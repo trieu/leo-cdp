@@ -285,7 +285,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	// --- BEGIN Quantitative Data Metrics
 	
 	@Expose
-	protected int dataCompletionScore = 0;
+	protected int totalDataQualityScore = 0;
 	
 	@Expose
 	protected int totalLeadScore = 0; // sum of all score from BehavioralEventMetric data
@@ -669,12 +669,12 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		this.businessContacts = businessContacts;
 	}
 
-	public int getDataCompletionScore() {
-		return dataCompletionScore;
+	public int getTotalDataQualityScore() {
+		return totalDataQualityScore;
 	}
 
-	public void setDataCompletionScore(int dataCompletionScore) {
-		this.dataCompletionScore = dataCompletionScore;
+	public void setTotalDataQualityScore(int totalDataQualityScore) {
+		this.totalDataQualityScore = totalDataQualityScore;
 	}
 
 	public Map<String, Map<String, Integer>> getPredictionMetrics() {
