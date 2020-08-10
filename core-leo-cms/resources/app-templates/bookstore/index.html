@@ -216,7 +216,7 @@
 		        // Log the clicked post url
 		        var url = location.href.substring(0, location.href.length - 1) + $(this).attr('href');
 		        console.log(url);
-		        LeoObserverProxy.recordActionEvent("click", {
+		        LeoObserverProxy.recordActionEvent("itemclick", {
 		            post_url: url, product_id: '4545'
 		        });
 		    });

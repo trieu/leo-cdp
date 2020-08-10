@@ -21,7 +21,7 @@ public class TestEmail {
 
 	}
 
-	 static void sendEmail() {
+	public static void sendEmail(EmailMessage messageModel) {
 		final String username = "tantrieuf31.database@gmail.com";
 		final String password = "Fx1gGWfL87wVEA3m";
 
@@ -40,11 +40,10 @@ public class TestEmail {
 		try {
 
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("contact@uspa.tech"));
-			message.setRecipients(Message.RecipientType.TO,
-					InternetAddress.parse("tantrieuf31.database@gmail.com"));
-			message.setSubject("Testing Email Marketing");
-			message.setText("Dear Mail Crawler," + "\n\n Please do not spam my email!");
+			message.setFrom(new InternetAddress(messageModel.getFromEmailAddress()));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(messageModel.getToEmailAddress()));
+			message.setSubject(messageModel.getSubject());
+			message.setContent(messageModel.getContent(), "text/html");
 
 			Transport.send(message);
 
