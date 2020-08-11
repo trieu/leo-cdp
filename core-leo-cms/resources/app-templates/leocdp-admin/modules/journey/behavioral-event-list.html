@@ -128,17 +128,17 @@ var initBehavioralEventList = initBehavioralEventList || function(){
 		    	//console.log(behavioralMetricsData)
 		    }, 
 		    onItemDeleting: function(args) {
-		        
 		        console.log(args.item)
 		    },
 
 		    fields: [
-		        { name: "eventName", title : "Behavioral Event", type: "text", width: 50, validate: "required" },
+		        { name: "eventName", title : "Behavioral Event Name", type: "text", validate: "required" },
+		        { name: "eventValue", title : "Event Value", type: "number",  width: 50, validate: "required" },
 		        { name: "score", title : "Score", type: "number",  width: 30, validate: "required" },
 		        { name: "eventFunnelStageId", title : "Event Funnel Stage", type: "select", items: eventFunnelStages, valueField: "id", textField: "name" },
 		        { name: "customerFunnelStageId", title : "Customer Funnel Stage", type: "select", items: customerFunnelStages, valueField: "id", textField: "name" },
 		        { name: "dataType", type: "select", title : "Data Type", items: eventDataTypes, valueField: "id", textField: "name" },
-		        { type: "control" }
+		        { type: "control" , width: 50}
 		    ]
 		});  
 	});

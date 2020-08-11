@@ -300,10 +300,10 @@ LeoCdpAdmin.navFunctions.loadPersonalizationWidgets = function(breadcrumbHtml) {
 
 //###################### Customer Activation Hub navigation ######################
 
-LeoCdpAdmin.navFunctions.loadCouponManagement = function(breadcrumbHtml) {
-    LeoCdpAdmin.loadView('/view/modules/activation/coupon-management.html?admin=1', pageDomSelector, function () {
+LeoCdpAdmin.navFunctions.loadActivationRules = function(breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/modules/activation/activation-rules.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
-    	initCouponManagement();
+    	initActivationRules();
     });
 }
 

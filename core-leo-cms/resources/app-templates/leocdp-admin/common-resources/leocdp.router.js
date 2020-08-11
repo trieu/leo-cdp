@@ -209,10 +209,10 @@ LeoCdpAdmin.navRouters = {
 		},
 		
 		// 5.1 Voucher/Coupon Management
-		"Coupon_Management" : {
-			"menuName" : "Coupon Management",
-			"functionName" : "loadCouponManagement",
-			"breadcrumb" : ["Customer Activation", "Coupon Management"]
+		"Activation_Rules" : {
+			"menuName" : "Activation Rules",
+			"functionName" : "loadActivationRules",
+			"breadcrumb" : ["Customer Activation", "Activation Rules"]
 		},
 		"Coupon_Report" : {
 			"menuName" : "Coupon Report",

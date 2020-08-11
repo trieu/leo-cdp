@@ -180,3 +180,5 @@ div.gridholder {
     border-radius: 10px;
     padding: 8px;
 }
+
+.CodeMirror { text-align: left!important; }

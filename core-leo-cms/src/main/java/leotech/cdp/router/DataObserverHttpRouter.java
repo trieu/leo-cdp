@@ -163,7 +163,6 @@ public class DataObserverHttpRouter extends BaseHttpRouter {
 			// click redirect for O2O synchronization
 			// E.g: https://domain/clr/5wbwf6yUxVBcr48AMbz9cb
 			else if (uri.startsWith(PREFIX_CLICK_REDIRECT)) {
-
 				String[] segments = uri.split("/");
 				String beacon = segments[segments.length - 1];
 

@@ -28,6 +28,9 @@ public abstract class EventMetric extends CdpPersistentObject {
 	protected String eventName;
 	
 	@Expose
+	protected long eventValue = 0;
+	
+	@Expose
 	protected String eventLabel;
 	
 	@Expose
@@ -78,6 +81,7 @@ public abstract class EventMetric extends CdpPersistentObject {
 			this.id = id(this.eventName);
 			this.createdAt = new Date();
 			this.dataType = FIRST_PARTY_DATA;
+			this.eventValue = 1;
 		} else {
 			throw new IllegalArgumentException(eventName + " must have the length less than 50 characters ");
 		}
@@ -138,5 +142,15 @@ public abstract class EventMetric extends CdpPersistentObject {
 	public void setDataType(int dataType) {
 		this.dataType = dataType;
 	}
+
+	public long getEventValue() {
+		return eventValue;
+	}
+
+	public void setEventValue(long eventValue) {
+		this.eventValue = eventValue;
+	}
+	
+	
 	
 }
