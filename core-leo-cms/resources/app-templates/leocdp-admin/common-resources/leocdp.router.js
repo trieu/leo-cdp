@@ -96,20 +96,20 @@ LeoCdpAdmin.navRouters = {
 		},
 		
 		// 2.6 Journey Map List, Report and Editor
-		"Customer_Journey_List" : {
-			"menuName" : "Customer Journey List",
-			"functionName" : "loadCustomerJourneyList",
-			"breadcrumb" : ["Customer Journey Hub", "Customer Journey List"]
+		"Journey_Map_List" : {
+			"menuName" : "Journey Map List",
+			"functionName" : "loadJourneyMapList",
+			"breadcrumb" : ["Customer Journey Hub", "Journey Map List"]
 		},
 		"Journey_Map_Report" : {
 			"menuName" : "Journey Map Report",
 			"functionName" : "loadJourneyMapReport",
-			"breadcrumb" : ["Customer Journey Hub", "Customer Journey List", "Journey Map Report"]
+			"breadcrumb" : ["Customer Journey Hub", "Journey Map List", "Journey Map Report"]
 		},
 		"Journey_Map_Studio" : {
 			"menuName" : "Journey Map Studio",
 			"functionName" : "loadJourneyMapStudio",
-			"breadcrumb" : ["Customer Journey Hub", "Customer Journey List","Journey Map Studio"]
+			"breadcrumb" : ["Customer Journey Hub", "Journey Map List","Journey Map Studio"]
 		},
 		
 		// 3.1 Content Dashboard
