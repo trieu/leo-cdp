@@ -2,13 +2,23 @@ package leotech.cdp.model.marketing;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 
 import com.google.gson.Gson;
 
-public class EmailMessage {
+import rfx.core.util.StringUtil;
 
-	String fromEmailAddress;
-	String toEmailAddress;
+public class EmailMessage {
+	
+	//EmailValidation https://blog.mailtrap.io/java-email-validation/
+	private static final String regex = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
+
+	String senderEmailAddress;
+	String receiverEmailAddress;
 	String profileName;
 	String profileId;
 	String subject;
@@ -17,8 +27,26 @@ public class EmailMessage {
 	
 	public EmailMessage(String fromEmailAddress, String toEmailAddress, String profileName, String profileId, String subject, String content) {
 		super();
-		this.fromEmailAddress = fromEmailAddress;
-		this.toEmailAddress = toEmailAddress;
+		
+		 //initialize the Pattern object
+	    Pattern pattern = Pattern.compile(regex);
+	    
+	    Matcher matcher1 = pattern.matcher(fromEmailAddress);
+	    if(! matcher1.matches()) {
+	    	throw new IllegalArgumentException(fromEmailAddress + " is INVALID email address ");
+	    }
+	    
+	    Matcher matcher2 = pattern.matcher(toEmailAddress);
+	    if(! matcher2.matches()) {
+	    	throw new IllegalArgumentException(toEmailAddress + " is INVALID email address ");
+	    }
+	    
+	    if(StringUtil.isEmpty(content)) {
+	    	throw new IllegalArgumentException(" EmailMessage.content must be empty string ");
+	    }
+	    
+		this.senderEmailAddress = fromEmailAddress;
+		this.receiverEmailAddress = toEmailAddress;
 		this.profileName = profileName;
 		this.profileId = profileId;
 		this.subject = subject;
@@ -30,26 +58,29 @@ public class EmailMessage {
 		return new Gson().toJson(this);
 	}
 
-
-	public String getFromEmailAddress() {
-		return fromEmailAddress;
+	public String getSenderEmailAddress() {
+		return senderEmailAddress;
+	}
+	
+	public InternetAddress getParsedSenderEmailAddress() throws AddressException {
+		return new InternetAddress(senderEmailAddress);
 	}
 
-
-	public void setFromEmailAddress(String fromEmailAddress) {
-		this.fromEmailAddress = fromEmailAddress;
+	public void setSenderEmailAddress(String senderEmailAddress) {
+		this.senderEmailAddress = senderEmailAddress;
 	}
 
-
-	public String getToEmailAddress() {
-		return toEmailAddress;
+	public String getReceiverEmailAddress() {
+		return receiverEmailAddress;
+	}
+	
+	public InternetAddress getParsedReceiverEmailAddress() throws AddressException {
+		return new InternetAddress(receiverEmailAddress);
 	}
 
-
-	public void setToEmailAddress(String toEmailAddress) {
-		this.toEmailAddress = toEmailAddress;
+	public void setReceiverEmailAddress(String receiverEmailAddress) {
+		this.receiverEmailAddress = receiverEmailAddress;
 	}
-
 
 	public String getProfileName() {
 		return profileName;
@@ -99,7 +130,6 @@ public class EmailMessage {
 	public void setAttachments(List<String> attachments) {
 		this.attachments = attachments;
 	}
-	
 	
 	
 	

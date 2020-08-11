@@ -1,0 +1,50 @@
+{
+	"map": 
+	{
+		"------------ System email SendGrid service channel ------------" : {"notes" : "Internal Email SendGrid for login account management and authorized user" },
+		"system_email_sendgrid_service":
+		{
+			"configs" : 
+			{
+				"apikey" : "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"
+			}
+		},
+		
+		"------------ Email Marketing SendGrid service channel ------------" : {"notes" : "Default SendGrid Service to contact customer via email" },
+		"marketing_email_sendgrid_service":
+		{
+			"configs" : 
+			{
+				"apikey" : "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"
+			}
+		},
+	
+		"------------ System email service channel ------------" : {"notes" : "Internal Email SMTP for login account management and authorized user" },
+		"system_email_smtp_service":
+		{
+			"configs" : 
+			{
+				"smtp_username" : "",
+				"smtp_password" : "",
+				"smtp_host": "",
+				"smtp_port": "465",
+				"smtp_auth": "true",
+				"smtp_starttls_enable": "true"
+			}
+		},
+		
+		"------------  Email Marketing service channel ------------" : {"notes" : "Default SMTP Server/Service to contact customer via email" },
+		"marketing_email_smtp_service":
+		{
+			"configs" : 
+			{
+				"smtp_username" : "",
+				"smtp_password" : "",
+				"smtp_host": "",
+				"smtp_port": "587",
+				"smtp_auth": "true",
+				"smtp_starttls_enable": "true"
+			}
+		}
+	}
+}

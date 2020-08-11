@@ -14,7 +14,9 @@ import io.rocketbase.mail.config.config.TbBoxConfig;
 import io.rocketbase.mail.config.config.TbBoxConfig.TbBoxDark;
 import io.rocketbase.mail.model.HtmlTextEmail;
 import leotech.cdp.model.marketing.EmailMessage;
+import leotech.system.util.email.EmailSender;
 import rfx.core.util.FileUtils;
+import rfx.core.util.Utils;
 
 public class EmailTemplateTest {
 	
@@ -34,8 +36,12 @@ public class EmailTemplateTest {
 		File file = new File("/Users/mac/projects/leo-cms-framework/core-leo-cms/BUILD-OUTPUT/testemail.html");
 		file.createNewFile();
 		FileUtils.writeStringToFile(file.getAbsolutePath(),content);
-		TestEmail.sendEmail(new EmailMessage("contact@uspa.tech", "tantrieuf31@gmail.com", "Trieu", "121", "Leo CDP with tracking", content));
-		System.out.println("Done sendEmail");
+		EmailMessage messageModel = new EmailMessage("support@leocdp.com", "tantrieuf31.database@gmail.com", "Trieu", "121", "Leo CDP test", content);
+		EmailSender.sendToSendGridServer(messageModel, true);
+		Utils.sleep(3000);
+//		EmailSender.flushMessageQueue();
+//		
+//		Utils.sleep(10000);
 	}
 	
 	static String getHtmlMailWithProduct() throws IOException {
