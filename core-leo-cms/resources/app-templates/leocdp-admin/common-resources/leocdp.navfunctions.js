@@ -48,14 +48,14 @@ LeoCdpAdmin.navFunctions.loadCustomerTouchpointList = function(breadcrumbHtml) {
     });
 }
 
-LeoCdpAdmin.navFunctions.loadMediaChannelList = function(breadcrumbHtml) {
-	LeoCdpAdmin.loadView('/view/modules/journey/media-channel-list.html?admin=1', pageDomSelector, function () {
+LeoCdpAdmin.navFunctions.loadMediaJourneyMap = function(breadcrumbHtml) {
+	LeoCdpAdmin.loadView('/view/modules/journey/media-journey-map.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
-    	initMediaChannelList();
+    	initMediaJourneyMap();
     });
 }
 
-LeoCdpAdmin.navFunctions.loadBehavioralEventList = function(breadcrumbHtml) {
+LeoCdpAdmin.navFunctions.loadBehavioralEventMetrics = function(breadcrumbHtml) {
 	LeoCdpAdmin.loadView('/view/modules/journey/behavioral-event-list.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
     	initBehavioralEventList();

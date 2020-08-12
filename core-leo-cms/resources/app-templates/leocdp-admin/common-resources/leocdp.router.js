@@ -38,20 +38,20 @@ LeoCdpAdmin.navRouters = {
 		},
 		
 		// 2.2 Media Channel 
-		"Media_Channel_List" : {
-			"menuName" : "Media Channel List",
-			"functionName" : "loadMediaChannelList",
-			"breadcrumb" : ["Customer Journey Hub", "Media Channel List"]
+		"Media_Journey_Map" : {
+			"menuName" : "Media Journey Map",
+			"functionName" : "loadMediaJourneyMap",
+			"breadcrumb" : ["Customer Journey Hub", "Media Journey Map"]
 		},
 		"Media_Channel_Report" : {
 			"menuName" : "Media Channel Report",
 			"functionName" : "loadMediaChannelReport",
-			"breadcrumb" : ["Customer Journey Hub", "Media Channel List" , "Media Channel Report" ]
+			"breadcrumb" : ["Customer Journey Hub", "Media Journey Map" , "Media Channel Report" ]
 		},
 		"Media_Channel_Editor" : {
 			"menuName" : "Media Channel Editor",
 			"functionName" : "loadMediaChannelEditor",
-			"breadcrumb" : ["Customer Journey Hub", "Media Channel List" , "Media Channel Editor" ]
+			"breadcrumb" : ["Customer Journey Hub", "Media Journey Map" , "Media Channel Editor" ]
 		},
 		
 		// 2.3 Customer Touchpoint
@@ -72,10 +72,10 @@ LeoCdpAdmin.navRouters = {
 		},
 		
 		// 2.4 Event Metrics for Media Channel and Touchpoint
-		"Behavioral_Event_List" : {
-			"menuName" : "Behavioral Event List",
-			"functionName" : "loadBehavioralEventList",
-			"breadcrumb" : ["Customer Journey Hub", "Behavioral Event List"]
+		"Behavioral_Event_Metrics" : {
+			"menuName" : "Behavioral Event Metrics",
+			"functionName" : "loadBehavioralEventMetrics",
+			"breadcrumb" : ["Customer Journey Hub", "Behavioral Event Metrics"]
 		},
 		
 		// 2.5 Data Observer for touchpoint and media channel

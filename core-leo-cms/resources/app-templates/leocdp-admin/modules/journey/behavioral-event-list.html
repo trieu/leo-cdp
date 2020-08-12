@@ -1,8 +1,12 @@
 <div class="container-fluid">
 
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-10">
             <h4 class="page-header" id="page_breadcrumb" > </h4>
+        </div>
+        <div class="col-lg-2 text-center" style="padding: 10px">
+        	<button type="button" class="btn btn-success" onclick="" > Save </button>
+        	<button type="button" class="btn btn-secondary" onclick="" > Cancel </button>
         </div>
     </div>
 
@@ -10,7 +14,7 @@
   		<div class="row col-lg-12 text-center">
   			<div class="col-md-2"></div>
   			<div class="col-md-4">
-                 <h4 class="chart_header text-center" >Event Funnel</h4>
+                 <h4 class="chart_header text-center" >Event Funnel Metrics</h4>
 	           	 <div class="summary_metric">
 	               <div class="vcenter">
 	                  <div id="event_funnel"></div>
@@ -18,14 +22,13 @@
 	           	</div>
              </div>
              <div class="col-md-4 ">
-                 <h4 class="chart_header text-center" >Customer Funnel</h4>
+                 <h4 class="chart_header text-center" >Customer Funnel Metrics</h4>
                  <div id="profile_funnel"></div>
              </div>
              <div class="col-md-2"></div>
         </div>
         
         <div class="col-lg-12">
-        	<br>
             <div class="table-responsive">
                 <div id="behavioral_metrics_table"></div>
             </div>
@@ -100,7 +103,7 @@ var initBehavioralEventList = initBehavioralEventList || function(){
 		 
 		 $("#behavioral_metrics_table").jsGrid({
 		    width: "100%",
-		    height: "360px",
+		    height: "auto",
 
 		    inserting: true,
 		    editing: true,

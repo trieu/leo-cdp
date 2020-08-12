@@ -1,0 +1,227 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-10">
+            <h4 class="page-header" id="page_breadcrumb" > </h4>
+        </div>
+        <div class="col-lg-2 text-center" style="padding: 10px">
+        	<button type="button" class="btn btn-success" onclick="" > Save </button>
+        	<button type="button" class="btn btn-secondary" onclick="" > Cancel </button>
+        </div>
+    </div>
+
+    <div class="row gridholder" >
+        <div class="col-lg-12">
+        	<div class="row">
+		       	 	<div id="journeyFlowChart" class="experience_journey_flow" style="height:420px;"></div>
+		    </div>
+            <div class="table-responsive">
+                <div id="media_channels_table"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    var initMediaJourneyMap = initMediaJourneyMap || function() {
+    	LeoAdminApiUtil.getSecuredData('/cdp/funnels-and-event-metrics',{"funnelTypes":"event_retail,customer_retail"}, function(json){ 
+	   		 //console.log(json.data);	
+	   		 var eventFunnelStages = json.data['event_retail'];
+	   		 var customerFunnelStages = json.data['customer_retail'];
+	   		 var behavioralMetricsData = json.data['behavioral_metrics'];
+	   		 
+	   		 $("#media_channels_table").jsGrid({
+	   		    width: "100%",
+	   		    height: "auto",
+	
+	   		    inserting: true,
+	   		    editing: true,
+	   		    sorting: true,
+	   		    paging: false,
+	   		    
+	   		    deleteConfirm: function(item) {
+	   	            return "The event \"" + item.eventName + "\" will be removed. Are you sure?";
+	   	        },
+	
+	   		    data: behavioralMetricsData,
+	   		    
+	   		    onItemInserting: function(args) {
+	   		    	//console.log(args.item)
+	   		    	
+	   		    	// TODO Ajax submit data to backend here
+	   		    	setTimeout(function(){
+	   		    		args.item.id = "";
+	   		    		//console.log(behavioralMetricsData)
+	   		    	},1000);
+	   		    	
+	   		    },      
+	   		    onItemInserted: function(args) {
+	   		    	//console.log(args.item)
+	   		    	//console.log(behavioralMetricsData)
+	   		    }, 
+	   		    onItemDeleting: function(args) {
+	   		        console.log(args.item)
+	   		    },
+	
+	   		    fields: [
+	   		        { name: "eventName", title : "Behavioral Event Metric", type: "text", validate: "required" },
+	   		        { name: "score", title : "Score", type: "number",  width: 40, validate: "required" },
+	   		        { name: "eventFunnelStageId", title : "Event Funnel Stage", type: "select", items: eventFunnelStages, valueField: "id", textField: "name" },
+	   		        { name: "customerFunnelStageId", title : "Customer Funnel Stage", type: "select", items: customerFunnelStages, valueField: "id", textField: "name" },
+	   		        { type: "control" , width: 50}
+	   		    ]
+	   		});  
+	   	});
+        
+        renderJourneyFlowChart()
+    }    
+    
+    function renderJourneyFlowChart() {
+        var metricName = 'Reach'
+        var journeyStages = ['Google Search', 'Facebook Group', 'YouTube channel', 'E-commerce Website', 'E-commerce Mobile App','Email khách hàng (CRM)','Số điện thoại khách hàng (CRM)','Cửa hàng bán lẻ','Shopping Mall']
+        var journeyStageMetrics = { 'Mua hàng' : 'đơn hàng' }
+
+        var configSankey = {
+            margin: {
+                top: 10,
+                left: 10,
+                right: 10,
+                bottom: 10
+            },
+            nodes: {
+                dynamicSizeFontNode: {
+                    enabled: true,
+                    minSize: 14,
+                    maxSize: 30
+                },
+                fontSize: 14, // if dynamicSizeFontNode not enabled
+                draggableX: false, // default [ false ]
+                draggableY: true, // default [ true ]
+                colors: d3.scaleOrdinal(d3.schemeCategory10)
+            },
+            links: {
+                formatValue: function (name, val) {
+                    //console.log('formatValue ' + name)
+                    var label = journeyStageMetrics[name] ? journeyStageMetrics[name] : metricName
+                    return d3.format(",.0f")(val) + ' ' + label;
+                },
+                unit: metricName // if not set formatValue function
+            },
+            tooltip: {
+                infoDiv: true, // if false display default tooltip
+                labelSource: 'Input:',
+                labelTarget: 'Output:'
+            }
+        }
+        var datajson = {
+            nodes: [
+                {
+                    id: 0,
+                    name: "Google Search"
+                }, {
+                    id: 1,
+                    name: "Facebook Group"
+                }, {
+                    id: 2,
+                    name: "YouTube channel",
+
+                }, {
+                    id: 3,
+                    name: "E-commerce Website",
+                }, {
+                    id: 4,
+                    name: "E-commerce Mobile App"
+                }, {
+                    id: 5,
+                    name: "Email Marketing"
+                }, {
+                    id: 6,
+                    name: "Push Notification Marketing"
+                }, {
+                    id: 7,
+                    name: "Retail Store"
+                }, {
+                    id: 8,
+                    name: "Shopping Mall"
+                } , {
+                    id: 9,
+                    name: "Purchase"
+                }
+                ],
+            links: [
+                {
+                    source: 0,
+                    target: 3,
+                    value: 1
+                },
+                {
+                    source: 1,
+                    target: 3,
+                    value: 1
+                }, {
+                    source: 2,
+                    target: 3,
+                    value: 1
+                }, {
+                    source: 0,
+                    target: 4,
+                    value: 1
+                },
+                {
+                    source: 1,
+                    target: 4,
+                    value: 1
+                }, {
+                    source: 0,
+                    target: 2,
+                    value: 1
+                } , {
+                    source: 2,
+                    target: 7,
+                    value: 1
+                }  , {
+                    source: 5,
+                    target: 4,
+                    value: 1
+                }
+                , {
+                    source: 6,
+                    target: 4,
+                    value: 1
+                }
+                , {
+                    source: 2,
+                    target: 7,
+                    value: 1
+                } , {
+                    source: 2,
+                    target: 8,
+                    value: 1
+                } , {
+                    source: 8,
+                    target: 9,
+                    value: 1
+                } , {
+                    source: 4,
+                    target: 9,
+                    value: 1
+                }  , {
+                    source: 3,
+                    target: 9,
+                    value: 1
+                }  , {
+                    source: 7,
+                    target: 9,
+                    value: 1
+                } , {
+                    source: 7,
+                    target: 4,
+                    value: 1
+                }
+                ]
+        };
+
+        var objSankey = sk.createSankey('#journeyFlowChart', configSankey, datajson);
+    }
+</script>
