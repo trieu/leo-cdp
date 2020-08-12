@@ -18,9 +18,11 @@ import leotech.cdp.model.customer.Profile;
 import leotech.cdp.model.customer.Segment;
 import leotech.cdp.model.customer.TrackingEvent;
 import leotech.cdp.model.customer.UserDevice;
+import leotech.cdp.model.marketing.BehavioralEventMetric;
 import leotech.cdp.model.marketing.Campaign;
 import leotech.cdp.model.marketing.Creative;
 import leotech.cdp.model.marketing.EventTrigger;
+import leotech.cdp.model.marketing.MediaChannel;
 import leotech.cdp.model.marketing.Touchpoint;
 import leotech.cms.dao.CategoryDaoUtil;
 import leotech.cms.dao.PageDaoUtil;
@@ -48,7 +50,9 @@ public class SetupNewDatabase {
 		// Business Data Hub
 		businessDataHubCollections.add(ProductItem.COLLECTION_NAME);
 		businessDataHubCollections.add(Touchpoint.COLLECTION_NAME);
+		businessDataHubCollections.add(MediaChannel.COLLECTION_NAME);
 		businessDataHubCollections.add(DataObserver.COLLECTION_NAME);
+		businessDataHubCollections.add(BehavioralEventMetric.COLLECTION_NAME);
 
 		// Content Data Hub
 		contentDataHubCollections.add(AppMetadata.COLLECTION_NAME);

@@ -23,13 +23,13 @@ import rfx.core.util.StringUtil;
  */
 public class Touchpoint extends MediaChannel {
 
-	public static final String COLLECTION_NAME = COLLECTION_PREFIX + Touchpoint.class.getSimpleName().toLowerCase();
+	public static final String COLLECTION_NAME = getCollectionName(Touchpoint.class);
 	static ArangoCollection instance;
 
 	@Override
 	public ArangoCollection getCollection() {
 		if (instance == null) {
-			ArangoDatabase arangoDatabase = cdpDbInstance();
+			ArangoDatabase arangoDatabase = getDatabaseInstance();
 
 			instance = arangoDatabase.collection(COLLECTION_NAME);
 

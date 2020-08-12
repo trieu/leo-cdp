@@ -66,7 +66,7 @@ public class Campaign extends CdpPersistentObject implements Comparable<Campaign
 	@Override
 	public ArangoCollection getCollection() {
 		if (dbCollection == null) {
-			ArangoDatabase arangoDatabase = cdpDbInstance();
+			ArangoDatabase arangoDatabase = getDatabaseInstance();
 
 			dbCollection = arangoDatabase.collection(COLLECTION_NAME);
 

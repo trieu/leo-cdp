@@ -49,7 +49,7 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment>{
     @Override
     public ArangoCollection getCollection() {
 	if (instance == null) {
-	    ArangoDatabase arangoDatabase = cdpDbInstance();
+	    ArangoDatabase arangoDatabase = getDatabaseInstance();
 
 	    instance = arangoDatabase.collection(COLLECTION_NAME);
 

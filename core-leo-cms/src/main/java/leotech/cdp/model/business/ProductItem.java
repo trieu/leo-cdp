@@ -69,7 +69,7 @@ public class ProductItem extends CdpPersistentObject implements Serializable {
 	@Override
 	public ArangoCollection getCollection() {
 		if (instance == null) {
-			ArangoDatabase arangoDatabase = cdpDbInstance();
+			ArangoDatabase arangoDatabase = getDatabaseInstance();
 
 			instance = arangoDatabase.collection(COLLECTION_NAME);
 

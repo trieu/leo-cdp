@@ -24,7 +24,7 @@ public class EventTrigger extends EventMetric {
 	@Override
 	public ArangoCollection getCollection() {
 		if (instance == null) {
-			ArangoDatabase arangoDatabase = cdpDbInstance();
+			ArangoDatabase arangoDatabase = getDatabaseInstance();
 
 			instance = arangoDatabase.collection(COLLECTION_NAME);
 

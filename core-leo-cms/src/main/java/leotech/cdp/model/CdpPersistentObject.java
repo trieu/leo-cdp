@@ -26,7 +26,7 @@ public abstract class CdpPersistentObject implements PersistentArangoObject {
 		return COLLECTION_PREFIX + childClass.getSimpleName().toLowerCase();
 	}
 	
-	public static final ArangoDatabase cdpDbInstance() {
+	public static final ArangoDatabase getDatabaseInstance() {
 		return BaseLeoCdpDao.getCdpDbInstance();
 	}
 }

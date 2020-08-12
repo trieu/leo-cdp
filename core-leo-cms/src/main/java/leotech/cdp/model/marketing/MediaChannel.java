@@ -25,7 +25,7 @@ public class MediaChannel extends CdpPersistentObject {
 	@Override
 	public ArangoCollection getCollection() {
 		if (instance == null) {
-			ArangoDatabase arangoDatabase = cdpDbInstance();
+			ArangoDatabase arangoDatabase = getDatabaseInstance();
 
 			instance = arangoDatabase.collection(COLLECTION_NAME);
 
@@ -34,10 +34,8 @@ public class MediaChannel extends CdpPersistentObject {
 			instance.ensurePersistentIndex(Arrays.asList("url"), new PersistentIndexOptions().unique(false));
 			instance.ensurePersistentIndex(Arrays.asList("type"), new PersistentIndexOptions().unique(false));
 
-			instance.ensurePersistentIndex(Arrays.asList("countryCode"),
-					new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("locationCode"),
-					new PersistentIndexOptions().unique(false));
+			instance.ensurePersistentIndex(Arrays.asList("countryCode"),new PersistentIndexOptions().unique(false));
+			instance.ensurePersistentIndex(Arrays.asList("locationCode"),new PersistentIndexOptions().unique(false));
 			instance.ensureGeoIndex(Arrays.asList("latitude", "longitude"), new GeoIndexOptions());
 			instance.ensureHashIndex(Arrays.asList("keywords[*]"), new HashIndexOptions());
 		}

@@ -33,7 +33,7 @@ public class BehavioralEventMetric extends EventMetric {
 	@Override
 	public ArangoCollection getCollection() {
 		if (dbCollection == null) {
-			ArangoDatabase arangoDatabase = cdpDbInstance();
+			ArangoDatabase arangoDatabase = getDatabaseInstance();
 
 			dbCollection = arangoDatabase.collection(COLLECTION_NAME);
 
