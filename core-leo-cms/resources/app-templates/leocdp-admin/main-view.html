@@ -41,15 +41,27 @@
 	<!-- Sidebar Menu Items -->
 	<div id="main-navbar" class="collapse navbar-collapse navbar-ex1-collapse">
 		<ul class="nav navbar-nav side-nav">
+			
+			<!-- 0 - Knowledge is everything -->
+			<li id="uspa_knowledge_hub" style="display: ;" >
+				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#uspa_knowledge_hub_menu"> <i class="fa fa-graduation-cap"></i>
+				 	USPA Knowledge Hub <i id="uspa_knowledge_hub_collapse_icon" class="fa fa-fw fa-caret-down"> </i>
+				</a>
+				<ul id="uspa_knowledge_hub_menu" class="collapse in" aria-expanded="true">
+					<li>
+						<a href="#calljs-leoCdpRouter('self_learning_courses')"> <i class="fa fa-list-ul" aria-hidden="true"></i> Self-Learning Courses </a>
+					</li>
+				</ul>
+			</li>
 		
-			<!--  1 - Start with the goals and dashboard of key vision Menu  -->
+			<!--  1 - Start with KPI metric goals and the dashboard   -->
 			<li id="nav_analytics_hub" style="display: ;" >
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#analytics_hub_menu"> <i class="fa fa-fw fa-line-chart"></i>
 				 	Unified Analytics Hub <i id="data_analytics_hub_collapse_icon" class="fa fa-fw fa-caret-down"> </i>
 				</a>
 				<ul id="analytics_hub_menu" class="collapse in" aria-expanded="true">
 					<li>
-						<a href="#calljs-leoCdpRouter('Primary_Dashboard')"> <i class="fa fa-fw fa-pie-chart"></i>  Primary Dashboard </a>
+						<a href="#calljs-leoCdpRouter('Primary_Dashboard')"> <i class="fa fa-fw  fa-bar-chart"></i>  Primary Dashboard </a>
 					</li>
 					<li>
 						<a href="#calljs-leoCdpRouter('Analytics_360_Notebooks')"> <i class="fa fa-fw fa-book"></i> Analytics 360 Notebooks</a>
@@ -57,7 +69,7 @@
 				</ul>
 			</li>
 		
-			<!--  2 - Customer Journey Map Menu  -->
+			<!--  2 - Customer Journey Map   -->
 			<li id="nav_journey_hub" style="display: ;" >
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#journey_hub_menu"> <i class="fa fa-fw fa-map-o"></i>
 				 	Customer Journey Hub<i id="journey_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
@@ -69,7 +81,7 @@
 						<a href="#calljs-leoCdpRouter('Customer_Persona_List')"> <i class="fa fa-fw fa-users"></i> Customer Persona List</a>
 					</li>
 					
-					<li>
+					<li style="display: none;" >
 						<a href="#calljs-leoCdpRouter('Journey_Map_List')"> <i class="fa fa-fw fa-map-o"></i> Journey Map List</a>
 					</li>
 					
@@ -349,6 +361,15 @@
 	}
 	
 	function navigationSetup(){
+		
+		
+		// knowledge menu
+		$("#uspa_knowledge_hub_menu").on("hide.bs.collapse", function(){
+        	$("#uspa_knowledge_hub_collapse_icon").attr('class','fa fa-fw fa-caret-left');
+        });
+        $("#uspa_knowledge_hub_menu").on("show.bs.collapse", function(){
+        	$("#uspa_knowledge_hub_collapse_icon").attr('class','fa fa-fw fa-caret-down');
+        });
 		
 		// analytics menu
 		$("#analytics_hub_menu").on("hide.bs.collapse", function(){

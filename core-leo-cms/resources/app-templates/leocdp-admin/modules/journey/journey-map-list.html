@@ -1,3 +1,33 @@
+<style>
+#key_business_action {
+	background-color: #c9cad4;
+	height: 28px;
+}
+pre.mermaid > textarea {
+    -webkit-font-smoothing: initial;
+    border-radius: 2px;
+    color: #525252;
+    display: block;
+    font-family: Roboto Mono,Monaco,courier,monospace;
+    font-size: 1.4rem;
+    line-height: inherit;
+    margin: 0 2px;
+    max-width: inherit;
+    width: 100%;
+    height: 280px;
+    overflow: inherit;
+    padding: 1.2em 5px;
+    white-space: inherit;
+}
+
+#journey_map_name {
+	margin: 25px;
+	font-size: 20px !important;
+}
+#customerJourneyDiv .label {
+font-size: 18px !important;
+}
+</style>
 <div class="container-fluid">
 
     <div class="row">
@@ -8,7 +38,23 @@
 
     <div class="row" >
   		<div class="row col-lg-12 text-center">
-  			
+  		<div id="customerJourneyDiv" class="experience_journey_flow row" ></div>
+  			 <pre class="mermaid" >
+			<textarea id="customer_flow_code" >
+journey
+    title from Visitor to Identified Person
+    section Visitor
+    	E-commerce Website:1: Customer
+      	E-commerce Mobile App:4: Customer
+      	Cửa hàng bán lẻ:5: Customer
+      	Đường sách : 5: Customer
+    section Identified Person
+      	Website - Customer Support:3: Customer
+      	Mobile App - Customer Support:4: Customer
+      	Social Media Fan Page:4: Customer
+      	Social Group:5: Customer
+			</textarea>
+	   	</pre>
         </div>
         
         <div class="col-lg-12">
@@ -24,7 +70,18 @@
 <script>
 var initJourneyMapList = initJourneyMapList || function(){
 	
-	
+	 function renderCustomerJourney(){
+	        // Example of using the API
+	        var placeholderSelector = "#customerJourneyDiv";
+	        var graphDefinition = $('#customer_flow_code').val().trim();
+	        $(placeholderSelector).find('div').remove();
+	      	
+	        var gid = "customer_graph_"+ new Date().getTime(); 
+	        graph = mermaid.mermaidAPI.render(gid, graphDefinition, function(svgCode, bindFunctions){
+	        	document.querySelector(placeholderSelector).innerHTML = '<div>'+svgCode+"</div>";
+	        });
+	    }
+	 renderCustomerJourney()
 	
     var eventDataTypes = [
         { name: "First-party Data", id: 1 },
