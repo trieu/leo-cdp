@@ -98,7 +98,7 @@ public class MediaChannel extends CdpPersistentObject {
 		this.isOwnedMedia = isOwnedMedia;
 		this.url = url;
 		
-		this.id = id(name + type + isOwnedMedia + url);
+		this.id = id(name);
 		this.createdAt = new Date();
 		this.isRootNode = true;
 	}
@@ -249,7 +249,7 @@ public class MediaChannel extends CdpPersistentObject {
 	
 	@Override
 	public int hashCode() {
-		return this.url.hashCode();
+		return this.name.hashCode();
 	}
 
 	@Override

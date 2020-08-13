@@ -4,6 +4,7 @@ import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 import leotech.cdp.admin.handler.CdpFunnelHandler;
+import leotech.cdp.admin.handler.CdpJourneyMapHandler;
 import leotech.cdp.admin.handler.CdpProfileHandler;
 import leotech.cms.handler.admin.AdminCategoryHandler;
 import leotech.cms.handler.admin.CmsPageHandler;
@@ -51,6 +52,9 @@ public class AdminApiRouter extends BaseApiRouter {
 			else if (uri.startsWith(CDP_FUNNEL_PREFIX)) {
 				payload = new CdpFunnelHandler().httpPostApiHandler(userSession, uri, paramJson);
 			}
+			else if(uri.startsWith(CDP_JOURNEY_MAP_PREFIX)) {
+				payload = new CdpJourneyMapHandler().httpPostApiHandler(userSession, uri, paramJson);
+			}
 			//
 			else if (uri.startsWith(CMS_CATEGORY_PREFIX)) {
 				payload = new AdminCategoryHandler().httpPostApiHandler(userSession, uri, paramJson);
@@ -93,8 +97,13 @@ public class AdminApiRouter extends BaseApiRouter {
 			else if (uri.startsWith(CDP_PROFILE_PREFIX)) {
 				payload = new CdpProfileHandler().httpGetApiHandler(userSession, uri, params);
 			}
+			//
 			else if (uri.startsWith(CDP_FUNNEL_PREFIX)) {
 				payload = new CdpFunnelHandler().httpGetApiHandler(userSession, uri, params);
+			}
+			//
+			else if(uri.startsWith(CDP_JOURNEY_MAP_PREFIX)) {
+				payload = new CdpJourneyMapHandler().httpGetApiHandler(userSession, uri, params);
 			}
 			//
 			else if (uri.startsWith(CMS_CATEGORY_PREFIX)) {

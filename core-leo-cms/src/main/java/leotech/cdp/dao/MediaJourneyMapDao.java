@@ -13,27 +13,30 @@ public class MediaJourneyMapDao {
 
 	public static MediaJourneyMap getDefaultMap() {
 		
-		MediaChannel google = new MediaChannel("Google", MediaChannelType.WEBSITE, false, "https://google.com");
-		MediaChannel facebook = new MediaChannel("Facebook Page", MediaChannelType.SOCIAL_MEDIA_PLATFORM, false, "https://www.facebook.com/");
-		MediaChannel emailMarketing = new MediaChannel("Email Marketing", MediaChannelType.EMAIl_CONTACT, true, "mailto:");
-		MediaChannel bookVideoHub = new MediaChannel("Book Review Video Hub", MediaChannelType.WEBSITE, true, "https://bookstore.bigdatavietnam.org/");
-		MediaChannel bookEcommerce = new MediaChannel("Book E-commerce", MediaChannelType.ECOMMERCE_PLATFORM, true, "http://demo.ecommerce.com/");
+		MediaChannel google = new MediaChannel("Google - Search Engine", MediaChannelType.WEBSITE, false, "https://google.com");
+		MediaChannel facebook = new MediaChannel("Facebook - Social Media", MediaChannelType.SOCIAL_MEDIA_PLATFORM, false, "https://www.facebook.com/");
+		MediaChannel affiliate = new MediaChannel("Affiliate Marketing", MediaChannelType.WEB_URL, false, "http://xemgiday.com/");
+		MediaChannel emailMarketing = new MediaChannel("Email Marketing", MediaChannelType.EMAIl_CONTACT, true, "mailto:support@bigdatavietnam.org");
+		MediaChannel videoHub = new MediaChannel("Video Content Hub", MediaChannelType.WEBSITE, true, "https://bookstore.bigdatavietnam.org/");
+		MediaChannel ecommerce = new MediaChannel("E-commerce", MediaChannelType.ECOMMERCE_PLATFORM, true, "http://demo.ecommerce.com/");
 		
 		Map<MediaChannel,Integer> mediaChannels = new HashMap<>();
 		mediaChannels.put(google,0);
 		mediaChannels.put(facebook,1 );
-		mediaChannels.put(emailMarketing, 2);
-		mediaChannels.put(bookVideoHub, 3);
-		mediaChannels.put(bookEcommerce, 4);
+		mediaChannels.put(affiliate,2 );
+		mediaChannels.put(emailMarketing, 3);
+		mediaChannels.put(videoHub, 4);
+		mediaChannels.put(ecommerce, 5);
 		
-		
-		Map<String,String> journeyStageMetrics = ImmutableMap.of("Book E-commerce", "Buy");
+		Map<String,String> journeyStageMetrics = ImmutableMap.of("E-commerce", "Buy");
 		MediaJourneyMap map = new MediaJourneyMap(mediaChannels, journeyStageMetrics);
-		map.addJourneyLink(google, bookVideoHub , 1);
-		map.addJourneyLink(google, bookEcommerce, 1);
-		map.addJourneyLink(facebook, bookVideoHub, 1);
-		map.addJourneyLink(facebook, bookEcommerce, 1);
-		map.addJourneyLink(bookVideoHub, bookEcommerce, 1);
+		map.addJourneyLink(google, videoHub , 1);
+		map.addJourneyLink(google, ecommerce, 1);
+		map.addJourneyLink(affiliate, ecommerce, 1);
+		map.addJourneyLink(affiliate, videoHub, 1);
+		map.addJourneyLink(facebook, videoHub, 1);
+		map.addJourneyLink(facebook, ecommerce, 1);
+		map.addJourneyLink(videoHub, ecommerce, 1);
 		return map;
 	}
 	

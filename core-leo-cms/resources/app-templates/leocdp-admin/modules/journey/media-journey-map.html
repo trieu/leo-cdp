@@ -25,8 +25,9 @@
 
 <script>
     var initMediaJourneyMap = initMediaJourneyMap || function() {
-    	LeoAdminApiUtil.getSecuredData('/cdp/funnels-and-event-metrics',{"funnelTypes":"event_retail,customer_retail"}, function(json){ 
-	   		 //console.log(json.data);	
+    	LeoAdminApiUtil.getSecuredData('/cdp/journeymap/get', { "id" : "" }, function(json){ 
+	   		 console.log(json.data);	
+	   		 return;
 	   		 var eventFunnelStages = json.data['event_retail'];
 	   		 var customerFunnelStages = json.data['customer_retail'];
 	   		 var behavioralMetricsData = json.data['behavioral_metrics'];
@@ -77,13 +78,17 @@
 	   		    ]
 	   		});  
 	   	});
-        renderJourneyFlowChart()
+        //renderJourneyFlowChart()
     }    
     
-    function renderJourneyFlowChart() {
+    function renderJourneyFlowChart(metricName, journeyStages, journeyStageMetrics, mediaChannelMap, journeyLinks) {
         var metricName = 'Reach'
         var journeyStages = ['Google Search', 'Facebook Group', 'YouTube channel']
-        var journeyStageMetrics = { 'Google Search' : 'pageview' }
+        var journeyStageMetrics = { 'Google Search' : 'pageview' };
+        var journeyNodes = [{
+            id: 0,
+            name: "Google Search"
+        }];
 
         var configSankey = {
             margin: {
@@ -117,38 +122,10 @@
                 labelTarget: 'Output:'
             }
         }
-        var datajson = {
-            nodes: [
-                {
-                    id: 0,
-                    name: "Google Search"
-                }, {
-                    id: 1,
-                    name: "Facebook Group"
-                }, {
-                    id: 2,
-                    name: "YouTube channel",
 
-                }
-                ],
-            links: [
-                {
-                    source: 0,
-                    target: 2,
-                    value: 1
-                },
-                {
-                    source: 0,
-                    target: 1,
-                    value: 1
-                }, {
-                    source: 1,
-                    target: 2,
-                    value: 1
-                }
-             ]
-        };
-
-        var objSankey = sk.createSankey('#journeyFlowChart', configSankey, datajson);
+        var objSankey = sk.createSankey('#journeyFlowChart', configSankey, {
+            nodes: journeyNodes,
+            links: journeyLinks
+        });
     }
 </script>
