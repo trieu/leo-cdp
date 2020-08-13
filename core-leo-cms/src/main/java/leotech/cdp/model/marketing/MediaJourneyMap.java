@@ -2,6 +2,7 @@ package leotech.cdp.model.marketing;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +50,46 @@ public class MediaJourneyMap extends CdpPersistentObject {
 	@Override
 	public boolean isReadyForSave() {
 		return StringUtil.isNotEmpty(this.name) && this.journeyStages.size() > 0 && mediaChannelMap != null;
+	}
+	
+	public static final class Node implements Comparable<Node> {
+		int id;
+		String name;
+		
+		public Node() {
+			// TODO Auto-generated constructor stub
+		}
+		
+		public Node(int id, String name) {
+			super();
+			this.id = id;
+			this.name = name;
+		}
+		
+		public int getId() {
+			return id;
+		}
+		public void setId(int id) {
+			this.id = id;
+		}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		@Override
+		public int compareTo(Node o) {
+			if(this.id > o.getId()) {
+				return 1;
+			}
+			else if(this.id < o.getId()) {
+				return -1;
+			}
+			return 0;
+		}
+		
 	}
 	
 	public static final class LinkNode {
@@ -113,7 +154,10 @@ public class MediaJourneyMap extends CdpPersistentObject {
 	protected Map<String,String> journeyStageMetrics = new HashMap<>(); // map of journey name => metric name
 	
 	@Expose
-	protected List<LinkNode> journeyLinks = new ArrayList<MediaJourneyMap.LinkNode>(); // list of ordered nodes for journey map visualization in JS 
+	protected List<Node> journeyNodes = new ArrayList<MediaJourneyMap.Node>(); // list of ordered nodes for journey map visualization in JS 
+	
+	@Expose
+	protected List<LinkNode> journeyLinks = new ArrayList<MediaJourneyMap.LinkNode>(); // list of node connections for journey map visualization in JS 
 	
 	@Expose
 	protected Map<MediaChannel,Integer> mediaChannelMap; // list of ordered nodes for data persistence with reversed indexing
@@ -127,8 +171,12 @@ public class MediaJourneyMap extends CdpPersistentObject {
 		this.mediaChannelMap = mediaChannelMap;
 		Set<MediaChannel> keys = mediaChannelMap.keySet();
 		for (MediaChannel mediaChannel : keys) {
-			journeyStages.add(mediaChannel.getName());
+			int index = mediaChannelMap.get(mediaChannel);
+			String nodeName = mediaChannel.getName();
+			journeyStages.add(nodeName);
+			journeyNodes.add(new Node(index, nodeName));
 		}
+		Collections.sort(journeyNodes);
 		this.journeyStageMetrics = journeyStageMetrics;
 	}
 

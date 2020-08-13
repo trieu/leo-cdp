@@ -26,21 +26,36 @@
 <script>
     var initMediaJourneyMap = initMediaJourneyMap || function() {
     	LeoAdminApiUtil.getSecuredData('/cdp/journeymap/get', { "id" : "" }, function(json){ 
-	   		 console.log(json.data);	
-	   		 return;
-	   		 var eventFunnelStages = json.data['event_retail'];
-	   		 var customerFunnelStages = json.data['customer_retail'];
-	   		 var behavioralMetricsData = json.data['behavioral_metrics'];
-	   		 var positiveNumbers = [];
-	   		 for(var i = 0; i< 100; i++){
-	   			positiveNumbers[i] = i;
-	   		 }
+	   		
 	   		 
+	   		var domSelector = '#journeyFlowChart';
+	   		var defaultMetricName = json.data.defaultMetricName;
+	   		var journeyStageMetrics = json.data.journeyStageMetrics;
+	   		var journeyStages = json.data.journeyStages;
+	   		var journeyLinks = json.data.journeyLinks;
+	   		var journeyNodes =  json.data.journeyNodes;
+	   		
+	   		renderJourneyFlowChart(domSelector, defaultMetricName, journeyStages, journeyStageMetrics, journeyNodes, journeyLinks);
+	   		
+	   		var mediaChannelMap = json.data.mediaChannelMap;
+	   		var mediaChannels = [];
+	   		for(var str in mediaChannelMap){
+	   			var index = mediaChannelMap[str];
+	   			var json = JSON.parse(unescape(str));
+	   			console.log(index)
+	   			console.log(json)
+	   			json.index = index;
+	   			mediaChannels[index] = json;
+	   		}
+	   		
+	   		//console.log(mediaChannelMap);	
+	   		
+	   		
 	   		 $("#media_channels_table").jsGrid({
 	   		    width: "100%",
 	   		    height: "auto",
 	
-	   		    inserting: true,
+	   		    inserting: false,
 	   		    editing: true,
 	   		    sorting: true,
 	   		    paging: false,
@@ -49,16 +64,11 @@
 	   	            return "The event \"" + item.eventName + "\" will be removed. Are you sure?";
 	   	        },
 	
-	   		    data: behavioralMetricsData,
+	   		    data: mediaChannels,
 	   		    
+		   	
 	   		    onItemInserting: function(args) {
 	   		    	//console.log(args.item)
-	   		    	
-	   		    	// TODO Ajax submit data to backend here
-	   		    	setTimeout(function(){
-	   		    		args.item.id = "";
-	   		    		//console.log(behavioralMetricsData)
-	   		    	},1000);
 	   		    	
 	   		    },      
 	   		    onItemInserted: function(args) {
@@ -70,62 +80,16 @@
 	   		    },
 	
 	   		    fields: [
-	   		        { name: "eventName", title : "Behavioral Event Metric", type: "text", validate: "required" },
-	   		        { name: "score", title : "Score", type: "select", width: 40, validate: "required", items: positiveNumbers },
-	   		        { name: "eventFunnelStageId", title : "Event Funnel Stage", type: "select", items: eventFunnelStages, valueField: "id", textField: "name" },
-	   		        { name: "customerFunnelStageId", title : "Customer Funnel Stage", type: "select", items: customerFunnelStages, valueField: "id", textField: "name" },
-	   		        { type: "control" , width: 50}
+	   		    	{ name: "index", title : "Index", type: "number", width: 8, editing: false, validate: "required" },
+	   		        { name: "name", title : "Channel Name", type: "text", width: 40, validate: "required" },
+	   		     	{ name: "isOwnedMedia", title : "Owned Media", type: "checkbox", width: 23, validate: "required" },
+	   		     	{ name: "url", title : "URL", type: "text", validate: "required" },
+	   		     
+	   		        { type: "control" , width: 20}
 	   		    ]
 	   		});  
-	   	});
-        //renderJourneyFlowChart()
+	   	})
     }    
     
-    function renderJourneyFlowChart(metricName, journeyStages, journeyStageMetrics, mediaChannelMap, journeyLinks) {
-        var metricName = 'Reach'
-        var journeyStages = ['Google Search', 'Facebook Group', 'YouTube channel']
-        var journeyStageMetrics = { 'Google Search' : 'pageview' };
-        var journeyNodes = [{
-            id: 0,
-            name: "Google Search"
-        }];
-
-        var configSankey = {
-            margin: {
-                top: 10,
-                left: 10,
-                right: 10,
-                bottom: 10
-            },
-            nodes: {
-                dynamicSizeFontNode: {
-                    enabled: true,
-                    minSize: 14,
-                    maxSize: 30
-                },
-                fontSize: 14, // if dynamicSizeFontNode not enabled
-                draggableX: false, // default [ false ]
-                draggableY: true, // default [ true ]
-                colors: d3.scaleOrdinal(d3.schemeCategory10)
-            },
-            links: {
-                formatValue: function (name, val) {
-                    //console.log('formatValue ' + name)
-                    var label = journeyStageMetrics[name] ? journeyStageMetrics[name] : metricName
-                    return d3.format(",.0f")(val) + ' ' + label;
-                },
-                unit: metricName // if not set formatValue function
-            },
-            tooltip: {
-                infoDiv: true, // if false display default tooltip
-                labelSource: 'Input:',
-                labelTarget: 'Output:'
-            }
-        }
-
-        var objSankey = sk.createSankey('#journeyFlowChart', configSankey, {
-            nodes: journeyNodes,
-            links: journeyLinks
-        });
-    }
+   
 </script>

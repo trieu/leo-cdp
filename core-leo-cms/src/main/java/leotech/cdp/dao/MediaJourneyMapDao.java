@@ -37,6 +37,8 @@ public class MediaJourneyMapDao {
 		map.addJourneyLink(facebook, videoHub, 1);
 		map.addJourneyLink(facebook, ecommerce, 1);
 		map.addJourneyLink(videoHub, ecommerce, 1);
+		map.addJourneyLink(videoHub, emailMarketing, 1);
+		map.addJourneyLink(emailMarketing, ecommerce, 1);
 		return map;
 	}
 	
