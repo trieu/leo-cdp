@@ -13,6 +13,7 @@ import com.arangodb.model.FulltextIndexOptions;
 import com.arangodb.model.GeoIndexOptions;
 import com.arangodb.model.HashIndexOptions;
 import com.arangodb.model.PersistentIndexOptions;
+import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 
 import leotech.cdp.model.CdpPersistentObject;
@@ -88,6 +89,18 @@ public class MediaChannel extends CdpPersistentObject {
 
 	public MediaChannel() {
 		super();
+	}
+
+	public MediaChannel(String name, int type, boolean isOwnedMedia, String url) {
+		super();
+		this.name = name;
+		this.type = type;
+		this.isOwnedMedia = isOwnedMedia;
+		this.url = url;
+		
+		this.id = id(name + type + isOwnedMedia + url);
+		this.createdAt = new Date();
+		this.isRootNode = true;
 	}
 
 	public String getId() {
@@ -234,5 +247,13 @@ public class MediaChannel extends CdpPersistentObject {
 		this.isRootNode = isRootNode;
 	}
 	
+	@Override
+	public int hashCode() {
+		return this.url.hashCode();
+	}
 
+	@Override
+	public String toString() {
+		return new Gson().toJson(this);
+	}
 }

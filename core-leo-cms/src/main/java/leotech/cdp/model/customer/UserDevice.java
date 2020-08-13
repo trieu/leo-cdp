@@ -6,7 +6,7 @@ import leotech.cdp.model.CdpPersistentObject;
 
 public class UserDevice extends CdpPersistentObject {
 
-	public static final String COLLECTION_NAME = COLLECTION_PREFIX + UserDevice.class.getSimpleName().toLowerCase();
+	public static final String COLLECTION_NAME =  getCollectionName(UserDevice.class);
 
 	@Override
 	public ArangoCollection getCollection() {

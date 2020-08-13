@@ -4,7 +4,8 @@ import java.util.List;
 
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
-
+import leotech.cdp.dao.MediaJourneyMapDao;
+import leotech.cdp.model.marketing.MediaJourneyMap;
 import leotech.core.api.BaseSecuredDataApi;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataPayload;
@@ -36,9 +37,14 @@ public class CdpJourneyMapHandler extends BaseSecuredDataApi {
 						return null;
 					}
 					case API_GET_MODEL : {
-						String id = paramJson.getString("id", "0");
-						//TODO
-						return JsonDataPayload.ok(uri, null, true);
+						String id = paramJson.getString("id", "");
+						MediaJourneyMap map;
+						if(id.isEmpty()) {
+							map = MediaJourneyMapDao.getDefaultMap();
+						} else {
+							map = MediaJourneyMapDao.get(id);
+						}
+						return JsonDataPayload.ok(uri, map, true);
 					}
 					case API_UPDATE_MODEL : {
 						String key = null;
@@ -78,11 +84,14 @@ public class CdpJourneyMapHandler extends BaseSecuredDataApi {
 						return JsonDataPayload.ok(uri, list, true);
 					}
 					case API_GET_MODEL : {
-						String id = RequestInfoUtil.getString(params,"id", "");
-						if (!id.isEmpty()) {
-							//TODO
-							return JsonDataPayload.ok(uri, null, false);
+						String id = RequestInfoUtil.getString(params, "id", "");
+						MediaJourneyMap map;
+						if(id.isEmpty()) {
+							map = MediaJourneyMapDao.getDefaultMap();
+						} else {
+							map = MediaJourneyMapDao.get(id);
 						}
+						return JsonDataPayload.ok(uri, map, true);
 					}
 
 					default :

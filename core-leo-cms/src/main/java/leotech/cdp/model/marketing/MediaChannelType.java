@@ -12,23 +12,26 @@ public class MediaChannelType {
 	public static final int OTT_APP = 6;
 	public static final int ECOMMERCE_PLATFORM = 7;
 	public static final int SOCIAL_MEDIA_PLATFORM = 8;
+	public static final int EMAIl_CONTACT = 9;
 
 	// offline retail store
-	public static final int RETAIL_STORE = 9;
+	public static final int RETAIL_STORE = 10;
 
 	// offline
-	public static final int TRADITIONAL_TV = 10;
-	public static final int SHOPPING_MALL = 11;
-	public static final int COFFEE_SHOP = 12;
-	public static final int CONFERENCE_HALL = 13;
-	public static final int URBAN_PARK = 14;
-	public static final int OFFICE_BUILDING = 15;
-	public static final int EXPERIENCE_SPACE = 16;
-	public static final int OUTDOOR_PR_EVENT = 17;
-	public static final int BILLBOARD_OUTDOOR = 18;
-	public static final int BILLBOARD_INDOOR = 19;
-	public static final int TRANSIT_MEDIA = 20;
-	public static final int SPORTING_EVENT = 21;
+	public static final int TRADITIONAL_TV = 11;
+	public static final int SHOPPING_MALL = 12;
+	public static final int COFFEE_SHOP = 13;
+	public static final int CONFERENCE_HALL = 14;
+	public static final int URBAN_PARK = 15;
+	public static final int OFFICE_BUILDING = 16;
+	public static final int EXPERIENCE_SPACE = 17;
+	public static final int OUTDOOR_PR_EVENT = 18;
+	public static final int BILLBOARD_OUTDOOR = 19;
+	public static final int BILLBOARD_INDOOR = 20;
+	public static final int TRANSIT_MEDIA = 21;
+	public static final int SPORTING_EVENT = 22;
 
-	public static final int KEY_OPINION_LEADER = 22;
+	// Key influencers are people, personalities, or businesses that already have the attention of your target audience. 
+	// Key influencers are the people who can actually drive sales and awareness.
+	public static final int KEY_INFLUENCER = 23;
 }

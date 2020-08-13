@@ -30,6 +30,10 @@
 	   		 var eventFunnelStages = json.data['event_retail'];
 	   		 var customerFunnelStages = json.data['customer_retail'];
 	   		 var behavioralMetricsData = json.data['behavioral_metrics'];
+	   		 var positiveNumbers = [];
+	   		 for(var i = 0; i< 100; i++){
+	   			positiveNumbers[i] = i;
+	   		 }
 	   		 
 	   		 $("#media_channels_table").jsGrid({
 	   		    width: "100%",
@@ -66,21 +70,20 @@
 	
 	   		    fields: [
 	   		        { name: "eventName", title : "Behavioral Event Metric", type: "text", validate: "required" },
-	   		        { name: "score", title : "Score", type: "number",  width: 40, validate: "required" },
+	   		        { name: "score", title : "Score", type: "select", width: 40, validate: "required", items: positiveNumbers },
 	   		        { name: "eventFunnelStageId", title : "Event Funnel Stage", type: "select", items: eventFunnelStages, valueField: "id", textField: "name" },
 	   		        { name: "customerFunnelStageId", title : "Customer Funnel Stage", type: "select", items: customerFunnelStages, valueField: "id", textField: "name" },
 	   		        { type: "control" , width: 50}
 	   		    ]
 	   		});  
 	   	});
-        
         renderJourneyFlowChart()
     }    
     
     function renderJourneyFlowChart() {
         var metricName = 'Reach'
-        var journeyStages = ['Google Search', 'Facebook Group', 'YouTube channel', 'E-commerce Website', 'E-commerce Mobile App','Email khách hàng (CRM)','Số điện thoại khách hàng (CRM)','Cửa hàng bán lẻ','Shopping Mall']
-        var journeyStageMetrics = { 'Mua hàng' : 'đơn hàng' }
+        var journeyStages = ['Google Search', 'Facebook Group', 'YouTube channel']
+        var journeyStageMetrics = { 'Google Search' : 'pageview' }
 
         var configSankey = {
             margin: {
@@ -126,100 +129,24 @@
                     id: 2,
                     name: "YouTube channel",
 
-                }, {
-                    id: 3,
-                    name: "E-commerce Website",
-                }, {
-                    id: 4,
-                    name: "E-commerce Mobile App"
-                }, {
-                    id: 5,
-                    name: "Email Marketing"
-                }, {
-                    id: 6,
-                    name: "Push Notification Marketing"
-                }, {
-                    id: 7,
-                    name: "Retail Store"
-                }, {
-                    id: 8,
-                    name: "Shopping Mall"
-                } , {
-                    id: 9,
-                    name: "Purchase"
                 }
                 ],
             links: [
                 {
                     source: 0,
-                    target: 3,
-                    value: 1
-                },
-                {
-                    source: 1,
-                    target: 3,
-                    value: 1
-                }, {
-                    source: 2,
-                    target: 3,
-                    value: 1
-                }, {
-                    source: 0,
-                    target: 4,
-                    value: 1
-                },
-                {
-                    source: 1,
-                    target: 4,
-                    value: 1
-                }, {
-                    source: 0,
                     target: 2,
                     value: 1
-                } , {
-                    source: 2,
-                    target: 7,
+                },
+                {
+                    source: 0,
+                    target: 1,
                     value: 1
-                }  , {
-                    source: 5,
-                    target: 4,
-                    value: 1
-                }
-                , {
-                    source: 6,
-                    target: 4,
+                }, {
+                    source: 1,
+                    target: 2,
                     value: 1
                 }
-                , {
-                    source: 2,
-                    target: 7,
-                    value: 1
-                } , {
-                    source: 2,
-                    target: 8,
-                    value: 1
-                } , {
-                    source: 8,
-                    target: 9,
-                    value: 1
-                } , {
-                    source: 4,
-                    target: 9,
-                    value: 1
-                }  , {
-                    source: 3,
-                    target: 9,
-                    value: 1
-                }  , {
-                    source: 7,
-                    target: 9,
-                    value: 1
-                } , {
-                    source: 7,
-                    target: 4,
-                    value: 1
-                }
-                ]
+             ]
         };
 
         var objSankey = sk.createSankey('#journeyFlowChart', configSankey, datajson);

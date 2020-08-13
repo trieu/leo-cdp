@@ -15,197 +15,194 @@ import com.arangodb.model.PersistentIndexOptions;
 import com.google.gson.annotations.Expose;
 
 import leotech.cdp.model.CdpPersistentObject;
-import leotech.system.util.database.ArangoDbUtil;
-
-
 
 /**
  * @author Trieu Nguyen
  *
  */
-public class Segment extends CdpPersistentObject implements Comparable<Segment>{
-    
-    public static class SegmentationType {
-	// https://learn.g2.com/market-segmentation
-   	public final static int GEOGRAPHIC = 1;
-   	public final static int DEMOGRAPHIC = 2;
-   	public final static int PSYCHOGRAPHIC = 3;
-   	public final static int BEHAVIORAL = 4;
-   	
-   	// common segment type for customer acquisition
-   	public final static int FIRST_RETARGETING = 5;
-   	public final static int LOOKALIKE = 6;
-   	
-   	// common segment type for customer retention
-   	public final static int RFM_ANALYSIS = 7; // https://clevertap.com/blog/rfm-analysis/
-   	public final static int CHURN = 8;
-   	
-   	public final static int AD_HOC_QUERY = 9;
-    }
+public class Segment extends CdpPersistentObject implements Comparable<Segment> {
+	public static final String COLLECTION_NAME = getCollectionName(Segment.class);
+	static ArangoCollection instance;
 
-    public static final String COLLECTION_NAME = COLLECTION_PREFIX + Segment.class.getSimpleName().toLowerCase();
-    static ArangoCollection instance;
-    
-    @Override
-    public ArangoCollection getCollection() {
-	if (instance == null) {
-	    ArangoDatabase arangoDatabase = getDatabaseInstance();
+	public static class SegmentationType {
+		// https://learn.g2.com/market-segmentation
+		public final static int GEOGRAPHIC = 1;
+		public final static int DEMOGRAPHIC = 2;
+		public final static int PSYCHOGRAPHIC = 3;
+		public final static int BEHAVIORAL = 4;
 
-	    instance = arangoDatabase.collection(COLLECTION_NAME);
+		// common segment type for customer acquisition
+		public final static int FIRST_RETARGETING = 5;
+		public final static int LOOKALIKE = 6;
 
-	    // ensure indexing key fields for fast lookup
-	    instance.ensurePersistentIndex(Arrays.asList("primaryEmail"), new PersistentIndexOptions().unique(false));
-	    instance.ensurePersistentIndex(Arrays.asList("primaryPhone"), new PersistentIndexOptions().unique(false));
-	    instance.ensurePersistentIndex(Arrays.asList("primaryAvatar"), new PersistentIndexOptions().unique(false));
-	    instance.ensurePersistentIndex(Arrays.asList("rootProfileId"), new PersistentIndexOptions().unique(false));
-	    instance.ensureHashIndex(Arrays.asList("identityAttributes[*]"), new HashIndexOptions());
-	    instance.ensureHashIndex(Arrays.asList("personaUri"), new HashIndexOptions());
+		// common segment type for customer retention
+		public final static int RFM_ANALYSIS = 7; // https://clevertap.com/blog/rfm-analysis/
+		public final static int CHURN = 8;
+
+		public final static int AD_HOC_QUERY = 9;
 	}
-	return instance;
-    }
 
-    @DocumentField(Type.KEY)
-    @Expose
-    private String key;
-    
-    @Expose
-    String name;
+	@Override
+	public ArangoCollection getCollection() {
+		if (instance == null) {
+			ArangoDatabase arangoDatabase = getDatabaseInstance();
 
-    @Expose
-    int type = 0;
-    
-    @Expose
-    int status = 0;
-    
-    @Expose
-    long size = 0;
-    
-    @Expose
-    String queryTemplate;
-    
-    @Expose
-    Map<String,String> queryParameters = new HashMap<>();
-   
-    @Expose
-    boolean isPublic = false;
-    
-    @Expose
-    List<String> keywords = new ArrayList<String>();
-    
-    @Expose
-    int indexScore = 0;
-    
-    @Expose
-    String segmenterUri;
-    
-    @Expose
-    Map<String,String> extData = new HashMap<>();
-    
-    
+			instance = arangoDatabase.collection(COLLECTION_NAME);
 
-    @Override
-    public int compareTo(Segment o) {
-	// TODO Auto-generated method stub
-	return 0;
-    }
+			// ensure indexing key fields for fast lookup
+			instance.ensurePersistentIndex(Arrays.asList("primaryEmail"),
+					new PersistentIndexOptions().unique(false));
+			instance.ensurePersistentIndex(Arrays.asList("primaryPhone"),
+					new PersistentIndexOptions().unique(false));
+			instance.ensurePersistentIndex(Arrays.asList("primaryAvatar"),
+					new PersistentIndexOptions().unique(false));
+			instance.ensurePersistentIndex(Arrays.asList("rootProfileId"),
+					new PersistentIndexOptions().unique(false));
+			instance.ensureHashIndex(Arrays.asList("identityAttributes[*]"), new HashIndexOptions());
+			instance.ensureHashIndex(Arrays.asList("personaUri"), new HashIndexOptions());
+		}
+		return instance;
+	}
 
-    @Override
-    public boolean isReadyForSave() {
-	// TODO Auto-generated method stub
-	return false;
-    }
+	@DocumentField(Type.KEY)
+	@Expose
+	private String key;
 
-    public String getName() {
-        return name;
-    }
+	@Expose
+	String name;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	@Expose
+	int type = 0;
 
-    public int getType() {
-        return type;
-    }
+	@Expose
+	int status = 0;
 
-    public void setType(int type) {
-        this.type = type;
-    }
+	@Expose
+	long size = 0;
 
-    public int getStatus() {
-        return status;
-    }
+	@Expose
+	String queryTemplate;
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
+	@Expose
+	Map<String, String> queryParameters = new HashMap<>();
 
-    public long getSize() {
-        return size;
-    }
+	@Expose
+	boolean isPublic = false;
 
-    public void setSize(long size) {
-        this.size = size;
-    }
+	@Expose
+	List<String> keywords = new ArrayList<String>();
 
-    public String getQueryTemplate() {
-        return queryTemplate;
-    }
+	@Expose
+	int indexScore = 0;
 
-    public void setQueryTemplate(String queryTemplate) {
-        this.queryTemplate = queryTemplate;
-    }
+	@Expose
+	String segmenterUri;
 
-    public Map<String, String> getQueryParameters() {
-        return queryParameters;
-    }
+	@Expose
+	Map<String, String> extData = new HashMap<>();
 
-    public void setQueryParameters(Map<String, String> queryParameters) {
-        this.queryParameters = queryParameters;
-    }
+	@Override
+	public int compareTo(Segment o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
-    public boolean isPublic() {
-        return isPublic;
-    }
+	@Override
+	public boolean isReadyForSave() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
-    public void setPublic(boolean isPublic) {
-        this.isPublic = isPublic;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public List<String> getKeywords() {
-        return keywords;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setKeywords(List<String> keywords) {
-        this.keywords = keywords;
-    }
+	public int getType() {
+		return type;
+	}
 
-    public int getIndexScore() {
-        return indexScore;
-    }
+	public void setType(int type) {
+		this.type = type;
+	}
 
-    public void setIndexScore(int indexScore) {
-        this.indexScore = indexScore;
-    }
+	public int getStatus() {
+		return status;
+	}
 
-    public String getSegmenterUri() {
-        return segmenterUri;
-    }
+	public void setStatus(int status) {
+		this.status = status;
+	}
 
-    public void setSegmenterUri(String segmenterUri) {
-        this.segmenterUri = segmenterUri;
-    }
+	public long getSize() {
+		return size;
+	}
 
-    public Map<String, String> getExtData() {
-        return extData;
-    }
+	public void setSize(long size) {
+		this.size = size;
+	}
 
-    public void setExtData(Map<String, String> extData) {
-        this.extData = extData;
-    }
+	public String getQueryTemplate() {
+		return queryTemplate;
+	}
 
-    public String getKey() {
-        return key;
-    }
-    
-    
+	public void setQueryTemplate(String queryTemplate) {
+		this.queryTemplate = queryTemplate;
+	}
+
+	public Map<String, String> getQueryParameters() {
+		return queryParameters;
+	}
+
+	public void setQueryParameters(Map<String, String> queryParameters) {
+		this.queryParameters = queryParameters;
+	}
+
+	public boolean isPublic() {
+		return isPublic;
+	}
+
+	public void setPublic(boolean isPublic) {
+		this.isPublic = isPublic;
+	}
+
+	public List<String> getKeywords() {
+		return keywords;
+	}
+
+	public void setKeywords(List<String> keywords) {
+		this.keywords = keywords;
+	}
+
+	public int getIndexScore() {
+		return indexScore;
+	}
+
+	public void setIndexScore(int indexScore) {
+		this.indexScore = indexScore;
+	}
+
+	public String getSegmenterUri() {
+		return segmenterUri;
+	}
+
+	public void setSegmenterUri(String segmenterUri) {
+		this.segmenterUri = segmenterUri;
+	}
+
+	public Map<String, String> getExtData() {
+		return extData;
+	}
+
+	public void setExtData(Map<String, String> extData) {
+		this.extData = extData;
+	}
+
+	public String getKey() {
+		return key;
+	}
+
 }

@@ -27,8 +27,7 @@ public class ContextSession extends CdpPersistentObject {
 	static final DateFormat DATEHOUR_FORMAT = new SimpleDateFormat(DATE_HOUR_FORMAT_PATTERN);
 	private static final int HOURS_OF_A_WEEK = 168;
 
-	public static final String COLLECTION_NAME = COLLECTION_PREFIX
-			+ ContextSession.class.getSimpleName().toLowerCase();
+	public static final String COLLECTION_NAME = getCollectionName(ContextSession.class);
 	static ArangoCollection instance;
 
 	@Override

@@ -28,7 +28,7 @@ import rfx.core.util.StringUtil;
  */
 public class Profile extends CdpPersistentObject implements Comparable<Profile> {
 
-	public static final String COLLECTION_NAME = COLLECTION_PREFIX + Profile.class.getSimpleName().toLowerCase();
+	public static final String COLLECTION_NAME = getCollectionName(Profile.class);
 	static ArangoCollection dbCollection;
 
 	@Override
