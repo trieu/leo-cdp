@@ -5,9 +5,9 @@ import java.util.Map;
 
 import com.google.common.collect.ImmutableMap;
 
-import leotech.cdp.model.marketing.MediaChannel;
-import leotech.cdp.model.marketing.MediaChannelType;
-import leotech.cdp.model.marketing.MediaJourneyMap;
+import leotech.cdp.model.journey.MediaChannel;
+import leotech.cdp.model.journey.MediaChannelType;
+import leotech.cdp.model.journey.MediaJourneyMap;
 
 public class MediaJourneyMapDao {
 
@@ -18,18 +18,29 @@ public class MediaJourneyMapDao {
 		MediaChannel affiliate = new MediaChannel("Affiliate Marketing", MediaChannelType.WEB_URL, false, "http://xemgiday.com/");
 		MediaChannel emailMarketing = new MediaChannel("Email Marketing", MediaChannelType.EMAIl_CONTACT, true, "mailto:support@bigdatavietnam.org");
 		MediaChannel videoHub = new MediaChannel("Video Content Hub", MediaChannelType.WEBSITE, true, "https://bookstore.bigdatavietnam.org/");
-		MediaChannel ecommerce = new MediaChannel("E-commerce", MediaChannelType.ECOMMERCE_PLATFORM, true, "http://demo.ecommerce.com/");
+		MediaChannel ecommerce = new MediaChannel("E-commerce Website", MediaChannelType.ECOMMERCE_PLATFORM, true, "http://demo.ecommerce.com/");
+		MediaChannel retailStore = new MediaChannel("Retail Store", MediaChannelType.RETAIL_STORE, true, "https://plus.codes/7P28QPF3+JJ");
 		
-		Map<MediaChannel,Integer> mediaChannels = new HashMap<>();
-		mediaChannels.put(google,0);
-		mediaChannels.put(facebook,1 );
-		mediaChannels.put(affiliate,2 );
-		mediaChannels.put(emailMarketing, 3);
-		mediaChannels.put(videoHub, 4);
-		mediaChannels.put(ecommerce, 5);
+		Map<String,MediaChannel> mediaChannelMap = new HashMap<>();
+		mediaChannelMap.put(google.getName(), google);
+		mediaChannelMap.put(facebook.getName(), facebook);
+		mediaChannelMap.put(affiliate.getName(), affiliate);
+		mediaChannelMap.put(emailMarketing.getName(), emailMarketing);
+		mediaChannelMap.put(videoHub.getName(), videoHub);
+		mediaChannelMap.put(ecommerce.getName(), ecommerce);
+		mediaChannelMap.put(retailStore.getName(), retailStore);
+		
+		Map<String,Integer> mediaChannelIndex = new HashMap<>();
+		mediaChannelIndex.put(google.getName(),0);
+		mediaChannelIndex.put(facebook.getName(),1 );
+		mediaChannelIndex.put(affiliate.getName(),2 );
+		mediaChannelIndex.put(emailMarketing.getName(), 3);
+		mediaChannelIndex.put(videoHub.getName(), 4);
+		mediaChannelIndex.put(ecommerce.getName(), 5);
+		mediaChannelIndex.put(retailStore.getName(), 6);
 		
 		Map<String,String> journeyStageMetrics = ImmutableMap.of("E-commerce", "Buy");
-		MediaJourneyMap map = new MediaJourneyMap(mediaChannels, journeyStageMetrics);
+		MediaJourneyMap map = new MediaJourneyMap(mediaChannelMap, mediaChannelIndex, journeyStageMetrics);
 		map.addJourneyLink(google, videoHub , 1);
 		map.addJourneyLink(google, ecommerce, 1);
 		map.addJourneyLink(affiliate, ecommerce, 1);
@@ -39,6 +50,9 @@ public class MediaJourneyMapDao {
 		map.addJourneyLink(videoHub, ecommerce, 1);
 		map.addJourneyLink(videoHub, emailMarketing, 1);
 		map.addJourneyLink(emailMarketing, ecommerce, 1);
+		map.addJourneyLink(emailMarketing, retailStore, 1);
+		map.addJourneyLink(videoHub, retailStore, 1);
+		
 		return map;
 	}
 	

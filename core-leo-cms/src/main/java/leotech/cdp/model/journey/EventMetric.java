@@ -1,4 +1,4 @@
-package leotech.cdp.model.marketing;
+package leotech.cdp.model.journey;
 
 import java.util.Date;
 

@@ -1,4 +1,4 @@
-package leotech.cdp.model.marketing;
+package leotech.cdp.model.journey;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,7 +42,6 @@ public class MediaJourneyMap extends CdpPersistentObject {
 			instance.ensureFulltextIndex(Arrays.asList("name"), new FulltextIndexOptions());
 			instance.ensurePersistentIndex(Arrays.asList("refProfileId"), new PersistentIndexOptions().unique(false));
 			instance.ensurePersistentIndex(Arrays.asList("isTargetPersona"), new PersistentIndexOptions().unique(false));
-			instance.ensureHashIndex(Arrays.asList("mediaChannels[*]"), new HashIndexOptions());
 		}
 		return instance;
 	}
@@ -160,24 +159,28 @@ public class MediaJourneyMap extends CdpPersistentObject {
 	protected List<LinkNode> journeyLinks = new ArrayList<MediaJourneyMap.LinkNode>(); // list of node connections for journey map visualization in JS 
 	
 	@Expose
-	protected Map<MediaChannel,Integer> mediaChannelMap; // list of ordered nodes for data persistence with reversed indexing
+	protected Map<String,MediaChannel> mediaChannelMap;
+	
+	@Expose
+	protected Map<String,Integer> mediaChannelIndex; // list of ordered nodes for data persistence with reversed indexing
 	
 	public MediaJourneyMap() {
 		
 	}
 
-	public MediaJourneyMap(Map<MediaChannel,Integer> mediaChannelMap, Map<String,String> journeyStageMetrics) {
+	public MediaJourneyMap(Map<String,MediaChannel> mediaChannelMap, Map<String,Integer> mediaChannelIndex, Map<String,String> journeyStageMetrics) {
 		super();
 		this.mediaChannelMap = mediaChannelMap;
-		Set<MediaChannel> keys = mediaChannelMap.keySet();
-		for (MediaChannel mediaChannel : keys) {
-			int index = mediaChannelMap.get(mediaChannel);
-			String nodeName = mediaChannel.getName();
-			journeyStages.add(nodeName);
-			journeyNodes.add(new Node(index, nodeName));
+		this.mediaChannelIndex = mediaChannelIndex;
+		this.journeyStageMetrics = journeyStageMetrics;
+		
+		Set<String> mediaNames = mediaChannelMap.keySet();
+		for (String mediaName : mediaNames) {
+			int index = mediaChannelIndex.get(mediaName);
+			journeyStages.add(mediaName);
+			journeyNodes.add(new Node(index, mediaName));
 		}
 		Collections.sort(journeyNodes);
-		this.journeyStageMetrics = journeyStageMetrics;
 	}
 
 	public String getId() {
@@ -237,17 +240,37 @@ public class MediaJourneyMap extends CdpPersistentObject {
 	}
 	
 	public void addJourneyLink(MediaChannel mediaSource, MediaChannel mediaTarget, long value) {
-		int mediaSourceIndex = mediaChannelMap.get(mediaSource);
-		int mediaTargetIndex = mediaChannelMap.get(mediaTarget);
-		this.journeyLinks.add(new LinkNode(mediaSourceIndex, mediaTargetIndex, value));
+		int mediaSourceIndex = mediaChannelIndex.getOrDefault(mediaSource.getName(),-1);
+		int mediaTargetIndex = mediaChannelIndex.getOrDefault(mediaTarget.getName(),-1);
+		if(mediaSourceIndex >=0 && mediaTargetIndex >= 0) {
+			this.journeyLinks.add(new LinkNode(mediaSourceIndex, mediaTargetIndex, value));
+		}
+	}
+	
+	
+
+	public List<Node> getJourneyNodes() {
+		return journeyNodes;
 	}
 
-	public Map<MediaChannel,Integer> getMediaChannelMap() {
+	public void setJourneyNodes(List<Node> journeyNodes) {
+		this.journeyNodes = journeyNodes;
+	}
+
+	public Map<String, MediaChannel> getMediaChannelMap() {
 		return mediaChannelMap;
 	}
 
-	public void setMediaChannelMap(Map<MediaChannel,Integer> mediaChannelMap) {
+	public void setMediaChannelMap(Map<String, MediaChannel> mediaChannelMap) {
 		this.mediaChannelMap = mediaChannelMap;
+	}
+
+	public Map<String, Integer> getMediaChannelIndex() {
+		return mediaChannelIndex;
+	}
+
+	public void setMediaChannelIndex(Map<String, Integer> mediaChannelIndex) {
+		this.mediaChannelIndex = mediaChannelIndex;
 	}
 
 	public boolean isTargetPersona() {

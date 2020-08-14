@@ -1,4 +1,4 @@
-package leotech.cdp.model.customer;
+package leotech.cdp.model.analytics;
 
 import java.util.Arrays;
 import java.util.Date;

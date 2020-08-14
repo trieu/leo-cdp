@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import leotech.cdp.model.marketing.BehavioralEventMetric;
-import leotech.cdp.model.marketing.EventMetric;
+import leotech.cdp.model.journey.BehavioralEventMetric;
+import leotech.cdp.model.journey.EventMetric;
 
 public class BehavioralEventMetricDao {
 

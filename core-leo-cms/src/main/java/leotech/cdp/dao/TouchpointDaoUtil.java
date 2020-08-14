@@ -8,7 +8,7 @@ import java.util.Map;
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
 
-import leotech.cdp.model.marketing.Touchpoint;
+import leotech.cdp.model.journey.Touchpoint;
 import leotech.core.config.AqlTemplate;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataTablePayload;

@@ -5,10 +5,10 @@ import java.util.Map;
 
 import leotech.cdp.dao.TrackingEventDaoUtil;
 import leotech.cdp.dao.singleview.EventSingleDataView;
-import leotech.cdp.model.customer.ContextSession;
-import leotech.cdp.model.customer.TrackingEvent;
-import leotech.cdp.model.marketing.MediaChannelType;
-import leotech.cdp.model.marketing.Touchpoint;
+import leotech.cdp.model.analytics.ContextSession;
+import leotech.cdp.model.analytics.TrackingEvent;
+import leotech.cdp.model.journey.MediaChannelType;
+import leotech.cdp.model.journey.Touchpoint;
 import leotech.system.model.DataFilter;
 import leotech.system.model.DeviceInfo;
 

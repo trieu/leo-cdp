@@ -1,4 +1,4 @@
-package leotech.cdp.model.marketing;
+package leotech.cdp.model.activation;
 
 public class CampaignType {
 

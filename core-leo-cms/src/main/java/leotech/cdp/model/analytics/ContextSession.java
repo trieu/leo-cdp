@@ -1,4 +1,4 @@
-package leotech.cdp.model.customer;
+package leotech.cdp.model.analytics;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -15,6 +15,7 @@ import com.arangodb.model.PersistentIndexOptions;
 import com.arangodb.model.TtlIndexOptions;
 
 import leotech.cdp.model.CdpPersistentObject;
+import leotech.cdp.model.customer.ProfileConstant;
 import rfx.core.util.StringUtil;
 
 /**

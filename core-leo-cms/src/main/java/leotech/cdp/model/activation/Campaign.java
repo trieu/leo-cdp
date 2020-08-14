@@ -1,4 +1,4 @@
-package leotech.cdp.model.marketing;
+package leotech.cdp.model.activation;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -10,6 +10,7 @@ import com.arangodb.model.PersistentIndexOptions;
 import com.google.gson.annotations.Expose;
 
 import leotech.cdp.model.CdpPersistentObject;
+import leotech.cdp.model.journey.EventTrigger;
 import rfx.core.util.StringUtil;
 
 public class Campaign extends CdpPersistentObject implements Comparable<Campaign> {

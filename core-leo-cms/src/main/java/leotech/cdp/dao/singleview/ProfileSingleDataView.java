@@ -11,7 +11,7 @@ import leotech.cdp.dao.TouchpointDaoUtil;
 import leotech.cdp.model.SingleDataView;
 import leotech.cdp.model.customer.Profile;
 import leotech.cdp.model.customer.ProfileConstant;
-import leotech.cdp.model.marketing.Touchpoint;
+import leotech.cdp.model.journey.Touchpoint;
 import leotech.system.model.DeviceInfo;
 
 public class ProfileSingleDataView extends Profile implements SingleDataView {

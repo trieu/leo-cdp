@@ -26,29 +26,36 @@
 <script>
     var initMediaJourneyMap = initMediaJourneyMap || function() {
     	LeoAdminApiUtil.getSecuredData('/cdp/journeymap/get', { "id" : "" }, function(json){ 
-	   		
-	   		 
+  		 
 	   		var domSelector = '#journeyFlowChart';
-	   		var defaultMetricName = json.data.defaultMetricName;
-	   		var journeyStageMetrics = json.data.journeyStageMetrics;
-	   		var journeyStages = json.data.journeyStages;
-	   		var journeyLinks = json.data.journeyLinks;
-	   		var journeyNodes =  json.data.journeyNodes;
+	   		var mediaJourneyData = json.data.mediaJourneyMap;
+	   		var channelTypes = json.data.channelTypes;
+	   		console.log(channelTypes);	
+	   		
+	   		
+	   		var defaultMetricName = mediaJourneyData.defaultMetricName;
+	   		var journeyStageMetrics = mediaJourneyData.journeyStageMetrics;
+	   		var journeyStages = mediaJourneyData.journeyStages;
+	   		var journeyLinks = mediaJourneyData.journeyLinks;
+	   		var journeyNodes =  mediaJourneyData.journeyNodes;
 	   		
 	   		renderJourneyFlowChart(domSelector, defaultMetricName, journeyStages, journeyStageMetrics, journeyNodes, journeyLinks);
 	   		
-	   		var mediaChannelMap = json.data.mediaChannelMap;
+	   		var mediaChannelMap = mediaJourneyData.mediaChannelMap;
+	   		var mediaChannelIndex = mediaJourneyData.mediaChannelIndex;
 	   		var mediaChannels = [];
-	   		for(var str in mediaChannelMap){
-	   			var index = mediaChannelMap[str];
-	   			var json = JSON.parse(unescape(str));
-	   			console.log(index)
-	   			console.log(json)
-	   			json.index = index;
-	   			mediaChannels[index] = json;
+	   		
+	   		for(var name in mediaChannelMap){
+	   			var index = mediaChannelIndex[name];
+	   			var mediaChannel = mediaChannelMap[name];
+
+	   			mediaChannel.index = index + 1;
+	   			mediaChannel.typeName = channelTypes[mediaChannel.type];
+	   		
+	   			mediaChannels[index] = mediaChannel;
 	   		}
 	   		
-	   		//console.log(mediaChannelMap);	
+	   		//
 	   		
 	   		
 	   		 $("#media_channels_table").jsGrid({
@@ -82,9 +89,9 @@
 	   		    fields: [
 	   		    	{ name: "index", title : "Index", type: "number", width: 8, editing: false, validate: "required" },
 	   		        { name: "name", title : "Channel Name", type: "text", width: 40, validate: "required" },
+	   		     	{ name: "typeName", title : "Channel Type", type: "text", width: 40, validate: "required" },
 	   		     	{ name: "isOwnedMedia", title : "Owned Media", type: "checkbox", width: 23, validate: "required" },
 	   		     	{ name: "url", title : "URL", type: "text", validate: "required" },
-	   		     
 	   		        { type: "control" , width: 20}
 	   		    ]
 	   		});  

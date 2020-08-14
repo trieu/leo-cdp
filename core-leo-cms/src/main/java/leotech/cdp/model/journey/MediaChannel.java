@@ -1,4 +1,4 @@
-package leotech.cdp.model.marketing;
+package leotech.cdp.model.journey;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,8 +35,10 @@ public class MediaChannel extends CdpPersistentObject {
 			instance.ensurePersistentIndex(Arrays.asList("url"), new PersistentIndexOptions().unique(false));
 			instance.ensurePersistentIndex(Arrays.asList("type"), new PersistentIndexOptions().unique(false));
 
-			instance.ensurePersistentIndex(Arrays.asList("countryCode"),new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("locationCode"),new PersistentIndexOptions().unique(false));
+			instance.ensurePersistentIndex(Arrays.asList("countryCode"),
+					new PersistentIndexOptions().unique(false));
+			instance.ensurePersistentIndex(Arrays.asList("locationCode"),
+					new PersistentIndexOptions().unique(false));
 			instance.ensureGeoIndex(Arrays.asList("latitude", "longitude"), new GeoIndexOptions());
 			instance.ensureHashIndex(Arrays.asList("keywords[*]"), new HashIndexOptions());
 		}
@@ -97,7 +99,7 @@ public class MediaChannel extends CdpPersistentObject {
 		this.type = type;
 		this.isOwnedMedia = isOwnedMedia;
 		this.url = url;
-		
+
 		this.id = id(name);
 		this.createdAt = new Date();
 		this.isRootNode = true;
@@ -246,7 +248,7 @@ public class MediaChannel extends CdpPersistentObject {
 	public void setRootNode(boolean isRootNode) {
 		this.isRootNode = isRootNode;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return this.name.hashCode();

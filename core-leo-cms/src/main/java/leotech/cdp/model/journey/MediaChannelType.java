@@ -1,4 +1,4 @@
-package leotech.cdp.model.marketing;
+package leotech.cdp.model.journey;
 
 public class MediaChannelType {
 	public static final int UNKNOWN = -1;

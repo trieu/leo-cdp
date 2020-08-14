@@ -9,7 +9,7 @@ import io.vertx.core.MultiMap;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.RoutingContext;
-import leotech.cdp.model.customer.ContextSession;
+import leotech.cdp.model.analytics.ContextSession;
 import leotech.cdp.router.api.TrackingApi;
 import leotech.cdp.router.api.TrackingApiParam;
 import leotech.cdp.service.ContextSessionService;

@@ -7,7 +7,7 @@ import java.util.Map;
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
 
-import leotech.cdp.model.customer.TrackingEvent;
+import leotech.cdp.model.analytics.TrackingEvent;
 import leotech.core.config.AqlTemplate;
 import leotech.system.util.database.ArangoDbQuery;
 import leotech.system.util.database.ArangoDbUtil;

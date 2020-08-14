@@ -1,4 +1,4 @@
-package leotech.cdp.model.marketing;
+package leotech.cdp.model.journey;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,41 +19,40 @@ import rfx.core.util.StringUtil;
  *
  */
 public class FunnelStage extends CdpPersistentObject {
-	
+
 	public static final String COLLECTION_NAME = getCollectionName(FunnelStage.class);
 	static ArangoCollection dbCollection;
 
 	@DocumentField(Type.KEY)
 	@Expose
 	protected String id;
-	
+
 	@Expose
 	int orderIndex;
-	
+
 	@Expose
 	String name;
-	
+
 	@Expose
 	String type;
-	
+
 	static List<FunnelStage> eventRetailFunnelStages = new ArrayList<FunnelStage>();
 	static List<FunnelStage> customerRetailFunnelStages = new ArrayList<FunnelStage>();
-	
+
 	static {
 		eventRetailFunnelStages.add(new FunnelStage(1, "Content View", "event_retail"));
 		eventRetailFunnelStages.add(new FunnelStage(2, "Interaction", "event_retail"));
 		eventRetailFunnelStages.add(new FunnelStage(3, "Purchase Intent", "event_retail"));
 		eventRetailFunnelStages.add(new FunnelStage(4, "First Purchase", "event_retail"));
 		eventRetailFunnelStages.add(new FunnelStage(5, "Repeat Purchase", "event_retail"));
-		
+
 		customerRetailFunnelStages.add(new FunnelStage(1, "Visitor", "customer_retail"));
 		customerRetailFunnelStages.add(new FunnelStage(2, "Identified Person", "customer_retail"));
 		customerRetailFunnelStages.add(new FunnelStage(3, "Customer Lead", "customer_retail"));
 		customerRetailFunnelStages.add(new FunnelStage(4, "First-time Customer", "customer_retail"));
 		customerRetailFunnelStages.add(new FunnelStage(5, "Repeat Customer", "customer_retail"));
 	}
-	
-	
+
 	public static List<FunnelStage> getEventRetailFunnelStages() {
 		return eventRetailFunnelStages;
 	}
@@ -61,7 +60,7 @@ public class FunnelStage extends CdpPersistentObject {
 	public static List<FunnelStage> getCustomerRetailFunnelStages() {
 		return customerRetailFunnelStages;
 	}
-	
+
 	public FunnelStage() {
 		// TODO Auto-generated constructor stub
 	}
@@ -73,7 +72,7 @@ public class FunnelStage extends CdpPersistentObject {
 		this.type = type;
 		this.id = id(orderIndex + name + type);
 	}
-	
+
 	public int getOrderIndex() {
 		return orderIndex;
 	}
@@ -111,18 +110,16 @@ public class FunnelStage extends CdpPersistentObject {
 			dbCollection = arangoDatabase.collection(COLLECTION_NAME);
 
 			// ensure indexing key fields for fast lookup
-			dbCollection.ensurePersistentIndex(Arrays.asList("type"),new PersistentIndexOptions().unique(false));
+			dbCollection.ensurePersistentIndex(Arrays.asList("type"), new PersistentIndexOptions().unique(false));
 
 		}
 		return dbCollection;
 	}
-
 
 	@Override
 	public boolean isReadyForSave() {
 		// TODO Auto-generated method stub
 		return StringUtil.isNotEmpty(id) && StringUtil.isNotEmpty(name);
 	}
-	
-	
+
 }

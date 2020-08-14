@@ -1,4 +1,4 @@
-package leotech.cdp.model.business;
+package leotech.cdp.model.analytics;
 
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;

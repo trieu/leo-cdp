@@ -1,15 +1,20 @@
 package leotech.cdp.admin.handler;
 
 import java.util.List;
+import java.util.Map;
+
+import com.google.common.collect.ImmutableMap;
 
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import leotech.cdp.dao.MediaJourneyMapDao;
-import leotech.cdp.model.marketing.MediaJourneyMap;
+import leotech.cdp.model.journey.MediaChannelType;
+import leotech.cdp.model.journey.MediaJourneyMap;
 import leotech.core.api.BaseSecuredDataApi;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.User;
+import leotech.system.util.ClassStaticDataList;
 import leotech.system.util.RequestInfoUtil;
 
 public class CdpJourneyMapHandler extends BaseSecuredDataApi {
@@ -91,7 +96,9 @@ public class CdpJourneyMapHandler extends BaseSecuredDataApi {
 						} else {
 							map = MediaJourneyMapDao.get(id);
 						}
-						return JsonDataPayload.ok(uri, map, true);
+						Map<Integer, String> channelTypes = ClassStaticDataList.getIntegerMap(MediaChannelType.class); 
+						Map<String,Object> data = ImmutableMap.of("mediaJourneyMap", map, "channelTypes", channelTypes);
+						return JsonDataPayload.ok(uri, data, true);
 					}
 
 					default :

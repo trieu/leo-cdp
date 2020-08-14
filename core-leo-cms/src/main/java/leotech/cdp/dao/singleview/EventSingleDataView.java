@@ -4,8 +4,8 @@ import com.google.gson.annotations.Expose;
 
 import leotech.cdp.dao.TouchpointDaoUtil;
 import leotech.cdp.model.SingleDataView;
-import leotech.cdp.model.customer.TrackingEvent;
-import leotech.cdp.model.marketing.Touchpoint;
+import leotech.cdp.model.analytics.TrackingEvent;
+import leotech.cdp.model.journey.Touchpoint;
 
 public class EventSingleDataView extends TrackingEvent implements SingleDataView {
 	

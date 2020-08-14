@@ -4,7 +4,7 @@ import java.util.Map;
 
 import io.vertx.core.MultiMap;
 import io.vertx.core.http.HttpServerRequest;
-import leotech.cdp.model.customer.ContextSession;
+import leotech.cdp.model.analytics.ContextSession;
 import leotech.cdp.service.DeviceDataService;
 import leotech.cdp.service.EventTrackingService;
 import leotech.system.model.DeviceInfo;
