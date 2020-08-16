@@ -79,10 +79,10 @@ LeoCdpAdmin.navRouters = {
 		},
 		
 		// 2.5 Data Observer for touchpoint and media channel
-		"Data_Observer_List" : {
-			"menuName" : "Data Observer List",
-			"functionName" : "loadDataObserverList",
-			"breadcrumb" : ["Customer Journey Hub", "Data Observer List"]
+		"Leo_Observer_List" : {
+			"menuName" : "Leo Observer List",
+			"functionName" : "loadLeoObserverList",
+			"breadcrumb" : ["Customer Journey Hub", "Leo Observer List"]
 		},
 		"Data_Observer_Report" : {
 			"menuName" : "Data Observer Report",

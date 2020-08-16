@@ -63,7 +63,7 @@ LeoCdpAdmin.navFunctions.loadBehavioralEventMetrics = function(breadcrumbHtml) {
 }	
 
 
-LeoCdpAdmin.navFunctions.loadDataObserverList  = function(breadcrumbHtml) {
+LeoCdpAdmin.navFunctions.loadLeoObserverList  = function(breadcrumbHtml) {
 	LeoCdpAdmin.loadView('/view/modules/journey/data-observer-list.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
     	initDataObserverList();
