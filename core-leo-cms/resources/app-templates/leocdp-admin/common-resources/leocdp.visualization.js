@@ -10,12 +10,12 @@ function renderJourneyFlowChart(domSelector, defaultMetricName, journeyStages, j
 			dynamicSizeFontNode : {
 				enabled : true,
 				minSize : 14,
-				maxSize : 30
+				maxSize : 26
 			},
-			fontSize : 14, // if dynamicSizeFontNode not enabled
+			fontSize : 16, // if dynamicSizeFontNode not enabled
 			draggableX : false, // default [ false ]
 			draggableY : true, // default [ true ]
-			colors : d3.scaleOrdinal(d3.schemeCategory10)
+			colors : d3.scaleOrdinal(d3.schemeCategory20)
 		},
 		links : {
 			formatValue : function(name, val) {

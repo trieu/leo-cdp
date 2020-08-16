@@ -1,115 +1,247 @@
 <div class="container-fluid">
 
-    <!-- MAIN BODY here -->
-     <div class="row">
-        <div class="col-lg-10">
+    <div class="row">
+        <div class="col-lg-12">
             <h4 class="page-header" id="page_breadcrumb" > </h4>
-        </div>
-        <div class="col-lg-2 text-center" style="padding: 10px">
-        	<button type="button" class="btn btn-success" onclick="" > New Data Observer </button>
         </div>
     </div>
 
-    <div class="row gridholder">
+    <div class="row gridholder" >
         <div class="col-lg-12">
+        	<div class="row">
+		       	 	<div id="journeyFlowChart" class="experience_journey_flow" style="height:420px;"></div>
+		    </div>
             <div class="table-responsive">
-                <table id="profile-list" class="display" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>Profile UUID</th>
-                            <th>FirstName</th>
-                            <th>Last Name</th>
-                            <th>Primary Email</th>
-                            <th>Primary Phone</th>
-                            <th>Created at</th>
-                            <th>Updated at</th>
-                            <th>Last Touch-point</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                </table>
+                <div id="media_channels_table"></div>
             </div>
         </div>
     </div>
 
 </div>
 
+<div class="modal fade" id="cameraDataObserverCodeDialog" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<!-- Modal content-->
+		<div class="modal-content">   
+			<div class="modal-header">
+				<h4 class="modal-title text-center" > Camera observer API for first-party data tracking </h4>
+			</div>         
+			<div class="modal-body">
+				<h5 class="text-center">Collecting first-data stream from Camera CCTV is not supported in Leo CDP version 1.0</h5>
+			</div>  
+			<div class="modal-footer">
+		        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+		    </div>  
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="webDataObserverCodeDialog" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<!-- Modal content-->
+		<div class="modal-content">   
+			<div class="modal-header">
+				<h4 class="modal-title text-center" > Web data observer code for first-party data tracking </h4>
+			</div>         
+			<div class="modal-body">
+				<div id="code_holder" ><textarea id="data_observer_code" class="code">
+
+		(function() {
+		    //Leo Web Observer for channel: __channelName__
+    		window.leoObserverLogDomain = "__leoObserverLogDomain__";
+			window.leoObserverId = "__leoObserverId__";
+			window.srcTouchpointName = encodeURIComponent(document.title);
+			window.srcTouchpointUrl = encodeURIComponent(location.protocol + '//' + location.host + location.pathname);
+		
+			var leoproxyJsPath = '/public/js/leo-event-observer/leoproxy.js';
+		    var src = '//' + window.leoObserverLogDomain + leoproxyJsPath;
+		    var jsNode = document.createElement('script');
+		    jsNode.async = true;
+		    jsNode.src = src;
+		    var s = document.getElementsByTagName('script')[0];
+		    s.parentNode.insertBefore(jsNode, s);
+		})();
+		
+		function leoObserverProxyReady() {
+		    //Leo is ready, record pageview data
+		    LeoObserverProxy.recordViewEvent("pageview");
+		}
+
+				</textarea></div>
+			</div>  
+			<div class="modal-footer">
+		        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+		    </div>  
+		</div>
+	</div>
+</div>
+
 <script>
-    function initDataObserverList() {
-        var usersession = getUserSession();
-        if (usersession) {
-            $('#profile-list').DataTable({
-            	'processing': true,
-                'serverSide': true,
-                'serverMethod': 'POST',
-                'ajax': {
-                    url: baseAdminApi + '/cdp/profiles/filter',
-                    contentType: 'application/json',
-                    beforeSend: function (request) {
-                        request.setRequestHeader("leouss", usersession);
-                    },
-                    data: function (d) {
-                        console.log(d)
-                        return JSON.stringify(d);
-                    }
-                },
-                'columnDefs': [
-                	{
-                        "render": function (data, type, row) {
-                        	var callJsViewStr = "#calljs-leoCdpRouter('Customer_Profile_Report','" + row.id + "')";
-                            return '<a title="Profile Report" href="' + callJsViewStr + '" >'+data.substr(0,8)+'...</a>';
-                        },
-                        "targets": 0
-                    },
-                    {
-                        "render": function (data, type, row) {
-                            var date = moment(new Date(data)).format('YYYY-MM-DD HH:mm:ss');
-                            return date;
-                        },
-                        "targets": 5
-                    },
-                    {
-                        "render": function (data, type, row) {
-                            var date = moment(new Date(data)).format('YYYY-MM-DD HH:mm:ss');
-                            return date;
-                        },
-                        "targets": 6
-                    },
-                    {
-                        "render": function (data, type, row) {
-                        	var callJsViewStr = "#calljs-leoCdpRouter('Customer_Profile_Report','" + row.id + "')";
-                            var callJsEditStr ="#calljs-leoCdpRouter('Customer_Profile_Editor','" + row.id + "')";
-                            return '<a title="Profile Report" href="' + callJsViewStr + '" >View</a> <br> <a title="Profile Data Editor" href="' + callJsEditStr + '" >Edit</a>';
-                        },
-                        "targets": 8
-                    }
-                ],
-                'columns': [{
-                        "data": "id"
-                    },
-                    {
-                        "data": "firstName"
-                    },
-                    {
-                        "data": "lastName"
-                    },
-                    {
-                        "data": "primaryEmail"
-                    },
-                    {
-                        "data": "primaryPhone"
-                    },
-                    {
-                        "data": "createdAt"
-                    },
-                    {
-                        "data": "updatedAt"
-                    },
-                    {
-                        "data": "lastTouchpointId"
-                    }
-                ]
-            });
-        }
+	
+	var getObserverCode = getObserverCode || function(btn){
+		var json = JSON.parse(decodeURIComponent($(btn).data('json')));
+		console.log(json)
+		var mediaChannelId = json.id;
+		var mediaChannelName = json.name;
+		var type = json.type;
+		var observerLogDomain = "cdp.bigdatavietnam.org";
+		
+		if(type < 10){
+			$('#webDataObserverCodeDialog').modal({
+	    		backdrop: 'static',
+	    		keyboard: false
+			});
+			
+			//init code preview editor
+			$('#code_holder .CodeMirror').remove();
+			var codeNode = $('#webDataObserverCodeDialog .code')[0];
+			var editor = CodeMirror.fromTextArea(codeNode, {
+				mode:  "htmlmixed",
+				lineNumbers: true,
+	            styleActiveLine: true,
+	            matchBrackets: true,
+	            readOnly: true,
+		    });
+			editor.setSize(null, 480);
+			setTimeout(function() {
+				//copy from textarea template into editor, then selectAll for copy
+				
+				var tpl = $('#webDataObserverCodeDialog .code').val().trim();
+				var code = tpl.replace('__leoObserverId__',mediaChannelId)
+				code = code.replace('__channelName__',mediaChannelName)
+				code = code.replace('__leoObserverLogDomain__',observerLogDomain)
+				editor.getDoc().setValue( '<script>\n' + code + '\n<\/script>' )
+				editor.refresh();
+				editor.execCommand('selectAll')
+			},700);
+			
+		} else {
+			$('#cameraDataObserverCodeDialog').modal({
+	    		backdrop: 'static',
+	    		keyboard: false
+			});
+		}
+	}
+
+	var jsGridDataObserverCode = jsGridDataObserverCode || function(){
+		var DataObserverCode = function(config) {
+		    jsGrid.Field.call(this, config);
+		};
+		
+		DataObserverCode.prototype = new jsGrid.Field({
+		    sorter: function(date1, date2) {
+		        return 0;
+		    },
+		
+		    itemTemplate: function(jsonStr) {
+		    	if(jsonStr !== ''){
+			    	var btnHtml = '<button type="button" class="btn btn-success" onclick="getObserverCode(this)" ';
+			    	btnHtml += (' data-json="' + jsonStr  + '" ' );
+			    	btnHtml += '><i class="fa fa-code" style="font-size:1.8em" aria-hidden="true"></i> Get Code </button>'
+			        return btnHtml;
+		    	}
+		    	return '<span style="font-size:12px">The Observer can collect only first-party data from Owned Media Channel</span>';
+		    },
+		    
+		    insertTemplate: function(value) {
+	            return this._insertCode = value;
+	        },
+
+	        editTemplate: function(value) {
+	            return this._editCode = value;
+	        },
+
+	        insertValue: function() {
+	            return this._insertCode;
+	        },
+
+	        editValue: function() {
+	            return this._editCode;
+	        }
+		   
+		});
+		
+		jsGrid.fields.DataObserverCode = DataObserverCode;
+	}
+
+    var initDataObserverList = initDataObserverList || function() {
+    	jsGridDataObserverCode();
+    	
+    	LeoAdminApiUtil.getSecuredData('/cdp/journeymap/get', { "id" : "" }, function(json){ 
+  		 
+	   		var domSelector = '#journeyFlowChart';
+	   		var mediaJourneyData = json.data.mediaJourneyMap;
+	   		var channelTypes = json.data.channelTypes;
+	   		console.log(channelTypes);	
+	   		
+	   		
+	   		var defaultMetricName = mediaJourneyData.defaultMetricName;
+	   		var journeyStageMetrics = mediaJourneyData.journeyStageMetrics;
+	   		var journeyStages = mediaJourneyData.journeyStages;
+	   		var journeyLinks = mediaJourneyData.journeyLinks;
+	   		var journeyNodes =  mediaJourneyData.journeyNodes;
+	   		
+	   		renderJourneyFlowChart(domSelector, defaultMetricName, journeyStages, journeyStageMetrics, journeyNodes, journeyLinks);
+	   		
+	   		var mediaChannelMap = mediaJourneyData.mediaChannelMap;
+	   		var mediaChannelIndex = mediaJourneyData.mediaChannelIndex;
+	   		var mediaChannels = [];
+	   		
+	   		for(var name in mediaChannelMap){
+	   			var index = mediaChannelIndex[name];
+	   			var mediaChannel = mediaChannelMap[name];
+	   			
+	   			mediaChannel.index = index + 1;
+	   			mediaChannel.typeName = channelTypes[mediaChannel.type];
+	   		
+	   			mediaChannels[index] = mediaChannel;
+	   			if(mediaChannel.isOwnedMedia){
+	   				var jsonStr = JSON.stringify({id: mediaChannel.id, name : name, type : mediaChannel.type });
+	   				mediaChannel.dataObserverCode = encodeURIComponent(jsonStr);
+	   			} else {
+	   				mediaChannel.dataObserverCode = '';
+	   			}
+	   		}
+	   		
+	   		 $("#media_channels_table").jsGrid({
+	   		    width: "100%",
+	   		    height: "auto",
+	
+	   		    inserting: false,
+	   		    editing: false,
+	   		    sorting: true,
+	   		    paging: false,
+	   		    
+	   		    deleteConfirm: function(item) {
+	   	            return "The event \"" + item.eventName + "\" will be removed. Are you sure?";
+	   	        },
+	
+	   		    data: mediaChannels,
+	   		    
+		   	
+	   		    onItemInserting: function(args) {
+	   		    	//console.log(args.item)
+	   		    	
+	   		    },      
+	   		    onItemInserted: function(args) {
+	   		    	//console.log(args.item)
+	   		    	//console.log(behavioralMetricsData)
+	   		    }, 
+	   		    onItemDeleting: function(args) {
+	   		        console.log(args.item)
+	   		    },
+	
+	   		    fields: [
+	   		    	{ name: "index", title : "Index", type: "number", width: 20, editing: false, validate: "required" },
+	   		        { name: "name", title : "Channel Name", type: "text", width: 80, validate: "required" , align: "center"},
+	   		     	{ name: "typeName", title : "Channel Type", type: "text", validate: "required" , align: "center"},
+	   		     	{ name: "isOwnedMedia", title : "Owned Media", type: "checkbox", width: 45, validate: "required", align: "center" },
+	   		     	{ name: "url", title : "URL", type: "text", validate: "required", width: 160 },
+	   		     	{ name: "dataObserverCode", title : "Data Observer Code", type: "DataObserverCode", width: 64}
+	   		    ]
+	   		});  
+	   	})
     }    
+    
+   
 </script>
