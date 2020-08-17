@@ -39,6 +39,7 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 		public final static int RFM_ANALYSIS = 7; // https://clevertap.com/blog/rfm-analysis/
 		public final static int CHURN = 8;
 
+		// custom query
 		public final static int AD_HOC_QUERY = 9;
 	}
 

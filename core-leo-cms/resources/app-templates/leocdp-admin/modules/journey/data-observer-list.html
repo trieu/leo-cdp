@@ -105,7 +105,6 @@
 			editor.setSize(null, 480);
 			setTimeout(function() {
 				//copy from textarea template into editor, then selectAll for copy
-				
 				var tpl = $('#webDataObserverCodeDialog .code').val().trim();
 				var code = tpl.replace('__leoObserverId__',mediaChannelId)
 				code = code.replace('__channelName__',mediaChannelName)
@@ -137,10 +136,10 @@
 		    	if(jsonStr !== ''){
 			    	var btnHtml = '<button type="button" class="btn btn-success" onclick="getObserverCode(this)" ';
 			    	btnHtml += (' data-json="' + jsonStr  + '" ' );
-			    	btnHtml += '><i class="fa fa-code" style="font-size:1.8em" aria-hidden="true"></i> Get Code </button>'
+			    	btnHtml += '><i class="fa fa-code" style="font-size:1.6em" aria-hidden="true"></i> Get Code </button>'
 			        return btnHtml;
 		    	}
-		    	return '<span style="font-size:12px">Leo Observer can collect only first-party data from Owned Media Channel</span>';
+		    	return '<span style="font-size:12px">Leo Observer can only collect first-party data from Owned Channels</span>';
 		    },
 		    
 		    insertTemplate: function(value) {
@@ -206,7 +205,6 @@
 	   		 $("#media_channels_table").jsGrid({
 	   		    width: "100%",
 	   		    height: "auto",
-	
 	   		    inserting: false,
 	   		    editing: false,
 	   		    sorting: true,

@@ -1,7 +1,7 @@
 <div class="container-fluid">
 
     <!-- MAIN BODY here -->
-     <div class="row">
+    <div class="row">
         <div class="col-lg-10">
             <h4 class="page-header" id="page_breadcrumb" > </h4>
         </div>
@@ -10,6 +10,23 @@
         </div>
     </div>
     
+     <div class="row">
+        <div class="col-lg-9">
+            <div id="builder-basic"></div>
+	
+		    <div class="btn-group">
+		      <button class="btn btn-warning reset" data-target="basic">Reset</button>
+		      <button class="btn btn-success set-json" data-target="basic">Set rules</button>
+		      <button class="btn btn-primary parse-json" data-target="basic">Get rules</button>
+		    </div>
+        </div>
+        <div class="col-lg-3 text-center" >
+        	Segment summary
+        	<div id="donut_chart" style="max-width: 300px;" ></div>
+        </div>
+    </div>
+
+	   
 
     <div class="row gridholder">
         <div class="col-lg-12">
@@ -37,6 +54,18 @@
 
 <script>
     function initCustomerSegmentList() {
+    	var data = [
+  	      {name: 'high value', count: 35, percentage: 35, color: '#000000'},
+  	      {name: 'total', count: 100, percentage: false, color: '#f8b70a'},
+  	      
+  	    ];
+  	    var totalCount = 35;		//calcuting total manually
+  	    var domSelector = '#donut_chart'
+  	    var width = $(domSelector).width(),
+  	    height = width,
+  	    radius = width -140 ;
+  	  	renderDonutChart(domSelector, data,totalCount, width, height, radius)
+    	
         var usersession = getUserSession();
         if (usersession) {
             $('#profile-list').DataTable({
@@ -113,4 +142,93 @@
             });
         }
     }    
+    
+    var rules_basic = {
+    		  condition: 'AND',
+    		  rules: [{
+    		    id: 'price',
+    		    operator: 'less',
+    		    value: 10.25
+    		  }, {
+    		    condition: 'OR',
+    		    rules: [{
+    		      id: 'category',
+    		      operator: 'equal',
+    		      value: 2
+    		    }, {
+    		      id: 'category',
+    		      operator: 'equal',
+    		      value: 1
+    		    }]
+    		  }]
+    		};
+
+    		$('#builder-basic').queryBuilder({
+    		  plugins: ['bt-tooltip-errors'],
+    		  
+    		  filters: [{
+    		    id: 'name',
+    		    label: 'Name',
+    		    type: 'string'
+    		  }, {
+    		    id: 'category',
+    		    label: 'Category',
+    		    type: 'integer',
+    		    input: 'select',
+    		    values: {
+    		      1: 'Books',
+    		      2: 'Movies',
+    		      3: 'Music',
+    		      4: 'Tools',
+    		      5: 'Goodies',
+    		      6: 'Clothes'
+    		    },
+    		    operators: ['equal', 'not_equal', 'in', 'not_in', 'is_null', 'is_not_null']
+    		  }, {
+    		    id: 'in_stock',
+    		    label: 'In stock',
+    		    type: 'integer',
+    		    input: 'radio',
+    		    values: {
+    		      1: 'Yes',
+    		      0: 'No'
+    		    },
+    		    operators: ['equal']
+    		  }, {
+    		    id: 'price',
+    		    label: 'Price',
+    		    type: 'double',
+    		    validation: {
+    		      min: 0,
+    		      step: 0.01
+    		    }
+    		  }, {
+    		    id: 'id',
+    		    label: 'Identifier',
+    		    type: 'string',
+    		    placeholder: '____-____-____',
+    		    operators: ['equal', 'not_equal'],
+    		    validation: {
+    		      format: /^.{4}-.{4}-.{4}$/
+    		    }
+    		  }],
+
+    		  rules: rules_basic
+    		});
+
+    		$('#btn-reset').on('click', function() {
+    		  $('#builder-basic').queryBuilder('reset');
+    		});
+
+    		$('#btn-set').on('click', function() {
+    		  $('#builder-basic').queryBuilder('setRules', rules_basic);
+    		});
+
+    		$('#btn-get').on('click', function() {
+    		  var result = $('#builder-basic').queryBuilder('getRules');
+    		  
+    		  if (!$.isEmptyObject(result)) {
+    		    alert(JSON.stringify(result, null, 2));
+    		  }
+    		});
 </script>

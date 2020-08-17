@@ -1,3 +1,11 @@
+/**
+ * 
+ * @author tantrieuf31 (Thomas)
+ * 
+ * this script contains all functions for admin
+ * 
+ */
+
 var prefixCallJs = '#calljs-';
 var pageDomSelector = '#page_main_content';
 
@@ -343,6 +351,9 @@ LeoCdpAdmin.loadDataAndUpdateView = function(urlStr, params, callback) {
             			}
         				$(this).html(value)
         			}
+        			else if(fieldholder === 'url'){
+        				$(this).html($('<a/>').attr('href',value).attr('target','_blank').html(value));
+        			}
         			else if(fieldholder === 'inputvalue'){
         				$(this).val(value)
         			}
@@ -364,6 +375,9 @@ LeoCdpAdmin.loadDataAndUpdateView = function(urlStr, params, callback) {
         			}
         			else if(fieldholder === 'inputvalue'){
         				$(this).val(value)
+        			}
+        			else if(fieldholder === 'url'){
+        				$(this).html($('<a/>').attr('href',value).attr('target','_blank').html(value));
         			}
         		}
         	}).promise().done( function() {

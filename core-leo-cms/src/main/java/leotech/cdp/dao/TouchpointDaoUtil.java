@@ -50,8 +50,7 @@ public class TouchpointDaoUtil extends BaseLeoCdpDao {
 		ArangoDatabase db = getCdpDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("id", id);
-		Touchpoint p = new ArangoDbQuery<Touchpoint>(db, AQL_GET_TOUCHPOINT_BY_ID, bindVars, Touchpoint.class)
-				.getResultsAsObject();
+		Touchpoint p = new ArangoDbQuery<Touchpoint>(db, AQL_GET_TOUCHPOINT_BY_ID, bindVars, Touchpoint.class).getResultsAsObject();
 		return p;
 	}
 

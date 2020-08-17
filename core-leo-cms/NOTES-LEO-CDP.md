@@ -76,6 +76,8 @@ http://log.xemgiday.com/eta?observer=tester&media=xemgiday.com&itouchid=homepage
 * Cohort Visualization library https://github.com/restorando/cornelius
 * https://github.com/kiransunkari/retention-graph-using-D3-cohort-analysis-
 * User Journey, Gantt, Sequence https://github.com/mermaid-js/mermaid
+* A dynamic, reusable donut chart for D3.js v4 https://bl.ocks.org/mbhall88/22f91dc6c9509b709defde9dc29c63f2
+
 
 ## Profile UI/UX
 * Ref https://piwik.pro/customer-data-platform/
