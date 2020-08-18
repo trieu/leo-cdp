@@ -13,11 +13,25 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Unified Analytics Hub", "Primary Dashboard"]
 		},
 		
+		// 0  Main Analytics Dashboard
+		"Self_Learning_Courses": {
+			"menuName" : "Self-Learning Courses",
+			"functionName" : "loadSelfLearningCourses",
+			"breadcrumb" : ["USPA Knowledge Hub", "Self-Learning Courses"]
+		},
+		
 		// 1.1 Main Analytics Dashboard
 		"Primary_Dashboard": {
 			"menuName" : "Primary Dashboard",
 			"functionName" : "loadPrimaryDashboard",
 			"breadcrumb" : ["Unified Analytics Hub", "Primary Dashboard"]
+		},
+		
+		// 1.2 Analytics 360 Notebooks
+		"Analytics_360_Notebooks": {
+			"menuName" : "Analytics 360 Notebooks",
+			"functionName" : "loadAnalytics360Notebooks",
+			"breadcrumb" : ["Unified Analytics Hub", "Analytics 360 Notebooks"]
 		},
 		
 		// 2.1 Targeted Persona
@@ -160,14 +174,21 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Customer Data Hub", "Customer Segment List", "Customer Segment Builder"]
 		},
 		
-		// 3.3 Customer Data Export
+		// 3.3 Customer Data Import from tab-separated values (TSV) file 
+		"Customer_Data_Import" : {
+			"menuName" : "Customer Data Import",
+			"functionName" : "loadCustomerDataImport",
+			"breadcrumb" : ["Customer Data Hub", "Customer Data Import"]
+		},
+		
+		// 3.4 Customer Data Export to tab-separated values (TSV) file
 		"Customer_Data_Export" : {
 			"menuName" : "Customer Data Export",
 			"functionName" : "loadCustomerDataExport",
 			"breadcrumb" : ["Customer Data Hub", "Customer Data Export"]
 		},
 		
-		// 3.4 Product and Service Catalog
+		// Product and Service Catalog
 		"Products_and_Services" : {
 			"menuName" : "Products and Services",
 			"functionName" : "loadProductsAndServices",

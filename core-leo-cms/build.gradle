@@ -130,8 +130,8 @@ dependencies {
 		,'com.maxmind.geoip2:geoip2:2.14.0'	
 		,'com.google.openlocationcode:openlocationcode:1.0.4'
 
-		// primary database of core system
-		,'com.arangodb:arangodb-java-driver:6.7.1'
+		// Arangodb driver: primary database of Leo CDP
+		,'com.arangodb:arangodb-java-driver:6.7.3'
             
 		// for Math library
 		,'org.apache.commons:commons-math3:3.6.1'			

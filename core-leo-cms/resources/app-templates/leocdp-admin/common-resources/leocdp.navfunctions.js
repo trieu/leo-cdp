@@ -8,6 +8,15 @@
 
 LeoCdpAdmin.navFunctions = {};
 
+//###################### USPA Knowledge Hub ######################
+
+LeoCdpAdmin.navFunctions.loadSelfLearningCourses = function(breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/modules/knowledge/self-learning-courses.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+    	initSelfLearningCourses();
+    });
+}
+
 //###################### Analytics 360 Hub ######################
 
 LeoCdpAdmin.navFunctions.loadPrimaryDashboard = function(breadcrumbHtml) {
@@ -21,6 +30,13 @@ LeoCdpAdmin.navFunctions.loadContentDashboard = function (breadcrumbHtml) {
 	LeoCdpAdmin.loadView('/view/modules/analytics/content-dashboard.html?admin=1', pageDomSelector, function () {
 		$('#page_breadcrumb').html(breadcrumbHtml);
 		initContentDashboard();
+    });
+}
+
+LeoCdpAdmin.navFunctions.loadAnalytics360Notebooks = function (breadcrumbHtml) {
+	LeoCdpAdmin.loadView('/view/modules/analytics/analytics-360-notebooks.html?admin=1', pageDomSelector, function () {
+		$('#page_breadcrumb').html(breadcrumbHtml);
+		initAnalytics360Notebooks();
     });
 }
 
@@ -116,6 +132,8 @@ LeoCdpAdmin.navFunctions.loadCustomerSegmentList = function (breadcrumbHtml) {
     	initCustomerSegmentList();
     });
 }
+
+// Import and Export data
 
 
 // Products and Services functions
