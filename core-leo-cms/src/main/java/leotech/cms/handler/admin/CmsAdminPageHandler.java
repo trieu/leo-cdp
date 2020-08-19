@@ -12,7 +12,7 @@ import leotech.system.model.AppMetadata;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.User;
 
-public class CmsPageHandler extends BaseSecuredDataApi {
+public class CmsAdminPageHandler extends BaseSecuredDataApi {
 	
 	// for Admin CMS, only for ROLE_ADMIN and ROLE_SUPER_ADMIN
 	static final String API_LIST_RECENT_PAGES_OF_CATEGORY = "/page/recent-from-category";

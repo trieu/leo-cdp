@@ -12,7 +12,7 @@ import leotech.system.model.JsonDataPayload;
 import leotech.system.model.User;
 import leotech.system.service.UserDataService;
 
-public class AdminUserApiHandler extends BaseSecuredDataApi {
+public class SystemUserApiHandler extends BaseSecuredDataApi {
 	// for Admin CMS, only for ROLE_ADMIN and ROLE_SUPER_ADMIN
 	static final String API_LIST_ALL = "/user/list-all";
 	static final String API_CREATE = "/user/create";

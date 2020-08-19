@@ -11,7 +11,7 @@ import leotech.system.model.JsonDataPayload;
 import leotech.system.model.User;
 import leotech.system.util.RequestInfoUtil;
 
-public class CdpAnalytics360NotebookHandler extends BaseSecuredDataApi {
+public class CdpAnalytics360Handler extends BaseSecuredDataApi {
 	
 	// for dataList view
 	static final String API_LIST_ALL = "/cdp/analytics360notebooks";

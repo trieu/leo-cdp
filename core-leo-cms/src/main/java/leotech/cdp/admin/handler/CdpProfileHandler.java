@@ -75,6 +75,10 @@ public class CdpProfileHandler extends BaseSecuredDataApi {
 						//TODO
 						return JsonDataPayload.ok(uri, null, true);
 					}
+					case API_EXPORT : {
+						//TODO
+						return JsonDataPayload.ok(uri, null, true);
+					}
 					
 					default : {
 						return JsonErrorPayload.NO_HANDLER_FOUND;
@@ -121,10 +125,7 @@ public class CdpProfileHandler extends BaseSecuredDataApi {
 						return JsonDataPayload.ok(uri, list, true);
 					}
 					
-					case API_EXPORT : {
-						//TODO
-						return JsonDataPayload.ok(uri, null, true);
-					}
+					
 					default :
 						return JsonErrorPayload.NO_HANDLER_FOUND;
 				}

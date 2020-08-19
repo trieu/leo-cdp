@@ -18,7 +18,7 @@ import leotech.system.model.JsonDataPayload;
 import leotech.system.model.User;
 import rfx.core.util.StringUtil;
 
-public class AdminPostApiHandler extends BaseSecuredDataApi {
+public class CmsAdminPostApiHandler extends BaseSecuredDataApi {
 
 	// for Admin CMS, only for ROLE_ADMIN and ROLE_SUPER_ADMIN
 	static final String API_LIST_ALL = "/post/list-all";
