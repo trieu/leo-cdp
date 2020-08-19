@@ -162,7 +162,6 @@
             }
         }
 
-
         window.LeoObserverProxy = LeoObserverProxy;
     }
 
