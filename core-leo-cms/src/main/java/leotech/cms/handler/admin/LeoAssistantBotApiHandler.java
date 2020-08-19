@@ -13,7 +13,7 @@ import leotech.system.model.JsonDataPayload;
 import leotech.system.model.User;
 import rfx.core.util.StringUtil;
 
-public class BotApiHandler extends BaseSecuredDataApi {
+public class LeoAssistantBotApiHandler extends BaseSecuredDataApi {
 
     static final String API_VIDEO_CRAWLER = "/bot/video-crawler";
     static final String API_ARTICLE_CRAWLER = "/bot/article-crawler";

@@ -11,7 +11,7 @@ import leotech.system.model.JsonDataPayload;
 import leotech.system.model.User;
 import leotech.system.util.RequestInfoUtil;
 
-public class CdpActivationCampaignHandler extends BaseSecuredDataApi {
+public class CdpCampaignHandler extends BaseSecuredDataApi {
 	
 	// for dataList view
 	static final String API_LIST_ALL = "/cdp/activationcampaigns";

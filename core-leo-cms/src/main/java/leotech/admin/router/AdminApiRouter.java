@@ -3,7 +3,7 @@ package leotech.admin.router;
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
-import leotech.cdp.admin.handler.CdpActivationCampaignHandler;
+import leotech.cdp.admin.handler.CdpCampaignHandler;
 import leotech.cdp.admin.handler.CdpAnalytics360Handler;
 import leotech.cdp.admin.handler.CdpFunnelHandler;
 import leotech.cdp.admin.handler.CdpJourneyMapHandler;
@@ -12,7 +12,7 @@ import leotech.cdp.admin.handler.CdpObserverHandler;
 import leotech.cdp.admin.handler.CdpProfileHandler;
 import leotech.cdp.admin.handler.CdpSegmentHandler;
 import leotech.cms.handler.admin.AdminSystemApiHandler;
-import leotech.cms.handler.admin.BotApiHandler;
+import leotech.cms.handler.admin.LeoAssistantBotApiHandler;
 import leotech.cms.handler.admin.CmsAdminCategoryHandler;
 import leotech.cms.handler.admin.CmsAdminPageHandler;
 import leotech.cms.handler.admin.CmsAdminPostApiHandler;
@@ -54,8 +54,8 @@ public class AdminApiRouter extends BaseApiRouter {
 				payload = new AdminSystemApiHandler().httpPostApiHandler(userSession, uri, paramJson);
 			} 
 			//
-			else if (uri.startsWith(LEO_ASSISTANT_PREFIX)) {
-				payload = new BotApiHandler().httpPostApiHandler(userSession, uri, paramJson);
+			else if (uri.startsWith(LEO_ASSISTANT_BOT_PREFIX)) {
+				payload = new LeoAssistantBotApiHandler().httpPostApiHandler(userSession, uri, paramJson);
 			}
 			
 			//////// Customer Data Platform ///////
@@ -93,7 +93,7 @@ public class AdminApiRouter extends BaseApiRouter {
 			}
 			//
 			else if (uri.startsWith(CDP_CAMPAIGN_PREFIX)) {
-				payload = new CdpActivationCampaignHandler().httpPostApiHandler(userSession, uri, paramJson);
+				payload = new CdpCampaignHandler().httpPostApiHandler(userSession, uri, paramJson);
 			}
 			
 			//////// Content Management System ///////
@@ -134,8 +134,8 @@ public class AdminApiRouter extends BaseApiRouter {
 				payload = new AdminSystemApiHandler().httpGetApiHandler(userSession, uri, params);
 			} 
 			//
-			else if (uri.startsWith(LEO_ASSISTANT_PREFIX)) {
-				payload = new BotApiHandler().httpGetApiHandler(userSession, uri, params);
+			else if (uri.startsWith(LEO_ASSISTANT_BOT_PREFIX)) {
+				payload = new LeoAssistantBotApiHandler().httpGetApiHandler(userSession, uri, params);
 			}
 			
 			//////// Customer Data Platform ///////
@@ -173,7 +173,7 @@ public class AdminApiRouter extends BaseApiRouter {
 			}
 			//
 			else if (uri.startsWith(CDP_CAMPAIGN_PREFIX)) {
-				payload = new CdpActivationCampaignHandler().httpGetApiHandler(userSession, uri, params);
+				payload = new CdpCampaignHandler().httpGetApiHandler(userSession, uri, params);
 			}
 			
 			//////// Content Management System ///////

@@ -36,7 +36,7 @@ public abstract class BaseApiRouter extends BaseHttpRouter {
 
 	public static final String SEARCH_PREFIX = "/search";
 	public static final String QUERY_PREFIX = "/query";
-	public static final String LEO_ASSISTANT_PREFIX = "/leo-bot";
+	public static final String LEO_ASSISTANT_BOT_PREFIX = "/leo-bot";
 	public static final String SYSTEM_PREFIX = "/system";
 
 	private JsonDataPayload defaultDataHttpGet = JsonDataPayload.fail("No HTTP GET handler found", 404);
