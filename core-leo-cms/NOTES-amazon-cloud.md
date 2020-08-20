@@ -44,6 +44,22 @@ https://linuxconfig.org/how-to-setup-the-nginx-web-server-on-ubuntu-18-04-bionic
 * sudo apt-get install python-certbot-nginx
 * sudo certbot --nginx certonly
 
+### Java JVM
+
+https://docs.aws.amazon.com/corretto/latest/corretto-8-ug/generic-linux-install.html
+
+	wget -O- https://apt.corretto.aws/corretto.key | sudo apt-key add - 
+	sudo add-apt-repository 'deb https://apt.corretto.aws stable main'
+	sudo apt-get update; sudo apt-get install -y java-1.8.0-amazon-corretto-jdk
+	
+### Redis
+
+https://computingforgeeks.com/how-to-install-redis-on-ubuntu-18-04-debian-9/
+
+	sudo add-apt-repository ppa:chris-lea/redis-server
+	sudo apt-get update
+	sudo apt -y install redis-server
+
 ### Master Node for LeoCDP license management system
 
 	ssh -i /Users/mac/.ssh/id_rsa_myaws ubuntu@54.157.239.156
