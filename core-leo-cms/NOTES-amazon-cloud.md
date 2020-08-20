@@ -1,5 +1,66 @@
 # Infrastructure Cloud
 
+
+
+## Notes
+
+### DNS Domains: 
+* https://domains.google.com/registrar/leocdp.net/dns
+
+contenthub.leocdp.net  3.6.208.57
+demo.leocdp.net  13.235.137.146
+demodb.leocdp.net  13.235.137.146
+demotrack.leocdp.net	  15.207.39.90
+
+### ArangoDB: 
+
+* https://www.arangodb.com/download-major/ubuntu/
+* curl -OL https://download.arangodb.com/arangodb37/DEBIAN/Release.key
+* sudo apt-key add - < Release.key
+* echo 'deb https://download.arangodb.com/arangodb37/DEBIAN/ /' | sudo tee /etc/apt/sources.list.d/arangodb.list
+* sudo apt-get install apt-transport-https
+* sudo apt-get update
+* sudo apt-get install arangodb3=3.7.1-1
+
+### Nginx Proxy:
+
+* sudo wget https://nginx.org/keys/nginx_signing.key
+* sudo apt-key add nginx_signing.key
+* sudo nano /etc/apt/sources.list
+
+	deb https://nginx.org/packages/mainline/ubuntu/ bionic nginx
+	deb-src https://nginx.org/packages/mainline/ubuntu/ bionic nginx
+
+* sudo apt-get remove nginx-common
+* sudo apt-get update && sudo apt-get install nginx
+* sudo service nginx start
+
+### SSL for Nginx Server
+
+https://linuxconfig.org/how-to-setup-the-nginx-web-server-on-ubuntu-18-04-bionic-beaver-linux
+
+* sudo add-apt-repository ppa:certbot/certbot
+* sudo apt-get update
+* sudo apt-get install python-certbot-nginx
+* sudo certbot --nginx certonly
+
+### Master Node for LeoCDP license management system
+
+	ssh -i /Users/mac/.ssh/id_rsa_myaws ubuntu@54.157.239.156
+
+### Database: 
+	ssh -i /Users/mac/.ssh/mumbai.pem ubuntu@ec2-3-7-254-178.ap-south-1.compute.amazonaws.com
+
+### Admin
+	ssh -i /Users/mac/.ssh/mumbai.pem ubuntu@demo.leocdp.net
+
+### Observer
+	ssh -i /Users/mac/.ssh/mumbai.pem ubuntu@demotrack.leocdp.net
+
+### Content Hub
+	ssh -i /Users/mac/.ssh/mumbai.pem ubuntu@contenthub.leocdp.net
+
+
 ## Amazon ECS 
 * https://dzone.com/articles/deploying-springboot-in-ecs
 * https://dzone.com/articles/deploying-spring-boot-to-ecs-part-2

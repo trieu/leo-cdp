@@ -1,0 +1,12 @@
+        # Leo CDP demo system admin 
+        acl host_demoleocdp hdr(host) -i demo.leocdp.com
+        # Leo CDP demo recommendation system 
+        acl host_demoleocdp hdr(host) -i demorecsys.leocdp.com
+        # Leo CDP demo event tracking observer
+        acl host_demoleocdp hdr(host) -i demotrack.leocdp.com
+        # Leo CDP demo core arangodb database 
+        acl host_demodbleocdp hdr(host) -i demodb.leocdp.com
+        
+        
+        cat /etc/letsencrypt/live/demodb.leocdp.com/fullchain.pem /etc/letsencrypt/live/demodb.leocdp.com/privkey.pem | sudo tee /etc/ssl/leocdp.com/demodb.leocdp.com.pem
+        
