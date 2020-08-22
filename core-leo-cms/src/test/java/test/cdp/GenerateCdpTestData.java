@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -79,7 +81,12 @@ public class GenerateCdpTestData {
 			DeviceInfo userDevice = DeviceInfoUtil.getDeviceInfo(user_agent);
 			System.out.println(domainReferer + " " + firstName + " " + userDevice.browserName + " " + userDevice.deviceName+ " " + locationCode);
 			
-//			Profile profile = ProfileDataService.createFacebookSocialLoginProfile(firstName, lastName, email);
+			String visitorId = RandomStringUtils.randomAlphanumeric(32).toLowerCase();
+			System.out.println(visitorId);
+			
+			String refId = RandomStringUtils.randomAlphabetic(9);
+			
+			//Profile profile = ProfileDataService.createSocialLoginProfile(visitorId, firstName, lastName, email, refId, "facebook");
 //			profile.engageAtTouchpointId(atTouchpointId);
 		}
 	}

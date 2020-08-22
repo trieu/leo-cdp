@@ -161,10 +161,8 @@ public class ProfileDataService {
 		return pf;
 	}
 	
-	public static Profile createSocialLoginProfile(String name, String email, String refId, String source) {
-		Profile pf = Profile.newSocialLoginProfile(SOCIAL_LOGIN, name, email, refId, source);
-		
-		
+	public static Profile createSocialLoginProfile(String visitorId, String firstName, String lastName, String email, String refId, String source) {
+		Profile pf = Profile.newSocialLoginProfile(SOCIAL_LOGIN, visitorId, firstName, lastName, email, refId, source);
 		ProfileDaoUtil.create(pf);
 		return pf;
 	}

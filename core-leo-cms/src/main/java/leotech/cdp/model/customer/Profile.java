@@ -434,10 +434,12 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	 * @param crmRefId
 	 * @return
 	 */
-	public static Profile newSocialLoginProfile(String observerId, String name, String email, String refId, String source) {
+	public static Profile newSocialLoginProfile(String observerId, String visitorId, String firstName, String lastName, String email, String refId, String source) {
 		Profile p = new Profile();
-		p.initBaseInformation(0, "", ProfileConstant.TYPE_SOCIAL_LOGIN, observerId, "", "", "", email, "", "", refId);
-		p.setFirstName(name);
+		p.initBaseInformation(0, visitorId, ProfileConstant.TYPE_SOCIAL_LOGIN, observerId, "", "", "", email, "", "", refId);
+		p.setFirstName(firstName);
+		p.setLastName(lastName);
+		p.setSocialMediaProfile(source, refId);
 		return p;
 	}
 
@@ -658,6 +660,10 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	public void setSocialMediaProfiles(Map<String, String> socialMediaProfiles) {
 		this.socialMediaProfiles = socialMediaProfiles;
+	}
+	
+	public void setSocialMediaProfile(String source, String id) {
+		this.socialMediaProfiles.put(source, id);
 	}
 
 	public Map<String, String> getPersonalContacts() {
