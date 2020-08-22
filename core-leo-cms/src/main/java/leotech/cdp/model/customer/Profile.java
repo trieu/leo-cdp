@@ -424,6 +424,22 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		p.initBaseInformation(0, "", ProfileConstant.TYPE_CRM_CONTACT, observerId, "", "", "", email, phone, "", crmRefId);
 		return p;
 	}
+	
+	/**
+	 * new CRM_USER profile with email, phone and crm Ref ID
+	 * 
+	 * @param observerId
+	 * @param email
+	 * @param phone
+	 * @param crmRefId
+	 * @return
+	 */
+	public static Profile newSocialLoginProfile(String observerId, String name, String email, String refId, String source) {
+		Profile p = new Profile();
+		p.initBaseInformation(0, "", ProfileConstant.TYPE_SOCIAL_LOGIN, observerId, "", "", "", email, "", "", refId);
+		p.setFirstName(name);
+		return p;
+	}
 
 	/**
 	 * new ANONYMOUS profile for web or app tracking

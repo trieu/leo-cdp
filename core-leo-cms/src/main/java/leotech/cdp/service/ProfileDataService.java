@@ -17,6 +17,7 @@ import rfx.core.util.StringUtil;
 
 public class ProfileDataService {
 
+	private static final String SOCIAL_LOGIN = "social-login";
 	private static final String CRM_IMPORT = "crm-import";
 
 	public static Profile updateOrCreateFromWebTouchpoint(String observerId,String srcTouchpointId, String refTouchpointId, String touchpointRefDomain, String lastSeenIp,
@@ -155,6 +156,14 @@ public class ProfileDataService {
 		Profile pf = Profile.newCrmProfile( CRM_IMPORT, email, phone, crmRefId);
 		pf.setFirstName(firstName);
 		pf.setLastName(lastName);
+		
+		ProfileDaoUtil.create(pf);
+		return pf;
+	}
+	
+	public static Profile createSocialLoginProfile(String name, String email, String refId, String source) {
+		Profile pf = Profile.newSocialLoginProfile(SOCIAL_LOGIN, name, email, refId, source);
+		
 		
 		ProfileDaoUtil.create(pf);
 		return pf;

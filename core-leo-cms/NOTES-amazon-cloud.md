@@ -1,10 +1,10 @@
 # Infrastructure Cloud
 
 
-
-## Notes
+## Install Notes
 
 ### DNS Domains: 
+
 * https://domains.google.com/registrar/leocdp.net/dns
 
 contenthub.leocdp.net  3.6.208.57
@@ -59,9 +59,19 @@ https://computingforgeeks.com/how-to-install-redis-on-ubuntu-18-04-debian-9/
 	sudo add-apt-repository ppa:chris-lea/redis-server
 	sudo apt-get update
 	sudo apt -y install redis-server
+	
+### Jupyter Notebooks
+
+https://naysan.ca/2019/09/07/jupyter-notebook-as-a-service-on-ubuntu-18-04-with-python-3/
+https://medium.com/@joaolggross/how-to-install-and-execute-jupyter-notebook-on-ubuntu-18-04-d5b37159bd8e
+
+### Amazon S3
+
+https://github.com/s3fs-fuse/s3fs-fuse
+
+## Cloud Services
 
 ### Master Node for LeoCDP license management system
-
 	ssh -i /Users/mac/.ssh/id_rsa_myaws ubuntu@54.157.239.156
 
 ### Database: 
@@ -75,6 +85,9 @@ https://computingforgeeks.com/how-to-install-redis-on-ubuntu-18-04-debian-9/
 
 ### Content Hub
 	ssh -i /Users/mac/.ssh/mumbai.pem ubuntu@contenthub.leocdp.net
+	
+### Leo Campaign Scheduler
+	ssh -i /Users/mac/.ssh/mumbai.pem ubuntu@
 
 
 ## Amazon ECS 
