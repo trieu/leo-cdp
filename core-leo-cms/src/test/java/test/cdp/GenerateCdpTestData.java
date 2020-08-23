@@ -1,10 +1,18 @@
 package test.cdp;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.time.DateUtils;
+import org.joda.time.DateTime;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -13,15 +21,27 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.google.openlocationcode.OpenLocationCode;
 
+import leotech.cdp.dao.ContextSessionDaoUtil;
+import leotech.cdp.dao.DeviceDaoUtil;
+import leotech.cdp.model.analytics.ContextSession;
+import leotech.cdp.model.customer.Device;
 import leotech.cdp.model.customer.Profile;
+import leotech.cdp.model.journey.MediaChannelType;
+import leotech.cdp.model.journey.Touchpoint;
+import leotech.cdp.service.EventTrackingService;
 import leotech.cdp.service.ProfileDataService;
+import leotech.cdp.service.TouchpointDataService;
 import leotech.system.model.DeviceInfo;
 import leotech.system.util.DeviceInfoUtil;
 import rfx.core.util.FileUtils;
+import rfx.core.util.HashUtil;
+import rfx.core.util.RandomUtil;
 
 public class GenerateCdpTestData {
 	
+	static SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
 	static Map<String, Boolean> mapMediaDomain = new HashMap<String, Boolean>();
+	static List<String> urlsToRamdom = new ArrayList<String>();
 	
 	static {
 		mapMediaDomain.put("nbcnews.com", true);
@@ -47,6 +67,12 @@ public class GenerateCdpTestData {
 		mapMediaDomain.put("about.com", true);
 		mapMediaDomain.put("sun.com", true);
 		
+		urlsToRamdom.add("https://bookstore.bigdatavietnam.org/html/page/data-science-books");
+		urlsToRamdom.add("https://bookstore.bigdatavietnam.org/html/page/van-hoc-tac-pham-kinh-dien");
+		urlsToRamdom.add("https://bookstore.bigdatavietnam.org/html/page/business-book");
+		urlsToRamdom.add("https://bookstore.bigdatavietnam.org/html/page/artificial-intelligence-books");
+		urlsToRamdom.add("https://bookstore.bigdatavietnam.org/html/page/programming-books");
+		urlsToRamdom.add("https://bookstore.bigdatavietnam.org/html/page/basic-science-books");
 	}
 	
 	
@@ -54,40 +80,88 @@ public class GenerateCdpTestData {
 		String defaultVal = id % 2 == 1 ? "facebook.com" : "bookstore.bigdatavietnam.org";
 		return mapMediaDomain.getOrDefault(domain_referer, false) ? domain_referer : defaultVal;
 	}
+	
+	public static String  getRamdomlyTouchpointUrl() {
+	    Random rand = new Random();
+	    return urlsToRamdom.get(rand.nextInt(urlsToRamdom.size()));
+	}
 
     //Touchpoint: Facebook 
 	
-	public static void main(String[] args) throws JsonSyntaxException, IOException {
+	public static void main(String[] args) throws JsonSyntaxException, IOException, ParseException {
 		JsonArray jsonArray = new Gson().fromJson(FileUtils.readFileAsString("./data/MOCK_DATA_TEST_2.json"), JsonArray.class);
 		for (JsonElement je : jsonArray) {
 			JsonObject jo = je.getAsJsonObject();
+			
+			String sourceIP = "127.0.0.1";
 			int id = jo.get("id").getAsInt();
+			boolean is_product_view = jo.get("is_product_view").getAsInt() == 1;
+			
+			// Personal Info
 			String firstName = jo.get("first_name").getAsString();
 			String lastName = jo.get("last_name").getAsString();
 			String email = jo.get("email").getAsString();
-			String gender = jo.get("gender").getAsString();
+			int gender = jo.get("gender").getAsString().equals("Male") ? 1 : 0;
 			
+			// Session date and time
 			String sessionDate = jo.get("session_date").getAsString();
 			String sessionTime = jo.get("session_time").getAsString();
-			String domainReferer = getValidMediaDomain(id,jo.get("domain_referer").getAsString());
-			String user_agent = jo.get("user_agent").getAsString();
+			Date createdAt = dateFormatter.parse(sessionDate + " " + sessionTime);
+			System.out.println("#### createdAt "+createdAt);
+			
+			// touchpoint
+			String touchpointRefDomain = getValidMediaDomain(id,jo.get("domain_referer").getAsString());
+			String refTouchpointUrl = "https://" + touchpointRefDomain + "/";
+			boolean isFromOwnedMedia = touchpointRefDomain.equals("bookstore.bigdatavietnam.org");
+			
+			Touchpoint refTouchPoint = TouchpointDataService.getOrCreateWebTouchpointForTesting(createdAt,touchpointRefDomain, MediaChannelType.WEB_URL, refTouchpointUrl, isFromOwnedMedia);
+			String srcTouchpointUrl = getRamdomlyTouchpointUrl();
+			Touchpoint srcTouchpoint = TouchpointDataService.getOrCreateWebTouchpointForTesting(createdAt,"bookstore.bigdatavietnam.org", MediaChannelType.WEB_URL, srcTouchpointUrl, true);
+			String refTouchpointId = refTouchPoint.getId();
+			String srcTouchpointId = srcTouchpoint.getId();
 			
 			double lat = jo.get("lat").getAsDouble();
 			double lon = jo.get("lon").getAsDouble();
 			String locationCode = OpenLocationCode.encode(lat, lon);
 			
-			boolean is_product_view = jo.get("is_product_view").getAsInt() == 1;
+			// Device 
+			String user_agent = jo.get("user_agent").getAsString();
+			DeviceInfo deviceInfo = DeviceInfoUtil.getDeviceInfo(user_agent);
+			Device userDevice = DeviceInfoUtil.getUserDevice(deviceInfo, createdAt);
+			String userDeviceId = userDevice.getId();
+			DeviceDaoUtil.save(userDevice);
 			
-			DeviceInfo userDevice = DeviceInfoUtil.getDeviceInfo(user_agent);
-			System.out.println(domainReferer + " " + firstName + " " + userDevice.browserName + " " + userDevice.deviceName+ " " + locationCode);
-			
+			// web UUID
 			String visitorId = RandomStringUtils.randomAlphanumeric(32).toLowerCase();
-			System.out.println(visitorId);
 			
-			String refId = RandomStringUtils.randomAlphabetic(9);
+			// social login
+			String source = "facebook";
+			String refId = HashUtil.hashUrlCrc64(email)+"";
 			
-			//Profile profile = ProfileDataService.createSocialLoginProfile(visitorId, firstName, lastName, email, refId, "facebook");
-//			profile.engageAtTouchpointId(atTouchpointId);
+			//Leo Web Observer for channel: Video Content Hub
+			String observerId = "4zfVva5ed1ZPqTMf489Qax";
+			
+			Profile profile = ProfileDataService.saveSocialLoginProfile(email, visitorId, firstName, lastName, refId, source, 
+					observerId, srcTouchpointId, refTouchpointId, touchpointRefDomain, userDeviceId, gender, createdAt);
+			String profileId = profile.getId();
+			
+			// create session
+			DateTime dateTime = new DateTime(createdAt);
+			String dateTimeKey = ContextSession.getSessionDateTimeKey(dateTime);
+			ContextSession ctxSession = new ContextSession(observerId, dateTime, dateTimeKey, locationCode,
+					userDeviceId, "127.0.0.1", "bookstore.bigdatavietnam.org", "", refTouchpointId, srcTouchpointId, profileId , profile.getType(), visitorId, "pro");
+			ContextSessionDaoUtil.create(ctxSession);
+			
+			String eventName = "pageview";
+			// pageview event
+			EventTrackingService.recordViewEvent(createdAt, ctxSession, observerId, "pro", userDeviceId, sourceIP, deviceInfo,"Book Video Review", srcTouchpointUrl, refTouchpointUrl, touchpointRefDomain, eventName , null);
+			
+			eventName = "facebook-login";
+			Date loginTime = DateUtils.addSeconds(createdAt, RandomUtil.getRandomInteger(300, 9)); 
+			EventTrackingService.recordActionEvent(loginTime,ctxSession, observerId, "pro", userDeviceId, sourceIP, deviceInfo,"Book Video Review",srcTouchpointUrl, refTouchpointUrl,  touchpointRefDomain, eventName, 1, "", null);
+			
+			
+			System.out.println(new Gson().toJson(profile));
 		}
 	}
 }

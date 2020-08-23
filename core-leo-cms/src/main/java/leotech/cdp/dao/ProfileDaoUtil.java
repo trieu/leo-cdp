@@ -24,6 +24,7 @@ public class ProfileDaoUtil  extends BaseLeoCdpDao {
 	static final String AQL_GET_PROFILES_BY_PAGINATION = AqlTemplate.get("AQL_GET_PROFILES_BY_PAGINATION");
 	static final String AQL_GET_PROFILE_BY_ID = AqlTemplate.get("AQL_GET_PROFILE_BY_ID");
 	static final String AQL_GET_PROFILE_BY_IDENTITY = AqlTemplate.get("AQL_GET_PROFILE_BY_IDENTITY");
+	static final String AQL_GET_PROFILE_BY_PRIMARY_EMAIL = AqlTemplate.get("AQL_GET_PROFILE_BY_PRIMARY_EMAIL");
 	static final String AQL_GET_PROFILE_BY_KEY_IDENTITIES = AqlTemplate.get("AQL_GET_PROFILE_BY_KEY_IDENTITIES");
 
 	public static boolean checkLimitOfLicense() {
@@ -85,6 +86,14 @@ public class ProfileDaoUtil  extends BaseLeoCdpDao {
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("id", id);
 		Profile p = new ArangoDbQuery<Profile>(db, AQL_GET_PROFILE_BY_ID, bindVars, Profile.class).getResultsAsObject();
+		return p;
+	}
+	
+	public static Profile getByPrimaryEmail(String email) {
+		ArangoDatabase db = getCdpDbInstance();
+		Map<String, Object> bindVars = new HashMap<>(1);
+		bindVars.put("email", email);
+		Profile p = new ArangoDbQuery<Profile>(db, AQL_GET_PROFILE_BY_PRIMARY_EMAIL, bindVars, Profile.class).getResultsAsObject();
 		return p;
 	}
 	

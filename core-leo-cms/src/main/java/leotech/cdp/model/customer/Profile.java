@@ -23,7 +23,7 @@ import rfx.core.util.StringUtil;
 /**
  * @author Trieu Nguyen (Thomas)
  * 
- * general data entity for storing customer profile information
+ *         general data entity for storing customer profile information
  *
  */
 public class Profile extends CdpPersistentObject implements Comparable<Profile> {
@@ -42,9 +42,8 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 			dbCollection.ensureHashIndex(Arrays.asList("rootProfileId"), new HashIndexOptions());
 			dbCollection.ensurePersistentIndex(Arrays.asList("visitorId"),
 					new PersistentIndexOptions().unique(false));
-			dbCollection.ensurePersistentIndex(Arrays.asList("type"),
-					new PersistentIndexOptions().unique(false));
-			
+			dbCollection.ensurePersistentIndex(Arrays.asList("type"), new PersistentIndexOptions().unique(false));
+
 			dbCollection.ensurePersistentIndex(Arrays.asList("primaryEmail"),
 					new PersistentIndexOptions().unique(false));
 			dbCollection.ensurePersistentIndex(Arrays.asList("primaryPhone"),
@@ -53,7 +52,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 					new PersistentIndexOptions().unique(false));
 			dbCollection.ensurePersistentIndex(Arrays.asList("crmRefId"),
 					new PersistentIndexOptions().unique(false));
-			
+
 			dbCollection.ensurePersistentIndex(Arrays.asList("lastChannelId"),
 					new PersistentIndexOptions().unique(false));
 			dbCollection.ensurePersistentIndex(Arrays.asList("lastSeenIp"),
@@ -62,7 +61,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 					new PersistentIndexOptions().unique(false));
 			dbCollection.ensurePersistentIndex(Arrays.asList("lastUsedDeviceId"),
 					new PersistentIndexOptions().unique(false));
-			
+
 			dbCollection.ensurePersistentIndex(Arrays.asList("identities[*]"),
 					new PersistentIndexOptions().unique(false));
 			dbCollection.ensurePersistentIndex(Arrays.asList("usedDeviceIds[*]"),
@@ -75,12 +74,12 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 					new PersistentIndexOptions().unique(false));
 			dbCollection.ensurePersistentIndex(Arrays.asList("locationCode"),
 					new PersistentIndexOptions().unique(false));
-			
+
 			dbCollection.ensurePersistentIndex(Arrays.asList("topEngagedTouchpointIds[*]"),
 					new PersistentIndexOptions().unique(false));
 			dbCollection.ensurePersistentIndex(Arrays.asList("inCollections[*]"),
 					new PersistentIndexOptions().unique(false));
-			
+
 			dbCollection.ensureHashIndex(Arrays.asList("personaUri"), new HashIndexOptions());
 		}
 		return dbCollection;
@@ -89,26 +88,26 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	@DocumentField(Type.KEY)
 	@Expose
 	protected String id;
-	
+
 	// the main ID after Identity Resolution processing
 	@Expose
 	String rootProfileId = "";
-	
+
 	@Expose
 	protected String visitorId = "";
-	
+
 	@Expose
 	protected String crmRefId = "";
-	
+
 	@Expose
 	protected Set<String> identities = new HashSet<>(50);
 
 	@Expose
 	protected int type = ProfileConstant.TYPE_ANONYMOUS;
-	
+
 	@Expose
 	protected String schemaType = ProfileConstant.SCHEMA_TYPE_GENERAL;
-	
+
 	@Expose
 	protected int mergeCode = 0;
 
@@ -117,16 +116,15 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	@Expose
 	protected Date createdAt = new Date();
-	
+
 	@Expose
 	protected Date updatedAt;
-
 
 	// --- BEGIN taxonomy meta data
 
 	@Expose
 	protected int status = 1;
-	
+
 	@Expose
 	protected Set<String> inCollections = new HashSet<String>(10);
 
@@ -135,11 +133,10 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	@Expose
 	protected Set<String> inJourneyMaps = new HashSet<String>(20);
-	
+
 	// --- END taxonomy meta data
-	
-	
-	// --- BEGIN metadata of business engagement 
+
+	// --- BEGIN metadata of business engagement
 
 	@Expose
 	protected Set<String> topEngagedTouchpointIds = new HashSet<String>(1000);
@@ -161,21 +158,20 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	@Expose
 	protected String lastWebCookies = "";
-	
-	// --- END metadata of business engagement 
-	
+
+	// --- END metadata of business engagement
 
 	// --- BEGIN key Personal attributes
-	
+
 	@Expose
 	protected String firstName = "";
-	
+
 	@Expose
 	protected String lastName = "";
-	
+
 	@Expose
 	protected String primaryUsername = "";
-	
+
 	@Expose
 	protected String primaryEmail = "";
 
@@ -184,13 +180,13 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	@Expose
 	protected String primaryAvatar = "";
-	
+
 	@Expose
 	protected String livingLocation = "";
-	
+
 	@Expose
 	protected String locationCode = "";
-	
+
 	@Expose
 	protected String mainNationality = "";
 
@@ -205,56 +201,54 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	@Expose
 	protected int ageGroup = 0;
-	
+
 	@Expose
 	protected Map<String, String> personalContacts = new HashMap<>(10);
-	
+
 	@Expose
 	protected Map<String, String> businessContacts = new HashMap<>(10);
-	
+
 	@Expose
 	protected Map<String, String> socialMediaProfiles = new HashMap<>(10);
-	
+
 	@Expose
 	protected Map<String, String> extPersonalAttributes = new HashMap<>(50);
-	
+
 	// --- END key Personal attributes
-	
-	
+
 	// --- BEGIN Marketing Data Model , inputed by Marketer
-	
+
 	@Expose
 	protected Set<String> personalProblems = new HashSet<>(20);
-	
+
 	@Expose
 	protected Set<String> personalInterests = new HashSet<>(20);
-	
+
 	@Expose
 	protected Set<String> ideasForBusiness = new HashSet<>(20);
-	
+
 	@Expose
-	protected Set<String> solutionsForCustomer  = new HashSet<>(20);
-	
+	protected Set<String> solutionsForCustomer = new HashSet<>(20);
+
 	@Expose
-	protected Set<String> mediaChannels  = new HashSet<>(30);
-	
+	protected Set<String> mediaChannels = new HashSet<>(30);
+
 	@Expose
 	protected Set<String> contentKeywords = new HashSet<>(50);
-	
+
 	@Expose
-	protected Set<String> funnelMetrics  = new HashSet<>(20);
-	
+	protected Set<String> funnelMetrics = new HashSet<>(20);
+
 	@Expose
 	protected String funnelStage = "";
-	
+
 	// --- END Marketing Data Model
-	
-	
+
 	// --- BEGIN Business Data Model
-	
+
 	@Expose
 	protected Map<String, Set<String>> businessData = new HashMap<>();
-	
+
 	@Expose
 	protected Map<String, Integer> referrerChannels = new HashMap<>(50);
 
@@ -278,44 +272,45 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	@Expose
 	protected Set<String> supportHistory = new HashSet<String>();
-	
+
 	// --- END Business Data Model
-	
 
 	// --- BEGIN Quantitative Data Metrics
-	
+
 	@Expose
 	protected int totalDataQualityScore = 0;
-	
+
 	@Expose
-	protected int totalLeadScore = 0; // sum of all score from BehavioralEventMetric data
-	
+	protected int totalLeadScore = 0; // sum of all score from
+										// BehavioralEventMetric data
+
 	@Expose
 	protected int totalCreditScore = 0;
 
 	@Expose
-	protected int totalCSAT = 0; // Customer Satisfaction Score 
+	protected int totalCSAT = 0; // Customer Satisfaction Score
 
 	@Expose
 	protected int totalCAC = 0; // Customer Acquisition Cost
 
 	@Expose
-	protected int totalCLV = 0; // Customer lifetime value 
-	
+	protected int totalCLV = 0; // Customer lifetime value
+
 	@Expose
 	protected int totalCES = 0; // Customer Effort Score
-	
+
 	@Expose
 	protected int totalNPS = 0; // Net Promoter Score
-	
+
 	// --- END Quantitative Data Metrics
-	
+
 	@Expose
-	protected int partitionId = 0;// when the database has more than 500,000 profile, need a good partitioning strategy
-	
-	
+	protected int partitionId = 0;// when the database has more than 500,000
+									// profile, need a good partitioning
+									// strategy
+
 	@Expose
-	protected Map<String, Map<String,Integer>> predictionMetrics = new HashMap<>();
+	protected Map<String, Map<String, Integer>> predictionMetrics = new HashMap<>();
 
 	@Override
 	public int compareTo(Profile o) {
@@ -325,12 +320,13 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	@Override
 	public boolean isReadyForSave() {
-		return this.id != null && this.lastObserverId != null && this.lastUsedDeviceId != null && this.lastTouchpointId != null && this.identities.size()>0;
+		return this.id != null && this.lastObserverId != null && this.lastUsedDeviceId != null
+				&& this.lastTouchpointId != null && this.identities.size() > 0;
 	}
 
 	public Profile() {
 	}
-	
+
 	public Profile(String primaryUsername) {
 		this.primaryUsername = primaryUsername;
 		if (StringUtil.isNotEmpty(primaryUsername)) {
@@ -338,17 +334,21 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		}
 	}
 
-	protected void initBaseInformation(int partitionId, String visitorId, int type,
-			String observerId, String lastTouchpointId, String lastSeenIp, String usedDeviceId, String email,
-			String phone, String fingerprintId, String crmRefId) {
+	protected void initBaseInformation(int partitionId, String visitorId, int type, String observerId,
+			String lastTouchpointId, String lastSeenIp, String usedDeviceId, String email, String phone,
+			String fingerprintId, String crmRefId) {
 		// hash for unique id key
 
 		this.partitionId = partitionId;
 		this.type = type;
 
 		this.lastObserverId = observerId;
-		this.lastTouchpointId = lastTouchpointId;
-		this.topEngagedTouchpointIds.add(lastTouchpointId);
+
+		if (StringUtil.isNotEmpty(lastTouchpointId)) {
+			this.lastTouchpointId = lastTouchpointId;
+			this.topEngagedTouchpointIds.add(lastTouchpointId);
+		}
+
 		this.lastSeenIp = lastSeenIp;
 		this.lastUsedDeviceId = usedDeviceId;
 
@@ -403,10 +403,11 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	 * @param email
 	 * @return
 	 */
-	public static Profile newIdentifiedProfile( String observerId, String lastTouchpointId,
-			String lastSeenIp, String visitorId, String usedDeviceId, String email, String fingerprintId) {
+	public static Profile newIdentifiedProfile(String observerId, String lastTouchpointId, String lastSeenIp,
+			String visitorId, String usedDeviceId, String email, String fingerprintId) {
 		Profile p = new Profile();
-		p.initBaseInformation(0, visitorId, ProfileConstant.TYPE_IDENTIFIED, observerId, lastTouchpointId, lastSeenIp, usedDeviceId, email, "", fingerprintId, "");
+		p.initBaseInformation(0, visitorId, ProfileConstant.TYPE_IDENTIFIED, observerId, lastTouchpointId,
+				lastSeenIp, usedDeviceId, email, "", fingerprintId, "");
 		return p;
 	}
 
@@ -421,10 +422,11 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	 */
 	public static Profile newCrmProfile(String observerId, String email, String phone, String crmRefId) {
 		Profile p = new Profile();
-		p.initBaseInformation(0, "", ProfileConstant.TYPE_CRM_CONTACT, observerId, "", "", "", email, phone, "", crmRefId);
+		p.initBaseInformation(0, "", ProfileConstant.TYPE_CRM_CONTACT, observerId, "", "", "", email, phone, "",
+				crmRefId);
 		return p;
 	}
-	
+
 	/**
 	 * new CRM_USER profile with email, phone and crm Ref ID
 	 * 
@@ -434,9 +436,10 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	 * @param crmRefId
 	 * @return
 	 */
-	public static Profile newSocialLoginProfile(String observerId, String visitorId, String firstName, String lastName, String email, String refId, String source) {
+	public static Profile newSocialLoginProfile(String observerId, String visitorId, String firstName,
+			String lastName, String email, String refId, String source) {
 		Profile p = new Profile();
-		p.initBaseInformation(0, visitorId, ProfileConstant.TYPE_SOCIAL_LOGIN, observerId, "", "", "", email, "", "", refId);
+		p.initBaseInformation(0, visitorId, ProfileConstant.TYPE_SOCIAL_LOGIN, observerId, "", "", "", email, "","", "");
 		p.setFirstName(firstName);
 		p.setLastName(lastName);
 		p.setSocialMediaProfile(source, refId);
@@ -451,10 +454,11 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	 * @param lastSeenIp
 	 * @param usedDeviceId
 	 */
-	public static Profile newAnonymousProfile( String observerId, String lastTouchpointId,
-			String lastSeenIp, String visitorId, String usedDeviceId, String fingerprintId) {
+	public static Profile newAnonymousProfile(String observerId, String lastTouchpointId, String lastSeenIp,
+			String visitorId, String usedDeviceId, String fingerprintId) {
 		Profile p = new Profile();
-		p.initBaseInformation(0,  visitorId, ProfileConstant.TYPE_ANONYMOUS, observerId, lastTouchpointId, lastSeenIp, usedDeviceId, "", "", fingerprintId, "");
+		p.initBaseInformation(0, visitorId, ProfileConstant.TYPE_ANONYMOUS, observerId, lastTouchpointId,
+				lastSeenIp, usedDeviceId, "", "", fingerprintId, "");
 		return p;
 	}
 
@@ -467,7 +471,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	public String getId() {
 		return id;
 	}
-	
+
 	public void setId(String id) {
 		this.id = id;
 	}
@@ -515,9 +519,9 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	public void setTopEngagedTouchpointIds(Set<String> topEngagedTouchpointIds) {
 		this.topEngagedTouchpointIds = topEngagedTouchpointIds;
 	}
-	
+
 	public void engageAtTouchpointId(String atTouchpointId) {
-		if(this.topEngagedTouchpointIds.size()<1000) {
+		if (this.topEngagedTouchpointIds.size() < 1000 && StringUtil.isNotEmpty(atTouchpointId)) {
 			this.topEngagedTouchpointIds.add(atTouchpointId);
 		}
 	}
@@ -644,8 +648,6 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		this.usedDeviceIds = usedDeviceIds;
 	}
 
-	
-
 	public Map<String, String> getExtPersonalAttributes() {
 		return extPersonalAttributes;
 	}
@@ -661,7 +663,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	public void setSocialMediaProfiles(Map<String, String> socialMediaProfiles) {
 		this.socialMediaProfiles = socialMediaProfiles;
 	}
-	
+
 	public void setSocialMediaProfile(String source, String id) {
 		this.socialMediaProfiles.put(source, id);
 	}
@@ -674,7 +676,6 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		this.personalContacts = personalContacts;
 	}
 
-	
 	public Map<String, String> getSubscribedChannels() {
 		return subscribedChannels;
 	}
@@ -706,7 +707,6 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	public void setPredictionMetrics(Map<String, Map<String, Integer>> predictionMetrics) {
 		this.predictionMetrics = predictionMetrics;
 	}
-	
 
 	public int getTotalCAC() {
 		return totalCAC;
@@ -761,7 +761,11 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	}
 
 	public void setGender(int gender) {
-		this.gender = gender;
+		// 0: Female, 1: Male, 2: Lesbian, 3: Gay, 4: Bisexual, 5: Transgender
+		if (gender >= 0 && gender <= 5) {
+			this.gender = gender;
+			setGenderProbability(100);
+		}
 	}
 
 	public int getAge() {
@@ -910,7 +914,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	public void setMediaChannels(Set<String> mediaChannels) {
 		this.mediaChannels = mediaChannels;
 	}
-	
+
 	public String getSchemaType() {
 		return schemaType;
 	}
@@ -986,7 +990,6 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	public void setPrimaryUsername(String primaryUsername) {
 		this.primaryUsername = primaryUsername;
 	}
-	
 
 	public int getTotalLeadScore() {
 		return totalLeadScore;
@@ -1030,7 +1033,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	@Override
 	public String toString() {
-		return StringUtil.join(this.identities.toArray(),"-");
+		return StringUtil.join(this.identities.toArray(), "-");
 	}
 
 }

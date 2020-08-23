@@ -83,6 +83,7 @@ public class ProfileDataService {
 			pf.updateReferrerChannel(touchpointRefDomain);
 			pf.updateReferrerChannel(loginProvider);
 			pf.setIdentity(loginId, loginProvider);
+			
 			pf.setPrimaryEmail(email);
 			pf.setPrimaryPhone(phone);
 			pf.setLastObserverId(observerId);
@@ -153,7 +154,7 @@ public class ProfileDataService {
 		String phone = paramJson.getString("phone", "");
 		String crmRefId = paramJson.getString("crmRefId", "");
 		
-		Profile pf = Profile.newCrmProfile( CRM_IMPORT, email, phone, crmRefId);
+		Profile pf = Profile.newCrmProfile(CRM_IMPORT, email, phone, crmRefId);
 		pf.setFirstName(firstName);
 		pf.setLastName(lastName);
 		
@@ -161,9 +162,39 @@ public class ProfileDataService {
 		return pf;
 	}
 	
-	public static Profile createSocialLoginProfile(String visitorId, String firstName, String lastName, String email, String refId, String source) {
-		Profile pf = Profile.newSocialLoginProfile(SOCIAL_LOGIN, visitorId, firstName, lastName, email, refId, source);
-		ProfileDaoUtil.create(pf);
+	public static Profile saveSocialLoginProfile(String email, String visitorId, String firstName, String lastName, String refId, String source,
+			String observerId,String srcTouchpointId, String refTouchpointId, String touchpointRefDomain, String userDeviceId, int gender, Date createdAt) {
+		
+		Profile pf = ProfileDaoUtil.getByPrimaryEmail(email);
+		boolean createNew = false;
+		if(pf == null) {
+			pf = Profile.newSocialLoginProfile(SOCIAL_LOGIN, visitorId, firstName, lastName, email, refId, source);
+			createNew = true;
+		} else {
+			pf.setFirstName(firstName);
+			pf.setLastName(lastName);
+			pf.setSocialMediaProfile(source, refId);
+			pf.setIdentity(visitorId);
+		}
+		
+		// session touchpoint
+		pf.engageAtTouchpointId(srcTouchpointId);
+		pf.updateReferrerChannel(touchpointRefDomain);
+		pf.setLastObserverId(observerId);
+		pf.setLastTouchpointId(srcTouchpointId);
+		pf.setLastUsedDeviceId(userDeviceId);
+		pf.setCreatedAt(createdAt);
+		pf.setUpdatedAt(createdAt);
+		
+		// 
+		pf.setGender(gender);
+		
+		if(createNew) {
+			ProfileDaoUtil.create(pf);
+		} else {
+			ProfileDaoUtil.update(pf);
+		}
+		
 		return pf;
 	}
 	

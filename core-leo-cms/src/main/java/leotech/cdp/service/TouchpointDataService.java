@@ -1,5 +1,7 @@
 package leotech.cdp.service;
 
+import java.util.Date;
+
 import leotech.cdp.dao.TouchpointDaoUtil;
 import leotech.cdp.model.journey.MediaChannelType;
 import leotech.cdp.model.journey.Touchpoint;
@@ -37,6 +39,26 @@ public class TouchpointDataService {
 				tp = new Touchpoint(name, type, touchpointUrl);
 				tp.setOwnedMedia(isOwnedMedia);
 				tp.setParentId(parent.getId());
+				
+				// run in a threadpool
+				TouchpointDaoUtil.save(tp);
+			}
+			return tp;
+		}
+		return DIRECT_TRAFFIC_WEB;
+	}
+	
+	public static Touchpoint getOrCreateWebTouchpointForTesting(Date createdAt, String name, int type, String touchpointUrl, boolean isOwnedMedia) {
+		if (StringUtil.isNotEmpty(touchpointUrl)) {
+			Touchpoint tp = TouchpointDaoUtil.getByUrl(touchpointUrl);
+			
+			if (tp == null) {
+				Touchpoint parent = getOrCreateParentTouchpoint(type, touchpointUrl, isOwnedMedia);
+				
+				tp = new Touchpoint(name, type, touchpointUrl);
+				tp.setOwnedMedia(isOwnedMedia);
+				tp.setParentId(parent.getId());
+				tp.setCreatedAt(createdAt);
 				
 				// run in a threadpool
 				TouchpointDaoUtil.save(tp);

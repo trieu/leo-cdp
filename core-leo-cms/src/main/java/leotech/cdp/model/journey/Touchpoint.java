@@ -109,6 +109,26 @@ public class Touchpoint extends MediaChannel {
 		String keyHint = type + url;
 		this.id = id(keyHint);
 	}
+	
+	/**
+	 * for online touch-point from internal API
+	 * 
+	 * @param name
+	 * @param type
+	 * @param isOwnedMedia
+	 * @param url
+	 * @param isOwnedMedia
+	 */
+	public Touchpoint(Date createdAt, String name, int type, String url, boolean isOwnedMedia) {
+		super();
+		this.createdAt = createdAt;
+		this.name = name;
+		this.type = type;
+		this.url = url;
+		this.isOwnedMedia = isOwnedMedia;
+		String keyHint = type + url;
+		this.id = id(keyHint);
+	}
 
 	/**
 	 * for online touch-point from public API

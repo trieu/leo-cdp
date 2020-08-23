@@ -78,7 +78,6 @@ public class ContextSessionService {
 		// create new
 		ContextSession ctxSession = new ContextSession(observerId, dateTime, dateTimeKey, locationCode,
 				userDeviceId, ip, mediaHost, appId, refTouchpointId, srcTouchpointId, profileId, profileType, visitorId, env);
-		
 
 		// TODO run in a thread
 		ContextSessionDaoUtil.create(ctxSession);
@@ -95,15 +94,13 @@ public class ContextSessionService {
 				if (StringUtil.isNotEmpty(clientSessionKey)) {
 					json = jedis.get(clientSessionKey);
 				}
-
 				ContextSession ctxSession = null;
 				DateTime dateTime = new DateTime();
-				String dateTimeKey = ContextSession.getSessionDateTimeKey(dateTime);
 
 				if (json == null) {
 
-					// the session is expired, so create a new one and commit to
-					// database
+					// the session is expired, so create a new one and commit to database
+					String dateTimeKey = ContextSession.getSessionDateTimeKey(dateTime);
 					ctxSession = createContextSession(req, params, device, dateTime, dateTimeKey);
 					String newSessionKey = ctxSession.getSessionKey();
 					String sessionJson = new Gson().toJson(ctxSession);
@@ -114,7 +111,6 @@ public class ContextSessionService {
 					p.sync();
 
 				} else {
-
 					// get from database for event recording
 					ctxSession = new Gson().fromJson(json, ContextSession.class);
 

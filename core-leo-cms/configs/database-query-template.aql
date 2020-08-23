@@ -213,6 +213,11 @@ AQL_GET_PROFILE_BY_ID =>
 	RETURN e
 ;
 
+AQL_GET_PROFILE_BY_PRIMARY_EMAIL =>
+	FOR e in cdp_profile FILTER e.primaryEmail == @email  
+	RETURN e
+;
+
 AQL_GET_PROFILE_BY_IDENTITY =>
 	FOR e in cdp_profile FILTER @visitorId IN e.identities[*] AND e.status == 1
 	RETURN e
@@ -319,5 +324,11 @@ AQL_GET_PRODUCT_ITEMS_BY_FILTER =>
 	RETURN p
 ;
 
+########### AQL LEO CDP - DEVICE COLLECTION ########################################################################################################;
+
+AQL_GET_DEVICE_BY_ID =>
+	FOR e in cdp_device FILTER e._key == @id
+	RETURN e
+;
 
 ############################################### END AQL  #####################################################################################

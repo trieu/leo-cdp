@@ -1,5 +1,6 @@
 package leotech.cdp.router.api;
 
+import java.util.Date;
 import java.util.Map;
 
 import io.vertx.core.MultiMap;
@@ -30,8 +31,10 @@ public class TrackingApi {
 				TrackingApiParam.EVENT_JSON_DATA);
 
 		//System.out.println(new Gson().toJson(eventJsonData));
+		
+		Date createdAt = new Date();
 
-		return EventTrackingService.recordViewEvent(ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
+		return EventTrackingService.recordViewEvent(createdAt, ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
 				srcTouchpointName, srcTouchpointUrl, refTouchpointUrl, touchpointRefDomain, eventName, eventJsonData);
 	}
 
@@ -52,8 +55,10 @@ public class TrackingApi {
 		Map<String, String> eventJsonData = RequestInfoUtil.getHashMapFromRequestParams(params,
 				TrackingApiParam.EVENT_JSON_DATA);
 		int eventCount = 1;
+		
+		Date createdAt = new Date();
 
-		return EventTrackingService.recordActionEvent(ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
+		return EventTrackingService.recordActionEvent(createdAt, ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
 				srcTouchpointName,srcTouchpointUrl, refTouchpointUrl,  touchpointRefDomain, eventName, eventCount, "", eventJsonData);
 	}
 
@@ -78,8 +83,10 @@ public class TrackingApi {
 		String transactionCode = StringUtil.safeString(params.get(TrackingApiParam.TRANSACTION_CODE));
 		String environment = StringUtil.safeString(params.get(TrackingApiParam.DATA_ENVIRONMENT),
 				TrackingApiParam.DEV_ENV);
+		
+		Date createdAt = new Date();
 
-		return EventTrackingService.recordConversionEvent(ctxSession, srcObserverId, environment, srcEventKey, deviceId, sourceIP,
+		return EventTrackingService.recordConversionEvent(createdAt,  ctxSession, srcObserverId, environment, srcEventKey, deviceId, sourceIP,
 				device, srcTouchpointName, srcTouchpointUrl, refTouchpointUrl, touchpointRefDomain, eventName, eventCount, transactionCode, "", eventJsonData);
 	}
 

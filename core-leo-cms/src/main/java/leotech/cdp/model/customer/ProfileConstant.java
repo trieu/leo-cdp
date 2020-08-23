@@ -19,9 +19,8 @@ public class ProfileConstant {
 	public final static int TYPE_COMPETITOR = 8;
 	public final static int TYPE_GATEKEEPER = 9;
 	
-	// SOcial login
+	// Social login
 	public final static int TYPE_SOCIAL_LOGIN = 10;
-	
 	
 	public final static String SCHEMA_TYPE_GENERAL = "general";
 	

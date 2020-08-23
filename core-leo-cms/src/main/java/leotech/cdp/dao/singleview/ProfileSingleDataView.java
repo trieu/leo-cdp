@@ -79,7 +79,10 @@ public class ProfileSingleDataView extends Profile implements SingleDataView {
 				typeAsText = "DMP_PROFILE";
 			} else if(type == ProfileConstant.TYPE_IDENTIFIED) {
 				typeAsText = "IDENTIFIED";
+			} else if(type == ProfileConstant.TYPE_SOCIAL_LOGIN) {
+				typeAsText = "SOCIAL_LOGIN";
 			}
+			 
 		}
 		
 		// gender 

@@ -19,7 +19,7 @@ import leotech.cdp.model.analytics.TrackingEvent;
 import leotech.cdp.model.business.ProductItem;
 import leotech.cdp.model.customer.Profile;
 import leotech.cdp.model.customer.Segment;
-import leotech.cdp.model.customer.UserDevice;
+import leotech.cdp.model.customer.Device;
 import leotech.cdp.model.journey.BehavioralEventMetric;
 import leotech.cdp.model.journey.EventTrigger;
 import leotech.cdp.model.journey.MediaChannel;
@@ -65,7 +65,7 @@ public class SetupNewDatabase {
 		audienceDataHubCollections.add(ContextSession.COLLECTION_NAME);
 		audienceDataHubCollections.add(Profile.COLLECTION_NAME);
 		audienceDataHubCollections.add(TrackingEvent.COLLECTION_NAME);
-		audienceDataHubCollections.add(UserDevice.COLLECTION_NAME);
+		audienceDataHubCollections.add(Device.COLLECTION_NAME);
 		audienceDataHubCollections.add(ReportUnit.COLLECTION_NAME);
 		audienceDataHubCollections.add(Segment.COLLECTION_NAME);
 
