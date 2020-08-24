@@ -10,7 +10,7 @@ import leotech.cms.service.PageDataService;
 import leotech.core.api.BaseSecuredDataApi;
 import leotech.system.model.AppMetadata;
 import leotech.system.model.JsonDataPayload;
-import leotech.system.model.User;
+import leotech.system.model.SystemUser;
 
 public class CmsAdminPageHandler extends BaseSecuredDataApi {
 	
@@ -25,7 +25,7 @@ public class CmsAdminPageHandler extends BaseSecuredDataApi {
 	@Override
 	public JsonDataPayload httpPostApiHandler(String userSession, String uri, JsonObject paramJson)
 			throws Exception {
-		User loginUser = getUserFromSession(userSession);
+		SystemUser loginUser = getUserFromSession(userSession);
 		if (loginUser != null) {
 			if (isAdminRole(loginUser)) {
 				System.out.println("uri " + uri);
@@ -95,7 +95,7 @@ public class CmsAdminPageHandler extends BaseSecuredDataApi {
 	@Override
 	public JsonDataPayload httpGetApiHandler(String userSession, String uri, MultiMap params) throws Exception {
 		// TODO Auto-generated method stub
-		User user = getUserFromSession(userSession);
+		SystemUser user = getUserFromSession(userSession);
 		if (user != null) {
 			if (isAdminRole(user)) {
 

@@ -15,14 +15,14 @@ import leotech.cms.model.Page;
 import leotech.cms.model.Post;
 import leotech.cms.model.common.ContentType;
 import leotech.system.model.AppMetadata;
-import leotech.system.model.User;
+import leotech.system.model.SystemUser;
 import leotech.system.util.KeywordUtil;
 
 public class PageDataService {
 
 	// TODO add shared redis cache here
 
-	public static String savePageInfo(JsonObject paramJson, User loginUser) {
+	public static String savePageInfo(JsonObject paramJson, SystemUser loginUser) {
 
 		String ownerId = loginUser.getKey();
 		String pageId = paramJson.getString("pageId", "");

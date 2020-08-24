@@ -1,4 +1,4 @@
-package leotech.system.model;
+package leotech.cms.model.common;
 
 import java.util.Arrays;
 
@@ -12,7 +12,6 @@ import com.arangodb.model.PersistentIndexOptions;
 import com.github.slugify.Slugify;
 import com.google.gson.annotations.Expose;
 
-import leotech.cms.model.common.QueryFilter;
 import leotech.system.util.database.ArangoDbUtil;
 import leotech.system.util.database.PersistentArangoObject;
 import rfx.core.util.StringUtil;

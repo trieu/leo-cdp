@@ -15,7 +15,7 @@ import leotech.cms.service.PostDataService;
 import leotech.core.api.BaseSecuredDataApi;
 import leotech.system.model.AppMetadata;
 import leotech.system.model.JsonDataPayload;
-import leotech.system.model.User;
+import leotech.system.model.SystemUser;
 import rfx.core.util.StringUtil;
 
 public class CmsAdminPostApiHandler extends BaseSecuredDataApi {
@@ -31,7 +31,7 @@ public class CmsAdminPostApiHandler extends BaseSecuredDataApi {
 	@Override
 	public JsonDataPayload httpPostApiHandler(String userSession, String uri, JsonObject paramJson)
 			throws Exception {
-		User loginUser = getUserFromSession(userSession);
+		SystemUser loginUser = getUserFromSession(userSession);
 		if (loginUser != null) {
 			if (isAdminRole(loginUser)) {
 				if (uri.equalsIgnoreCase(API_LIST_ALL)) {
@@ -83,7 +83,7 @@ public class CmsAdminPostApiHandler extends BaseSecuredDataApi {
 
 	@Override
 	public JsonDataPayload httpGetApiHandler(String userSession, String uri, MultiMap params) throws Exception {
-		User user = getUserFromSession(userSession);
+		SystemUser user = getUserFromSession(userSession);
 		if (user != null) {
 			if (uri.equalsIgnoreCase(API_GET_BY_CONTENT_CLASS_AND_KEYWORDS)) {
 				String contentClass = StringUtil.safeString(params.get("contentClass"));

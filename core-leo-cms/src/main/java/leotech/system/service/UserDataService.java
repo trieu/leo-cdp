@@ -6,7 +6,7 @@ import java.util.Map;
 import io.vertx.core.json.JsonObject;
 import leotech.cms.dao.UserDaoUtil;
 import leotech.system.model.AppMetadata;
-import leotech.system.model.User;
+import leotech.system.model.SystemUser;
 
 public class UserDataService {
 
@@ -33,13 +33,13 @@ public class UserDataService {
 		});
 
 		if (createNew) {
-			User user = new User(userLogin, userPass, displayName, userEmail, AppMetadata.DEFAULT_ID);
+			SystemUser user = new SystemUser(userLogin, userPass, displayName, userEmail, AppMetadata.DEFAULT_ID);
 			user.setRole(role);
 			user.setStatus(status);
 			user.setCustomData(customData);
 			userId = UserDaoUtil.createNew(user);
 		} else {
-			User u = UserDaoUtil.getByUserLogin(userLogin);
+			SystemUser u = UserDaoUtil.getByUserLogin(userLogin);
 			u.setUserEmail(userEmail);
 			u.setDisplayName(displayName);
 			if (!userPass.isEmpty()) {
@@ -55,7 +55,7 @@ public class UserDataService {
 		return userId;
 	}
 
-	public static User getByUserId(String id) {
+	public static SystemUser getByUserId(String id) {
 		return UserDaoUtil.getByUserId(id);
 	}
 

@@ -23,9 +23,7 @@ import rfx.core.util.StringUtil;
 
 public class PostDaoUtil {
 
-	// for
-	static long limitTotalPosts = 1000;// free = 1000, $9 = 90000, $99 = 900000,
-										// $999 = 9000000, $9999 = no limit
+	static long limitTotalPosts = 100000;
 
 	private static final String AQL_FIND_KEY_AQL = ArangoDbUtil.contentFindKeyAql(Post.COLLECTION_NAME);
 	static final String AQL_GET_POSTS_BY_NETWORK = AqlTemplate.get("AQL_GET_POSTS_BY_NETWORK");
@@ -156,7 +154,8 @@ public class PostDaoUtil {
 		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 		
 		StringBuilder aql = new StringBuilder();
-		aql.append("FOR p in post FILTER p.privacyStatus == ").append(DataPrivacy.PUBLIC);
+		aql.append("FOR p in ").append(Post.COLLECTION_NAME).append(" FILTER ");
+		aql.append(" p.privacyStatus == ").append(DataPrivacy.PUBLIC);
 		
 		Map<String, Object> bindVars = new HashMap<>();
 		
@@ -308,7 +307,8 @@ public class PostDaoUtil {
 			String categoryKey = query.getCategoryKey();
 			int startIndex = query.getStartIndex();
 			int limit = query.getLimit();
-			aql.append("LET ").append(ccpQueryKey).append(" = (FOR p in post FILTER ( \"").append(categoryKey)
+			aql.append("LET ").append(ccpQueryKey).append(" = (FOR p in ").append(Post.COLLECTION_NAME)
+					.append(" FILTER ( \"").append(categoryKey)
 					.append("\" IN p.categoryKeys[*]) AND (p.privacyStatus == 0 OR p.privacyStatus == 1 ) ")
 					.append(" AND (p.contentClass == \"news\")").append("SORT p.modificationTime DESC LIMIT  ")
 					.append(startIndex).append(",").append(limit).append(returnSingle).append("\n");
@@ -360,7 +360,8 @@ public class PostDaoUtil {
 		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 		Map<String, Object> bindVars = new HashMap<>();
 
-		StringBuilder aql = new StringBuilder("FOR p in post FILTER ");
+		StringBuilder aql = new StringBuilder();
+		aql.append("FOR p in ").append(Post.COLLECTION_NAME).append(" FILTER ");
 
 		// content class
 		int c = 0;

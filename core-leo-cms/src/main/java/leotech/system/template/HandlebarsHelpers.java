@@ -12,7 +12,7 @@ import com.github.jknack.handlebars.Helper;
 import com.github.jknack.handlebars.Options;
 import com.google.gson.Gson;
 
-import leotech.system.model.User;
+import leotech.system.model.SystemUser;
 import leotech.system.service.UserDataService;
 import rfx.core.util.RandomUtil;
 import rfx.core.util.StringPool;
@@ -337,7 +337,7 @@ public class HandlebarsHelpers {
 	@Override
 	public CharSequence apply(String userId, Options options) throws IOException {
 	    if (StringUtil.isNotEmpty(userId)) {
-		User user = UserDataService.getByUserId(userId);
+		SystemUser user = UserDataService.getByUserId(userId);
 		if(user != null) {
 		    return user.getDisplayName();
 		}
@@ -354,7 +354,7 @@ public class HandlebarsHelpers {
 	public CharSequence apply(String contentOwnerId, Options options) throws IOException {
 	    if (StringUtil.isNotEmpty(contentOwnerId)) {
 		String sessionUserId = options.param(0, "");
-		User contentOwner = UserDataService.getByUserId(contentOwnerId);
+		SystemUser contentOwner = UserDataService.getByUserId(contentOwnerId);
 		if(contentOwner != null) {
 		    return contentOwner.getKey().equals(sessionUserId) ? options.fn(this) : options.inverse(this);
 		}		

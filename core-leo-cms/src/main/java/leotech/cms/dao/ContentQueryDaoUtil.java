@@ -31,7 +31,9 @@ public class ContentQueryDaoUtil {
 
 		for (String keyword : keywords) {
 			keyword = keyword.trim();
-			StringBuilder aql = new StringBuilder("FOR p in post FILTER ");
+			StringBuilder aql = new StringBuilder();
+			aql.append("FOR p in ").append(Post.COLLECTION_NAME).append(" FILTER ");
+			
 			Map<String, Object> bindVars = new HashMap<>(2);
 			bindVars.put("keyword", keyword);
 			if (!contentClass.isEmpty()) {
@@ -75,7 +77,8 @@ public class ContentQueryDaoUtil {
 		}
 		ArangoCursor<Post> cursor = null;
 		try {
-			StringBuilder aql = new StringBuilder("FOR p in post FILTER ");
+			StringBuilder aql = new StringBuilder();
+			aql.append("FOR p in ").append(Post.COLLECTION_NAME).append(" FILTER ");
 			ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 			Map<String, Object> bindVars = new HashMap<>(categoryKeys.length);
 

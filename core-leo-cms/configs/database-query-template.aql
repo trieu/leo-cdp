@@ -1,49 +1,49 @@
 ############# AQL LEO CMS - POST COLLECTION ########################################################################################################;
 
 AQL_GET_POST_BY_ID =>
-	FOR p in post FILTER p.id == @id  
+	FOR p in cms_post FILTER p.id == @id  
 	RETURN p
 ;
 
 AQL_GET_POST_BY_SLUG =>
-	FOR p in post FILTER p.slug == @slug  
+	FOR p in cms_post FILTER p.slug == @slug  
 	RETURN p
 ;
 
 AQL_GET_POSTS_BY_NETWORK =>
-	FOR p in post FILTER p.networkId == @networkId 
+	FOR p in cms_post FILTER p.networkId == @networkId 
 	SORT p.modificationTime DESC
 	LIMIT @startIndex,@numberResult 
 	RETURN p
 ;
 
 AQL_GET_POSTS_BY_PAGE =>
-	FOR p in post FILTER @pageId IN p.pageIds[*]
+	FOR p in cms_post FILTER @pageId IN p.pageIds[*]
 	SORT p.modificationTime DESC
 	LIMIT @startIndex,@numberResult 
 	RETURN p
 ;
 
 AQL_GET_ALL_POSTS_BY_PAGE =>
-	FOR p in post FILTER @pageId IN p.pageIds[*]
+	FOR p in cms_post FILTER @pageId IN p.pageIds[*]
 	SORT p.modificationTime DESC
 	RETURN p
 ;
 
 AQL_GET_ALL_POSTS_BY_CATEGORY_OR_PAGE =>
-	FOR p in post FILTER @categoryKey IN p.categoryKeys[*] OR @pageId IN p.pageIds[*] 
+	FOR p in cms_post FILTER @categoryKey IN p.categoryKeys[*] OR @pageId IN p.pageIds[*] 
 	SORT p.modificationTime DESC
 	RETURN p
 ;
 
 AQL_GET_POSTS_BY_OWNER =>
-	FOR p in post FILTER p.ownerId == @ownerId
+	FOR p in cms_post FILTER p.ownerId == @ownerId
 	LIMIT @startIndex,@numberResult 
 	RETURN p
 ;
 
 AQL_GET_VIEWABLE_POSTS_BY_PAGE =>
-	FOR p in post FILTER @pageId IN p.pageIds[*] AND (p.ownerId == @ownerId OR p.privacyStatus == 0)
+	FOR p in cms_post FILTER @pageId IN p.pageIds[*] AND (p.ownerId == @ownerId OR p.privacyStatus == 0)
 	LIMIT @startIndex,@numberResult 
 	RETURN p
 ;
@@ -104,22 +104,22 @@ AQL_GET_ALL_CATEGORIES_BY_NETWORK =>
 
 ########### AQL LEO Platform - USER COLLECTION ########################################################################################################;
 AQL_FIND_KEY_BY_USERLOGIN => 
-	FOR u in user FILTER u.userLogin == @userLogin  
+	FOR u in system_user FILTER u.userLogin == @userLogin  
 	RETURN u._key
 ;
 
 AQL_GET_USER_BY_USERLOGIN => 
-	FOR u in user FILTER u.userLogin == @userLogin  
+	FOR u in system_user FILTER u.userLogin == @userLogin  
 	RETURN u
 ;
 
 AQL_GET_USER_BY_KEY => 
-	FOR u in user FILTER u._key == @key  
+	FOR u in system_user FILTER u._key == @key  
 	RETURN u
 ;
 
 AQL_GET_ALL_USERS_IN_NETWORK => 
-	FOR u in user FILTER u.networkId == @networkId  
+	FOR u in system_user FILTER u.networkId == @networkId  
 	RETURN u
 ;
 

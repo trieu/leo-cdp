@@ -27,7 +27,10 @@ import rfx.core.util.StringUtil;
  * core user model for system administration
  * 
  */
-public class User implements PersistentArangoObject {
+public class SystemUser implements PersistentArangoObject {
+	
+	public static final String COLLECTION_NAME = "system_user";
+	static ArangoCollection instance;
 
 	public static final int STATUS_PENDING = 0;
 	public static final int STATUS_ACTIVE = 1;
@@ -117,7 +120,7 @@ public class User implements PersistentArangoObject {
 	@Expose
 	Map<String, String> customData = new HashMap<>();
 
-	public User() {
+	public SystemUser() {
 
 	}
 
@@ -126,15 +129,15 @@ public class User implements PersistentArangoObject {
 	 * 
 	 * @return Root user
 	 */
-	public static final User createTestUser() {
-		User user = new User("tester", "", "tester", "", 666);
+	public static final SystemUser createTestUser() {
+		SystemUser user = new SystemUser("tester", "", "tester", "", 666);
 		user.setActivationKey("");
 		user.setStatus(STATUS_ACTIVE);
 		user.setRole(ROLE_STANDARD_USER);
 		return user;
 	}
 
-	public User(String userLogin, String userPass, String displayName, String userEmail, long networkId) {
+	public SystemUser(String userLogin, String userPass, String displayName, String userEmail, long networkId) {
 		super();
 		this.userLogin = userLogin;
 		this.userPass = Encryptor.passwordHash(userLogin, userPass);
@@ -142,9 +145,6 @@ public class User implements PersistentArangoObject {
 		this.userEmail = userEmail;
 		this.networkId = networkId;
 	}
-
-	public static final String COLLECTION_NAME = User.class.getSimpleName().toLowerCase();
-	static ArangoCollection instance;
 
 	@Override
 	public ArangoCollection getCollection() {

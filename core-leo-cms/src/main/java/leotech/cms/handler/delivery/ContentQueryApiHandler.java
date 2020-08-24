@@ -15,7 +15,7 @@ import leotech.cms.model.Post;
 import leotech.cms.query.SearchPostUtil;
 import leotech.core.api.BaseSecuredDataApi;
 import leotech.system.model.JsonDataPayload;
-import leotech.system.model.User;
+import leotech.system.model.SystemUser;
 import rfx.core.util.StringUtil;
 
 public class ContentQueryApiHandler extends BaseSecuredDataApi {
@@ -44,7 +44,7 @@ public class ContentQueryApiHandler extends BaseSecuredDataApi {
 		boolean includeProtected = false;
 		boolean includePrivate = false;
 
-		User loginUser = getUserFromSession(userSession);
+		SystemUser loginUser = getUserFromSession(userSession);
 		if (loginUser != null) {
 			includeProtected = true;
 		}

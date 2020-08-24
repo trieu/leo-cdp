@@ -4,13 +4,13 @@ import org.testng.Assert;
 
 import leotech.cms.dao.UserDaoUtil;
 import leotech.system.model.AppMetadata;
-import leotech.system.model.User;
+import leotech.system.model.SystemUser;
 
 public class NewUser {
 
     public static void main(String[] args) {
 	String userLogin = "demo";
-	User user = new User(userLogin, "123456", userLogin, "tester@example.com", AppMetadata.DEFAULT_ID);
+	SystemUser user = new SystemUser(userLogin, "123456", userLogin, "tester@example.com", AppMetadata.DEFAULT_ID);
 	String userId = UserDaoUtil.createNew(user);
 	System.out.println("UserDaoUtil.save " + userId);
 	Assert.assertTrue(userId != null);

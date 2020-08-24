@@ -33,54 +33,47 @@ import leotech.cms.model.Page;
 import leotech.cms.model.Post;
 import leotech.system.model.AppMetadata;
 import leotech.system.model.LeoPackage;
-import leotech.system.model.User;
+import leotech.system.model.SystemConfigs;
+import leotech.system.model.SystemUser;
 import rfx.core.util.Utils;
 
 public class SetupNewDatabase {
 
-	static final List<String> coreSystemCollections = new ArrayList<>(20);
-	static final List<String> businessDataHubCollections = new ArrayList<>(20);
-	static final List<String> contentDataHubCollections = new ArrayList<>(20);
-	static final List<String> audienceDataHubCollections = new ArrayList<>(20);
-	static final List<String> aiModelHubCollections = new ArrayList<>(20);
-	static final List<String> activationHubCollections = new ArrayList<>(20);
+	static final List<String> systemCollections = new ArrayList<>(20);
+	static final List<String> cmsCollections = new ArrayList<>(20);
+	static final List<String> cdpCollections = new ArrayList<>(20);
+	
 
 	static {
 
-		// Business Data Hub
-		businessDataHubCollections.add(ProductItem.COLLECTION_NAME);
-		businessDataHubCollections.add(Touchpoint.COLLECTION_NAME);
-		businessDataHubCollections.add(MediaChannel.COLLECTION_NAME);
-		businessDataHubCollections.add(DataObserver.COLLECTION_NAME);
-		businessDataHubCollections.add(BehavioralEventMetric.COLLECTION_NAME);
+		// Content Management System
+		cmsCollections.add(Category.COLLECTION_NAME);
+		cmsCollections.add(Page.COLLECTION_NAME);
+		cmsCollections.add(Post.COLLECTION_NAME);
+		cmsCollections.add(FileMetadata.COLLECTION_NAME);
 
-		// Content Data Hub
-		contentDataHubCollections.add(AppMetadata.COLLECTION_NAME);
-		contentDataHubCollections.add(Category.COLLECTION_NAME);
-		contentDataHubCollections.add(Page.COLLECTION_NAME);
-		contentDataHubCollections.add(Post.COLLECTION_NAME);
-		contentDataHubCollections.add(FileMetadata.COLLECTION_NAME);
-
-		// Customer Data Hub
-		audienceDataHubCollections.add(ContextSession.COLLECTION_NAME);
-		audienceDataHubCollections.add(Profile.COLLECTION_NAME);
-		audienceDataHubCollections.add(TrackingEvent.COLLECTION_NAME);
-		audienceDataHubCollections.add(Device.COLLECTION_NAME);
-		audienceDataHubCollections.add(ReportUnit.COLLECTION_NAME);
-		audienceDataHubCollections.add(Segment.COLLECTION_NAME);
-
-		// Personalization AI Hub
-		// TODO
-
+		// Customer Data Platform
+		cdpCollections.add(ContextSession.COLLECTION_NAME);
+		cdpCollections.add(Profile.COLLECTION_NAME);
+		cdpCollections.add(TrackingEvent.COLLECTION_NAME);
+		cdpCollections.add(Device.COLLECTION_NAME);
+		cdpCollections.add(ReportUnit.COLLECTION_NAME);
+		cdpCollections.add(Segment.COLLECTION_NAME);
+		cdpCollections.add(ProductItem.COLLECTION_NAME);
+		cdpCollections.add(Touchpoint.COLLECTION_NAME);
+		cdpCollections.add(MediaChannel.COLLECTION_NAME);
+		cdpCollections.add(DataObserver.COLLECTION_NAME);
+		cdpCollections.add(BehavioralEventMetric.COLLECTION_NAME);
+		
 		// Campaign Activation
-		activationHubCollections.add(EventTrigger.COLLECTION_NAME);
-		activationHubCollections.add(ScheduledJob.COLLECTION_NAME);
-		activationHubCollections.add(Campaign.COLLECTION_NAME);
-		activationHubCollections.add(Creative.COLLECTION_NAME);
+		cdpCollections.add(EventTrigger.COLLECTION_NAME);
+		cdpCollections.add(ScheduledJob.COLLECTION_NAME);
+		cdpCollections.add(Campaign.COLLECTION_NAME);
+		cdpCollections.add(Creative.COLLECTION_NAME);
 
 		// System
-		coreSystemCollections.add(User.COLLECTION_NAME);
-		coreSystemCollections.add("systemconfigs");
+		systemCollections.add(SystemUser.COLLECTION_NAME);
+		systemCollections.add(SystemConfigs.COLLECTION_NAME);
 
 	}
 
@@ -103,14 +96,14 @@ public class SetupNewDatabase {
 	 * 
 	 * @param dbKey
 	 */
-	static void setupBigDataCollections(String dbKey) {
+	static void setupCdpCollections(String dbKey) {
 		ArangoDatabase dbInstance = ArangoDbUtil.initActiveArangoDatabase(dbKey);
 		Collection<String> currentDbCollections = dbInstance.getCollections().stream().map(col -> {
 			return col.getName();
 		}).collect(Collectors.toList());
 
-		List<String> cols = new ArrayList<>(audienceDataHubCollections.size());
-		for (String colName : audienceDataHubCollections) {
+		List<String> cols = new ArrayList<>(cdpCollections.size());
+		for (String colName : cdpCollections) {
 			boolean isExisted = currentDbCollections.contains(colName);
 			if (!isExisted) {
 				cols.add(colName);
@@ -119,7 +112,7 @@ public class SetupNewDatabase {
 		createNewCollections(dbInstance, cols);
 	}
 
-	static void setupDataCollections(String dbKey) {
+	static void setupCmsCollections(String dbKey) {
 		ArangoDatabase dbInstance = ArangoDbUtil.initActiveArangoDatabase(dbKey);
 		Collection<String> currentDbCollections = dbInstance.getCollections().stream().map(col -> {
 			return col.getName();
@@ -127,28 +120,7 @@ public class SetupNewDatabase {
 
 		List<String> colsNeedToCreate = new ArrayList<>(100);
 
-		for (String colName : businessDataHubCollections) {
-			boolean isExisted = currentDbCollections.contains(colName);
-			if (!isExisted) {
-				colsNeedToCreate.add(colName);
-			}
-		}
-
-		for (String colName : contentDataHubCollections) {
-			boolean isExisted = currentDbCollections.contains(colName);
-			if (!isExisted) {
-				colsNeedToCreate.add(colName);
-			}
-		}
-
-		for (String colName : aiModelHubCollections) {
-			boolean isExisted = currentDbCollections.contains(colName);
-			if (!isExisted) {
-				colsNeedToCreate.add(colName);
-			}
-		}
-
-		for (String colName : activationHubCollections) {
+		for (String colName : cmsCollections) {
 			boolean isExisted = currentDbCollections.contains(colName);
 			if (!isExisted) {
 				colsNeedToCreate.add(colName);
@@ -166,16 +138,16 @@ public class SetupNewDatabase {
 
 		// just create collections when user collection is not existed in the
 		// database
-		List<String> cols = new ArrayList<>(coreSystemCollections.size());
+		List<String> cols = new ArrayList<>(systemCollections.size());
 		boolean importDefaultData = false;
-		for (String colName : coreSystemCollections) {
+		for (String colName : systemCollections) {
 			boolean isExisted = currentDbCollections.contains(colName);
 			if (!isExisted) {
 				cols.add(colName);
 
 				// if collection "user" is not existed, we can make sure this is
 				// a new system setup
-				if (colName.equalsIgnoreCase(User.COLLECTION_NAME)) {
+				if (colName.equalsIgnoreCase(SystemUser.COLLECTION_NAME)) {
 					importDefaultData = true;
 				}
 			}
@@ -190,11 +162,11 @@ public class SetupNewDatabase {
 	static void importingDefaultData() {
 		// default data importing
 
-		User firstUser = UserDaoUtil.getByUserLogin("admin");
+		SystemUser firstUser = UserDaoUtil.getByUserLogin("admin");
 
 		// make sure do not override existing data
 		if (firstUser == null) {
-			firstUser = new User("admin", "123456abc", "admin", "admin@example.com", AppMetadata.DEFAULT_ID);
+			firstUser = new SystemUser("admin", "123456abc", "admin", "admin@example.com", AppMetadata.DEFAULT_ID);
 			UserDaoUtil.createNew(firstUser);
 		}
 		boolean ok = UserDaoUtil.activateAsSuperAdmin(firstUser.getUserLogin());
@@ -211,12 +183,10 @@ public class SetupNewDatabase {
 
 	public static void createDbCollections(String leoPackage, String arangoDbConfigKey) {
 		boolean importDefaultData = false;
-		if (LeoPackage.LEO_CDP_FREE_VERSION.equals(leoPackage)
-				|| LeoPackage.LEO_CDP_PROFESSIONAL_VERSION.equals(leoPackage)) {
+		if (LeoPackage.LEO_CDP_FREE_VERSION.equals(leoPackage)|| LeoPackage.LEO_CDP_PROFESSIONAL_VERSION.equals(leoPackage)) {
 			importDefaultData = setupDefaultSystemConfigs(arangoDbConfigKey);
-			setupDataCollections(arangoDbConfigKey);
-			setupBigDataCollections(arangoDbConfigKey);
-
+			setupCmsCollections(arangoDbConfigKey);
+			setupCdpCollections(arangoDbConfigKey);
 		}
 		// TODO for enterprise
 		
@@ -235,7 +205,6 @@ public class SetupNewDatabase {
 		} else {
 			System.err.println("missing db key param [0] leoPackage [1] arangoDbConfigKey");
 		}
-
 	}
 
 }

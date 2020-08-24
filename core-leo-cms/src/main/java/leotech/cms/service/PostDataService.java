@@ -17,7 +17,7 @@ import leotech.cms.model.common.ContentType;
 import leotech.cms.query.SearchPostUtil;
 import leotech.crawler.model.CrawledYouTubeVideo;
 import leotech.system.model.AppMetadata;
-import leotech.system.model.User;
+import leotech.system.model.SystemUser;
 
 public class PostDataService {
 
@@ -53,7 +53,7 @@ public class PostDataService {
 		return saveId;
 	}
 
-	public static String savePost(JsonObject paramJson, User loginUser) {
+	public static String savePost(JsonObject paramJson, SystemUser loginUser) {
 		String ownerId = loginUser.getKey();
 		String postId = paramJson.getString("postId", "");
 		String pageId = paramJson.getString("pageId", "");

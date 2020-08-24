@@ -11,7 +11,7 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.ext.web.RoutingContext;
 import leotech.core.api.BaseSecuredDataApi.JsonErrorPayload;
 import leotech.system.model.JsonDataPayload;
-import leotech.system.model.User;
+import leotech.system.model.SystemUser;
 import leotech.system.util.CookieUserSessionUtil;
 import rfx.core.util.HttpClientUtil;
 import rfx.core.util.StringUtil;
@@ -80,7 +80,7 @@ public class SecuredApiProxyHandler {
 	MultiMap reqHeaders = req.headers();
 	String userSession = CookieUserSessionUtil.getUserSession(context, StringUtil.safeString(reqHeaders.get(BaseApiRouter.HEADER_SESSION)));
 
-	User loginUser = BaseSecuredDataApi.getUserFromSession(userSession);
+	SystemUser loginUser = BaseSecuredDataApi.getUserFromSession(userSession);
 	if (loginUser != null) {
 	    try {
 		String rs = queriedCache.get(new ApiProxyHttpGetRequest(provider, uri));

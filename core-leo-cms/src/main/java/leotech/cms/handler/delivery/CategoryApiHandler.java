@@ -9,7 +9,7 @@ import leotech.cms.model.Category;
 import leotech.core.api.BaseSecuredDataApi;
 import leotech.system.model.AppMetadata;
 import leotech.system.model.JsonDataPayload;
-import leotech.system.model.User;
+import leotech.system.model.SystemUser;
 
 public class CategoryApiHandler extends BaseSecuredDataApi {
 
@@ -22,7 +22,7 @@ public class CategoryApiHandler extends BaseSecuredDataApi {
 
     @Override
     public JsonDataPayload httpGetApiHandler(String userSession, String uri, MultiMap params) throws Exception {
-	User loginUser = getUserFromSession(userSession);
+	SystemUser loginUser = getUserFromSession(userSession);
 	if (loginUser == null) {
 	    return JsonErrorPayload.NO_AUTHENTICATION;
 	} else {

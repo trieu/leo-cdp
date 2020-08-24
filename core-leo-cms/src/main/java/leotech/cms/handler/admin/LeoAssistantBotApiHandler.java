@@ -10,7 +10,7 @@ import leotech.crawler.model.CrawledYouTubeVideo;
 import leotech.crawler.util.ArticleDataCrawler;
 import leotech.crawler.util.YouTubeVideoCrawler;
 import leotech.system.model.JsonDataPayload;
-import leotech.system.model.User;
+import leotech.system.model.SystemUser;
 import rfx.core.util.StringUtil;
 
 public class LeoAssistantBotApiHandler extends BaseSecuredDataApi {
@@ -27,7 +27,7 @@ public class LeoAssistantBotApiHandler extends BaseSecuredDataApi {
     @Override
     public JsonDataPayload httpGetApiHandler(String userSession, String uri, MultiMap params) throws Exception {
 
-	User user = getUserFromSession(userSession);
+	SystemUser user = getUserFromSession(userSession);
 	// if (user != null)
 	{
 	    if (uri.equalsIgnoreCase(API_VIDEO_CRAWLER)) {

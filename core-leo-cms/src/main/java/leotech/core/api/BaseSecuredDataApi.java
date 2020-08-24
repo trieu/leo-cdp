@@ -8,7 +8,7 @@ import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import leotech.cms.dao.UserDaoUtil;
 import leotech.system.model.JsonDataPayload;
-import leotech.system.model.User;
+import leotech.system.model.SystemUser;
 import leotech.system.util.Encryptor;
 import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.Response;
@@ -21,7 +21,7 @@ import rfx.core.util.StringUtil;
 public abstract class BaseSecuredDataApi extends BaseApiHandler {
 
 	public static final boolean DEV_MODE = false;
-	private static final User DEFAULT_ROOT_USER = User.createTestUser();
+	private static final SystemUser DEFAULT_ROOT_USER = SystemUser.createTestUser();
 
 	public static final String REDIS_KEY_ENCKEY = "enckey";
 	public static final String REDIS_KEY_USERLOGIN = "userlogin";
@@ -81,15 +81,15 @@ public abstract class BaseSecuredDataApi extends BaseApiHandler {
 	 * @param userSession
 	 * @return
 	 */
-	public static User getUserFromSession(String userSession) {
+	public static SystemUser getUserFromSession(String userSession) {
 		if (DEV_MODE) {
 			return DEFAULT_ROOT_USER;
 		}
 		if (isValidUserSession(userSession)) {
 			try {
-				return new RedisCommand<User>(redisLocalCache) {
+				return new RedisCommand<SystemUser>(redisLocalCache) {
 					@Override
-					protected User build() throws JedisException {
+					protected SystemUser build() throws JedisException {
 						Pipeline p = jedis.pipelined();
 						Response<String> resp1 = p.hget(userSession, REDIS_KEY_USERLOGIN);
 						Response<String> resp2 = p.hget(userSession, REDIS_KEY_ENCKEY);
@@ -97,9 +97,9 @@ public abstract class BaseSecuredDataApi extends BaseApiHandler {
 
 						String userlogin = resp1.get();
 						String enckey = resp2.get();
-						User user = UserDaoUtil.getByUserLogin(userlogin);
+						SystemUser user = UserDaoUtil.getByUserLogin(userlogin);
 						if (user != null) {
-							if (user.getStatus() == User.STATUS_ACTIVE) {
+							if (user.getStatus() == SystemUser.STATUS_ACTIVE) {
 								user.setEncryptionKey(enckey);
 								return user;
 							} else {
@@ -118,14 +118,14 @@ public abstract class BaseSecuredDataApi extends BaseApiHandler {
 	}
 	
 
-	public static boolean isAdminRole(User loginUser) {
+	public static boolean isAdminRole(SystemUser loginUser) {
 		int role = loginUser.getRole();
-		return role == User.ROLE_ADMIN || role == User.ROLE_SUPER_ADMIN;
+		return role == SystemUser.ROLE_ADMIN || role == SystemUser.ROLE_SUPER_ADMIN;
 	}
 
-	public static boolean isSuperAdminRole(User loginUser) {
+	public static boolean isSuperAdminRole(SystemUser loginUser) {
 		int role = loginUser.getRole();
-		return role == User.ROLE_SUPER_ADMIN;
+		return role == SystemUser.ROLE_SUPER_ADMIN;
 	}
 
 	/**

@@ -12,7 +12,7 @@ import leotech.cdp.model.journey.BehavioralEventMetric;
 import leotech.cdp.model.journey.FunnelStage;
 import leotech.core.api.BaseSecuredDataApi;
 import leotech.system.model.JsonDataPayload;
-import leotech.system.model.User;
+import leotech.system.model.SystemUser;
 import leotech.system.util.RequestInfoUtil;
 
 public class CdpFunnelHandler extends BaseSecuredDataApi {
@@ -28,7 +28,7 @@ public class CdpFunnelHandler extends BaseSecuredDataApi {
 
 	@Override
 	public JsonDataPayload httpPostApiHandler(String userSession, String uri, JsonObject paramJson) throws Exception {
-		User loginUser = getUserFromSession(userSession);
+		SystemUser loginUser = getUserFromSession(userSession);
 		if (loginUser != null) {
 			if (isAdminRole(loginUser)) {
 				switch (uri) {
@@ -47,7 +47,7 @@ public class CdpFunnelHandler extends BaseSecuredDataApi {
 
 	@Override
 	public JsonDataPayload httpGetApiHandler(String userSession, String uri, MultiMap params) throws Exception {
-		User user = getUserFromSession(userSession);
+		SystemUser user = getUserFromSession(userSession);
 		if (user != null) {
 			if (isAdminRole(user)) {
 				switch (uri) {

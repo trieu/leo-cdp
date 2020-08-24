@@ -16,6 +16,9 @@ import leotech.cms.model.common.MediaNode;
  *
  */
 public class Post extends MediaNode {
+	
+	public static final String COLLECTION_NAME = getCollectionName(Post.class);
+	static ArangoCollection collectionInstance;
 
 	long viewCount = 0;
 	int likeCount = 0;
@@ -41,8 +44,7 @@ public class Post extends MediaNode {
 		super(title, mediaInfo, networkId, type, pageId, categoryKey, ownerId);
 	}
 
-	public static final String COLLECTION_NAME = Post.class.getSimpleName().toLowerCase();
-	static ArangoCollection collectionInstance;
+
 
 	@Override
 	public ArangoCollection getCollection() throws ArangoDBException {

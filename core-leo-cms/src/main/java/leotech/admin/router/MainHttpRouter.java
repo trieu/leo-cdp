@@ -32,7 +32,7 @@ import rfx.core.util.StringUtil;
 /**
  * @author tantrieuf31
  * 
- *  Main HTTP Server Router 
+ *         Main HTTP Server Router
  *
  */
 public class MainHttpRouter extends BaseHttpRouter {
@@ -47,7 +47,7 @@ public class MainHttpRouter extends BaseHttpRouter {
 	public static final String ADMIN_ROUTER = "/admin";
 	public static final String API_GATEWAY_ROUTER = "/api-gateway";
 	public static final String APP_ROUTER = "/app";
-	
+
 	public static final String VIEW_ROUTER = "/view";
 	public static final String HOME_ROUTER = "/";
 
@@ -93,7 +93,7 @@ public class MainHttpRouter extends BaseHttpRouter {
 		System.out.println("==>>>> host: " + host + " path: " + path);
 
 		// HOME page
-		if (path.equals(HOME_ROUTER) ) {
+		if (path.equals(HOME_ROUTER)) {
 			outHeaders.set(CONTENT_TYPE, MIME_TYPE_HTML);
 			BaseHttpRouter.setCorsHeaders(outHeaders, origin);
 
@@ -177,7 +177,7 @@ public class MainHttpRouter extends BaseHttpRouter {
 			outHeaders.set(CONTENT_TYPE, MIME_TYPE_HTML);
 			resp.end(PONG);
 		} else {
-			// JSON data API handler for Leo Content Hub 
+			// JSON data API handler for Leo Content Hub
 			AdminApiRouter adminApiRouter = new AdminApiRouter(context);
 			adminApiRouter.enableAutoRedirectToHomeIf404();
 			boolean rs = adminApiRouter.handle();
@@ -188,7 +188,6 @@ public class MainHttpRouter extends BaseHttpRouter {
 
 	//////////////////////////////////////////////////////////////////////////////////////
 	// utilities //
-	
 
 	void viewRoutingHandler(HttpServerRequest req, HttpServerResponse resp, String path, String networkDomain) {
 		try {

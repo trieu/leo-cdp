@@ -20,7 +20,7 @@ import leotech.core.api.BaseSecuredDataApi;
 import leotech.core.api.BaseSecuredDataApi.JsonErrorPayload;
 import leotech.system.model.FileUploaderData;
 import leotech.system.model.JsonDataPayload;
-import leotech.system.model.User;
+import leotech.system.model.SystemUser;
 import leotech.system.util.HttpTrackingUtil;
 import rfx.core.util.HashUtil;
 import rfx.core.util.StringUtil;
@@ -52,7 +52,7 @@ public class UploadFileHttpRouter extends BaseHttpRouter {
 		String userSession = StringUtil.safeString(reqHeaders.get(BaseApiRouter.HEADER_SESSION));
 		String refObjClass = StringUtil.safeString(reqHeaders.get("refObjectClass"));
 		String refObjKey = StringUtil.safeString(reqHeaders.get("refObjectKey"));
-		User loginUser = BaseSecuredDataApi.getUserFromSession(userSession);
+		SystemUser loginUser = BaseSecuredDataApi.getUserFromSession(userSession);
 
 		// CORS Header
 		BaseHttpRouter.setCorsHeaders(outHeaders, origin);

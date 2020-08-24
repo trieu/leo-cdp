@@ -12,7 +12,7 @@ import leotech.cdp.model.customer.Profile;
 import leotech.cdp.model.customer.ProfileConstant;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataTablePayload;
-import leotech.system.model.User;
+import leotech.system.model.SystemUser;
 import rfx.core.util.StringUtil;
 
 public class ProfileDataService {
@@ -143,7 +143,7 @@ public class ProfileDataService {
 		return profile;
 	}
 	
-	public static Profile createNewCrmProfile(JsonObject paramJson, User loginUser) {
+	public static Profile createNewCrmProfile(JsonObject paramJson, SystemUser loginUser) {
 		String firstName = paramJson.getString("firstName", "");
 		String lastName = paramJson.getString("lastName", "");
 		String email = paramJson.getString("email", "");

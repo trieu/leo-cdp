@@ -9,7 +9,7 @@ import leotech.cms.dao.UserDaoUtil;
 import leotech.core.api.BaseSecuredDataApi;
 import leotech.system.model.AppMetadata;
 import leotech.system.model.JsonDataPayload;
-import leotech.system.model.User;
+import leotech.system.model.SystemUser;
 import leotech.system.service.UserDataService;
 
 public class SystemUserApiHandler extends BaseSecuredDataApi {
@@ -26,7 +26,7 @@ public class SystemUserApiHandler extends BaseSecuredDataApi {
 	public JsonDataPayload httpPostApiHandler(String userSession, String uri, JsonObject paramJson)
 			throws Exception {
 		System.out.println("ManageUserApiHandler");
-		User loginUser = getUserFromSession(userSession);
+		SystemUser loginUser = getUserFromSession(userSession);
 		System.out.println("getUserFromSession " + loginUser);
 		if (loginUser == null) {
 			return userLoginHandler(userSession, uri, paramJson);
@@ -36,7 +36,7 @@ public class SystemUserApiHandler extends BaseSecuredDataApi {
 				switch (uri) {
 
 					case API_LIST_ALL :
-						List<User> list = UserDaoUtil.listAllUsersInNetwork(AppMetadata.DEFAULT_ID);
+						List<SystemUser> list = UserDaoUtil.listAllUsersInNetwork(AppMetadata.DEFAULT_ID);
 						return JsonDataPayload.ok(uri, list, false);
 					case API_CREATE : {
 						String userId = UserDataService.saveUserInfo(paramJson, true);
@@ -58,10 +58,10 @@ public class SystemUserApiHandler extends BaseSecuredDataApi {
 					}
 					case API_GET_INFO : {
 						String key = paramJson.getString("key", "");
-						User userInfo = loginUser;
+						SystemUser userInfo = loginUser;
 						if (!key.isEmpty()) {
 							if (key.equals("newuser")) {
-								userInfo = new User();
+								userInfo = new SystemUser();
 							} else {
 								userInfo = UserDaoUtil.getByUserId(key);
 							}
@@ -106,11 +106,11 @@ public class SystemUserApiHandler extends BaseSecuredDataApi {
 	@Override
 	public JsonDataPayload httpGetApiHandler(String userSession, String uri, MultiMap params) throws Exception {
 		// TODO Auto-generated method stub
-		User user = getUserFromSession(userSession);
+		SystemUser user = getUserFromSession(userSession);
 		if (user != null) {
 			if (isAdminRole(user)) {
 				if (uri.equalsIgnoreCase(API_LIST_ALL)) {
-					List<User> list = UserDaoUtil.listAllUsersInNetwork(AppMetadata.DEFAULT_ID);
+					List<SystemUser> list = UserDaoUtil.listAllUsersInNetwork(AppMetadata.DEFAULT_ID);
 					return JsonDataPayload.ok(uri, list, true);
 				}
 			} else {

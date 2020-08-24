@@ -12,7 +12,7 @@ import leotech.cms.dao.UserDaoUtil;
 import leotech.cms.model.Category;
 import leotech.cms.model.Page;
 import leotech.system.model.AppMetadata;
-import leotech.system.model.User;
+import leotech.system.model.SystemUser;
 import rfx.core.util.Utils;
 
 public class RunSetupCoreDatabase {
@@ -27,7 +27,7 @@ public class RunSetupCoreDatabase {
 	}
 
 	static void setupUserCollection() {
-		User user = new User("superadmin", "AppCms4bluescope", "SuperAdmin", "trieunt@leocdp.com",
+		SystemUser user = new SystemUser("superadmin", "AppCms4bluescope", "SuperAdmin", "trieunt@leocdp.com",
 				AppMetadata.DEFAULT_ID);
 		String userId = UserDaoUtil.createNew(user);
 		boolean ok = UserDaoUtil.activateAsSuperAdmin(user.getUserLogin());

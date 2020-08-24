@@ -8,20 +8,16 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 
-import com.arangodb.ArangoCollection;
 import com.google.gson.Gson;
 
 import leotech.cms.model.ContentClassPostQuery;
-import leotech.system.util.database.PersistentArangoObject;
 import rfx.core.util.HashUtil;
 import rfx.core.util.StringUtil;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class AppMetadata implements PersistentArangoObject {
+public class AppMetadata {
 
 	public static final long DEFAULT_ID = 10000L;
-
-	public static final String COLLECTION_NAME = AppMetadata.class.getSimpleName().toLowerCase();
 
 	@XmlElement(name = "appId")
 	long appId = DEFAULT_ID;
@@ -173,17 +169,6 @@ public class AppMetadata implements PersistentArangoObject {
 		this.appTemplateFolder = appTemplateFolder;
 	}
 
-	@Override
-	public ArangoCollection getCollection() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean isReadyForSave() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	public List<ContentClassPostQuery> getContentClassPostQueries() {
 		return contentClassPostQueries;
 	}

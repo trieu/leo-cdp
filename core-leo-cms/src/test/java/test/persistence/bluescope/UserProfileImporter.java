@@ -12,7 +12,7 @@ import com.univocity.parsers.tsv.TsvParserSettings;
 import leotech.cms.dao.UserDaoUtil;
 import leotech.core.config.DbConfigs;
 import leotech.system.model.AppMetadata;
-import leotech.system.model.User;
+import leotech.system.model.SystemUser;
 import leotech.system.util.database.ArangoDbUtil;
 
 public class UserProfileImporter {
@@ -34,11 +34,11 @@ public class UserProfileImporter {
 		String position = data[3];
 		String userLogin = email.split("@")[0];
 		String pass = "12345678";
-		User user = new User(userLogin,pass, displayName, email, AppMetadata.DEFAULT_ID);
+		SystemUser user = new SystemUser(userLogin,pass, displayName, email, AppMetadata.DEFAULT_ID);
 		user.addCustomData("position", position);
 		user.addCustomData("department", department);
-		user.setStatus(User.STATUS_ACTIVE);
-		user.setRole(User.ROLE_STANDARD_USER);
+		user.setStatus(SystemUser.STATUS_ACTIVE);
+		user.setRole(SystemUser.ROLE_STANDARD_USER);
 		UserDaoUtil.deleteByUserLogin(userLogin);
 		user.setUserLogin(userLogin.toLowerCase());
 		UserDaoUtil.createNew(user);

@@ -9,7 +9,7 @@ import com.arangodb.ArangoDatabase;
 import com.google.gson.Gson;
 
 import leotech.core.config.AqlTemplate;
-import leotech.system.model.User;
+import leotech.system.model.SystemUser;
 import leotech.system.util.Encryptor;
 import leotech.system.util.database.ArangoDbQuery;
 import leotech.system.util.database.ArangoDbUtil;
@@ -23,7 +23,7 @@ public class UserDaoUtil {
 	static final String AQL_GET_USER_BY_KEY = AqlTemplate.get("AQL_GET_USER_BY_KEY");
 	static final String AQL_GET_ALL_USERS_IN_NETWORK = AqlTemplate.get("AQL_GET_ALL_USERS_IN_NETWORK");
 
-	public static String createNew(User user) {
+	public static String createNew(SystemUser user) {
 		if (user.isReadyForSave()) {
 			ArangoCollection col = user.getCollection();
 			if (col != null) {
@@ -44,7 +44,7 @@ public class UserDaoUtil {
 	}
 
 	public static String deleteByKey(String key) {
-		ArangoCollection col = new User().getCollection();
+		ArangoCollection col = new SystemUser().getCollection();
 		if (col != null) {
 			col.deleteDocument(key);
 			return key;
@@ -53,7 +53,7 @@ public class UserDaoUtil {
 	}
 
 	public static String deleteByUserLogin(String userLogin) {
-		User u = getByUserLogin(userLogin);
+		SystemUser u = getByUserLogin(userLogin);
 		if (u != null) {
 			return deleteByKey(u.getKey());
 		}
@@ -61,7 +61,7 @@ public class UserDaoUtil {
 	}
 
 	public static String updateDisplayName(String userLogin, String displayName) {
-		User u = getByUserLogin(userLogin);
+		SystemUser u = getByUserLogin(userLogin);
 		if (u != null) {
 			u.setDisplayName(displayName);
 			return update(u);
@@ -70,7 +70,7 @@ public class UserDaoUtil {
 	}
 
 	public static String updateUserRole(String userLogin, int role) {
-		User u = getByUserLogin(userLogin);
+		SystemUser u = getByUserLogin(userLogin);
 		if (u != null) {
 			u.setRole(role);
 			return update(u);
@@ -79,7 +79,7 @@ public class UserDaoUtil {
 	}
 
 	public static String updateOnlineStatus(String userLogin, boolean isOnline) {
-		User u = getByUserLogin(userLogin);
+		SystemUser u = getByUserLogin(userLogin);
 		if (u != null) {
 			u.setOnline(isOnline);
 			return update(u);
@@ -88,7 +88,7 @@ public class UserDaoUtil {
 	}
 
 	public static String updatePassword(String userLogin, String userPass) {
-		User u = getByUserLogin(userLogin);
+		SystemUser u = getByUserLogin(userLogin);
 		if (u != null) {
 			u.setUserPass(userPass);
 			return update(u);
@@ -97,7 +97,7 @@ public class UserDaoUtil {
 	}
 
 	public static String updateAvatar(String userLogin, String avatarUrl) {
-		User u = getByUserLogin(userLogin);
+		SystemUser u = getByUserLogin(userLogin);
 		if (u != null) {
 			u.setAvatarUrl(avatarUrl);
 			return update(u);
@@ -106,7 +106,7 @@ public class UserDaoUtil {
 	}
 
 	public static String updateCustomData(String userLogin, Map<String, String> customData) {
-		User u = getByUserLogin(userLogin);
+		SystemUser u = getByUserLogin(userLogin);
 		if (u != null) {
 			u.setCustomData(customData);
 			return update(u);
@@ -114,59 +114,59 @@ public class UserDaoUtil {
 		return "";
 	}
 
-	public static User getByUserLogin(String userLogin) {
+	public static SystemUser getByUserLogin(String userLogin) {
 		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("userLogin", userLogin);
 
-		User user = new ArangoDbQuery<User>(db, AQL_GET_USER_BY_USERLOGIN, bindVars, User.class)
+		SystemUser user = new ArangoDbQuery<SystemUser>(db, AQL_GET_USER_BY_USERLOGIN, bindVars, SystemUser.class)
 				.getResultsAsObject();
 		return user;
 	}
 
-	public static User getByUserId(String key) {
+	public static SystemUser getByUserId(String key) {
 		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("key", key);
-		User user = new ArangoDbQuery<User>(db, AQL_GET_USER_BY_KEY, bindVars, User.class).getResultsAsObject();
+		SystemUser user = new ArangoDbQuery<SystemUser>(db, AQL_GET_USER_BY_KEY, bindVars, SystemUser.class).getResultsAsObject();
 		return user;
 	}
 
-	public static List<User> listAllUsersInNetwork(long networkId) {
+	public static List<SystemUser> listAllUsersInNetwork(long networkId) {
 		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("networkId", networkId);
-		List<User> users = new ArangoDbQuery<User>(db, AQL_GET_ALL_USERS_IN_NETWORK, bindVars, User.class)
+		List<SystemUser> users = new ArangoDbQuery<SystemUser>(db, AQL_GET_ALL_USERS_IN_NETWORK, bindVars, SystemUser.class)
 				.getResultsAsList();
 		return users;
 	}
 
 	public static boolean activateAsGuest(String userLogin) {
-		return activate(userLogin, User.ROLE_GUEST);
+		return activate(userLogin, SystemUser.ROLE_GUEST);
 	}
 
 	public static boolean activateAsStandarUser(String userLogin) {
-		return activate(userLogin, User.ROLE_STANDARD_USER);
+		return activate(userLogin, SystemUser.ROLE_STANDARD_USER);
 	}
 
 	public static boolean activateAsEditor(String userLogin) {
-		return activate(userLogin, User.ROLE_EDITOR);
+		return activate(userLogin, SystemUser.ROLE_EDITOR);
 	}
 
 	public static boolean activateAsAdmin(String userLogin) {
-		return activate(userLogin, User.ROLE_ADMIN);
+		return activate(userLogin, SystemUser.ROLE_ADMIN);
 	}
 
 	public static boolean activateAsSuperAdmin(String userLogin) {
-		return activate(userLogin, User.ROLE_SUPER_ADMIN);
+		return activate(userLogin, SystemUser.ROLE_SUPER_ADMIN);
 	}
 
 	private static boolean activate(String userLogin, int role) {
-		User user = getByUserLogin(userLogin);
+		SystemUser user = getByUserLogin(userLogin);
 		if (user != null) {
 			user.setActivationKey("");
 			user.setRegisteredTime(System.currentTimeMillis());
-			user.setStatus(User.STATUS_ACTIVE);
+			user.setStatus(SystemUser.STATUS_ACTIVE);
 			user.setRole(role);
 			update(user);
 			return true;
@@ -175,10 +175,10 @@ public class UserDaoUtil {
 	}
 
 	public static boolean deactivate(String userLogin) {
-		User user = getByUserLogin(userLogin);
+		SystemUser user = getByUserLogin(userLogin);
 		if (user != null) {
-			user.setStatus(User.STATUS_DISABLED);
-			user.setRole(User.ROLE_GUEST);
+			user.setStatus(SystemUser.STATUS_DISABLED);
+			user.setRole(SystemUser.ROLE_GUEST);
 			update(user);
 			return true;
 		}
@@ -186,12 +186,12 @@ public class UserDaoUtil {
 	}
 
 	public static boolean activate(String userLogin, String activationKey) {
-		User user = getByUserLogin(userLogin);
+		SystemUser user = getByUserLogin(userLogin);
 		if (StringUtil.isNotEmpty(activationKey)) {
 			if (activationKey.equals(user.getActivationKey())) {
 				user.setActivationKey("");
 				user.setRegisteredTime(System.currentTimeMillis());
-				user.setStatus(User.STATUS_ACTIVE);
+				user.setStatus(SystemUser.STATUS_ACTIVE);
 				update(user);
 				return true;
 			}
@@ -199,7 +199,7 @@ public class UserDaoUtil {
 		return false;
 	}
 
-	public static String update(User user) {
+	public static String update(SystemUser user) {
 		if (user.isReadyForSave()) {
 			ArangoCollection col = user.getCollection();
 			if (col != null) {
@@ -216,10 +216,10 @@ public class UserDaoUtil {
 	}
 
 	public static boolean checkLogin(String userLogin, String password) {
-		User user = getByUserLogin(userLogin);
+		SystemUser user = getByUserLogin(userLogin);
 		if (user != null && StringUtil.isNotEmpty(password)) {
 			String hash = Encryptor.passwordHash(userLogin, password);
-			if (user.getStatus() == User.STATUS_ACTIVE && hash.equals(user.getUserPass())) {
+			if (user.getStatus() == SystemUser.STATUS_ACTIVE && hash.equals(user.getUserPass())) {
 				return true;
 			}
 		}

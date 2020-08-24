@@ -15,7 +15,7 @@ import leotech.cms.service.PostDataService;
 import leotech.core.api.BaseSecuredDataApi;
 import leotech.system.model.AppMetadata;
 import leotech.system.model.JsonDataPayload;
-import leotech.system.model.User;
+import leotech.system.model.SystemUser;
 import rfx.core.util.StringUtil;
 
 public class PostApiHandler extends BaseSecuredDataApi {
@@ -41,10 +41,10 @@ public class PostApiHandler extends BaseSecuredDataApi {
 		boolean includePrivate = false;
 		boolean allowPublicAccess = true;
 
-		User loginUser = getUserFromSession(userSession);
+		SystemUser loginUser = getUserFromSession(userSession);
 		if (loginUser != null) {
 			includeProtected = true;
-			if (loginUser.getRole() == User.ROLE_ADMIN || loginUser.getRole() == User.ROLE_SUPER_ADMIN) {
+			if (loginUser.getRole() == SystemUser.ROLE_ADMIN || loginUser.getRole() == SystemUser.ROLE_SUPER_ADMIN) {
 				includePrivate = true;
 			}
 		}
@@ -181,7 +181,7 @@ public class PostApiHandler extends BaseSecuredDataApi {
 				// TODO implement recommendation engine here
 				List<Post> simlilarPosts = PostDataService.getSimilarPosts(contextPageIds, postId);
 				model.setRecommendedPosts(simlilarPosts);
-				User user = BaseSecuredDataApi.getUserFromSession(userSession);
+				SystemUser user = BaseSecuredDataApi.getUserFromSession(userSession);
 				if (user != null) {
 					model.setAdminRole(BaseSecuredDataApi.isAdminRole(user));
 					model.setSessionUserId(user.getKey());

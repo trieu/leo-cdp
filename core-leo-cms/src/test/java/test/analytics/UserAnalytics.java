@@ -5,16 +5,16 @@ import java.util.List;
 
 import leotech.cms.dao.UserDaoUtil;
 import leotech.system.model.AppMetadata;
-import leotech.system.model.User;
+import leotech.system.model.SystemUser;
 import leotech.system.util.Encryptor;
 
 public class UserAnalytics {
 
     public static void main(String[] args) {
-	List<User> updatedPassUsers = new ArrayList<>();
-	List<User> users = UserDaoUtil.listAllUsersInNetwork(AppMetadata.DEFAULT_ID);
+	List<SystemUser> updatedPassUsers = new ArrayList<>();
+	List<SystemUser> users = UserDaoUtil.listAllUsersInNetwork(AppMetadata.DEFAULT_ID);
 	int c1 = 0, c2 = 0;
-	for (User user : users) {
+	for (SystemUser user : users) {
 	    String userLogin = user.getUserLogin();
 	    String userPass = "12345678";
 	    String orginalPass = Encryptor.passwordHash(userLogin, userPass);

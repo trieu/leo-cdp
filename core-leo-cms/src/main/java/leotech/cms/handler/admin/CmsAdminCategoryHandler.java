@@ -10,7 +10,7 @@ import leotech.cms.service.CategoryDataService;
 import leotech.core.api.BaseSecuredDataApi;
 import leotech.system.model.AppMetadata;
 import leotech.system.model.JsonDataPayload;
-import leotech.system.model.User;
+import leotech.system.model.SystemUser;
 
 public class CmsAdminCategoryHandler extends BaseSecuredDataApi {
 	// for Admin CMS, only for ROLE_ADMIN and ROLE_SUPER_ADMIN
@@ -22,7 +22,7 @@ public class CmsAdminCategoryHandler extends BaseSecuredDataApi {
 
 	@Override
 	public JsonDataPayload httpPostApiHandler(String userSession, String uri, JsonObject paramJson) throws Exception {
-		User loginUser = getUserFromSession(userSession);
+		SystemUser loginUser = getUserFromSession(userSession);
 		if (loginUser != null) {
 			if (isAdminRole(loginUser)) {
 				switch (uri) {
@@ -70,7 +70,7 @@ public class CmsAdminCategoryHandler extends BaseSecuredDataApi {
 
 	@Override
 	public JsonDataPayload httpGetApiHandler(String userSession, String uri, MultiMap params) throws Exception {
-		User user = getUserFromSession(userSession);
+		SystemUser user = getUserFromSession(userSession);
 		if (user != null) {
 			if (isAdminRole(user)) {
 				// skip
