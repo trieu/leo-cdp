@@ -34,4 +34,7 @@ public class MediaChannelType {
 	// Key influencers are people, personalities, or businesses that already have the attention of your target audience. 
 	// Key influencers are the people who can actually drive sales and awareness.
 	public static final int KEY_INFLUENCER = 23;
+	
+	// unified owned media channels
+	public static final int UNIFIED_CONTENT_HUB = 24;
 }

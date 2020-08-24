@@ -30,9 +30,7 @@
 	   		var domSelector = '#journeyFlowChart';
 	   		var mediaJourneyData = json.data.mediaJourneyMap;
 	   		var channelTypes = json.data.channelTypes;
-	   		console.log(channelTypes);	
-	   		
-	   		
+
 	   		var defaultMetricName = mediaJourneyData.defaultMetricName;
 	   		var journeyStageMetrics = mediaJourneyData.journeyStageMetrics;
 	   		var journeyStages = mediaJourneyData.journeyStages;
@@ -55,8 +53,7 @@
 	   			mediaChannels[index] = mediaChannel;
 	   		}
 	   		
-	   		
-	   		 $("#media_channels_table").jsGrid({
+	   		$("#media_channels_table").jsGrid({
 	   		    width: "100%",
 	   		    height: "auto",
 	
@@ -70,7 +67,6 @@
 	   	        },
 	
 	   		    data: mediaChannels,
-	   		    
 		   	
 	   		    onItemInserting: function(args) {
 	   		    	//console.log(args.item)

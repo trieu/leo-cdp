@@ -47,16 +47,6 @@
 	<div id="main-navbar" class="collapse navbar-collapse navbar-ex1-collapse">
 		<ul class="nav navbar-nav side-nav">
 			
-			<!-- 0 - Knowledge is everything -->
-			<li id="uspa_knowledge_hub" style="display: none;" >
-				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#uspa_knowledge_hub_menu"> <i class="fa fa-graduation-cap"></i>
-				 	USPA Knowledge Hub <i id="uspa_knowledge_hub_collapse_icon" class="fa fa-fw fa-caret-down"> </i>
-				</a>
-				<ul id="uspa_knowledge_hub_menu" class="collapse in" aria-expanded="true">
-					
-				</ul>
-			</li>
-		
 			<!--  1 - Start with KPI metric goals and the dashboard   -->
 			<li id="nav_analytics_hub" style="display: ;" >
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#analytics_hub_menu"> <i class="fa fa-fw fa-line-chart"></i>
@@ -78,25 +68,14 @@
 				 	Customer Journey Hub<i id="journey_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
 				<ul id="journey_hub_menu" class="collapse in" aria-expanded="true">
-				
-					
-					<li style="display: none;" >
-						<a href="#calljs-leoCdpRouter('Customer_Persona_List')"> <i class="fa fa-fw fa-users"></i> Customer Persona List</a>
-					</li>
-					
-					<li style="display: none;" >
-						<a href="#calljs-leoCdpRouter('Journey_Map_List')"> <i class="fa fa-fw fa-map-o"></i> Journey Map List</a>
-					</li>
 					
 					<li>
 						<a href="#calljs-leoCdpRouter('Behavioral_Event_Metrics')"> <i class="fa fa-fw fa-list-ol"></i> Behavioral Event Metrics </a>
 					</li>
 					
-					<li >
+					<li>
 						<a href="#calljs-leoCdpRouter('Media_Journey_Map')"> <i class="fa fa-fw fa-map-o"></i> Media Journey Map</a>
-					</li>
-						
-					
+					</li>	
 					
 					<li style="display: none;" >
 						<a href="#calljs-leoCdpRouter('Products_and_Services')"> <i class="fa fa-fw fa-database"></i> Products and Services</a>
@@ -111,16 +90,10 @@
 						<a href="#calljs-leoCdpRouter('Leo_Observer_List')"> <i class="fa fa-fw fa-camera"></i> Leo Observer List</a>
 					</li>
 					
-					<li style="display: none;" >
-						<a href="#calljs-leoCdpRouter('Customer_Journey_API')"> <i class="fa fa-fw fa-plug"></i> Journey Hub API</a>
-					</li>
-					
 				</ul>
 			</li>
-			
-			
 		
-			<!--  4 - Customer Data Hub Menu  -->
+			<!--  3 - Customer Data Hub Menu  -->
 			<li id="nav_customer_hub" >
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#customer_hub_menu"> <i class="fa fa-fw fa-users"></i>
 					Customer Data Hub <i id="customer_data_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
@@ -143,70 +116,10 @@
 						<a href="#calljs-leoCdpRouter('Customer_Data_Export')"> <i class="fa fa-fw fa-upload"></i> Customer Data Export</a>
 					</li>
 					
-					<li style="display: none;" >
-						<a href="#calljs-leoCdpRouter('Marketing_Hub_API')"> <i class="fa fa-fw fa-plug"></i> Marketing Hub API</a>
-					</li>
-					
 				</ul>
 			</li>
 
-			<!--  5 - Personalization A.I Models Management  -->
-			<li id="nav_personalization_hub" style="display: none;"  >
-				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#personalization_hub_menu"> <i class="fa fa-fw fa-user-circle-o "></i>
-					Personalization AI Hub <i id="personalization_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
-				</a>
-				<ul id="personalization_hub_menu" class="collapse in" aria-expanded="true">		
-							
-					<li>
-						<a href="#calljs-leoCdpRouter('Personalization_Models')"> <i class="fa fa-fw fa-user-circle"></i> Personalization Models</a>
-					</li>	
-					
-					<li style="display: none;" >
-						<a href="#calljs-leoCdpRouter('Personalization_Widgets')"> <i class="fa fa-fw fa-internet-explorer"></i> Personalization Widgets</a>
-					</li>
-					
-					<li style="display: none;" >
-						<a href="#calljs-leoCdpRouter('')"  > <i class="fa fa-fw fa-plug"></i> Personalization Hub API</a>
-					</li>
-					
-				</ul>
-			</li>
-			
-			<!--  6 - Marketing & Sales Campaign Activation Management  -->
-			<li id="nav_activation_hub" style="display: none;" >
-				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#activation_hub_menu"><i class="fa fa-fw fa-heart"></i>
-					Customer Activation <i id="activation_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
-				</a>
-				<ul id="activation_hub_menu" class="collapse in" aria-expanded="true" >
-					
-					<li>
-						<a href="#calljs-leoCdpRouter('Email_Campaigns')"> <i class="fa fa-fw fa-envelope-o"></i> Email Campaigns</a>
-					</li>
-					
-					<li style="display: none;" >
-						<a href="#calljs-leoCdpRouter('Push_Message_Campaigns')"> <i class="fa fa-fw fa-paper-plane"></i> Notification Campaigns</a>
-					</li>
-					
-					<li style="display: none;" >
-						<a href="#calljs-leoCdpRouter('')"  > <i class="fa fa-fw fa-list-ol"></i> Branding Campaigns</a>
-					</li>
-					
-					<li style="display: none;" >
-						<a href="#calljs-leoCdpRouter('')" > <i class="fa fa-fw fa-list-ol"></i> Performance Campaigns</a>
-					</li>
-					
-					<li>
-						<a href="#calljs-leoCdpRouter('Activation_Rules')"> <i class="fa fa-fw fa-code"></i> Activation Rules </a>
-					</li>
-					
-					<li style="display: none;" >
-						<a href="#calljs-leoCdpRouter('')"  > <i class="fa fa-fw fa-plug"></i> Activation Campaign API </a>
-					</li>
-					
-				</ul>
-			</li>
-
-			<!--  7 - Core System Management  -->
+			<!--  4 - Core System Management  -->
 			<li id="nav_system_management" >
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#system_management_menu"> <i class="fa fa-cogs" aria-hidden="true"></i>
 					System Management <i id="system_management_collapse_icon" class="fa fa-fw fa-caret-down"></i>
@@ -221,8 +134,6 @@
 				</ul>
 			</li>
 			
-			
-
 		</ul>
 	</div>
 	<!-- /.navbar-collapse -->
@@ -238,16 +149,6 @@
 </div>
 
 
-<script id='category-navigation-tpl' type='text/template'>
-	<li>
-		<a class="capitalize" href="#calljs-loadPagesOfCategory('{{key}}','{{name}}')" >
-			<i class="fa fa-fw fa-folder-open"></i> {{name}} 
-		</a>
-	</li>
-</script>
-
-
-
 <script>
 	/////////////////////////////// READY //////////////////////////////////
 	
@@ -258,23 +159,6 @@
 	$(window).resize(function() {
 		pageWrapperResize();
 	});
-	
-	function loadCategoryNavigation() {
-	    LeoAdminApiUtil.callPostAdminApi(baseAdminApi + '/category/list-all', {}, function (rs) {
-	        if (rs.data && rs.httpCode === 0) {
-	            var raw_template = $('#category-navigation-tpl').html();
-	            var template = Handlebars.compile(raw_template);
-	            var placeHolder = $('#content_hub_menu');
-	            rs.data.forEach(function (e) {
-	                //console.log(e);	
-	                //e.name = toTitleCase(e.name);
-	                var html = template(e);
-	                placeHolder.append(html);
-	            });
-	            $('[title]').tooltip();
-	        }
-	    });
-	}
 	
 	function loadCommonModalHtml() {
 	    var list = [
@@ -348,16 +232,7 @@
 	
 	function navigationSetup(){
 		
-		
-		// knowledge menu
-		$("#uspa_knowledge_hub_menu").on("hide.bs.collapse", function(){
-        	$("#uspa_knowledge_hub_collapse_icon").attr('class','fa fa-fw fa-caret-left');
-        });
-        $("#uspa_knowledge_hub_menu").on("show.bs.collapse", function(){
-        	$("#uspa_knowledge_hub_collapse_icon").attr('class','fa fa-fw fa-caret-down');
-        });
-		
-		// analytics menu
+		// 1 analytics menu
 		$("#analytics_hub_menu").on("hide.bs.collapse", function(){
         	$("#data_analytics_hub_collapse_icon").attr('class','fa fa-fw fa-caret-left');
         });
@@ -365,7 +240,7 @@
         	$("#data_analytics_hub_collapse_icon").attr('class','fa fa-fw fa-caret-down');
         });
         
-     	// journey menu
+     	// 2 journey menu
 		$("#journey_hub_menu").on("hide.bs.collapse", function(){
         	$("#journey_hub_collapse_icon").attr('class','fa fa-fw fa-caret-left');
         });
@@ -373,15 +248,7 @@
          	$("#journey_hub_collapse_icon").attr('class','fa fa-fw fa-caret-down');
         });
          
-        // content menu
-		$("#content_hub_menu").on("hide.bs.collapse", function(){
-        	$("#content_hub_collapse_icon").attr('class','fa fa-fw fa-caret-left');
-        });
-        $("#content_hub_menu").on("show.bs.collapse", function(){
-         	$("#content_hub_collapse_icon").attr('class','fa fa-fw fa-caret-down');
-        });
-         
-		// customer menu
+		// 3 customer menu
 		$("#customer_hub_menu").on("hide.bs.collapse", function(){
         	$("#customer_data_hub_collapse_icon").attr('class','fa fa-fw fa-caret-left');
         });
@@ -389,23 +256,7 @@
         	$("#customer_data_hub_collapse_icon").attr('class','fa fa-fw fa-caret-down');
         });    	
         
-     	// personalization menu
-		$("#personalization_hub_menu").on("hide.bs.collapse", function(){
-        	$("#personalization_hub_collapse_icon").attr('class','fa fa-fw fa-caret-left');
-        });
-        $("#personalization_hub_menu").on("show.bs.collapse", function(){
-         	$("#personalization_hub_collapse_icon").attr('class','fa fa-fw fa-caret-down');
-        });
-         
-        // activation menu
-		$("#activation_hub_menu").on("hide.bs.collapse", function(){
-        	$("#activation_hub_collapse_icon").attr('class','fa fa-fw fa-caret-left');
-        });
-        $("#activation_hub_menu").on("show.bs.collapse", function(){
-        	$("#activation_hub_collapse_icon").attr('class','fa fa-fw fa-caret-down');
-        });
-        
-     	// activation menu
+     	// 4 system menu
 		$("#system_management_menu").on("hide.bs.collapse", function(){
         	$("#system_management_collapse_icon").attr('class','fa fa-fw fa-caret-left');
         });
@@ -419,10 +270,7 @@
 			var msg ='<div class="alert alert-info"> <strong> Leo CDP Admin</strong> is not supported on mobile browsers! </div>';
 			$('#page-main-notification').show().html(msg);
 		} else {
-			
-			//loadCategoryNavigation(); //FIXME
 			pageWrapperResize();
-			
 			loadCommonModalHtml();
 			loadUserInfoWidget();
 			initMainSeach();
@@ -430,7 +278,6 @@
 			
 			$('#main_cms_navigation').show();
 			$('#logo-img').attr('src',window.pageHeaderLogo).show();
-			
 		}
 	};
 </script>
