@@ -138,7 +138,7 @@ LeoCdpAdmin.navFunctions.loadProductsAndServices = function (breadcrumbHtml) {
 
 //Category functions
 
-LeoCdpAdmin.navFunctions.loadContentMarketingCategories = function (breadcrumbHtml) {
+LeoCdpAdmin.navFunctions.loadContentCategoryList = function (breadcrumbHtml) {
     LeoCdpAdmin.loadView('/view/modules/content/category-list.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
     	initContentCategoryList();

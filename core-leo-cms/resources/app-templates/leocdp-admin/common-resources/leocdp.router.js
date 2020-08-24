@@ -14,10 +14,10 @@ LeoCdpAdmin.navRouters = {
 		},
 		
 		// 0  Main Analytics Dashboard
-		"Self_Learning_Courses": {
+		"Learn_Leo_CDP": {
 			"menuName" : "Self-Learning Courses",
 			"functionName" : "loadSelfLearningCourses",
-			"breadcrumb" : ["USPA Knowledge Hub", "Self-Learning Courses"]
+			"breadcrumb" : ["Leo CDP Knowledge Base", "Self-Learning Courses"]
 		},
 		
 		// 1.1 Main Analytics Dashboard
@@ -161,17 +161,17 @@ LeoCdpAdmin.navRouters = {
 		},
 		
 		// 2.8 Content Marketing List
-		"Content_Marketing" : {
-			"menuName" : "Content Marketing",
-			"functionName" : "loadContentMarketingCategories",
-			"breadcrumb" : ["Customer Journey Hub", "Content Marketing"]
+		"Content_Category_List" : {
+			"menuName" : "Content Category List",
+			"functionName" : "loadContentCategoryList",
+			"breadcrumb" : ["Customer Journey Hub", "Content Category List"]
 		},
 		
 		// 2.9 Content Marketing Pages
 		"Content_Pages" : {
 			"menuName" : "Content Pages",
 			"functionName" : "loadContentPages",
-			"breadcrumb" : ["Customer Journey Hub", "Content Marketing", "Content Pages"]
+			"breadcrumb" : ["Customer Journey Hub", "Content Category List", "Content Pages"]
 		},
 		
 		// 4.1 Customer Profile 
