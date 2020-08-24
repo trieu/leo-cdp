@@ -61,11 +61,12 @@
         <PublicContentClass>standard,youtube_video</PublicContentClass>
         <PageTitle>Leo CDP for Book Retail Industry</PageTitle>
         <PageHeaderLogo>/public/images/leo-cdp-logo.png</PageHeaderLogo>
-        <BaseStaticUrl>bookstore.bigdatavietnam.org</BaseStaticUrl>
-        <BaseAdminApiUrl>bookstore.bigdatavietnam.org</BaseAdminApiUrl>
+        <BaseStaticUrl>//bookstore.bigdatavietnam.org</BaseStaticUrl>
+        <BaseAdminApiUrl>//bookstore.bigdatavietnam.org</BaseAdminApiUrl>
         <BaseDeliveryApiUrl>bookstore.bigdatavietnam.org</BaseDeliveryApiUrl>
-        <BaseUploaderUrl>bookstore.bigdatavietnam.org</BaseUploaderUrl>
-        <BaseLogCollectorUrl>bookstore.bigdatavietnam.org</BaseLogCollectorUrl>
+        <BaseUploaderUrl>//bookstore.bigdatavietnam.org</BaseUploaderUrl>
+        <BaseLogCollectorUrl>//bookstore.bigdatavietnam.org</BaseLogCollectorUrl>
+        <PageTitle>Book Video Review Hub</PageTitle>
         <AdsTxtContent> </AdsTxtContent>
         <GoogleTrackingId></GoogleTrackingId>
         <NumberSimilarPostsInList>7</NumberSimilarPostsInList>

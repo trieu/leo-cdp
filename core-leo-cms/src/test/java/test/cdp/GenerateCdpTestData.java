@@ -93,75 +93,80 @@ public class GenerateCdpTestData {
 		for (JsonElement je : jsonArray) {
 			JsonObject jo = je.getAsJsonObject();
 			
-			String sourceIP = "127.0.0.1";
-			int id = jo.get("id").getAsInt();
-			boolean is_product_view = jo.get("is_product_view").getAsInt() == 1;
-			
-			// Personal Info
-			String firstName = jo.get("first_name").getAsString();
-			String lastName = jo.get("last_name").getAsString();
-			String email = jo.get("email").getAsString();
-			int gender = jo.get("gender").getAsString().equals("Male") ? 1 : 0;
-			
-			// Session date and time
-			String sessionDate = jo.get("session_date").getAsString();
-			String sessionTime = jo.get("session_time").getAsString();
-			Date createdAt = dateFormatter.parse(sessionDate + " " + sessionTime);
-			System.out.println("#### createdAt "+createdAt);
-			
-			// touchpoint
-			String touchpointRefDomain = getValidMediaDomain(id,jo.get("domain_referer").getAsString());
-			String refTouchpointUrl = "https://" + touchpointRefDomain + "/";
-			boolean isFromOwnedMedia = touchpointRefDomain.equals("bookstore.bigdatavietnam.org");
-			
-			Touchpoint refTouchPoint = TouchpointDataService.getOrCreateWebTouchpointForTesting(createdAt,touchpointRefDomain, MediaChannelType.WEB_URL, refTouchpointUrl, isFromOwnedMedia);
-			String srcTouchpointUrl = getRamdomlyTouchpointUrl();
-			Touchpoint srcTouchpoint = TouchpointDataService.getOrCreateWebTouchpointForTesting(createdAt,"bookstore.bigdatavietnam.org", MediaChannelType.WEB_URL, srcTouchpointUrl, true);
-			String refTouchpointId = refTouchPoint.getId();
-			String srcTouchpointId = srcTouchpoint.getId();
-			
-			double lat = jo.get("lat").getAsDouble();
-			double lon = jo.get("lon").getAsDouble();
-			String locationCode = OpenLocationCode.encode(lat, lon);
-			
-			// Device 
-			String user_agent = jo.get("user_agent").getAsString();
-			DeviceInfo deviceInfo = DeviceInfoUtil.getDeviceInfo(user_agent);
-			Device userDevice = DeviceInfoUtil.getUserDevice(deviceInfo, createdAt);
-			String userDeviceId = userDevice.getId();
-			DeviceDaoUtil.save(userDevice);
-			
-			// web UUID
-			String visitorId = RandomStringUtils.randomAlphanumeric(32).toLowerCase();
-			
-			// social login
-			String source = "facebook";
-			String refId = HashUtil.hashUrlCrc64(email)+"";
-			
-			//Leo Web Observer for channel: Video Content Hub
-			String observerId = "4zfVva5ed1ZPqTMf489Qax";
-			
-			Profile profile = ProfileDataService.saveSocialLoginProfile(email, visitorId, firstName, lastName, refId, source, 
-					observerId, srcTouchpointId, refTouchpointId, touchpointRefDomain, userDeviceId, gender, createdAt);
-			String profileId = profile.getId();
-			
-			// create session
-			DateTime dateTime = new DateTime(createdAt);
-			String dateTimeKey = ContextSession.getSessionDateTimeKey(dateTime);
-			ContextSession ctxSession = new ContextSession(observerId, dateTime, dateTimeKey, locationCode,
-					userDeviceId, "127.0.0.1", "bookstore.bigdatavietnam.org", "", refTouchpointId, srcTouchpointId, profileId , profile.getType(), visitorId, "pro");
-			ContextSessionDaoUtil.create(ctxSession);
-			
-			String eventName = "pageview";
-			// pageview event
-			EventTrackingService.recordViewEvent(createdAt, ctxSession, observerId, "pro", userDeviceId, sourceIP, deviceInfo,"Book Video Review", srcTouchpointUrl, refTouchpointUrl, touchpointRefDomain, eventName , null);
-			
-			eventName = "facebook-login";
-			Date loginTime = DateUtils.addSeconds(createdAt, RandomUtil.getRandomInteger(300, 9)); 
-			EventTrackingService.recordActionEvent(loginTime,ctxSession, observerId, "pro", userDeviceId, sourceIP, deviceInfo,"Book Video Review",srcTouchpointUrl, refTouchpointUrl,  touchpointRefDomain, eventName, 1, "", null);
-			
-			
-			System.out.println(new Gson().toJson(profile));
+			generareFakeProfileForTesting(jo);
 		}
+	}
+
+	private static void generareFakeProfileForTesting(JsonObject jo) throws ParseException {
+		String sourceIP = "127.0.0.1";
+		int id = jo.get("id").getAsInt();
+		boolean is_product_view = jo.get("is_product_view").getAsInt() == 1;
+		
+		// Personal Info
+		String firstName = jo.get("first_name").getAsString();
+		String lastName = jo.get("last_name").getAsString();
+		String email = jo.get("email").getAsString();
+		int gender = jo.get("gender").getAsString().equals("Male") ? 1 : 0;
+		
+		// Session date and time
+		String sessionDate = jo.get("session_date").getAsString();
+		String sessionTime = jo.get("session_time").getAsString();
+		Date createdAt = dateFormatter.parse(sessionDate + " " + sessionTime);
+		System.out.println("#### createdAt "+createdAt);
+		
+		// touchpoint
+		String touchpointRefDomain = getValidMediaDomain(id,jo.get("domain_referer").getAsString());
+		String refTouchpointUrl = "https://" + touchpointRefDomain + "/";
+		boolean isFromOwnedMedia = touchpointRefDomain.equals("bookstore.bigdatavietnam.org");
+		
+		Touchpoint refTouchPoint = TouchpointDataService.getOrCreateWebTouchpointForTesting(createdAt,touchpointRefDomain, MediaChannelType.WEB_URL, refTouchpointUrl, isFromOwnedMedia);
+		String srcTouchpointUrl = getRamdomlyTouchpointUrl();
+		Touchpoint srcTouchpoint = TouchpointDataService.getOrCreateWebTouchpointForTesting(createdAt,"bookstore.bigdatavietnam.org", MediaChannelType.WEB_URL, srcTouchpointUrl, true);
+		String refTouchpointId = refTouchPoint.getId();
+		String srcTouchpointId = srcTouchpoint.getId();
+		
+		//geolocation
+		double lat = jo.get("lat").getAsDouble();
+		double lon = jo.get("lon").getAsDouble();
+		String locationCode = OpenLocationCode.encode(lat, lon);
+		
+		// Device 
+		String user_agent = jo.get("user_agent").getAsString();
+		DeviceInfo deviceInfo = DeviceInfoUtil.getDeviceInfo(user_agent);
+		Device userDevice = DeviceInfoUtil.getUserDevice(deviceInfo, createdAt);
+		String userDeviceId = userDevice.getId();
+		DeviceDaoUtil.save(userDevice);
+		
+		// web UUID
+		String visitorId = RandomStringUtils.randomAlphanumeric(32).toLowerCase();
+		
+		// social login
+		String source = "facebook";
+		String refId = HashUtil.hashUrlCrc64(email)+"";
+		
+		//Leo Web Observer for channel: Video Content Hub
+		String observerId = "4zfVva5ed1ZPqTMf489Qax";
+		
+		Profile profile = ProfileDataService.saveSocialLoginProfile(email, visitorId, firstName, lastName, refId, source, 
+				observerId, srcTouchpointId, refTouchpointId, touchpointRefDomain, userDeviceId, gender, createdAt);
+		String profileId = profile.getId();
+		
+		// create session
+		DateTime dateTime = new DateTime(createdAt);
+		String dateTimeKey = ContextSession.getSessionDateTimeKey(dateTime);
+		ContextSession ctxSession = new ContextSession(observerId, dateTime, dateTimeKey, locationCode,
+				userDeviceId, "127.0.0.1", "bookstore.bigdatavietnam.org", "", refTouchpointId, srcTouchpointId, profileId , profile.getType(), visitorId, "pro");
+		ContextSessionDaoUtil.create(ctxSession);
+		
+		String eventName = "pageview";
+		// pageview event
+		EventTrackingService.trackViewEvent(createdAt, ctxSession, observerId, "pro", userDeviceId, sourceIP, deviceInfo,"Book Video Review", srcTouchpointUrl, refTouchpointUrl, touchpointRefDomain, eventName , null);
+		
+		eventName = "facebook-login";
+		Date loginTime = DateUtils.addSeconds(createdAt, RandomUtil.getRandomInteger(300, 9)); 
+		EventTrackingService.trackActionEvent(loginTime,ctxSession, observerId, "pro", userDeviceId, sourceIP, deviceInfo,"Book Video Review",srcTouchpointUrl, refTouchpointUrl,  touchpointRefDomain, eventName, 1, "", null);
+		
+		
+		System.out.println(new Gson().toJson(profile));
 	}
 }

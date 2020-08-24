@@ -647,6 +647,11 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	public void setUsedDeviceIds(Set<String> usedDeviceIds) {
 		this.usedDeviceIds = usedDeviceIds;
 	}
+	
+	public void setUsedDeviceId(String usedDeviceId) {
+		this.usedDeviceIds.add(usedDeviceId);
+		this.lastUsedDeviceId = usedDeviceId;
+	}
 
 	public Map<String, String> getExtPersonalAttributes() {
 		return extPersonalAttributes;

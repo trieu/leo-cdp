@@ -21,7 +21,7 @@ public class EventTrackingService {
 
 	//
 
-	public static int recordViewEvent(Date createdAt, ContextSession ctxSession, String srcObserverId, String environment,
+	public static int trackViewEvent(Date createdAt, ContextSession ctxSession, String srcObserverId, String environment,
 			String deviceId, String sourceIP, DeviceInfo dv, String srcTouchpointName, String srcTouchpointUrl,
 			String refTouchpointUrl, String touchpointRefDomain, String eventName, Map<String, String> eventData) {
 		String deviceName = dv.deviceName;
@@ -63,7 +63,7 @@ public class EventTrackingService {
 		return 201;
 	}
 
-	public static int recordActionEvent(Date createdAt, ContextSession ctxSession, String srcObserverId, String environment,
+	public static int trackActionEvent(Date createdAt, ContextSession ctxSession, String srcObserverId, String environment,
 			String deviceId, String sourceIP, DeviceInfo dv, String srcTouchpointName, String srcTouchpointUrl,
 			String refTouchpointUrl, String touchpointRefDomain, String eventName, long eventCount,
 			String feedbackText, Map<String, String> eventData) {
@@ -104,7 +104,7 @@ public class EventTrackingService {
 		return 221;
 	}
 
-	public static int recordConversionEvent(Date createdAt, ContextSession ctxSession, String srcObserverId, String environment,
+	public static int trackConversionEvent(Date createdAt, ContextSession ctxSession, String srcObserverId, String environment,
 			String srcEventKey, String deviceId, String sourceIP, DeviceInfo device, String srcTouchpointName,
 			String srcTouchpointUrl, String refTouchpointUrl, String touchpointRefDomain, String eventName,
 			long eventCount, String transactionCode, String feedbackText, Map<String, String> eventData) {
@@ -153,8 +153,7 @@ public class EventTrackingService {
 	public static List<EventSingleDataView> getEventActivityFlowOfProfile(String profileId, int startIndex,
 			int numberResults) {
 		// Engagement Event Activities
-		List<EventSingleDataView> eventActivities = TrackingEventDaoUtil.getEventsByProfileId(profileId,
-				new DataFilter(startIndex, numberResults));
+		List<EventSingleDataView> eventActivities = TrackingEventDaoUtil.getEventsByProfileId(profileId,new DataFilter(startIndex, numberResults));
 		return eventActivities;
 	}
 }

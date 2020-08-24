@@ -4,10 +4,10 @@ import com.google.gson.annotations.Expose;
 
 public class JsonDataTablePayload extends JsonDataPayload {
 	
-	public static final JsonDataTablePayload data(String uri, Object data, long recordsTotal, int recordsFiltered, int draw) {
+	public static final JsonDataTablePayload data(String uri, Object data, long recordsTotal, long recordsFiltered, int draw) {
 		JsonDataTablePayload model = new JsonDataTablePayload(uri, data);
-		model.setRecordsFiltered(recordsFiltered);
 		model.setRecordsTotal(recordsTotal);
+		model.setRecordsFiltered(recordsFiltered);
 		model.setDraw(draw);
 		return model;
 	}
@@ -20,7 +20,7 @@ public class JsonDataTablePayload extends JsonDataPayload {
 	long recordsTotal = 0;
 	
 	@Expose
-	int recordsFiltered = 0;
+	long recordsFiltered = 0;
 	
 	@Expose
 	int draw = 2;
@@ -33,11 +33,11 @@ public class JsonDataTablePayload extends JsonDataPayload {
 		this.recordsTotal = recordsTotal;
 	}
 
-	public int getRecordsFiltered() {
+	public long getRecordsFiltered() {
 		return recordsFiltered;
 	}
 
-	public void setRecordsFiltered(int recordsFiltered) {
+	public void setRecordsFiltered(long recordsFiltered) {
 		this.recordsFiltered = recordsFiltered;
 	}
 

@@ -121,12 +121,30 @@ public class ProfileDaoUtil  extends BaseLeoCdpDao {
 		return list;
 	}
 	
-	public static List<ProfileSingleDataView> filter(DataFilter filter) {
+	public static long getTotalRecordsFiltered(DataFilter filter) {
+		//TODO
+		return countTotalOfProfiles();
+	}
+	
+	public static JsonDataTablePayload filter(DataFilter filter){
+		int draw = filter.getDraw();
+		
+		List<ProfileSingleDataView> list = runFilterQuery(filter);
+		long recordsTotal = ProfileDaoUtil.countTotalOfProfiles();
+		long recordsFiltered = getTotalRecordsFiltered(filter);
+		
+		JsonDataTablePayload payload =  JsonDataTablePayload.data(filter.getUri(), list, recordsTotal, recordsFiltered, draw);
+		return payload;
+	}
+
+	private static List<ProfileSingleDataView> runFilterQuery(DataFilter filter) {
 		ArangoDatabase db = getCdpDbInstance();
-		
-		//System.out.println("==> before apply DataFilter " + filter);
-		
 		//TODO dynamic query builder for filtering data
+		List<ProfileSingleDataView> list = getProfilesByPagination(filter, db);
+		return list;
+	}
+
+	private static List<ProfileSingleDataView> getProfilesByPagination(DataFilter filter, ArangoDatabase db) {
 		Map<String, Object> bindVars = new HashMap<>(2);
 		bindVars.put("startIndex", filter.getStart());
 		bindVars.put("numberResult", filter.getLength());
@@ -140,7 +158,6 @@ public class ProfileDaoUtil  extends BaseLeoCdpDao {
 		};
 		List<ProfileSingleDataView> list = new ArangoDbQuery<ProfileSingleDataView>(db, AQL_GET_PROFILES_BY_PAGINATION, 
 				bindVars, ProfileSingleDataView.class, callback).getResultsAsList();
-		
 		return list;
 	}
 

@@ -133,13 +133,9 @@ public class ProfileDataService {
 	}
 	
 	public static JsonDataTablePayload filter(DataFilter filter){
-		List<ProfileSingleDataView> list  = ProfileDaoUtil.filter(filter);
-		long recordsTotal = ProfileDaoUtil.countTotalOfProfiles();
-		int recordsFiltered = list.size();
-		int draw = filter.getDraw();
-		JsonDataTablePayload payload =  JsonDataTablePayload.data(filter.getUri(), list, recordsTotal, recordsFiltered, draw);
+		
 		//TODO caching
-		return payload;
+		return ProfileDaoUtil.filter(filter);
 	}
 	
 	public static ProfileSingleDataView getSingleViewById(String id) {
@@ -183,6 +179,7 @@ public class ProfileDataService {
 		pf.setLastObserverId(observerId);
 		pf.setLastTouchpointId(srcTouchpointId);
 		pf.setLastUsedDeviceId(userDeviceId);
+		pf.setUsedDeviceId(userDeviceId);
 		pf.setCreatedAt(createdAt);
 		pf.setUpdatedAt(createdAt);
 		
