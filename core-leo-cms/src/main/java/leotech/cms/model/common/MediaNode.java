@@ -27,9 +27,7 @@ import rfx.core.util.StringUtil;
 /**
  * @author TrieuNT core abstract class for content persistence
  */
-public abstract class MediaNode implements PersistentArangoObject, Comparable<MediaNode> {
-	
-	
+public abstract class MediaNode extends CmsPersistentObject implements Comparable<MediaNode> {
 
 	private static final int MAX_LENGTH_OF_SLUG = 255;
 
@@ -81,7 +79,6 @@ public abstract class MediaNode implements PersistentArangoObject, Comparable<Me
 	// default headline short video about content
 	@Expose
 	protected String headlineVideoUrl = "";
-											
 
 	// KEY is Image URL, VALUE is the label of image
 	@Expose
@@ -100,18 +97,18 @@ public abstract class MediaNode implements PersistentArangoObject, Comparable<Me
 
 	// by administrator or system
 	@Expose
-	protected List<String> categoryKeys = new ArrayList<>(10);														
+	protected List<String> categoryKeys = new ArrayList<>(10);
 
 	@Expose
 	protected List<String> keywords = new ArrayList<>(100);
 
 	// the content network ID
 	@Expose
-	protected long networkId = 0; 
+	protected long networkId = 0;
 
 	// the userId or botId
 	@Expose
-	protected String ownerId = ""; 
+	protected String ownerId = "";
 
 	protected int privacyStatus = DataPrivacy.PUBLIC;
 
@@ -210,7 +207,7 @@ public abstract class MediaNode implements PersistentArangoObject, Comparable<Me
 		throw new IllegalArgumentException("The data is not ready, title is empty ");
 	}
 
-	public static ArangoCollection getCollection(ArangoCollection collection, String colName)
+	protected static ArangoCollection getCollection(ArangoCollection collection, String colName)
 			throws ArangoDBException {
 		if (collection == null) {
 			ArangoDatabase arangoDatabase = ArangoDbUtil.getActiveArangoDbInstance();

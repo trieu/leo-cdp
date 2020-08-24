@@ -15,7 +15,7 @@ import leotech.system.util.database.ArangoDbUtil;
  */
 public class DataObserver extends CdpPersistentObject {
 
-	public static final String COLLECTION_NAME = COLLECTION_PREFIX
+	public static final String COLLECTION_NAME = CDP_COLLECTION_PREFIX
 			+ DataObserver.class.getSimpleName().toLowerCase();
 	static ArangoCollection instance;
 

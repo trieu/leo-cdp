@@ -20,7 +20,7 @@ import com.google.gson.annotations.Expose;
 import leotech.system.util.database.ArangoDbUtil;
 import rfx.core.util.StringUtil;
 
-public abstract class TaxonomyNode implements PersistentArangoObject {
+public abstract class TaxonomyNode extends CmsPersistentObject {
 
 	@DocumentField(Type.KEY)
 	@Expose
@@ -77,7 +77,7 @@ public abstract class TaxonomyNode implements PersistentArangoObject {
 		this.modificationTime = System.currentTimeMillis();
 	}
 
-	public static ArangoCollection getCollection(ArangoCollection collection, String colName)
+	protected static ArangoCollection getCollection(ArangoCollection collection, String colName)
 			throws ArangoDBException {
 		if (collection == null) {
 			ArangoDatabase arangoDatabase = ArangoDbUtil.getActiveArangoDbInstance();

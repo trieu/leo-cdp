@@ -19,7 +19,7 @@ partitionId = Optional(int, size=16, default=1)*/
 
 public class ReportUnit  extends CdpPersistentObject implements Comparable<ReportUnit>{
 
-    public static final String COLLECTION_NAME = COLLECTION_PREFIX + ReportUnit.class.getSimpleName().toLowerCase();
+    public static final String COLLECTION_NAME = CDP_COLLECTION_PREFIX + ReportUnit.class.getSimpleName().toLowerCase();
     static ArangoCollection instance;
 
     @Override

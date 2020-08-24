@@ -13,8 +13,8 @@ import com.arangodb.model.HashIndexOptions;
 import com.arangodb.model.PersistentIndexOptions;
 import com.google.gson.Gson;
 
-import leotech.cms.model.common.PersistentArangoObject;
 import leotech.system.util.database.ArangoDbUtil;
+import leotech.system.util.database.PersistentArangoObject;
 
 public class CrawledYouTubeVideo implements Comparable<CrawledYouTubeVideo>, PersistentArangoObject {
 

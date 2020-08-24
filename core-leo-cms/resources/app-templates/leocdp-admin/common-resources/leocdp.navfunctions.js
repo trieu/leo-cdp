@@ -134,7 +134,7 @@ LeoCdpAdmin.navFunctions.loadProductsAndServices = function (breadcrumbHtml) {
 }
 
 
-//###################### Creative Content Hub ######################
+//###################### Creative Content ######################
 
 //Category functions
 
@@ -144,7 +144,6 @@ LeoCdpAdmin.navFunctions.loadContentCategoryList = function (breadcrumbHtml) {
     	initContentCategoryList();
     });
 }
-
 
 LeoCdpAdmin.navFunctions.loadContentPages = function(catKey, breadcrumbHtml) {
     LeoCdpAdmin.loadView('/view/modules/content/page-list.html?admin=1', pageDomSelector, function () {
@@ -291,7 +290,7 @@ LeoCdpAdmin.navFunctions.loadPersonalizationWidgets = function(breadcrumbHtml) {
     });
 }
 
-//###################### Customer Activation Hub navigation ######################
+//###################### Customer Activation ######################
 
 LeoCdpAdmin.navFunctions.loadActivationRules = function(breadcrumbHtml) {
     LeoCdpAdmin.loadView('/view/modules/activation/activation-rules.html?admin=1', pageDomSelector, function () {

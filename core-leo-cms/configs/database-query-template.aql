@@ -57,30 +57,30 @@ AQL_GET_KEYWORDS_OF_ALL_POSTS =>
 ########### AQL LEO CMS - PAGE COLLECTION ########################################################################################################;
 
 AQL_GET_PAGE_BY_ID =>
-	FOR p in page FILTER p.id == @id  
+	FOR p in cms_page FILTER p.id == @id  
 	RETURN p
 ;
 
 AQL_GET_PAGE_BY_SLUG =>
-	FOR p in page FILTER p.slug == @slug  
+	FOR p in cms_page FILTER p.slug == @slug  
 	RETURN p
 ;
 
 AQL_GET_PAGES_BY_NETWORK =>
-	FOR p in page FILTER p.networkId == @networkId 
+	FOR p in cms_page FILTER p.networkId == @networkId 
 	LIMIT @startIndex,@numberResult 
 	SORT p.modificationTime DESC
 	RETURN p
 ;
 
 AQL_GET_ALL_PAGES_BY_CATEGORY =>
-	FOR p in page FILTER @categoryKey IN p.categoryKeys[*]
+	FOR p in cms_page FILTER @categoryKey IN p.categoryKeys[*]
 	SORT p.modificationTime DESC
 	RETURN p
 ;
 
 AQL_GET_PUBLIC_PAGES_BY_CATEGORY =>
-	FOR p in page FILTER p.privacyStatus == 0 AND @categoryKey IN p.categoryKeys[*]
+	FOR p in cms_page FILTER p.privacyStatus == 0 AND @categoryKey IN p.categoryKeys[*]
 	SORT p.modificationTime DESC
 	RETURN p
 ;
@@ -88,17 +88,17 @@ AQL_GET_PUBLIC_PAGES_BY_CATEGORY =>
 ########### AQL LEO CMS - CATEGORY COLLECTION ########################################################################################################;
 
 AQL_FIND_KEY_BY_SLUG =>
-	FOR p in category FILTER p.slug == @slug  
+	FOR p in cms_category FILTER p.slug == @slug  
 	RETURN p._key
 ;
 
 AQL_GET_CATEGORY_BY_KEY =>
-	FOR p in category FILTER p._key == @_key  
+	FOR p in cms_category FILTER p._key == @_key  
 	RETURN p
 ;
 
 AQL_GET_ALL_CATEGORIES_BY_NETWORK =>
-	FOR p in category FILTER p.networkId == @networkId 
+	FOR p in cms_category FILTER p.networkId == @networkId 
 	RETURN p
 ;
 
@@ -125,22 +125,22 @@ AQL_GET_ALL_USERS_IN_NETWORK =>
 
 ########### AQL LEO CMS - FILE_METADATA COLLECTION ########################################################################################################;
 AQL_GET_FILE_METADATA_BY_PATH => 
-	FOR f in filemetadata FILTER f.path == @path  
+	FOR f in cms_filemetadata FILTER f.path == @path  
 	RETURN f
 ;
 
 AQL_GET_FILE_METADATA_BY_NETWORK_ID => 
-	FOR f in filemetadata FILTER f.networkId == @networkId  
+	FOR f in cms_filemetadata FILTER f.networkId == @networkId  
 	RETURN f
 ;
 
 AQL_GET_FILE_METADATA_BY_OWNER_ID => 
-	FOR f in filemetadata FILTER f.ownerLogin == @ownerLogin  
+	FOR f in cms_filemetadata FILTER f.ownerLogin == @ownerLogin  
 	RETURN f
 ;
 
 AQL_GET_FILE_METADATA_BY_OBJECT => 
-	FOR f in filemetadata FILTER f.refObjectClass == @refObjectClass AND f.refObjectKey == @refObjectKey  
+	FOR f in cms_filemetadata FILTER f.refObjectClass == @refObjectClass AND f.refObjectKey == @refObjectKey  
 	RETURN f
 ;
 

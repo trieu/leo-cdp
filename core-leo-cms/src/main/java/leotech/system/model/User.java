@@ -16,9 +16,9 @@ import com.google.gson.annotations.Expose;
 import leotech.cms.model.Category;
 import leotech.cms.model.Page;
 import leotech.cms.model.Post;
-import leotech.cms.model.common.PersistentArangoObject;
 import leotech.system.util.Encryptor;
 import leotech.system.util.database.ArangoDbUtil;
+import leotech.system.util.database.PersistentArangoObject;
 import rfx.core.util.StringUtil;
 
 /**

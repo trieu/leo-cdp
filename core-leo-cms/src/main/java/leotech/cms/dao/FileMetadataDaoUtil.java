@@ -16,96 +16,96 @@ import leotech.system.util.database.ArangoDbUtil;
 
 public class FileMetadataDaoUtil {
 
-    static final String AQL_GET_BY_PATH = AqlTemplate.get("AQL_GET_FILE_METADATA_BY_PATH");
-    static final String AQL_GET_BY_NETWORK_ID = AqlTemplate.get("AQL_GET_FILE_METADATA_BY_NETWORK_ID");
-    static final String AQL_GET_BY_OWNER_ID = AqlTemplate.get("AQL_GET_FILE_METADATA_BY_OWNER_ID");
-    static final String AQL_GET_BY_OBJECT = AqlTemplate.get("AQL_GET_FILE_METADATA_BY_OBJECT");
+	static final String AQL_GET_BY_PATH = AqlTemplate.get("AQL_GET_FILE_METADATA_BY_PATH");
+	static final String AQL_GET_BY_NETWORK_ID = AqlTemplate.get("AQL_GET_FILE_METADATA_BY_NETWORK_ID");
+	static final String AQL_GET_BY_OWNER_ID = AqlTemplate.get("AQL_GET_FILE_METADATA_BY_OWNER_ID");
+	static final String AQL_GET_BY_OBJECT = AqlTemplate.get("AQL_GET_FILE_METADATA_BY_OBJECT");
 
-    public static String save(FileMetadata fileMetadata) {
-	if (fileMetadata.isReadyForSave()) {
-	    ArangoCollection col = fileMetadata.getCollection();
-	    if (col != null) {
-		String _key = col.insertDocument(fileMetadata).getKey();
-		return _key;
-	    }
+	public static String save(FileMetadata fileMetadata) {
+		if (fileMetadata.isReadyForSave()) {
+			ArangoCollection col = fileMetadata.getCollection();
+			if (col != null) {
+				String _key = col.insertDocument(fileMetadata).getKey();
+				return _key;
+			}
+		}
+		return null;
 	}
-	return null;
-    }
 
-    public static boolean deleteByPath(String path) {
-	FileMetadata f = getByPath(path);
-	if (f != null) {
-	    ArangoCollection col = f.getCollection();
-	    col.deleteDocument(f.getKey());
-	    return true;
+	public static boolean deleteByPath(String path) {
+		FileMetadata f = getByPath(path);
+		if (f != null) {
+			ArangoCollection col = f.getCollection();
+			col.deleteDocument(f.getKey());
+			return true;
+		}
+		return false;
 	}
-	return false;
-    }
 
-    public static FileMetadata getByPath(String path) {
-	ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
-	Map<String, Object> bindVars = new HashMap<>(1);
-	bindVars.put("path", path);
-	
-	ArangoCursor<FileMetadata> cursor = db.query(AQL_GET_BY_PATH, bindVars, null, FileMetadata.class);
-	while (cursor.hasNext()) {
-	    return cursor.next();
+	public static FileMetadata getByPath(String path) {
+		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
+		Map<String, Object> bindVars = new HashMap<>(1);
+		bindVars.put("path", path);
+
+		ArangoCursor<FileMetadata> cursor = db.query(AQL_GET_BY_PATH, bindVars, null, FileMetadata.class);
+		while (cursor.hasNext()) {
+			return cursor.next();
+		}
+		return null;
 	}
-	return null;
-    }
 
-    public static List<FileMetadata> listAllByNetwork(long networkId) {
-	List<FileMetadata> list = new ArrayList<>();
-	try {
-	    ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
-	    Map<String, Object> bindVars = new HashMap<>(3);
-	    bindVars.put("networkId", networkId);
+	public static List<FileMetadata> listAllByNetwork(long networkId) {
+		List<FileMetadata> list = new ArrayList<>();
+		try {
+			ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
+			Map<String, Object> bindVars = new HashMap<>(3);
+			bindVars.put("networkId", networkId);
 
-	    ArangoCursor<FileMetadata> cursor = db.query(AQL_GET_BY_NETWORK_ID, bindVars, null, FileMetadata.class);
-	    while (cursor.hasNext()) {
-		FileMetadata f = cursor.next();
-		list.add(f);
-	    }
-	} catch (ArangoDBException e) {
-	    e.printStackTrace();
+			ArangoCursor<FileMetadata> cursor = db.query(AQL_GET_BY_NETWORK_ID, bindVars, null, FileMetadata.class);
+			while (cursor.hasNext()) {
+				FileMetadata f = cursor.next();
+				list.add(f);
+			}
+		} catch (ArangoDBException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
-	return list;
-    }
 
-    public static List<FileMetadata> listAllByOwner(String ownerLogin) {
-	List<FileMetadata> list = new ArrayList<>();
-	try {
-	    ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
-	    Map<String, Object> bindVars = new HashMap<>(3);
-	    bindVars.put("ownerLogin", ownerLogin);
+	public static List<FileMetadata> listAllByOwner(String ownerLogin) {
+		List<FileMetadata> list = new ArrayList<>();
+		try {
+			ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
+			Map<String, Object> bindVars = new HashMap<>(3);
+			bindVars.put("ownerLogin", ownerLogin);
 
-	    ArangoCursor<FileMetadata> cursor = db.query(AQL_GET_BY_OWNER_ID, bindVars, null, FileMetadata.class);
-	    while (cursor.hasNext()) {
-		FileMetadata f = cursor.next();
-		list.add(f);
-	    }
-	} catch (ArangoDBException e) {
-	    e.printStackTrace();
+			ArangoCursor<FileMetadata> cursor = db.query(AQL_GET_BY_OWNER_ID, bindVars, null, FileMetadata.class);
+			while (cursor.hasNext()) {
+				FileMetadata f = cursor.next();
+				list.add(f);
+			}
+		} catch (ArangoDBException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
-	return list;
-    }
 
-    public static List<FileMetadata> listAllByObject(String refObjectClass, String refObjectKey) {
-	List<FileMetadata> list = new ArrayList<>();
-	try {
-	    ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
-	    Map<String, Object> bindVars = new HashMap<>(3);
-	    bindVars.put("refObjectClass", refObjectClass);
-	    bindVars.put("refObjectKey", refObjectKey);
+	public static List<FileMetadata> listAllByObject(String refObjectClass, String refObjectKey) {
+		List<FileMetadata> list = new ArrayList<>();
+		try {
+			ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
+			Map<String, Object> bindVars = new HashMap<>(3);
+			bindVars.put("refObjectClass", refObjectClass);
+			bindVars.put("refObjectKey", refObjectKey);
 
-	    ArangoCursor<FileMetadata> cursor = db.query(AQL_GET_BY_OBJECT, bindVars, null, FileMetadata.class);
-	    while (cursor.hasNext()) {
-		FileMetadata f = cursor.next();
-		list.add(f);
-	    }
-	} catch (ArangoDBException e) {
-	    e.printStackTrace();
+			ArangoCursor<FileMetadata> cursor = db.query(AQL_GET_BY_OBJECT, bindVars, null, FileMetadata.class);
+			while (cursor.hasNext()) {
+				FileMetadata f = cursor.next();
+				list.add(f);
+			}
+		} catch (ArangoDBException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
-	return list;
-    }
 }

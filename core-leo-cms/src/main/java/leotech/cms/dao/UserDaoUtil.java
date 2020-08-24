@@ -119,7 +119,8 @@ public class UserDaoUtil {
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("userLogin", userLogin);
 
-		User user = new ArangoDbQuery<User>(db, AQL_GET_USER_BY_USERLOGIN, bindVars, User.class).getResultsAsObject();
+		User user = new ArangoDbQuery<User>(db, AQL_GET_USER_BY_USERLOGIN, bindVars, User.class)
+				.getResultsAsObject();
 		return user;
 	}
 

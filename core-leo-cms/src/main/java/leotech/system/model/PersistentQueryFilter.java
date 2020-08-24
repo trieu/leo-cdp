@@ -12,9 +12,9 @@ import com.arangodb.model.PersistentIndexOptions;
 import com.github.slugify.Slugify;
 import com.google.gson.annotations.Expose;
 
-import leotech.cms.model.common.PersistentArangoObject;
 import leotech.cms.model.common.QueryFilter;
 import leotech.system.util.database.ArangoDbUtil;
+import leotech.system.util.database.PersistentArangoObject;
 import rfx.core.util.StringUtil;
 
 public class PersistentQueryFilter extends QueryFilter implements PersistentArangoObject {

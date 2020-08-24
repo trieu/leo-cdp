@@ -12,7 +12,7 @@ import com.arangodb.ArangoCollection;
 import com.google.gson.Gson;
 
 import leotech.cms.model.ContentClassPostQuery;
-import leotech.cms.model.common.PersistentArangoObject;
+import leotech.system.util.database.PersistentArangoObject;
 import rfx.core.util.HashUtil;
 import rfx.core.util.StringUtil;
 

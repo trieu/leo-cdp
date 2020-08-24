@@ -4,20 +4,20 @@ import leotech.system.template.DataModel;
 
 public class DefaultModel implements DataModel {
 
-    static String classpath = DefaultModel.class.getName();
-    
-    @Override
-    public void freeResource() {
-    }
+	static String classpath = DefaultModel.class.getName();
 
-    @Override
-    public String getClasspath() {
-	return classpath;
-    }
+	@Override
+	public void freeResource() {
+	}
 
-    @Override
-    public boolean isOutputable() {
-	return true;
-    }
+	@Override
+	public String getClasspath() {
+		return classpath;
+	}
+
+	@Override
+	public boolean isOutputable() {
+		return true;
+	}
 
 }

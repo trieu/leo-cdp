@@ -7,8 +7,8 @@ import com.arangodb.ArangoDBException;
 import com.arangodb.ArangoDatabase;
 import com.arangodb.model.PersistentIndexOptions;
 
-import leotech.cms.model.common.PersistentArangoObject;
 import leotech.system.util.database.ArangoDbUtil;
+import leotech.system.util.database.PersistentArangoObject;
 import rfx.core.util.StringUtil;
 
 public class ContentTranslation implements PersistentArangoObject {

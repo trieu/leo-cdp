@@ -13,7 +13,7 @@ import com.arangodb.model.HashIndexOptions;
 import com.arangodb.model.PersistentIndexOptions;
 import com.google.gson.annotations.Expose;
 
-import leotech.cms.model.common.PersistentArangoObject;
+import leotech.cms.model.common.CmsPersistentObject;
 import leotech.system.model.AppMetadata;
 import leotech.system.util.database.ArangoDbUtil;
 import rfx.core.util.StringUtil;
@@ -22,7 +22,7 @@ import rfx.core.util.StringUtil;
  * @author TrieuNT
  *
  */
-public class FileMetadata implements PersistentArangoObject {
+public class FileMetadata extends CmsPersistentObject {
 
 	@DocumentField(Type.KEY)
 	private String key;
@@ -72,7 +72,7 @@ public class FileMetadata implements PersistentArangoObject {
 		this.refObjectKey = refObjectKey;
 	}
 
-	public static final String COLLECTION_NAME = FileMetadata.class.getSimpleName().toLowerCase();
+	public static final String COLLECTION_NAME = getCollectionName(FileMetadata.class);
 	static ArangoCollection collection;
 
 	@Override

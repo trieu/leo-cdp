@@ -8,14 +8,14 @@ import leotech.cms.model.common.QueryFilter;
 
 public class ContentQueryFilter extends QueryFilter {
 
-    @Expose
-    SortedSet<Page> pages;
+	@Expose
+	SortedSet<Page> pages;
 
-    @Expose
-    SortedSet<Post> posts;
+	@Expose
+	SortedSet<Post> posts;
 
-    public ContentQueryFilter(String name, long networkId) {
-	super(name, networkId);
-    }
+	public ContentQueryFilter(String name, long networkId) {
+		super(name, networkId);
+	}
 
 }

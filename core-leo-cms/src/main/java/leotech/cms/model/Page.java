@@ -13,6 +13,9 @@ import leotech.cms.model.common.ContentType;
 import leotech.cms.model.common.MediaNode;
 
 public class Page extends MediaNode {
+	
+	public static final String COLLECTION_NAME = getCollectionName(Page.class);
+	static ArangoCollection collectionInstance;
 
 	@Expose
 	@com.arangodb.velocypack.annotations.Expose(serialize = false, deserialize = false)
@@ -43,8 +46,7 @@ public class Page extends MediaNode {
 		postsOfPage.addAll(posts);
 	}
 
-	public static final String COLLECTION_NAME = Page.class.getSimpleName().toLowerCase();
-	static ArangoCollection collectionInstance;
+
 
 	@Override
 	public ArangoCollection getCollection() {
