@@ -70,6 +70,12 @@ http://log.xemgiday.com/eta?observer=tester&media=xemgiday.com&itouchid=homepage
 * https://community.tealiumiq.com/t5/Data-Layer/Data-Layer-Definition-Publisher/ta-p/17268
 * https://docs.tealium.com/platforms/javascript/universal-data-object/
 
+## Restful API for data query
+* https://www.youtube.com/watch?v=sAVJDyQd4j4
+* https://github.com/TechPrimers/restwebservice-vertx-example
+* https://www.eclipse.org/community/eclipse_newsletter/2016/october/article4.php
+* https://vertx.io/docs/vertx-auth-jwt/java/
+
 ## Chart & Visualization
 * http://sigmajs.org
 * https://www.chartjs.org

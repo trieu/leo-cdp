@@ -27,7 +27,14 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Unified Analytics Hub", "Primary Dashboard"]
 		},
 		
-		// 1.2 Analytics 360 Notebooks
+		// 1.2 TODO Content Dashboard
+		"Content_Dashboard" : {
+			"menuName" : "Content Dashboard",
+			"functionName" : "loadContentDashboard",
+			"breadcrumb" : ["Creative Content Hub", "Content Dashboard"]
+		},
+		
+		// 1.3 Analytics 360 Notebooks
 		"Analytics_360_Notebooks": {
 			"menuName" : "Analytics 360 Notebooks",
 			"functionName" : "loadAnalytics360Notebooks",
@@ -126,21 +133,48 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Customer Journey Hub", "Journey Map List","Journey Map Studio"]
 		},
 		
-		// 3.1 Content Dashboard
-		"Content_Dashboard" : {
-			"menuName" : "Content Dashboard",
-			"functionName" : "loadContentDashboard",
-			"breadcrumb" : ["Creative Content Hub", "Content Dashboard"]
+		// 2.7 TODO Product and Service Catalog
+		"Products_and_Services" : {
+			"menuName" : "Products and Services",
+			"functionName" : "loadProductsAndServices",
+			"breadcrumb" : ["Customer Journey Hub", "Products & Services"]
+		},
+		"Product_Report" : {
+			"menuName" : "Product Report",
+			"functionName" : "loadProductReport",
+			"breadcrumb" : ["Customer Journey Hub", "Products & Services", "Product Report"]
+		},
+		"Service_Report" : {
+			"menuName" : "Service Report",
+			"functionName" : "loadServiceReport",
+			"breadcrumb" : ["Customer Journey Hub", "Products & Services", "Service Report"]
+		},
+		"Product_Data_Editor" : {
+			"menuName" : "Product Data Editor",
+			"functionName" : "loadProductDataEditor",
+			"breadcrumb" : ["Customer Journey Hub", "Products & Services", "Product Data Editor"]
+		},
+		"Product_Data_Editor" : {
+			"menuName" : "Service Data Editor",
+			"functionName" : "loadServiceDataEditor",
+			"breadcrumb" : ["Customer Journey Hub", "Products & Services", "Service Data Editor"]
 		},
 		
-		// 3.2 Creative Content Category
-		"Content_Category_List" : {
-			"menuName" : "Content Category List",
-			"functionName" : "loadContentCategoryList",
-			"breadcrumb" : ["Creative Content Hub", "Content Category List"]
+		// 2.8 Content Marketing List
+		"Content_Marketing" : {
+			"menuName" : "Content Marketing",
+			"functionName" : "loadContentMarketingCategories",
+			"breadcrumb" : ["Customer Journey Hub", "Content Marketing"]
 		},
 		
-		// 3.1 Customer Profile 
+		// 2.9 Content Marketing Pages
+		"Content_Pages" : {
+			"menuName" : "Content Pages",
+			"functionName" : "loadContentPages",
+			"breadcrumb" : ["Customer Journey Hub", "Content Marketing", "Content Pages"]
+		},
+		
+		// 4.1 Customer Profile 
 		"Customer_Profile_List" : {
 			"menuName" : "Customer Profile List",
 			"functionName" : "loadCustomerProfileList",
@@ -157,7 +191,7 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Customer Data Hub", "Customer Profile List", "Customer Profile Editor"]
 		},
 		
-		// 3.2 Customer Segmentation
+		// 4.2 Customer Segmentation
 		"Customer_Segment_List" : {
 			"menuName" : "Customer Segment List",
 			"functionName" : "loadCustomerSegmentList",
@@ -174,45 +208,18 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Customer Data Hub", "Customer Segment List", "Customer Segment Builder"]
 		},
 		
-		// 3.3 Customer Data Import from tab-separated values (TSV) file 
+		// 4.3 Customer Data Import from tab-separated values (TSV) file 
 		"Customer_Data_Import" : {
 			"menuName" : "Customer Data Import",
 			"functionName" : "loadCustomerDataImport",
 			"breadcrumb" : ["Customer Data Hub", "Customer Data Import"]
 		},
 		
-		// 3.4 Customer Data Export to tab-separated values (TSV) file
+		// 4.4 Customer Data Export to tab-separated values (TSV) file
 		"Customer_Data_Export" : {
 			"menuName" : "Customer Data Export",
 			"functionName" : "loadCustomerDataExport",
 			"breadcrumb" : ["Customer Data Hub", "Customer Data Export"]
-		},
-		
-		// Product and Service Catalog
-		"Products_and_Services" : {
-			"menuName" : "Products and Services",
-			"functionName" : "loadProductsAndServices",
-			"breadcrumb" : ["Customer Data Hub", "Products & Services"]
-		},
-		"Product_Report" : {
-			"menuName" : "Product Report",
-			"functionName" : "loadProductReport",
-			"breadcrumb" : ["Customer Data Hub", "Products & Services", "Product Report"]
-		},
-		"Service_Report" : {
-			"menuName" : "Service Report",
-			"functionName" : "loadServiceReport",
-			"breadcrumb" : ["Customer Data Hub", "Products & Services", "Service Report"]
-		},
-		"Product_Data_Editor" : {
-			"menuName" : "Product Data Editor",
-			"functionName" : "loadProductDataEditor",
-			"breadcrumb" : ["Customer Data Hub", "Products & Services", "Product Data Editor"]
-		},
-		"Product_Data_Editor" : {
-			"menuName" : "Service Data Editor",
-			"functionName" : "loadServiceDataEditor",
-			"breadcrumb" : ["Customer Data Hub", "Products & Services", "Service Data Editor"]
 		},
 		
 		// 4.1 Personalization AI Models 
@@ -297,4 +304,3 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["System Management", "System Configuration"]
 		}
 };
-
