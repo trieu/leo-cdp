@@ -122,7 +122,17 @@ LeoCdpAdmin.navFunctions.loadCustomerSegmentList = function (breadcrumbHtml) {
 
 // Import and Export data
 
-// TODO
+LeoCdpAdmin.navFunctions.loadCustomerDataImport = function (breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/modules/customer/customer-data-import.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+    });
+}
+
+LeoCdpAdmin.navFunctions.loadCustomerDataExport = function (breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/modules/customer/customer-data-export.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+    });
+}
 
 // Products and Services functions
 

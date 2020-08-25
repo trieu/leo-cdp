@@ -4,7 +4,7 @@
         <div class="col-lg-10">
             <h4 class="page-header" id="page_breadcrumb" > </h4>
         </div>
-        <div class="col-lg-2 text-center" style="padding: 10px">
+        <div class="col-lg-2 text-center" style="padding: 10px; display: none">
         	<button type="button" class="btn btn-success" onclick="" > Save </button>
         	<button type="button" class="btn btn-secondary" onclick="" > Cancel </button>
         </div>
@@ -105,9 +105,9 @@ var initBehavioralEventList = initBehavioralEventList || function(){
 		    width: "100%",
 		    height: "auto",
 
-		    inserting: true,
-		    editing: true,
-		    sorting: true,
+		    inserting: false,
+		    editing: false,
+		    sorting: false,
 		    paging: false,
 		    
 		    deleteConfirm: function(item) {
@@ -140,7 +140,7 @@ var initBehavioralEventList = initBehavioralEventList || function(){
 		        { name: "eventFunnelStageId", title : "Event Funnel Stage", type: "select", items: eventFunnelStages, valueField: "id", textField: "name" },
 		        { name: "customerFunnelStageId", title : "Customer Funnel Stage", type: "select", items: customerFunnelStages, valueField: "id", textField: "name" },
 		        { name: "dataType", type: "select", title : "Data Type", items: eventDataTypes, valueField: "id", textField: "name" },
-		        { type: "control" , width: 50}
+		        //{ type: "control" , width: 50}
 		    ]
 		});  
 	});

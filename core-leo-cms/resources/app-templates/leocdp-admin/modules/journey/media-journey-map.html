@@ -4,7 +4,7 @@
         <div class="col-lg-10">
             <h4 class="page-header" id="page_breadcrumb" > </h4>
         </div>
-        <div class="col-lg-2 text-center" style="padding: 10px">
+        <div class="col-lg-2 text-center" style="padding: 10px; display: none">
         	<button type="button" class="btn btn-success" onclick="" > Save </button>
         	<button type="button" class="btn btn-secondary" onclick="" > Cancel </button>
         </div>
@@ -58,8 +58,8 @@
 	   		    height: "auto",
 	
 	   		    inserting: false,
-	   		    editing: true,
-	   		    sorting: true,
+	   		    editing: false,
+	   		    sorting: false,
 	   		    paging: false,
 	   		    
 	   		    deleteConfirm: function(item) {
@@ -86,7 +86,7 @@
 	   		     	{ name: "typeName", title : "Channel Type", type: "text", width: 40, validate: "required" },
 	   		     	{ name: "isOwnedMedia", title : "Owned Media", type: "checkbox", width: 23, validate: "required" },
 	   		     	{ name: "url", title : "URL", type: "text", validate: "required" },
-	   		        { type: "control" , width: 20}
+	   		        //{ type: "control" , width: 20}
 	   		    ]
 	   		});  
 	   	})

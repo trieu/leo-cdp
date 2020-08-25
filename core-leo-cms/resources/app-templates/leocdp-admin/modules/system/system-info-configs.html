@@ -3,7 +3,8 @@
        <h4 class="page-header" id="page_breadcrumb" > </h4>
     </div>
     <div class="panel-body">
-        <select id="systemCmd" data-placeholder="Choose a command..." class="select" tabindex="1">
+    	System Configuration: This function is under development and is not yet available
+        <select id="systemCmd" data-placeholder="Choose a command..." class="select" tabindex="1" style="display: none">
             <option value=""></option>
             <option value="rebuildSearchIndex">rebuildSearchIndex</option>
         </select>
@@ -18,7 +19,7 @@
 
 <script>
     function systemManagementReady() {
-        $("#systemCmd").chosen();
+        //$("#systemCmd").chosen();
     }
 
     function sendSytemCommand() {
