@@ -1,6 +1,7 @@
 package leotech.cdp.dao.singleview;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import com.google.gson.Gson;
@@ -25,6 +26,9 @@ public class ProfileSingleDataView extends Profile implements SingleDataView {
 	TrackingEvent lastTrackingEvent;
 	
 	@Expose
+	String currentFunnelStage;
+	
+	@Expose
 	Set<Touchpoint> topEngagedTouchpoints;
 	
 	@Expose
@@ -35,6 +39,9 @@ public class ProfileSingleDataView extends Profile implements SingleDataView {
 	
 	@Expose
 	String genderAsText;
+	
+	@Expose
+	Map<String,Long> totalEventStatistics;
 	
 	//TODO 
 	
@@ -163,6 +170,24 @@ public class ProfileSingleDataView extends Profile implements SingleDataView {
 
 	public void setLastTrackingEvent(TrackingEvent lastTrackingEvent) {
 		this.lastTrackingEvent = lastTrackingEvent;
+	}
+	
+	
+
+	public String getCurrentFunnelStage() {
+		return currentFunnelStage;
+	}
+
+	public void setCurrentFunnelStage(String currentFunnelStage) {
+		this.currentFunnelStage = currentFunnelStage;
+	}
+
+	public Map<String, Long> getTotalEventStatistics() {
+		return totalEventStatistics;
+	}
+
+	public void setTotalEventStatistics(Map<String, Long> totalEventStatistics) {
+		this.totalEventStatistics = totalEventStatistics;
 	}
 
 	@Override
