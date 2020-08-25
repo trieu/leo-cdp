@@ -99,12 +99,13 @@ public class ProfileDataService {
 		return pf;
 	}
 
-	public static Profile updateLoginInfo(String loginId, String loginProvider, String firstName, String lastName, String email, String phone, 
+	public static Profile updateSocialLoginInfo(String loginId, String loginProvider, String firstName, String lastName, String email, String phone, 
 			String profileId, String observerId, String lastTouchpointId, String lastSeenIp, String usedDeviceId) {
 		Profile p = ProfileDaoUtil.getById(profileId);
 
 		p.setSocialMediaProfile(loginProvider, loginId);
 		p.setIdentity(loginId, loginProvider);
+		p.setType(ProfileConstant.TYPE_SOCIAL_LOGIN);
 		
 		if(StringUtil.isNotEmpty(firstName)) {
 			p.setFirstName(firstName);

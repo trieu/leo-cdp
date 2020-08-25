@@ -139,15 +139,15 @@
 		                               </li>
 		                               <li>
 		                                   <b> Browser </b> 
-		                                   <p> Safari  </p>
+		                                   <p> -  </p>
 		                               </li>
 		                               <li>
 		                                   <b> Device Type</b>
-		                                   <p> iPhone 7  </p>
+		                                   <p> -  </p>
 		                               </li>
 		                               <li>
 		                                   <b> Device OS </b> 
-		                                   <p> iOS 11  </p>
+		                                   <p> -  </p>
 		                               </li>
 		                                <li>
 		                                   <b> Device ID </b> 
@@ -289,7 +289,6 @@
 		    
 	   </div>
        
-       
        <div class="row" style="display: none;" >
        		<div class="line" ></div>
             <h4 style="text-align:center;width: 100%;">Customer Attribution Matrix of Profile and Persona </h4>
@@ -315,7 +314,7 @@
 </div>
 
 <script id='view-event-tpl' type="text/html" >
-<li class="list-group-item" id="ev_<%- id %>">
+ <li class="list-group-item" id="ev_<%- id %>">
    <div class="row">
       <div class="col-md-1 text-center"> <i class="fa fa-internet-explorer" aria-hidden="true" style="font-size:2em" ></i> <br> <b><%- metricName %></b> </div>
       <div class="col-md-11">
@@ -326,11 +325,11 @@
 		 </div>
       </div>
    </div>
-</li>
+ </li>
 </script>
 
 <script id='action-event-tpl' type="text/html" >
-<li class="list-group-item" id="ev_<%- id %>" >
+ <li class="list-group-item" id="ev_<%- id %>" >
    <div class="row">
       <div class="col-md-1 text-center">  <i class="fa fa-sign-in" aria-hidden="true" style="font-size:2em" ></i> <br> <b><%- metricName %></b> </div>
       <div class="col-md-11">
@@ -341,11 +340,11 @@
 		 </div>
       </div>
    </div>
-</li>
+ </li>
 </script>
 
 <script id='conversion-event-tpl' type="text/html" >
-<li class="list-group-item" id="ev_<%- id %>" >
+ <li class="list-group-item" id="ev_<%- id %>" >
    <div class="row">
       <div class="col-md-1 text-center">  <i class="fa fa-cart-plus" aria-hidden="true" style="font-size:2em" ></i> <br> <b><%- metricName %></b> </div>
       <div class="col-md-11">
@@ -356,28 +355,29 @@
 		 </div>
       </div>
    </div>
-</li>
+ </li>
 </script>
+
 
 <script type="text/javascript">
     ///Js code
     
-    function initProfile360Analytics(profileId) {
+    var initProfile360Analytics = initProfile360Analytics || function(profileId) {
     	console.log(profileId);
     	//setup editable node
 		setupTabPanels();
 		loadCurrentProfile(profileId);
     }
     
-    function editCurrentProfile(){
+    var editCurrentProfile = editCurrentProfile || function (){
     	gotoLeoCdpRouter('Customer_Profile_Editor', LeoCdpAdmin.routerContext.objId );
     }
     
-    function removeCurrentProfile(){
+    var removeCurrentProfile = removeCurrentProfile || function (){
     	alert('TODO')
     }
     
-    function loadCurrentProfile(profileId) {
+    var loadCurrentProfile = loadCurrentProfile || function (profileId) {
          console.log('loadCurrentProfile profileId ' + profileId);
 
          var urlStr = '/cdp/profile/get';

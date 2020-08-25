@@ -153,7 +153,7 @@ public class DataObserverHttpRouter extends BaseHttpRouter {
 				ContextSession currentSession = ContextSessionService.synchData(clientSessionKey, req, params,device);
 				String profileId = currentSession.getProfileId();
 				if (StringUtil.isNotEmpty(profileId)) {
-					status = ContextSessionService.updateSessionWithProfile(req, params, currentSession);
+					status = ContextSessionService.updateProfileFromSocialLogin(req, params, currentSession);
 				} else {
 					status = 101;
 				}

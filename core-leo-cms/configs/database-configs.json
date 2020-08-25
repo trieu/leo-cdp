@@ -11,6 +11,17 @@
 			,"enabled" : true
 		},
 		
+		"dbConfigsBookstore" : {
+			"username" : "root"
+			,"password" : "123456"
+			,"database" : "leo_cdp"
+			,"host" : "127.0.0.1"				
+			,"port" : 8529
+			,"dbdriver" : "arangodb"
+			,"dbdriverclasspath" : "com.arangodb.ArangoDB"
+			,"enabled" : true
+		},
+		
 		"awsLeoCdpDbConfigs" : {
 			"username" : "leodev"
 			,"password" : "SocialCEO@12345"
@@ -23,9 +34,9 @@
 		},
 		
 		"defaultDbConfigs" : {
-			"username" : "root"
-			,"password" : "123456"
-			,"database" : "bdvn_cms"
+			"username" : ""
+			,"password" : ""
+			,"database" : ""
 			,"host" : "127.0.0.1"				
 			,"port" : 8529
 			,"dbdriver" : "arangodb"
@@ -34,25 +45,15 @@
 		},
 		
 		"dbConfigsXemGiDay" : {
-			"username" : "root"
-			,"password" : "123456"
-			,"database" : "bdvn_cms"
-			,"host" : "127.0.0.1"				
-			,"port" : 8529
-			,"dbdriver" : "arangodb"
-			,"dbdriverclasspath" : "com.arangodb.ArangoDB"
-			,"enabled" : true
-		},
-		
-		"dbConfigsBookstore" : {
-			"username" : "root"
-			,"password" : "123456"
-			,"database" : "bookstore"
+			"username" : ""
+			,"password" : ""
+			,"database" : ""
 			,"host" : "127.0.0.1"				
 			,"port" : 8529
 			,"dbdriver" : "arangodb"
 			,"dbdriverclasspath" : "com.arangodb.ArangoDB"
 			,"enabled" : true
 		}
+		
 	}
 }
