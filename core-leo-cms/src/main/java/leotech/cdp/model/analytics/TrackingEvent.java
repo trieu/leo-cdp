@@ -187,7 +187,11 @@ public class TrackingEvent extends CdpPersistentObject {
 	}
 
 	public TrackingEvent() {
-		// TODO Auto-generated constructor stub
+		this.observerId = "";
+		this.browserName = "";
+		this.deviceName = "";
+		this.deviceOS = "";
+		this.deviceId = "";
 	}
 
 	/**

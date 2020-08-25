@@ -330,11 +330,11 @@ function gotoLeoCdpRouter(){
 	location.hash = hash;
 }
 
-LeoCdpAdmin.loadDataAndUpdateView = function(urlStr, params, callback) {
+LeoCdpAdmin.loadDataAndUpdateView = function(urlStr, params, dataProcessor, callback) {
 	var url = baseAdminApi + urlStr;
 	LeoAdminApiUtil.callPostAdminApi(url, params, function (json) {
         if (json.httpCode === 0 && json.errorMessage === '') {
-        	LeoCdpAdmin.routerContext.dataObject = json.data;
+        	LeoCdpAdmin.routerContext.dataObject = typeof dataProcessor === 'function' ? dataProcessor(json.data) : json.data;
         	
         	$('#page_data_holder').find('*[data-field]').each(function(){
         		var fieldholder = $(this).data('fieldholder');

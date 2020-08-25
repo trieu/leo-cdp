@@ -42,12 +42,26 @@ public class TrackingEventDaoUtil  extends BaseLeoCdpDao{
 	}
 
 	public static List<EventSingleDataView> getEventsByProfileId(String refProfileId, DataFilter filter) {
+		int startIndex = filter.getStart();
+		int numberResult = filter.getLength();
+		return getEventsByProfileIdAndPagination(refProfileId, startIndex, numberResult);
+	}
+	
+	public static EventSingleDataView getLastTrackingEventsByProfileId(String refProfileId) {
+		List<EventSingleDataView> events = getEventsByProfileIdAndPagination(refProfileId, 0, 1);
+		if(events.size() > 0) {
+			return events.get(0);
+		}
+		return null;
+	}
+	
+	public static List<EventSingleDataView> getEventsByProfileIdAndPagination(String refProfileId, int startIndex, int numberResult) {
 		ArangoDatabase db = getCdpDbInstance();
 		
 		Map<String, Object> bindVars = new HashMap<>(3);
 		bindVars.put("refProfileId", refProfileId);
-		bindVars.put("startIndex", filter.getStart());
-		bindVars.put("numberResult", filter.getLength());
+		bindVars.put("startIndex", startIndex);
+		bindVars.put("numberResult", numberResult);
 		
 		CallbackQuery<EventSingleDataView> callback = new CallbackQuery<EventSingleDataView>() {
 			@Override

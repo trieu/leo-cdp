@@ -8,7 +8,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 
 import leotech.cdp.dao.TouchpointDaoUtil;
+import leotech.cdp.dao.TrackingEventDaoUtil;
 import leotech.cdp.model.SingleDataView;
+import leotech.cdp.model.analytics.TrackingEvent;
 import leotech.cdp.model.customer.Profile;
 import leotech.cdp.model.customer.ProfileConstant;
 import leotech.cdp.model.journey.Touchpoint;
@@ -20,7 +22,10 @@ public class ProfileSingleDataView extends Profile implements SingleDataView {
 	Touchpoint lastTouchpoint;
 	
 	@Expose
-	Set<Touchpoint> topEngagedTouchpoints ;
+	TrackingEvent lastTrackingEvent;
+	
+	@Expose
+	Set<Touchpoint> topEngagedTouchpoints;
 	
 	@Expose
 	DeviceInfo lastUsedDevice;
@@ -56,6 +61,11 @@ public class ProfileSingleDataView extends Profile implements SingleDataView {
 		// touchpoint model
 		if(this.lastTouchpoint == null) {
 			this.lastTouchpoint = TouchpointDaoUtil.getById(this.lastTouchpointId);
+		}
+		
+		this.lastTrackingEvent = TrackingEventDaoUtil.getLastTrackingEventsByProfileId(this.id);
+		if(this.lastTrackingEvent == null) {
+			this.lastTrackingEvent = new TrackingEvent();
 		}
 		
 		if(this.topEngagedTouchpoints == null) {
@@ -147,7 +157,13 @@ public class ProfileSingleDataView extends Profile implements SingleDataView {
 		this.lastUsedDevice = lastUsedDevice;
 	}
 
-	
+	public TrackingEvent getLastTrackingEvent() {
+		return lastTrackingEvent;
+	}
+
+	public void setLastTrackingEvent(TrackingEvent lastTrackingEvent) {
+		this.lastTrackingEvent = lastTrackingEvent;
+	}
 
 	@Override
 	public String toString() {

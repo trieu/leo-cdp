@@ -138,20 +138,28 @@
 		                                   <p data-field="lastTouchpoint.url" data-fieldholder="url" data-fieldtype="string"  >   </p>
 		                               </li>
 		                               <li>
+		                                   <b> Observer ID </b> 
+		                                   <p data-field="lastTrackingEvent.observerId" data-fieldholder="html"  data-fieldtype="string"  >   </p>
+		                               </li>
+		                               <li>
 		                                   <b> Browser </b> 
-		                                   <p> -  </p>
+		                                   <p data-field="lastTrackingEvent.browserName" data-fieldholder="html" data-fieldtype="string" > -  </p>
 		                               </li>
 		                               <li>
 		                                   <b> Device Type</b>
-		                                   <p> -  </p>
+		                                   <p data-field="lastTrackingEvent.deviceType" data-fieldholder="html" data-fieldtype="string"> -  </p>
+		                               </li>
+		                               <li>
+		                                   <b> Device Name</b>
+		                                   <p data-field="lastTrackingEvent.deviceName" data-fieldholder="html" data-fieldtype="string"> -  </p>
 		                               </li>
 		                               <li>
 		                                   <b> Device OS </b> 
-		                                   <p> -  </p>
+		                                   <p data-field="lastTrackingEvent.deviceOS" data-fieldholder="html" data-fieldtype="string" > -  </p>
 		                               </li>
-		                                <li>
+		                               <li>
 		                                   <b> Device ID </b> 
-		                                   <p> - </p>
+		                                   <p data-field="lastTrackingEvent.deviceId" data-fieldholder="html" data-fieldtype="string" > - </p>
 		                               </li>
 		                           </ol>
 		                       </td>
@@ -184,6 +192,14 @@
                                    <p data-field="lastName" data-fieldholder="html"  data-fieldtype="string"  >  - </p>
                                </li>
                                <li>
+                                   <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-envelope"></i> Primary Email </b> 
+                                   <p data-field="primaryEmail" data-fieldholder="html"  data-fieldtype="string"  >  - </p>
+                               </li>
+                               <li>
+                                   <b data-persona="key" class="editable_text" >  <i class="fa fa-fw fa-mobile"></i> Primary Mobile Phone </b> 
+                                   <p data-field="primaryPhone" data-fieldholder="html"  data-fieldtype="string"  > - </p>
+                               </li>
+                               <li>
                                    <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-male"></i> Gender </b> 
                                    <p data-field="genderAsText" data-fieldholder="html"  data-fieldtype="string" > - </p>
                                </li>
@@ -194,14 +210,6 @@
                                <li>
                                    <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-map-marker"></i> Living Location  </b> 
                                    <p data-field="livingLocation" data-fieldholder="html"  data-fieldtype="string"  >  - </p>
-                               </li>
-                               <li>
-                                   <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-envelope"></i> Primary Email </b> 
-                                   <p data-field="primaryEmail" data-fieldholder="html"  data-fieldtype="string"  >  - </p>
-                               </li>
-                               <li>
-                                   <b data-persona="key" class="editable_text" >  <i class="fa fa-fw fa-mobile"></i> Primary Mobile Phone </b> 
-                                   <p data-field="primaryPhone" data-fieldholder="html"  data-fieldtype="string"  > - </p>
                                </li>
                                <li>
                                    <b data-persona="key" class="editable_text" >  <i class="fa fa-fw fa-mobile"></i> Social Media Profiles </b> 
@@ -382,8 +390,24 @@
 
          var urlStr = '/cdp/profile/get';
          var params = {'id': profileId };
+         var dataProcessor = function(data){
+        	 var noinfo = 'No information';
+        	 if(data.age === 0){
+        		 data.age = noinfo;
+        	 }
+        	 if(data.livingLocation === ''){
+        		 data.livingLocation = noinfo;
+        	 }
+        	 if(data.primaryPhone === ''){
+        		 data.primaryPhone = noinfo;
+        	 }
+        	 if(data.primaryEmail === ''){
+        		 data.primaryEmail = noinfo;
+        	 }
+        	 return data;
+         }
          
-         LeoCdpAdmin.loadDataAndUpdateView(urlStr, params, function(){
+         LeoCdpAdmin.loadDataAndUpdateView(urlStr, params, dataProcessor, function(){
         	 //console.log(LeoCdpAdmin.routerContext.dataObject);
         	 var profileData = LeoCdpAdmin.routerContext.dataObject;
         	 if(profileData.primaryAvatar != ''){
