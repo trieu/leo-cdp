@@ -2,30 +2,6 @@
 <AppMetadataList>
 
     <AppMetadata>
-        <appId>-3032901574009874613</appId>
-        <name>XemGiDay.com</name>
-        <uri>xemgiday</uri>
-        <domain>xemgiday.com</domain>
-        <WebTemplateFolder>xemgiday</WebTemplateFolder>
-        <AndroidAppId></AndroidAppId>
-        <IosAppId></IosAppId>
-        <AppTemplateFolder></AppTemplateFolder>      
-        <ContentCategoryId>25893</ContentCategoryId>
-        <PublicContentClass>standard</PublicContentClass>
-        <PageTitle>xemgiday.com</PageTitle>
-        <PageHeaderLogo>/public/images/leotech-logo.png</PageHeaderLogo>
-        <BaseStaticUrl>xemgiday.com</BaseStaticUrl>
-        <BaseAdminApiUrl>xemgiday.com</BaseAdminApiUrl>
-        <BaseDeliveryApiUrl>api.xemgiday.com</BaseDeliveryApiUrl>
-        <BaseUploaderUrl>uploader.xemgiday.com</BaseUploaderUrl>
-        <BaseLogCollectorUrl>log.xemgiday.com</BaseLogCollectorUrl>
-        <AdsTxtContent> google.com, pub-9034869050940123, DIRECT, f08c47fec0942fa0 </AdsTxtContent>
-        <GoogleTrackingId></GoogleTrackingId>
-        <NumberSimilarPostsInList>7</NumberSimilarPostsInList>
-    </AppMetadata>
-    
-    
-    <AppMetadata>
         <appId>10000</appId>
         <name>Leo CDP Admin</name>
         <uri>admin-leocdp</uri>
@@ -47,6 +23,29 @@
         <GoogleTrackingId></GoogleTrackingId>
         <NumberSimilarPostsInList>7</NumberSimilarPostsInList>
     </AppMetadata>
+
+    <AppMetadata>
+        <appId>-3032901574009874613</appId>
+        <name>XemGiDay.com</name>
+        <uri>xemgiday</uri>
+        <domain>xemgiday.com</domain>
+        <WebTemplateFolder>xemgiday</WebTemplateFolder>
+        <AndroidAppId></AndroidAppId>
+        <IosAppId></IosAppId>
+        <AppTemplateFolder></AppTemplateFolder>      
+        <ContentCategoryId>25893</ContentCategoryId>
+        <PublicContentClass>standard</PublicContentClass>
+        <PageTitle>xemgiday.com</PageTitle>
+        <PageHeaderLogo>/public/images/leotech-logo.png</PageHeaderLogo>
+        <BaseStaticUrl>xemgiday.com</BaseStaticUrl>
+        <BaseAdminApiUrl>xemgiday.com</BaseAdminApiUrl>
+        <BaseDeliveryApiUrl>api.xemgiday.com</BaseDeliveryApiUrl>
+        <BaseUploaderUrl>uploader.xemgiday.com</BaseUploaderUrl>
+        <BaseLogCollectorUrl>log.xemgiday.com</BaseLogCollectorUrl>
+        <AdsTxtContent> google.com, pub-9034869050940123, DIRECT, f08c47fec0942fa0 </AdsTxtContent>
+        <GoogleTrackingId></GoogleTrackingId>
+        <NumberSimilarPostsInList>7</NumberSimilarPostsInList>
+    </AppMetadata>
   
     <AppMetadata>
         <appId>9999</appId>
@@ -59,7 +58,6 @@
         <AppTemplateFolder></AppTemplateFolder>      
         <ContentCategoryId>318084</ContentCategoryId>
         <PublicContentClass>standard,youtube_video</PublicContentClass>
-        <PageTitle>Leo CDP for Book Retail Industry</PageTitle>
         <PageHeaderLogo>/public/images/leo-cdp-logo.png</PageHeaderLogo>
         <BaseStaticUrl>//bookstore.bigdatavietnam.org</BaseStaticUrl>
         <BaseAdminApiUrl>//bookstore.bigdatavietnam.org</BaseAdminApiUrl>

@@ -163,13 +163,14 @@ public class ContextSessionService {
 		Map<String, String> profileData = RequestInfoUtil.getHashMapFromRequestParams(formAttributes,TrackingApiParam.PROFILE_DATA);
 		System.out.println(profileData);
 		
+		String firstName = profileData.getOrDefault("firstName", "");
+		String lastName = profileData.getOrDefault("lastName", "");
 		String email = profileData.getOrDefault("email", "");
 		String phone = profileData.getOrDefault("phone", "");
 		String loginId = profileData.getOrDefault("loginId", "");
 		String loginProvider = profileData.getOrDefault("loginProvider", "");
 		
-		Profile profile = ProfileDataService.updateLoginInfo(loginProvider, loginId, email, phone, curProfileId, observerId, lastTouchpointId, sourceIP, usedDeviceId);
-		
+		Profile profile = ProfileDataService.updateLoginInfo(loginId , loginProvider,firstName, lastName, email, phone, curProfileId, observerId, lastTouchpointId, sourceIP, usedDeviceId);
 		String newProfileId = profile.getId();
 		
 		if(! newProfileId.equals(curProfileId)) {

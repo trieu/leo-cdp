@@ -80,10 +80,8 @@ public class DataObserverHttpRouter extends BaseHttpRouter {
 		// int platformId = dv.platformType;
 
 		try {
-
 			// set CORS Header
 			String origin = StringUtil.safeString(reqHeaders.get(BaseApiHandler.ORIGIN), "*");
-			
 
 			// init core params
 			String eventName = StringUtil.safeString(params.get(TrackingApiParam.EVENT_METRIC_NAME)).toLowerCase();
@@ -144,7 +142,8 @@ public class DataObserverHttpRouter extends BaseHttpRouter {
 				}
 				return true;
 				
-			} else if(httpMethod.equalsIgnoreCase("POST") && uri.startsWith(PREFIX_UPDATE_PROFILE_LOGIN_INFO)) {
+			} 
+			else if(httpMethod.equalsIgnoreCase("POST") && uri.startsWith(PREFIX_UPDATE_PROFILE_LOGIN_INFO)) {
 				
 				BaseHttpRouter.setCorsHeaders(outHeaders, origin);
 				outHeaders.set(CONTENT_TYPE, BaseApiHandler.CONTENT_TYPE_JSON);
@@ -152,7 +151,8 @@ public class DataObserverHttpRouter extends BaseHttpRouter {
 				int status = 404;
 				// synch ContextSession with request
 				ContextSession currentSession = ContextSessionService.synchData(clientSessionKey, req, params,device);
-				if (StringUtil.isNotEmpty(currentSession.getProfileId())) {
+				String profileId = currentSession.getProfileId();
+				if (StringUtil.isNotEmpty(profileId)) {
 					status = ContextSessionService.updateSessionWithProfile(req, params, currentSession);
 				} else {
 					status = 101;

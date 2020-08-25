@@ -150,7 +150,17 @@
                 $('#user-login').hide();
                 
              	// update current session the profile
-    		    LeoObserverProxy.updateProfileBySession({email: response.email})
+             	
+             	var idxSpace = response.name.indexOf(' ');
+             	var userData = {email: response.email, loginId : response.id, loginProvider: 'facebook' };
+             	if(idxSpace>0){
+             		userData.firstName = response.name.substring(0,idxSpace);
+             		userData.lastName = response.name.substring(idxSpace+1);
+             	} else {
+             		userData.firstName = response.name;
+             		userData.lastName =  '';
+             	}
+             	LeoObserverProxy.updateProfileBySession(userData)
             });
         }
         
