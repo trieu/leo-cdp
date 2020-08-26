@@ -271,6 +271,8 @@ function leoCdpRouter(objKey,objId){
 	var obj = LeoCdpAdmin.navRouters[objKey];
 	console.log( obj );
 	
+	$('#main-navbar').find('a.active').removeClass('active');
+	
 	// generate breadcrumb navigation
 	var breadcrumbHtml = '';
 	var titleNav = '';
@@ -287,6 +289,7 @@ function leoCdpRouter(objKey,objId){
 			breadcrumbHtml = breadcrumbHtml + ' &#8594; ';
 		} else {
 			breadcrumbHtml = breadcrumbHtml + '<a title="'+ name +'" href="#calljs-"> ' + breadcrumbList[i] + ' </a> ';
+			$('#main-navbar').find('#'+key).addClass('active');
 		}
 	}
 	

@@ -182,3 +182,25 @@ div.gridholder {
 }
 
 .CodeMirror { text-align: left!important; }
+
+
+
+.query-builder label.btn-primary {
+	background-color: #cdd1cd;
+	border-color: #050505;
+	color: #050505;
+}
+
+.query-builder label.active {
+	background-color: #5cb85c!important;
+	border-color: #4cae4c!important;
+	color: #fff!important;
+	font-weight: bolder;
+}
+
+#main-navbar a.active {
+    background-color: #e8edca;
+    color: #3300ff;
+    font-weight: bold;
+}
+}
