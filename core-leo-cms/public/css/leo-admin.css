@@ -201,6 +201,7 @@ div.gridholder {
 #main-navbar a.active {
     background-color: #e8edca;
     color: #3300ff;
+    font-size: 13px;
     font-weight: bold;
 }
 }

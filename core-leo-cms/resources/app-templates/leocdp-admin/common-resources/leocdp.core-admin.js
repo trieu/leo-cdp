@@ -278,20 +278,27 @@ function leoCdpRouter(objKey,objId){
 	var titleNav = '';
 	var breadcrumbList = obj.breadcrumb;
 	var len = breadcrumbList.length;
+	var activeMenuItemId = '';
 	for(var i=0; i< len; i++ ){
 		var name = breadcrumbList[i];
 		titleNav  = titleNav + name + " - ";
 		var key = name.replace(/ /g, "_");
-		var jsFunc = LeoCdpAdmin.navRouters[key] ? "leoCdpRouter('"+ key + "')"  : "";
+		var jsFunc = LeoCdpAdmin.navRouters[key] ? "leoCdpRouter('"+ key + "')"  : '';
 		
 		if( i < (len - 1) ){
 			breadcrumbHtml = breadcrumbHtml + '<a title="'+ name +'" href="#calljs-' + jsFunc + '"> ' + breadcrumbList[i] + ' </a> ';
 			breadcrumbHtml = breadcrumbHtml + ' &#8594; ';
 		} else {
 			breadcrumbHtml = breadcrumbHtml + '<a title="'+ name +'" href="#calljs-"> ' + breadcrumbList[i] + ' </a> ';
-			$('#main-navbar').find('#'+key).addClass('active');
 		}
+		
+		activeMenuItemId = LeoCdpAdmin.navRouters[key] ? (LeoCdpAdmin.navRouters[key].activeMenuItem || activeMenuItemId)  : activeMenuItemId;
+		console.log('activeMenuItemId ' + activeMenuItemId)
 	}
+	if(activeMenuItemId != ''){
+		$('#main-navbar').find('#'+activeMenuItemId).addClass('active');
+	}
+	
 	
 	var vf = LeoCdpAdmin.navFunctions[obj.functionName];
 	
