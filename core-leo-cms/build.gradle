@@ -92,6 +92,9 @@ dependencies {
 	// generate html and text mail via one fluent build from https://github.com/rocketbase-io/email-template-builder
 	compile group: 'io.rocketbase.mail', name: 'email-template-builder', version: '2.0.0'
 	
+	// deps of https://github.com/USPA-Technology/QueryBuilder
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.10.6'
+	
     compile (	   
 		fileTree(dir: 'ext-lib', include: '**/*.jar') 	
     		    	
