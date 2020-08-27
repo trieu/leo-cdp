@@ -228,22 +228,22 @@ LeoCdpAdmin.navRouters = {
 		},
 		
 		// 4.2 Customer Segmentation
-		"Customer_Segment_List" : {
-			"menuName" : "Customer Segment List",
-			"functionName" : "loadCustomerSegmentList",
-			"breadcrumb" : ["Customer Data Hub", "Customer Segment List"],
+		"Segment_List" : {
+			"menuName" : "Segment List",
+			"functionName" : "loadSegmentList",
+			"breadcrumb" : ["Customer Data Hub", "Segment List"],
 			"activeMenuItem" : "Customer_Segment_List"
 		},
-		"Customer_Segment_Report" : {
-			"menuName" : "Customer Segment Report",
+		"Segment_Report" : {
+			"menuName" : "Segment Report",
 			"functionName" : "loadCustomerSegmentReport",
-			"breadcrumb" : ["Customer Data Hub", "Customer Segment List", "Customer Segment Report"],
+			"breadcrumb" : ["Customer Data Hub", "Segment List", "Segment Report"],
 			"activeMenuItem" : "Customer_Segment_List"
 		},
-		"Customer_Segment_Builder" : {
-			"menuName" : "Customer Segment Builder",
+		"Segment_Builder" : {
+			"menuName" : "Segment Builder",
 			"functionName" : "loadCustomerSegmentBuilder",
-			"breadcrumb" : ["Customer Data Hub", "Customer Segment List", "Customer Segment Builder"],
+			"breadcrumb" : ["Customer Data Hub", "Segment List", "Segment Builder"],
 			"activeMenuItem" : "Customer_Segment_List"
 		},
 		

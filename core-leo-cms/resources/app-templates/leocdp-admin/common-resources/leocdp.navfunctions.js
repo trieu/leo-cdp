@@ -113,8 +113,8 @@ LeoCdpAdmin.navFunctions.loadCustomerProfileEditor = function (profileId, breadc
 
 // Segment functions
 
-LeoCdpAdmin.navFunctions.loadCustomerSegmentList = function (breadcrumbHtml) {
-    LeoCdpAdmin.loadView('/view/modules/customer/customer-segment-list.html?admin=1', pageDomSelector, function () {
+LeoCdpAdmin.navFunctions.loadSegmentList = function (breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/modules/customer/segment-list.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
     	initCustomerSegmentList();
     });

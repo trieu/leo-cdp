@@ -2,6 +2,7 @@ package leotech.cdp.model.customer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,19 +11,19 @@ import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
 import com.arangodb.entity.DocumentField;
 import com.arangodb.entity.DocumentField.Type;
-import com.arangodb.model.HashIndexOptions;
 import com.arangodb.model.PersistentIndexOptions;
 import com.google.gson.annotations.Expose;
 
 import leotech.cdp.model.CdpPersistentObject;
 
 /**
- * @author Trieu Nguyen
+ * @author tantrieu31
+ * @since 2020-08-27
  *
  */
 public class Segment extends CdpPersistentObject implements Comparable<Segment> {
 	public static final String COLLECTION_NAME = getCollectionName(Segment.class);
-	static ArangoCollection instance;
+	static ArangoCollection dbCollection;
 
 	public static class SegmentationType {
 		// https://learn.g2.com/market-segmentation
@@ -45,66 +46,69 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 
 	@Override
 	public ArangoCollection getCollection() {
-		if (instance == null) {
+		if (dbCollection == null) {
 			ArangoDatabase arangoDatabase = getDatabaseInstance();
 
-			instance = arangoDatabase.collection(COLLECTION_NAME);
+			dbCollection = arangoDatabase.collection(COLLECTION_NAME);
 
 			// ensure indexing key fields for fast lookup
-			instance.ensurePersistentIndex(Arrays.asList("primaryEmail"),
+			dbCollection.ensurePersistentIndex(Arrays.asList("name"), new PersistentIndexOptions().unique(true));
+			dbCollection.ensurePersistentIndex(Arrays.asList("type"), new PersistentIndexOptions().unique(true));
+			dbCollection.ensurePersistentIndex(Arrays.asList("segmenterUri"),new PersistentIndexOptions().unique(false));
+			dbCollection.ensurePersistentIndex(Arrays.asList("keywords[*]"),
 					new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("primaryPhone"),
-					new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("primaryAvatar"),
-					new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("rootProfileId"),
-					new PersistentIndexOptions().unique(false));
-			instance.ensureHashIndex(Arrays.asList("identityAttributes[*]"), new HashIndexOptions());
-			instance.ensureHashIndex(Arrays.asList("personaUri"), new HashIndexOptions());
 		}
-		return instance;
+		return dbCollection;
 	}
 
 	@DocumentField(Type.KEY)
 	@Expose
-	private String key;
+	protected String id;
 
 	@Expose
-	String name;
+	String name; // e.g: all profiles is living in Vietnam ?
 
 	@Expose
-	int type = 0;
+	int type = SegmentationType.AD_HOC_QUERY;
 
 	@Expose
-	int status = 0;
+	int status = 0; // -1 is deleted, 0 is default, 1 is active
 
 	@Expose
-	long size = 0;
+	// check rules_basic at https://querybuilder.js.org/assets/demo-basic.js
+	String jsonStringRules;
 
 	@Expose
-	String queryTemplate;
+	// https://github.com/USPA-Technology/QueryBuilder
+	String queryFilter;
+	
+	@Expose
+	long size = 0; // how many of profiles from query ?
 
 	@Expose
-	Map<String, String> queryParameters = new HashMap<>();
-
-	@Expose
-	boolean isPublic = false;
+	boolean isPublic = false; // anyone can see and run the query ?
 
 	@Expose
 	List<String> keywords = new ArrayList<String>();
 
 	@Expose
-	int indexScore = 0;
+	int indexScore = 0; // the important score of segment
 
 	@Expose
-	String segmenterUri;
+	String segmenterUri; // data processor URI (e.g: notebooks name, akka name)
+	
+	@Expose
+	protected Date createdAt = new Date();
 
 	@Expose
-	Map<String, String> extData = new HashMap<>();
+	protected Date updatedAt;
+
+	@Expose
+	Map<String, String> extData = new HashMap<>(); // extra attributes
 
 	@Override
 	public int compareTo(Segment o) {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
@@ -144,22 +148,6 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 
 	public void setSize(long size) {
 		this.size = size;
-	}
-
-	public String getQueryTemplate() {
-		return queryTemplate;
-	}
-
-	public void setQueryTemplate(String queryTemplate) {
-		this.queryTemplate = queryTemplate;
-	}
-
-	public Map<String, String> getQueryParameters() {
-		return queryParameters;
-	}
-
-	public void setQueryParameters(Map<String, String> queryParameters) {
-		this.queryParameters = queryParameters;
 	}
 
 	public boolean isPublic() {
@@ -202,8 +190,42 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 		this.extData = extData;
 	}
 
-	public String getKey() {
-		return key;
+	public String getJsonStringRules() {
+		return jsonStringRules;
 	}
+
+	public void setJsonStringRules(String jsonStringRules) {
+		this.jsonStringRules = jsonStringRules;
+	}
+
+	public String getQueryFilter() {
+		return queryFilter;
+	}
+
+	public void setQueryFilter(String queryFilter) {
+		this.queryFilter = queryFilter;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	public String getId() {
+		return id;
+	}
+	
+	
 
 }

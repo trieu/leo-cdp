@@ -14,8 +14,8 @@ import leotech.cms.model.MediaInfoUnit;
 import leotech.cms.model.Post;
 import leotech.cms.model.bot.LeoBot;
 import leotech.cms.model.common.ContentType;
-import leotech.cms.query.SearchPostUtil;
 import leotech.crawler.model.CrawledYouTubeVideo;
+import leotech.query.util.SearchPostUtil;
 import leotech.system.model.AppMetadata;
 import leotech.system.model.SystemUser;
 

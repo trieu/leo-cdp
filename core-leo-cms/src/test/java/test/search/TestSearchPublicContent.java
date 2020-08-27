@@ -3,7 +3,7 @@ package test.search;
 import java.util.List;
 
 import leotech.cms.model.Post;
-import leotech.cms.query.SearchPostUtil;
+import leotech.query.util.SearchPostUtil;
 
 public class TestSearchPublicContent {
 

@@ -28,9 +28,9 @@
 <script>
     var initMediaJourneyMap = initMediaJourneyMap || function() {
     	LeoAdminApiUtil.getSecuredData('/cdp/journeymap/get', { "id" : "" }, function(json){
-    		 var canInsertData = json.canInsertData;
-	    	 var canEditData = json.canEditData;
-    		 var canDeleteData = json.canDeleteData;
+    		var canInsertData = json.canInsertData;
+	    	var canEditData = json.canEditData;
+    		var canDeleteData = json.canDeleteData;
     		
     		if( ! canEditData ){
 				$('button.data-control').attr('disabled','disabled');
@@ -94,7 +94,7 @@
 	   		        { name: "name", title : "Channel Name", type: "text", width: 40, validate: "required" },
 	   		     	{ name: "typeName", title : "Channel Type", type: "text", width: 40, validate: "required" },
 	   		     	{ name: "isOwnedMedia", title : "Owned Media", type: "checkbox", width: 23, validate: "required" },
-	   		     	{ name: "url", title : "URL", type: "text", validate: "required" },
+	   		     	{ name: "url", title : "URL", type: "text", itemTemplate: jsGridItemUrlTemplate , validate: "required" },
 	   		     	{ type: "control" , width: 50, deleteButton: canDeleteData}
 	   		    ]
 	   		});  

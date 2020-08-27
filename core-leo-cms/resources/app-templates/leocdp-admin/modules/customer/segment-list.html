@@ -1,44 +1,59 @@
 
 
-    <div class="row">
-        <div class="col-lg-9">
-            <h4 class="page-header" id="page_breadcrumb" > </h4>
-        </div>
-        <div class="col-lg-3 text-center" style="padding: 10px">
-        	<button type="button" class="btn btn-success" onclick="loadDataProfileList()" > New Profile </button>
-	        <button type="button" class="btn btn-success" onclick="loadDataProfileList()" > Import Profiles </button>
-        </div>
-    </div>
-    
-    <div class="row float-right" >
-		 
-        <div class='col-md-2 col-xs-12'>
-            <div class="form-group">
-                <div class='input-group date' id='beginFilterDate'>
-                    <input type='text' class="form-control" autocomplete="off" /> <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                </div>
-            </div>
-        </div>
-        <div class='col-md-2 col-xs-12'>
-            <div class="form-group">
-                <div class='input-group date' id='endFilterDate'>
-                    <input type='text' class="form-control" autocomplete="off" /> <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                </div>
-            </div>
-        </div>
-        
-        <div class='col-md-2 col-xs-12'>
-        	<button type="button" class="btn btn-info" onclick="loadDataProfileList()" > Filter by Date </button>
-        </div>
-        
-    </div>
-	
+<!-- MAIN BODY here -->
+<div class="row">
+	<div class="col-lg-10">
+		<h4 class="page-header" id="page_breadcrumb"></h4>
+	</div>
+	<div class="col-lg-2 text-center" style="padding: 10px">
+		<button type="button" class="btn btn-success" onclick="">New
+			Segment</button>
+	</div>
+</div>
 
-    <div class="row gridholder">
+<div class="row float-right">
+
+	<div class='col-md-2 col-xs-12'>
+		<div class="form-group">
+			<div class='input-group date' id='beginFilterDate'>
+				<input type='text' class="form-control" autocomplete="off" /> <span
+					class="input-group-addon"> <span
+					class="glyphicon glyphicon-calendar"></span>
+				</span>
+			</div>
+		</div>
+	</div>
+	<div class='col-md-2 col-xs-12'>
+		<div class="form-group">
+			<div class='input-group date' id='endFilterDate'>
+				<input type='text' class="form-control" autocomplete="off" /> <span
+					class="input-group-addon"> <span
+					class="glyphicon glyphicon-calendar"></span>
+				</span>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="row">
+	<div class="col-lg-9">
+		<div id="segment-builder"></div>
+
+		<div class="btn-group">
+			<button class="btn btn-warning" id="btn-reset">Reset</button>
+			<button class="btn btn-secondary" id="btn-computesize">Compute
+				size</button>
+			<button class="btn btn-primary" id="btn-save">Save</button>
+		</div>
+	</div>
+	<div class="col-lg-3 text-center">
+		Segment summary
+		<div id="donut_chart" style="max-width: 300px;"></div>
+	</div>
+</div>
+
+  <div class="row gridholder">
         <div class="col-lg-12">
             <div class="table-responsive">
                 <table id="profile-list" class="display" style="width:100%">
@@ -62,7 +77,131 @@
 
 
 <script>
-    function loadDataProfileList() {
+	function initCustomerSegmentList() {
+		loadDataProfileList();
+		loadSegmentBuilder();
+	}
+
+	var computeSegmentSize = computeSegmentSize
+			|| function() {
+				var data = [ {
+					name : 'high value',
+					count : 35,
+					percentage : 35,
+					color : '#000000'
+				}, {
+					name : 'total',
+					count : 100,
+					percentage : false,
+					color : '#f8b70a'
+				}, ];
+				var totalCount = 35; //calcuting total manually
+				var domSelector = '#donut_chart'
+				var width = $(domSelector).empty().width(), height = width, radius = width - 140;
+				renderDonutChart(domSelector, data, totalCount, width, height,
+						radius)
+			}
+
+	var loadSegmentBuilder = loadSegmentBuilder
+			|| function() {
+				var rules_basic = {
+					condition : 'AND',
+					rules : [ {
+						id : 'price',
+						operator : 'less',
+						value : 10.25
+					}, {
+						condition : 'OR',
+						rules : [ {
+							id : 'category',
+							operator : 'equal',
+							value : 2
+						}, {
+							id : 'category',
+							operator : 'equal',
+							value : 1
+						} ]
+					} ]
+				};
+				$('#segment-builder').queryBuilder(
+						{
+							plugins : [ 'bt-tooltip-errors' ],
+
+							filters : [
+									{
+										id : 'name',
+										label : 'Name',
+										type : 'string'
+									},
+									{
+										id : 'category',
+										label : 'Category',
+										type : 'integer',
+										input : 'select',
+										values : {
+											1 : 'Books',
+											2 : 'Movies',
+											3 : 'Music',
+											4 : 'Tools',
+											5 : 'Goodies',
+											6 : 'Clothes'
+										},
+										operators : [ 'equal', 'not_equal',
+												'in', 'not_in', 'is_null',
+												'is_not_null' ]
+									}, {
+										id : 'in_stock',
+										label : 'In stock',
+										type : 'integer',
+										input : 'radio',
+										values : {
+											1 : 'Yes',
+											0 : 'No'
+										},
+										operators : [ 'equal' ]
+									}, {
+										id : 'price',
+										label : 'Price',
+										type : 'double',
+										validation : {
+											min : 0,
+											step : 0.01
+										}
+									}, {
+										id : 'id',
+										label : 'Identifier',
+										type : 'string',
+										placeholder : '____-____-____',
+										operators : [ 'equal', 'not_equal' ],
+										validation : {
+											format : /^.{4}-.{4}-.{4}$/
+										}
+									} ],
+
+							rules : rules_basic
+						});
+
+				$('#btn-reset').on('click', function() {
+					$('#segment-builder').queryBuilder('reset');
+				});
+
+				$('#btn-computesize').on('click', function() {
+					computeSegmentSize()
+				});
+
+				$('#btn-save').on(
+						'click',
+						function() {
+							var result = $('#segment-builder').queryBuilder(
+									'getRules');
+
+							if (!$.isEmptyObject(result)) {
+								alert(JSON.stringify(result, null, 2));
+							}
+						});
+			}
+	
+	function loadDataProfileList() {
     	initDateFilterComponent();
     	
         var usersession = getUserSession();

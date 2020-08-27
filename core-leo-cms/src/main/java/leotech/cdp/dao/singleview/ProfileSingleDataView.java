@@ -25,8 +25,6 @@ public class ProfileSingleDataView extends Profile implements SingleDataView {
 	@Expose
 	TrackingEvent lastTrackingEvent;
 	
-	@Expose
-	String currentFunnelStage;
 	
 	@Expose
 	Set<Touchpoint> topEngagedTouchpoints;
@@ -170,16 +168,6 @@ public class ProfileSingleDataView extends Profile implements SingleDataView {
 
 	public void setLastTrackingEvent(TrackingEvent lastTrackingEvent) {
 		this.lastTrackingEvent = lastTrackingEvent;
-	}
-	
-	
-
-	public String getCurrentFunnelStage() {
-		return currentFunnelStage;
-	}
-
-	public void setCurrentFunnelStage(String currentFunnelStage) {
-		this.currentFunnelStage = currentFunnelStage;
 	}
 
 	public Map<String, Long> getTotalEventStatistics() {

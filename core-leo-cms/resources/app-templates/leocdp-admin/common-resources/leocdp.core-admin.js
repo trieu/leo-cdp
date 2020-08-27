@@ -432,12 +432,14 @@ LeoCdpAdmin.updateDataObjectOfView = function(urlStr, params, callback) {
 	}).promise().done(function() {   
         LeoAdminApiUtil.callPostAdminApi(urlStr, params, function (json) {
              if (json.httpCode === 0 && json.errorMessage === '') {
-   
-            	 console.log('Done updateDataObjectOfView ' + urlStr);
      			if(typeof callback === 'function') callback(json);
              } else {
                  LeoAdminApiUtil.logErrorPayload(json);
              }
         });
     });
+}
+
+var jsGridItemUrlTemplate = function(value) {
+    return $("<a>").attr('target','_blank').attr('title',value).attr("href", value).text(value);
 }

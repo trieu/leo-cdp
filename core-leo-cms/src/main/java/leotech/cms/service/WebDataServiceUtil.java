@@ -15,7 +15,7 @@ import leotech.cms.model.renderable.ContentMediaBox;
 import leotech.cms.model.renderable.MediaNetworkDataModel;
 import leotech.cms.model.renderable.PostDataModel;
 import leotech.cms.model.renderable.WebData;
-import leotech.cms.query.SearchPostUtil;
+import leotech.query.util.SearchPostUtil;
 import leotech.system.model.AppMetadata;
 import leotech.system.service.AppMetadataService;
 import rfx.core.util.StringUtil;
