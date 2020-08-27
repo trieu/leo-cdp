@@ -286,10 +286,10 @@ function leoCdpRouter(objKey,objId){
 		var jsFunc = LeoCdpAdmin.navRouters[key] ? "leoCdpRouter('"+ key + "')"  : '';
 		
 		if( i < (len - 1) ){
-			breadcrumbHtml = breadcrumbHtml + '<a title="'+ name +'" href="#calljs-' + jsFunc + '"> ' + breadcrumbList[i] + ' </a> ';
+			breadcrumbHtml = breadcrumbHtml + '<a id="tnv_'+key+'" title="'+ name +'" href="#calljs-' + jsFunc + '"> ' + breadcrumbList[i] + ' </a> ';
 			breadcrumbHtml = breadcrumbHtml + ' &#8594; ';
 		} else {
-			breadcrumbHtml = breadcrumbHtml + '<a title="'+ name +'" href="#calljs-"> ' + breadcrumbList[i] + ' </a> ';
+			breadcrumbHtml = breadcrumbHtml + '<a id="tnv_'+key+'" title="'+ name +'" href="#calljs-"> ' + breadcrumbList[i] + ' </a> ';
 		}
 		
 		activeMenuItemId = LeoCdpAdmin.navRouters[key] ? (LeoCdpAdmin.navRouters[key].activeMenuItem || activeMenuItemId)  : activeMenuItemId;

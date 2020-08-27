@@ -42,12 +42,15 @@
 
         <div class="col-lg-3">
             <div class="row">
-                <a href="#calljs-" class="btn btn-primary" id="btn_edit_post">
-                    <i class="fa fa-fw fa-check"></i> Edit
-                </a>
+               
+                <button type="button" class="btn btn-primary data-control" id="btn_edit_post" disabled="disabled" > 
+	        		<i class="fa fa-fw fa-pencil-square-o"></i> Edit 
+	        	</button>
+               
+                <button type="button" class="btn btn-danger" onclick="deletePost()" disabled="disabled" >Delete</button>
                 <button type="button" class="btn btn-info" onclick="history.back()">Cancel</button>
-                <button type="button" class="btn btn-danger" onclick="deletePost()">Delete</button>
-                <button id="btn_preview_post" type="button" class="btn btn-success" data-slug="" onclick="previewPost(this)">Preview</button>
+                 
+                <button id="btn_preview_post" type="button" class="btn btn-success" data-slug="" onclick="previewPost(this)">View</button>
             </div>
             <hr>
         </div>
@@ -57,7 +60,7 @@
 <script>
     var postModel = false;
     
-    function initPostInfoView(params){
+    var initPostInfoView = initPostInfoView || function(params){
     	LeoCdpAdmin.loadView('/view/common-widgets/headline-images.html?admin=1', '#headline-images-div', function () {
             loadDataPostInfo(params)
         }, true);
@@ -79,8 +82,11 @@
 
                     var pageId = postModel.pageIds[0] || '';
                     var categoryKey = postModel.categoryKeys[0] || '';
-                    var editCmd = "#calljs-postEditor('" + postId + "','" + pageId + "','" + categoryKey + "')";
-                    $('#btn_edit_post').attr('href', editCmd);
+                    
+                    $('#btn_edit_page').click(function(){
+    		        	location.hash = "#calljs-postEditor('" + postId + "','" + pageId + "','" + categoryKey + "')";
+    		        });
+                    
                     $('#btn_preview_post').data('slug',postModel.slug);
 
                     var view = $('#post_info_view');
@@ -148,10 +154,10 @@
     }
 
     function previewPost(aNode) {
-        var url = '//' + location.host + '/html/post/' + $(aNode).data('slug');
+    	var contentBaseUrl = 'https://bookstore.bigdatavietnam.org';
+        var url = contentBaseUrl + '/html/post/' + $(aNode).data('slug');
         var win = window.open(url, '_blank');
         win.focus();
     }
-
     
 </script>

@@ -3,9 +3,9 @@
         <h4 class="page-header" id="page_breadcrumb" > </h4>
     </div>
     <div class="col-lg-2 text-center" style="padding: 10px">
-    	<a href="#calljs-pageEditor('')" class="btn btn-primary" id="btn_new_page" >
-            <i class="fa fa-fw fa-play"></i> New Page
-        </a>
+        <button type="button" class="btn btn-success data-control" id="btn_new_page"  disabled="disabled" > 
+        	<i class="fa fa-fw fa-plus-circle"></i> New Page
+        </button>
     </div>
 </div>
     
@@ -104,7 +104,10 @@
 
     function loadPageList(catKey) {
         categoryKey = catKey;
-        $('#btn_new_page').attr('href', "#calljs-pageEditor('','"+categoryKey+"')");
+        
+        $('#btn_new_page').click(function(){
+        	location.hash =  "calljs-pageEditor('','"+categoryKey+"')";
+        });
 
         // $('#catName').html(decodeURI(catName));
         var usersession = lscache.get('usersession');

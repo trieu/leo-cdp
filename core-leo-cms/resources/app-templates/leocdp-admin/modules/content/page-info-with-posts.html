@@ -21,7 +21,7 @@
                             <h4>Posts</h4>                            
                         </div>
                         <div class="col-lg-3" style="text-align: right;">
-                            <button type="button" class="btn btn-success data-control"  id="btn_new_post" > 
+                            <button type="button" class="btn btn-success data-control"  id="btn_new_post" disabled="disabled" > 
 				        		<i class="fa fa-plus-circle" aria-hidden="true"></i> New Post
 				        	</button>
                         </div>
@@ -58,11 +58,11 @@
         </div>
         <div class="col-lg-3">
             <div class="row text-center">
-                <button type="button" class="btn btn-primary data-control" id="btn_edit_page" > 
+                <button type="button" class="btn btn-primary data-control" id="btn_edit_page" disabled="disabled" > 
 	        		<i class="fa fa-fw fa-pencil-square-o"></i> Edit 
 	        	</button>
-                <button type="button" class="btn btn-info data-control" onclick="history.back()">Cancel</button>
-                <button type="button" class="btn btn-danger data-control" onclick="deletePage()">Delete</button>
+                <button type="button" class="btn btn-danger data-control" onclick="deletePage()" disabled="disabled" >Delete</button>
+                <button type="button" class="btn btn-info data-control" onclick="history.back()" >Cancel</button>
                 <button style="display: none;" type="button" class="btn btn-success" onclick="callLeoBotForIdeasRecommender('context-page')">Hi Leo</button>
 
             </div>
@@ -97,6 +97,8 @@
 		        $('#btn_new_post').click(function(){
 		        	location.hash =  "calljs-postEditor('','" + pageId + "','" + categoryKey + "')";
 		        });
+		        
+		        $('#tnv_Pages_in_Category').attr('href',"#calljs-leoCdpRouter('Pages_in_Category' ,'" + categoryKey + "' )" );
                 
                 var view = $('#page_info_view');
                 for (var k in pageModel) {
