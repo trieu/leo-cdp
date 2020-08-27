@@ -155,7 +155,7 @@ LeoCdpAdmin.navFunctions.loadContentCategoryList = function (breadcrumbHtml) {
     });
 }
 
-LeoCdpAdmin.navFunctions.loadContentPages = function(catKey, breadcrumbHtml) {
+LeoCdpAdmin.navFunctions.loadPagesInCategory = function(catKey, breadcrumbHtml) {
     LeoCdpAdmin.loadView('/view/modules/content/page-list.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
         loadPageList(catKey);
@@ -192,12 +192,11 @@ function pageEditor(id, categoryKey) {
 	 });
 }
 
-function pageInfo(pageId, pageName, categoryKey) {
-	 document.title = 'Page Info: ' + decodeURIComponent(pageName);
-	 console.log('pageInfo');
-	 LeoCdpAdmin.loadView('/view/modules/content/page-info-with-posts.html?admin=1', pageDomSelector, function () {
-	     pageInfoCallback(pageId, pageName, categoryKey);
-	 });
+LeoCdpAdmin.navFunctions.loadPageInfo = function(pageId, breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/modules/content/page-info-with-posts.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+    	 pageInfoCallback(pageId);
+    });
 }
 
 function deletePage() {

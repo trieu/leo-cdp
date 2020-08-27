@@ -4,9 +4,11 @@
         <div class="col-lg-10">
             <h4 class="page-header" id="page_breadcrumb" > </h4>
         </div>
-        <div class="col-lg-2 text-center" style="padding: 10px; display: none">
-        	<button type="button" class="btn btn-success" onclick="" > Save </button>
-        	<button type="button" class="btn btn-secondary" onclick="" > Cancel </button>
+        <div class="col-lg-2 text-center" style="padding: 10px;">
+        	<button type="button" class="btn btn-success data-control" onclick=""  > 
+        		<i class="fa fa-fw fa-check-circle"></i> Save 
+        	</button>
+        	<button type="button" class="btn btn-secondary data-control" onclick=""  > Cancel </button>
         </div>
     </div>
 
@@ -28,7 +30,7 @@
              <div class="col-md-2"></div>
         </div>
         
-        <div class="col-lg-12">
+        <div class="col-lg-12" style="margin-top: 15px;">
             <div class="table-responsive">
                 <div id="behavioral_metrics_table"></div>
             </div>
@@ -38,112 +40,120 @@
 </div>
 
 <script>
-var initBehavioralEventList = initBehavioralEventList || function(){
+	var initBehavioralEventList = initBehavioralEventList || function(){
+		
+		var funnelOptions = {
+		  		block: { highlight: true },
+		        chart: {
+		        	curve: { enabled: true, height: 20 },
+		            bottomWidth : 0.52,
+		            height: 280
+		        },
+		        tooltip: {
+		            enabled: true
+		        },
+		        label: {
+		            fontSize: '12px'
+		        },
+		        events: {
+		            click: {
+		                block: function (data) {
+		                    console.log(data.label.raw);
+		                }
+		            }
+		        }
+		 };
 	
-	var funnelOptions = {
-	  		block: { highlight: true },
-	        chart: {
-	        	curve: { enabled: true, height: 20 },
-	            bottomWidth : 0.52,
-	            height: 280
-	        },
-	        tooltip: {
-	            enabled: true
-	        },
-	        label: {
-	            fontSize: '12px'
-	        },
-	        events: {
-	            click: {
-	                block: function (data) {
-	                    console.log(data.label.raw);
-	                }
-	            }
-	        }
-	 };
-	
-    var eventDataTypes = [
-        { name: "First-party Data", id: 1 },
-        { name: "Second-party Data", id: 2 },
-        { name: "Third-party Data", id: 3 }
-    ];
-	
-	function loadProfileFunnel() {
-	    var data = [
-	        ['Visitor', 0, '#008080'],
-	        ['Identified Person', 0, '#6497b1'],
-	        ['Customer Lead', 0, '#005b96'],
-	        ['First-time Customer', 0, '#03396c'],
-	        ['Repeat Customer', 0, '#011f4b']
+	    var eventDataTypes = [
+	        { name: "First-party Data", id: 1 },
+	        { name: "Second-party Data", id: 2 },
+	        { name: "Third-party Data", id: 3 }
 	    ];
-	    var chart = new D3Funnel('#profile_funnel');
-	    chart.draw(data, funnelOptions);
-	}
-
-	function loadEventFunnel() {
-	    var data = [
-	        ['Content View', 0, '#011f4b'],
-	        ['Interaction', 0, '#03396c'],
-	        ['Purchase Intent', 0, '#005b96'],
-	        ['First Purchase', 0, '#5f9ea0'],
-	        ['Repeat Purchase', 0, '#49796b']
-	    ];
-	    var chart = new D3Funnel('#event_funnel');
-	    chart.draw(data, funnelOptions);
-	}
 	
-	loadProfileFunnel();
-    loadEventFunnel();
-    
-    LeoAdminApiUtil.getSecuredData('/cdp/funnels-and-event-metrics',{"funnelTypes":"event_retail,customer_retail"}, function(json){ 
-		 //console.log(json.data);	
-		 var eventFunnelStages = json.data['event_retail'];
-		 var customerFunnelStages = json.data['customer_retail'];
-		 var behavioralMetricsData = json.data['behavioral_metrics'];
-		 
-		 $("#behavioral_metrics_table").jsGrid({
-		    width: "100%",
-		    height: "auto",
+		function loadProfileFunnel() {
+		    var data = [
+		        ['Visitor', 0, '#008080'],
+		        ['Identified Person', 0, '#6497b1'],
+		        ['Customer Lead', 0, '#005b96'],
+		        ['First-time Customer', 0, '#03396c'],
+		        ['Repeat Customer', 0, '#011f4b']
+		    ];
+		    var chart = new D3Funnel('#profile_funnel');
+		    chart.draw(data, funnelOptions);
+		}
 
-		    inserting: false,
-		    editing: false,
-		    sorting: false,
-		    paging: false,
-		    
-		    deleteConfirm: function(item) {
-	            return "The event \"" + item.eventName + "\" will be removed. Are you sure?";
-	        },
-
-		    data: behavioralMetricsData,
-		    
-		    onItemInserting: function(args) {
-		    	//console.log(args.item)
-		    	
-		    	// TODO Ajax submit data to backend here
-		    	setTimeout(function(){
-		    		args.item.id = "";
-		    		//console.log(behavioralMetricsData)
-		    	},1000);
-		    	
-		    },      
-		    onItemInserted: function(args) {
-		    	//console.log(args.item)
-		    	//console.log(behavioralMetricsData)
-		    }, 
-		    onItemDeleting: function(args) {
-		        console.log(args.item)
-		    },
-
-		    fields: [
-		        { name: "eventName", title : "Behavioral Event Metric", align: 'center' , type: "text", validate: "required" },
-		        { name: "score", title : "Score", type: "number", align: 'center',  width: 40, validate: "required" },
-		        { name: "eventFunnelStageId", title : "Event Funnel Stage", type: "select", items: eventFunnelStages, valueField: "id", textField: "name" },
-		        { name: "customerFunnelStageId", title : "Customer Funnel Stage", type: "select", items: customerFunnelStages, valueField: "id", textField: "name" },
-		        { name: "dataType", type: "select", title : "Data Type", items: eventDataTypes, valueField: "id", textField: "name" },
-		        //{ type: "control" , width: 50}
-		    ]
-		});  
-	});
-}
+		function loadEventFunnel() {
+		    var data = [
+		        ['Content View', 0, '#011f4b'],
+		        ['Interaction', 0, '#03396c'],
+		        ['Purchase Intent', 0, '#005b96'],
+		        ['First Purchase', 0, '#5f9ea0'],
+		        ['Repeat Purchase', 0, '#49796b']
+		    ];
+		    var chart = new D3Funnel('#event_funnel');
+		    chart.draw(data, funnelOptions);
+		}
+	
+		loadProfileFunnel();
+	    loadEventFunnel();
+	    
+	    LeoAdminApiUtil.getSecuredData('/cdp/funnels-and-event-metrics',{"funnelTypes":"event_retail,customer_retail"}, function(json){ 
+			 //console.log(json.data);	
+			 var canInsertData = json.canInsertData;
+	    	 var canEditData = json.canEditData;
+    		 var canDeleteData = json.canDeleteData;
+			
+			 if( ! canEditData ){
+				$('button.data-control').attr('disabled','disabled');
+			 }
+			
+			 var eventFunnelStages = json.data['event_retail'];
+			 var customerFunnelStages = json.data['customer_retail'];
+			 var behavioralMetricsData = json.data['behavioral_metrics'];
+			 
+			 $("#behavioral_metrics_table").jsGrid({
+			    width: "100%",
+			    height: "auto",
+	
+			    inserting: canInsertData,
+			    editing: canEditData,
+			    sorting: false,
+			    paging: false,
+			    
+			    deleteConfirm: function(item) {
+		            return "The event \"" + item.eventName + "\" will be removed. Are you sure?";
+		        },
+	
+			    data: behavioralMetricsData,
+			    
+			    onItemInserting: function(args) {
+			    	//console.log(args.item)
+			    	
+			    	// TODO Ajax submit data to backend here
+			    	setTimeout(function(){
+			    		args.item.id = "";
+			    		//console.log(behavioralMetricsData)
+			    	},1000);
+			    	
+			    },      
+			    onItemInserted: function(args) {
+			    	//console.log(args.item)
+			    	//console.log(behavioralMetricsData)
+			    }, 
+			    onItemDeleting: function(args) {
+			        console.log(args.item)
+			    },
+	
+			    fields: [
+			        { name: "eventName", title : "Behavioral Event Metric", align: 'center' , type: "text", validate: "required" },
+			        { name: "score", title : "Score", type: "number", align: 'center',  width: 40, validate: "required" },
+			        { name: "eventFunnelStageId", title : "Event Funnel Stage", type: "select", items: eventFunnelStages, valueField: "id", textField: "name" },
+			        { name: "customerFunnelStageId", title : "Customer Funnel Stage", type: "select", items: customerFunnelStages, valueField: "id", textField: "name" },
+			        { name: "dataType", type: "select", title : "Data Type", items: eventDataTypes, valueField: "id", textField: "name" },
+			        { type: "control" , width: 50, deleteButton: canDeleteData}
+			    ]
+			});  
+		});
+	}
 
 </script>

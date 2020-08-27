@@ -1,9 +1,7 @@
 package leotech.system.model;
 
 import java.lang.reflect.Modifier;
-import java.nio.charset.Charset;
 
-import com.google.gson.FieldNamingStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
@@ -11,9 +9,15 @@ import com.google.gson.annotations.Expose;
 import rfx.core.configs.WorkerConfigs;
 import rfx.core.util.StringUtil;
 
+/**
+ * Json Data Payload for Leo CDP Admin System
+ * 
+ * @author tantrieuf31
+ * @since 2019-08-01
+ *
+ */
 public class JsonDataPayload {
-	protected static final String STATIC_BASE_URL = StringUtil
-			.safeString(WorkerConfigs.load().getCustomConfig("STATIC_BASE_URL"), "");
+	protected static final String STATIC_BASE_URL = StringUtil.safeString(WorkerConfigs.load().getCustomConfig("STATIC_BASE_URL"), "");
 
 	@Expose
 	String uri = "";
@@ -29,6 +33,16 @@ public class JsonDataPayload {
 
 	@Expose
 	int httpCode = 0;
+	
+	@Expose
+	boolean canEditData = false;
+	
+	@Expose
+	boolean canInsertData = false;
+	
+	@Expose
+	boolean canDeleteData = false;
+	
 
 	@Expose
 	String staticBaseUrl = STATIC_BASE_URL;
@@ -109,6 +123,42 @@ public class JsonDataPayload {
 		if (httpCode >= 400) {
 			this.errorCode = httpCode;
 		}
+	}
+
+	public boolean isCanEditData() {
+		return canEditData;
+	}
+
+	public void setCanEditData(boolean canEditData) {
+		this.canEditData = canEditData;
+	}
+
+	public boolean isCanInsertData() {
+		return canInsertData;
+	}
+
+	public void setCanInsertData(boolean canInsertData) {
+		this.canInsertData = canInsertData;
+	}
+
+	public boolean isCanDeleteData() {
+		return canDeleteData;
+	}
+
+	public void setCanDeleteData(boolean canDeleteData) {
+		this.canDeleteData = canDeleteData;
+	}
+
+	public String getStaticBaseUrl() {
+		return staticBaseUrl;
+	}
+
+	public void setStaticBaseUrl(String staticBaseUrl) {
+		this.staticBaseUrl = staticBaseUrl;
+	}
+
+	public void setErrorCode(int errorCode) {
+		this.errorCode = errorCode;
 	}
 
 	public int getErrorCode() {

@@ -4,9 +4,11 @@
         <div class="col-lg-10">
             <h4 class="page-header" id="page_breadcrumb" > </h4>
         </div>
-        <div class="col-lg-2 text-center" style="padding: 10px; display: none">
-        	<button type="button" class="btn btn-success" onclick="" > Save </button>
-        	<button type="button" class="btn btn-secondary" onclick="" > Cancel </button>
+        <div class="col-lg-2 text-center" style="padding: 10px;">
+        	<button type="button" class="btn btn-success data-control" onclick=""  > 
+        		<i class="fa fa-fw fa-check-circle"></i> Save 
+        	</button>
+        	<button type="button" class="btn btn-secondary data-control" onclick="" > Cancel </button>
         </div>
     </div>
 
@@ -25,7 +27,14 @@
 
 <script>
     var initMediaJourneyMap = initMediaJourneyMap || function() {
-    	LeoAdminApiUtil.getSecuredData('/cdp/journeymap/get', { "id" : "" }, function(json){ 
+    	LeoAdminApiUtil.getSecuredData('/cdp/journeymap/get', { "id" : "" }, function(json){
+    		 var canInsertData = json.canInsertData;
+	    	 var canEditData = json.canEditData;
+    		 var canDeleteData = json.canDeleteData;
+    		
+    		if( ! canEditData ){
+				$('button.data-control').attr('disabled','disabled');
+			 }
   		 
 	   		var domSelector = '#journeyFlowChart';
 	   		var mediaJourneyData = json.data.mediaJourneyMap;
@@ -57,10 +66,10 @@
 	   		    width: "100%",
 	   		    height: "auto",
 	
-	   		    inserting: false,
-	   		    editing: false,
-	   		    sorting: false,
-	   		    paging: false,
+	   		 	inserting: canInsertData,
+			    editing: canEditData,
+			    sorting: false,
+			    paging: false,
 	   		    
 	   		    deleteConfirm: function(item) {
 	   	            return "The event \"" + item.eventName + "\" will be removed. Are you sure?";
@@ -86,7 +95,7 @@
 	   		     	{ name: "typeName", title : "Channel Type", type: "text", width: 40, validate: "required" },
 	   		     	{ name: "isOwnedMedia", title : "Owned Media", type: "checkbox", width: 23, validate: "required" },
 	   		     	{ name: "url", title : "URL", type: "text", validate: "required" },
-	   		        //{ type: "control" , width: 20}
+	   		     	{ type: "control" , width: 50, deleteButton: canDeleteData}
 	   		    ]
 	   		});  
 	   	})

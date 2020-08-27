@@ -192,10 +192,18 @@ LeoCdpAdmin.navRouters = {
 		},
 		
 		// 2.9 Content Marketing Pages
-		"Content_Pages" : {
-			"menuName" : "Content Pages",
-			"functionName" : "loadContentPages",
-			"breadcrumb" : ["Customer Journey Hub", "Content Category List", "Content Pages"],
+		"Pages_in_Category" : {
+			"menuName" : "Pages in Category",
+			"functionName" : "loadPagesInCategory",
+			"breadcrumb" : ["Customer Journey Hub", "Content Category List", "Pages in Category"],
+			"activeMenuItem" : "Content_Category_List"
+		},
+		
+		// 2.10 Content Page Information with Posts
+		"Page_Info" : {
+			"menuName" : "Page Information",
+			"functionName" : "loadPageInfo",
+			"breadcrumb" : ["Customer Journey Hub", "Content Category List", "Pages in Category","Page Information"],
 			"activeMenuItem" : "Content_Category_List"
 		},
 		
