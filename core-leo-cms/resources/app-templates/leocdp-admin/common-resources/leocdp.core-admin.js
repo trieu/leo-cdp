@@ -364,6 +364,11 @@ LeoCdpAdmin.loadDataAndUpdateView = function(urlStr, params, dataProcessor, call
         			else if(fieldholder === 'url'){
         				$(this).html($('<a/>').attr('href',value).attr('target','_blank').html(value));
         			}
+        			else if(fieldholder === 'locationcode'){
+        				var url = 'https://plus.codes/'+ LeoCdpAdmin.routerContext.dataObject.locationCode;
+        				$(this).html($('<a/>').attr('href',url).attr('target','_blank').html(value));
+        			}
+        			
         			else if(fieldholder === 'inputvalue'){
         				$(this).val(value)
         			}

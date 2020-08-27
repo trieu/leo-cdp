@@ -1,7 +1,7 @@
-#TODO for xemgiday.com
+#TODO 
 
 ##Server
-* ssh -p 234 adminsys@cloudcms1
+* 
 
 ## Content Ideas
 * https://2sao.vn/an-ngon-c-aa6/

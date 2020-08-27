@@ -27,6 +27,7 @@ import leotech.cdp.service.EventTrackingService;
 import leotech.cdp.service.TouchpointDataService;
 import leotech.system.model.DeviceInfo;
 import leotech.system.util.DeviceInfoUtil;
+import leotech.system.util.GeoLocationUtil;
 import rfx.core.util.FileUtils;
 import rfx.core.util.RandomUtil;
 import rfx.core.util.Utils;
@@ -117,15 +118,13 @@ public class GenerateFakeEventData {
 					null);
 			refTouchpointUrl2 = srcTouchpointUrl2;
 		}
-
-		
-
 	}
+	
+	
 
 	public static void main(String[] args) throws Exception {
 
-		JsonArray jsonArray = new Gson().fromJson(FileUtils.readFileAsString("./data/MOCK_DATA_TEST_2.json"),
-				JsonArray.class);
+		JsonArray jsonArray = new Gson().fromJson(FileUtils.readFileAsString("./data/MOCK_DATA_TEST_2.json"),JsonArray.class);
 		for (JsonElement je : jsonArray) {
 			JsonObject jo = je.getAsJsonObject();
 
@@ -154,12 +153,17 @@ public class GenerateFakeEventData {
 			String userDeviceId = userDevice.getId();
 			
 			profile.setUsedDeviceId(userDeviceId);
+			profile.setLocationCode(locationCode);
+			String livingLocation = GeoLocationUtil.getLocationName(lat, lon).getLocationName();
+			profile.setLivingLocation(livingLocation);
+			int age = RandomUtil.getRandomInteger(65, 16);
+			profile.setAge(age);
 			
 			ProfileDaoUtil.update(profile);
 			
-			System.out.println(profile.getId() + " " + profile.getFirstName());
+			System.out.println(livingLocation);
 			
-			generateEvents(loggedAt, locationCode, visitorId, profile.getId(), deviceInfo, userDeviceId, profile.getType());
+			//generateEvents(loggedAt, locationCode, visitorId, profile.getId(), deviceInfo, userDeviceId, profile.getType());
 		}
 		Utils.exitSystemAfterTimeout(5000);
 

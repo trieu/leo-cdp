@@ -68,6 +68,7 @@
         var usersession = getUserSession();
         if (usersession) {
             $('#profile-list').DataTable({
+            	"lengthMenu": [[20, 30, 50], [20, 30, 50]],
             	'processing': true,
                 'serverSide': true,
                 'serverMethod': 'POST',
