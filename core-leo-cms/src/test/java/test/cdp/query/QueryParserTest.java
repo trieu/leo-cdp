@@ -1,65 +1,49 @@
 package test.cdp.query;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.itfsw.query.builder.ArangoDbBuilderFactory;
 import com.itfsw.query.builder.exception.ParserNotFoundException;
-import com.itfsw.query.builder.support.builder.ArangoDbBuilder;
-import com.itfsw.query.builder.support.model.enums.EnumOperator;
 import com.itfsw.query.builder.support.model.result.ArangoDbQueryResult;
+
+import leotech.cdp.query.ProfileQueryBuilder;
 
 public class QueryParserTest {
 
 	public static void main(String[] args) throws ParserNotFoundException, Exception {
 		
 
-		String jsonRules = "{\"condition\":\"OR\",\"rules\":[{\"id\":\"name\",\"field\":\"username\",\"type\":\"string\",\"input\":\"text\",\"operator\":\"equal\",\"value\":\"Mistic\"}],\"not\":false,\"valid\":true}";
-
-		jsonRules = "{\n" + 
+		String jsonRules = "{\n" + 
 				"  \"condition\": \"AND\",\n" + 
 				"  \"rules\": [\n" + 
 				"    {\n" + 
-				"      \"id\": \"price\",\n" + 
-				"      \"field\": \"price\",\n" + 
-				"      \"type\": \"double\",\n" + 
+				"      \"id\": \"age\",\n" + 
+				"      \"field\": \"age\",\n" + 
+				"      \"type\": \"integer\",\n" + 
 				"      \"input\": \"number\",\n" + 
-				"      \"operator\": \"less\",\n" + 
-				"      \"value\": 10.25\n" + 
-				"    },\n" + 
-				"    {\n" + 
-				"      \"condition\": \"OR\",\n" + 
-				"      \"rules\": [\n" + 
-				"        {\n" + 
-				"          \"id\": \"category\",\n" + 
-				"          \"field\": \"category\",\n" + 
-				"          \"type\": \"integer\",\n" + 
-				"          \"input\": \"select\",\n" + 
-				"          \"operator\": \"equal\",\n" + 
-				"          \"value\": 2\n" + 
-				"        },\n" + 
-				"        {\n" + 
-				"          \"id\": \"category\",\n" + 
-				"          \"field\": \"category\",\n" + 
-				"          \"type\": \"integer\",\n" + 
-				"          \"input\": \"select\",\n" + 
-				"          \"operator\": \"equal\",\n" + 
-				"          \"value\": 1\n" + 
-				"        },\n" + 
-				"        {\n" + 
-				"          \"id\": \"name\",\n" + 
-				"          \"field\": \"name\",\n" + 
-				"          \"type\": \"string\",\n" + 
-				"          \"input\": \"text\",\n" + 
-				"          \"operator\": \"contains\",\n" + 
-				"          \"value\": \"demo\"\n" + 
-				"        }\n" + 
+				"      \"operator\": \"between\",\n" + 
+				"      \"value\": [\n" + 
+				"        18,\n" + 
+				"        30\n" + 
 				"      ]\n" + 
 				"    }\n" + 
 				"  ],\n" + 
 				"  \"valid\": true\n" + 
 				"}";
+		
 		ArangoDbQueryResult result = new ArangoDbBuilderFactory().builder().build(jsonRules);
 		
 
-		System.out.println(EnumOperator.EQUAL.getValue());
-		System.out.println(result.getQuery());
+		boolean filterCreateAt = true;
+		String beginFilterDate = "'2020-04-27T00:00:00+07:00'";
+		String endFilterDate =  "'2020-04-29T00:00:00+07:00'";
+		String parsedFilterAql = result.getQuery();
+		
+		int startIndex = 0;
+		int numberResult = 5;
+		List<String> profileFields = Arrays.asList("id","primaryEmail","createdAt","firstName","age");
+		String aql = ProfileQueryBuilder.buildAqlString(filterCreateAt, beginFilterDate, endFilterDate, parsedFilterAql, startIndex, numberResult, profileFields);
+		System.out.println(aql);
 	}
 }

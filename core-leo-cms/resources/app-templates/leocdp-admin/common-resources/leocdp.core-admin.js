@@ -247,7 +247,7 @@ var getIconItemByKey = function(key){
 
 var initDateFilterComponent = function(){
 	var end = new moment().format("YYYY-MM-DD");
-	var begin = new moment().subtract(120, 'days').format("YYYY-MM-DD");
+	var begin = new moment().subtract(365, 'days').format("YYYY-MM-DD");
 	
 	$('#beginFilterDate').datetimepicker({
 	    format: 'YYYY-MM-DD',
@@ -259,6 +259,14 @@ var initDateFilterComponent = function(){
         defaultDate: end
     });
 }
+
+var getDateFilterValues = function(){
+	var bDate = $('#beginFilterDate').data("DateTimePicker").date().format();
+	var eDate = $('#endFilterDate').data("DateTimePicker").date().format();
+	return { beginFilterDate : bDate, endFilterDate : eDate }
+}
+
+
 
 document.addEventListener("trix-file-accept", function(event) {
   event.preventDefault();
