@@ -1,7 +1,6 @@
 package leotech.cdp.dao.singleview;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import com.google.gson.Gson;
@@ -37,9 +36,6 @@ public class ProfileSingleDataView extends Profile implements SingleDataView {
 	
 	@Expose
 	String genderAsText;
-	
-	@Expose
-	Map<String,Long> totalEventStatistics;
 	
 	//TODO 
 	
@@ -170,13 +166,7 @@ public class ProfileSingleDataView extends Profile implements SingleDataView {
 		this.lastTrackingEvent = lastTrackingEvent;
 	}
 
-	public Map<String, Long> getTotalEventStatistics() {
-		return totalEventStatistics;
-	}
-
-	public void setTotalEventStatistics(Map<String, Long> totalEventStatistics) {
-		this.totalEventStatistics = totalEventStatistics;
-	}
+	
 
 	@Override
 	public String toString() {

@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
@@ -62,23 +63,18 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 			dbCollection.ensurePersistentIndex(Arrays.asList("lastUsedDeviceId"),
 					new PersistentIndexOptions().unique(false));
 
-			dbCollection.ensurePersistentIndex(Arrays.asList("identities[*]"),
-					new PersistentIndexOptions().unique(false));
-			dbCollection.ensurePersistentIndex(Arrays.asList("usedDeviceIds[*]"),
-					new PersistentIndexOptions().unique(false));
-			dbCollection.ensurePersistentIndex(Arrays.asList("sessionKeys[*]"),
-					new PersistentIndexOptions().unique(false));
-			dbCollection.ensurePersistentIndex(Arrays.asList("inSegments[*]"),
-					new PersistentIndexOptions().unique(false));
-			dbCollection.ensurePersistentIndex(Arrays.asList("funnelStage"),
-					new PersistentIndexOptions().unique(false));
-			dbCollection.ensurePersistentIndex(Arrays.asList("locationCode"),
-					new PersistentIndexOptions().unique(false));
+			dbCollection.ensurePersistentIndex(Arrays.asList("identities[*]"),new PersistentIndexOptions().unique(false));
+			dbCollection.ensurePersistentIndex(Arrays.asList("usedDeviceIds[*]"),new PersistentIndexOptions().unique(false));
+			
+			
+			dbCollection.ensurePersistentIndex(Arrays.asList("funnelStage"),new PersistentIndexOptions().unique(false));
+			dbCollection.ensurePersistentIndex(Arrays.asList("locationCode"),new PersistentIndexOptions().unique(false));
 
-			dbCollection.ensurePersistentIndex(Arrays.asList("topEngagedTouchpointIds[*]"),
-					new PersistentIndexOptions().unique(false));
-			dbCollection.ensurePersistentIndex(Arrays.asList("inCollections[*]"),
-					new PersistentIndexOptions().unique(false));
+			dbCollection.ensurePersistentIndex(Arrays.asList("topEngagedTouchpointIds[*]"),new PersistentIndexOptions().unique(false));
+			
+			dbCollection.ensurePersistentIndex(Arrays.asList("inSegments[*]"),new PersistentIndexOptions().unique(false));
+			dbCollection.ensurePersistentIndex(Arrays.asList("inCollections[*]"),new PersistentIndexOptions().unique(false));
+			dbCollection.ensurePersistentIndex(Arrays.asList("inJourneyMaps[*]"),new PersistentIndexOptions().unique(false));
 
 			dbCollection.ensureHashIndex(Arrays.asList("personaUri"), new HashIndexOptions());
 		}
@@ -126,13 +122,13 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	protected int status = 1;
 
 	@Expose
-	protected Set<String> inCollections = new HashSet<String>(10);
+	protected Set<String> inCollections = new HashSet<String>(100);
 
 	@Expose
-	protected Set<String> inSegments = new HashSet<String>(20);
+	protected Set<String> inSegments = new HashSet<String>(100);
 
 	@Expose
-	protected Set<String> inJourneyMaps = new HashSet<String>(20);
+	protected Set<String> inJourneyMaps = new HashSet<String>(100);
 
 	// --- END taxonomy meta data
 
@@ -280,34 +276,41 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	@Expose
 	protected int totalDataQualityScore = 0;
 
+	// sum of all score from BehavioralEventMetric data
 	@Expose
-	protected int totalLeadScore = 0; // sum of all score from
-										// BehavioralEventMetric data
+	protected int totalLeadScore = 0; 
 
 	@Expose
 	protected int totalCreditScore = 0;
 
+	// Customer Satisfaction Score
 	@Expose
-	protected int totalCSAT = 0; // Customer Satisfaction Score
+	protected int totalCSAT = 0; 
 
+	// Customer Acquisition Cost
 	@Expose
-	protected int totalCAC = 0; // Customer Acquisition Cost
+	protected int totalCAC = 0; 
 
+	// Customer lifetime value
 	@Expose
-	protected int totalCLV = 0; // Customer lifetime value
+	protected int totalCLV = 0; 
 
+	// Customer Effort Score
 	@Expose
-	protected int totalCES = 0; // Customer Effort Score
+	protected int totalCES = 0; 
 
+	// Net Promoter Score
 	@Expose
-	protected int totalNPS = 0; // Net Promoter Score
+	protected int totalNPS = 0; 
+	
+	@Expose
+	Map<String,Long> eventStatistics = new ConcurrentHashMap<String, Long>();
 
 	// --- END Quantitative Data Metrics
 
+	// when the database has more than 500,000 profile, need a good partitioning strategy
 	@Expose
-	protected int partitionId = 0;// when the database has more than 500,000
-									// profile, need a good partitioning
-									// strategy
+	protected int partitionId = 0;
 
 	@Expose
 	protected Map<String, Map<String, Integer>> predictionMetrics = new HashMap<>();
@@ -324,8 +327,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 				&& this.lastTouchpointId != null && this.identities.size() > 0;
 	}
 
-	public Profile() {
-	}
+	public Profile() {}
 
 	public Profile(String primaryUsername) {
 		this.primaryUsername = primaryUsername;
@@ -338,7 +340,6 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 			String lastTouchpointId, String lastSeenIp, String usedDeviceId, String email, String phone,
 			String fingerprintId, String crmRefId) {
 		// hash for unique id key
-
 		this.partitionId = partitionId;
 		this.type = type;
 
@@ -1034,6 +1035,19 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	public void setTotalNPS(int totalNPS) {
 		this.totalNPS = totalNPS;
+	}
+	
+	public Map<String, Long> getEventStatistics() {
+		return eventStatistics;
+	}
+
+	public void setEventStatistics(Map<String, Long> totalEventStatistics) {
+		this.eventStatistics = totalEventStatistics;
+	}
+	
+	public void updateEventCount(String eventName) {
+		long c = this.eventStatistics.getOrDefault(eventName, 0L) + 1;
+		this.eventStatistics.put(eventName, c);
 	}
 
 	@Override

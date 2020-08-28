@@ -42,6 +42,8 @@ public class DataObserverHttpRouter extends BaseHttpRouter {
 
 	public DataObserverHttpRouter(RoutingContext context) {
 		super(context);
+		
+		// TODO trigger a scheduler for data summary computation 
 	}
 
 	static class ObserverResponse {

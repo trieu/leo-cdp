@@ -25,7 +25,7 @@ public class ProfileDataService {
 		return updateOrCreate( observerId, srcTouchpointId, refTouchpointId, touchpointRefDomain,lastSeenIp, visitorId, userDeviceId, fingerprintId, "", "", "", "");
 	}
 	
-	public static void updateProfileFromEvent(String profileId, String observerId, String srcTouchpointId, String touchpointRefDomain, String lastSeenIp, String userDeviceId) {
+	public static void updateProfileFromEvent(String profileId, String observerId, String srcTouchpointId, String touchpointRefDomain, String lastSeenIp, String userDeviceId, String eventName) {
 		Profile pf = ProfileDaoUtil.getById(profileId);
 	
 		if(pf != null) {
@@ -36,6 +36,7 @@ public class ProfileDataService {
 			pf.setLastTouchpointId(srcTouchpointId);
 			pf.setLastSeenIp(lastSeenIp);
 			pf.setLastUsedDeviceId(userDeviceId);
+			pf.updateEventCount(eventName);
 			
 			// TODO run in a thread to commit to database
 			ProfileDaoUtil.update(pf);

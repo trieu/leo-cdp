@@ -49,7 +49,7 @@
 	</div>
 	<div class="col-lg-3 text-center">
 		Segment summary
-		<div id="donut_chart" style="max-width: 300px;"></div>
+		<div id="donut_chart" style="max-width: 300px;margin: auto;"></div>
 	</div>
 </div>
 
@@ -83,23 +83,21 @@
 	}
 
 	var computeSegmentSize = computeSegmentSize
-			|| function() {
-				var data = [ {
-					name : 'high value',
-					count : 35,
-					percentage : 35,
-					color : '#000000'
-				}, {
-					name : 'total',
-					count : 100,
-					percentage : false,
-					color : '#f8b70a'
-				}, ];
-				var totalCount = 35; //calcuting total manually
-				var domSelector = '#donut_chart'
-				var width = $(domSelector).empty().width(), height = width, radius = width - 140;
-				renderDonutChart(domSelector, data, totalCount, width, height, radius)
-			}
+	|| function() {
+		var data = [ {
+			name : 'high value',
+			count : 90000000,
+			color : '#000000'
+		}, {
+			name : 'total',
+			count : 100000000,
+			color : '#f8b70a'
+		}, ];
+		var totalCount = 100000000; // total manually
+		var domSelector = '#donut_chart'
+		var width = $(domSelector).empty().width(), height = width, radius = width - 140;
+		renderDonutChart(domSelector, data, totalCount, width, height, radius, 42)
+	}
 
 	var loadSegmentBuilder = loadSegmentBuilder
 			|| function() {

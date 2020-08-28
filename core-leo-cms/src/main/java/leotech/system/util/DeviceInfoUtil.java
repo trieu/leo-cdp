@@ -36,5 +36,9 @@ public class DeviceInfoUtil {
 	public static Device getUserDevice(DeviceInfo dv, Date createdAt) {
 		return new Device(dv, createdAt);
 	}
+	
+	public static Device getUserDevice(DeviceInfo dv) {
+		return new Device(dv);
+	}
 
 }

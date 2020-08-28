@@ -4,14 +4,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import leotech.cdp.dao.DeviceDaoUtil;
 import leotech.cdp.dao.TrackingEventDaoUtil;
 import leotech.cdp.dao.singleview.EventSingleDataView;
 import leotech.cdp.model.analytics.ContextSession;
 import leotech.cdp.model.analytics.TrackingEvent;
+import leotech.cdp.model.customer.Device;
 import leotech.cdp.model.journey.MediaChannelType;
 import leotech.cdp.model.journey.Touchpoint;
 import leotech.system.model.DataFilter;
 import leotech.system.model.DeviceInfo;
+import leotech.system.util.DeviceInfoUtil;
 
 /**
  * @author Trieu Nguyen (Thomas)
@@ -20,15 +23,14 @@ import leotech.system.model.DeviceInfo;
 public class EventTrackingService {
 
 	//
-
 	public static int trackViewEvent(Date createdAt, ContextSession ctxSession, String srcObserverId, String environment,
-			String deviceId, String sourceIP, DeviceInfo dv, String srcTouchpointName, String srcTouchpointUrl,
+			String deviceId, String sourceIP, DeviceInfo deviceInfo, String srcTouchpointName, String srcTouchpointUrl,
 			String refTouchpointUrl, String touchpointRefDomain, String eventName, Map<String, String> eventData) {
-		String deviceName = dv.deviceName;
-		String deviceOS = dv.deviceOs;
+		String deviceName = deviceInfo.deviceName;
+		String deviceOS = deviceInfo.deviceOs;
 
-		String browserName = dv.browserName;
-		String deviceType = dv.deviceType;
+		String browserName = deviceInfo.browserName;
+		String deviceType = deviceInfo.deviceType;
 
 		
 		int refProfileType = ctxSession.getProfileType();
@@ -56,10 +58,12 @@ public class EventTrackingService {
 
 		TrackingEventDaoUtil.record(e);
 
-		// FIXME
-		String userDeviceId = "";
-		ProfileDataService.updateProfileFromEvent(refProfileId, srcObserverId, srcTouchpointId, touchpointRefDomain,
-				sourceIP, userDeviceId);
+		// TODO add to a thread
+		Device userDevice = DeviceInfoUtil.getUserDevice(deviceInfo);
+		DeviceDaoUtil.save(userDevice);
+		String userDeviceId = userDevice.getId();
+		
+		ProfileDataService.updateProfileFromEvent(refProfileId, srcObserverId, srcTouchpointId, touchpointRefDomain, sourceIP, userDeviceId, eventName);
 		return 201;
 	}
 
@@ -98,9 +102,12 @@ public class EventTrackingService {
 
 		TrackingEventDaoUtil.record(e);
 
-		String userDeviceId = "";
-		ProfileDataService.updateProfileFromEvent(refProfileId, srcObserverId, srcTouchpointId, touchpointRefDomain,
-				sourceIP, userDeviceId);
+		// TODO add to a thread
+		Device userDevice = DeviceInfoUtil.getUserDevice(dv);
+		DeviceDaoUtil.save(userDevice);
+		String userDeviceId = userDevice.getId();
+		
+		ProfileDataService.updateProfileFromEvent(refProfileId, srcObserverId, srcTouchpointId, touchpointRefDomain,sourceIP, userDeviceId, eventName);
 		return 221;
 	}
 
@@ -120,10 +127,7 @@ public class EventTrackingService {
 
 		// owned media has data from itself
 		boolean isFromOwnedMedia = ctxSession.getMediaHost().equals(touchpointRefDomain);
-
-		// TODO
-		//int timeSpent = 1;
-
+	
 		// touch-point info process
 		Touchpoint refTouchPoint = TouchpointDataService.getOrCreateWebTouchpoint(touchpointRefDomain,
 				MediaChannelType.WEB_URL, refTouchpointUrl, isFromOwnedMedia);
@@ -144,14 +148,16 @@ public class EventTrackingService {
 
 		TrackingEventDaoUtil.record(e);
 
-		String userDeviceId = "";
-		ProfileDataService.updateProfileFromEvent(refProfileId, srcObserverId, srcTouchpointId, touchpointRefDomain,
-				sourceIP, userDeviceId);
+		// TODO add to a thread
+		Device userDevice = DeviceInfoUtil.getUserDevice(device);
+		DeviceDaoUtil.save(userDevice);
+		String userDeviceId = userDevice.getId();
+		
+		ProfileDataService.updateProfileFromEvent(refProfileId, srcObserverId, srcTouchpointId, touchpointRefDomain, sourceIP, userDeviceId, eventName);
 		return 241;
 	}
 
-	public static List<EventSingleDataView> getEventActivityFlowOfProfile(String profileId, int startIndex,
-			int numberResults) {
+	public static List<EventSingleDataView> getEventActivityFlowOfProfile(String profileId, int startIndex,int numberResults) {
 		// Engagement Event Activities
 		List<EventSingleDataView> eventActivities = TrackingEventDaoUtil.getEventsByProfileId(profileId,new DataFilter(startIndex, numberResults));
 		return eventActivities;
