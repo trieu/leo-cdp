@@ -45,28 +45,26 @@
 			</div>         
 			<div class="modal-body">
 				<div id="code_holder" ><textarea id="data_observer_code" class="code">
-
-		(function() {
-		    //Leo Web Observer for channel: __channelName__
-    		window.leoObserverLogDomain = "__leoObserverLogDomain__";
-			window.leoObserverId = "__leoObserverId__";
-			window.srcTouchpointName = encodeURIComponent(document.title);
-			window.srcTouchpointUrl = encodeURIComponent(location.protocol + '//' + location.host + location.pathname);
-		
-			var leoproxyJsPath = '/public/js/leo-observer/leoproxy.js';
-		    var src = '//' + window.leoObserverLogDomain + leoproxyJsPath;
-		    var jsNode = document.createElement('script');
-		    jsNode.async = true;
-		    jsNode.src = src;
-		    var s = document.getElementsByTagName('script')[0];
-		    s.parentNode.insertBefore(jsNode, s);
-		})();
-		
-		function leoObserverProxyReady() {
-		    //Leo is ready, record pageview data
-		    LeoObserverProxy.recordViewEvent("pageview");
-		}
-
+			(function() {
+			    //Leo Web Observer for channel: __channelName__
+	    		window.leoObserverLogDomain = "__leoObserverLogDomain__";
+				window.leoObserverId = "__leoObserverId__";
+				window.srcTouchpointName = encodeURIComponent(document.title);
+				window.srcTouchpointUrl = encodeURIComponent(location.protocol + '//' + location.host + location.pathname);
+			
+				var leoproxyJsPath = '/public/js/leo-observer/leoproxy.js';
+			    var src = '//' + window.leoObserverLogDomain + leoproxyJsPath;
+			    var jsNode = document.createElement('script');
+			    jsNode.async = true;
+			    jsNode.src = src;
+			    var s = document.getElementsByTagName('script')[0];
+			    s.parentNode.insertBefore(jsNode, s);
+			})();
+			
+			function leoObserverProxyReady() {
+			    //Leo is ready, record pageview data
+			    LeoObserverProxy.recordViewEvent("pageview");
+			}
 				</textarea></div>
 			</div>  
 			<div class="modal-footer">
@@ -86,7 +84,7 @@
 		var type = json.type;
 		var observerLogDomain = "cdp.bigdatavietnam.org";
 		
-		if(type < 10){
+		if(type < 10 || type === 24 ){
 			$('#webDataObserverCodeDialog').modal({
 	    		backdrop: 'static',
 	    		keyboard: false
