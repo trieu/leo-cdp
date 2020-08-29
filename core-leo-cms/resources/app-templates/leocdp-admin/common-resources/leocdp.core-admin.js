@@ -101,8 +101,7 @@ function loadMediaInfoView(mediaInfo, type, editMode) {
         } else if (mediaInfo.indexOf('https://drive.google.com/file/d/') >= 0) {
             var url = mediaInfo.replace('/view', '/preview');
             html =
-                '<div class="embed-responsive embed-responsive-4by3"><iframe class="embed-responsive-item" frameborder="0" src="' +
-                url + '"></iframe></div>';
+                '<div class="embed-responsive embed-responsive-4by3"><iframe class="embed-responsive-item" frameborder="0" src="' + url + '"></iframe></div>';
         }
         //VIDEO from uploaded or YouTube
         else if (mediaInfo.indexOf('.mp4') >= 0 ||
@@ -373,8 +372,11 @@ LeoCdpAdmin.loadDataAndUpdateView = function(urlStr, params, dataProcessor, call
         				$(this).html($('<a/>').attr('href',value).attr('target','_blank').html(value));
         			}
         			else if(fieldholder === 'locationcode'){
-        				var url = 'https://plus.codes/'+ LeoCdpAdmin.routerContext.dataObject.locationCode;
-        				$(this).html($('<a/>').attr('href',url).attr('target','_blank').html(value));
+        				var aNode = $('<a/>').attr('href','javascript:').html(value).click(function(){
+        					var url = 'https://plus.codes/'+ LeoCdpAdmin.routerContext.dataObject.locationCode;
+        					eModal.iframe(url, value)
+        				})
+        				$(this).html(aNode);
         			}
         			
         			else if(fieldholder === 'inputvalue'){

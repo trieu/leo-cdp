@@ -45,11 +45,11 @@
                     <thead>
                         <tr>
                             <th>UUID</th>
-                            <th>Last touchpoint</th>
+                            <th>Last seen touchpoint</th>
                             <th>Type</th>
                             <th>Name</th>
-                            <th>Primary email</th>
-                            <th>Primary phone</th>
+                            <th>Primary Email</th>
+                            <th>Phone</th>
                             <th>Created at</th>
                             <th>Updated at</th>
                             <th>Actions</th>
@@ -99,7 +99,7 @@
                     },
                     {
                         "render": function (data, type, row) {
-                            return row.typeAsText;
+                            return '<small style="font-size:11px">'+row.typeAsText+'</small>';
                         },
                         "targets": 2
                     },
