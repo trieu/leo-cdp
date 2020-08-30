@@ -23,6 +23,9 @@ import rfx.core.util.StringUtil;
 public class ProductItem extends CdpPersistentObject implements Serializable {
 
 	private static final long serialVersionUID = -3618110544243923554L;
+	
+	public static final String COLLECTION_NAME = getCollectionName(ProductItem.class);
+	static ArangoCollection instance;
 
 	@DocumentField(Type.KEY)
 	@Expose
@@ -35,7 +38,6 @@ public class ProductItem extends CdpPersistentObject implements Serializable {
 	protected String description;
 	protected String image;
 
-	
 	protected double originalPrice;
 	
 	protected double salePrice;
@@ -61,11 +63,8 @@ public class ProductItem extends CdpPersistentObject implements Serializable {
 	protected List<String> optionFields = new ArrayList<>(10);
 	protected List<String> optionValues = new ArrayList<>(10);
 
-	Date updatedAt;
-
-	public static final String COLLECTION_NAME = getCollectionName(ProductItem.class);
-	static ArangoCollection instance;
-
+	protected Date updatedAt;
+	
 	@Override
 	public ArangoCollection getCollection() {
 		if (instance == null) {

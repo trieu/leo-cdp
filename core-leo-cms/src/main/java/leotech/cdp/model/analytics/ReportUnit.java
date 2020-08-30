@@ -17,34 +17,34 @@ updatedAt = Required(datetime)
 timeUnit = Optional(int, size=8, default=3)
 partitionId = Optional(int, size=16, default=1)*/
 
-public class ReportUnit  extends CdpPersistentObject implements Comparable<ReportUnit>{
+public class ReportUnit extends CdpPersistentObject implements Comparable<ReportUnit> {
 
-    public static final String COLLECTION_NAME = CDP_COLLECTION_PREFIX + ReportUnit.class.getSimpleName().toLowerCase();
-    static ArangoCollection instance;
+	public static final String COLLECTION_NAME = getCollectionName(ReportUnit.class);
+	static ArangoCollection instance;
 
-    @Override
-    public ArangoCollection getCollection() {
-	if (instance == null) {
-	    ArangoDatabase arangoDatabase = getDatabaseInstance();
+	@Override
+	public ArangoCollection getCollection() {
+		if (instance == null) {
+			ArangoDatabase arangoDatabase = getDatabaseInstance();
 
-	    instance = arangoDatabase.collection(COLLECTION_NAME);
+			instance = arangoDatabase.collection(COLLECTION_NAME);
 
-	    // ensure indexing key fields for fast lookup
-	    
+			// ensure indexing key fields for fast lookup
+
+		}
+		return instance;
 	}
-	return instance;
-    }
 
-    @Override
-    public boolean isReadyForSave() {
-	// TODO Auto-generated method stub
-	return false;
-    }
+	@Override
+	public boolean isReadyForSave() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
-    @Override
-    public int compareTo(ReportUnit o) {
-	// TODO Auto-generated method stub
-	return 0;
-    }
+	@Override
+	public int compareTo(ReportUnit o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 }

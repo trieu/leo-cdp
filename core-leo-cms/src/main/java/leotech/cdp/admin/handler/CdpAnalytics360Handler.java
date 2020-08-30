@@ -14,14 +14,14 @@ import leotech.system.util.RequestInfoUtil;
 public class CdpAnalytics360Handler extends BaseSecuredDataApi {
 	
 	// for dataList view
-	static final String API_LIST_ALL = "/cdp/analytics360notebooks";
-	static final String API_LIST_WITH_FILTER = "/cdp/analytics360notebooks/filter";
+	static final String API_LIST_ALL = "/cdp/analytics360/notebooks";
+	static final String API_LIST_WITH_FILTER = "/cdp/analytics360/notebooks/filter";
 	
 	// for dataList view
-	static final String API_CREATE_NEW = "/cdp/analytics360notebook/new";
-	static final String API_UPDATE_MODEL = "/cdp/analytics360notebook/update";
-	static final String API_GET_MODEL = "/cdp/analytics360notebook/get";
-	static final String API_REMOVE = "/cdp/analytics360notebook/remove";
+	static final String API_CREATE_NEW = "/cdp/analytics360/notebook/new";
+	static final String API_UPDATE_MODEL = "/cdp/analytics360/notebook/update";
+	static final String API_GET_MODEL = "/cdp/analytics360/notebook/get";
+	static final String API_REMOVE = "/cdp/analytics360/notebook/remove";
 
 	@Override
 	public JsonDataPayload httpPostApiHandler(String userSession, String uri, JsonObject paramJson) throws Exception {
