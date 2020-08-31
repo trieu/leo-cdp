@@ -43,9 +43,10 @@ public class Analytics360Service {
 		String outputName = nbName.replace(".ipynb", "-output.ipynb");
 		String runNbCommand = "papermill "+nbName+" output.ipynb "+nbName;
 		String convertToHtmlCommand = "jupyter nbconvert --to html "+nbName;
-		
 		return htmlName;
 	}
+	
+	
 	
 	public static void main(String[] args) {
 		

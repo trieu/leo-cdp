@@ -5,8 +5,8 @@
             <h4 class="page-header" id="page_breadcrumb" > </h4>
         </div>
         <div class="col-lg-3 text-center" style="padding: 10px">
-        	<button type="button" class="btn btn-success" onclick="loadDataProfileList()" disabled="disabled" > New Profile </button>
-	        <button type="button" class="btn btn-success" onclick="loadDataProfileList()" disabled="disabled" > Import Profiles </button>
+        	<button type="button" class="btn btn-success data-control-insert" disabled="disabled" > New Profile </button>
+	        <button type="button" class="btn btn-success data-control-insert" disabled="disabled" > Import Profiles </button>
         </div>
     </div>
     
@@ -32,7 +32,7 @@
         </div>
         
         <div class='col-md-2 col-xs-12'>
-        	<button type="button" class="btn btn-info" onclick="loadDataProfileList()" disabled="disabled" > Filter by Date </button>
+        	<button type="button" class="btn btn-primary" onclick="refreshDataTable()"  > Filter by Date </button>
         </div>
         
     </div>
@@ -45,9 +45,9 @@
                     <thead>
                         <tr>
                             <th>UUID</th>
-                            <th>Last seen touchpoint</th>
+                            <th>Full Name</th>
                             <th>Type</th>
-                            <th>Name</th>
+                            <th>Last seen touchpoint</th>
                             <th>Primary Email</th>
                             <th>Phone</th>
                             <th>Created at</th>
@@ -62,12 +62,19 @@
 
 
 <script>
+	initDateFilterComponent();
+	
+	var canEditData = false, canDeteteData = false, dataTable = false;
+	
+	function refreshDataTable() {
+	    $('#profile-list').DataTable().clear();
+	    $('#profile-list').DataTable().ajax.reload();
+	}
+	
     function loadDataProfileList() {
-    	initDateFilterComponent();
-    	
         var usersession = getUserSession();
         if (usersession) {
-            $('#profile-list').DataTable({
+            dataTable = $('#profile-list').DataTable({
             	"lengthMenu": [[20, 30, 50], [20, 30, 50]],
             	'processing': true,
                 'serverSide': true,
@@ -79,9 +86,25 @@
                         request.setRequestHeader("leouss", usersession);
                     },
                     data: function (d) {
-                        console.log(d)
+                        //console.log(d)
                         return JSON.stringify(d);
-                    }
+                    },
+                    dataSrc: function ( json ) {
+                    	var canInsertData = json.canInsertData;
+            	    	var canEditData = json.canEditData;
+                		var canDeleteData = json.canDeleteData;
+                		
+                		if( ! canEditData ){
+                			canEditData = false;
+            			}
+                		if( ! canDeleteData ){
+                			canDeteteData = false;
+            			}
+                		if( ! canInsertData ){
+            				$('button.data-control-insert').attr('disabled','disabled');
+            			}
+                		return json.data;
+                     }
                 },
                 'columnDefs': [
                 	{
@@ -90,12 +113,6 @@
                             return '<a title="Profile Report" href="' + callJsViewStr + '" >'+textTruncate(data,10)+'</a>';
                         },
                         "targets": 0
-                    },
-                	{
-                        "render": function (data, type, row) {
-                            return textTruncate(row.lastTouchpoint.name, 30);
-                        },
-                        "targets": 1
                     },
                     {
                         "render": function (data, type, row) {
@@ -111,6 +128,12 @@
                         	}
                             var callJsViewStr = "#calljs-leoCdpRouter('Customer_Profile_Info','" + row.id + "')";
                             return '<a title="Profile Report" href="' + callJsViewStr + '" >' + name + '</a>';
+                        },
+                        "targets": 1
+                    },
+                	{
+                        "render": function (data, type, row) {
+                            return textTruncate(row.lastTouchpoint.name, 30);
                         },
                         "targets": 3
                     },
@@ -131,8 +154,14 @@
                     {
                         "render": function (data, type, row) {
                         	var callJsViewStr = "#calljs-leoCdpRouter('Customer_Profile_Info','" + row.id + "')";
-                            var callJsEditStr = "#calljs-leoCdpRouter('Customer_Profile_Editor','" + row.id + "')";
-                            return '<a title="Profile Report" href="' + callJsViewStr + '" >View</a> <br> <a title="Profile Data Editor" href="' + callJsEditStr + '" >Edit</a>';
+                            var html = '<a title="Profile Report" href="' + callJsViewStr + '" > <i class="fa fa-address-card-o" aria-hidden="true"></i> View</a>';
+                        	if( canEditData ){
+                        		var callJsEditStr = "#calljs-leoCdpRouter('Customer_Profile_Editor','" + row.id + "')";
+                        		html += ' <br> <a title="Profile Editor" href="' + callJsEditStr + '" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
+                        	} else {
+                        		html += ' <br> <a title="Profile Editor" href="javascript:" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
+                        	}
+                            return html;
                         },
                         "targets": 8
                     }
@@ -141,13 +170,13 @@
                         "data": "id"
                     },
                     {
-                        "data": "lastTouchpoint"
+                        "data": "firstName"
                     },
                     {
                         "data": "typeAsText"
                     },
                     {
-                        "data": "firstName"
+                        "data": "lastTouchpoint"
                     },
                     {
                         "data": "primaryEmail"

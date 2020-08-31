@@ -228,7 +228,7 @@ LeoCdpAdmin.navRouters = {
 		},
 		
 		// 4.2 Customer Segmentation
-		"Segment_List" : {
+		"Segment_Data_List" : {
 			"menuName" : "Segment List",
 			"functionName" : "loadSegmentList",
 			"breadcrumb" : ["Customer Data Hub", "Segment List"],

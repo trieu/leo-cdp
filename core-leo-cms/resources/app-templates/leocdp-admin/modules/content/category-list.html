@@ -3,7 +3,7 @@
         <h4 class="page-header" id="page_breadcrumb" > </h4>
     </div>
     <div class="col-lg-2 text-center" style="padding: 10px">
-        <button type="button" class="btn btn-success data-control" onclick="loadCategoryForm(false)" disabled="disabled" > 
+        <button type="button" class="btn btn-success data-control data-control-insert" onclick="loadCategoryForm(false)"  > 
         	<i class="fa fa-fw fa-plus-circle"></i> New Category 
         </button>
     </div>
@@ -31,6 +31,7 @@
 </div>
 
 <script>
+	var canEditData = false, canDeteteData = false;
     var initContentCategoryList = initContentCategoryList || function() {
         var usersession = lscache.get('usersession');
         if (usersession) {
@@ -44,7 +45,23 @@
                     "contentType": 'application/x-www-form-urlencoded',
                     "data": function (d) {
                         d.usersession = usersession;
-                    }
+                    },
+                    "dataSrc": function ( json ) {
+                    	var canInsertData = json.canInsertData;
+            	    	var canEditData = json.canEditData;
+                		var canDeleteData = json.canDeleteData;
+                		
+                		if( ! canEditData ){
+                			canEditData = false;
+            			}
+                		if( ! canDeleteData ){
+                			canDeteteData = false;
+            			}
+                		if( ! canInsertData ){
+            				$('button.data-control-insert').attr('disabled','disabled');
+            			}
+                		return json.data;
+                     }
                 },
                 "columnDefs": [{
                         "render": function (data, type, row) {
@@ -81,8 +98,12 @@
                     },
                     {
                         "render": function (data, type, row) {
-                            var callJsStr = "#calljs-loadCategoryForm('" + data + "')";
-                            return '<a title="' + row.title + '" href="' + callJsStr + '" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
+                            var html = '<a title="' + row.title + '" href="javascript:" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
+                            if( canEditData ){
+                            	var callJsStr = "#calljs-loadCategoryForm('" + data + "')";
+                                html = '<a title="' + row.title + '" href="' + callJsStr + '" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
+                        	}
+                            return html;
                         },
                         "targets": 7
                     }
