@@ -11,6 +11,7 @@ import com.google.gson.reflect.TypeToken;
 
 import io.vertx.core.MultiMap;
 import io.vertx.core.http.HttpServerRequest;
+import io.vertx.core.json.JsonObject;
 import io.vertx.core.net.SocketAddress;
 import rfx.core.util.StringUtil;
 
@@ -76,6 +77,14 @@ public class RequestInfoUtil {
 	
 	public static final String getString(MultiMap params, String paramName, String defaultValue){
 		return StringUtil.safeString(params.get(paramName), defaultValue) ;
+	}
+	
+	public static final int getInteger(JsonObject paramJson, String paramName, int defaultValue){
+		return paramJson.getInteger(paramName, defaultValue);
+	}
+	
+	public static final String getString(JsonObject paramJson, String paramName, String defaultValue){
+		return paramJson.getString(paramName, defaultValue);
 	}
 
 	public static Map<String, String> getHashMapFromRequestParams(MultiMap params, String paramName) {

@@ -351,6 +351,20 @@ LeoCdpAdmin.loadDataAndUpdateView = function(urlStr, params, dataProcessor, call
 	var url = baseAdminApi + urlStr;
 	LeoAdminApiUtil.callPostAdminApi(url, params, function (json) {
         if (json.httpCode === 0 && json.errorMessage === '') {
+        	var canInsertData = json.canInsertData;
+	    	var canEditData = json.canEditData;
+    		var canDeleteData = json.canDeleteData;
+    		
+    		if( ! canEditData ){
+				$('button.data-control-edit').attr('disabled','disabled');
+			}
+    		if( ! canDeleteData ){
+				$('button.data-control-delete').attr('disabled','disabled');
+			}
+    		if( ! canInsertData ){
+				$('button.data-control-insert').attr('disabled','disabled');
+			}
+    		
         	LeoCdpAdmin.routerContext.dataObject = typeof dataProcessor === 'function' ? dataProcessor(json.data) : json.data;
         	
         	$('#page_data_holder').find('*[data-field]').each(function(){
