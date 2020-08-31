@@ -1,5 +1,6 @@
 package leotech.cdp.admin.handler;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -8,11 +9,14 @@ import com.google.common.collect.ImmutableMap;
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import leotech.cdp.dao.MediaJourneyMapDao;
+import leotech.cdp.model.customer.Profile;
 import leotech.cdp.model.journey.MediaChannelType;
 import leotech.cdp.model.journey.MediaJourneyMap;
+import leotech.cdp.service.JourneyMapService;
 import leotech.core.api.BaseSecuredDataApi;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataPayload;
+import leotech.system.model.JsonDataTablePayload;
 import leotech.system.model.SystemUser;
 import leotech.system.util.ClassStaticDataList;
 import leotech.system.util.RequestInfoUtil;
@@ -33,13 +37,14 @@ public class CdpJourneyMapHandler extends BaseSecuredDataApi {
 	public JsonDataPayload httpPostApiHandler(String userSession, String uri, JsonObject paramJson) throws Exception {
 		SystemUser loginUser = getUserFromSession(userSession);
 		if (loginUser != null) {
-			if (isAdminRole(loginUser)) {
+			if (isAuthorized(loginUser, MediaJourneyMap.class)) {
 				switch (uri) {
 					case API_LIST_WITH_FILTER : {
 						// the list-view component at datatables.net needs Ajax POST method to avoid long URL 
 						DataFilter filter = new DataFilter(uri, paramJson);
-						//TODO
-						return null;
+						JsonDataTablePayload payload = JourneyMapService.filter(filter);
+						payload.checkPermission(loginUser, Profile.class);
+						return payload;
 					}
 					case API_GET_MODEL : {
 						String id = paramJson.getString("id", "");
@@ -49,18 +54,18 @@ public class CdpJourneyMapHandler extends BaseSecuredDataApi {
 						} else {
 							map = MediaJourneyMapDao.get(id);
 						}
-						return JsonDataPayload.ok(uri, map, true);
+						return JsonDataPayload.ok(uri, map, loginUser, MediaJourneyMap.class);
 					}
 					case API_UPDATE_MODEL : {
 						String key = null;
 						//TODO                                                                                                                                                                                                                                                                
-						return JsonDataPayload.ok(uri, key, true);
+						return JsonDataPayload.ok(uri, key, loginUser, MediaJourneyMap.class);
 					}
 					case API_REMOVE : {
 						// the data is not deleted, we need to remove it from valid data view, set status of object = -4
 						//TODO
 						boolean rs = false;
-						return JsonDataPayload.ok(uri, rs, true);
+						return JsonDataPayload.ok(uri, rs, loginUser, MediaJourneyMap.class);
 					}
 					default : {
 						return JsonErrorPayload.NO_HANDLER_FOUND;
@@ -77,16 +82,16 @@ public class CdpJourneyMapHandler extends BaseSecuredDataApi {
 
 	@Override
 	public JsonDataPayload httpGetApiHandler(String userSession, String uri, MultiMap params) throws Exception {
-		SystemUser user = getUserFromSession(userSession);
-		if (user != null) {
-			if (isAdminRole(user)) {
+		SystemUser loginUser = getUserFromSession(userSession);
+		if (loginUser != null) {
+			if (isAuthorized(loginUser, MediaJourneyMap.class)) {
 				switch (uri) {
 					case API_LIST_ALL : {
 						int startIndex =   RequestInfoUtil.getInteger(params,"startIndex", 0);
 						int numberResult = RequestInfoUtil.getInteger(params,"numberResult", 20);
 						//TODO
-						List<?> list = null;
-						return JsonDataPayload.ok(uri, list, true);
+						List<MediaJourneyMap> list = new ArrayList<MediaJourneyMap>();
+						return JsonDataPayload.ok(uri, list, loginUser, MediaJourneyMap.class);
 					}
 					case API_GET_MODEL : {
 						String id = RequestInfoUtil.getString(params, "id", "");
@@ -98,7 +103,7 @@ public class CdpJourneyMapHandler extends BaseSecuredDataApi {
 						}
 						Map<Integer, String> channelTypes = ClassStaticDataList.getIntegerMap(MediaChannelType.class); 
 						Map<String,Object> data = ImmutableMap.of("mediaJourneyMap", map, "channelTypes", channelTypes);
-						return JsonDataPayload.ok(uri, data, true);
+						return JsonDataPayload.ok(uri, data, loginUser, MediaJourneyMap.class);
 					}
 
 					default :

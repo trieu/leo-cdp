@@ -2,6 +2,8 @@ package leotech.cdp.admin.handler;
 
 import java.util.List;
 
+import com.sleepycat.je.cleaner.OffsetList.Segment;
+
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 
@@ -27,7 +29,7 @@ public class CdpSegmentHandler extends BaseSecuredDataApi {
 	public JsonDataPayload httpPostApiHandler(String userSession, String uri, JsonObject paramJson) throws Exception {
 		SystemUser loginUser = getUserFromSession(userSession);
 		if (loginUser != null) {
-			if (isAdminRole(loginUser)) {
+			if (isAuthorized(loginUser, Segment.class)) {
 				switch (uri) {
 					case API_LIST_WITH_FILTER : {
 						// the list-view component at datatables.net needs Ajax POST method to avoid long URL 
@@ -38,18 +40,18 @@ public class CdpSegmentHandler extends BaseSecuredDataApi {
 					case API_GET_MODEL : {
 						String id = paramJson.getString("id", "0");
 						//TODO
-						return JsonDataPayload.ok(uri, null, true);
+						return JsonDataPayload.ok(uri, null, loginUser, Segment.class);
 					}
 					case API_UPDATE_MODEL : {
 						String key = null;
 						//TODO                                                                                                                                                                                                                                                                
-						return JsonDataPayload.ok(uri, key, true);
+						return JsonDataPayload.ok(uri, key, loginUser, Segment.class);
 					}
 					case API_REMOVE : {
 						// the data is not deleted, we need to remove it from valid data view, set status of object = -4
 						//TODO
 						boolean rs = false;
-						return JsonDataPayload.ok(uri, rs, true);
+						return JsonDataPayload.ok(uri, rs, loginUser, Segment.class);
 					}
 					default : {
 						return JsonErrorPayload.NO_HANDLER_FOUND;
@@ -66,22 +68,22 @@ public class CdpSegmentHandler extends BaseSecuredDataApi {
 
 	@Override
 	public JsonDataPayload httpGetApiHandler(String userSession, String uri, MultiMap params) throws Exception {
-		SystemUser user = getUserFromSession(userSession);
-		if (user != null) {
-			if (isAdminRole(user)) {
+		SystemUser loginUser = getUserFromSession(userSession);
+		if (loginUser != null) {
+			if (isAuthorized(loginUser, Segment.class)) {
 				switch (uri) {
 					case API_LIST_ALL : {
 						int startIndex =   RequestInfoUtil.getInteger(params,"startIndex", 0);
 						int numberResult = RequestInfoUtil.getInteger(params,"numberResult", 20);
 						//TODO
 						List<?> list = null;
-						return JsonDataPayload.ok(uri, list, true);
+						return JsonDataPayload.ok(uri, list, loginUser, Segment.class);
 					}
 					case API_GET_MODEL : {
 						String id = RequestInfoUtil.getString(params,"id", "");
 						if (!id.isEmpty()) {
 							//TODO
-							return JsonDataPayload.ok(uri, null, false);
+							return JsonDataPayload.ok(uri, null, loginUser, Segment.class);
 						}
 					}
 

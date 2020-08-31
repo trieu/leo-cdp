@@ -33,7 +33,7 @@ public class CmsAdminPostApiHandler extends BaseSecuredDataApi {
 			throws Exception {
 		SystemUser loginUser = getUserFromSession(userSession);
 		if (loginUser != null) {
-			if (isAdminRole(loginUser)) {
+			if (isAuthorized(loginUser, Post.class)) {
 				if (uri.equalsIgnoreCase(API_LIST_ALL)) {
 					int startIndex = paramJson.getInteger("startIndex", 0);
 					int numberResult = paramJson.getInteger("numberResult", 1000);
@@ -109,7 +109,7 @@ public class CmsAdminPostApiHandler extends BaseSecuredDataApi {
 				}
 				// FIXME check authorization
 				List<Post> results = SearchPostUtil.searchPost(keywords, 1, 100);
-				return JsonDataPayload.ok(uri, results);
+				return JsonDataPayload.ok(uri, results, user, Post.class);
 			}
 		} else {
 			if (uri.equalsIgnoreCase("/post/keywords-for-search")) {
@@ -119,7 +119,7 @@ public class CmsAdminPostApiHandler extends BaseSecuredDataApi {
 					map.put("name", e);
 					return map;
 				}).collect(Collectors.toList());
-				JsonDataPayload payload = JsonDataPayload.ok(uri, keywords);
+				JsonDataPayload payload = JsonDataPayload.ok(uri, keywords, user, Post.class);
 				payload.setReturnOnlyData(true);
 				return payload;
 			}

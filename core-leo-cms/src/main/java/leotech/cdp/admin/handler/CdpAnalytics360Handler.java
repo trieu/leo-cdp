@@ -27,34 +27,34 @@ public class CdpAnalytics360Handler extends BaseSecuredDataApi {
 	public JsonDataPayload httpPostApiHandler(String userSession, String uri, JsonObject paramJson) throws Exception {
 		SystemUser loginUser = getUserFromSession(userSession);
 		if (loginUser != null) {
-			if (isAdminRole(loginUser)) {
+			if (isAuthorized(loginUser, Notebook.class)) {
 				switch (uri) {
 					case API_LIST_ALL : {
 						int startIndex =   RequestInfoUtil.getInteger(paramJson,"startIndex", 0);
 						int numberResult = RequestInfoUtil.getInteger(paramJson,"numberResult", 10);
 						List<Notebook> list = Analytics360Service.getNotebooks(startIndex, numberResult);
-						return JsonDataPayload.ok(uri, list, true);
+						return JsonDataPayload.ok(uri, list, loginUser, Notebook.class);
 					}
 					case API_RUN_MANUALLY : {
 						String id = paramJson.getString("id", "0");
 						//TODO
-						return JsonDataPayload.ok(uri, null, true);
+						return JsonDataPayload.ok(uri, null, loginUser, Notebook.class);
 					}
 					case API_GET_MODEL : {
 						String id = paramJson.getString("id", "0");
 						//TODO
-						return JsonDataPayload.ok(uri, null, true);
+						return JsonDataPayload.ok(uri, null, loginUser, Notebook.class);
 					}
 					case API_UPDATE_MODEL : {
 						String key = null;
 						//TODO                                                                                                                                                                                                                                                                
-						return JsonDataPayload.ok(uri, key, true);
+						return JsonDataPayload.ok(uri, key, loginUser, Notebook.class);
 					}
 					case API_REMOVE : {
 						// the data is not deleted, we need to remove it from valid data view, set status of object = -4
 						//TODO
 						boolean rs = false;
-						return JsonDataPayload.ok(uri, rs, true);
+						return JsonDataPayload.ok(uri, rs, loginUser, Notebook.class);
 					}
 					default : {
 						return JsonErrorPayload.NO_HANDLER_FOUND;
@@ -71,21 +71,21 @@ public class CdpAnalytics360Handler extends BaseSecuredDataApi {
 
 	@Override
 	public JsonDataPayload httpGetApiHandler(String userSession, String uri, MultiMap params) throws Exception {
-		SystemUser user = getUserFromSession(userSession);
-		if (user != null) {
-			if (isAdminRole(user)) {
+		SystemUser loginUser = getUserFromSession(userSession);
+		if (loginUser != null) {
+			if (isAuthorized(loginUser, Notebook.class)) {
 				switch (uri) {
 					case API_LIST_ALL : {
 						int startIndex =   RequestInfoUtil.getInteger(params,"startIndex", 0);
 						int numberResult = RequestInfoUtil.getInteger(params,"numberResult", 10);
 						List<Notebook> list = Analytics360Service.getNotebooks(startIndex, numberResult);
-						return JsonDataPayload.ok(uri, list, true);
+						return JsonDataPayload.ok(uri, list, loginUser, Notebook.class);
 					}
 					case API_GET_MODEL : {
 						String id = RequestInfoUtil.getString(params,"id", "");
 						if (!id.isEmpty()) {
 							//TODO
-							return JsonDataPayload.ok(uri, null, false);
+							return JsonDataPayload.ok(uri, null, loginUser, Notebook.class);
 						}
 					}
 

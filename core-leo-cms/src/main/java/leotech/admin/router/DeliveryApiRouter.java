@@ -14,8 +14,7 @@ import leotech.system.model.JsonDataPayload;
 /**
  * @author trieu
  * 
- *         App Data API Delivery Handler for Content Hub, Page, Post, Category
- *         and User Login
+ *  App Data API Delivery Handler for Content Hub, Page, Post, Category and User Login
  *
  */
 public class DeliveryApiRouter extends BaseApiRouter {

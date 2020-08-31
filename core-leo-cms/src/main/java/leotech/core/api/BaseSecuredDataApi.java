@@ -117,6 +117,10 @@ public abstract class BaseSecuredDataApi extends BaseApiHandler {
 		return null;
 	}
 	
+	public static boolean isAuthorized(SystemUser loginUser, Class<?> clazz) {
+		int role = loginUser.getRole();
+		return role == SystemUser.ROLE_ADMIN || role == SystemUser.ROLE_SUPER_ADMIN || role == SystemUser.ROLE_EDITOR || role == SystemUser.ROLE_STANDARD_USER;
+	}
 
 	public static boolean isAdminRole(SystemUser loginUser) {
 		int role = loginUser.getRole();
@@ -172,8 +176,7 @@ public abstract class BaseSecuredDataApi extends BaseApiHandler {
 
 	// (1)
 	private static JsonDataPayload loginSessionInit(String uri) {
-		String userSession = Encryptor
-				.encrypt(LEO_USS + SESSION_SPLITER + System.currentTimeMillis() + SESSION_SPLITER + randomNumber());
+		String userSession = Encryptor.encrypt(LEO_USS + SESSION_SPLITER + System.currentTimeMillis() + SESSION_SPLITER + randomNumber());
 		return JsonDataPayload.ok(uri, userSession);
 	}
 

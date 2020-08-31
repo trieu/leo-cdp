@@ -334,6 +334,36 @@ public class SystemUser implements PersistentArangoObject {
 	public void setEncryptionKey(String encryptionKey) {
 		this.encryptionKey = encryptionKey;
 	}
+	
+	public boolean canInsertData(Class<?> clazz) {
+		if(this.role == ROLE_SUPER_ADMIN || this.role == ROLE_ADMIN) {
+			return true;
+		}
+		else if(this.role == ROLE_EDITOR && (clazz.equals(Category.class) || clazz.equals(Page.class) || clazz.equals(Post.class) )) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean canEditData(Class<?> clazz) {
+		if(this.role == ROLE_SUPER_ADMIN || this.role == ROLE_ADMIN) {
+			return true;
+		}
+		else if(this.role == ROLE_EDITOR && (clazz.equals(Category.class) || clazz.equals(Page.class) || clazz.equals(Post.class) )) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean canDeleteData(Class<?> clazz) {
+		if(this.role == ROLE_SUPER_ADMIN || this.role == ROLE_ADMIN) {
+			return true;
+		}
+		else if(this.role == ROLE_EDITOR && (clazz.equals(Category.class) || clazz.equals(Page.class) || clazz.equals(Post.class) )) {
+			return true;
+		}
+		return false;
+	}
 
 	@Override
 	public String toString() {

@@ -6,6 +6,7 @@ import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import leotech.cms.dao.CategoryDaoUtil;
 import leotech.cms.model.Category;
+import leotech.cms.model.Page;
 import leotech.cms.service.CategoryDataService;
 import leotech.core.api.BaseSecuredDataApi;
 import leotech.system.model.AppMetadata;
@@ -24,11 +25,11 @@ public class CmsAdminCategoryHandler extends BaseSecuredDataApi {
 	public JsonDataPayload httpPostApiHandler(String userSession, String uri, JsonObject paramJson) throws Exception {
 		SystemUser loginUser = getUserFromSession(userSession);
 		if (loginUser != null) {
-			if (isAdminRole(loginUser)) {
+			if (isAuthorized(loginUser, Category.class)) {
 				switch (uri) {
 					case API_LIST_ALL : {
 						List<Category> list = CategoryDaoUtil.listAllByNetwork(AppMetadata.DEFAULT_ID);
-						return JsonDataPayload.ok(uri, list, true);
+						return JsonDataPayload.ok(uri, list, loginUser, Category.class);
 					}
 					case API_GET_INFO : {
 						String key = paramJson.getString("key", "");
@@ -39,16 +40,16 @@ public class CmsAdminCategoryHandler extends BaseSecuredDataApi {
 							} else {
 								category = CategoryDaoUtil.getByKey(key);
 							}
-							return JsonDataPayload.ok(uri, category, false);
+							return JsonDataPayload.ok(uri, category, loginUser, Category.class);
 						}
 					}
 					case API_CREATE_NEW : {
 						String key = CategoryDataService.save(paramJson, true);
-						return JsonDataPayload.ok(uri, key, true);
+						return JsonDataPayload.ok(uri, key, loginUser, Category.class);
 					}
 					case API_UPDATE_INFO : {
 						String key = CategoryDataService.save(paramJson, false);
-						return JsonDataPayload.ok(uri, key, true);
+						return JsonDataPayload.ok(uri, key, loginUser, Category.class);
 					}
 					case API_DELETE : {
 						String key = paramJson.getString("key", "");
@@ -72,7 +73,7 @@ public class CmsAdminCategoryHandler extends BaseSecuredDataApi {
 	public JsonDataPayload httpGetApiHandler(String userSession, String uri, MultiMap params) throws Exception {
 		SystemUser user = getUserFromSession(userSession);
 		if (user != null) {
-			if (isAdminRole(user)) {
+			if (isAuthorized(user, Category.class)) {
 				// skip
 			} else {
 				return JsonErrorPayload.NO_AUTHORIZATION;

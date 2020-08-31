@@ -21,10 +21,8 @@ public class ProductItemDaoUtil extends BaseLeoCdpDao {
 
 	static final String AQL_GET_PRODUCT_ITEM_BY_ID = AqlTemplate.get("AQL_GET_PRODUCT_ITEM_BY_ID");
 	static final String AQL_GET_PRODUCT_ITEM_BY_URL = AqlTemplate.get("AQL_GET_PRODUCT_ITEM_BY_FULL_URL");
-	static final String AQL_GET_PRODUCT_ITEMS_BY_FILTER  = AqlTemplate.get("AQL_GET_PRODUCT_ITEMS_BY_FILTER");
+	static final String AQL_GET_PRODUCT_ITEMS_BY_FILTER = AqlTemplate.get("AQL_GET_PRODUCT_ITEMS_BY_FILTER");
 	static final String AQL_GET_PRODUCT_ITEMS = AqlTemplate.get("AQL_GET_PRODUCT_ITEMS");
-
-
 
 	public static String save(ProductItem item) {
 		if (item.isReadyForSave()) {
@@ -32,7 +30,7 @@ public class ProductItemDaoUtil extends BaseLeoCdpDao {
 			ArangoCollection col = item.getCollection();
 			if (col != null) {
 				String id = item.getId();
-				boolean isExisted = ArangoDbUtil.isExistedDocument(db,ProductItem.COLLECTION_NAME, id);
+				boolean isExisted = ArangoDbUtil.isExistedDocument(db, ProductItem.COLLECTION_NAME, id);
 				if (isExisted) {
 					item.setUpdatedAt(new Date());
 					col.updateDocument(id, item);
@@ -68,30 +66,32 @@ public class ProductItemDaoUtil extends BaseLeoCdpDao {
 		Map<String, Object> bindVars = new HashMap<>(2);
 		bindVars.put("startIndex", startIndex);
 		bindVars.put("numberResult", numberResult);
-		List<ProductItem> list = new ArangoDbQuery<ProductItem>(db, AQL_GET_PRODUCT_ITEMS, bindVars, ProductItem.class).getResultsAsList();
+		List<ProductItem> list = new ArangoDbQuery<ProductItem>(db, AQL_GET_PRODUCT_ITEMS, bindVars,
+				ProductItem.class).getResultsAsList();
 		return list;
 	}
-	
-	
+
 	public static JsonDataTablePayload filter(DataFilter filter) {
 		ArangoDatabase db = getCdpDbInstance();
-		
-		//System.out.println("==> before apply DataFilter " + filter);
-		
-		//TODO dynamic query builder for filtering data
+
+		// System.out.println("==> before apply DataFilter " + filter);
+
+		// TODO dynamic query builder for filtering data
 		Map<String, Object> bindVars = new HashMap<>(2);
 		bindVars.put("startIndex", filter.getStart());
 		bindVars.put("numberResult", filter.getLength());
-		
-		List<ProductItem> list = new ArangoDbQuery<ProductItem>(db, AQL_GET_PRODUCT_ITEMS_BY_FILTER, bindVars, ProductItem.class).getResultsAsList();
-		
+
+		List<ProductItem> list = new ArangoDbQuery<ProductItem>(db, AQL_GET_PRODUCT_ITEMS_BY_FILTER, bindVars,
+				ProductItem.class).getResultsAsList();
+
 		long recordsTotal = countTotalOfProductItems();
 		int recordsFiltered = list.size();
 		int draw = filter.getDraw();
-		JsonDataTablePayload payload =  JsonDataTablePayload.data(filter.getUri(), list, recordsTotal, recordsFiltered, draw);
+		JsonDataTablePayload payload = JsonDataTablePayload.data(filter.getUri(), list, recordsTotal,
+				recordsFiltered, draw);
 		return payload;
 	}
-	
+
 	public static long countTotalOfProductItems() {
 		ArangoDatabase db = getCdpDbInstance();
 		long c = db.collection(ProductItem.COLLECTION_NAME).count().getCount();

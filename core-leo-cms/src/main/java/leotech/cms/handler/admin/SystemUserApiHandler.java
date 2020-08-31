@@ -31,17 +31,16 @@ public class SystemUserApiHandler extends BaseSecuredDataApi {
 		if (loginUser == null) {
 			return userLoginHandler(userSession, uri, paramJson);
 		} else {
-
-			if (isAdminRole(loginUser)) {
+			if (isAuthorized(loginUser, SystemUser.class)) {
 				switch (uri) {
 
 					case API_LIST_ALL :
 						List<SystemUser> list = UserDaoUtil.listAllUsersInNetwork(AppMetadata.DEFAULT_ID);
-						return JsonDataPayload.ok(uri, list, false);
+						return JsonDataPayload.ok(uri, list, loginUser, SystemUser.class);
 					case API_CREATE : {
 						String userId = UserDataService.saveUserInfo(paramJson, true);
 						System.out.println("API_CREATE.saveUserInfo " + userId);
-						return JsonDataPayload.ok(uri, userId, true);
+						return JsonDataPayload.ok(uri, userId, loginUser, SystemUser.class);
 					}
 					case API_UPDATE : {
 						String userId = UserDataService.saveUserInfo(paramJson, false);
@@ -54,7 +53,7 @@ public class SystemUserApiHandler extends BaseSecuredDataApi {
 						ThirdPartyTrackingUtil.event("user-tracking", "username:" + loginUser.getUserLogin(),
 								trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
 
-						return JsonDataPayload.ok(uri, userId, true);
+						return JsonDataPayload.ok(uri, userId, loginUser, SystemUser.class);
 					}
 					case API_GET_INFO : {
 						String key = paramJson.getString("key", "");
@@ -74,23 +73,23 @@ public class SystemUserApiHandler extends BaseSecuredDataApi {
 						ThirdPartyTrackingUtil.event("user-tracking", "username:" + loginUser.getUserLogin(),
 								trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
 
-						return JsonDataPayload.ok(uri, userInfo, false);
+						return JsonDataPayload.ok(uri, userInfo, loginUser, SystemUser.class);
 					}
 					case API_ACTIVATE : {
 						String userLogin = paramJson.getString("userLogin", "");
 						String activationKey = paramJson.getString("activationKey", "");
 						boolean ok = UserDaoUtil.activate(userLogin, activationKey);
-						return JsonDataPayload.ok(uri, ok, true);
+						return JsonDataPayload.ok(uri, ok, loginUser, SystemUser.class);
 					}
 					case API_DEACTIVATE : {
 						String userLogin = paramJson.getString("userLogin", "");
 						boolean ok = UserDaoUtil.deactivate(userLogin);
-						return JsonDataPayload.ok(uri, ok, true);
+						return JsonDataPayload.ok(uri, ok, loginUser, SystemUser.class);
 					}
 					case API_DELETE : {
 						String userLogin = paramJson.getString("userLogin", "");
 						String ukey = UserDaoUtil.deleteByUserLogin(userLogin);
-						return JsonDataPayload.ok(uri, ukey, true);
+						return JsonDataPayload.ok(uri, ukey, loginUser, SystemUser.class);
 					}
 					default : {
 						return JsonErrorPayload.NO_HANDLER_FOUND;
@@ -106,12 +105,12 @@ public class SystemUserApiHandler extends BaseSecuredDataApi {
 	@Override
 	public JsonDataPayload httpGetApiHandler(String userSession, String uri, MultiMap params) throws Exception {
 		// TODO Auto-generated method stub
-		SystemUser user = getUserFromSession(userSession);
-		if (user != null) {
-			if (isAdminRole(user)) {
+		SystemUser loginUser = getUserFromSession(userSession);
+		if (loginUser != null) {
+			if (isAuthorized(loginUser, SystemUser.class)) {
 				if (uri.equalsIgnoreCase(API_LIST_ALL)) {
 					List<SystemUser> list = UserDaoUtil.listAllUsersInNetwork(AppMetadata.DEFAULT_ID);
-					return JsonDataPayload.ok(uri, list, true);
+					return JsonDataPayload.ok(uri, list, loginUser, SystemUser.class);
 				}
 			} else {
 				return JsonErrorPayload.NO_AUTHORIZATION;

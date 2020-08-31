@@ -42,7 +42,7 @@ public class AdminSystemApiHandler extends BaseSecuredDataApi {
 	public JsonDataPayload httpGetApiHandler(String userSession, String uri, MultiMap params) throws Exception {
 		SystemUser user = getUserFromSession(userSession);
 		if (user != null) {
-			if (isAdminRole(user)) {
+			if (isSuperAdminRole(user)) {
 				// skip
 			} else {
 				return JsonErrorPayload.NO_AUTHORIZATION;

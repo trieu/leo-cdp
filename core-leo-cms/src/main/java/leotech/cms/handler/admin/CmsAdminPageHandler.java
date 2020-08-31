@@ -27,7 +27,7 @@ public class CmsAdminPageHandler extends BaseSecuredDataApi {
 			throws Exception {
 		SystemUser loginUser = getUserFromSession(userSession);
 		if (loginUser != null) {
-			if (isAdminRole(loginUser)) {
+			if (isAuthorized(loginUser, Page.class)) {
 				System.out.println("uri " + uri);
 
 				switch (uri) {
@@ -36,13 +36,13 @@ public class CmsAdminPageHandler extends BaseSecuredDataApi {
 						int numberResult = paramJson.getInteger("numberResult", 1000);
 						List<Page> list = PageDaoUtil.listByNetwork(AppMetadata.DEFAULT_ID, startIndex,
 								numberResult);
-						return JsonDataPayload.ok(uri, list, true);
+						return JsonDataPayload.ok(uri, list, loginUser, Page.class);
 					}
 					case API_LIST_RECENT_PAGES_OF_CATEGORY : {
 						String categoryKey = paramJson.getString("categoryKey", "");
 						if (!categoryKey.isEmpty()) {
 							List<Page> list = PageDaoUtil.listByCategory(categoryKey);
-							return JsonDataPayload.ok(uri, list, true);
+							return JsonDataPayload.ok(uri, list, loginUser, Page.class);
 						} else {
 							return JsonDataPayload.fail("Missing categoryKey", 500);
 						}
@@ -55,7 +55,7 @@ public class CmsAdminPageHandler extends BaseSecuredDataApi {
 							return JsonDataPayload.fail(e, 500);
 						}
 						if (key != null) {
-							return JsonDataPayload.ok(uri, key, true);
+							return JsonDataPayload.ok(uri, key, loginUser, Page.class);
 						} else {
 							return JsonErrorPayload.UNKNOWN_EXCEPTION;
 						}
@@ -68,13 +68,13 @@ public class CmsAdminPageHandler extends BaseSecuredDataApi {
 						} else {
 							page = PageDaoUtil.getById(pageId);
 						}
-						return JsonDataPayload.ok(uri, page, true);
+						return JsonDataPayload.ok(uri, page, loginUser, Page.class);
 					}
 					case API_DELETE : {
 						String pageId = paramJson.getString("pageId", "");
 						if (!pageId.isEmpty()) {
 							boolean ok = PageDataService.deletePage(pageId);
-							return JsonDataPayload.ok(uri, ok, true);
+							return JsonDataPayload.ok(uri, ok, loginUser, Page.class);
 						} else {
 							return JsonDataPayload.fail("Missing pageId", 500);
 						}
@@ -97,7 +97,7 @@ public class CmsAdminPageHandler extends BaseSecuredDataApi {
 		// TODO Auto-generated method stub
 		SystemUser user = getUserFromSession(userSession);
 		if (user != null) {
-			if (isAdminRole(user)) {
+			if (isAuthorized(user, Page.class)) {
 
 			} else {
 				return JsonErrorPayload.NO_AUTHORIZATION;

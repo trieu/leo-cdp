@@ -3,7 +3,7 @@
         <h4 class="page-header" id="page_breadcrumb" > </h4>
     </div>
     <div class="col-lg-2 text-center" style="padding: 10px">
-        <button type="button" class="btn btn-success data-control" id="btn_new_page"  disabled="disabled" > 
+        <button type="button" class="btn btn-success data-control-insert" id="btn_new_page"  > 
         	<i class="fa fa-fw fa-plus-circle"></i> New Page
         </button>
     </div>
@@ -96,6 +96,7 @@
 </div>
 
 <script>
+	var canEditData = false, canDeteteData = false, dataTable = false;
     var categoryKey = '';
 
     function filterPages() {
@@ -121,7 +122,23 @@
                     "data": function (d) {
                         d.usersession = usersession;
                         d.categoryKey = catKey;
-                    }
+                    },
+                    "dataSrc": function ( json ) {
+                    	var canInsertData = json.canInsertData;
+            	    	var canEditData = json.canEditData;
+                		var canDeleteData = json.canDeleteData;
+                		
+                		if( ! canEditData ){
+                			canEditData = false;
+            			}
+                		if( ! canDeleteData ){
+                			canDeteteData = false;
+            			}
+                		if( ! canInsertData ){
+            				$('button.data-control-insert').attr('disabled','disabled');
+            			}
+                		return json.data;
+                     }
                 },
                 "columnDefs": [{
                         "render": function (data, type, row) {

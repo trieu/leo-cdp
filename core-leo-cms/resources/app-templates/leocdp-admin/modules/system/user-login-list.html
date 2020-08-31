@@ -61,17 +61,10 @@
                         d.usersession = usersession;
                     },
                     "dataSrc": function ( json ) {
-                    	var canInsertData = json.canInsertData;
-            	    	var canEditData = json.canEditData;
-                		var canDeleteData = json.canDeleteData;
+                    	canEditLoginData = json.canEditData;
+                    	canDisableLoginData = json.canDeleteData;
                 		
-                		if( ! canEditData ){
-            				canEditLoginData = false;
-            			}
-                		if( ! canDeleteData ){
-                			canDisableLoginData = false;
-            			}
-                		if( ! canInsertData ){
+                		if( ! json.canInsertData ){
             				$('button.data-control-insert').attr('disabled','disabled');
             			}
                 		return json.data;

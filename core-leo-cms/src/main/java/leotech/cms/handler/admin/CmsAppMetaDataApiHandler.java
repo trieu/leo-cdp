@@ -10,7 +10,7 @@ import leotech.system.model.JsonDataPayload;
 import leotech.system.model.SystemUser;
 import leotech.system.service.AppMetadataService;
 
-public class AdminMediaNetworkApiHandler extends BaseSecuredDataApi {
+public class CmsAppMetaDataApiHandler extends BaseSecuredDataApi {
 
 	// for Admin CMS, only for ROLE_ADMIN and ROLE_SUPER_ADMIN
 	static final String API_LIST_ALL = "/media-network/list-all";
@@ -24,10 +24,9 @@ public class AdminMediaNetworkApiHandler extends BaseSecuredDataApi {
 			throws Exception {
 		SystemUser loginUser = getUserFromSession(userSession);
 		if (loginUser != null) {
-			if (isAdminRole(loginUser)) {
+			if (isAuthorized(loginUser, AppMetadata.class)) {
 
 				switch (uri) {
-
 					case API_LIST_ALL : {
 						List<AppMetadata> list = AppMetadataService.listAll();
 						return JsonDataPayload.ok(uri, list, true);
@@ -74,7 +73,7 @@ public class AdminMediaNetworkApiHandler extends BaseSecuredDataApi {
 	public JsonDataPayload httpGetApiHandler(String userSession, String uri, MultiMap params) throws Exception {
 		SystemUser user = getUserFromSession(userSession);
 		if (user != null) {
-			if (isAdminRole(user)) {
+			if (isAuthorized(user, AppMetadata.class)) {
 				// skip
 			} else {
 				return JsonErrorPayload.NO_AUTHORIZATION;

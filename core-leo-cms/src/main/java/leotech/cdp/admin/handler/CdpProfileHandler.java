@@ -12,6 +12,7 @@ import leotech.cdp.service.ProfileDataService;
 import leotech.core.api.BaseSecuredDataApi;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataPayload;
+import leotech.system.model.JsonDataTablePayload;
 import leotech.system.model.SystemUser;
 import leotech.system.util.RequestInfoUtil;
 
@@ -40,12 +41,14 @@ public class CdpProfileHandler extends BaseSecuredDataApi {
 	public JsonDataPayload httpPostApiHandler(String userSession, String uri, JsonObject paramJson) throws Exception {
 		SystemUser loginUser = getUserFromSession(userSession);
 		if (loginUser != null) {
-			if (isAdminRole(loginUser)) {
+			if (isAuthorized(loginUser, Profile.class)) {
 				switch (uri) {
 					case API_LIST_WITH_FILTER : {
 						// the list-view component at datatables.net needs AJAX POST method to avoid long URL 
 						DataFilter filter = new DataFilter(uri, paramJson);
-						return ProfileDataService.filter(filter);
+						JsonDataTablePayload payload = ProfileDataService.filter(filter);
+						payload.checkPermission(loginUser, Profile.class);
+						return payload;
 					}
 					case API_GET_MODEL : {
 						String id = paramJson.getString("id", "0");
@@ -54,30 +57,30 @@ public class CdpProfileHandler extends BaseSecuredDataApi {
 							// in case create new model, the schema data model must be returned from server 
 							pf = new ProfileSingleDataView();
 						}
-						return JsonDataPayload.ok(uri, pf, true);
+						return JsonDataPayload.ok(uri, pf, loginUser, Profile.class);
 					}
 					case API_UPDATE_MODEL : {
 						String json = paramJson.getString("objectJson", "{}");
 						String id = ProfileDataService.updateSingleDataViewFromJson(json).getId();
-						return JsonDataPayload.ok(uri, id, true);
+						return JsonDataPayload.ok(uri, id, loginUser, Profile.class);
 					}
 					case API_REMOVE : {
 						// the data is not deleted, we need to remove it from valid data view, set status of object = -4
 						String id = paramJson.getString("id", "");
 						boolean rs = ProfileDataService.remove(id);
-						return JsonDataPayload.ok(uri, rs, true);
+						return JsonDataPayload.ok(uri, rs, loginUser, Profile.class);
 					}
 					case API_IDENTITY_RESOLUTION : {
 						//TODO
-						return JsonDataPayload.ok(uri, null, true);
+						return JsonDataPayload.ok(uri, null, loginUser, Profile.class);
 					}
 					case API_IMPORT : {
 						//TODO
-						return JsonDataPayload.ok(uri, null, true);
+						return JsonDataPayload.ok(uri, null, loginUser, Profile.class);
 					}
 					case API_EXPORT : {
 						//TODO
-						return JsonDataPayload.ok(uri, null, true);
+						return JsonDataPayload.ok(uri, null, loginUser, Profile.class);
 					}
 					
 					default : {
@@ -95,15 +98,15 @@ public class CdpProfileHandler extends BaseSecuredDataApi {
 
 	@Override
 	public JsonDataPayload httpGetApiHandler(String userSession, String uri, MultiMap params) throws Exception {
-		SystemUser user = getUserFromSession(userSession);
-		if (user != null) {
-			if (isAdminRole(user)) {
+		SystemUser loginUser = getUserFromSession(userSession);
+		if (loginUser != null) {
+			if (isAuthorized(loginUser, Profile.class)) {
 				switch (uri) {
 					case API_LIST_ALL : {
 						int startIndex =   RequestInfoUtil.getInteger(params,"startIndex", 0);
 						int numberResult = RequestInfoUtil.getInteger(params,"numberResult", 20);
 						List<Profile> list = ProfileDataService.list(startIndex, numberResult);
-						return JsonDataPayload.ok(uri, list, true);
+						return JsonDataPayload.ok(uri, list, loginUser, Profile.class);
 					}
 					case API_GET_MODEL : {
 						String id = RequestInfoUtil.getString(params,"id", "new");
@@ -114,7 +117,7 @@ public class CdpProfileHandler extends BaseSecuredDataApi {
 							} else {
 								pf = ProfileDataService.getSingleViewById(id);
 							}
-							return JsonDataPayload.ok(uri, pf, false);
+							return JsonDataPayload.ok(uri, pf, loginUser, Profile.class);
 						}
 					}
 					case API_GET_TRACKING_EVENTS : {
@@ -122,7 +125,7 @@ public class CdpProfileHandler extends BaseSecuredDataApi {
 						int startIndex =   RequestInfoUtil.getInteger(params,"startIndex", 0);
 						int numberResult = RequestInfoUtil.getInteger(params,"numberResult", 20);
 						List<EventSingleDataView> list = EventTrackingService.getEventActivityFlowOfProfile(profileId, startIndex, numberResult);
-						return JsonDataPayload.ok(uri, list, true);
+						return JsonDataPayload.ok(uri, list, loginUser, Profile.class);
 					}
 					
 					

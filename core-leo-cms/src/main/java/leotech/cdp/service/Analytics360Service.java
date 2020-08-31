@@ -12,15 +12,15 @@ public class Analytics360Service {
 	static Map<String, Notebook> notebooks = new HashMap<String, Notebook>();
 	static {
 		//FIXME move to database
-		Notebook n = new Notebook("scoring", "Profile Data Quality Scoring Model");
+		Notebook n = new Notebook("scoring", "Data Quality Scoring Model");
 		n.setAccessToken("12345");
 		notebooks.put(n.getId(), n);
 		
-		n = new Notebook("scoring", "Profile Lead Scoring Model");
+		n = new Notebook("scoring", "Lead Scoring Model");
 		n.setAccessToken("12345");
 		notebooks.put( n.getId(), n);
 		
-		n = new Notebook("analytics", "Profile Analytics: Gender and Age");
+		n = new Notebook("analytics", "Customer Analytics: Gender and Age");
 		n.setAccessToken("12345");
 		notebooks.put(n.getId(), n);
 		

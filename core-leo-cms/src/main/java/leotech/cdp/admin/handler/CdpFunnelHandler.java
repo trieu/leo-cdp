@@ -8,6 +8,7 @@ import java.util.Map;
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import leotech.cdp.dao.BehavioralEventMetricDao;
+import leotech.cdp.model.analytics.Notebook;
 import leotech.cdp.model.journey.BehavioralEventMetric;
 import leotech.cdp.model.journey.FunnelStage;
 import leotech.core.api.BaseSecuredDataApi;
@@ -30,7 +31,7 @@ public class CdpFunnelHandler extends BaseSecuredDataApi {
 	public JsonDataPayload httpPostApiHandler(String userSession, String uri, JsonObject paramJson) throws Exception {
 		SystemUser loginUser = getUserFromSession(userSession);
 		if (loginUser != null) {
-			if (isAdminRole(loginUser)) {
+			if (isAuthorized(loginUser, FunnelStage.class)) {
 				switch (uri) {
 					// TODO
 					default : {
@@ -47,9 +48,9 @@ public class CdpFunnelHandler extends BaseSecuredDataApi {
 
 	@Override
 	public JsonDataPayload httpGetApiHandler(String userSession, String uri, MultiMap params) throws Exception {
-		SystemUser user = getUserFromSession(userSession);
-		if (user != null) {
-			if (isAdminRole(user)) {
+		SystemUser loginUser = getUserFromSession(userSession);
+		if (loginUser != null) {
+			if (isAuthorized(loginUser, FunnelStage.class)) {
 				switch (uri) {
 					case API_LIST_ALL_WITH_FUNNEL_TYPES : {
 						String funnelTypes = RequestInfoUtil.getString(params, "funnelTypes", "");
@@ -72,9 +73,8 @@ public class CdpFunnelHandler extends BaseSecuredDataApi {
 						Collection<BehavioralEventMetric> metrics = BehavioralEventMetricDao.getEventRetailMetrics();
 						map.put("behavioral_metrics", metrics);
 						
-						return JsonDataPayload.ok(uri, map, true);
+						return JsonDataPayload.ok(uri, map, loginUser, FunnelStage.class);
 					}
-					
 
 					default :
 						return JsonErrorPayload.NO_HANDLER_FOUND;

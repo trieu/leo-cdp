@@ -43,7 +43,6 @@ public class JsonDataPayload {
 	@Expose
 	boolean canDeleteData = false;
 	
-
 	@Expose
 	String staticBaseUrl = STATIC_BASE_URL;
 
@@ -54,9 +53,19 @@ public class JsonDataPayload {
 	public static  JsonDataPayload ok(String uri, Object data, boolean exposeAllData) {
 		return new JsonDataPayload(uri, data, exposeAllData);
 	}
-
+	
 	public static  JsonDataPayload ok(String uri, Object data) {
 		return new JsonDataPayload(uri, data, false);
+	}
+
+	public static  JsonDataPayload ok(String uri, Object data, SystemUser user, Class<?> clazz) {
+		return ok(uri, data, user, clazz, true);
+	}
+	
+	public static  JsonDataPayload ok(String uri, Object data, SystemUser user, Class<?> clazz, boolean exposeAllData) {
+		JsonDataPayload payload = new JsonDataPayload(uri, data, exposeAllData);
+		payload.checkPermission(user, clazz);
+		return payload;
 	}
 
 	public static  JsonDataPayload fail(String errorMessage, int httpCode) {
@@ -171,6 +180,12 @@ public class JsonDataPayload {
 
 	public void setReturnOnlyData(boolean returnOnlyData) {
 		this.returnOnlyData = returnOnlyData;
+	}
+	
+	public void checkPermission(SystemUser user, Class<?> clazz) {
+		this.canInsertData = user.canInsertData(clazz);
+		this.canEditData = user.canEditData(clazz);
+		this.canDeleteData = user.canDeleteData(clazz);
 	}
 
 	public String toString() {
