@@ -35,15 +35,17 @@
                         autocapitalize="off" autocomplete="nope">
                 </div>
                 <div class="form-group">
-                    <label> Department </label>
+                    <label> Group or Department </label>
                     <select name="customData_department" data-placeholder="Choose Department" class="select">
                         <option value=""> No information</option>
-                         <option value="bod"> Board of Directors </option>
+                        <option value="bod"> Board of Directors (BOD) </option>
                         <option value="marketing"> Marketing </option>
                         <option value="finance"> Finance </option>
                         <option value="operation"> Operation </option>
                         <option value="sales"> Sales </option>
-                         <option value="tech"> IT / Tech Support </option>
+                        <option value="tech"> IT / Tech Support </option>
+                        <option value="media"> Media Agency </option>
+                        <option value="sales_agent"> Sales Agent / Representative </option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -73,7 +75,7 @@
                     <div class="radio" style="display: none;" >
                         <label><input type="radio" name="role" value="0" >GUEST</label>
                     </div>
-                    <div class="radio" style="display: none;" >
+                    <div class="radio"  >
                         <label><input type="radio" name="role" value="1" >STANDARD_USER</label>
                     </div>
                     <div class="radio">
@@ -108,7 +110,7 @@
 <script>
     var userModel = false;
 
-    function loadDataUserProfile(key) {
+    var loadDataUserProfile = loadDataUserProfile || function(key) {
     	
          var urlStr = baseAdminApi + '/user/get-info';
          LeoAdminApiUtil.callPostAdminApi(urlStr, {
@@ -152,10 +154,9 @@
                  }
              }
          });
-
     }
 
-    function saveUserProfile() {
+    var saveUserProfile = saveUserProfile || function() {
         var node = $('#user_form');
         userModel.displayName = node.find('input[name="displayName"]').val();
         userModel.userLogin = node.find('input[name="userLogin"]').val();
@@ -193,7 +194,7 @@
         console.log(userModel);
     }
 
-    function deleteUserProfile() {
+    var deleteUserProfile = deleteUserProfile || function() {
         var result = confirm("Do you want to delete " + userModel.displayName + " ?");
         if (result) {
             var onSaveOk = function (data) {

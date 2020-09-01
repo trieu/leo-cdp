@@ -13,9 +13,9 @@ public class MediaJourneyMapDao {
 
 	public static MediaJourneyMap getDefaultMap() {
 		
-		MediaChannel google = new MediaChannel("Google - Search Engine", MediaChannelType.WEBSITE, false, "https://google.com");
+		MediaChannel google = new MediaChannel("Google - Search Engine", MediaChannelType.SEARCH_ENGINE, false, "https://google.com");
 		MediaChannel facebook = new MediaChannel("Facebook - Social Media", MediaChannelType.SOCIAL_MEDIA_PLATFORM, false, "https://www.facebook.com/");
-		MediaChannel affiliate = new MediaChannel("Affiliate Marketing", MediaChannelType.WEB_URL, false, "http://xemgiday.com/");
+		MediaChannel affiliate = new MediaChannel("Affiliate Marketing", MediaChannelType.WEB_URL, true, "http://xemgiday.com/");
 		MediaChannel emailMarketing = new MediaChannel("Email Marketing", MediaChannelType.EMAIl_CONTACT, false, "mailto:support@bigdatavietnam.org");
 		MediaChannel videoHub = new MediaChannel("Video Content Website", MediaChannelType.UNIFIED_CONTENT_HUB, true, "https://bookstore.bigdatavietnam.org/");
 		MediaChannel ecommerce = new MediaChannel("E-commerce Website", MediaChannelType.ECOMMERCE_PLATFORM, true, "http://demo.ecommerce.com/");
