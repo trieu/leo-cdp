@@ -20,11 +20,15 @@ public class Analytics360Service {
 		n.setAccessToken("12345");
 		notebooks.put( n.getId(), n);
 		
-		n = new Notebook("analytics", "Customer Analytics: Gender and Age");
+		n = new Notebook("analytics", "Customer Analytics with RFM and Visualization");
 		n.setAccessToken("12345");
 		notebooks.put(n.getId(), n);
 		
 		n = new Notebook("processor", "Profile Data Identity Resolution");
+		n.setAccessToken("12345");
+		notebooks.put(n.getId(), n);
+		
+		n = new Notebook("scoring", "Customer Lifetime Value Scoring Model");
 		n.setAccessToken("12345");
 		notebooks.put(n.getId(), n);
 	}
