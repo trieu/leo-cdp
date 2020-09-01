@@ -15,7 +15,7 @@ import com.arangodb.model.PersistentIndexOptions;
 import com.arangodb.model.TtlIndexOptions;
 
 import leotech.cdp.model.CdpPersistentObject;
-import leotech.cdp.model.customer.ProfileConstant;
+import leotech.cdp.model.customer.ProfileType;
 import rfx.core.util.StringUtil;
 
 /**
@@ -91,7 +91,7 @@ public class ContextSession extends CdpPersistentObject {
 	String observerId;
 	String profileId;
 	String visitorId;
-	int profileType = ProfileConstant.TYPE_ANONYMOUS;
+	int profileType = ProfileType.TYPE_ANONYMOUS;
 	
 	Date createAt;
 	Date updatedAt;

@@ -40,7 +40,7 @@ public class ProfileQueryBuilder {
 		return aql.toString();
 	}
 	
-	public static String buildAqlString(boolean filterCreateAt, String beginFilterDate, String endFilterDate, String parsedFilterAql) {
+	public static String buildCoutingQuery(boolean filterCreateAt, String beginFilterDate, String endFilterDate, String parsedFilterAql) {
 		String filterDateStr = filterCreateAt ? " d.createdAt " : " d.updatedAt ";
 		StringBuilder aql = new StringBuilder("RETURN LENGTH( FOR d in ").append(Profile.COLLECTION_NAME);
 		aql.append(" FILTER ( ").append(filterDateStr).append(" >= '").append(beginFilterDate).append("' AND ");

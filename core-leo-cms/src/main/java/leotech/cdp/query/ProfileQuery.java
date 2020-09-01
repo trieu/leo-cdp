@@ -1,7 +1,6 @@
 package leotech.cdp.query;
 
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.List;
 
 import com.itfsw.query.builder.ArangoDbBuilderFactory;
@@ -22,18 +21,18 @@ public class ProfileQuery {
 
 	int startIndex = 0;
 	int numberResult = 20;
-	List<String> profileFields = Arrays.asList("id", "primaryEmail", "createdAt", "firstName", "age");
+	List<String> selectedFields;
 
 	// ----- BEGIN query builder
 	
 	public String toArangoDataQuery() {
 		String aql = ProfileQueryBuilder.buildAqlString(filterCreateAt, beginFilterDate, endFilterDate,
-				parsedFilterAql, startIndex, numberResult, profileFields);
+				parsedFilterAql, startIndex, numberResult, selectedFields);
 		return aql;
 	}
 	
 	public String toArangoCountingQuery() {
-		String aql = ProfileQueryBuilder.buildAqlString(filterCreateAt, beginFilterDate, endFilterDate,parsedFilterAql);
+		String aql = ProfileQueryBuilder.buildCoutingQuery(filterCreateAt, beginFilterDate, endFilterDate,parsedFilterAql);
 		return aql;
 	}
 	
@@ -44,28 +43,35 @@ public class ProfileQuery {
 	
 	// ----- END query builder
 	
-	public ProfileQuery() {
+	protected ProfileQuery() {
 		
 	}
-	public ProfileQuery(String jsonQueryRules) {
+	
+	public ProfileQuery(String beginFilterDate, String endFilterDate, String jsonQueryRules, List<String> selectedFields) {
 		super();
-		this.jsonQueryRules = jsonQueryRules;
+		this.beginFilterDate = beginFilterDate;
+		this.endFilterDate = endFilterDate;
+		this.selectedFields = selectedFields;
+		
 		setJsonQueryRules(jsonQueryRules);
 	}
 
 	public ProfileQuery(boolean filterCreateAt, boolean pagination, boolean countingTotal, String beginFilterDate,
 			String endFilterDate, String jsonQueryRules, int startIndex, int numberResult,
-			List<String> profileFields) {
+			List<String> selectedFields) {
 		super();
 		this.filterCreateAt = filterCreateAt;
 		this.pagination = pagination;
 		this.countingTotal = countingTotal;
 		this.beginFilterDate = beginFilterDate;
 		this.endFilterDate = endFilterDate;
-		this.jsonQueryRules = jsonQueryRules;
+		
 		this.startIndex = startIndex;
 		this.numberResult = numberResult;
-		this.profileFields = profileFields;
+		this.selectedFields = selectedFields;
+		
+		setJsonQueryRules(jsonQueryRules);
+		
 	}
 
 	public boolean isFilterCreateAt() {
@@ -125,6 +131,10 @@ public class ProfileQuery {
 	public String getParsedFilterAql() {
 		return parsedFilterAql;
 	}
+	
+	protected void setParsedFilterAql(String parsedFilterAql) {
+		this.parsedFilterAql = parsedFilterAql;
+	}
 
 	public int getStartIndex() {
 		return startIndex;
@@ -142,12 +152,12 @@ public class ProfileQuery {
 		this.numberResult = numberResult;
 	}
 
-	public List<String> getProfileFields() {
-		return profileFields;
+	public List<String> getSelectedFields() {
+		return selectedFields;
 	}
 
-	public void setProfileFields(List<String> profileFields) {
-		this.profileFields = profileFields;
+	public void setSelectedFields(List<String> selectedFields) {
+		this.selectedFields = selectedFields;
 	}
 
 }

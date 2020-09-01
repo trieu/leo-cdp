@@ -2,6 +2,7 @@ package leotech.system.util.database;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,9 +11,10 @@ import com.arangodb.ArangoDBException;
 import com.arangodb.ArangoDatabase;
 
 /**
- * @author Trieu
- *
- *         util class For Database query data with ArangoDB
+ * util class For Database query data with ArangoDB
+ * 
+ * @author tantrieuf31
+ * @since 2019
  *
  * @param <T>
  */
@@ -27,13 +29,22 @@ public class ArangoDbQuery<T> {
 	Map<String, Object> bindVars;
 	Class<T> type;
 	CallbackQuery<T> callback = null;
+	
+	
+	public ArangoDbQuery(ArangoDatabase db, String aql, Class<T> type) {
+		setRequiredData(db, aql, new HashMap<>(0), type);
+	}
+	
+	public ArangoDbQuery(ArangoDatabase db, String aql, Class<T> type, CallbackQuery<T> callback) {
+		setRequiredData(db, aql, new HashMap<>(0), type);
+		this.callback = callback;
+	}
 
 	public ArangoDbQuery(ArangoDatabase db, String aql, Map<String, Object> bindVars, Class<T> type) {
 		setRequiredData(db, aql, bindVars, type);
 	}
 
-	public ArangoDbQuery(ArangoDatabase db, String aql, Map<String, Object> bindVars, Class<T> type,
-			CallbackQuery<T> callback) {
+	public ArangoDbQuery(ArangoDatabase db, String aql, Map<String, Object> bindVars, Class<T> type, CallbackQuery<T> callback) {
 		setRequiredData(db, aql, bindVars, type);
 		this.callback = callback;
 	}

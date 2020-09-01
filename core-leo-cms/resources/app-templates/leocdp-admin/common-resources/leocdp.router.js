@@ -234,26 +234,39 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Customer Data Hub", "Customer Profile List", "Customer Profile Editor"],
 			"activeMenuItem" : "Customer_Profile_List"
 		},
+		"Customer_Activation" : {
+			"menuName" : "Customer Activation",
+			"functionName" : "loadCustomerActivation",
+			"breadcrumb" : ["Customer Data Hub", "Customer Profile List", "Customer Activation"],
+			"activeMenuItem" : "Customer_Profile_List"
+		},
 		
 		// 4.2 Customer Segmentation
 		"Segment_Data_List" : {
-			"menuName" : "Segment List",
+			"menuName" : "Segment Data List",
 			"functionName" : "loadSegmentList",
-			"breadcrumb" : ["Customer Data Hub", "Segment List"],
-			"activeMenuItem" : "Customer_Segment_List"
-		},
-		"Segment_Report" : {
-			"menuName" : "Segment Report",
-			"functionName" : "loadCustomerSegmentReport",
-			"breadcrumb" : ["Customer Data Hub", "Segment List", "Segment Report"],
-			"activeMenuItem" : "Customer_Segment_List"
+			"breadcrumb" : ["Customer Data Hub", "Segment Data List"],
+			"activeMenuItem" : "Segment_Data_List"
 		},
 		"Segment_Builder" : {
 			"menuName" : "Segment Builder",
-			"functionName" : "loadCustomerSegmentBuilder",
-			"breadcrumb" : ["Customer Data Hub", "Segment List", "Segment Builder"],
-			"activeMenuItem" : "Customer_Segment_List"
+			"functionName" : "loadSegmentBuilder",
+			"breadcrumb" : ["Customer Data Hub", "Segment Data List", "Segment Builder"],
+			"activeMenuItem" : "Segment_Data_List"
 		},
+		"Segment_Report" : {
+			"menuName" : "Segment Report",
+			"functionName" : "loadSegmentReport",
+			"breadcrumb" : ["Customer Data Hub", "Segment Data List", "Segment Report"],
+			"activeMenuItem" : "Segment_Data_List"
+		},
+		"Segment_Activation" : {
+			"menuName" : "Segment Activation",
+			"functionName" : "loadSegmentActivation",
+			"breadcrumb" : ["Customer Data Hub", "Segment Data List", "Segment Activation"],
+			"activeMenuItem" : "Segment_Data_List"
+		},
+		
 		
 		// 4.3 Customer Data Import from tab-separated values (TSV) file 
 		"Customer_Data_Import" : {
@@ -276,7 +289,7 @@ LeoCdpAdmin.navRouters = {
 			"menuName" : "Personalization Models",
 			"functionName" : "loadPersonalizationModels",
 			"breadcrumb" : ["Personalization AI Hub", "Personalization AI Models"],
-			"activeMenuItem" : "Customer_Segment_List"
+			"activeMenuItem" : "Segment_Data_List"
 		},
 		
 		// 4.1 Personalization AI Widgets
@@ -284,7 +297,7 @@ LeoCdpAdmin.navRouters = {
 			"menuName" : "Personalization Widgets",
 			"functionName" : "loadPersonalizationWidgets",
 			"breadcrumb" : ["Personalization AI Hub", "Personalization Widgets"],
-			"activeMenuItem" : "Customer_Segment_List"
+			"activeMenuItem" : "Segment_Data_List"
 		},
 		
 		// 5.1 Voucher/Coupon Management

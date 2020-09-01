@@ -111,12 +111,40 @@ LeoCdpAdmin.navFunctions.loadCustomerProfileEditor = function (profileId, breadc
     });
 }
 
+LeoCdpAdmin.navFunctions.loadCustomerActivation = function (profileId, breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/modules/customer/customer-activation.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+    	initCustomerActivation(profileId);
+    });
+}
+
 // Segment functions
 
 LeoCdpAdmin.navFunctions.loadSegmentList = function (breadcrumbHtml) {
     LeoCdpAdmin.loadView('/view/modules/customer/segment-list.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
     	initCustomerSegmentList();
+    });
+}
+
+LeoCdpAdmin.navFunctions.loadSegmentBuilder = function (segmentId, breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/modules/customer/segment-builder.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+    	initCustomerSegmentBuilder(segmentId);
+    });
+}
+
+LeoCdpAdmin.navFunctions.loadSegmentReport = function (segmentId, breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/modules/customer/segment-report.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+    	initCustomerSegmentReport(segmentId);
+    });
+}
+
+LeoCdpAdmin.navFunctions.loadSegmentActivation = function (segmentId, breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/modules/customer/segment-activation.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+    	initCustomerSegmentActivation(segmentId);
     });
 }
 

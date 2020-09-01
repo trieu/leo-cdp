@@ -9,7 +9,7 @@ import io.vertx.core.json.JsonObject;
 import leotech.cdp.dao.ProfileDaoUtil;
 import leotech.cdp.dao.singleview.ProfileSingleDataView;
 import leotech.cdp.model.customer.Profile;
-import leotech.cdp.model.customer.ProfileConstant;
+import leotech.cdp.model.customer.ProfileType;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataTablePayload;
 import leotech.system.model.SystemUser;
@@ -52,17 +52,17 @@ public class ProfileDataService {
 		
 		if (pf == null) {
 			
-			int type = ProfileConstant.TYPE_ANONYMOUS;
+			int type = ProfileType.TYPE_ANONYMOUS;
 			if (StringUtil.isNotEmpty(email) || StringUtil.isNotEmpty(phone) || StringUtil.isNotEmpty(loginId)) {
-				type = ProfileConstant.TYPE_IDENTIFIED;
+				type = ProfileType.TYPE_IDENTIFIED;
 			} else if (StringUtil.isNotEmpty(email) && StringUtil.isNotEmpty(phone)) {
-				type = ProfileConstant.TYPE_CRM_CONTACT;
+				type = ProfileType.TYPE_CRM_CONTACT;
 			}
 			
-			if (type == ProfileConstant.TYPE_ANONYMOUS) {
+			if (type == ProfileType.TYPE_ANONYMOUS) {
 				pf = Profile.newAnonymousProfile( observerId, srcTouchpointId, lastSeenIp, visitorId,
 						userDeviceId, fingerprintId);
-			} else if (type == ProfileConstant.TYPE_IDENTIFIED) {
+			} else if (type == ProfileType.TYPE_IDENTIFIED) {
 
 				pf = Profile.newIdentifiedProfile( observerId, srcTouchpointId, lastSeenIp, visitorId,
 						userDeviceId, email, fingerprintId);
@@ -70,7 +70,6 @@ public class ProfileDataService {
 				if (StringUtil.isNotEmpty(loginId)) {
 					pf.setIdentity(loginId, loginProvider);
 				}
-
 			} 
 
 			pf.engageAtTouchpointId(refTouchpointId);
@@ -106,7 +105,7 @@ public class ProfileDataService {
 
 		p.setSocialMediaProfile(loginProvider, loginId);
 		p.setIdentity(loginId, loginProvider);
-		p.setType(ProfileConstant.TYPE_SOCIAL_LOGIN);
+		p.setType(ProfileType.TYPE_SOCIAL_LOGIN);
 		
 		if(StringUtil.isNotEmpty(firstName)) {
 			p.setFirstName(firstName);

@@ -12,7 +12,7 @@ import leotech.cdp.dao.TrackingEventDaoUtil;
 import leotech.cdp.model.SingleDataView;
 import leotech.cdp.model.analytics.TrackingEvent;
 import leotech.cdp.model.customer.Profile;
-import leotech.cdp.model.customer.ProfileConstant;
+import leotech.cdp.model.customer.ProfileType;
 import leotech.cdp.model.journey.Touchpoint;
 import leotech.system.model.DeviceInfo;
 
@@ -82,15 +82,15 @@ public class ProfileSingleDataView extends Profile implements SingleDataView {
 		// profile type
 		if(typeAsText == null) {
 			typeAsText = "ANONYMOUS";
-			if(type == ProfileConstant.TYPE_CRM_CONTACT) {
+			if(type == ProfileType.TYPE_CRM_CONTACT) {
 				typeAsText = "CRM_CONTACT";
-			} else if(type == ProfileConstant.TYPE_KEY_ACCOUNT) {
+			} else if(type == ProfileType.TYPE_KEY_ACCOUNT) {
 				typeAsText = "KEY_ACCOUNT";
-			} else if(type == ProfileConstant.TYPE_DMP_PROFILE) {
+			} else if(type == ProfileType.TYPE_DMP_PROFILE) {
 				typeAsText = "DMP_PROFILE";
-			} else if(type == ProfileConstant.TYPE_IDENTIFIED) {
+			} else if(type == ProfileType.TYPE_IDENTIFIED) {
 				typeAsText = "IDENTIFIED";
-			} else if(type == ProfileConstant.TYPE_SOCIAL_LOGIN) {
+			} else if(type == ProfileType.TYPE_SOCIAL_LOGIN) {
 				typeAsText = "SOCIAL_LOGIN";
 			}
 			 

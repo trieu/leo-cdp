@@ -99,10 +99,10 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	protected Set<String> identities = new HashSet<>(50);
 
 	@Expose
-	protected int type = ProfileConstant.TYPE_ANONYMOUS;
+	protected int type = ProfileType.TYPE_ANONYMOUS;
 
 	@Expose
-	protected String schemaType = ProfileConstant.SCHEMA_TYPE_GENERAL;
+	protected String schemaType = ProfileSchema.SCHEMA_TYPE_GENERAL;
 
 	@Expose
 	protected int mergeCode = 0;
@@ -138,7 +138,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	protected Set<String> topEngagedTouchpointIds = new HashSet<String>(1000);
 
 	@Expose
-	protected String lastObserverId = ProfileConstant.UNKNOWN;
+	protected String lastObserverId = ProfileType.UNKNOWN;
 
 	@Expose
 	protected String lastTouchpointId = "";
@@ -407,7 +407,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	public static Profile newIdentifiedProfile(String observerId, String lastTouchpointId, String lastSeenIp,
 			String visitorId, String usedDeviceId, String email, String fingerprintId) {
 		Profile p = new Profile();
-		p.initBaseInformation(0, visitorId, ProfileConstant.TYPE_IDENTIFIED, observerId, lastTouchpointId,
+		p.initBaseInformation(0, visitorId, ProfileType.TYPE_IDENTIFIED, observerId, lastTouchpointId,
 				lastSeenIp, usedDeviceId, email, "", fingerprintId, "");
 		return p;
 	}
@@ -423,7 +423,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	 */
 	public static Profile newCrmProfile(String observerId, String email, String phone, String crmRefId) {
 		Profile p = new Profile();
-		p.initBaseInformation(0, "", ProfileConstant.TYPE_CRM_CONTACT, observerId, "", "", "", email, phone, "",
+		p.initBaseInformation(0, "", ProfileType.TYPE_CRM_CONTACT, observerId, "", "", "", email, phone, "",
 				crmRefId);
 		return p;
 	}
@@ -440,7 +440,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	public static Profile newSocialLoginProfile(String observerId, String visitorId, String firstName,
 			String lastName, String email, String refId, String source) {
 		Profile p = new Profile();
-		p.initBaseInformation(0, visitorId, ProfileConstant.TYPE_SOCIAL_LOGIN, observerId, "", "", "", email, "","", "");
+		p.initBaseInformation(0, visitorId, ProfileType.TYPE_SOCIAL_LOGIN, observerId, "", "", "", email, "","", "");
 		p.setFirstName(firstName);
 		p.setLastName(lastName);
 		p.setSocialMediaProfile(source, refId);
@@ -458,7 +458,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	public static Profile newAnonymousProfile(String observerId, String lastTouchpointId, String lastSeenIp,
 			String visitorId, String usedDeviceId, String fingerprintId) {
 		Profile p = new Profile();
-		p.initBaseInformation(0, visitorId, ProfileConstant.TYPE_ANONYMOUS, observerId, lastTouchpointId,
+		p.initBaseInformation(0, visitorId, ProfileType.TYPE_ANONYMOUS, observerId, lastTouchpointId,
 				lastSeenIp, usedDeviceId, "", "", fingerprintId, "");
 		return p;
 	}
@@ -601,8 +601,8 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	public void setPrimaryEmail(String primaryEmail) {
 		this.primaryEmail = primaryEmail;
-		if (this.type == ProfileConstant.TYPE_ANONYMOUS) {
-			this.type = ProfileConstant.TYPE_IDENTIFIED;
+		if (this.type == ProfileType.TYPE_ANONYMOUS) {
+			this.type = ProfileType.TYPE_IDENTIFIED;
 		}
 	}
 
@@ -612,8 +612,8 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	public void setPrimaryPhone(String primaryPhone) {
 		this.primaryPhone = primaryPhone;
-		if (this.type == ProfileConstant.TYPE_ANONYMOUS) {
-			this.type = ProfileConstant.TYPE_IDENTIFIED;
+		if (this.type == ProfileType.TYPE_ANONYMOUS) {
+			this.type = ProfileType.TYPE_IDENTIFIED;
 		}
 	}
 

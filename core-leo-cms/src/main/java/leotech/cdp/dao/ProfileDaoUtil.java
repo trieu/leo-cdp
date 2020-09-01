@@ -11,6 +11,7 @@ import com.arangodb.ArangoDatabase;
 import leotech.cdp.dao.singleview.ProfileSingleDataView;
 import leotech.cdp.model.customer.Profile;
 import leotech.cdp.query.ProfileMatchingResult;
+import leotech.cdp.query.ProfileQuery;
 import leotech.core.config.AqlTemplate;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataTablePayload;
@@ -156,8 +157,28 @@ public class ProfileDaoUtil  extends BaseLeoCdpDao {
 				return obj;
 			}
 		};
-		List<ProfileSingleDataView> list = new ArangoDbQuery<ProfileSingleDataView>(db, AQL_GET_PROFILES_BY_PAGINATION, 
-				bindVars, ProfileSingleDataView.class, callback).getResultsAsList();
+		ArangoDbQuery<ProfileSingleDataView> q = new ArangoDbQuery<ProfileSingleDataView>(db, AQL_GET_PROFILES_BY_PAGINATION, bindVars, ProfileSingleDataView.class, callback);
+		List<ProfileSingleDataView> list = q.getResultsAsList();
+		return list;
+	}
+	
+	public static long countProfilesByQuery(ProfileQuery profileQuery) {
+		ArangoDatabase db = getCdpDbInstance();
+		long c =  new ArangoDbQuery<Long>(db, profileQuery.toArangoCountingQuery(), Long.class).getResultsAsObject();
+		return c;
+	}
+	
+	public static List<ProfileSingleDataView> getProfilesByQuery(ProfileQuery profileQuery) {
+		ArangoDatabase db = getCdpDbInstance();
+		CallbackQuery<ProfileSingleDataView> callback = new CallbackQuery<ProfileSingleDataView>() {
+			@Override
+			public ProfileSingleDataView apply(ProfileSingleDataView obj) {
+				obj.unifyDataView();
+				return obj;
+			}
+		};
+		ArangoDbQuery<ProfileSingleDataView> q = new ArangoDbQuery<ProfileSingleDataView>(db, profileQuery.toArangoDataQuery(), ProfileSingleDataView.class, callback);
+		List<ProfileSingleDataView> list = q.getResultsAsList();
 		return list;
 	}
 

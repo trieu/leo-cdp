@@ -7,9 +7,9 @@ import rfx.core.util.StringUtil;
 
 public class DeviceDataService {
 
-    public static String getDeviceId(MultiMap params, DeviceInfo device) {
-	String deviceId = StringUtil.safeString(params.get(TrackingApiParam.USER_DEVICE_ID));
-	// TODO
-	return deviceId;
-    }
+	public static String getDeviceId(MultiMap params, DeviceInfo device) {
+		String deviceId = StringUtil.safeString(params.get(TrackingApiParam.USER_DEVICE_ID));
+		// TODO
+		return deviceId;
+	}
 }

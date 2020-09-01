@@ -15,6 +15,8 @@ import com.arangodb.model.PersistentIndexOptions;
 import com.google.gson.annotations.Expose;
 
 import leotech.cdp.model.CdpPersistentObject;
+import leotech.cdp.query.ProfileQuery;
+import rfx.core.util.StringUtil;
 
 /**
  * @author tantrieu31
@@ -24,25 +26,6 @@ import leotech.cdp.model.CdpPersistentObject;
 public class Segment extends CdpPersistentObject implements Comparable<Segment> {
 	public static final String COLLECTION_NAME = getCollectionName(Segment.class);
 	static ArangoCollection dbCollection;
-
-	public static class SegmentationType {
-		// https://learn.g2.com/market-segmentation
-		public final static int GEOGRAPHIC = 1;
-		public final static int DEMOGRAPHIC = 2;
-		public final static int PSYCHOGRAPHIC = 3;
-		public final static int BEHAVIORAL = 4;
-
-		// common segment type for customer acquisition
-		public final static int FIRST_RETARGETING = 5;
-		public final static int LOOKALIKE = 6;
-
-		// common segment type for customer retention
-		public final static int RFM_ANALYSIS = 7; // https://clevertap.com/blog/rfm-analysis/
-		public final static int CHURN = 8;
-
-		// custom query
-		public final static int AD_HOC_QUERY = 9;
-	}
 
 	@Override
 	public ArangoCollection getCollection() {
@@ -54,9 +37,8 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 			// ensure indexing key fields for fast lookup
 			dbCollection.ensurePersistentIndex(Arrays.asList("name"), new PersistentIndexOptions().unique(true));
 			dbCollection.ensurePersistentIndex(Arrays.asList("type"), new PersistentIndexOptions().unique(true));
-			dbCollection.ensurePersistentIndex(Arrays.asList("segmenterUri"),new PersistentIndexOptions().unique(false));
-			dbCollection.ensurePersistentIndex(Arrays.asList("keywords[*]"),
-					new PersistentIndexOptions().unique(false));
+			dbCollection.ensurePersistentIndex(Arrays.asList("dataPipelineUrl"),new PersistentIndexOptions().unique(false));
+			dbCollection.ensurePersistentIndex(Arrays.asList("keywords[*]"),new PersistentIndexOptions().unique(false));
 		}
 		return dbCollection;
 	}
@@ -67,6 +49,12 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 
 	@Expose
 	String name; // e.g: all profiles is living in Vietnam ?
+	
+	@Expose
+	String description; 
+	
+	@Expose
+	String dataPipelineUrl; // the URI of data pipeline processor for profile scoring and ranking
 
 	@Expose
 	int type = SegmentationType.AD_HOC_QUERY;
@@ -76,26 +64,28 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 
 	@Expose
 	// check rules_basic at https://querybuilder.js.org/assets/demo-basic.js
-	String jsonStringRules;
+	String jsonQueryRules;
 
 	@Expose
-	// https://github.com/USPA-Technology/QueryBuilder
-	String queryFilter;
+	List<String> selectedFields = Arrays.asList("id", "primaryEmail", "primaryPhone", "createdAt", "firstName","lastName", "age", "gender");
 	
 	@Expose
-	long size = 0; // how many of profiles from query ?
+	String beginFilterDate;
+	
+	@Expose
+	String endFilterDate;
+	
+	@Expose
+	long totalCount = 0; // how many of profiles from query ?
 
 	@Expose
-	boolean isPublic = false; // anyone can see and run the query ?
+	boolean autoQuery = true; 
 
 	@Expose
 	List<String> keywords = new ArrayList<String>();
 
 	@Expose
 	int indexScore = 0; // the important score of segment
-
-	@Expose
-	String segmenterUri; // data processor URI (e.g: notebooks name, akka name)
 	
 	@Expose
 	protected Date createdAt = new Date();
@@ -108,14 +98,38 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 
 	@Override
 	public int compareTo(Segment o) {
-		
 		return 0;
 	}
 
 	@Override
 	public boolean isReadyForSave() {
-		// TODO Auto-generated method stub
-		return false;
+		return StringUtil.isNotEmpty(this.name) && StringUtil.isNotEmpty(this.jsonQueryRules) 
+				&& StringUtil.isNotEmpty(this.beginFilterDate) && StringUtil.isNotEmpty(this.endFilterDate)
+				&& this.selectedFields != null;
+	}
+	public Segment(String name, String jsonQueryRules, List<String> selectedFields, String beginFilterDate, String endFilterDate) {
+		super();
+		this.name = name;
+		this.jsonQueryRules = jsonQueryRules;
+		this.selectedFields = selectedFields;
+		this.beginFilterDate = beginFilterDate;
+		this.endFilterDate = endFilterDate;
+		this.id = id(name + jsonQueryRules + selectedFields + beginFilterDate + endFilterDate);
+	}
+	
+	public ProfileQuery toProfileQuery() {
+		// default query
+		return toProfileQuery(0, 20);
+	}
+
+	public ProfileQuery toProfileQuery(int startIndex, int numberResult) {
+		// build query
+		ProfileQuery profileQuery = new ProfileQuery(beginFilterDate, endFilterDate, jsonQueryRules, selectedFields);
+		
+		// pagination
+		profileQuery.setStartIndex(startIndex);
+		profileQuery.setNumberResult(numberResult);
+		return profileQuery;
 	}
 
 	public String getName() {
@@ -142,21 +156,7 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 		this.status = status;
 	}
 
-	public long getSize() {
-		return size;
-	}
-
-	public void setSize(long size) {
-		this.size = size;
-	}
-
-	public boolean isPublic() {
-		return isPublic;
-	}
-
-	public void setPublic(boolean isPublic) {
-		this.isPublic = isPublic;
-	}
+	
 
 	public List<String> getKeywords() {
 		return keywords;
@@ -174,14 +174,7 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 		this.indexScore = indexScore;
 	}
 
-	public String getSegmenterUri() {
-		return segmenterUri;
-	}
-
-	public void setSegmenterUri(String segmenterUri) {
-		this.segmenterUri = segmenterUri;
-	}
-
+	
 	public Map<String, String> getExtData() {
 		return extData;
 	}
@@ -190,22 +183,7 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 		this.extData = extData;
 	}
 
-	public String getJsonStringRules() {
-		return jsonStringRules;
-	}
-
-	public void setJsonStringRules(String jsonStringRules) {
-		this.jsonStringRules = jsonStringRules;
-	}
-
-	public String getQueryFilter() {
-		return queryFilter;
-	}
-
-	public void setQueryFilter(String queryFilter) {
-		this.queryFilter = queryFilter;
-	}
-
+	
 	public Date getCreatedAt() {
 		return createdAt;
 	}
@@ -225,7 +203,68 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 	public String getId() {
 		return id;
 	}
-	
-	
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getJsonQueryRules() {
+		return jsonQueryRules;
+	}
+
+	public void setJsonQueryRules(String jsonQueryRules) {
+		this.jsonQueryRules = jsonQueryRules;
+	}
+
+	public String getBeginFilterDate() {
+		return beginFilterDate;
+	}
+
+	public void setBeginFilterDate(String beginFilterDate) {
+		this.beginFilterDate = beginFilterDate;
+	}
+
+	public String getEndFilterDate() {
+		return endFilterDate;
+	}
+
+	public void setEndFilterDate(String endFilterDate) {
+		this.endFilterDate = endFilterDate;
+	}
+
+	public long getTotalCount() {
+		return totalCount;
+	}
+
+	public void setTotalCount(long totalCount) {
+		this.totalCount = totalCount;
+	}
+
+	public boolean isAutoQuery() {
+		return autoQuery;
+	}
+
+	public void setAutoQuery(boolean autoQuery) {
+		this.autoQuery = autoQuery;
+	}
+
+	public String getDataPipelineUrl() {
+		return dataPipelineUrl;
+	}
+
+	public void setDataPipelineUrl(String dataPipelineUrl) {
+		this.dataPipelineUrl = dataPipelineUrl;
+	}
+
+	public List<String> getSelectedFields() {
+		return selectedFields;
+	}
+
+	public void setSelectedFields(List<String> selectedFields) {
+		this.selectedFields = selectedFields;
+	}
 }
