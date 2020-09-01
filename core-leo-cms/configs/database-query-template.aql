@@ -243,6 +243,20 @@ AQL_GET_PROFILE_BY_KEY_IDENTITIES =>
 	RETURN { "deterministic" : rs1, "probabilistic" : rs2 }
 ;
 
+########### AQL LEO CDP - SEGMENT COLLECTION ########################################################################################################;
+
+AQL_GET_SEGMENTS_BY_PAGINATION =>
+	FOR p in cdp_segment  
+	SORT p.createdAt DESC
+	LIMIT @startIndex,@numberResult 
+	RETURN p
+;
+
+AQL_GET_SEGMENT_BY_ID =>
+	FOR e in cdp_segment FILTER e._key == @id  
+	RETURN e
+;
+
 ########### AQL LEO CDP - CONTEXT_SESSION COLLECTION ########################################################################################################;
 
 AQL_GET_CONTEXT_SESSION_BY_KEY =>

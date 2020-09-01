@@ -9,6 +9,17 @@ import leotech.cdp.model.customer.Segment;
 import leotech.cdp.query.ProfileQuery;
 
 public class SegmentDataService {
+	
+	public static Segment create(Segment sm) {
+		SegmentDaoUtil.create(sm);
+		return sm;
+	}
+	
+	public static Segment create(String name, String jsonQueryRules,  String beginFilterDate, String endFilterDate) {
+		Segment sm = new Segment(name, jsonQueryRules, beginFilterDate, endFilterDate);
+		SegmentDaoUtil.create(sm);
+		return sm;
+	}
 
 	public static Segment create(String name, String jsonQueryRules, List<String> selectedFields, String beginFilterDate, String endFilterDate) {
 		Segment sm = new Segment(name, jsonQueryRules, selectedFields, beginFilterDate, endFilterDate);
@@ -23,6 +34,21 @@ public class SegmentDataService {
 		sm.setSelectedFields(selectedFields);
 		sm.setBeginFilterDate(beginFilterDate);
 		sm.setEndFilterDate(endFilterDate);
+		SegmentDaoUtil.update(sm);
+		return sm;
+	}
+	
+	public static Segment update(String id, String name, String jsonQueryRules, String beginFilterDate, String endFilterDate) {
+		Segment sm = SegmentDaoUtil.getById(id);
+		sm.setName(name);
+		sm.setJsonQueryRules(jsonQueryRules);
+		sm.setBeginFilterDate(beginFilterDate);
+		sm.setEndFilterDate(endFilterDate);
+		SegmentDaoUtil.update(sm);
+		return sm;
+	}
+	
+	public static Segment update(Segment sm) {
 		SegmentDaoUtil.update(sm);
 		return sm;
 	}

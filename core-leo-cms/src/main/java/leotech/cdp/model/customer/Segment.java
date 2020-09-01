@@ -107,6 +107,17 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 				&& StringUtil.isNotEmpty(this.beginFilterDate) && StringUtil.isNotEmpty(this.endFilterDate)
 				&& this.selectedFields != null;
 	}
+	
+	public Segment(String name, String jsonQueryRules, String beginFilterDate, String endFilterDate) {
+		super();
+		this.name = name;
+		this.jsonQueryRules = jsonQueryRules;
+		this.selectedFields = new ArrayList<String>(0);
+		this.beginFilterDate = beginFilterDate;
+		this.endFilterDate = endFilterDate;
+		this.id = id(name + jsonQueryRules + selectedFields + beginFilterDate + endFilterDate);
+	}
+	
 	public Segment(String name, String jsonQueryRules, List<String> selectedFields, String beginFilterDate, String endFilterDate) {
 		super();
 		this.name = name;

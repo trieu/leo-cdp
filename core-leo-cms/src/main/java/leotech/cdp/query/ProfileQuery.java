@@ -26,8 +26,7 @@ public class ProfileQuery {
 	// ----- BEGIN query builder
 	
 	public String toArangoDataQuery() {
-		String aql = ProfileQueryBuilder.buildAqlString(filterCreateAt, beginFilterDate, endFilterDate,
-				parsedFilterAql, startIndex, numberResult, selectedFields);
+		String aql = ProfileQueryBuilder.buildAqlString(filterCreateAt, beginFilterDate, endFilterDate,parsedFilterAql, startIndex, numberResult, selectedFields);
 		return aql;
 	}
 	
