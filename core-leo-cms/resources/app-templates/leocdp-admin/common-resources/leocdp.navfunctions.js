@@ -199,11 +199,9 @@ LeoCdpAdmin.navFunctions.loadPageInfo = function(pageId, breadcrumbHtml) {
     });
 }
 
-function deletePage() {
+LeoCdpAdmin.navFunctions.deletePage = function(pageModel) {
 	 $('#delete_callback').val('');
-	 $('#confirmDeleteDialog').modal({
-	     focus: true
-	 });
+	 $('#confirmDeleteDialog').modal({ focus: true });
 	 if (pageModel) {
 	     var callback = "deletePage" + pageModel.id;
 	     window[callback] = function () {
@@ -214,7 +212,7 @@ function deletePage() {
 	         LeoAdminApiUtil.callPostAdminApi(urlStr, params, function (json) {
 	             if (json.httpCode === 0 && json.errorMessage === '') {
 	                 if (json.data) {
-	                     location.href = '/admin';
+	                     location.hash = 'calljs-leoCdpRouter("Content_Category_List")';
 	                 }
 	             }
 	         });
@@ -239,15 +237,16 @@ function postEditor(id, pageId, categoryKey) {
 	 });
 }
 
-function postInfo(id) {
+LeoCdpAdmin.navFunctions.loadPostInfo = function(id, breadcrumbHtml) {
 	 if (id) {
 	     LeoCdpAdmin.loadView('/view/modules/content/post-info.html?admin=1', pageDomSelector, function () {
+	    	$('#page_breadcrumb').html(breadcrumbHtml);
 	     	initPostInfoView({ postId: id });
 	     });
 	 }
 }
 
-function deletePost() {
+LeoCdpAdmin.navFunctions.deletePost = function(postModel) {
 	 $('#delete_callback').val('');
 	 $('#confirmDeleteDialog').modal({ focus: true });
 	 if (postModel) {
@@ -260,7 +259,7 @@ function deletePost() {
 	         LeoAdminApiUtil.callPostAdminApi(urlStr, params, function (json) {
 	             if (json.httpCode === 0 && json.errorMessage === '') {
 	                 if (json.data) {
-	                     location.href = '/admin';
+	                	 location.hash = 'calljs-leoCdpRouter("Content_Category_List")';
 	                 }
 	             }
 	         });

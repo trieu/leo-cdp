@@ -6,7 +6,7 @@
 
     <div class="mdl-cell mdl-cell--12-col mdl-typography--text-right" style="font-weight: bold">
         Posted by: {{#userDisplayName ownerId }}{{/userDisplayName}}
-        <a id="btnEditPost" target="_blank" href="/admin#calljs-postInfo('{{id}}')" style="display: none"> Edit </a>
+        <a id="btnEditPost" target="_blank" href="/admin#calljs-leoCdpRouter('Post_Information','{{id}}')" style="display: none"> Edit </a>
     </div>
 
     <div id="postMediaVideo" class="mdl-cell mdl-cell--12-col" style="display: none;">

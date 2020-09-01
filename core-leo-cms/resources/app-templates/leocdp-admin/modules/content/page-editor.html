@@ -57,7 +57,7 @@
                     <i class="fa fa-fw fa-check"></i> Save
                 </a>
                 <button type="button" class="btn btn-info" onclick="history.back()">Cancel</button>
-                <button type="button" class="btn btn-danger" onclick="deletePage()">Delete</button>                
+                <button type="button" class="btn btn-danger" onclick="LeoCdpAdmin.navFunctions.deletePage(pageModel)">Delete</button>                
             </div>
             <hr>
             <div class="action-div">
@@ -228,10 +228,8 @@
     function pageEditorSave() {
         console.log('=====> pageEditorSave pageId ' + pageId);
         var onSaveOk = function (data) {
-            console.log(data);
             pageId = data;
-            var title = encodeURIComponent(pageModel.title);
-            location.hash = "calljs-pageInfo('" + pageId + "','" + title + "','" + categoryKey + "')";
+            location.hash = "calljs-leoCdpRouter('Page_Information','" + pageId + "')";
         }
         saveDataPageEditor(onSaveOk);
     }

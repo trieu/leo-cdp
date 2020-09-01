@@ -3,10 +3,8 @@
     <!-- MAIN BODY here -->
     <div class="row">
         <div class="col-lg-12">
-        	
 	         <h4 class="page-header" id="page_breadcrumb" > </h4>
 	         <h4 class="page-header" id="pageTitle"></h4>
-	       
         </div>
     </div>
 
@@ -61,10 +59,9 @@
                 <button type="button" class="btn btn-primary data-control-edit" id="btn_edit_page"  > 
 	        		<i class="fa fa-fw fa-pencil-square-o"></i> Edit 
 	        	</button>
-                <button type="button" class="btn btn-danger data-control-delete" onclick="deletePage()"  >Delete</button>
+                <button type="button" class="btn btn-danger data-control-delete" onclick="LeoCdpAdmin.navFunctions.deletePage(pageModel)" >Delete</button>
                 <button type="button" class="btn btn-info" onclick="history.back()" >Cancel</button>
                 <button style="display: none;" type="button" class="btn btn-success" onclick="callLeoBotForIdeasRecommender('context-page')">Hi Leo</button>
-
             </div>
             <hr>
         </div>
@@ -112,6 +109,7 @@
 		        	location.hash =  "calljs-postEditor('','" + pageId + "','" + categoryKey + "')";
 		        });
 		        
+		     	// update breadcrumb link
 		        $('#tnv_Pages_in_Category').attr('href',"#calljs-leoCdpRouter('Pages_in_Category' ,'" + categoryKey + "' )" );
                 
                 var view = $('#page_info_view');
@@ -162,9 +160,9 @@
                 },
                 "columnDefs": [{
                         "render": function (data, type, row) {
-                            var callJsStr = "#calljs-postInfo('" + row.id + "')";
-                            return '<a class="text_wrapper" title="' + data + '" href="' + callJsStr +
-                                '" >' + textTruncate(data, 50) + '</a>';
+                           
+                            var callJsStr = "#calljs-leoCdpRouter('Post_Information','" + row.id + "')";
+                            return '<a class="text_wrapper" title="' + data + '" href="' + callJsStr + '" >' + textTruncate(data, 50) + '</a>';
                         },
                         "targets": 0
                     },

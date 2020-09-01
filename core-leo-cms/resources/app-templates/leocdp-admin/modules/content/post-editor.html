@@ -96,7 +96,7 @@
                 </a>
                 <button type="button" class="btn btn-info" onclick="history.back()">Cancel</button>
                 <button style="display: none;" type="button" class="btn btn-success" onclick="callLeoBotForIdeasRecommender('context-page')">Hi Leo</button>
-                <button type="button" class="btn btn-danger" onclick="deletePost()">Delete</button>
+                <button type="button" class="btn btn-danger" onclick="LeoCdpAdmin.navFunctions.deletePost(postModel)">Delete</button>
             </div>
             <hr>
             <div class="action-div">
@@ -335,7 +335,8 @@
             console.log('=====> postEditorSave ', postId);   
             $('#ajaxLoaderDialog').modal('hide');   
             setTimeout(function(){
-                location.hash = "calljs-postInfo('" + postId + "')";
+            	var callJsStr = "calljs-leoCdpRouter('Post_Information','" + postId + "')";
+                location.hash = callJsStr;
             },500);
         }
         $('#ajaxLoaderDialog').modal({

@@ -142,7 +142,7 @@
                 },
                 "columnDefs": [{
                         "render": function (data, type, row) {
-                            var callJsStr = "#calljs-leoCdpRouter('Page_Info','" + row.id + "')";
+                            var callJsStr = "#calljs-leoCdpRouter('Page_Information','" + row.id + "')";
                             return '<a class="text_wrapper" title="' + data + '" href="' + callJsStr + '" >' + textTruncate(data,50) + '</a>';
                         },
                         "targets": 0

@@ -38,12 +38,14 @@ public class CmsAdminPostApiHandler extends BaseSecuredDataApi {
 					int startIndex = paramJson.getInteger("startIndex", 0);
 					int numberResult = paramJson.getInteger("numberResult", 1000);
 					List<Post> list = PostDaoUtil.listByNetwork(AppMetadata.DEFAULT_ID, startIndex, numberResult);
-					return JsonDataPayload.ok(uri, list, true);
-				} else if (uri.equalsIgnoreCase(API_LIST_RECENT_POSTS_OF_PAGE)) {
+					return JsonDataPayload.ok(uri, list, loginUser, Post.class);
+				} 
+				else if (uri.equalsIgnoreCase(API_LIST_RECENT_POSTS_OF_PAGE)) {
 					String pageId = StringUtil.safeString(paramJson.getString("pageId"));
 					List<Post> list = PostDaoUtil.listAllByPage(pageId);
-					return JsonDataPayload.ok(uri, list, true);
-				} else if (uri.equalsIgnoreCase(API_SAVE)) {
+					return JsonDataPayload.ok(uri, list, loginUser, Post.class);
+				}
+				else if (uri.equalsIgnoreCase(API_SAVE)) {
 					String key = null;
 					try {
 						key = PostDataService.savePost(paramJson, loginUser);
@@ -51,11 +53,12 @@ public class CmsAdminPostApiHandler extends BaseSecuredDataApi {
 						return JsonDataPayload.fail(e, 500);
 					}
 					if (key != null) {
-						return JsonDataPayload.ok(uri, key, true);
+						return JsonDataPayload.ok(uri, key, loginUser, Post.class);
 					} else {
 						return JsonErrorPayload.UNKNOWN_EXCEPTION;
 					}
-				} else if (uri.equalsIgnoreCase(API_GET_INFO)) {
+				} 
+				else if (uri.equalsIgnoreCase(API_GET_INFO)) {
 					String postId = paramJson.getString("postId", "");
 					Post post;
 					if (postId.isEmpty()) {
@@ -63,12 +66,13 @@ public class CmsAdminPostApiHandler extends BaseSecuredDataApi {
 					} else {
 						post = PostDaoUtil.getById(postId);
 					}
-					return JsonDataPayload.ok(uri, post, true);
-				} else if (uri.equalsIgnoreCase(API_DELETE)) {
+					return JsonDataPayload.ok(uri, post, loginUser, Post.class);
+				} 
+				else if (uri.equalsIgnoreCase(API_DELETE)) {
 					String postId = paramJson.getString("postId", "");
 					if (!postId.isEmpty()) {
 						boolean ok = PostDataService.deletePost(postId);
-						return JsonDataPayload.ok(uri, ok, true);
+						return JsonDataPayload.ok(uri, ok, loginUser, Post.class);
 					} else {
 						return JsonDataPayload.fail("Missing postId", 500);
 					}
@@ -83,8 +87,8 @@ public class CmsAdminPostApiHandler extends BaseSecuredDataApi {
 
 	@Override
 	public JsonDataPayload httpGetApiHandler(String userSession, String uri, MultiMap params) throws Exception {
-		SystemUser user = getUserFromSession(userSession);
-		if (user != null) {
+		SystemUser loginUser = getUserFromSession(userSession);
+		if (loginUser != null) {
 			if (uri.equalsIgnoreCase(API_GET_BY_CONTENT_CLASS_AND_KEYWORDS)) {
 				String contentClass = StringUtil.safeString(params.get("contentClass"));
 				String k = StringUtil.safeString(params.get("keywords"), "");
@@ -98,8 +102,9 @@ public class CmsAdminPostApiHandler extends BaseSecuredDataApi {
 				List<String> contentClasses = Arrays.asList(contentClass);
 				List<Post> list = PostDaoUtil.listAllByContentClassAndKeywords(null, contentClasses, keywords, true,
 						false, false, 0, 1000);
-				return JsonDataPayload.ok(uri, list, true);
-			} else if (uri.equalsIgnoreCase("/post/search")) {
+				return JsonDataPayload.ok(uri, list, loginUser, Post.class);
+			} 
+			else if (uri.equalsIgnoreCase("/post/search")) {
 				String k = StringUtil.safeString(params.get("keywords"), "");
 				String[] keywords;
 				if (!k.isEmpty()) {
@@ -109,7 +114,7 @@ public class CmsAdminPostApiHandler extends BaseSecuredDataApi {
 				}
 				// FIXME check authorization
 				List<Post> results = SearchPostUtil.searchPost(keywords, 1, 100);
-				return JsonDataPayload.ok(uri, results, user, Post.class);
+				return JsonDataPayload.ok(uri, results, loginUser, Post.class);
 			}
 		} else {
 			if (uri.equalsIgnoreCase("/post/keywords-for-search")) {
@@ -119,7 +124,7 @@ public class CmsAdminPostApiHandler extends BaseSecuredDataApi {
 					map.put("name", e);
 					return map;
 				}).collect(Collectors.toList());
-				JsonDataPayload payload = JsonDataPayload.ok(uri, keywords, user, Post.class);
+				JsonDataPayload payload = JsonDataPayload.ok(uri, keywords, loginUser, Post.class);
 				payload.setReturnOnlyData(true);
 				return payload;
 			}

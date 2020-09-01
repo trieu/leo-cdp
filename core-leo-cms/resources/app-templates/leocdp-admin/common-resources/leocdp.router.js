@@ -199,11 +199,19 @@ LeoCdpAdmin.navRouters = {
 			"activeMenuItem" : "Content_Category_List"
 		},
 		
-		// 2.10 Content Page Information with Posts
-		"Page_Info" : {
+		// 2.10 Content Page Info with Posts
+		"Page_Information" : {
 			"menuName" : "Page Information",
 			"functionName" : "loadPageInfo",
 			"breadcrumb" : ["Customer Journey Hub", "Content Category List", "Pages in Category","Page Information"],
+			"activeMenuItem" : "Content_Category_List"
+		},
+		
+		// 2.11 Content Post Info
+		"Post_Information" : {
+			"menuName" : "Post Information",
+			"functionName" : "loadPostInfo",
+			"breadcrumb" : ["Customer Journey Hub", "Content Category List", "Pages in Category","Page Information","Post Information"],
 			"activeMenuItem" : "Content_Category_List"
 		},
 		
