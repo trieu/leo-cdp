@@ -155,12 +155,12 @@
                     {
                         "render": function (data, type, row) {
                         	var callJsViewStr = "#calljs-leoCdpRouter('Customer_Profile_Info','" + row.id + "')";
-                            var html = '<a title="Profile Report" href="' + callJsViewStr + '" > <i class="fa fa-address-card-o" aria-hidden="true"></i> View</a>';
+                            var html = '<a class="control" title="Profile Report" href="' + callJsViewStr + '" > <i class="fa fa-address-card-o" aria-hidden="true"></i> View</a>';
                         	if( canEditData ){
                         		var callJsEditStr = "#calljs-leoCdpRouter('Customer_Profile_Editor','" + row.id + "')";
-                        		html += ' <br> <a title="Profile Editor" href="' + callJsEditStr + '" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
+                        		html += ' <br><a class="control" title="Profile Editor" href="' + callJsEditStr + '" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
                         	} else {
-                        		html += ' <br> <a title="Profile Editor" href="javascript:" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
+                        		html += ' <br><a class="control" title="Profile Editor" href="javascript:" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
                         	}
                             return html;
                         },

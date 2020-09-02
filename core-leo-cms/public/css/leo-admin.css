@@ -181,8 +181,9 @@ div.gridholder {
     padding: 8px;
 }
 
-.CodeMirror { text-align: left!important; }
-
+.CodeMirror { 
+	text-align: left!important; 
+}
 
 
 .query-builder label.btn-primary {
@@ -204,4 +205,12 @@ div.gridholder {
     font-size: 13px;
     font-weight: bold;
 }
+
+.table-responsive a.control {
+	font-size: 15px;
+}
+
+.table-responsive a.control:hover {
+	background-color: #e8edca;
+    color: #3300ff;
 }

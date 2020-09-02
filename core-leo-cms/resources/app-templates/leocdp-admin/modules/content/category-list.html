@@ -98,10 +98,10 @@
                     },
                     {
                         "render": function (data, type, row) {
-                            var html = '<a title="' + row.title + '" href="javascript:" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
+                            var html = '<a class="control" title="' + row.title + '" href="javascript:" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
                             if( canEditData ){
                             	var callJsStr = "#calljs-loadCategoryForm('" + data + "')";
-                                html = '<a title="' + row.title + '" href="' + callJsStr + '" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
+                                html = '<a class="control" title="' + row.title + '" href="' + callJsStr + '" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
                         	}
                             return html;
                         },
