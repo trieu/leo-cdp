@@ -49,16 +49,16 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 	protected String id;
 
 	@Expose
-	String name; // e.g: all profiles is living in Vietnam ?
+	String name = ""; // e.g: all profiles is living in Vietnam ?
 	
 	@Expose
-	String description; 
+	String description = ""; 
 	
 	@Expose
 	String dataPipelineUrl; // the URI of data pipeline processor for profile scoring and ranking
 
 	@Expose
-	int type = SegmentationType.AD_HOC_QUERY;
+	int type = SegmentType.AD_HOC_QUERY;
 
 	@Expose
 	int status = 0; // -1 is deleted, 0 is default, 1 is active
@@ -107,6 +107,10 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 		return StringUtil.isNotEmpty(this.name) && StringUtil.isNotEmpty(this.jsonQueryRules) 
 				&& StringUtil.isNotEmpty(this.beginFilterDate) && StringUtil.isNotEmpty(this.endFilterDate)
 				&& this.selectedFields != null;
+	}
+	
+	public Segment() {
+		
 	}
 	
 	public Segment(String name, String jsonQueryRules, String beginFilterDate, String endFilterDate) {
@@ -185,7 +189,6 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 	public void setIndexScore(int indexScore) {
 		this.indexScore = indexScore;
 	}
-
 	
 	public Map<String, String> getExtData() {
 		return extData;
@@ -194,7 +197,6 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 	public void setExtData(Map<String, String> extData) {
 		this.extData = extData;
 	}
-
 	
 	public Date getCreatedAt() {
 		return createdAt;

@@ -1,4 +1,12 @@
 
+<style>
+	.segment_size {
+	    text-align: center;
+    	font-weight: bold;
+    	font-size: 12px;
+    }
+
+</style>
 
 <!-- MAIN BODY here -->
 <div class="row">
@@ -6,36 +14,9 @@
 		<h4 class="page-header" id="page_breadcrumb"></h4>
 	</div>
 	<div class="col-lg-2 text-center" style="padding: 10px">
-		<button type="button" class="btn btn-success" onclick="">New
-			Segment</button>
+		<button type="button" class="btn btn-success data-control-insert" onclick="newSegmentBuilder()">New Segment</button>
 	</div>
 </div>
-
-<div class="row float-right">
-
-	<div class='col-md-2 col-xs-12'>
-		<div class="form-group">
-			<div class='input-group date' id='beginFilterDate'>
-				<input type='text' class="form-control" autocomplete="off" /> <span
-					class="input-group-addon"> <span
-					class="glyphicon glyphicon-calendar"></span>
-				</span>
-			</div>
-		</div>
-	</div>
-	<div class='col-md-2 col-xs-12'>
-		<div class="form-group">
-			<div class='input-group date' id='endFilterDate'>
-				<input type='text' class="form-control" autocomplete="off" /> <span
-					class="input-group-addon"> <span
-					class="glyphicon glyphicon-calendar"></span>
-				</span>
-			</div>
-		</div>
-	</div>
-
-</div>
-
 
 
 <div class="row gridholder">
@@ -44,12 +25,12 @@
 	        <table id="segment-list" class="display" style="width:100%">
 	            <thead>
 	                <tr>
-	                    <th>UUID</th>
-	                    <th>Last touchpoint</th>
-	                    <th>Type</th>
 	                    <th>Name</th>
-	                    <th>Primary email</th>
-	                    <th>Primary phone</th>
+	                    <th>Description</th>
+	                    <th>Type</th>
+	                    <th>Total Profiles</th>
+	                    <th>Query Details</th>
+	                    <th>Status</th>
 	                    <th>Created at</th>
 	                    <th>Updated at</th>
 	                    <th>Actions</th>
@@ -63,20 +44,26 @@
 
 <script>
 	var initSegmentList = initSegmentList || function() {
-		initDateFilterComponent();
 		loadSegmentList();
 	}
 	
+	var canEditData = false, canDeteteData = false, dataTable = false;
+	
+	function refreshSegmentTable() {
+	    $('#segment-list').DataTable().clear();
+	    $('#segment-list').DataTable().ajax.reload();
+	}
+	
 	function loadSegmentList() {
-    	
         var usersession = getUserSession();
+        
         if (usersession) {
-            $('#profile-list').DataTable({
+            $('#segment-list').DataTable({
             	'processing': true,
                 'serverSide': true,
                 'serverMethod': 'POST',
                 'ajax': {
-                    url: baseAdminApi + '/cdp/profiles/filter',
+                    url: baseAdminApi + '/cdp/segments/filter',
                     contentType: 'application/json',
                     beforeSend: function (request) {
                         request.setRequestHeader("leouss", usersession);
@@ -84,38 +71,66 @@
                     data: function (d) {
                         console.log(d)
                         return JSON.stringify(d);
-                    }
+                    },
+                    dataSrc: function ( json ) {
+                    	
+                    	canEditData = json.canEditData;
+                    	canDeteteData = json.canDeleteData;
+                		
+                		if( ! json.canInsertData ){
+            				$('button.data-control-insert').attr('disabled','disabled');
+            			}
+                		return json.data;
+                     }
                 },
                 'columnDefs': [
                 	{
                         "render": function (data, type, row) {
-                        	var callJsViewStr = "#calljs-leoCdpRouter('Customer_Profile_Info','" + row.id + "')";
-                            return '<a title="Profile Report" href="' + callJsViewStr + '" >'+textTruncate(data,10)+'</a>';
+                        	var callJsViewStr = "#calljs-leoCdpRouter('Segment_Report','" + row.id + "')";
+                            return '<a title="Segment Report: '+data+'" href="' + callJsViewStr + '" >'+textTruncate(data,50)+'</a>';
                         },
                         "targets": 0
                     },
                 	{
                         "render": function (data, type, row) {
-                            return textTruncate(row.lastTouchpoint.name, 30);
+                            return textTruncate(data, 50);
                         },
                         "targets": 1
                     },
                     {
                         "render": function (data, type, row) {
-                            return row.typeAsText;
+                        	var typeName = 'AD_HOC_QUERY';
+                            return '<small>' + typeName + '</small>';
                         },
                         "targets": 2
                     },
                     {
                         "render": function (data, type, row) {
-                        	var name = 'Anonymous Person';
-                        	if(row.firstName.length > 0 && row.lastName.length > 0){
-                        		name = textTruncate(row.firstName + ' ' + row.lastName,30);
-                        	}
-                            var callJsViewStr = "#calljs-leoCdpRouter('Customer_Profile_Info','" + row.id + "')";
-                            return '<a title="Profile Report" href="' + callJsViewStr + '" >' + name + '</a>';
+                            return   '<div class="segment_size">' +  data.toLocaleString() + '</div>';
                         },
                         "targets": 3
+                    },
+                    {
+                        "render": function (data, type, row) {
+                        	var id = 'smqd_'+ row.id;
+                        	var data = encodeURIComponent(data);
+                        	var html = '<a id="'+id+'" data-query-details="'+data+'" href="javascript:" onclick="viewSegmentQuery(this)" > <i class="fa fa-info-circle" aria-hidden="true"></i> Query Details </a>';
+                            return  html ;
+                        },
+                        "targets": 4
+                    },
+                    {
+                        "render": function (data, type, row) {
+                        	var statusText = 'REMOVED';
+                        	if(data === 0){
+                        		statusText = 'ACTIVE';
+                        	}
+                        	else if(data === 1){
+                        		statusText = 'ACTIVATED';
+                        	}
+                            return '<small>' + statusText + '</small>';
+                        },
+                        "targets": 5
                     },
                     {
                         "render": function (data, type, row) {
@@ -126,46 +141,68 @@
                     },
                     {
                         "render": function (data, type, row) {
-                            var date = moment(new Date(data)).format('YYYY-MM-DD HH:mm:ss');
-                            return date;
+                        	if(data){
+                        		 var date = moment(new Date(data)).format('YYYY-MM-DD HH:mm:ss');
+                                 return date;
+                        	}
+                           return '-';
                         },
                         "targets": 7
                     },
                     {
                         "render": function (data, type, row) {
-                        	var callJsViewStr = "#calljs-leoCdpRouter('Customer_Profile_Info','" + row.id + "')";
-                            var callJsEditStr = "#calljs-leoCdpRouter('Customer_Profile_Editor','" + row.id + "')";
-                            return '<a title="Profile Report" href="' + callJsViewStr + '" >View</a> <br> <a title="Profile Data Editor" href="' + callJsEditStr + '" >Edit</a>';
+                            var callJsViewStr = "#calljs-leoCdpRouter('Segment_Report','" + row.id + "')";
+                            var html = '<a title="Segment Report" href="' + callJsViewStr + '" > <i class="fa fa-info-circle" aria-hidden="true"></i> View</a>';
+                        	if( canEditData ){
+                        		var callJsEditStr = "#calljs-leoCdpRouter('Segment_Builder','" + row.id + "')";
+                        		html += ' <br> <a title="Segment Builder" href="' + callJsEditStr + '" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
+                        	} else {
+                        		html += ' <br> <a title="Segment Builder" href="javascript:" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
+                        	}
+                            return html;
                         },
                         "targets": 8
                     }
                 ],
                 'columns': [{
-                        "data": "id"
+                        "data": "name" // 0
                     },
                     {
-                        "data": "lastTouchpoint"
+                        "data": "description" // 1
                     },
                     {
-                        "data": "typeAsText"
+                        "data": "type" // 2
                     },
                     {
-                        "data": "firstName"
+                        "data": "totalCount" // 3
                     },
                     {
-                        "data": "primaryEmail"
+                        "data": "jsonQueryRules" // 4
                     },
                     {
-                        "data": "primaryPhone"
+                        "data": "status" // 5
                     },
                     {
-                        "data": "createdAt"
+                        "data": "createdAt" // 6
                     },
                     {
-                        "data": "updatedAt"
+                        "data": "updatedAt" // 7
                     }
                 ]
             });
         }
-    }    
+    }
+	
+	var newSegmentBuilder = newSegmentBuilder || function() {
+	 	location.hash = "calljs-leoCdpRouter('Segment_Builder','new')";
+	}
+	
+	var viewSegmentQuery = viewSegmentQuery || function(node){
+		var jsonStr = $(node).attr('data-query-details');
+		var data = JSON.parse(decodeURIComponent(jsonStr));
+		console.log(jsonStr)
+		console.log(data)
+		//var json = JSON.parse(jsonStr);
+		//alert(json)
+	}
 </script>

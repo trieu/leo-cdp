@@ -32,11 +32,10 @@
         </div>
         
         <div class='col-md-2 col-xs-12'>
-        	<button type="button" class="btn btn-primary" onclick="refreshDataTable()"  > Filter by Date </button>
+        	<button type="button" class="btn btn-primary" onclick="refreshProfileTable()"  > Filter by Date </button>
         </div>
         
     </div>
-	
 
     <div class="row gridholder">
         <div class="col-lg-12">
@@ -59,14 +58,15 @@
             </div>
         </div>
     </div>
-
-
+    
 <script>
+
+	// Date Range Filtering Controller
 	initDateFilterComponent();
 	
 	var canEditData = false, canDeteteData = false, dataTable = false;
 	
-	function refreshDataTable() {
+	function refreshProfileTable() {
 	    $('#profile-list').DataTable().clear();
 	    $('#profile-list').DataTable().ajax.reload();
 	}
@@ -168,28 +168,28 @@
                     }
                 ],
                 'columns': [{
-                        "data": "id"
+                        "data": "id" // 0
                     },
                     {
-                        "data": "firstName"
+                        "data": "firstName" // 1
                     },
                     {
-                        "data": "typeAsText"
+                        "data": "typeAsText" // 2
                     },
                     {
-                        "data": "lastTouchpoint"
+                        "data": "lastTouchpoint" // 3
                     },
                     {
-                        "data": "primaryEmail"
+                        "data": "primaryEmail" // 4
                     },
                     {
-                        "data": "primaryPhone"
+                        "data": "primaryPhone" // 5
                     },
                     {
-                        "data": "createdAt"
+                        "data": "createdAt" // 6
                     },
                     {
-                        "data": "updatedAt"
+                        "data": "updatedAt" // 7
                     }
                 ]
             });

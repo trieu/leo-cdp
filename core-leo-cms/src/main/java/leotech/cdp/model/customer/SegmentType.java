@@ -1,6 +1,6 @@
 package leotech.cdp.model.customer;
 
-public final class SegmentationType {
+public final class SegmentType {
 	// https://learn.g2.com/market-segmentation
 	public final static int GEOGRAPHIC = 1;
 	public final static int DEMOGRAPHIC = 2;
