@@ -13,7 +13,7 @@ import leotech.cdp.model.customer.Profile;
 import leotech.cdp.model.journey.MediaChannelType;
 import leotech.cdp.model.journey.MediaJourneyMap;
 import leotech.cdp.service.JourneyMapService;
-import leotech.core.api.BaseSecuredDataApi;
+import leotech.core.api.SecuredWebDataHandler;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.JsonDataTablePayload;
@@ -21,7 +21,7 @@ import leotech.system.model.SystemUser;
 import leotech.system.util.ClassStaticDataList;
 import leotech.system.util.RequestInfoUtil;
 
-public class CdpJourneyMapHandler extends BaseSecuredDataApi {
+public class CdpJourneyMapHandler extends SecuredWebDataHandler {
 	
 	// for dataList view
 	static final String API_LIST_ALL = "/cdp/journeymaps";

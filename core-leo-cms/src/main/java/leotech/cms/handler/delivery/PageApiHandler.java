@@ -11,113 +11,115 @@ import leotech.cms.model.renderable.PageDataModel;
 import leotech.cms.model.renderable.PageNavigator;
 import leotech.cms.model.renderable.WebData;
 import leotech.cms.service.PageDataService;
-import leotech.core.api.BaseSecuredDataApi;
+import leotech.core.api.SecuredWebDataHandler;
 import leotech.system.model.AppMetadata;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.SystemUser;
 import rfx.core.util.StringUtil;
 
-public class PageApiHandler extends BaseSecuredDataApi {
+public class PageApiHandler extends SecuredWebDataHandler {
 
-    static final String API_PAGE_LIST_BY_CATEGORY = "/page/list-by-category";
-    static final String API_PAGE_LIST_BY_KEYWORD = "/page/list-by-keyword";
+	static final String API_PAGE_LIST_BY_CATEGORY = "/page/list-by-category";
+	static final String API_PAGE_LIST_BY_KEYWORD = "/page/list-by-keyword";
 
-    public static final String HTML_PAGE = "/html/page/";
-    public static final String SINGLE_PAGE = "single-page";
-    public static final String LIST_PAGE = "list-page";
+	public static final String HTML_PAGE = "/html/page/";
+	public static final String SINGLE_PAGE = "single-page";
+	public static final String LIST_PAGE = "list-page";
 
-    @Override
-    public JsonDataPayload httpPostApiHandler(String userSession, String uri, JsonObject paramJson) throws Exception {
-	SystemUser loginUser = getUserFromSession(userSession);
-	if (loginUser == null) {
-	    return JsonErrorPayload.NO_AUTHENTICATION;
-	} else {
-	    if (uri.equalsIgnoreCase(API_PAGE_LIST_BY_CATEGORY)) {
-		String catId = paramJson.getString("categoryId", "");
-		if (catId.isEmpty()) {
-		    return JsonDataPayload.fail("categoryId is empty", 500);
+	@Override
+	public JsonDataPayload httpPostApiHandler(String userSession, String uri, JsonObject paramJson)
+			throws Exception {
+		SystemUser loginUser = getUserFromSession(userSession);
+		if (loginUser == null) {
+			return JsonErrorPayload.NO_AUTHENTICATION;
 		} else {
-		    List<Page> pages = PageDaoUtil.listByCategory(catId);
-		    return JsonDataPayload.ok(uri, pages);
+			if (uri.equalsIgnoreCase(API_PAGE_LIST_BY_CATEGORY)) {
+				String catId = paramJson.getString("categoryId", "");
+				if (catId.isEmpty()) {
+					return JsonDataPayload.fail("categoryId is empty", 500);
+				} else {
+					List<Page> pages = PageDaoUtil.listByCategory(catId);
+					return JsonDataPayload.ok(uri, pages);
+				}
+			}
+			return JsonErrorPayload.NO_HANDLER_FOUND;
 		}
-	    }
-	    return JsonErrorPayload.NO_HANDLER_FOUND;
+
 	}
 
-    }
-
-    @Override
-    public JsonDataPayload httpGetApiHandler(String userSession, String uri, MultiMap params) throws Exception {
-	SystemUser loginUser = getUserFromSession(userSession);
-	if (loginUser == null) {
-	    return JsonErrorPayload.NO_AUTHENTICATION;
-	} else {
-	    if (uri.equalsIgnoreCase(API_PAGE_LIST_BY_CATEGORY)) {
-		String catId = StringUtil.safeString(params.get("categoryId"), "");
-		if (catId.isEmpty()) {
-		    return JsonDataPayload.fail("categoryId is empty", 500);
+	@Override
+	public JsonDataPayload httpGetApiHandler(String userSession, String uri, MultiMap params) throws Exception {
+		SystemUser loginUser = getUserFromSession(userSession);
+		if (loginUser == null) {
+			return JsonErrorPayload.NO_AUTHENTICATION;
 		} else {
-		    List<Page> pages = PageDaoUtil.listByCategory(catId);
-		    return JsonDataPayload.ok(uri, pages);
+			if (uri.equalsIgnoreCase(API_PAGE_LIST_BY_CATEGORY)) {
+				String catId = StringUtil.safeString(params.get("categoryId"), "");
+				if (catId.isEmpty()) {
+					return JsonDataPayload.fail("categoryId is empty", 500);
+				} else {
+					List<Page> pages = PageDaoUtil.listByCategory(catId);
+					return JsonDataPayload.ok(uri, pages);
+				}
+			}
+			return JsonErrorPayload.NO_HANDLER_FOUND;
 		}
-	    }
-	    return JsonErrorPayload.NO_HANDLER_FOUND;
 	}
-    }
 
-    public static WebData buildPageDataModel(String path, AppMetadata network, String objectId, int startIndex,
-	    int numberResult) {
-	WebData model;
-	String networkDomain = network.getDomain();
-	String templateFolder = network.getWebTemplateFolder();
-	if (StringUtil.isNotEmpty(objectId)) {
-	    Page page = PageDataService.getPageWithPosts(objectId, startIndex, numberResult);
-	    if (page != null) {
-		String title = network.getDomain() + " - " + page.getTitle();
-		System.out.println(page.getPostsOfPage().size() + "=>>>>>>>>>>>>> ### getPageWithPosts " + numberResult);
-		
-		model = new PageDataModel(networkDomain, templateFolder, SINGLE_PAGE, title, page);
-		model.setBaseStaticUrl(network.getBaseStaticUrl());
-   		model.setPageDescription(page.getDescription());
-   		model.setPageKeywords(page.getKeywords());
+	public static WebData buildPageDataModel(String path, AppMetadata network, String objectId, int startIndex,
+			int numberResult) {
+		WebData model;
+		String networkDomain = network.getDomain();
+		String templateFolder = network.getWebTemplateFolder();
+		if (StringUtil.isNotEmpty(objectId)) {
+			Page page = PageDataService.getPageWithPosts(objectId, startIndex, numberResult);
+			if (page != null) {
+				String title = network.getDomain() + " - " + page.getTitle();
+				System.out.println(
+						page.getPostsOfPage().size() + "=>>>>>>>>>>>>> ### getPageWithPosts " + numberResult);
 
-		int nextStartIndex = startIndex + numberResult;
-		if (page.getPostsOfPage().size() < numberResult) {
-		    nextStartIndex = 0;
+				model = new PageDataModel(networkDomain, templateFolder, SINGLE_PAGE, title, page);
+				model.setBaseStaticUrl(network.getBaseStaticUrl());
+				model.setPageDescription(page.getDescription());
+				model.setPageKeywords(page.getKeywords());
+
+				int nextStartIndex = startIndex + numberResult;
+				if (page.getPostsOfPage().size() < numberResult) {
+					nextStartIndex = 0;
+				}
+				model.setCustomData("nextStartIndex", nextStartIndex);
+				model.setCustomData("currentPath", path);
+
+			} else {
+				model = WebData.page404(networkDomain, templateFolder);
+			}
+
+		} else {
+			String title = network.getName() + " - Top Pages";
+			List<Page> pages = PageDataService.getPagesByNetwork(network.getAppId(), startIndex, numberResult);
+			model = new PageDataModel(networkDomain, templateFolder, LIST_PAGE, title, pages);
+			model.setBaseStaticUrl(network.getBaseStaticUrl());
+
+			int nextStartIndex = startIndex + numberResult;
+			if (pages.size() < numberResult) {
+				nextStartIndex = 0;
+			}
+			model.setCustomData("nextStartIndex", nextStartIndex);
 		}
-		model.setCustomData("nextStartIndex", nextStartIndex);
-		model.setCustomData("currentPath", path);
-
-	    } else {
-		model = WebData.page404(networkDomain, templateFolder);
-	    }
-
-	} else {
-	    String title = network.getName() + " - Top Pages";
-	    List<Page> pages = PageDataService.getPagesByNetwork(network.getAppId(), startIndex, numberResult);
-	    model = new PageDataModel(networkDomain, templateFolder, LIST_PAGE, title, pages);
-	    model.setBaseStaticUrl(network.getBaseStaticUrl());
-		
-	    int nextStartIndex = startIndex + numberResult;
-	    if (pages.size() < numberResult) {
-		nextStartIndex = 0;
-	    }
-	    model.setCustomData("nextStartIndex", nextStartIndex);
+		return model;
 	}
-	return model;
-    }
 
-    public static void setPageNavigators(WebData model, String category) {
-	List<PageNavigator> pageNavigators = new ArrayList<>();
-	List<Page> topPages = PageDataService.listByCategoryWithPublicPrivacy(category);
-	for (Page page : topPages) {
-	    String id = page.getId();
-	    String uri = HTML_PAGE + page.getSlug();
-	    // TODO ranking by use profile here
-	    long rankingScore = page.getRankingScore();
-	    pageNavigators.add(new PageNavigator(id, uri, page.getTitle(), rankingScore));
+	public static void setPageNavigators(WebData model, String category) {
+		List<PageNavigator> pageNavigators = new ArrayList<>();
+		List<Page> topPages = PageDataService.listByCategoryWithPublicPrivacy(category);
+		for (Page page : topPages) {
+			String id = page.getId();
+			String uri = HTML_PAGE + page.getSlug();
+			// TODO ranking by use profile here
+			long rankingScore = page.getRankingScore();
+			pageNavigators.add(new PageNavigator(id, uri, page.getTitle(), rankingScore));
+		}
+		model.setTopPageNavigators(pageNavigators);
 	}
-	model.setTopPageNavigators(pageNavigators);
-    }
 
 }

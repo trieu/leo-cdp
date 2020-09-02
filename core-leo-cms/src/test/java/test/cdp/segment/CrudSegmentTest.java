@@ -30,12 +30,13 @@ public class CrudSegmentTest {
 			"  \"valid\": true\n" + 
 			"}";
 	static String beginFilterDate = "2020-01-27T00:00:00+07:00";
-	static String endFilterDate =  "2020-05-29T00:00:00+07:00";
+	static String endFilterDate =  "2020-08-29T00:00:00+07:00";
 	
 	
     @Test
     public void testCreateNew() throws IOException {
     	Segment sm = new Segment("profiles with age between 18 to 35", jsonQueryRules, beginFilterDate, endFilterDate);
+    	System.out.println(sm.getId());
     	Segment s = SegmentDataService.create(sm);
     	Assert.assertEquals(s.getId(), sm.getId());
     }

@@ -12,7 +12,7 @@ import leotech.cdp.admin.handler.CdpObserverHandler;
 import leotech.cdp.admin.handler.CdpProfileHandler;
 import leotech.cdp.admin.handler.CdpSegmentHandler;
 import leotech.cms.handler.admin.AdminSystemApiHandler;
-import leotech.cms.handler.admin.LeoAssistantBotApiHandler;
+import leotech.cms.handler.admin.LeoAssistantBotHandler;
 import leotech.cms.handler.admin.CmsAdminCategoryHandler;
 import leotech.cms.handler.admin.CmsAdminPageHandler;
 import leotech.cms.handler.admin.CmsAdminPostApiHandler;
@@ -55,7 +55,7 @@ public class AdminApiRouter extends BaseApiRouter {
 			} 
 			//
 			else if (uri.startsWith(LEO_ASSISTANT_BOT_PREFIX)) {
-				payload = new LeoAssistantBotApiHandler().httpPostApiHandler(userSession, uri, paramJson);
+				payload = new LeoAssistantBotHandler().httpPostApiHandler(userSession, uri, paramJson);
 			}
 			
 			//////// Customer Data Platform ///////
@@ -135,7 +135,7 @@ public class AdminApiRouter extends BaseApiRouter {
 			} 
 			//
 			else if (uri.startsWith(LEO_ASSISTANT_BOT_PREFIX)) {
-				payload = new LeoAssistantBotApiHandler().httpGetApiHandler(userSession, uri, params);
+				payload = new LeoAssistantBotHandler().httpGetApiHandler(userSession, uri, params);
 			}
 			
 			//////// Customer Data Platform ///////

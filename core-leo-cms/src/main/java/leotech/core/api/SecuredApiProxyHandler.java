@@ -9,7 +9,7 @@ import com.google.common.cache.LoadingCache;
 import io.vertx.core.MultiMap;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.ext.web.RoutingContext;
-import leotech.core.api.BaseSecuredDataApi.JsonErrorPayload;
+import leotech.core.api.SecuredWebDataHandler.JsonErrorPayload;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.SystemUser;
 import leotech.system.util.CookieUserSessionUtil;
@@ -80,7 +80,7 @@ public class SecuredApiProxyHandler {
 	MultiMap reqHeaders = req.headers();
 	String userSession = CookieUserSessionUtil.getUserSession(context, StringUtil.safeString(reqHeaders.get(BaseApiRouter.HEADER_SESSION)));
 
-	SystemUser loginUser = BaseSecuredDataApi.getUserFromSession(userSession);
+	SystemUser loginUser = SecuredWebDataHandler.getUserFromSession(userSession);
 	if (loginUser != null) {
 	    try {
 		String rs = queriedCache.get(new ApiProxyHttpGetRequest(provider, uri));

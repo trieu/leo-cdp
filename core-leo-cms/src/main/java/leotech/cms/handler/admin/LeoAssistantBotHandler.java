@@ -5,7 +5,7 @@ import java.util.List;
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import leotech.cms.model.bot.ContentBot;
-import leotech.core.api.BaseSecuredDataApi;
+import leotech.core.api.SecuredWebDataHandler;
 import leotech.crawler.model.ArticleData;
 import leotech.crawler.model.CrawledYouTubeVideo;
 import leotech.crawler.util.ArticleDataCrawler;
@@ -14,7 +14,7 @@ import leotech.system.model.JsonDataPayload;
 import leotech.system.model.SystemUser;
 import rfx.core.util.StringUtil;
 
-public class LeoAssistantBotApiHandler extends BaseSecuredDataApi {
+public class LeoAssistantBotHandler extends SecuredWebDataHandler {
 
 	static final String API_VIDEO_CRAWLER = "/bot/video-crawler";
 	static final String API_ARTICLE_CRAWLER = "/bot/article-crawler";

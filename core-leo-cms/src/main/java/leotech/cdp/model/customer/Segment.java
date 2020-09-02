@@ -11,6 +11,7 @@ import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
 import com.arangodb.entity.DocumentField;
 import com.arangodb.entity.DocumentField.Type;
+import com.arangodb.model.FulltextIndexOptions;
 import com.arangodb.model.PersistentIndexOptions;
 import com.google.gson.annotations.Expose;
 
@@ -35,8 +36,8 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 			dbCollection = arangoDatabase.collection(COLLECTION_NAME);
 
 			// ensure indexing key fields for fast lookup
-			dbCollection.ensurePersistentIndex(Arrays.asList("name"), new PersistentIndexOptions().unique(true));
-			dbCollection.ensurePersistentIndex(Arrays.asList("type"), new PersistentIndexOptions().unique(true));
+			dbCollection.ensureFulltextIndex(Arrays.asList("name"), new FulltextIndexOptions().inBackground(true) );
+			dbCollection.ensurePersistentIndex(Arrays.asList("type"), new PersistentIndexOptions().unique(false));
 			dbCollection.ensurePersistentIndex(Arrays.asList("dataPipelineUrl"),new PersistentIndexOptions().unique(false));
 			dbCollection.ensurePersistentIndex(Arrays.asList("keywords[*]"),new PersistentIndexOptions().unique(false));
 		}
@@ -115,7 +116,7 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 		this.selectedFields = new ArrayList<String>(0);
 		this.beginFilterDate = beginFilterDate;
 		this.endFilterDate = endFilterDate;
-		this.id = id(name + jsonQueryRules + selectedFields + beginFilterDate + endFilterDate);
+		this.id = id(name + jsonQueryRules + beginFilterDate + endFilterDate);
 	}
 	
 	public Segment(String name, String jsonQueryRules, List<String> selectedFields, String beginFilterDate, String endFilterDate) {

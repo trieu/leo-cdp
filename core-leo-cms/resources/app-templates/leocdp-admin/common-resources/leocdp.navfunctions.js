@@ -86,9 +86,18 @@ LeoCdpAdmin.navFunctions.loadLeoObserverList  = function(breadcrumbHtml) {
     });
 }
 
+//--- Products and Services functions ---
+
+LeoCdpAdmin.navFunctions.loadProductsAndServices = function (breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/modules/customer/products-services-list.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+    	initProductsAndServices();
+    });
+}
+
 //###################### Customer Data Hub ######################
 
-// Profile functions
+// --- Customer Profile functions ---
 
 LeoCdpAdmin.navFunctions.loadCustomerProfileList = function (breadcrumbHtml) {
     LeoCdpAdmin.loadView('/view/modules/customer/customer-profile-list.html?admin=1', pageDomSelector, function () {
@@ -118,37 +127,37 @@ LeoCdpAdmin.navFunctions.loadCustomerActivation = function (profileId, breadcrum
     });
 }
 
-// Segment functions
+// --- Customer Segment functions ---
 
 LeoCdpAdmin.navFunctions.loadSegmentList = function (breadcrumbHtml) {
     LeoCdpAdmin.loadView('/view/modules/customer/segment-list.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
-    	initCustomerSegmentList();
+    	initSegmentList();
     });
 }
 
 LeoCdpAdmin.navFunctions.loadSegmentBuilder = function (segmentId, breadcrumbHtml) {
     LeoCdpAdmin.loadView('/view/modules/customer/segment-builder.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
-    	initCustomerSegmentBuilder(segmentId);
+    	initSegmentBuilder(segmentId);
     });
 }
 
 LeoCdpAdmin.navFunctions.loadSegmentReport = function (segmentId, breadcrumbHtml) {
     LeoCdpAdmin.loadView('/view/modules/customer/segment-report.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
-    	initCustomerSegmentReport(segmentId);
+    	initSegmentReport(segmentId);
     });
 }
 
 LeoCdpAdmin.navFunctions.loadSegmentActivation = function (segmentId, breadcrumbHtml) {
     LeoCdpAdmin.loadView('/view/modules/customer/segment-activation.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
-    	initCustomerSegmentActivation(segmentId);
+    	initSegmentActivation(segmentId);
     });
 }
 
-// Import and Export data
+// --- Customer Data Import and Export functions ---
 
 LeoCdpAdmin.navFunctions.loadCustomerDataImport = function (breadcrumbHtml) {
     LeoCdpAdmin.loadView('/view/modules/customer/customer-data-import.html?admin=1', pageDomSelector, function () {
@@ -162,19 +171,9 @@ LeoCdpAdmin.navFunctions.loadCustomerDataExport = function (breadcrumbHtml) {
     });
 }
 
-// Products and Services functions
+//###################### Creative Content Hub ######################
 
-LeoCdpAdmin.navFunctions.loadProductsAndServices = function (breadcrumbHtml) {
-    LeoCdpAdmin.loadView('/view/modules/customer/products-services-list.html?admin=1', pageDomSelector, function () {
-    	$('#page_breadcrumb').html(breadcrumbHtml);
-    	initProductsAndServices();
-    });
-}
-
-
-//###################### Creative Content ######################
-
-//Category functions
+// --- Category functions ---
 
 LeoCdpAdmin.navFunctions.loadContentCategoryList = function (breadcrumbHtml) {
     LeoCdpAdmin.loadView('/view/modules/content/category-list.html?admin=1', pageDomSelector, function () {
@@ -203,7 +202,7 @@ function loadCategoryForm(id) {
     });
 }
 
-// Page functions 
+// --- Page functions ---
 
 function pageEditor(id, categoryKey) {
 	 console.log('pageEditor');
@@ -251,7 +250,7 @@ LeoCdpAdmin.navFunctions.deletePage = function(pageModel) {
 	 }
 }
 
-// Post functions 
+// --- Post functions ---
 
 function postEditor(id, pageId, categoryKey) {
 	 console.log('postEditor' + id);
@@ -310,22 +309,6 @@ function loadMediaMarketplace(){
     });
 }
 
-//###################### Personalization AI Hub navigation ######################
-
-LeoCdpAdmin.navFunctions.loadPersonalizationModels = function(breadcrumbHtml) {
-    LeoCdpAdmin.loadView('/view/modules/personalization/personalization-model-list.html?admin=1', pageDomSelector, function () {
-    	$('#page_breadcrumb').html(breadcrumbHtml);
-    	initPersonalizationModels();
-    });
-}
-
-LeoCdpAdmin.navFunctions.loadPersonalizationWidgets = function(breadcrumbHtml) {
-    LeoCdpAdmin.loadView('/view/modules/personalization/personalization-widget-list.html?admin=1', pageDomSelector, function () {
-    	$('#page_breadcrumb').html(breadcrumbHtml);
-    	initPersonalizationWidgets();
-    });
-}
-
 //###################### Customer Activation ######################
 
 LeoCdpAdmin.navFunctions.loadActivationRules = function(breadcrumbHtml) {
@@ -360,6 +343,22 @@ LeoCdpAdmin.navFunctions.loadEmailCampaignEditor = function(id, breadcrumbHtml) 
     LeoCdpAdmin.loadView('/view/modules/activation/email-campaign-editor.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
     	initEmailCampaignEditor(id);
+    });
+}
+
+//###################### Personalization AI Hub navigation ######################
+
+LeoCdpAdmin.navFunctions.loadPersonalizationModels = function(breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/modules/personalization/personalization-model-list.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+    	initPersonalizationModels();
+    });
+}
+
+LeoCdpAdmin.navFunctions.loadPersonalizationWidgets = function(breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/modules/personalization/personalization-widget-list.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+    	initPersonalizationWidgets();
     });
 }
 

@@ -8,12 +8,12 @@ import leotech.cms.dao.CategoryDaoUtil;
 import leotech.cms.model.Category;
 import leotech.cms.model.Page;
 import leotech.cms.service.CategoryDataService;
-import leotech.core.api.BaseSecuredDataApi;
+import leotech.core.api.SecuredWebDataHandler;
 import leotech.system.model.AppMetadata;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.SystemUser;
 
-public class CmsAdminCategoryHandler extends BaseSecuredDataApi {
+public class CmsAdminCategoryHandler extends SecuredWebDataHandler {
 	// for Admin CMS, only for ROLE_ADMIN and ROLE_SUPER_ADMIN
 	static final String API_LIST_ALL = "/category/list-all";
 	static final String API_CREATE_NEW = "/category/create-new";

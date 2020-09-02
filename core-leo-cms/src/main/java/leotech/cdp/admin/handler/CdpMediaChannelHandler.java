@@ -5,13 +5,13 @@ import java.util.List;
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import leotech.cdp.model.journey.MediaChannel;
-import leotech.core.api.BaseSecuredDataApi;
+import leotech.core.api.SecuredWebDataHandler;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.SystemUser;
 import leotech.system.util.RequestInfoUtil;
 
-public class CdpMediaChannelHandler extends BaseSecuredDataApi {
+public class CdpMediaChannelHandler extends SecuredWebDataHandler {
 	
 	// for dataList view
 	static final String API_LIST_ALL = "/cdp/mediachannels";

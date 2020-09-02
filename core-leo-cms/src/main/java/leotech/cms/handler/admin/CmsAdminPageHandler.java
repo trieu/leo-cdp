@@ -7,12 +7,12 @@ import io.vertx.core.json.JsonObject;
 import leotech.cms.dao.PageDaoUtil;
 import leotech.cms.model.Page;
 import leotech.cms.service.PageDataService;
-import leotech.core.api.BaseSecuredDataApi;
+import leotech.core.api.SecuredWebDataHandler;
 import leotech.system.model.AppMetadata;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.SystemUser;
 
-public class CmsAdminPageHandler extends BaseSecuredDataApi {
+public class CmsAdminPageHandler extends SecuredWebDataHandler {
 	
 	// for Admin CMS, only for ROLE_ADMIN and ROLE_SUPER_ADMIN
 	static final String API_LIST_RECENT_PAGES_OF_CATEGORY = "/page/recent-from-category";

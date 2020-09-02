@@ -6,12 +6,12 @@ import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import leotech.cdp.model.analytics.Notebook;
 import leotech.cdp.service.Analytics360Service;
-import leotech.core.api.BaseSecuredDataApi;
+import leotech.core.api.SecuredWebDataHandler;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.SystemUser;
 import leotech.system.util.RequestInfoUtil;
 
-public class CdpAnalytics360Handler extends BaseSecuredDataApi {
+public class CdpAnalytics360Handler extends SecuredWebDataHandler {
 	
 	// for dataList view
 	static final String API_LIST_ALL = "/cdp/analytics360/notebooks";

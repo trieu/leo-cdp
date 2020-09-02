@@ -6,13 +6,13 @@ import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import leotech.cdp.model.activation.Campaign;
 import leotech.cdp.model.analytics.Notebook;
-import leotech.core.api.BaseSecuredDataApi;
+import leotech.core.api.SecuredWebDataHandler;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.SystemUser;
 import leotech.system.util.RequestInfoUtil;
 
-public class CdpCampaignHandler extends BaseSecuredDataApi {
+public class CdpCampaignHandler extends SecuredWebDataHandler {
 	
 	// for dataList view
 	static final String API_LIST_ALL = "/cdp/activationcampaigns";

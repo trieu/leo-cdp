@@ -6,12 +6,12 @@ import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import leotech.cms.dao.CategoryDaoUtil;
 import leotech.cms.model.Category;
-import leotech.core.api.BaseSecuredDataApi;
+import leotech.core.api.SecuredWebDataHandler;
 import leotech.system.model.AppMetadata;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.SystemUser;
 
-public class CategoryApiHandler extends BaseSecuredDataApi {
+public class CategoryApiHandler extends SecuredWebDataHandler {
 
     private static final String CATEGORY_LIST = "/category/list";
 

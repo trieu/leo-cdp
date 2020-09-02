@@ -3,11 +3,11 @@ package leotech.cms.handler.admin;
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import leotech.cms.service.PostDataService;
-import leotech.core.api.BaseSecuredDataApi;
+import leotech.core.api.SecuredWebDataHandler;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.SystemUser;
 
-public class AdminSystemApiHandler extends BaseSecuredDataApi {
+public class AdminSystemApiHandler extends SecuredWebDataHandler {
 	// for Admin CMS, only for ROLE_SUPER_ADMIN
 	static final String API_SYSTEM_COMMAND = "/system/command";
 

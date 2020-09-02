@@ -16,8 +16,8 @@ import leotech.cms.model.FileMetadata;
 import leotech.core.api.BaseApiHandler;
 import leotech.core.api.BaseApiRouter;
 import leotech.core.api.BaseHttpRouter;
-import leotech.core.api.BaseSecuredDataApi;
-import leotech.core.api.BaseSecuredDataApi.JsonErrorPayload;
+import leotech.core.api.SecuredWebDataHandler;
+import leotech.core.api.SecuredWebDataHandler.JsonErrorPayload;
 import leotech.system.model.FileUploaderData;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.SystemUser;
@@ -52,7 +52,7 @@ public class UploadFileHttpRouter extends BaseHttpRouter {
 		String userSession = StringUtil.safeString(reqHeaders.get(BaseApiRouter.HEADER_SESSION));
 		String refObjClass = StringUtil.safeString(reqHeaders.get("refObjectClass"));
 		String refObjKey = StringUtil.safeString(reqHeaders.get("refObjectKey"));
-		SystemUser loginUser = BaseSecuredDataApi.getUserFromSession(userSession);
+		SystemUser loginUser = SecuredWebDataHandler.getUserFromSession(userSession);
 
 		// CORS Header
 		BaseHttpRouter.setCorsHeaders(outHeaders, origin);
@@ -65,7 +65,7 @@ public class UploadFileHttpRouter extends BaseHttpRouter {
 		if (HTTP_POST_NAME.equalsIgnoreCase(httpMethod)) {
 			boolean ok = false;
 			if (loginUser != null) {
-				if (BaseSecuredDataApi.isAdminRole(loginUser)) {
+				if (SecuredWebDataHandler.isAdminRole(loginUser)) {
 
 					FileUploaderData data = new FileUploaderData();
 					for (io.vertx.ext.web.FileUpload uploadedFile : context.fileUploads()) {

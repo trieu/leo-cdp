@@ -8,11 +8,15 @@ import java.util.Map;
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
 
+import leotech.cdp.dao.singleview.ProfileSingleDataView;
 import leotech.cdp.model.customer.Profile;
 import leotech.cdp.model.customer.Segment;
 import leotech.cdp.query.ProfileQuery;
 import leotech.core.config.AqlTemplate;
+import leotech.system.model.DataFilter;
+import leotech.system.model.JsonDataTablePayload;
 import leotech.system.util.database.ArangoDbQuery;
+import leotech.system.util.database.ArangoDbQuery.CallbackQuery;
 
 /**
  * Segment Data Access Object
@@ -69,13 +73,51 @@ public class SegmentDaoUtil extends BaseLeoCdpDao {
 		return s;
 	}
 	
-	public static List<Profile> list(int startIndex, int numberResult) {
+	public static List<Segment> list(int startIndex, int numberResult) {
 		ArangoDatabase db = getCdpDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(2);
 		bindVars.put("startIndex", startIndex);
 		bindVars.put("numberResult", numberResult);
-		List<Profile> list = new ArangoDbQuery<Profile>(db, AQL_GET_SEGMENTS_BY_PAGINATION, bindVars, Profile.class).getResultsAsList();
+		List<Segment> list = new ArangoDbQuery<Segment>(db, AQL_GET_SEGMENTS_BY_PAGINATION, bindVars, Segment.class).getResultsAsList();
 		return list;
+	}
+	
+	public static JsonDataTablePayload filter(DataFilter filter){
+		int draw = filter.getDraw();
+		
+		List<Segment> list = runFilterQuery(filter);
+		long recordsTotal = countTotalOfSegments();
+		long recordsFiltered = getTotalRecordsFiltered(filter);
+		
+		JsonDataTablePayload payload =  JsonDataTablePayload.data(filter.getUri(), list, recordsTotal, recordsFiltered, draw);
+		return payload;
+	}
+	
+	private static List<Segment> runFilterQuery(DataFilter filter) {
+		ArangoDatabase db = getCdpDbInstance();
+		//TODO dynamic query builder for filtering data
+		List<Segment> list = getSegmentsByPagination(filter, db);
+		return list;
+	}
+
+	private static List<Segment> getSegmentsByPagination(DataFilter filter, ArangoDatabase db) {
+		Map<String, Object> bindVars = new HashMap<>(2);
+		bindVars.put("startIndex", filter.getStart());
+		bindVars.put("numberResult", filter.getLength());
+		
+		ArangoDbQuery<Segment> q = new ArangoDbQuery<Segment>(db, AQL_GET_SEGMENTS_BY_PAGINATION, bindVars, Segment.class);
+		List<Segment> list = q.getResultsAsList();
+		return list;
+	}
+	
+	public static long getTotalRecordsFiltered(DataFilter filter) {
+		//TODO
+		return countTotalOfSegments();
+	}
+	
+	public static long countTotalOfSegments() {
+		ArangoDatabase db = getCdpDbInstance();
+		return db.collection(Segment.COLLECTION_NAME).count().getCount();
 	}
 
 }

@@ -184,8 +184,7 @@ public class ProfileDaoUtil  extends BaseLeoCdpDao {
 
 	public static long countTotalOfProfiles() {
 		ArangoDatabase db = getCdpDbInstance();
-		long c = db.collection(Profile.COLLECTION_NAME).count().getCount();
-		return c;
+		return db.collection(Profile.COLLECTION_NAME).count().getCount();
 	}
 	
 

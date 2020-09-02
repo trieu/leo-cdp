@@ -142,7 +142,6 @@ public class ProfileDataService {
 	}
 	
 	public static JsonDataTablePayload filter(DataFilter filter){
-		
 		//TODO caching
 		return ProfileDaoUtil.filter(filter);
 	}
@@ -204,7 +203,13 @@ public class ProfileDataService {
 		return pf;
 	}
 	
-	public static Profile updateSingleDataViewFromJson(String json) {
+	/**
+	 * update profile data must be an instance of ProfileSingleDataView (list -> get -> update)
+	 * 
+	 * @param json
+	 * @return
+	 */
+	public static Profile updateFromJson(String json) {
 		ProfileSingleDataView dataObj = new Gson().fromJson(json, ProfileSingleDataView.class);
 		
 		// TODO run in a thread to commit to database
@@ -215,6 +220,7 @@ public class ProfileDataService {
 	
 	public static boolean remove(String profileId) {
 		Profile pf = ProfileDaoUtil.getById(profileId);
+		// the data is not deleted, we need to remove it from valid data view, set status of object = -4
 		pf.setStatus(-4);
 		
 		// TODO run in a thread to commit to database

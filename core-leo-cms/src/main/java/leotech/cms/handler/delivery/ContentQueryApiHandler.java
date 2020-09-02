@@ -12,13 +12,13 @@ import leotech.cms.dao.PostDaoUtil;
 import leotech.cms.model.ContentClassPostQuery;
 import leotech.cms.model.Page;
 import leotech.cms.model.Post;
-import leotech.core.api.BaseSecuredDataApi;
+import leotech.core.api.SecuredWebDataHandler;
 import leotech.query.util.SearchPostUtil;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.SystemUser;
 import rfx.core.util.StringUtil;
 
-public class ContentQueryApiHandler extends BaseSecuredDataApi {
+public class ContentQueryApiHandler extends SecuredWebDataHandler {
 	static final String API_QUERY_POST_BY_CONTENT_CLASS_AND_KEYWORDS = "/query/posts-by-contentclass-and-keywords";
 	static final String API_QUERY_POST_BY_CATEGORY_AND_KEYWORDS = "/query/post-by-categories-and-keywords";
 	static final String API_QUERY_PAGE_BY_KEYWORDS = "/query/page-by-keywords";

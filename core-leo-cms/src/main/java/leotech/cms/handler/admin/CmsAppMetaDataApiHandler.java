@@ -4,13 +4,13 @@ import java.util.List;
 
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
-import leotech.core.api.BaseSecuredDataApi;
+import leotech.core.api.SecuredWebDataHandler;
 import leotech.system.model.AppMetadata;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.SystemUser;
 import leotech.system.service.AppMetadataService;
 
-public class CmsAppMetaDataApiHandler extends BaseSecuredDataApi {
+public class CmsAppMetaDataApiHandler extends SecuredWebDataHandler {
 
 	// for Admin CMS, only for ROLE_ADMIN and ROLE_SUPER_ADMIN
 	static final String API_LIST_ALL = "/media-network/list-all";

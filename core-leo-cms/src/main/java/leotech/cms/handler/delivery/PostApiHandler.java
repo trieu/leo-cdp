@@ -12,13 +12,13 @@ import leotech.cms.model.Post;
 import leotech.cms.model.renderable.PostDataModel;
 import leotech.cms.model.renderable.WebData;
 import leotech.cms.service.PostDataService;
-import leotech.core.api.BaseSecuredDataApi;
+import leotech.core.api.SecuredWebDataHandler;
 import leotech.system.model.AppMetadata;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.SystemUser;
 import rfx.core.util.StringUtil;
 
-public class PostApiHandler extends BaseSecuredDataApi {
+public class PostApiHandler extends SecuredWebDataHandler {
 
 	static final String URI_GET_POSTS_BY_CONTENT_CLASS = "/post/by-content-class";
 	static final String URI_GET_RECENT_POSTS_FROM_PAGE = "/post/recent-from-page";
@@ -181,9 +181,9 @@ public class PostApiHandler extends BaseSecuredDataApi {
 				// TODO implement recommendation engine here
 				List<Post> simlilarPosts = PostDataService.getSimilarPosts(contextPageIds, postId);
 				model.setRecommendedPosts(simlilarPosts);
-				SystemUser user = BaseSecuredDataApi.getUserFromSession(userSession);
+				SystemUser user = SecuredWebDataHandler.getUserFromSession(userSession);
 				if (user != null) {
-					model.setAdminRole(BaseSecuredDataApi.isAdminRole(user));
+					model.setAdminRole(SecuredWebDataHandler.isAdminRole(user));
 					model.setSessionUserId(user.getKey());
 				}
 			} else {

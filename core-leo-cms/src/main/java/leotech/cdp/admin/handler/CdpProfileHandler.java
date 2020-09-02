@@ -9,14 +9,14 @@ import leotech.cdp.dao.singleview.ProfileSingleDataView;
 import leotech.cdp.model.customer.Profile;
 import leotech.cdp.service.EventTrackingService;
 import leotech.cdp.service.ProfileDataService;
-import leotech.core.api.BaseSecuredDataApi;
+import leotech.core.api.SecuredWebDataHandler;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.JsonDataTablePayload;
 import leotech.system.model.SystemUser;
 import leotech.system.util.RequestInfoUtil;
 
-public class CdpProfileHandler extends BaseSecuredDataApi {
+public class CdpProfileHandler extends SecuredWebDataHandler {
 	
 	// for dataList view
 	static final String API_LIST_ALL = "/cdp/profiles";
@@ -61,11 +61,16 @@ public class CdpProfileHandler extends BaseSecuredDataApi {
 					}
 					case API_UPDATE_MODEL : {
 						String json = paramJson.getString("objectJson", "{}");
-						String id = ProfileDataService.updateSingleDataViewFromJson(json).getId();
-						return JsonDataPayload.ok(uri, id, loginUser, Profile.class);
+						Profile profile = ProfileDataService.updateFromJson(json);
+						if(profile != null) {
+							String id = profile.getId();
+							return JsonDataPayload.ok(uri, id, loginUser, Profile.class);
+						} else {
+							return JsonDataPayload.fail("failed to save Profile data into database", 500);
+						}
 					}
 					case API_REMOVE : {
-						// the data is not deleted, we need to remove it from valid data view, set status of object = -4
+						
 						String id = paramJson.getString("id", "");
 						boolean rs = ProfileDataService.remove(id);
 						return JsonDataPayload.ok(uri, rs, loginUser, Profile.class);

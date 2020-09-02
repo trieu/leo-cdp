@@ -18,7 +18,7 @@ import rfx.core.configs.RedisConfigs;
 import rfx.core.nosql.jedis.RedisCommand;
 import rfx.core.util.StringUtil;
 
-public abstract class BaseSecuredDataApi extends BaseApiHandler {
+public abstract class SecuredWebDataHandler extends BaseApiHandler {
 
 	public static final boolean DEV_MODE = false;
 	private static final SystemUser DEFAULT_ROOT_USER = SystemUser.createTestUser();
@@ -228,8 +228,7 @@ public abstract class BaseSecuredDataApi extends BaseApiHandler {
 	 * @return
 	 * @throws Exception
 	 */
-	abstract public JsonDataPayload httpPostApiHandler(String userSession, String uri, JsonObject paramJson)
-			throws Exception;
+	abstract public JsonDataPayload httpPostApiHandler(String userSession, String uri, JsonObject paramJson) throws Exception;
 
 	/**
 	 * HTTP get data handler for JSON
@@ -240,7 +239,6 @@ public abstract class BaseSecuredDataApi extends BaseApiHandler {
 	 * @return
 	 * @throws Exception
 	 */
-	abstract public JsonDataPayload httpGetApiHandler(String userSession, String uri, MultiMap params)
-			throws Exception;
+	abstract public JsonDataPayload httpGetApiHandler(String userSession, String uri, MultiMap params) throws Exception;
 
 }

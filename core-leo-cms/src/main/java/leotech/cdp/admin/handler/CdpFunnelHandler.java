@@ -11,12 +11,12 @@ import leotech.cdp.dao.BehavioralEventMetricDao;
 import leotech.cdp.model.analytics.Notebook;
 import leotech.cdp.model.journey.BehavioralEventMetric;
 import leotech.cdp.model.journey.FunnelStage;
-import leotech.core.api.BaseSecuredDataApi;
+import leotech.core.api.SecuredWebDataHandler;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.SystemUser;
 import leotech.system.util.RequestInfoUtil;
 
-public class CdpFunnelHandler extends BaseSecuredDataApi {
+public class CdpFunnelHandler extends SecuredWebDataHandler {
 	
 	// for dataList view
 	static final String API_LIST_ALL_WITH_FUNNEL_TYPES = "/cdp/funnels-and-event-metrics";

@@ -11,14 +11,14 @@ import io.vertx.core.json.JsonObject;
 import leotech.cms.dao.PostDaoUtil;
 import leotech.cms.model.Post;
 import leotech.cms.service.PostDataService;
-import leotech.core.api.BaseSecuredDataApi;
+import leotech.core.api.SecuredWebDataHandler;
 import leotech.query.util.SearchPostUtil;
 import leotech.system.model.AppMetadata;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.SystemUser;
 import rfx.core.util.StringUtil;
 
-public class CmsAdminPostApiHandler extends BaseSecuredDataApi {
+public class CmsAdminPostApiHandler extends SecuredWebDataHandler {
 
 	// for Admin CMS, only for ROLE_ADMIN and ROLE_SUPER_ADMIN
 	static final String API_LIST_ALL = "/post/list-all";
