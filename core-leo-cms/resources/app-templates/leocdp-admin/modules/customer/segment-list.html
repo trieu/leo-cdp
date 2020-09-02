@@ -100,7 +100,7 @@
                     {
                         "render": function (data, type, row) {
                         	var typeName = 'AD_HOC_QUERY';
-                            return '<small>' + typeName + '</small>';
+                            return '<div class="datatable_text">' + typeName + '</div>';
                         },
                         "targets": 2
                     },
@@ -128,7 +128,7 @@
                         	else if(data === 1){
                         		statusText = 'ACTIVATED';
                         	}
-                            return '<small>' + statusText + '</small>';
+                            return '<div class="datatable_text">' + statusText + '</div>';
                         },
                         "targets": 5
                     },

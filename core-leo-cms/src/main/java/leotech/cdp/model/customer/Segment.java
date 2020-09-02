@@ -26,22 +26,22 @@ import rfx.core.util.StringUtil;
  */
 public class Segment extends CdpPersistentObject implements Comparable<Segment> {
 	public static final String COLLECTION_NAME = getCollectionName(Segment.class);
-	static ArangoCollection dbCollection;
+	static ArangoCollection dbCol;
 
 	@Override
 	public ArangoCollection getCollection() {
-		if (dbCollection == null) {
+		if (dbCol == null) {
 			ArangoDatabase arangoDatabase = getDatabaseInstance();
 
-			dbCollection = arangoDatabase.collection(COLLECTION_NAME);
+			dbCol = arangoDatabase.collection(COLLECTION_NAME);
 
 			// ensure indexing key fields for fast lookup
-			dbCollection.ensureFulltextIndex(Arrays.asList("name"), new FulltextIndexOptions().inBackground(true) );
-			dbCollection.ensurePersistentIndex(Arrays.asList("type"), new PersistentIndexOptions().unique(false));
-			dbCollection.ensurePersistentIndex(Arrays.asList("dataPipelineUrl"),new PersistentIndexOptions().unique(false));
-			dbCollection.ensurePersistentIndex(Arrays.asList("keywords[*]"),new PersistentIndexOptions().unique(false));
+			dbCol.ensureFulltextIndex(Arrays.asList("name"), new FulltextIndexOptions().inBackground(true).minLength(3) );
+			dbCol.ensurePersistentIndex(Arrays.asList("type"), new PersistentIndexOptions().unique(false));
+			dbCol.ensurePersistentIndex(Arrays.asList("dataPipelineUrl"),new PersistentIndexOptions().unique(false));
+			dbCol.ensurePersistentIndex(Arrays.asList("keywords[*]"),new PersistentIndexOptions().unique(false));
 		}
-		return dbCollection;
+		return dbCol;
 	}
 
 	@DocumentField(Type.KEY)

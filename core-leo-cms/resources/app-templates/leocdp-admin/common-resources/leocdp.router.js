@@ -38,11 +38,11 @@ LeoCdpAdmin.navRouters = {
 		},
 		
 		// 1.3 Analytics 360 Notebooks
-		"Analytics_360_Notebooks": {
-			"menuName" : "Analytics 360 Notebooks",
-			"functionName" : "loadAnalytics360Notebooks",
-			"breadcrumb" : ["Unified Analytics Hub", "Analytics 360 Notebooks"],
-			"activeMenuItem" : "Analytics_360_Notebooks"
+		"Data_Science_Notebooks": {
+			"menuName" : "Data Science Notebooks",
+			"functionName" : "loadDataScienceNotebooks",
+			"breadcrumb" : ["Unified Analytics Hub", "Data Science Notebooks"],
+			"activeMenuItem" : "Data_Science_Notebooks"
 		
 		},
 		

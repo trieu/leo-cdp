@@ -33,8 +33,8 @@ LeoCdpAdmin.navFunctions.loadContentDashboard = function (breadcrumbHtml) {
     });
 }
 
-LeoCdpAdmin.navFunctions.loadAnalytics360Notebooks = function (breadcrumbHtml) {
-	LeoCdpAdmin.loadView('/view/modules/analytics/analytics-360-notebooks.html?admin=1', pageDomSelector, function () {
+LeoCdpAdmin.navFunctions.loadDataScienceNotebooks = function (breadcrumbHtml) {
+	LeoCdpAdmin.loadView('/view/modules/analytics/data-science-notebooks.html?admin=1', pageDomSelector, function () {
 		$('#page_breadcrumb').html(breadcrumbHtml);
 		initAnalytics360Notebooks();
     });
