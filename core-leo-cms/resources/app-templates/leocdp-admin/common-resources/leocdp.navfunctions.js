@@ -143,10 +143,10 @@ LeoCdpAdmin.navFunctions.loadSegmentBuilder = function (segmentId, breadcrumbHtm
     });
 }
 
-LeoCdpAdmin.navFunctions.loadSegmentReport = function (segmentId, breadcrumbHtml) {
-    LeoCdpAdmin.loadView('/view/modules/customer/segment-report.html?admin=1', pageDomSelector, function () {
+LeoCdpAdmin.navFunctions.loadSegmentDetails = function (segmentId, breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/modules/customer/segment-details.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
-    	initSegmentReport(segmentId);
+    	initSegmentDetails(segmentId);
     });
 }
 

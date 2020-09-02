@@ -86,7 +86,7 @@
                 'columnDefs': [
                 	{
                         "render": function (data, type, row) {
-                        	var callJsViewStr = "#calljs-leoCdpRouter('Segment_Report','" + row.id + "')";
+                        	var callJsViewStr = "#calljs-leoCdpRouter('Segment_Details','" + row.id + "')";
                             return '<a title="Segment Report: '+data+'" href="' + callJsViewStr + '" >'+textTruncate(data,50)+'</a>';
                         },
                         "targets": 0
@@ -151,7 +151,7 @@
                     },
                     {
                         "render": function (data, type, row) {
-                            var callJsViewStr = "#calljs-leoCdpRouter('Segment_Report','" + row.id + "')";
+                            var callJsViewStr = "#calljs-leoCdpRouter('Segment_Details','" + row.id + "')";
                             var html = '<a class="control" title="Segment Report" href="' + callJsViewStr + '" > <i class="fa fa-info-circle" aria-hidden="true"></i> View</a>';
                         	if( canEditData ){
                         		var callJsEditStr = "#calljs-leoCdpRouter('Segment_Builder','" + row.id + "')";

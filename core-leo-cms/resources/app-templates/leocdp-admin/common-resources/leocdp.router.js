@@ -254,10 +254,10 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Customer Data Hub", "Segment Data List", "Segment Builder"],
 			"activeMenuItem" : "Segment_Data_List"
 		},
-		"Segment_Report" : {
-			"menuName" : "Segment Report",
-			"functionName" : "loadSegmentReport",
-			"breadcrumb" : ["Customer Data Hub", "Segment Data List", "Segment Report"],
+		"Segment_Details" : {
+			"menuName" : "Segment Details",
+			"functionName" : "loadSegmentDetails",
+			"breadcrumb" : ["Customer Data Hub", "Segment Data List", "Segment Details"],
 			"activeMenuItem" : "Segment_Data_List"
 		},
 		"Segment_Activation" : {
