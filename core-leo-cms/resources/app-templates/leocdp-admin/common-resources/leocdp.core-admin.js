@@ -472,3 +472,8 @@ LeoCdpAdmin.updateDataObjectOfView = function(urlStr, params, callback) {
 var jsGridItemUrlTemplate = function(value) {
     return $("<a>").attr('target','_blank').attr('title',value).attr("href", value).text(value);
 }
+
+var getJqueryBuilderStringOperators = function(){
+	var stringOperators = ["equal", "not_equal", "is_null", "is_not_null","begins_with","not_begins_with","contains","not_contains","ends_with","not_ends_with","is_empty","is_not_empty"];
+	return stringOperators
+}

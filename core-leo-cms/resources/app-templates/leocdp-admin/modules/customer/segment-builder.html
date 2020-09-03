@@ -6,174 +6,254 @@
 		<h4 class="page-header" id="page_breadcrumb"></h4>
 	</div>
 	<div class="col-lg-2 text-center" style="padding: 10px">
-		<button type="button" class="btn btn-success" onclick="">New
-			Segment</button>
+		<button type="button" class="btn btn-success" onclick="">
+			Save</button>
+		<button type="button" class="btn btn-default" onclick="">
+			Cancel</button>
 	</div>
 </div>
 
-<div class="row float-right">
 
-	<div class='col-md-2 col-xs-12'>
-		<div class="form-group">
-			<div class='input-group date' id='beginFilterDate'>
-				<input type='text' class="form-control" autocomplete="off" /> <span
-					class="input-group-addon"> <span
-					class="glyphicon glyphicon-calendar"></span>
-				</span>
+<div class="container row">
+	<h2>Segment Builder</h2>
+	<p> Enter the name of segment and use query builder to search profiles </p>
+	<div class="panel-group">
+	
+		<div class="panel panel-primary">
+			<div class="panel-heading"> <b> Segment Details </b> </div>
+			<div class="panel-body">
+				<div class="col-lg-9">
+					<form class="form-horizontal" action="/action_page.php">
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="name">Name:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="name" placeholder="Enter segment name" name="name">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="description">Description:</label>
+							<div class="col-sm-10">
+								<textarea class="form-control" rows="2"  name="description" id="description" placeholder="Enter segment description" ></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="type">Segment Type:</label>
+							<div class="col-sm-10">
+								<div class="radio">
+								  <label><input type="radio" name="type" checked value="9" > Ad hoc query segmentation </label>
+								</div>
+								
+								<div class="radio">
+								  <label><input type="radio" name="type"  value="1" disabled="disabled" > Geographic segmentation</label>
+								</div>
+								<div class="radio">
+								  <label><input type="radio" name="type"  value="2" disabled="disabled" > Demographic segmentation</label>
+								</div>
+								<div class="radio">
+								  <label><input type="radio" name="type"  value="3" disabled="disabled" > Psychographic segmentation </label>
+								</div>
+								<div class="radio">
+								  <label><input type="radio" name="type"  value="4" disabled="disabled" > Behavioral segmentation </label>
+								</div>
+								
+								<div class="radio">
+								  <label><input type="radio" name="type"  value="5" disabled="disabled" > Re-marketing segmentation </label>
+								</div>
+								<div class="radio">
+								  <label><input type="radio" name="type"  value="6" disabled="disabled" > Look-alike segmentation </label>
+								</div>
+								
+								<div class="radio">
+								  <label><input type="radio" name="type" value="7" disabled="disabled" > RFM model Segmentation </label>
+								</div>
+								<div class="radio">
+								  <label><input type="radio" name="type"  value="8" disabled="disabled" > Churn segmentation </label>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="autoQuery"> Auto Query: </label>
+							<div class="col-sm-10">
+								<div class="checkbox">
+									<label><input type="checkbox" name="autoQuery"> Automatic adding new profile who is matched query builder</label>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="col-lg-3 text-center">
+					<b> Segment Size </b>
+					<div id="donut_chart" style="max-width: 300px; margin: auto;"></div>
+				</div>
+
+			</div>
+		</div>
+		
+		<div class="panel panel-primary">
+			<div class="panel-heading"> <b> Segment Query Builder </b> </div>
+			<div class="panel-body">
+				<div class='col-md-2 col-xs-12'>
+					<div class="form-group">
+						<div class='input-group date' id='beginFilterDate'>
+							<input type='text' class="form-control" autocomplete="off" /> <span
+								class="input-group-addon"> <span
+								class="glyphicon glyphicon-calendar"></span>
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class='col-md-2 col-xs-12'>
+					<div class="form-group">
+						<div class='input-group date' id='endFilterDate'>
+							<input type='text' class="form-control" autocomplete="off" /> <span
+								class="input-group-addon"> <span
+								class="glyphicon glyphicon-calendar"></span>
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-12">
+					<div id="segment-builder"></div>
+
+					<div class="btn-group">
+						<button class="btn btn-warning" id="btn-reset">Reset</button>
+						<button class="btn btn-secondary" id="btn-computesize"> Count Matched Profile </button>
+						<button class="btn btn-primary" id="btn-save">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-success">
+			<div class="panel-heading"> <b> List of all profiles from query builder </b>  </div>
+			<div class="panel-body">
+				<div class="table-responsive">
+					<table id="profile-list" class="display" style="width: 100%">
+						<thead>
+							<tr>
+								<th>UUID</th>
+								<th>Last touchpoint</th>
+								<th>Type</th>
+								<th>Name</th>
+								<th>Primary email</th>
+								<th>Primary phone</th>
+								<th>Created at</th>
+								<th>Updated at</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>
-	<div class='col-md-2 col-xs-12'>
-		<div class="form-group">
-			<div class='input-group date' id='endFilterDate'>
-				<input type='text' class="form-control" autocomplete="off" /> <span
-					class="input-group-addon"> <span
-					class="glyphicon glyphicon-calendar"></span>
-				</span>
-			</div>
-		</div>
-	</div>
-
 </div>
 
-<div class="row">
-	<div class="col-lg-9">
-		<div id="segment-builder"></div>
 
-		<div class="btn-group">
-			<button class="btn btn-warning" id="btn-reset">Reset</button>
-			<button class="btn btn-secondary" id="btn-computesize">Compute
-				size</button>
-			<button class="btn btn-primary" id="btn-save">Save</button>
-		</div>
-	</div>
-	<div class="col-lg-3 text-center">
-		Segment summary
-		<div id="donut_chart" style="max-width: 300px;margin: auto;"></div>
-	</div>
-</div>
-
-  <div class="row gridholder">
-        <div class="col-lg-12">
-            <div class="table-responsive">
-                <table id="profile-list" class="display" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>UUID</th>
-                            <th>Last touchpoint</th>
-                            <th>Type</th>
-                            <th>Name</th>
-                            <th>Primary email</th>
-                            <th>Primary phone</th>
-                            <th>Created at</th>
-                            <th>Updated at</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
-        </div>
-    </div>
 
 
 <script>
 	var initSegmentBuilder = initSegmentBuilder || function(id) {
+		// Date Range Filtering Controller
+		initDateFilterComponent();
+
+		// jquery builder
 		loadSegmentBuilder();
+		
+		computeSegmentSize()
 	}
 
 	var computeSegmentSize = computeSegmentSize || function() {
 		var data = [ {
 			name : 'high value',
-			count : 90000000,
+			count : 0,
 			color : '#000000'
 		}, {
 			name : 'total',
-			count : 100000000,
+			count : 1000,
 			color : '#f8b70a'
 		}, ];
-		var totalCount = 100000000; // total manually
-		var domSelector = '#donut_chart'
+		var totalCount = 0; // total manually
+		var domSelector = '#donut_chart';
+		var percentNum = 0;
 		var width = $(domSelector).empty().width(), height = width, radius = width - 140;
-		renderDonutChart(domSelector, data, totalCount, width, height, radius, 42)
+		renderDonutChart(domSelector, data, totalCount, width, height, radius, percentNum)
 	}
 
+	var dataFilter = [ {
+		id : "firstName",
+		label : "First Name",
+		type : "string",
+		operators : getJqueryBuilderStringOperators(),
+	}, {
+		id : "lastName",
+		label : "Last Name",
+		type : "string",
+		operators : getJqueryBuilderStringOperators(),
+	}, {
+		id : "primaryEmail",
+		label : "Email",
+		type : "string",
+		operators : getJqueryBuilderStringOperators(),
+	}, {
+		id : "primaryPhone",
+		label : "Phone",
+		type : "string",
+		operators : getJqueryBuilderStringOperators(),
+	}, {
+		id : "livingLocation",
+		label : "Living Location",
+		type : "string",
+		operators : getJqueryBuilderStringOperators(),
+	}, {
+		id : "age",
+		label : "Age",
+		type : "integer",
+		validation : {
+			min : 16,
+			step : 1,
+		},
+	}, {
+		id : "gender",
+		label : "Gender",
+		type : "integer",
+		input : "radio",
+		values : {
+			6 : "Unknown",
+			1 : "Male",
+			0 : "Female",
+			2 : "Lesbian",
+			3 : "Gay",
+			4 : "Bisexual",
+			5 : "Transgender",
+		},
+		operators : [ "equal" ],
+	}, {
+		id : "totalDataQualityScore",
+		label : "Total Data Quality Score",
+		type : "integer",
+		validation : {
+			min : 0,
+			step : 1,
+		},
+	}, {
+		id : "totalLeadScore",
+		label : "Total Lead Score",
+		type : "integer",
+		validation : {
+			min : 0,
+			step : 1,
+		},
+	} ];
+
 	var loadSegmentBuilder = loadSegmentBuilder || function() {
-		var rules_basic = {
-			condition : 'AND',
-			rules : [ {
-				id : 'price',
-				operator : 'less',
-				value : 10.25
-			}, {
-				condition : 'OR',
-				rules : [ {
-					id : 'category',
-					operator : 'equal',
-					value : 2
-				}, {
-					id : 'category',
-					operator : 'equal',
-					value : 1
-				} ]
-			} ]
-		};
-		$('#segment-builder').queryBuilder(
-				{
-					plugins : [ 'bt-tooltip-errors' ],
+		var rules_basic = null;
 
-					filters : [
-							{
-								id : 'name',
-								label : 'Name',
-								type : 'string'
-							},
-							{
-								id : 'category',
-								label : 'Category',
-								type : 'integer',
-								input : 'select',
-								values : {
-									1 : 'Books',
-									2 : 'Movies',
-									3 : 'Music',
-									4 : 'Tools',
-									5 : 'Goodies',
-									6 : 'Clothes'
-								},
-								operators : [ 'equal', 'not_equal',
-										'in', 'not_in', 'is_null',
-										'is_not_null' ]
-							}, {
-								id : 'in_stock',
-								label : 'In stock',
-								type : 'integer',
-								input : 'radio',
-								values : {
-									1 : 'Yes',
-									0 : 'No'
-								},
-								operators : [ 'equal' ]
-							}, {
-								id : 'price',
-								label : 'Price',
-								type : 'double',
-								validation : {
-									min : 0,
-									step : 0.01
-								}
-							}, {
-								id : 'id',
-								label : 'Identifier',
-								type : 'string',
-								placeholder : '____-____-____',
-								operators : [ 'equal', 'not_equal' ],
-								validation : {
-									format : /^.{4}-.{4}-.{4}$/
-								}
-							} ],
-
-					rules : rules_basic
-				});
+		$('#segment-builder').queryBuilder({
+			plugins : [ 'bt-tooltip-errors' ],
+			filters : dataFilter,
+			rules : rules_basic
+		});
 
 		$('#btn-reset').on('click', function() {
 			$('#segment-builder').queryBuilder('reset');
@@ -183,17 +263,11 @@
 			computeSegmentSize()
 		});
 
-		$('#btn-save').on(
-				'click',
-				function() {
-					var result = $('#segment-builder').queryBuilder(
-							'getRules');
-
-					if (!$.isEmptyObject(result)) {
-						alert(JSON.stringify(result, null, 2));
-					}
-				});
+		$('#btn-save').on('click', function() {
+			var result = $('#segment-builder').queryBuilder('getRules');
+			if (!$.isEmptyObject(result)) {
+				alert(JSON.stringify(result, null, 2));
+			}
+		});
 	}
-	
-	
 </script>
