@@ -4,6 +4,11 @@ import com.google.gson.Gson;
 
 import io.vertx.core.json.JsonObject;
 
+/**
+ * @author tantrieuf31
+ * @since 2020
+ *
+ */
 public class DataFilter {
 
 	String uri;

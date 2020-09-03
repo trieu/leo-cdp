@@ -7,14 +7,16 @@
 	</div>
 	<div class="col-lg-3 text-center" style="padding: 10px">
 		<button type="button" class="btn btn-danger data-control-delete" onclick=""> Remove </button>
-		<button type="button" class="btn btn-default" onclick=""> Cancel </button>
-		<button type="button" class="btn btn-success" onclick=""> Save </button>
+		<button type="button" class="btn btn-default" onclick="history.back()"> Cancel </button>
+		<button type="button" class="btn btn-success" onclick="" > Save </button>
 	</div>
 </div>
 
 <div class="container row">
-	<h3>Segment Builder</h3>
+	
+	<h3> Segment Builder </h3>
 	<p> Enter the name of segment and use query builder to search profiles </p>
+	
 	<div class="panel-group">
 	
 		<!--  1 metadata  -->
@@ -123,7 +125,7 @@
 					<div id="segment-builder-holder"></div>
 				</div>
 				<div class="col-lg-3 text-center">
-					<b> Segment Size </b>
+					<b> Segment Size / Total Profiles </b>
 					<div id="donut_chart" style="max-width: 300px; margin: auto;"></div>
 				</div>
 			</div>
@@ -131,7 +133,7 @@
 		
 		<!--  3 profiles  -->
 		<div class="panel panel-leoadmin" id="profile-list-panel" style="display: none" >
-			<div class="panel-heading"> <b> <i class="fa fa-list" aria-hidden="true"></i> List of all profiles in this segment from query builder </b>  </div>
+			<div class="panel-heading"> <b> <i class="fa fa-list" aria-hidden="true"></i> List of all profiles in segment </b>  </div>
 			<div class="panel-body">
 				<div class="table-responsive">
 					<table id="profile-list" class="display" style="width:100%;">
@@ -142,9 +144,9 @@
 	                            <th>Gender</th>
 	                            <th>Last seen touchpoint</th>
 	                            <th>Primary Email</th>
-	                            <th>Phone</th>
+	                            <th>Primary Phone</th>
 	                            <th>Created at</th>
-	                            <th>Updated at</th>
+	                            <th>Last Updated at</th>
 	                        </tr>
 	                    </thead>
 	                </table>
@@ -154,27 +156,26 @@
 	</div>
 </div>
 
+<script src="/view/common-resources/leocdp.segmentation.js?admin=1"></script>
 
 <script>
-	var currentSegmentId = false;
+
 	var initSegmentBuilder = initSegmentBuilder || function(id) {
 		// Date Range Filtering Controller
 		
-
 		if(id === 'new'){
 			// init UI for new segment
 			initDateFilterComponent(true);
 			loadSegmentBuilder(false);
 			loadSegmentStatistics(false);
 		} else {
-			loadSegmentDetails(id)
+			getSegmentBuilderData(id)
 		}
 	}
 	
-	function loadSegmentDetails(id) {
+	var getSegmentBuilderData = window.getSegmentBuilderData || function(id) {
         var urlStr = baseAdminApi + '/cdp/segment/get';
-        var params = { 'id': id };
-        LeoAdminApiUtil.callPostAdminApi(urlStr, params, function (json) {
+        LeoAdminApiUtil.callPostAdminApi(urlStr, { 'id': id }, function (json) {
             if (json.httpCode === 0 && json.errorMessage === '') {
         		// only super-admin role can remove the segment 
         		var readOnlyMode = json.canEditData === false;
@@ -183,269 +184,30 @@
     			}
                 var segmentData = json.data.segmentData;
                 var segmentStats = json.data.segmentStats;
+                var segmentId = segmentData.id;
                 var jsonQueryRules = JSON.parse( segmentData.jsonQueryRules);
-                document.title = 'Segment Details - ' + segmentData.name;
-                currentSegmentId = segmentData.id;
                 
-                $('#sm_name').val(segmentData.name)
-                $('#sm_description').val(segmentData.description)
-                $('#sm_autoQuery').prop( "checked", segmentData.autoQuery );
-              
+                document.title = 'Segment Builder: ' + segmentData.name;
+                
+                setSegmentDataForm(segmentData)
                
              	// init UI after setting data into DOM
                 initDateFilterComponent(true, segmentData.beginFilterDate , segmentData.endFilterDate );
                 loadSegmentStatistics(segmentStats);
                 loadSegmentBuilder(jsonQueryRules, readOnlyMode);
-                loadProfilesInSegment(currentSegmentId)
+                loadProfilesInSegment(segmentId)
             } else {
                 LeoAdminApiUtil.logErrorPayload(json);
             }
         });
     }
-
-	var loadSegmentStatistics = loadSegmentStatistics || function(segmentStats) {
-		var domSelector = '#donut_chart';
-		var width = $(domSelector).empty().width(), height = width, radius = width - 140;
-		
-		if(segmentStats === false){
-			var data = [ {
-				name : 'high value',
-				count : 0,
-				color : '#000000'
-			}, {
-				name : 'total',
-				count : 1000,
-				color : '#f8b70a'
-			}, ];
-			var totalCount = 0; // total manually
-			var percentNum = 0;
-			renderDonutChart(domSelector, data, totalCount, width, height, radius, percentNum)
-		} else {
-			var data = [ {
-				name : 'high value',
-				count : segmentStats.totalProfilesInSegment,
-				color : '#000000'
-			}, {
-				name : 'total',
-				count : segmentStats.totalProfilesInCdp,
-				color : '#f8b70a'
-			}, ];
-			
-			var totalCount = segmentStats.totalProfilesInSegment; // total manually
-			
-			var ratio =  (segmentStats.totalProfilesInSegment / segmentStats.totalProfilesInCdp).toFixed(2);
-			var percentNum = Math.floor(ratio * 100);
-			renderDonutChart(domSelector, data, totalCount, width, height, radius, percentNum)
-		}
+	
+	var setSegmentDataForm = setSegmentDataForm || function(segmentData){
+		 $('#sm_name').val(segmentData.name)
+	     $('#sm_description').val(segmentData.description)
+	     $('#sm_autoQuery').prop( "checked", segmentData.autoQuery );
 	}
 
-	var loadSegmentBuilder = loadSegmentBuilder || function(jsonQueryRules, readOnlyMode) {
-		
-		var dataFilter = [ {
-			id : "firstName",
-			label : "First Name",
-			type : "string",
-			operators : getOperatorsForStringField(),
-		}, {
-			id : "lastName",
-			label : "Last Name",
-			type : "string",
-			operators : getOperatorsForStringField(),
-		}, {
-			id : "primaryEmail",
-			label : "Email",
-			type : "string",
-			operators : getOperatorsForStringField(),
-		}, {
-			id : "primaryPhone",
-			label : "Phone",
-			type : "string",
-			operators : getOperatorsForStringField(),
-		}, {
-			id : "livingLocation",
-			label : "Living Location",
-			type : "string",
-			operators : getOperatorsForStringField(),
-		}, {
-			id : "age",
-			label : "Age",
-			type : "integer",
-			validation : {
-				min : 16,
-				step : 1,
-			},
-			operators : getOperatorsForNumberField()
-		}, {
-			id : "gender",
-			label : "Gender",
-			type : "integer",
-			input : "radio",
-			values : {
-				6 : "Unknown",
-				1 : "Male",
-				0 : "Female",
-				2 : "Lesbian",
-				3 : "Gay",
-				4 : "Bisexual",
-				5 : "Transgender",
-			},
-			operators : [ "equal" ],
-		}, {
-			id : "totalDataQualityScore",
-			label : "Total Data Quality Score",
-			type : "integer",
-			validation : {
-				min : 0,
-				step : 1,
-			},
-			operators : getOperatorsForNumberField()
-		}, {
-			id : "totalLeadScore",
-			label : "Total Lead Score",
-			type : "integer",
-			validation : {
-				min : 0,
-				step : 1,
-			},
-			operators : getOperatorsForNumberField()
-		} ];
-		
-		var rulesOfQuery = jsonQueryRules || false;
 
-		$('#segment-builder-holder').queryBuilder({
-			plugins : [ 'bt-tooltip-errors' ],
-			filters : dataFilter,
-			rules : rulesOfQuery
-		});
-		
-		if(readOnlyMode){
-			$('#segment-builder-holder button').attr('disabled','disabled');
-		}
-
-		$('#btn-reset-querybuilder').on('click', function() {
-			$('#segment-builder-holder').queryBuilder('reset');
-		});
-
-		$('#btn-segmentation-run-query').on('click', function() {
-			var result = $('#segment-builder-holder').queryBuilder('getRules');
-			if (!$.isEmptyObject(result)) {
-				loadSegmentStatistics(JSON.stringify(result));
-			}
-		});
-	}
 	
-	
-	var loadProfilesInSegment = loadProfilesInSegment || function(segmentId) {
-		$('#profile-list-panel').show();
-        var usersession = getUserSession();
-        if (usersession) {
-            dataTable = $('#profile-list').DataTable({
-            	"lengthMenu": [[20, 30, 50], [20, 30, 50]],
-            	'processing': true,
-                'serverSide': true,
-                'searching': false,
-                'serverMethod': 'POST',
-                'ajax': {
-                    url: baseAdminApi + '/cdp/segment/profiles',
-                    contentType: 'application/json',
-                    beforeSend: function (request) {
-                        request.setRequestHeader("leouss", usersession);
-                    },
-                    data: function (d) {
-                    	d.segmentId = segmentId;
-                        return JSON.stringify(d);
-                    }
-                },
-                'columnDefs': [
-                	{
-                        "render": function (data, type, row) {
-                        	var name = 'Anonymous Person';
-                        	if(row.firstName.length > 0 && row.lastName.length > 0){
-                        		name = textTruncate(row.firstName + ' ' + row.lastName,30);
-                        	}
-                            var callJsViewStr = "#calljs-leoCdpRouter('Customer_Profile_Info','" + row.id + "')";
-                            return '<a target="_blank" title="Profile Report" href="' + callJsViewStr + '" >' + name + '</a>';
-                        },
-                        "targets": 0
-                    },
-                	{
-                        "render": function (data, type, row) {
-                            return data;
-                        },
-                        "targets": 1
-                    },
-                    {
-                        "render": function (data, type, row) {
-                        	var genderText = "No information";
-                        	if(data === 0){
-                        		genderText = "Female";
-                        	}
-                        	else if(data === 1){
-                        		genderText = "Male";
-                        	}
-                            return '<div class="datatable_text">'  + genderText + '</div>';
-                        },
-                        "targets": 2
-                    },
-                	{
-                        "render": function (data, type, row) {
-                            return textTruncate(row.lastTouchpoint.name, 30);
-                        },
-                        "targets": 3
-                    },
-                    {
-                        "render": function (data, type, row) {
-                        	//format email
-                        	if(data != null || data != ''){
-                        		var callJsViewStr = "#calljs-leoCdpRouter('Customer_Profile_Info','" + row.id + "')";
-                            	var link = '<a title="Profile Report" href="' + callJsViewStr + '" >' + data + '</a>';
-                            	return '<div class="datatable_text">'  + link + '</div>';
-                        	}
-                        	return '';
-                        },
-                        "targets": 4
-                    },
-                    {
-                        "render": function (data, type, row) {
-                            var date = moment(new Date(data)).format('YYYY-MM-DD HH:mm:ss');
-                            return date;
-                        },
-                        "targets": 6
-                    },
-                    {
-                        "render": function (data, type, row) {
-                            var date = moment(new Date(data)).format('YYYY-MM-DD HH:mm:ss');
-                            return date;
-                        },
-                        "targets": 7
-                    }
-                ],
-                'columns': [{
-                        "data": "firstName" // 0
-                    },
-                    {
-                        "data": "age" // 1
-                    },
-                    {
-                        "data": "gender" // 2
-                    },
-                    {
-                        "data": "lastTouchpoint" // 3
-                    },
-                    {
-                        "data": "primaryEmail" // 4
-                    },
-                    {
-                        "data": "primaryPhone" // 5
-                    },
-                    {
-                        "data": "createdAt" // 6
-                    },
-                    {
-                        "data": "updatedAt" // 7
-                    }
-                ]
-            });
-        }
-    }    
 </script>

@@ -1,34 +1,170 @@
 
 <!-- Segment Analytics & Reports  -->
 
+
+<!-- Segment Builder -->
+
 <div class="row">
-	<div class="col-lg-10">
+	<div class="col-lg-9">
 		<h4 class="page-header" id="page_breadcrumb"></h4>
 	</div>
-	<div class="col-lg-2 text-center" style="padding: 10px">
-		<button type="button" class="btn btn-success" onclick="">Edit</button>
+	<div class="col-lg-3 text-center" style="padding: 10px">
+		<button type="button" class="btn btn-danger data-control-delete" onclick=""> Remove </button>
+		<button type="button" class="btn btn-default" onclick="history.back()" > Cancel </button>
+		<button type="button" class="btn btn-success data-control-edit" onclick=""> Edit </button>
 	</div>
 </div>
 
+<div class="container row">
+	
+	<h3> Segment Builder </h3>
+	<p> Enter the name of segment and use query builder to search profiles </p>
+	
+	<div class="panel-group">
+	
+		<!--  1 metadata  -->
+		<div class="panel panel-leoadmin">
+			<div class="panel-heading"> <b> <i class="fa fa-info-circle" aria-hidden="true"></i>  Segment Metadata </b>  </div>
+			<div class="panel-body">
+				<div class="col-lg-12">
+					<form class="form-horizontal" action="/action_page.php">
+						<div class="form-group">
+							<div class="col-sm-10">
+								<b>Name:</b> <span id="sm_name" ></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-10">
+								<b>Description:</b> <span id="sm_description" ></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-10"  id="sm_type" >
+								<b>Segment Type:</b> Ad hoc query segmentation
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<div class="col-sm-10"  id="sm_autoQuery" >
+							
+							</div>
+						</div>
+					</form>
+				</div>
+				
 
-
-<div class="row">
-	Segment Report
+			</div>
+		</div>
+		
+		<!--  2 query  -->
+		<div class="panel panel-leoadmin">
+			<div class="panel-heading"> <b> <i class="fa fa-filter" aria-hidden="true"></i> Segment Query Details </b> </div>
+			<div class="panel-body">
+				
+				<div class='col-lg-9 text-center' style="font-size: 18px" >
+					<span id='beginFilterDate'>
+							
+					</span>
+					<i class="fa fa-long-arrow-right" aria-hidden="true"  ></i>
+					<span  id='endFilterDate'>
+							
+					</span>
+				</div>
+				
+				<!-- Query Details -->
+				<div class="col-lg-9">
+					<div id="segment-builder-holder"></div>
+				</div>
+				<div class="col-lg-3 text-center">
+					<b> Segment Size / Total Profiles </b>
+					<div id="donut_chart" style="max-width: 300px; margin: auto;"></div>
+				</div>
+			</div>
+		</div>
+		
+		<!--  3 profiles  -->
+		<div class="panel panel-leoadmin" id="profile-list-panel" style="display: none" >
+			<div class="panel-heading"> <b> <i class="fa fa-list" aria-hidden="true"></i> List of all profiles in segment </b>  </div>
+			<div class="panel-body">
+				<div class="table-responsive">
+					<table id="profile-list" class="display" style="width:100%;">
+	                    <thead>
+	                        <tr>
+	                            <th>Full Name</th>
+	                            <th>Age</th>
+	                            <th>Gender</th>
+	                            <th>Last seen touchpoint</th>
+	                            <th>Primary Email</th>
+	                            <th>Primary Phone</th>
+	                            <th>Created at</th>
+	                            <th>Last Updated at</th>
+	                        </tr>
+	                    </thead>
+	                </table>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
-  <div class="row gridholder">
-        <div class="col-lg-12">
-            <div class="table-responsive">
-                
-            </div>
-        </div>
-    </div>
-
+<script src="/view/common-resources/leocdp.segmentation.js?admin=1"></script>
 
 <script>
-	var initSegmentDetails = initSegmentDetails || function (id) {
-		
+
+	var initSegmentDetails = window.initSegmentDetails || function(id) {
+		// Date Range Filtering Controller
+		var urlStr = baseAdminApi + '/cdp/segment/get';
+        LeoAdminApiUtil.callPostAdminApi(urlStr, { 'id': id }, function (json) {
+            if (json.httpCode === 0 && json.errorMessage === '') {
+        		// only super-admin role can remove the segment 
+        		
+        		if( ! json.canDeleteData ){
+    				$('button.data-control-delete').attr('disabled','disabled');
+    			}
+        		if( !  json.canEditData ){
+        			$('button.data-control-edit').attr('disabled','disabled');
+        		} else {
+        			
+        			$('button.data-control-edit').click(function(){
+        				var callJsEditStr = "calljs-leoCdpRouter('Segment_Builder','" + id + "')";
+        				location.hash = callJsEditStr;
+        			})
+        		}
+        		
+                var segmentData = json.data.segmentData;
+                var segmentStats = json.data.segmentStats;
+                var segmentId = segmentData.id;
+                var jsonQueryRules = JSON.parse( segmentData.jsonQueryRules);
+                
+                document.title = 'Segment Details: ' + segmentData.name;
+                
+                setSegmentDataAndReports(segmentData)
+               
+             	// init UI after setting data into DOM
+              
+                loadSegmentStatistics(segmentStats);
+                loadSegmentBuilder(jsonQueryRules, true);
+                loadProfilesInSegment(segmentId)
+            } else {
+                LeoAdminApiUtil.logErrorPayload(json);
+            }
+        });
 	}
+
+	var setSegmentDataAndReports = setSegmentDataAndReports || function(segmentData){
+		var formatDateTime =  'YYYY-MM-DD HH:mm:ss';
+		 $('#sm_name').text(segmentData.name)
+	     $('#sm_description').text(segmentData.description)
+	     $('#beginFilterDate').text( new moment(segmentData.beginFilterDate).format(formatDateTime) )
+	     $('#endFilterDate').text( new moment(segmentData.endFilterDate).format(formatDateTime) )
+	     if(segmentData.autoQuery){
+	    	 $('#sm_autoQuery').html('<b> Automatic adding new profile who is matched query builder in real-time </b>')
+	     } else {
+	    	 $('#sm_autoQuery').parent().hide()
+	     }
+	     
+	}
+
+
 	
-	  
 </script>
