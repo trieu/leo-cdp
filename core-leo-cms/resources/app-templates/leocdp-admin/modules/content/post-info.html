@@ -68,12 +68,10 @@
     function loadDataPostInfo(params) {
         if (params) {
             var postId = params.postId;
-            console.log('view post ' + postId);
+            //console.log('view post ' + postId);
 
             var urlStr = baseAdminApi + '/post/get-info';
-            var params = {
-                'postId': postId
-            };
+            var params = { 'postId': postId };
             LeoAdminApiUtil.callPostAdminApi(urlStr, params, function (json) {
                 if (json.httpCode === 0 && json.errorMessage === '') {
                 	

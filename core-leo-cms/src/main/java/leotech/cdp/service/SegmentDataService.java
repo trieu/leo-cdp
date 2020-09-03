@@ -104,11 +104,27 @@ public class SegmentDataService {
 		return rs;
 	}
 	
-	public static List<ProfileSingleDataView> getProfilesInSegment(String id, int startIndex, int numberResult){
-		Segment sm = SegmentDaoUtil.getById(id);
+	public static List<ProfileSingleDataView> getProfilesInSegment(String segmentId, int startIndex, int numberResult){
+		Segment sm = SegmentDaoUtil.getById(segmentId);
 		ProfileQuery profileQuery = sm.toProfileQuery(startIndex, numberResult);
 		List<ProfileSingleDataView> rs = ProfileDaoUtil.getProfilesByQuery(profileQuery);
-		return rs;
+		return rs; 
+	}
+	
+	public static JsonDataTablePayload getProfilesInSegment(String segmentId, DataFilter filter) {
+		int draw = filter.getDraw();
+		
+		Segment sm = SegmentDaoUtil.getById(segmentId);
+		int startIndex = filter.getStart();
+		int numberResult = filter.getLength();
+		ProfileQuery profileQuery = sm.toProfileQuery(startIndex, numberResult);
+		List<ProfileSingleDataView> profilesInSegment = ProfileDaoUtil.getProfilesByQuery(profileQuery);
+		
+		long recordsTotal = sm.getTotalCount();
+		long recordsFiltered = ProfileDaoUtil.countProfilesByQuery(profileQuery);
+		
+		JsonDataTablePayload payload =  JsonDataTablePayload.data(filter.getUri(), profilesInSegment, recordsTotal, recordsFiltered, draw);
+		return payload;
 	}
 	
 	public static boolean remove(String id) {

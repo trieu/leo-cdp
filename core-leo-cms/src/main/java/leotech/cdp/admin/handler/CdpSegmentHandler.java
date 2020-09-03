@@ -1,10 +1,14 @@
 package leotech.cdp.admin.handler;
 
 import java.util.List;
+import java.util.Map;
+
+import com.google.common.collect.ImmutableMap;
 
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import leotech.cdp.model.customer.Segment;
+import leotech.cdp.service.ProfileDataService;
 import leotech.cdp.service.SegmentDataService;
 import leotech.core.api.SecuredWebDataHandler;
 import leotech.system.model.DataFilter;
@@ -31,6 +35,7 @@ public class CdpSegmentHandler extends SecuredWebDataHandler {
 	static final String API_UPDATE_MODEL = "/cdp/segment/update";
 	static final String API_GET_MODEL = "/cdp/segment/get";
 	static final String API_REMOVE = "/cdp/segment/remove";
+	static final String API_PROFILES_IN_SEGMENT = "/cdp/segment/profiles";
 
 	@Override
 	public JsonDataPayload httpPostApiHandler(String userSession, String uri, JsonObject paramJson) throws Exception {
@@ -45,6 +50,17 @@ public class CdpSegmentHandler extends SecuredWebDataHandler {
 						payload.checkPermission(loginUser, Segment.class);
 						return payload;
 					}
+					case API_PROFILES_IN_SEGMENT : {
+						// the list-view component at datatables.net needs Ajax POST method to avoid long URL 
+						String segmentId = paramJson.getString("segmentId", "");
+						if(!segmentId.isEmpty()) {
+							DataFilter filter = new DataFilter(uri, paramJson);
+							JsonDataTablePayload payload = SegmentDataService.getProfilesInSegment(segmentId, filter);
+							payload.checkPermission(loginUser, Segment.class);
+							return payload;
+						}
+						return JsonDataPayload.fail("segmentId is not valid", 500);
+					}
 					case API_GET_MODEL : {
 						String id = paramJson.getString("id", "new");
 						Segment sm;
@@ -53,7 +69,12 @@ public class CdpSegmentHandler extends SecuredWebDataHandler {
 						} else {
 							sm = SegmentDataService.getById(id);
 						}
-						return JsonDataPayload.ok(uri, sm, loginUser, Segment.class);
+						
+						long totalProfilesInCdp = ProfileDataService.countTotalOfProfiles();
+						Map<String,Long> stats = ImmutableMap.of("totalProfilesInSegment", sm.getTotalCount(), "totalProfilesInCdp", totalProfilesInCdp);
+						Map<String,Object> data = ImmutableMap.of("segmentData", sm, "segmentStats", stats);
+						
+						return JsonDataPayload.ok(uri, data, loginUser, Segment.class);
 					}
 					case API_UPDATE_MODEL : {
 						String json = paramJson.getString("objectJson", "{}");

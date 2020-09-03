@@ -229,3 +229,10 @@ div.gridholder {
 	color: #3300ff;
 	text-align: left;
 }
+
+.panel-leoadmin > .panel-heading{
+    color: #484848;
+    background-color: #D3D3D3;
+    border-color: #ddd;
+}
+

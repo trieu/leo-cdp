@@ -244,19 +244,40 @@ var getIconItemByKey = function(key){
 	return icon;
 }
 
-var initDateFilterComponent = function(){
-	var end = new moment().format("YYYY-MM-DD");
-	var begin = new moment().subtract(365, 'days').format("YYYY-MM-DD");
+var initDateFilterComponent = function(withTime, beginDateTime, endDateTime){
+	var formatDateTime = withTime === true ? 'YYYY-MM-DD HH:mm:ss' : 'YYYY-MM-DD';
 	
-	$('#beginFilterDate').datetimepicker({
-	    format: 'YYYY-MM-DD',
-	        defaultDate: begin
-	});
-    $('#endFilterDate').datetimepicker({
-        useCurrent: false, 
-        format: 'YYYY-MM-DD',
-        defaultDate: end
-    });
+	var end = new moment().format(formatDateTime);
+	var begin = new moment().subtract(365, 'days').format(formatDateTime);
+	
+	if(beginDateTime != null){
+		$('#beginFilterDate').datetimepicker({
+	        useCurrent: false, 
+	        format: formatDateTime,
+	        defaultDate: new moment(beginDateTime).format(formatDateTime)
+	    });
+	} else {
+		$('#beginFilterDate').datetimepicker({
+		    format: formatDateTime,
+		    defaultDate: begin
+		});
+	}
+	
+	if(endDateTime != null){
+		$('#endFilterDate').datetimepicker({
+	        useCurrent: false, 
+	        format: formatDateTime,
+	        defaultDate: new moment(endDateTime).format(formatDateTime)
+	    });
+	} else {
+		$('#endFilterDate').datetimepicker({
+	        useCurrent: false, 
+	        format: formatDateTime,
+	        defaultDate: end
+	    });
+	}
+	
+    
 }
 
 var getDateFilterValues = function(){
@@ -265,8 +286,7 @@ var getDateFilterValues = function(){
 	return { beginFilterDate : bDate, endFilterDate : eDate }
 }
 
-
-
+// for file uploader in trix editor
 document.addEventListener("trix-file-accept", function(event) {
   event.preventDefault();
 });
@@ -296,7 +316,7 @@ function leoCdpRouter(objKey,objId){
 			breadcrumbHtml = breadcrumbHtml + '<a id="tnv_'+key+'" title="'+ name +'" href="#calljs-' + jsFunc + '"> ' + breadcrumbList[i] + ' </a> ';
 			breadcrumbHtml = breadcrumbHtml + ' &#8594; ';
 		} else {
-			breadcrumbHtml = breadcrumbHtml + '<a id="tnv_'+key+'" title="'+ name +'" href="#calljs-"> ' + breadcrumbList[i] + ' </a> ';
+			breadcrumbHtml = breadcrumbHtml + '<a id="tnv_'+key+'" title="'+ name +'" href="javascript:"> ' + breadcrumbList[i] + ' </a> ';
 		}
 		
 		activeMenuItemId = LeoCdpAdmin.navRouters[key] ? (LeoCdpAdmin.navRouters[key].activeMenuItem || activeMenuItemId)  : activeMenuItemId;
@@ -473,7 +493,16 @@ var jsGridItemUrlTemplate = function(value) {
     return $("<a>").attr('target','_blank').attr('title',value).attr("href", value).text(value);
 }
 
-var getJqueryBuilderStringOperators = function(){
-	var stringOperators = ["equal", "not_equal", "is_null", "is_not_null","begins_with","not_begins_with","contains","not_contains","ends_with","not_ends_with","is_empty","is_not_empty"];
-	return stringOperators
+var getOperatorsForStringField = function(){
+	var operators = ["equal", "not_equal", "is_null", "is_not_null","begins_with","not_begins_with","contains","not_contains","ends_with","not_ends_with","is_empty","is_not_empty"];
+	return operators;
+}
+
+var getOperatorsForNumberField = function(){
+	var operators = ["equal", "not_equal","less","less_or_equal","greater","greater_or_equal","between","not_between" ];
+	return operators;
+}
+
+function roundNumber(value, decimals) {
+    return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
 }

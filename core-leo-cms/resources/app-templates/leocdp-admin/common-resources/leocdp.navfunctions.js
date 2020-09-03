@@ -386,7 +386,6 @@ LeoCdpAdmin.navFunctions.loadMyLoginInfo = function(breadcrumbHtml) {
     });
 }
 
-
 LeoCdpAdmin.navFunctions.loadSystemInfoConfigs = function(breadcrumbHtml) {
     LeoCdpAdmin.loadView('/view/modules/system/system-info-configs.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);

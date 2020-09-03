@@ -227,5 +227,9 @@ public class ProfileDataService {
 		ProfileDaoUtil.update(pf);
 		return pf != null;
 	}
+	
+	public static long countTotalOfProfiles() {
+		return ProfileDaoUtil.countTotalOfProfiles();
+	}
 
 }
