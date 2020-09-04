@@ -71,6 +71,17 @@ public abstract class EventMetric extends CdpPersistentObject {
 			this.dataType = dataType;
 		}
 	}
+	
+	public EventMetric(String eventName, String eventLabel, int score, int dataType) {
+		super();
+		initBaseData(eventName);
+		this.score = score;
+		this.eventLabel = eventLabel;
+		
+		if(dataType > 0 && dataType <= 3){
+			this.dataType = dataType;
+		}
+	}
 
 	private void initBaseData(String eventName) {
 		if(eventName.length() <= 50) {

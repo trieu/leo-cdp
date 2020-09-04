@@ -18,8 +18,8 @@ public class BehavioralEventMetric extends EventMetric {
 	String customerFunnelStageId;
 	
 	
-	public BehavioralEventMetric(String eventName, int score, int dataType, String eventFunnelStageId, String customerFunnelStageId) {
-		super(eventName, score, dataType);
+	public BehavioralEventMetric(String eventName, String eventLabel, int score, int dataType, String eventFunnelStageId, String customerFunnelStageId) {
+		super(eventName, eventLabel, score, dataType);
 		this.eventFunnelStageId = eventFunnelStageId;
 		this.customerFunnelStageId = customerFunnelStageId;
 	}

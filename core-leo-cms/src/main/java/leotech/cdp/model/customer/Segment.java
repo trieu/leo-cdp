@@ -61,7 +61,7 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 	int type = SegmentType.AD_HOC_QUERY;
 
 	@Expose
-	int status = 0; // -1 is deleted, 0 is default, 1 is active
+	int status = 0; // -1 is deleted, 0 is inactive, 1 is active, 2 is activated
 
 	@Expose
 	// check rules_basic at https://querybuilder.js.org/assets/demo-basic.js
@@ -80,7 +80,7 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 	long totalCount = 0; // how many of profiles from query ?
 
 	@Expose
-	boolean autoQuery = true; 
+	boolean activeQuery = false; 
 
 	@Expose
 	List<String> keywords = new ArrayList<String>();
@@ -257,13 +257,16 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 	public void setTotalCount(long totalCount) {
 		this.totalCount = totalCount;
 	}
-
-	public boolean isAutoQuery() {
-		return autoQuery;
+	
+	public boolean isActiveQuery() {
+		return activeQuery;
 	}
 
-	public void setAutoQuery(boolean autoQuery) {
-		this.autoQuery = autoQuery;
+	public void setActiveQuery(boolean activeQuery) {
+		this.activeQuery = activeQuery;
+		if(this.activeQuery) {
+			this.status = 1;
+		}
 	}
 
 	public String getDataPipelineUrl() {

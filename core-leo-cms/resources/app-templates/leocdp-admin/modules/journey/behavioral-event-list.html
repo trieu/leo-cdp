@@ -1,23 +1,18 @@
 <div class="container-fluid">
 
     <div class="row">
-        <div class="col-lg-10">
+        <div class="col-lg-12">
             <h4 class="page-header" id="page_breadcrumb" > </h4>
         </div>
-        <div class="col-lg-2 text-center" style="padding: 10px;">
-        	<button type="button" class="btn btn-success data-control" onclick=""  > 
-        		<i class="fa fa-fw fa-check-circle"></i> Save 
-        	</button>
-        	<button type="button" class="btn btn-secondary data-control" onclick=""  > Cancel </button>
-        </div>
-       
+        
+        <h3 class="text-center" > Customer Journey Funnel for Retail Industry </h3>
     </div>
 
     <div class="row" >
   		<div class="row col-lg-12 text-center">
   			<div class="col-md-2"></div>
   			<div class="col-md-4">
-                 <h4 class="chart_header text-center" >Event Funnel Metrics</h4>
+                 <h4 class="chart_header text-center" >Behavioral Event Funnel</h4>
 	           	 <div class="summary_metric">
 	               <div class="vcenter">
 	                  <div id="event_funnel"></div>
@@ -25,14 +20,14 @@
 	           	</div>
              </div>
              <div class="col-md-4 ">
-                 <h4 class="chart_header text-center" >Customer Funnel Metrics</h4>
+                 <h4 class="chart_header text-center" >Customer Data Funnel</h4>
                  <div id="profile_funnel"></div>
              </div>
              <div class="col-md-2"></div>
         </div>
         
         <div class="col-lg-12" style="margin-top: 8px;">
-         	<h4 class="text-center"> All behavioral events in Journey Map </h4>
+         	<h4 class="text-center"> All tracking events in Customer Journey Funnel </h4>
             <div class="table-responsive">
                 <div id="behavioral_metrics_table"></div>
             </div>
@@ -74,11 +69,13 @@
 	
 		function loadProfileFunnel() {
 		    var data = [
-		        ['Visitor', 0, '#008080'],
-		        ['Identified Person', 0, '#6497b1'],
-		        ['Customer Lead', 0, '#005b96'],
-		        ['First-time Customer', 0, '#03396c'],
-		        ['Repeat Customer', 0, '#011f4b']
+		        ['Visitor', '', '#0000FF'],
+		        ['Engaged Visitor', '', '#4169E1'],
+		        ['Customer Lead', '', '#7B68EE'],
+		        ['Prospective Customer', '', '#4169E1'],
+		        ['First-time Customer', '', '#1E90FF'],
+		        ['Customer Advocate', '', '#4169E1'],
+		        ['Repeat Customer', '', '#00008B']
 		    ];
 		    var chart = new D3Funnel('#profile_funnel');
 		    chart.draw(data, funnelOptions);
@@ -86,11 +83,13 @@
 
 		function loadEventFunnel() {
 		    var data = [
-		        ['Content View', 0, '#011f4b'],
-		        ['Interaction', 0, '#03396c'],
-		        ['Purchase Intent', 0, '#005b96'],
-		        ['First Purchase', 0, '#5f9ea0'],
-		        ['Repeat Purchase', 0, '#49796b']
+		        ['Content View', '', '#0000FF'],
+		        ['Product View', '', '#4169E1'],
+		        ['Customer Login','', '#7B68EE'],
+		        ['Purchase Intent', '', '#4169E1'],
+		        ['First Purchase', '', '#1E90FF'],
+		        ['Product Experience', '', '#4169E1'],
+		        ['Repeat Purchase', '', '#00008B']
 		    ];
 		    var chart = new D3Funnel('#event_funnel');
 		    chart.draw(data, funnelOptions);
@@ -147,11 +146,12 @@
 			    },
 	
 			    fields: [
-			        { name: "eventName", title : "Behavioral Event Metric", align: 'center' , type: "text", validate: "required" },
-			        { name: "score", title : "Score", type: "number", align: 'center',  width: 40, validate: "required" },
+			        { name: "eventName", title : "Event Name", align: 'center' , type: "text", validate: "required" },
+			        { name: "eventLabel", title : "Event Label", align: 'center' , type: "text" },
 			        { name: "eventFunnelStageId", title : "Event Funnel Stage", type: "select", items: eventFunnelStages, valueField: "id", textField: "name" },
 			        { name: "customerFunnelStageId", title : "Customer Funnel Stage", type: "select", items: customerFunnelStages, valueField: "id", textField: "name" },
 			        { name: "dataType", type: "select", title : "Data Type", items: eventDataTypes, valueField: "id", textField: "name" },
+			        { name: "score", title : "Score", type: "number", align: 'center',  width: 40, validate: "required" },
 			        { type: "control" , width: 50, deleteButton: canDeleteData}
 			    ]
 			});  

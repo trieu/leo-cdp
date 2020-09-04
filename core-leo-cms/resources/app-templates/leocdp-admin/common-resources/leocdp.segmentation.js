@@ -109,14 +109,17 @@ var loadSegmentBuilder = window.loadSegmentBuilder || function(jsonQueryRules, r
 	    type: 'string',
 	    input: 'select',
 	    values: {
-	      "contentview": 'Content View',
-	      "productview": 'Product View',
-	      "sociallogin": 'Customer Login',
-	      "add2cart": 'Purchase Intent',
+	      "content_view": 'Content View',
+	      "product_view": 'Product View',
+	      "social_login": 'Customer Login',
+	      "add_to_cart": 'Purchase Intent',
 	      "buy": 'First Purchase',
-	      "rebuy": 'Repeat Purchase'
+	      "feedback_1st": 'First-time Feedback',
+	      "social_sharing": 'Social Sharing',
+	      "rebuy": 'Repeat Purchase',
+	      "feedback_2nd": 'Second-time Feedback',
 	    },
-	    operators: ['equal', 'not_equal', 'is_null', 'is_not_null']
+	    operators: ['equal', 'is_empty']
 	  } 
 	];
 	

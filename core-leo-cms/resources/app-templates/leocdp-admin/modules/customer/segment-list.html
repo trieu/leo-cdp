@@ -112,10 +112,8 @@
                     },
                     {
                         "render": function (data, type, row) {
-                        	var id = 'smqd_'+ row.id;
-                        	var data = encodeURIComponent(data);
-                        	var html = '<a id="'+id+'" data-query-details="'+data+'" href="javascript:" onclick="viewSegmentQuery(this)" > <i class="fa fa-info-circle" aria-hidden="true"></i> Query Details </a>';
-                            return  html ;
+                        	
+                        	return '<div class="datatable_text">' + data + '</div>';
                         },
                         "targets": 4
                     },
@@ -123,10 +121,16 @@
                         "render": function (data, type, row) {
                         	var statusText = 'REMOVED';
                         	if(data === 0){
-                        		statusText = 'ACTIVE';
+                        		statusText = 'INACTIVE';
                         	}
                         	else if(data === 1){
+                        		statusText = 'ACTIVE';
+                        	}
+                        	else if(data === 2){
                         		statusText = 'ACTIVATED';
+                        	}
+                        	else if(data < 0){
+                        		statusText = "REMOVED";
                         	}
                             return '<div class="datatable_text">' + statusText + '</div>';
                         },
@@ -154,13 +158,20 @@
                             var callJsViewStr = "#calljs-leoCdpRouter('Segment_Details','" + row.id + "')";
                             var html = '<a class="control" title="Segment Report" href="' + callJsViewStr + '" > <i class="fa fa-info-circle" aria-hidden="true"></i> View</a>';
                         	if( canEditData ){
+                        		
                         		var callJsEditStr = "#calljs-leoCdpRouter('Segment_Builder','" + row.id + "')";
                         		html += ' <br> <a class="control" title="Segment Builder" href="' + callJsEditStr + '" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
+                        		
                         		var callJsCopyStr = "#calljs-leoCdpRouter('Segment_Builder_Copy','" + row.id + "')";
                         		html += ' <br> <a class="control" title="Copy this segment" href="' + callJsCopyStr + '" > <i class="fa fa-clone" aria-hidden="true"></i> Copy</a>';
+                        		
+                        		var callJsCopyStr = "#calljs-leoCdpRouter('Activate_Segment','" + row.id + "')";
+                        		html += ' <br> <a class="control" title="Activate this segment" href="' + callJsCopyStr + '" > <i class="fa fa-line-chart" aria-hidden="true"></i> Activate</a>';
+                        		
                         	} else {
                         		html += ' <br> <a class="control" title="Segment Builder Editor" href="javascript:" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
                         		html += ' <br> <a class="control" title="Copy this segment" href="javascript:" > <i class="fa fa-clone" aria-hidden="true"></i> Copy</a>';
+                        		html += ' <br> <a class="control" title="Activate this segment" href="javascript:" > <i class="fa fa-line-chart" aria-hidden="true"></i> Activate</a>';
                         	}
                             return html;
                         },
@@ -180,7 +191,7 @@
                         "data": "totalCount" // 3
                     },
                     {
-                        "data": "jsonQueryRules" // 4
+                        "data": "activeQuery" // 4
                     },
                     {
                         "data": "status" // 5
@@ -200,12 +211,4 @@
 	 	location.hash = "calljs-leoCdpRouter('Segment_Builder','new')";
 	}
 	
-	var viewSegmentQuery = viewSegmentQuery || function(node){
-		var jsonStr = $(node).attr('data-query-details');
-		var data = JSON.parse(decodeURIComponent(jsonStr));
-		console.log(jsonStr)
-		console.log(data)
-		//var json = JSON.parse(jsonStr);
-		//alert(json)
-	}
 </script>
