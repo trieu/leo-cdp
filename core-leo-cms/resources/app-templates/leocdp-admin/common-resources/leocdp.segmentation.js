@@ -78,10 +78,10 @@ var loadSegmentBuilder = window.loadSegmentBuilder || function(jsonQueryRules, r
 		values : {
 			0 : "Female",
 			1 : "Male",
-			2 : "Lesbian",
-			3 : "Gay",
-			4 : "Bisexual",
-			5 : "Transgender",
+		//	2 : "Lesbian",
+		//	3 : "Gay",
+		//	4 : "Bisexual",
+		//	5 : "Transgender",
 			6 : "Unknown",
 		},
 		operators : [ "equal" ],
@@ -103,7 +103,22 @@ var loadSegmentBuilder = window.loadSegmentBuilder || function(jsonQueryRules, r
 			step : 1,
 		},
 		operators : getOperatorsForNumberField()
-	} ];
+	}, {
+	    id: 'behavioral_event',
+	    label: 'Behavioral Event',
+	    type: 'string',
+	    input: 'select',
+	    values: {
+	      "contentview": 'Content View',
+	      "productview": 'Product View',
+	      "sociallogin": 'Customer Login',
+	      "add2cart": 'Purchase Intent',
+	      "buy": 'First Purchase',
+	      "rebuy": 'Repeat Purchase'
+	    },
+	    operators: ['equal', 'not_equal', 'is_null', 'is_not_null']
+	  } 
+	];
 	
 	var rulesOfQuery = jsonQueryRules || false;
 

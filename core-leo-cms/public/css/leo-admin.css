@@ -224,10 +224,9 @@ div.gridholder {
 }
 
 .table-responsive .datatable_text {
-	font-size: 11px;
+	font-size: 11.5px;
 	font-weight: bold;
 	color: #3300ff;
-	text-align: left;
 }
 
 .panel-leoadmin > .panel-heading{
@@ -236,3 +235,8 @@ div.gridholder {
     border-color: #ddd;
 }
 
+.input_disabled {
+  background: #dddddd;
+  color: #b5b5b5;
+  border-radius: 5px;
+}

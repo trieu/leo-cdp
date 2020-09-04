@@ -156,8 +156,11 @@
                         	if( canEditData ){
                         		var callJsEditStr = "#calljs-leoCdpRouter('Segment_Builder','" + row.id + "')";
                         		html += ' <br> <a class="control" title="Segment Builder" href="' + callJsEditStr + '" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
+                        		var callJsCopyStr = "#calljs-leoCdpRouter('Segment_Builder_Copy','" + row.id + "')";
+                        		html += ' <br> <a class="control" title="Copy this segment" href="' + callJsCopyStr + '" > <i class="fa fa-clone" aria-hidden="true"></i> Copy</a>';
                         	} else {
-                        		html += ' <br> <a class="control" title="Segment Builder" href="javascript:" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
+                        		html += ' <br> <a class="control" title="Segment Builder Editor" href="javascript:" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
+                        		html += ' <br> <a class="control" title="Copy this segment" href="javascript:" > <i class="fa fa-clone" aria-hidden="true"></i> Copy</a>';
                         	}
                             return html;
                         },

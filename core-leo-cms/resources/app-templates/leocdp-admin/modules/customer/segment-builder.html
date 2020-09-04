@@ -40,35 +40,35 @@
 						<div class="form-group">
 							<label class="control-label col-sm-2" for="type">Segment Type:</label>
 							<div class="col-sm-10"  id="sm_type" >
-								<div class="radio">
+								<div class="radio" title="Ad hoc query segmentation" >
 								  <label><input type="radio" name="type" checked value="9" > Ad hoc query segmentation </label>
 								</div>
 								
-								<div class="radio">
-								  <label><input type="radio" name="type" value="1" disabled="disabled" > Geographic segmentation </label>
+								<div class="radio" title="Geographic segmentation" >
+								  <label><input type="radio" name="type" value="1" > Geographic segmentation </label>
 								</div>
-								<div class="radio">
-								  <label><input type="radio" name="type" value="2" disabled="disabled" > Demographic segmentation </label>
+								<div class="radio" title="Demographic segmentation" >
+								  <label><input type="radio" name="type" value="2" > Demographic segmentation </label>
 								</div>
-								<div class="radio">
-								  <label><input type="radio" name="type" value="3" disabled="disabled" > Psychographic segmentation </label>
-								</div>
-								<div class="radio">
-								  <label><input type="radio" name="type" value="4" disabled="disabled" > Behavioral segmentation </label>
+								<div class="radio" title="Behavioral segmentation" >
+								  <label><input type="radio" name="type" value="4" > Behavioral segmentation </label>
 								</div>
 								
-								<div class="radio">
-								  <label><input type="radio" name="type" value="5" disabled="disabled" > Re-marketing segmentation </label>
+								<div class="radio" title="Psychographic segmentation (This feature is only on Leo CDP Enterprise version)" >
+								  <label class="input_disabled" ><input type="radio" name="type" value="3" disabled="disabled" > Psychographic segmentation </label>
 								</div>
-								<div class="radio">
-								  <label><input type="radio" name="type" value="6" disabled="disabled" > Look-alike segmentation </label>
+								<div class="radio" title="Re-marketing segmentation (This feature is only on Leo CDP Enterprise version)" >
+								  <label class="input_disabled"><input type="radio" name="type" value="5" disabled="disabled" > Re-marketing segmentation </label>
+								</div>
+								<div class="radio" title="Look-alike segmentation (This feature is only on Leo CDP Enterprise version)" >
+								  <label class="input_disabled"><input type="radio" name="type" value="6" disabled="disabled" > Look-alike segmentation </label>
 								</div>
 								
-								<div class="radio">
-								  <label><input type="radio" name="type" value="7" disabled="disabled" > RFM model segmentation </label>
+								<div class="radio" title="RFM model segmentation (This feature is only on Leo CDP Enterprise version)">
+								  <label class="input_disabled"><input type="radio" name="type" value="7" disabled="disabled" > RFM model segmentation </label>
 								</div>
-								<div class="radio">
-								  <label><input type="radio" name="type" value="8" disabled="disabled" > Churn segmentation </label>
+								<div class="radio" title="Churn segmentation (This feature is only on Leo CDP Enterprise version)">
+								  <label class="input_disabled"><input type="radio" name="type" value="8" disabled="disabled" > Churn segmentation </label>
 								</div>
 							</div>
 						</div>
@@ -153,6 +153,7 @@
 				</div>
 			</div>
 		</div>
+		
 	</div>
 </div>
 
@@ -160,9 +161,10 @@
 
 <script>
 
-	var initSegmentBuilder = initSegmentBuilder || function(id) {
+	var segmentDataModel = false;
+	var initSegmentBuilder = window.initSegmentBuilder || function(id) {
+		segmentDataModel = false;
 		// Date Range Filtering Controller
-		
 		if(id === 'new'){
 			// init UI for new segment
 			initDateFilterComponent(true);
@@ -202,12 +204,19 @@
         });
     }
 	
+	
 	var setSegmentDataForm = setSegmentDataForm || function(segmentData){
-		 $('#sm_name').val(segmentData.name)
-	     $('#sm_description').val(segmentData.description)
-	     $('#sm_autoQuery').prop( "checked", segmentData.autoQuery );
+		segmentDataModel = segmentData;
+		
+		$('#sm_name').val(segmentData.name).change(function() {
+			segmentDataModel.name = $(this).val()
+		});
+		$('#sm_description').val(segmentData.description).change(function() {
+			segmentDataModel.description = $(this).val()
+		});
+		$('#sm_autoQuery').prop( "checked", segmentData.autoQuery ).change(function() {
+			segmentDataModel.autoQuery = $(this).prop( "checked")
+		});;
 	}
-
-
 	
 </script>

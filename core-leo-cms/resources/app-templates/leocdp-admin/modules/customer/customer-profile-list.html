@@ -48,7 +48,7 @@
                             <th>Type</th>
                             <th>Last seen touchpoint</th>
                             <th>Primary Email</th>
-                            <th>Phone</th>
+                            <th>Lead Score</th>
                             <th>Created at</th>
                             <th>Updated at</th>
                             <th>Actions</th>
@@ -135,7 +135,7 @@
                     },
                 	{
                         "render": function (data, type, row) {
-                            return textTruncate(row.lastTouchpoint.name, 30);
+                        	return '<div class="datatable_text">'  + textTruncate(row.lastTouchpoint.name, 30) + '</div>';
                         },
                         "targets": 3
                     },
@@ -144,7 +144,7 @@
                         	//format email
                         	if(data != null || data != ''){
                         		var callJsViewStr = "#calljs-leoCdpRouter('Customer_Profile_Info','" + row.id + "')";
-                            	var link = '<a title="Profile Report" href="' + callJsViewStr + '" >' + data + '</a>';
+                            	var link = '<a title="Profile Report" href="' + callJsViewStr + '" >' + textTruncate(data, 25) + '</a>';
                             	return '<div class="datatable_text">'  + link + '</div>';
                         	}
                         	return '';
@@ -153,15 +153,21 @@
                     },
                     {
                         "render": function (data, type, row) {
+                        	return '<div class="datatable_text text-center">'  + data + '</div>';
+                        },
+                        "targets": 5
+                    },
+                    {
+                        "render": function (data, type, row) {
                             var date = moment(new Date(data)).format('YYYY-MM-DD HH:mm:ss');
-                            return date;
+                            return '<div class="datatable_text">'  + date + '</div>';
                         },
                         "targets": 6
                     },
                     {
                         "render": function (data, type, row) {
                             var date = moment(new Date(data)).format('YYYY-MM-DD HH:mm:ss');
-                            return date;
+                            return '<div class="datatable_text">'  + date + '</div>';
                         },
                         "targets": 7
                     },
@@ -196,7 +202,7 @@
                         "data": "primaryEmail" // 4
                     },
                     {
-                        "data": "primaryPhone" // 5
+                        "data": "totalLeadScore" // 5
                     },
                     {
                         "data": "createdAt" // 6
