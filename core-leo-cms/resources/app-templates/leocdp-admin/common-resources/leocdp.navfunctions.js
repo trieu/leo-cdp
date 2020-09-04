@@ -71,8 +71,8 @@ LeoCdpAdmin.navFunctions.loadMediaJourneyMap = function(breadcrumbHtml) {
     });
 }
 
-LeoCdpAdmin.navFunctions.loadBehavioralEventMetrics = function(breadcrumbHtml) {
-	LeoCdpAdmin.loadView('/view/modules/journey/behavioral-event-list.html?admin=1', pageDomSelector, function () {
+LeoCdpAdmin.navFunctions.loadDataJourneyFunnel = function(breadcrumbHtml) {
+	LeoCdpAdmin.loadView('/view/modules/journey/data-journey-funnel.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
     	initBehavioralEventList();
     });
@@ -80,7 +80,7 @@ LeoCdpAdmin.navFunctions.loadBehavioralEventMetrics = function(breadcrumbHtml) {
 
 
 LeoCdpAdmin.navFunctions.loadLeoObserverList  = function(breadcrumbHtml) {
-	LeoCdpAdmin.loadView('/view/modules/journey/data-observer-list.html?admin=1', pageDomSelector, function () {
+	LeoCdpAdmin.loadView('/view/modules/journey/leo-observer-list.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
     	initDataObserverList();
     });

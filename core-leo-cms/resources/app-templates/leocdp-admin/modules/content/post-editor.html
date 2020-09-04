@@ -190,6 +190,7 @@
     }
     
     function initPostEditor(params){
+    	postModel = false;
     	LeoCdpAdmin.loadView('/view/common-widgets/headline-images.html?admin=1', '#post-headline-images', function () {
             $('#post-headline-images div.thumbnail p').editable({
                 type: 'text',
