@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
@@ -18,20 +19,29 @@ import leotech.system.model.JsonDataTablePayload;
 import leotech.system.util.database.ArangoDbQuery;
 import leotech.system.util.database.ArangoDbQuery.CallbackQuery;
 
-public class ProfileDaoUtil  extends BaseLeoCdpDao {
+public class ProfileDaoUtil extends BaseLeoCdpDao {
 
-	static long limitTotalProfiles = 5000;
 	
+	private static final String AQL_COUNT_TOTAL_ACTIVE_PROFILES = "RETURN LENGTH( FOR p in "+Profile.COLLECTION_NAME+" FILTER  p.status > 0 RETURN p._key)";
 	static final String AQL_GET_PROFILES_BY_PAGINATION = AqlTemplate.get("AQL_GET_PROFILES_BY_PAGINATION");
+	static final String AQL_GET_ACTIVE_PROFILES_BY_PAGINATION = AqlTemplate.get("AQL_GET_ACTIVE_PROFILES_BY_PAGINATION");
+	
 	static final String AQL_GET_PROFILE_BY_ID = AqlTemplate.get("AQL_GET_PROFILE_BY_ID");
 	static final String AQL_GET_PROFILE_BY_IDENTITY = AqlTemplate.get("AQL_GET_PROFILE_BY_IDENTITY");
 	static final String AQL_GET_PROFILE_BY_PRIMARY_EMAIL = AqlTemplate.get("AQL_GET_PROFILE_BY_PRIMARY_EMAIL");
 	static final String AQL_GET_PROFILE_BY_KEY_IDENTITIES = AqlTemplate.get("AQL_GET_PROFILE_BY_KEY_IDENTITIES");
-
+	static final String AQL_GET_PROFILE_REAL_TIME_IDENTITY_RESOLUTION = AqlTemplate.get("AQL_GET_PROFILE_REAL_TIME_IDENTITY_RESOLUTION");
+	
+	// --------------------------------------------------------- //
+	static final long FREE_LIMIT = 5000;
 	public static boolean checkLimitOfLicense() {
-		return limitTotalProfiles > 0 && countTotalOfProfiles() < limitTotalProfiles;
+		long limit = FREE_LIMIT;
+		//TODO get from server for Paid version
+		return limit > 0 && countTotalOfProfiles() <= limit;
 	}
+	// --------------------------------------------------------- //
 
+	
 	public static String create(Profile profile) {
 		if (profile.isReadyForSave() && checkLimitOfLicense()) {
 			ArangoCollection col = profile.getCollection();
@@ -66,28 +76,16 @@ public class ProfileDaoUtil  extends BaseLeoCdpDao {
 		return p;
 	}
 	
-	public static Profile getByKeyIdentities(String visitorId, String email, String phone, String adsUserId, String fingerprintId) {
-		System.out.println("==> getByKeyIdentities visitorId:" + visitorId + " email:" + email + " phone:" + phone + " adsUserId:" + adsUserId+ " fingerprintId:" + fingerprintId);
-		
-		Map<String, Object> bindVars = new HashMap<>(5);
-		
+	public static Profile realTimeIdentityResolution(String visitorId, String email) {
+		Map<String, Object> bindVars = new HashMap<>(2);
 		
 		// deterministic
 		bindVars.put("visitorId", visitorId);
 		bindVars.put("email", email);
 		
-		//FIXME
-		
-//		bindVars.put("phone", phone);
-//		bindVars.put("adsUserId", adsUserId);
-		
-		// probabilistic
-		bindVars.put("fingerprintId", fingerprintId);
-		
 		ArangoDatabase db = getCdpDbInstance();
-		ProfileMatchingResult matchRs = new ArangoDbQuery<ProfileMatchingResult>(db, AQL_GET_PROFILE_BY_KEY_IDENTITIES, bindVars, ProfileMatchingResult.class)
-				.getResultsAsObject();
-		return matchRs.getBestMatchingProfile();
+		ProfileMatchingResult matchRs = new ArangoDbQuery<ProfileMatchingResult>(db, AQL_GET_PROFILE_REAL_TIME_IDENTITY_RESOLUTION, bindVars, ProfileMatchingResult.class).getResultsAsObject();
+		return matchRs.getProfileByDeterministicProcessing();
 	}
 	
 	public static Profile getById(String id) {
@@ -121,7 +119,7 @@ public class ProfileDaoUtil  extends BaseLeoCdpDao {
 		return p;
 	}
 	
-	public static List<Profile> list(int startIndex, int numberResult) {
+	public static List<Profile> listAllWithPagination(int startIndex, int numberResult) {
 		ArangoDatabase db = getCdpDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(2);
 		bindVars.put("startIndex", startIndex);
@@ -129,6 +127,25 @@ public class ProfileDaoUtil  extends BaseLeoCdpDao {
 		List<Profile> list = new ArangoDbQuery<Profile>(db, AQL_GET_PROFILES_BY_PAGINATION, bindVars, Profile.class).getResultsAsList();
 		return list;
 	}
+	
+	public static List<Profile> getProfilesByFilterMap(Map<String, Object> filterMap, String notIncludeId) {
+		ArangoDatabase db = getCdpDbInstance();
+		
+		StringBuffer aql = new StringBuffer("FOR p in ").append(Profile.COLLECTION_NAME);
+		aql.append(" FILTER p.status == 1 AND p._key != @id ");
+		Set<String> keys = filterMap.keySet();
+		for (String key : keys) {
+			aql.append(" AND p.").append(key).append(" == @").append(key);
+		}
+		aql.append(" RETURN p ");
+		
+		filterMap.put("id", notIncludeId);
+		
+		List<Profile> list = new ArangoDbQuery<Profile>(db, aql.toString(), filterMap, Profile.class).getResultsAsList();
+		return list;
+	}
+	
+	
 	
 	public static long getTotalRecordsFiltered(DataFilter filter) {
 		//TODO
@@ -165,7 +182,7 @@ public class ProfileDaoUtil  extends BaseLeoCdpDao {
 				return obj;
 			}
 		};
-		ArangoDbQuery<ProfileSingleDataView> q = new ArangoDbQuery<ProfileSingleDataView>(db, AQL_GET_PROFILES_BY_PAGINATION, bindVars, ProfileSingleDataView.class, callback);
+		ArangoDbQuery<ProfileSingleDataView> q = new ArangoDbQuery<ProfileSingleDataView>(db, AQL_GET_ACTIVE_PROFILES_BY_PAGINATION, bindVars, ProfileSingleDataView.class, callback);
 		List<ProfileSingleDataView> list = q.getResultsAsList();
 		return list;
 	}
@@ -192,7 +209,8 @@ public class ProfileDaoUtil  extends BaseLeoCdpDao {
 
 	public static long countTotalOfProfiles() {
 		ArangoDatabase db = getCdpDbInstance();
-		return db.collection(Profile.COLLECTION_NAME).count().getCount();
+		long c =  new ArangoDbQuery<Long>(db, AQL_COUNT_TOTAL_ACTIVE_PROFILES, Long.class).getResultsAsObject();
+		return c;
 	}
 	
 

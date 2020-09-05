@@ -201,6 +201,15 @@ AQL_GET_TOUCHPOINT_FLOW_BY_PROFILE =>
 
 ########### AQL LEO CDP - PROFILE COLLECTION ########################################################################################################;
 
+ 
+AQL_GET_ACTIVE_PROFILES_BY_PAGINATION =>
+	FOR p in cdp_profile  
+	FILTER p.status > 0 
+	SORT p.createdAt DESC
+	LIMIT @startIndex,@numberResult 
+	RETURN p
+; 
+ 
 AQL_GET_PROFILES_BY_PAGINATION =>
 	FOR p in cdp_profile  
 	SORT p.createdAt DESC
@@ -223,7 +232,14 @@ AQL_GET_PROFILE_BY_IDENTITY =>
 	RETURN e
 ;
 
-###  OR @phone IN e.identities[*] OR @adsUserId IN e.identities[*] ###;
+AQL_GET_PROFILE_REAL_TIME_IDENTITY_RESOLUTION => 
+	LET rs1 = (
+        FOR e in cdp_profile 
+        FILTER  e.status == 1 AND (@visitorId IN e.identities[*] OR @email IN e.identities[*])
+    	RETURN e
+    )
+	RETURN { "deterministic" : rs1, "probabilistic" : [] }
+;
 
 AQL_GET_PROFILE_BY_KEY_IDENTITIES => 
 	LET rs1 = (
@@ -232,13 +248,11 @@ AQL_GET_PROFILE_BY_KEY_IDENTITIES =>
         	(
             	@visitorId IN e.identities[*] OR @email IN e.identities[*]
             )
-        LIMIT 1
     	RETURN e
     )
     LET rs2 = (
         FOR e in cdp_profile 
         FILTER e.status == 1 AND @fingerprintId IN e.identities[*]
-        LIMIT 1
     	RETURN e
     )
 	RETURN { "deterministic" : rs1, "probabilistic" : rs2 }

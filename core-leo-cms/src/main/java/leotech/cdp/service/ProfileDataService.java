@@ -48,7 +48,7 @@ public class ProfileDataService {
 			String userDeviceId, String fingerprintId, String email, String phone, String loginId, String loginProvider) {
 
 		// the key function for real-time Identity Resolution into one profile
-		Profile pf = ProfileDaoUtil.getByKeyIdentities(visitorId, email, phone, userDeviceId, fingerprintId);
+		Profile pf = ProfileDaoUtil.realTimeIdentityResolution(visitorId, email);
 		
 		if (pf == null) {
 			
@@ -79,6 +79,7 @@ public class ProfileDataService {
 			// TODO run in a thread to commit to database
 			ProfileDaoUtil.create(pf);
 		} else {
+			
 			pf.engageAtTouchpointId(refTouchpointId);
 			pf.updateReferrerChannel(touchpointRefDomain);
 			pf.updateReferrerChannel(loginProvider);
@@ -137,7 +138,7 @@ public class ProfileDataService {
 	}
 	
 	public static List<Profile> list(int startIndex, int numberResult){
-		List<Profile> list = ProfileDaoUtil.list(startIndex, numberResult);
+		List<Profile> list = ProfileDaoUtil.listAllWithPagination(startIndex, numberResult);
 		return list;
 	}
 	
@@ -223,7 +224,7 @@ public class ProfileDataService {
 	public static boolean remove(String profileId) {
 		Profile pf = ProfileDaoUtil.getById(profileId);
 		// the data is not deleted, we need to remove it from valid data view, set status of object = -4
-		pf.setStatus(-4);
+		pf.setStatus(Profile.STATUS_REMOVED);
 		
 		// TODO run in a thread to commit to database
 		ProfileDaoUtil.update(pf);

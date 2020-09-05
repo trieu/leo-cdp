@@ -93,7 +93,6 @@ public class ProfileSingleDataView extends Profile implements SingleDataView {
 			} else if(type == ProfileType.TYPE_SOCIAL_LOGIN) {
 				typeAsText = "SOCIAL_LOGIN";
 			}
-			 
 		}
 		
 		// gender 
@@ -165,8 +164,6 @@ public class ProfileSingleDataView extends Profile implements SingleDataView {
 	public void setLastTrackingEvent(TrackingEvent lastTrackingEvent) {
 		this.lastTrackingEvent = lastTrackingEvent;
 	}
-
-	
 
 	@Override
 	public String toString() {

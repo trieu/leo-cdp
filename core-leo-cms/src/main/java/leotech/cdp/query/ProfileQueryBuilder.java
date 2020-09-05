@@ -10,7 +10,7 @@ public class ProfileQueryBuilder {
 		String filterDateStr = filterCreateAt ? " d.createdAt " : " d.updatedAt ";
 		
 		StringBuilder aql = new StringBuilder("FOR d in ").append(Profile.COLLECTION_NAME);
-		aql.append(" FILTER ( ").append(filterDateStr).append(" >= '").append(beginFilterDate).append("' AND ");
+		aql.append(" FILTER d.status > 0 AND ( ").append(filterDateStr).append(" >= '").append(beginFilterDate).append("' AND ");
 		aql.append(filterDateStr).append(" <= '").append(endFilterDate).append("' ) ");
 		if( ! parsedFilterAql.isEmpty() ) {
 			aql.append(" AND ").append(parsedFilterAql);
@@ -43,7 +43,7 @@ public class ProfileQueryBuilder {
 	public static String buildCoutingQuery(boolean filterCreateAt, String beginFilterDate, String endFilterDate, String parsedFilterAql) {
 		String filterDateStr = filterCreateAt ? " d.createdAt " : " d.updatedAt ";
 		StringBuilder aql = new StringBuilder("RETURN LENGTH( FOR d in ").append(Profile.COLLECTION_NAME);
-		aql.append(" FILTER ( ").append(filterDateStr).append(" >= '").append(beginFilterDate).append("' AND ");
+		aql.append(" FILTER d.status > 0 AND ( ").append(filterDateStr).append(" >= '").append(beginFilterDate).append("' AND ");
 		aql.append(filterDateStr).append(" <= '").append(endFilterDate).append("' ) ");
 		if( ! parsedFilterAql.isEmpty() ) {
 			aql.append(" AND ").append(parsedFilterAql);

@@ -23,12 +23,19 @@ import leotech.cdp.model.CdpPersistentObject;
 import rfx.core.util.StringUtil;
 
 /**
- * @author Trieu Nguyen (Thomas)
  * 
- *         general data entity for storing customer profile information
+ * general entity for storing customer data profile information
+ * 
+ * @author Trieu Nguyen (Thomas)
+ * @since 2019
  *
  */
 public class Profile extends CdpPersistentObject implements Comparable<Profile> {
+	
+	public static final int MERGED_BY_EMAIL = 101;
+	public static final int STATUS_REMOVED = -4;
+	public static final int STATUS_MERGED = 0;
+	public static final int STATUS_ACTIVE = 1;
 
 	public static final String COLLECTION_NAME = getCollectionName(Profile.class);
 	static ArangoCollection dbCol;
@@ -50,7 +57,6 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 			dbCol.ensurePersistentIndex(Arrays.asList("primaryEmail"),new PersistentIndexOptions().unique(false));
 			dbCol.ensurePersistentIndex(Arrays.asList("primaryPhone"),new PersistentIndexOptions().unique(false));
-			dbCol.ensurePersistentIndex(Arrays.asList("primaryAvatar"),	new PersistentIndexOptions().unique(false));
 			dbCol.ensurePersistentIndex(Arrays.asList("crmRefId"), new PersistentIndexOptions().unique(false));
 
 			dbCol.ensurePersistentIndex(Arrays.asList("lastChannelId"),new PersistentIndexOptions().unique(false));
@@ -60,7 +66,6 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 			dbCol.ensurePersistentIndex(Arrays.asList("identities[*]"),new PersistentIndexOptions().unique(false));
 			dbCol.ensurePersistentIndex(Arrays.asList("usedDeviceIds[*]"),new PersistentIndexOptions().unique(false));
-			
 			
 			dbCol.ensurePersistentIndex(Arrays.asList("funnelStage"),new PersistentIndexOptions().unique(false));
 			dbCol.ensurePersistentIndex(Arrays.asList("locationCode"),new PersistentIndexOptions().unique(false));
@@ -114,7 +119,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	// --- BEGIN taxonomy meta data
 
 	@Expose
-	protected int status = 1;
+	protected int status = STATUS_ACTIVE;
 
 	@Expose
 	protected Set<String> inCollections = new HashSet<String>(100);
@@ -312,7 +317,12 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	@Override
 	public int compareTo(Profile o) {
-		// TODO Auto-generated method stub
+		if(this.getTotalValue() > o.getTotalValue()) {
+			return 1;
+		}
+		else if(this.getTotalValue() < o.getTotalValue()) {
+			return -1;
+		}
 		return 0;
 	}
 
@@ -1030,6 +1040,11 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	public void setTotalNPS(int totalNPS) {
 		this.totalNPS = totalNPS;
+	}
+	
+	public long getTotalValue() {
+		long total = this.totalDataQualityScore + this.totalLeadScore + this.totalCreditScore + this.totalCLV;
+		return total;
 	}
 	
 	public Map<String, Long> getEventStatistics() {
