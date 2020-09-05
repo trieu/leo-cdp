@@ -3,7 +3,7 @@ package leotech.starter;
 import leotech.system.HttpWorker;
 import leotech.system.util.LogUtil;
 
-public class InfoDeliveryStarter {
+public class DataDeliveryStarter {
 
 	public static void main(String[] args) throws Exception {
 		LogUtil.setLogLevelToInfo();

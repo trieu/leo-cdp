@@ -64,6 +64,13 @@ public class IdentityResolutionJob extends ScheduledJob {
 		Utils.sleep(1000);
 	}
 	
+	/**
+	 * this method is used to unify duplicated profiles into the unique profile
+	 * 
+	 * @param bestProfile
+	 * @param needToBeUnified
+	 * @param mergeCode
+	 */
 	public static void unifyData(Profile bestProfile, List<Profile> needToBeUnified, int mergeCode) {
 		if(bestProfile != null && needToBeUnified.size()>0) {
 			String rootProfileId = bestProfile.getId();
@@ -74,6 +81,9 @@ public class IdentityResolutionJob extends ScheduledJob {
 				bestProfile.getBusinessContacts().putAll(profile.getBusinessContacts());
 				bestProfile.getPersonalContacts().putAll(profile.getPersonalContacts());
 				bestProfile.getSocialMediaProfiles().putAll(profile.getSocialMediaProfiles());
+				bestProfile.getReferrerChannels().putAll(profile.getReferrerChannels());
+				bestProfile.getBusinessTransactions().addAll(profile.getBusinessTransactions());
+				bestProfile.getBusinessData().putAll(profile.getBusinessData());
 				
 				// personal information
 				if(bestProfile.getAge() == 0 && profile.getAge() > 0) {
