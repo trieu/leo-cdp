@@ -223,14 +223,14 @@ AQL_GET_PROFILE_BY_IDENTITY =>
 	RETURN e
 ;
 
-### OR @email IN e.identities[*] OR @phone IN e.identities[*] OR @adsUserId IN e.identities[*] ###;
+###  OR @phone IN e.identities[*] OR @adsUserId IN e.identities[*] ###;
 
 AQL_GET_PROFILE_BY_KEY_IDENTITIES => 
 	LET rs1 = (
         FOR e in cdp_profile 
         FILTER  e.status == 1 AND 
         	(
-            	@visitorId IN e.identities[*] 
+            	@visitorId IN e.identities[*] OR @email IN e.identities[*]
             )
         LIMIT 1
     	RETURN e

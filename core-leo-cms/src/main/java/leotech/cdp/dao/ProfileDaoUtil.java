@@ -71,10 +71,13 @@ public class ProfileDaoUtil  extends BaseLeoCdpDao {
 		
 		Map<String, Object> bindVars = new HashMap<>(5);
 		
+		
 		// deterministic
 		bindVars.put("visitorId", visitorId);
+		bindVars.put("email", email);
 		
-//		bindVars.put("email", email);
+		//FIXME
+		
 //		bindVars.put("phone", phone);
 //		bindVars.put("adsUserId", adsUserId);
 		
