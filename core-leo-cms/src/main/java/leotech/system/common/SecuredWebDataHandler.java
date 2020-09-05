@@ -1,4 +1,4 @@
-package leotech.core.api;
+package leotech.system.common;
 
 import java.util.Random;
 

@@ -34,15 +34,17 @@ public class ProfileMatchingResult {
 	}
 	
 	public Profile getBestMatchingProfile() {
+		//FIXME 
+		
 		List<Profile> deterministicProfiles = getDeterministic();
-		List<Profile> probabilisticProfiles = getProbabilistic();
+		//List<Profile> probabilisticProfiles = getProbabilistic();
 		
 		if(deterministicProfiles.size()>0) {
 			return deterministicProfiles.get(0);
 		} 
-		else if(probabilisticProfiles.size()>0) {
-			return probabilisticProfiles.get(0);
-		}
+//		else if(probabilisticProfiles.size()>0) {
+//			return probabilisticProfiles.get(0);
+//		}
 		
 		return null;
 	}

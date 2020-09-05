@@ -24,7 +24,7 @@ import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
 
 import leotech.cdp.model.activation.EmailMessage;
-import leotech.core.config.ActivationChannelConfigs;
+import leotech.system.config.ActivationChannelConfigs;
 
 public class EmailSender {
 	

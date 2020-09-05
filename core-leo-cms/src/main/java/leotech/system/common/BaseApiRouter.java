@@ -1,4 +1,4 @@
-package leotech.core.api;
+package leotech.system.common;
 
 import static io.netty.handler.codec.http.HttpHeaderNames.CONNECTION;
 import static io.netty.handler.codec.http.HttpHeaderNames.CONTENT_TYPE;

@@ -8,7 +8,7 @@ import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
 import com.google.gson.Gson;
 
-import leotech.core.config.AqlTemplate;
+import leotech.system.config.AqlTemplate;
 import leotech.system.model.SystemUser;
 import leotech.system.util.Encryptor;
 import leotech.system.util.database.ArangoDbQuery;

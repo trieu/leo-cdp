@@ -12,7 +12,7 @@ import com.arangodb.ArangoDatabase;
 import leotech.cdp.model.analytics.ContextSession;
 import leotech.cdp.model.journey.Touchpoint;
 import leotech.cms.model.Post;
-import leotech.core.config.AqlTemplate;
+import leotech.system.config.AqlTemplate;
 import leotech.system.util.database.ArangoDbQuery;
 import leotech.system.util.database.ArangoDbUtil;
 

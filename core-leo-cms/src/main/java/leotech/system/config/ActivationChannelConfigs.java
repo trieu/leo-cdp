@@ -1,4 +1,4 @@
-package leotech.core.config;
+package leotech.system.config;
 
 import java.util.HashMap;
 
@@ -89,11 +89,4 @@ public class ActivationChannelConfigs {
 		return load(MARKETING_EMAIL_SERVICE);
 	}
 	
-	
-
-	public static void main(String[] args) {
-		System.out.println(ActivationChannelConfigs.loadSystemEmailServiceConfig());
-	}
-	
-
 }

@@ -11,7 +11,7 @@ import leotech.cms.model.renderable.PageDataModel;
 import leotech.cms.model.renderable.PageNavigator;
 import leotech.cms.model.renderable.WebData;
 import leotech.cms.service.PageDataService;
-import leotech.core.api.SecuredWebDataHandler;
+import leotech.system.common.SecuredWebDataHandler;
 import leotech.system.model.AppMetadata;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.SystemUser;

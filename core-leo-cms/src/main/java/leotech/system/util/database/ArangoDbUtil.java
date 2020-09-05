@@ -8,7 +8,7 @@ import com.arangodb.ArangoDB;
 import com.arangodb.ArangoDatabase;
 import com.google.gson.Gson;
 
-import leotech.core.config.DbConfigs;
+import leotech.system.config.DbConfigs;
 import rfx.core.util.StringUtil;
 import rfx.core.util.Utils;
 

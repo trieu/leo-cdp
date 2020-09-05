@@ -1,4 +1,4 @@
-package leotech.core.config;
+package leotech.system.config;
 
 import java.util.HashMap;
 

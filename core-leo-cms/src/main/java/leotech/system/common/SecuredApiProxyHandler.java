@@ -1,4 +1,4 @@
-package leotech.core.api;
+package leotech.system.common;
 
 import java.util.concurrent.TimeUnit;
 
@@ -9,7 +9,7 @@ import com.google.common.cache.LoadingCache;
 import io.vertx.core.MultiMap;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.ext.web.RoutingContext;
-import leotech.core.api.SecuredWebDataHandler.JsonErrorPayload;
+import leotech.system.common.SecuredWebDataHandler.JsonErrorPayload;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.SystemUser;
 import leotech.system.util.CookieUserSessionUtil;

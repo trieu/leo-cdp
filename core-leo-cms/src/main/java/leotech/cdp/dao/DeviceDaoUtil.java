@@ -7,7 +7,7 @@ import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
 
 import leotech.cdp.model.customer.Device;
-import leotech.core.config.AqlTemplate;
+import leotech.system.config.AqlTemplate;
 import leotech.system.util.database.ArangoDbQuery;
 import leotech.system.util.database.ArangoDbUtil;
 

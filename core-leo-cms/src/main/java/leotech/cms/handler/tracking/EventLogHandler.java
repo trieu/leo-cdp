@@ -5,7 +5,7 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import leotech.cdp.utils.EventTrackingUtil;
 import leotech.cdp.utils.UserTrackingUtil;
-import leotech.core.api.BaseApiHandler;
+import leotech.system.common.BaseApiHandler;
 import leotech.system.model.DeviceInfo;
 import leotech.system.model.GeoLocation;
 import leotech.system.model.LogData;

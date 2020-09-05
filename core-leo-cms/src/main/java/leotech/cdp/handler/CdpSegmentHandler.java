@@ -1,4 +1,4 @@
-package leotech.cdp.admin.handler;
+package leotech.cdp.handler;
 
 import java.util.List;
 import java.util.Map;
@@ -10,7 +10,7 @@ import io.vertx.core.json.JsonObject;
 import leotech.cdp.model.customer.Segment;
 import leotech.cdp.service.ProfileDataService;
 import leotech.cdp.service.SegmentDataService;
-import leotech.core.api.SecuredWebDataHandler;
+import leotech.system.common.SecuredWebDataHandler;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.JsonDataTablePayload;

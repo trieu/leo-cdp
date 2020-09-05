@@ -1,4 +1,4 @@
-package leotech.cdp.admin.handler;
+package leotech.cdp.handler;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -11,7 +11,7 @@ import leotech.cdp.dao.BehavioralEventMetricDao;
 import leotech.cdp.model.analytics.Notebook;
 import leotech.cdp.model.journey.BehavioralEventMetric;
 import leotech.cdp.model.journey.FunnelStage;
-import leotech.core.api.SecuredWebDataHandler;
+import leotech.system.common.SecuredWebDataHandler;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.SystemUser;
 import leotech.system.util.RequestInfoUtil;

@@ -1,11 +1,11 @@
-package leotech.cdp.admin.handler;
+package leotech.cdp.handler;
 
 import java.util.List;
 
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import leotech.cdp.model.journey.MediaChannel;
-import leotech.core.api.SecuredWebDataHandler;
+import leotech.system.common.SecuredWebDataHandler;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.SystemUser;

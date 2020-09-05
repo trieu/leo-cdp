@@ -1,4 +1,4 @@
-package leotech.core.api;
+package leotech.system.common;
 
 import leotech.cdp.utils.EventTrackingUtil;
 import leotech.cdp.utils.UserTrackingUtil;

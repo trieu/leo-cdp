@@ -10,7 +10,7 @@ import com.google.gson.Gson;
 
 import leotech.cdp.dao.singleview.EventSingleDataView;
 import leotech.cdp.model.analytics.TrackingEvent;
-import leotech.core.config.AqlTemplate;
+import leotech.system.config.AqlTemplate;
 import leotech.system.model.DataFilter;
 import leotech.system.util.database.ArangoDbQuery;
 import leotech.system.util.database.ArangoDbQuery.CallbackQuery;

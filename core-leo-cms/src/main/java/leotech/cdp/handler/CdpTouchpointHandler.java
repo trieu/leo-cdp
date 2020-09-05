@@ -1,60 +1,55 @@
-package leotech.cdp.admin.handler;
+package leotech.cdp.handler;
 
 import java.util.List;
 
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
-import leotech.cdp.model.analytics.Notebook;
-import leotech.cdp.service.Analytics360Service;
-import leotech.core.api.SecuredWebDataHandler;
+import leotech.cdp.model.journey.Touchpoint;
+import leotech.system.common.SecuredWebDataHandler;
+import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.SystemUser;
 import leotech.system.util.RequestInfoUtil;
 
-public class CdpAnalytics360Handler extends SecuredWebDataHandler {
+public class CdpTouchpointHandler extends SecuredWebDataHandler {
 	
 	// for dataList view
-	static final String API_LIST_ALL = "/cdp/analytics360/notebooks";
+	static final String API_LIST_ALL = "/cdp/touchpoints";
+	static final String API_LIST_WITH_FILTER = "/cdp/touchpoints/filter";
 	
 	// for dataList view
-	static final String API_CREATE_NEW = "/cdp/analytics360/notebook/new";
-	static final String API_UPDATE_MODEL = "/cdp/analytics360/notebook/update";
-	static final String API_GET_MODEL = "/cdp/analytics360/notebook/get";
-	static final String API_REMOVE = "/cdp/analytics360/notebook/remove";
-	static final String API_RUN_MANUALLY = "/cdp/analytics360/notebook/run";
+	static final String API_CREATE_NEW = "/cdp/touchpoint/new";
+	static final String API_UPDATE_MODEL = "/cdp/touchpoint/update";
+	static final String API_GET_MODEL = "/cdp/touchpoint/get";
+	static final String API_REMOVE = "/cdp/touchpoint/remove";
 
 	@Override
 	public JsonDataPayload httpPostApiHandler(String userSession, String uri, JsonObject paramJson) throws Exception {
 		SystemUser loginUser = getUserFromSession(userSession);
 		if (loginUser != null) {
-			if (isAuthorized(loginUser, Notebook.class)) {
+			if (isAuthorized(loginUser, Touchpoint.class)) {
 				switch (uri) {
-					case API_LIST_ALL : {
-						int startIndex =   RequestInfoUtil.getInteger(paramJson,"startIndex", 0);
-						int numberResult = RequestInfoUtil.getInteger(paramJson,"numberResult", 10);
-						List<Notebook> list = Analytics360Service.getNotebooks(startIndex, numberResult);
-						return JsonDataPayload.ok(uri, list, loginUser, Notebook.class);
-					}
-					case API_RUN_MANUALLY : {
-						String id = paramJson.getString("id", "0");
+					case API_LIST_WITH_FILTER : {
+						// the list-view component at datatables.net needs Ajax POST method to avoid long URL 
+						DataFilter filter = new DataFilter(uri, paramJson);
 						//TODO
-						return JsonDataPayload.ok(uri, null, loginUser, Notebook.class);
+						return null;
 					}
 					case API_GET_MODEL : {
 						String id = paramJson.getString("id", "0");
 						//TODO
-						return JsonDataPayload.ok(uri, null, loginUser, Notebook.class);
+						return JsonDataPayload.ok(uri, null, loginUser, Touchpoint.class);
 					}
 					case API_UPDATE_MODEL : {
 						String key = null;
 						//TODO                                                                                                                                                                                                                                                                
-						return JsonDataPayload.ok(uri, key, loginUser, Notebook.class);
+						return JsonDataPayload.ok(uri, key, loginUser, Touchpoint.class);
 					}
 					case API_REMOVE : {
 						// the data is not deleted, we need to remove it from valid data view, set status of object = -4
 						//TODO
 						boolean rs = false;
-						return JsonDataPayload.ok(uri, rs, loginUser, Notebook.class);
+						return JsonDataPayload.ok(uri, rs, loginUser, Touchpoint.class);
 					}
 					default : {
 						return JsonErrorPayload.NO_HANDLER_FOUND;
@@ -73,19 +68,20 @@ public class CdpAnalytics360Handler extends SecuredWebDataHandler {
 	public JsonDataPayload httpGetApiHandler(String userSession, String uri, MultiMap params) throws Exception {
 		SystemUser loginUser = getUserFromSession(userSession);
 		if (loginUser != null) {
-			if (isAuthorized(loginUser, Notebook.class)) {
+			if (isAuthorized(loginUser, Touchpoint.class)) {
 				switch (uri) {
 					case API_LIST_ALL : {
 						int startIndex =   RequestInfoUtil.getInteger(params,"startIndex", 0);
-						int numberResult = RequestInfoUtil.getInteger(params,"numberResult", 10);
-						List<Notebook> list = Analytics360Service.getNotebooks(startIndex, numberResult);
-						return JsonDataPayload.ok(uri, list, loginUser, Notebook.class);
+						int numberResult = RequestInfoUtil.getInteger(params,"numberResult", 20);
+						//TODO
+						List<?> list = null;
+						return JsonDataPayload.ok(uri, list, loginUser, Touchpoint.class);
 					}
 					case API_GET_MODEL : {
 						String id = RequestInfoUtil.getString(params,"id", "");
 						if (!id.isEmpty()) {
 							//TODO
-							return JsonDataPayload.ok(uri, null, loginUser, Notebook.class);
+							return JsonDataPayload.ok(uri, null, loginUser, Touchpoint.class);
 						}
 					}
 

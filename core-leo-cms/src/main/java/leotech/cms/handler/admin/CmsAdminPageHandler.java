@@ -7,7 +7,7 @@ import io.vertx.core.json.JsonObject;
 import leotech.cms.dao.PageDaoUtil;
 import leotech.cms.model.Page;
 import leotech.cms.service.PageDataService;
-import leotech.core.api.SecuredWebDataHandler;
+import leotech.system.common.SecuredWebDataHandler;
 import leotech.system.model.AppMetadata;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.SystemUser;

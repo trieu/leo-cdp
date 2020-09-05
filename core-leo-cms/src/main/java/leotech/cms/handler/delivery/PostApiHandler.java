@@ -12,7 +12,7 @@ import leotech.cms.model.Post;
 import leotech.cms.model.renderable.PostDataModel;
 import leotech.cms.model.renderable.WebData;
 import leotech.cms.service.PostDataService;
-import leotech.core.api.SecuredWebDataHandler;
+import leotech.system.common.SecuredWebDataHandler;
 import leotech.system.model.AppMetadata;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.SystemUser;

@@ -1,4 +1,4 @@
-package leotech.admin.router;
+package leotech.starter.router;
 
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
@@ -8,7 +8,7 @@ import leotech.cms.handler.delivery.ContentQueryApiHandler;
 import leotech.cms.handler.delivery.PageApiHandler;
 import leotech.cms.handler.delivery.PostApiHandler;
 import leotech.cms.handler.delivery.UserApiHandler;
-import leotech.core.api.BaseApiRouter;
+import leotech.system.common.BaseApiRouter;
 import leotech.system.model.JsonDataPayload;
 
 /**

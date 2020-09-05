@@ -1,4 +1,4 @@
-package leotech.core.config;
+package leotech.system.config;
 
 
 import com.google.gson.Gson;

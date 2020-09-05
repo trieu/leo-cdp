@@ -1,4 +1,4 @@
-package leotech.admin.router;
+package leotech.starter.router;
 
 import static io.netty.handler.codec.http.HttpHeaderNames.CONNECTION;
 import static io.netty.handler.codec.http.HttpHeaderNames.CONTENT_TYPE;
@@ -13,11 +13,11 @@ import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.RoutingContext;
 import leotech.cms.dao.FileMetadataDaoUtil;
 import leotech.cms.model.FileMetadata;
-import leotech.core.api.BaseApiHandler;
-import leotech.core.api.BaseApiRouter;
-import leotech.core.api.BaseHttpRouter;
-import leotech.core.api.SecuredWebDataHandler;
-import leotech.core.api.SecuredWebDataHandler.JsonErrorPayload;
+import leotech.system.common.BaseApiHandler;
+import leotech.system.common.BaseApiRouter;
+import leotech.system.common.BaseHttpRouter;
+import leotech.system.common.SecuredWebDataHandler;
+import leotech.system.common.SecuredWebDataHandler.JsonErrorPayload;
 import leotech.system.model.FileUploaderData;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.SystemUser;

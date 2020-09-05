@@ -10,7 +10,7 @@ import com.arangodb.ArangoDatabase;
 
 import leotech.cdp.model.customer.Segment;
 import leotech.cdp.query.ProfileQuery;
-import leotech.core.config.AqlTemplate;
+import leotech.system.config.AqlTemplate;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataTablePayload;
 import leotech.system.util.database.ArangoDbQuery;

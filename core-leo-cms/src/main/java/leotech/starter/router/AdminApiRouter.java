@@ -1,23 +1,23 @@
-package leotech.admin.router;
+package leotech.starter.router;
 
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
-import leotech.cdp.admin.handler.CdpCampaignHandler;
-import leotech.cdp.admin.handler.CdpAnalytics360Handler;
-import leotech.cdp.admin.handler.CdpFunnelHandler;
-import leotech.cdp.admin.handler.CdpJourneyMapHandler;
-import leotech.cdp.admin.handler.CdpMediaChannelHandler;
-import leotech.cdp.admin.handler.CdpObserverHandler;
-import leotech.cdp.admin.handler.CdpProfileHandler;
-import leotech.cdp.admin.handler.CdpSegmentHandler;
+import leotech.cdp.handler.CdpAnalytics360Handler;
+import leotech.cdp.handler.CdpCampaignHandler;
+import leotech.cdp.handler.CdpFunnelHandler;
+import leotech.cdp.handler.CdpJourneyMapHandler;
+import leotech.cdp.handler.CdpMediaChannelHandler;
+import leotech.cdp.handler.CdpObserverHandler;
+import leotech.cdp.handler.CdpProfileHandler;
+import leotech.cdp.handler.CdpSegmentHandler;
 import leotech.cms.handler.admin.AdminSystemApiHandler;
 import leotech.cms.handler.admin.LeoAssistantBotHandler;
 import leotech.cms.handler.admin.CmsAdminCategoryHandler;
 import leotech.cms.handler.admin.CmsAdminPageHandler;
 import leotech.cms.handler.admin.CmsAdminPostApiHandler;
 import leotech.cms.handler.admin.SystemUserApiHandler;
-import leotech.core.api.BaseApiRouter;
+import leotech.system.common.BaseApiRouter;
 import leotech.system.model.JsonDataPayload;
 
 public class AdminApiRouter extends BaseApiRouter {

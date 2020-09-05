@@ -11,7 +11,7 @@ import com.arangodb.ArangoDBException;
 import com.arangodb.ArangoDatabase;
 
 import leotech.cms.model.FileMetadata;
-import leotech.core.config.AqlTemplate;
+import leotech.system.config.AqlTemplate;
 import leotech.system.util.database.ArangoDbUtil;
 
 public class FileMetadataDaoUtil {

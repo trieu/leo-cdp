@@ -12,7 +12,7 @@ import leotech.cdp.dao.singleview.ProfileSingleDataView;
 import leotech.cdp.model.customer.Profile;
 import leotech.cdp.query.ProfileMatchingResult;
 import leotech.cdp.query.ProfileQuery;
-import leotech.core.config.AqlTemplate;
+import leotech.system.config.AqlTemplate;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataTablePayload;
 import leotech.system.util.database.ArangoDbQuery;
@@ -66,14 +66,19 @@ public class ProfileDaoUtil  extends BaseLeoCdpDao {
 		return p;
 	}
 	
-	public static Profile getByKeyIdentities(String visitorId, String email, String phone, String userDeviceId, String fingerprintId) {
-		System.out.println("==> getByKeyIdentities visitorId:" + visitorId + " email:" + email + " phone:" + phone + " userDeviceId:" + userDeviceId+ " fingerprintId:" + fingerprintId);
+	public static Profile getByKeyIdentities(String visitorId, String email, String phone, String adsUserId, String fingerprintId) {
+		System.out.println("==> getByKeyIdentities visitorId:" + visitorId + " email:" + email + " phone:" + phone + " adsUserId:" + adsUserId+ " fingerprintId:" + fingerprintId);
 		
-		Map<String, Object> bindVars = new HashMap<>(4);
+		Map<String, Object> bindVars = new HashMap<>(5);
+		
+		// deterministic
 		bindVars.put("visitorId", visitorId);
-		bindVars.put("email", email);
-		bindVars.put("phone", phone);
-		bindVars.put("userDeviceId", userDeviceId);
+		
+//		bindVars.put("email", email);
+//		bindVars.put("phone", phone);
+//		bindVars.put("adsUserId", adsUserId);
+		
+		// probabilistic
 		bindVars.put("fingerprintId", fingerprintId);
 		
 		ArangoDatabase db = getCdpDbInstance();

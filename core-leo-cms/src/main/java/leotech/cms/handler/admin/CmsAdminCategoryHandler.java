@@ -8,7 +8,7 @@ import leotech.cms.dao.CategoryDaoUtil;
 import leotech.cms.model.Category;
 import leotech.cms.model.Page;
 import leotech.cms.service.CategoryDataService;
-import leotech.core.api.SecuredWebDataHandler;
+import leotech.system.common.SecuredWebDataHandler;
 import leotech.system.model.AppMetadata;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.SystemUser;

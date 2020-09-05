@@ -3,9 +3,9 @@ package test.persistence.util;
 import java.util.List;
 
 import leotech.cms.service.PostDataService;
-import leotech.core.config.DbConfigs;
 import leotech.crawler.model.CrawledYouTubeVideo;
 import leotech.crawler.util.YouTubeVideoCrawler;
+import leotech.system.config.DbConfigs;
 import leotech.system.util.database.ArangoDbUtil;
 import rfx.core.util.Utils;
 

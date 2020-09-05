@@ -1,4 +1,4 @@
-package leotech.cdp.router;
+package leotech.starter.router;
 
 import static io.netty.handler.codec.http.HttpHeaderNames.CONNECTION;
 import static io.netty.handler.codec.http.HttpHeaderNames.CONTENT_TYPE;
@@ -13,9 +13,9 @@ import leotech.cdp.model.analytics.ContextSession;
 import leotech.cdp.router.api.TrackingApi;
 import leotech.cdp.router.api.TrackingApiParam;
 import leotech.cdp.service.ContextSessionService;
-import leotech.core.api.BaseApiHandler;
-import leotech.core.api.BaseHttpRouter;
-import leotech.core.api.PublicFileHttpRouter;
+import leotech.system.common.BaseApiHandler;
+import leotech.system.common.BaseHttpRouter;
+import leotech.system.common.PublicFileHttpRouter;
 import leotech.system.model.DeviceInfo;
 import leotech.system.util.DeviceInfoUtil;
 import leotech.system.util.HttpTrackingUtil;
@@ -26,7 +26,7 @@ import rfx.core.util.StringUtil;
  * https://github.com/USPA-Technology/leotech-final-build/blob/master/leo-cdp-event-observer-data-flow.md
  *
  */
-public class DataObserverHttpRouter extends BaseHttpRouter {
+public class LeoObserverHttpRouter extends BaseHttpRouter {
 
 	public static final String INVALID = "invalid";
 	public static final String FAILED = "failed";
@@ -40,7 +40,7 @@ public class DataObserverHttpRouter extends BaseHttpRouter {
 	public static final String PREFIX_EVENT_ACTION = "/eta";
 	public static final String PREFIX_EVENT_CONVERSION = "/etc";
 
-	public DataObserverHttpRouter(RoutingContext context) {
+	public LeoObserverHttpRouter(RoutingContext context) {
 		super(context);
 		
 		// TODO trigger a scheduler for data summary computation 

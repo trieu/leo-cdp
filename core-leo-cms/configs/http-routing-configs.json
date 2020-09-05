@@ -5,7 +5,7 @@
 			"name": "MainHttpWorker",
 			"host": "127.0.0.1",
 			"port": 9898,
-			"classNameHttpRouter": "leotech.admin.router.MainHttpRouter",
+			"classNameHttpRouter": "leotech.starter.router.MainHttpRouter",
 			"bodyHandlerEnabled": true,
 			"sockJsHandlerEnabled": true
 		},
@@ -15,7 +15,7 @@
 			"name": "MainHttpWorker",
 			"host": "127.0.0.1",
 			"port": 9070,
-			"classNameHttpRouter": "leotech.admin.router.MainHttpRouter",
+			"classNameHttpRouter": "leotech.starter.router.MainHttpRouter",
 			"bodyHandlerEnabled": true,
 			"sockJsHandlerEnabled": true,
 			"defaultDbConfig" : "leoCdpDbConfigs"
@@ -26,7 +26,7 @@
 			"name": "dataObserverWorker",
 			"host": "127.0.0.1",
 			"port": 9080,
-			"classNameHttpRouter": "leotech.cdp.router.DataObserverHttpRouter",
+			"classNameHttpRouter": "leotech.starter.router.LeoObserverHttpRouter",
 			"bodyHandlerEnabled": true,
 			"sockJsHandlerEnabled": false,
 			"defaultDbConfig" : "leoCdpDbConfigs"
@@ -37,7 +37,7 @@
 			"name": "awsMainAdminLeoCDP",
 			"host": "127.0.0.1",
 			"port": 9070,
-			"classNameHttpRouter": "leotech.admin.router.MainHttpRouter",
+			"classNameHttpRouter": "leotech.starter.router.MainHttpRouter",
 			"bodyHandlerEnabled": true,
 			"sockJsHandlerEnabled": true,
 			"defaultDbConfig" : "awsLeoCdpDbConfigs"
@@ -48,7 +48,7 @@
 			"name": "awsDataObserverWorker",
 			"host": "127.0.0.1",
 			"port": 9080,
-			"classNameHttpRouter": "leotech.cdp.router.DataObserverHttpRouter",
+			"classNameHttpRouter": "leotech.starter.router.LeoObserverHttpRouter",
 			"bodyHandlerEnabled": true,
 			"sockJsHandlerEnabled": false,
 			"defaultDbConfig" : "awsLeoCdpDbConfigs"
@@ -60,7 +60,7 @@
 			"name": "AdminApiWorker",
 			"host": "127.0.0.1",
 			"port": 9071,
-			"classNameHttpRouter": "leotech.admin.router.AdminApiRouter",
+			"classNameHttpRouter": "leotech.starter.router.AdminApiRouter",
 			"bodyHandlerEnabled": true,
 			"sockJsHandlerEnabled": true,
 			"defaultDbConfig" : "leoCdpDbConfigs"
@@ -71,7 +71,7 @@
 			"name": "DeliveryApiWorker",
 			"host": "127.0.0.1",
 			"port": 9090,
-			"classNameHttpRouter": "leotech.admin.router.DeliveryApiRouter",
+			"classNameHttpRouter": "leotech.starter.router.DeliveryApiRouter",
 			"bodyHandlerEnabled": true,
 			"sockJsHandlerEnabled": true
 		},
@@ -81,7 +81,7 @@
 			"name": "UploadFileWorker",
 			"host": "127.0.0.1",
 			"port": 9071,
-			"classNameHttpRouter": "leotech.admin.router.UploadFileHttpRouter",
+			"classNameHttpRouter": "leotech.starter.router.UploadFileHttpRouter",
 			"bodyHandlerEnabled": true,
 			"sockJsHandlerEnabled": false
 		},
@@ -91,7 +91,7 @@
 			"name": "MainHttpWorker",
 			"host": "127.0.0.1",
 			"port": 9192,
-			"classNameHttpRouter": "leotech.admin.router.MainHttpRouter",
+			"classNameHttpRouter": "leotech.starter.router.MainHttpRouter",
 			"bodyHandlerEnabled": true,
 			"sockJsHandlerEnabled": true,
 			"defaultDbConfig" : "dbConfigsBookstore"
@@ -102,7 +102,7 @@
 			"name": "MainHttpWorker",
 			"host": "127.0.0.1",
 			"port": 9190,
-			"classNameHttpRouter": "leotech.admin.router.MainHttpRouter",
+			"classNameHttpRouter": "leotech.starter.router.MainHttpRouter",
 			"bodyHandlerEnabled": true,
 			"sockJsHandlerEnabled": true,
 			"defaultDbConfig" : "dbConfigsXemGiDay"
@@ -113,7 +113,7 @@
 			"name": "MainHttpWorker",
 			"host": "127.0.0.1",
 			"port": 9191,
-			"classNameHttpRouter": "leotech.admin.router.MainHttpRouter",
+			"classNameHttpRouter": "leotech.starter.router.MainHttpRouter",
 			"bodyHandlerEnabled": true,
 			"sockJsHandlerEnabled": true,
 			"defaultDbConfig" : "dbConfigsVideoMonngon"

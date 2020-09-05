@@ -3,7 +3,7 @@ package leotech.cms.handler.admin;
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import leotech.cms.service.PostDataService;
-import leotech.core.api.SecuredWebDataHandler;
+import leotech.system.common.SecuredWebDataHandler;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.SystemUser;
 

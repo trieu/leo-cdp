@@ -10,7 +10,7 @@ import com.univocity.parsers.tsv.TsvParser;
 import com.univocity.parsers.tsv.TsvParserSettings;
 
 import leotech.cms.dao.UserDaoUtil;
-import leotech.core.config.DbConfigs;
+import leotech.system.config.DbConfigs;
 import leotech.system.model.AppMetadata;
 import leotech.system.model.SystemUser;
 import leotech.system.util.database.ArangoDbUtil;
