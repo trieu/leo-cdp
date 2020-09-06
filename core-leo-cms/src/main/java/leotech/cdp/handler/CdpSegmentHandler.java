@@ -32,7 +32,7 @@ public class CdpSegmentHandler extends SecuredWebDataHandler {
 	
 	// for dataList view
 	static final String API_CREATE_NEW = "/cdp/segment/new";
-	static final String API_UPDATE_MODEL = "/cdp/segment/update";
+	static final String API_SAVE_MODEL = "/cdp/segment/save";
 	static final String API_GET_MODEL = "/cdp/segment/get";
 	static final String API_REMOVE = "/cdp/segment/remove";
 	static final String API_PROFILES_IN_SEGMENT = "/cdp/segment/profiles";
@@ -76,7 +76,7 @@ public class CdpSegmentHandler extends SecuredWebDataHandler {
 						
 						return JsonDataPayload.ok(uri, data, loginUser, Segment.class);
 					}
-					case API_UPDATE_MODEL : {
+					case API_SAVE_MODEL : {
 						String json = paramJson.getString("objectJson", "{}");
 						Segment sm = SegmentDataService.updateFromJson(json);
 						if(sm != null) {

@@ -219,4 +219,23 @@
 		});;
 	}
 	
+	var saveSegment = saveSegment || function() {
+		//done set data model, POST to API
+        var urlStr = baseAdminApi + '/cdp/segment/save';
+        LeoAdminApiUtil.callPostAdminApi(urlStr, segmentDataModel, function (json) {
+            if (json.httpCode === 0 && json.errorMessage === '') {
+                if (typeof callback === 'function') {
+                    if(json.data === ''){
+                        $('#error-on-save').html('Data is not valid !').show().delay(6000).fadeOut('slow');
+                    } else {
+                        callback(json.data);
+                    }                        
+                }
+            } else {
+                $('#error-on-save').html(json.errorMessage).show().delay(6000).fadeOut('slow');
+                LeoAdminApiUtil.logErrorPayload(json);
+            }
+        });
+	}
+	
 </script>
