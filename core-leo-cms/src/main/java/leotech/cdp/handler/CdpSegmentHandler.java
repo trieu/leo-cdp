@@ -77,11 +77,10 @@ public class CdpSegmentHandler extends SecuredWebDataHandler {
 						return JsonDataPayload.ok(uri, data, loginUser, Segment.class);
 					}
 					case API_SAVE_MODEL : {
-						String json = paramJson.getString("objectJson", "{}");
-						Segment sm = SegmentDataService.updateFromJson(json);
-						if(sm != null) {
-							String id = sm.getId();
-							return JsonDataPayload.ok(uri, id, loginUser, Segment.class);
+						String json = paramJson.getString("dataObject", "{}");
+						String segmentId = SegmentDataService.saveFromJson(json);
+						if(segmentId != null) {
+							return JsonDataPayload.ok(uri, segmentId, loginUser, Segment.class);
 						} else {
 							return JsonDataPayload.fail("failed to save Segment data into database", 500);
 						}

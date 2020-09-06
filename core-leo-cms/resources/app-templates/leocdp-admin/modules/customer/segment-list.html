@@ -121,16 +121,13 @@
                         "render": function (data, type, row) {
                         	var statusText = 'REMOVED';
                         	if(data === 0){
-                        		statusText = 'INACTIVE';
+                        		statusText = 'PASSIVE';
                         	}
                         	else if(data === 1){
                         		statusText = 'ACTIVE';
                         	}
                         	else if(data === 2){
                         		statusText = 'ACTIVATED';
-                        	}
-                        	else if(data < 0){
-                        		statusText = "REMOVED";
                         	}
                             return '<div class="datatable_text">' + statusText + '</div>';
                         },

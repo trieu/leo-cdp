@@ -6,9 +6,9 @@
 		<h4 class="page-header" id="page_breadcrumb"></h4>
 	</div>
 	<div class="col-lg-3 text-center" style="padding: 10px">
-		<button type="button" class="btn btn-danger data-control-delete" onclick=""> Remove </button>
+		<button type="button" class="btn btn-danger data-control-delete" > Remove </button>
 		<button type="button" class="btn btn-default" onclick="history.back()"> Cancel </button>
-		<button type="button" class="btn btn-success" onclick="" > Save </button>
+		<button type="button" class="btn btn-success data-control-edit"  > Save </button>
 	</div>
 </div>
 
@@ -24,64 +24,65 @@
 			<div class="panel-heading"> <b> <i class="fa fa-info-circle" aria-hidden="true"></i>  Segment Metadata </b>  </div>
 			<div class="panel-body">
 				<div class="col-lg-12">
-					<form class="form-horizontal" action="/action_page.php">
-						<div class="form-group">
-							<label class="control-label col-sm-2" for="sm_name">Name:</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="sm_name" placeholder="Enter segment name" name="name">
+				
+					<div id="error-on-save" class="alert alert-danger" style="display: none;"></div>
+					
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="sm_name">Name:</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="sm_name" placeholder="Enter segment name" name="name">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="sm_description">Description:</label>
+						<div class="col-sm-10">
+							<textarea class="form-control" rows="2" id="sm_description" name="description"  placeholder="Enter segment description" ></textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="type">Segment Type:</label>
+						<div class="col-sm-10"  id="sm_type" >
+							<div class="radio" title="Ad hoc query segmentation" >
+							  <label><input type="radio" name="type" checked value="9" > Ad hoc query segmentation </label>
+							</div>
+							
+							<div class="radio" title="Geographic segmentation" >
+							  <label><input type="radio" name="type" value="1" > Geographic segmentation </label>
+							</div>
+							<div class="radio" title="Demographic segmentation" >
+							  <label><input type="radio" name="type" value="2" > Demographic segmentation </label>
+							</div>
+							<div class="radio" title="Behavioral segmentation" >
+							  <label><input type="radio" name="type" value="4" > Behavioral segmentation </label>
+							</div>
+							
+							<div class="radio" title="Psychographic segmentation (This feature is only on Leo CDP Enterprise version)" >
+							  <label class="input_disabled" ><input type="radio" name="type" value="3" disabled="disabled" > Psychographic segmentation </label>
+							</div>
+							<div class="radio" title="Re-marketing segmentation (This feature is only on Leo CDP Enterprise version)" >
+							  <label class="input_disabled"><input type="radio" name="type" value="5" disabled="disabled" > Re-marketing segmentation </label>
+							</div>
+							<div class="radio" title="Look-alike segmentation (This feature is only on Leo CDP Enterprise version)" >
+							  <label class="input_disabled"><input type="radio" name="type" value="6" disabled="disabled" > Look-alike segmentation </label>
+							</div>
+							
+							<div class="radio" title="RFM model segmentation (This feature is only on Leo CDP Enterprise version)">
+							  <label class="input_disabled"><input type="radio" name="type" value="7" disabled="disabled" > RFM model segmentation </label>
+							</div>
+							<div class="radio" title="Churn segmentation (This feature is only on Leo CDP Enterprise version)">
+							  <label class="input_disabled"><input type="radio" name="type" value="8" disabled="disabled" > Churn segmentation </label>
 							</div>
 						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-2" for="sm_description">Description:</label>
-							<div class="col-sm-10">
-								<textarea class="form-control" rows="2" id="sm_description" name="description"  placeholder="Enter segment description" ></textarea>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="activeQuery"> Auto Query: </label>
+						<div class="col-sm-10">
+							<div class="checkbox">
+								<label><input type="checkbox" id="sm_activeQuery" name="activeQuery"> Automatic adding new profile who is matched query builder in real-time </label>
 							</div>
 						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-2" for="type">Segment Type:</label>
-							<div class="col-sm-10"  id="sm_type" >
-								<div class="radio" title="Ad hoc query segmentation" >
-								  <label><input type="radio" name="type" checked value="9" > Ad hoc query segmentation </label>
-								</div>
-								
-								<div class="radio" title="Geographic segmentation" >
-								  <label><input type="radio" name="type" value="1" > Geographic segmentation </label>
-								</div>
-								<div class="radio" title="Demographic segmentation" >
-								  <label><input type="radio" name="type" value="2" > Demographic segmentation </label>
-								</div>
-								<div class="radio" title="Behavioral segmentation" >
-								  <label><input type="radio" name="type" value="4" > Behavioral segmentation </label>
-								</div>
-								
-								<div class="radio" title="Psychographic segmentation (This feature is only on Leo CDP Enterprise version)" >
-								  <label class="input_disabled" ><input type="radio" name="type" value="3" disabled="disabled" > Psychographic segmentation </label>
-								</div>
-								<div class="radio" title="Re-marketing segmentation (This feature is only on Leo CDP Enterprise version)" >
-								  <label class="input_disabled"><input type="radio" name="type" value="5" disabled="disabled" > Re-marketing segmentation </label>
-								</div>
-								<div class="radio" title="Look-alike segmentation (This feature is only on Leo CDP Enterprise version)" >
-								  <label class="input_disabled"><input type="radio" name="type" value="6" disabled="disabled" > Look-alike segmentation </label>
-								</div>
-								
-								<div class="radio" title="RFM model segmentation (This feature is only on Leo CDP Enterprise version)">
-								  <label class="input_disabled"><input type="radio" name="type" value="7" disabled="disabled" > RFM model segmentation </label>
-								</div>
-								<div class="radio" title="Churn segmentation (This feature is only on Leo CDP Enterprise version)">
-								  <label class="input_disabled"><input type="radio" name="type" value="8" disabled="disabled" > Churn segmentation </label>
-								</div>
-							</div>
-						</div>
-						
-						<div class="form-group">
-							<label class="control-label col-sm-2" for="activeQuery"> Auto Query: </label>
-							<div class="col-sm-10">
-								<div class="checkbox">
-									<label><input type="checkbox" id="sm_activeQuery" name="activeQuery"> Automatic adding new profile who is matched query builder in real-time </label>
-								</div>
-							</div>
-						</div>
-					</form>
+					</div>
 				</div>
 				
 
@@ -167,9 +168,8 @@
 		// Date Range Filtering Controller
 		if(id === 'new'){
 			// init UI for new segment
-			initDateFilterComponent(true);
-			loadSegmentBuilder(false);
-			loadSegmentStatistics(false);
+			$('button.data-control-delete').hide();
+			createNewSegmentModel()
 		} else {
 			getSegmentBuilderData(id)
 		}
@@ -182,8 +182,14 @@
         		// only super-admin role can remove the segment 
         		var readOnlyMode = json.canEditData === false;
         		if( ! json.canDeleteData ){
-    				$('button.data-control-delete').attr('disabled','disabled');
+    				
     			}
+        		if( json.canDeleteData ){
+    				$('button.data-control-edit').click(saveSegment)
+    			} else {
+    				$('button.data-control-edit').attr('disabled','disabled');
+    			}
+        		
                 var segmentData = json.data.segmentData;
                 var segmentStats = json.data.segmentStats;
                 var segmentId = segmentData.id;
@@ -204,6 +210,29 @@
         });
     }
 	
+	var createNewSegmentModel = window.createNewSegmentModel || function() {
+        var urlStr = baseAdminApi + '/cdp/segment/get';
+        LeoAdminApiUtil.callPostAdminApi(urlStr, {}, function (json) {
+            if (json.httpCode === 0 && json.errorMessage === '') {
+            	
+            	var segmentData = json.data.segmentData;
+            	setSegmentDataForm(segmentData)
+            	
+    			$('button.data-control-edit').click(saveSegment);
+                document.title = 'New Segment Builder';
+               
+             	// init UI after setting data into DOM
+             	//initDateFilterComponent(true);
+				loadSegmentBuilder(false);
+				loadSegmentStatistics(false);
+                initDateFilterComponent(true, segmentData.beginFilterDate , segmentData.endFilterDate );
+                loadProfilesInSegment('');
+            } else {
+                LeoAdminApiUtil.logErrorPayload(json);
+            }
+        });
+    }
+	
 	
 	var setSegmentDataForm = setSegmentDataForm || function(segmentData){
 		segmentDataModel = segmentData;
@@ -216,23 +245,30 @@
 		});
 		$('#sm_activeQuery').prop( "checked", segmentData.activeQuery ).change(function() {
 			segmentDataModel.activeQuery = $(this).prop( "checked")
-		});;
+		});
 	}
 	
 	var saveSegment = saveSegment || function() {
+		
+		// jquery builder final data
+		var result = $('#segment-builder-holder').queryBuilder('getRules');
+		if (!$.isEmptyObject(result)) {
+			segmentDataModel.jsonQueryRules = JSON.stringify(result)
+		}
+		
 		//done set data model, POST to API
+		var dataJsonStr = JSON.stringify(segmentDataModel) ;
         var urlStr = baseAdminApi + '/cdp/segment/save';
-        LeoAdminApiUtil.callPostAdminApi(urlStr, segmentDataModel, function (json) {
-            if (json.httpCode === 0 && json.errorMessage === '') {
-                if (typeof callback === 'function') {
-                    if(json.data === ''){
-                        $('#error-on-save').html('Data is not valid !').show().delay(6000).fadeOut('slow');
-                    } else {
-                        callback(json.data);
-                    }                        
+        LeoAdminApiUtil.callPostAdminApi(urlStr,  { 'dataObject' : dataJsonStr }, function (json) {
+            if (json.httpCode === 0 ) {
+                if(json.data === ''){
+                    $('#error-on-save').html('Data is not valid !').show().delay(5000).fadeOut('slow');
+                } else {
+                	var segmentId = json.data;
+                	location.hash = "calljs-leoCdpRouter('Segment_Details','" + segmentId + "')";
                 }
             } else {
-                $('#error-on-save').html(json.errorMessage).show().delay(6000).fadeOut('slow');
+                $('#error-on-save').html(json.errorMessage).show().delay(5000).fadeOut('slow');
                 LeoAdminApiUtil.logErrorPayload(json);
             }
         });

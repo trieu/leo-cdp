@@ -12,6 +12,7 @@ import leotech.cdp.model.customer.Segment;
 import leotech.cdp.query.ProfileQuery;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataTablePayload;
+import rfx.core.util.StringUtil;
 
 public class SegmentDataService {
 	
@@ -60,12 +61,20 @@ public class SegmentDataService {
 		return sm;
 	}
 	
-	public static Segment updateFromJson(String json) {
-		Segment dataObj = new Gson().fromJson(json, Segment.class);
+	public static String saveFromJson(String json) {
+		Segment segment = new Gson().fromJson(json, Segment.class);
+		
+		String id = segment.getId();
+		System.out.println("saveFromJson "+segment);
 		
 		// TODO run in a thread to commit to database
-		SegmentDaoUtil.update(dataObj);
-		return dataObj;
+		
+		if(StringUtil.isNotEmpty(id)) {
+			return SegmentDaoUtil.update(segment);
+		} else {
+			segment.buildHashKey();
+			return SegmentDaoUtil.create(segment);
+		}
 	}
 	
 	
@@ -86,7 +95,7 @@ public class SegmentDataService {
 		// default is one week
 		String beginFilterDate = Instant.now().minusSeconds(ONE_WEEK_SECONDS).toString();
 		String endFilterDate = Instant.now().toString();
-		return new Segment("", "{}", beginFilterDate, endFilterDate);
+		return new Segment(beginFilterDate, endFilterDate);
 	}
 	
 	public static long computeSegmentSize(String name, String jsonQueryRules, List<String> selectedFields, String beginFilterDate, String endFilterDate) {
@@ -130,7 +139,7 @@ public class SegmentDataService {
 	public static boolean remove(String id) {
 		Segment sm = SegmentDaoUtil.getById(id);
 		// the data is not deleted, we need to remove it from valid data view, set status of object = -4
-		sm.setStatus(-4);
+		sm.setStatus(Segment.STATUS_REMOVED);
 		
 		// TODO run in a thread to commit to database
 		SegmentDaoUtil.update(sm);

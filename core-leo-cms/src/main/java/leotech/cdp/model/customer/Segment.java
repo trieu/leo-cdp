@@ -13,6 +13,7 @@ import com.arangodb.entity.DocumentField;
 import com.arangodb.entity.DocumentField.Type;
 import com.arangodb.model.FulltextIndexOptions;
 import com.arangodb.model.PersistentIndexOptions;
+import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 
 import leotech.cdp.model.CdpPersistentObject;
@@ -25,6 +26,12 @@ import rfx.core.util.StringUtil;
  *
  */
 public class Segment extends CdpPersistentObject implements Comparable<Segment> {
+	
+	public static final int STATUS_REMOVED = -1; // 
+	public static final int STATUS_PASSIVE_QUERY = 0;// for reporting and analytics on-demand
+	public static final int STATUS_ACTIVE_QUERY = 1;// for actively query into cached profiles
+	public static final int STATUS_ACTIVATED = 2; // activated by scheduled campaigns
+	
 	public static final String COLLECTION_NAME = getCollectionName(Segment.class);
 	static ArangoCollection dbCol;
 
@@ -109,18 +116,34 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 				&& this.selectedFields != null;
 	}
 	
+	public void buildHashKey() {
+		this.id = id(name + jsonQueryRules + beginFilterDate + endFilterDate);
+	}
+	
 	public Segment() {
 		
+	}
+	
+	public Segment(String beginFilterDate, String endFilterDate) {
+		super();
+		this.beginFilterDate = beginFilterDate;
+		this.endFilterDate = endFilterDate;
+		this.id = "";
+		this.selectedFields = new ArrayList<String>(0);
 	}
 	
 	public Segment(String name, String jsonQueryRules, String beginFilterDate, String endFilterDate) {
 		super();
 		this.name = name;
 		this.jsonQueryRules = jsonQueryRules;
-		this.selectedFields = new ArrayList<String>(0);
 		this.beginFilterDate = beginFilterDate;
 		this.endFilterDate = endFilterDate;
-		this.id = id(name + jsonQueryRules + beginFilterDate + endFilterDate);
+		if( StringUtil.isNotEmpty(name) ) {
+			buildHashKey();
+		} else {
+			this.id = "";
+		}
+		this.selectedFields = new ArrayList<String>(0);
 	}
 	
 	public Segment(String name, String jsonQueryRules, List<String> selectedFields, String beginFilterDate, String endFilterDate) {
@@ -265,7 +288,7 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 	public void setActiveQuery(boolean activeQuery) {
 		this.activeQuery = activeQuery;
 		if(this.activeQuery) {
-			this.status = 1;
+			this.status = STATUS_ACTIVE_QUERY;
 		}
 	}
 
@@ -283,5 +306,10 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 
 	public void setSelectedFields(List<String> selectedFields) {
 		this.selectedFields = selectedFields;
+	}
+	
+	@Override
+	public String toString() {
+		return new Gson().toJson(this);
 	}
 }
