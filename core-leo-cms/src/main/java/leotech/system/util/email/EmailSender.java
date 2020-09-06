@@ -1,6 +1,5 @@
 package leotech.system.util.email;
 
-import java.io.IOException;
 import java.util.Properties;
 import java.util.Queue;
 import java.util.Timer;
@@ -14,14 +13,6 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.MimeMessage;
-
-import com.sendgrid.Method;
-import com.sendgrid.Request;
-import com.sendgrid.Response;
-import com.sendgrid.SendGrid;
-import com.sendgrid.helpers.mail.Mail;
-import com.sendgrid.helpers.mail.objects.Content;
-import com.sendgrid.helpers.mail.objects.Email;
 
 import leotech.cdp.model.activation.EmailMessage;
 import leotech.system.config.ActivationChannelConfigs;
@@ -72,40 +63,15 @@ public class EmailSender {
 	
 	public static void sendToSendGridServer(EmailMessage messageModel, boolean flushNow) {
 		if(flushNow) {
-			flushEmailToSendGridServer(messageModel);
+			EmailSenderDataService.pushToRedisPubSubQueue(messageModel);
 		} else {
 			timer.schedule(new TimerTask() {
 				@Override
 				public void run() {
-					flushEmailToSendGridServer(messageModel);
+					EmailSenderDataService.pushToRedisPubSubQueue(messageModel);
 				}
 			}, 1500);
 		}
-	}
-	
-	static int flushEmailToSendGridServer(EmailMessage emailMsg) {
-		
-		try {
-			Email from = new Email(emailMsg.getSenderEmailAddress());
-			String subject = emailMsg.getSubject();
-			Email to = new Email(emailMsg.getReceiverEmailAddress());
-			Content content = new Content(EMAIL_CONTENT_TEXT_HTML, emailMsg.getContent());
-			Mail mail = new Mail(from, subject, to, content);
-			
-			SendGrid sg = new SendGrid(ActivationChannelConfigs.getEmailSendGridApiKeyForSystem());
-			Request request = new Request();
-			
-			request.setMethod(Method.POST);
-			request.setEndpoint("mail/send");
-			request.setBody(mail.build());
-			Response response = sg.api(request);
-			System.out.println(response.getStatusCode());
-			System.out.println(response.getBody());
-			System.out.println(response.getHeaders());
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
-		return 0;
 	}
 	
 	// ------ END SendGrid Service ------

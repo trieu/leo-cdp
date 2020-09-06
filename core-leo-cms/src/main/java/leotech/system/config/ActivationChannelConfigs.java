@@ -6,10 +6,15 @@ import com.google.gson.Gson;
 
 import rfx.core.util.FileUtils;
 
+/**
+ * Activation Channel Configuration
+ * 
+ * @author tantrieuf31
+ * @since 2020
+ *
+ */
 public class ActivationChannelConfigs {
 
-	private static final String APIKEY = "apikey";
-	private static final String SYSTEM_EMAIL_SENDGRID_SERVICE = "system_email_sendgrid_service";
 	public static final String MARKETING_EMAIL_SERVICE = "marketing_email_service";
 	public static final String SYSTEM_EMAIL_SERVICE = "system_email_service";
 	public static final String FILE_ACTIVATION_CHANNEL_CONFIGS_JSON = "./configs/activation-channel-configs.json";
@@ -76,15 +81,6 @@ public class ActivationChannelConfigs {
 	public static ActivationChannelConfigs loadSystemEmailServiceConfig() {
 		return load(SYSTEM_EMAIL_SERVICE);
 	}
-	
-	public static String getEmailSendGridApiKeyForSystem() {
-		ActivationChannelConfigs configs = load(SYSTEM_EMAIL_SENDGRID_SERVICE);
-		if(configs != null) {
-			return configs.getValue(APIKEY);
-		}
-		return "";
-	}
-	
 	public static ActivationChannelConfigs loadMarketingEmailServiceConfig() {
 		return load(MARKETING_EMAIL_SERVICE);
 	}

@@ -86,9 +86,6 @@ dependencies {
 	// core STMP client for email marketing
 	compile group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
 	
-	// Sendgrid email service
-	compile group: 'com.sendgrid', name: 'sendgrid-java', version: '4.6.4'
-	
 	// generate html and text mail via one fluent build from https://github.com/rocketbase-io/email-template-builder
 	compile group: 'io.rocketbase.mail', name: 'email-template-builder', version: '2.0.0'
 	

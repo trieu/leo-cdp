@@ -21,76 +21,76 @@ import rfx.core.util.Utils;
 
 public class YouTubeCrawlerCronJob {
 
-    private static final String KILL_SYSTEM_MESSAGE = "_kill_system";
-    static ShardedJedisPool jedisPool = RedisConfigs.load().get("clusterInfoRedis").getShardedJedisPool();
-    static final int NUMBER_CRAWLING_WORKER = 2;
-    static Logger logger = LoggerFactory.getLogger(YouTubeCrawlerCronJob.class);
-    static Queue<ContentBot> contentBots = new LinkedBlockingQueue<>();
-    static AtomicBoolean killSystem = new AtomicBoolean(false);
-    static final String CHANNEL_NAME = "youtube-crawler";
+	private static final String KILL_SYSTEM_MESSAGE = "_kill_system";
+	static ShardedJedisPool jedisPool = RedisConfigs.load().get("clusterInfoRedis").getShardedJedisPool();
+	static final int NUMBER_CRAWLING_WORKER = 2;
+	static Logger logger = LoggerFactory.getLogger(YouTubeCrawlerCronJob.class);
+	static Queue<ContentBot> contentBots = new LinkedBlockingQueue<>();
+	static AtomicBoolean killSystem = new AtomicBoolean(false);
+	static final String CHANNEL_NAME = "youtube-crawler";
 
-    static final int SCHEDULED_TIME = 5000;
-    static final Timer timer = new Timer(true);
+	static final int SCHEDULED_TIME = 5000;
+	static final Timer timer = new Timer(true);
 
-    public static void startCronJob() {
-	System.out.println("startCronJob...");
+	public static void startCronJob() {
+		System.out.println("startCronJob...");
 
-	for (int i = 1; i <= NUMBER_CRAWLING_WORKER; i++) {
-	    long delay = 1000 * i;
-	    timer.schedule(new TimerTask() {
-		@Override
-		public void run() {
-		    ContentBot bot = contentBots.poll();
-		    if (bot != null) {
-			bot.process();
-		    }
+		for (int i = 1; i <= NUMBER_CRAWLING_WORKER; i++) {
+			long delay = 1000 * i;
+			timer.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					ContentBot bot = contentBots.poll();
+					if (bot != null) {
+						bot.process();
+					}
+				}
+			}, delay, SCHEDULED_TIME);
 		}
-	    }, delay, SCHEDULED_TIME);
+
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				Subscriber subscriber = new Subscriber() {
+					@Override
+					public void onMessage(String channel, String message) {
+						System.out.println("onMessage: " + channel + " " + message);
+						if (channel.equals(CHANNEL_NAME) && StringUtil.isNotEmpty(message)) {
+							if (message.equals(KILL_SYSTEM_MESSAGE)) {
+								killSystem.set(true);
+							} else {
+								contentBots.add(new YouTubeContentBot(message));
+							}
+						}
+					}
+				};
+				(new RedisCommand<Void>(jedisPool) {
+					@Override
+					public Void build() throws JedisException {
+						try {
+							logger.info("Subscribing to \"" + CHANNEL_NAME + "\". This thread will be blocked.");
+							jedis.subscribe(subscriber, CHANNEL_NAME);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						return null;
+					}
+				}).execute();
+			}
+		}).start();
+
+		while (killSystem.get() == false) {
+			Utils.sleep(2000);
+		}
+
+		contentBots.clear();
+		timer.cancel();
+
+		Utils.exitSystemAfterTimeout(10444);
 	}
 
-	new Thread(new Runnable() {
-	    @Override
-	    public void run() {
-		Subscriber subscriber = new Subscriber() {
-		    @Override
-		    public void onMessage(String channel, String message) {
-			System.out.println("onMessage: " + channel + " " + message);
-			if (channel.equals(CHANNEL_NAME) && StringUtil.isNotEmpty(message)) {
-			    if (message.equals(KILL_SYSTEM_MESSAGE)) {
-				killSystem.set(true);
-			    } else {
-				contentBots.add(new YouTubeContentBot(message));
-			    }
-			}
-		    }
-		};
-		(new RedisCommand<Void>(jedisPool) {
-		    @Override
-		    public Void build() throws JedisException {
-			try {
-			    logger.info("Subscribing to \"" + CHANNEL_NAME + "\". This thread will be blocked.");
-			    jedis.subscribe(subscriber, CHANNEL_NAME);
-			} catch (Exception e) {
-			    e.printStackTrace();
-			}
-			return null;
-		    }
-		}).execute();
-	    }
-	}).start();
-
-	while (killSystem.get() == false) {
-	    Utils.sleep(2000);
+	public static void main(String[] args) {
+		startCronJob();
 	}
-
-	contentBots.clear();
-	timer.cancel();
-
-	Utils.exitSystemAfterTimeout(10444);
-    }
-
-    public static void main(String[] args) {
-	startCronJob();
-    }
 
 }

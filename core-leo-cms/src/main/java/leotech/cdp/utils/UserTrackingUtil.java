@@ -18,7 +18,7 @@ import rfx.core.util.DateTimeUtil;
  */
 public class UserTrackingUtil {
 
-	final public static ShardedJedisPool redisAdDataStats = RedisConfigs.load().get("adDataStats").getShardedJedisPool();
+	final public static ShardedJedisPool redisAdDataStats = RedisConfigs.load().get("realtimeDataStats").getShardedJedisPool();
 	public static final int AFTER_3_DAYS = 60 * 60 * 24 * 3;
 	public static final int AFTER_7_DAYS = 60 * 60 * 24 * 7;
 
