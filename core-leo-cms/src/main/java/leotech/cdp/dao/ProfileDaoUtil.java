@@ -189,7 +189,10 @@ public class ProfileDaoUtil extends BaseLeoCdpDao {
 	
 	public static long countProfilesByQuery(ProfileQuery profileQuery) {
 		ArangoDatabase db = getCdpDbInstance();
-		long c =  new ArangoDbQuery<Long>(db, profileQuery.toArangoCountingQuery(), Long.class).getResultsAsObject();
+		String aql = profileQuery.toArangoCountingQuery();
+		
+		System.out.println("countProfilesByQuery " + aql);
+		long c =  new ArangoDbQuery<Long>(db, aql, Long.class).getResultsAsObject();
 		return c;
 	}
 	
@@ -202,7 +205,11 @@ public class ProfileDaoUtil extends BaseLeoCdpDao {
 				return obj;
 			}
 		};
-		ArangoDbQuery<ProfileSingleDataView> q = new ArangoDbQuery<ProfileSingleDataView>(db, profileQuery.toArangoDataQuery(), ProfileSingleDataView.class, callback);
+		String aql = profileQuery.toArangoDataQuery();
+		
+		System.out.println("getProfilesByQuery " + aql);
+		
+		ArangoDbQuery<ProfileSingleDataView> q = new ArangoDbQuery<ProfileSingleDataView>(db, aql, ProfileSingleDataView.class, callback);
 		List<ProfileSingleDataView> list = q.getResultsAsList();
 		return list;
 	}

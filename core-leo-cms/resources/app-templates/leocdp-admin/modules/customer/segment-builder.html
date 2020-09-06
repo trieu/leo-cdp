@@ -255,6 +255,9 @@
 		if (!$.isEmptyObject(result)) {
 			segmentDataModel.jsonQueryRules = JSON.stringify(result)
 		}
+		var datetimeFilter = getDateFilterValues();
+		segmentDataModel.beginFilterDate = datetimeFilter.beginFilterDate;
+		segmentDataModel.endFilterDate = datetimeFilter.endFilterDate;
 		
 		//done set data model, POST to API
 		var dataJsonStr = JSON.stringify(segmentDataModel) ;
