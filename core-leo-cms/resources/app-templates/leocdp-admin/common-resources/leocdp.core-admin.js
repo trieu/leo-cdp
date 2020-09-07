@@ -3,6 +3,7 @@
  * @author tantrieuf31 (Thomas)
  * 
  * this script contains all functions for admin
+ * TODO need to refactoring code
  * 
  */
 
@@ -167,6 +168,56 @@ function searchingByKeywords() {
         window.currentSearchKeywords = k;
         location.href = '#calljs-searchContent("' + encodeURIComponent(k) + '")';
     }
+}
+
+function initMainSeach() {
+	
+    var domSelector = "#main_search";
+    var usersession = lscache.get('usersession');
+    var optionsAutocomplete = {
+        url: window.baseAdminApi + "/cdp/profiles/search-suggestion",
+        ajaxSettings: {
+        	beforeSend: function (xhr) {
+				xhr.setRequestHeader('leouss', usersession);
+			}
+        },
+        getValue: "name",
+        list: {
+            match: {
+                enabled: true
+            },
+            maxNumberOfElements: 10,
+            showAnimation: {
+                type: "slide",
+                time: 200
+            },
+            hideAnimation: {
+                type: "slide",
+                time: 200
+            },
+            sort: {
+                enabled: true
+            },
+            onSelectItemEvent: function () {
+                var node = $(domSelector);
+                var value = node.getSelectedItemData().name;
+                if (value) {
+                    node.val(value).trigger("change");
+                }
+            },
+            onChooseEvent: function () {
+                searchingByKeywords();
+            }
+        },
+        theme: "round"
+    };
+
+    $(domSelector).easyAutocomplete(optionsAutocomplete).on('keyup', function (e) {
+        if (e.keyCode == 13) {
+            searchingByKeywords();
+            $('.easy-autocomplete-container > ul').hide();
+        }
+    });
 }
 
 function toggleDiv(aNode, divSelector) {

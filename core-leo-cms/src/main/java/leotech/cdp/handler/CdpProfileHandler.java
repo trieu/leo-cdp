@@ -1,5 +1,6 @@
 package leotech.cdp.handler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.vertx.core.MultiMap;
@@ -36,6 +37,8 @@ public class CdpProfileHandler extends SecuredWebDataHandler {
 	static final String API_IDENTITY_RESOLUTION = "/cdp/profiles/identityresolution";
 	static final String API_IMPORT = "/cdp/profiles/import";
 	static final String API_EXPORT = "/cdp/profiles/export";
+	static final String API_SEARCH = "/cdp/profiles/search";
+	static final String API_SEARCH_SUGGESTION = "/cdp/profiles/search-suggestion";
 
 	@Override
 	public JsonDataPayload httpPostApiHandler(String userSession, String uri, JsonObject paramJson) throws Exception {
@@ -88,6 +91,7 @@ public class CdpProfileHandler extends SecuredWebDataHandler {
 						return JsonDataPayload.ok(uri, null, loginUser, Profile.class);
 					}
 					
+					
 					default : {
 						return JsonErrorPayload.NO_HANDLER_FOUND;
 					}
@@ -132,7 +136,16 @@ public class CdpProfileHandler extends SecuredWebDataHandler {
 						List<EventSingleDataView> list = EventTrackingService.getEventActivityFlowOfProfile(profileId, startIndex, numberResult);
 						return JsonDataPayload.ok(uri, list, loginUser, Profile.class);
 					}
-					
+					case API_SEARCH_SUGGESTION : {
+						//TODO
+						List<String> keywords = new ArrayList<String>();
+						return JsonDataPayload.ok(uri, keywords, loginUser, Profile.class);
+					}
+					case API_SEARCH : {
+						//TODO
+						List<Profile> profiles = new ArrayList<Profile>();
+						return JsonDataPayload.ok(uri, profiles, loginUser, Profile.class);
+					}
 					
 					default :
 						return JsonErrorPayload.NO_HANDLER_FOUND;

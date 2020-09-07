@@ -11,8 +11,9 @@
 			<img id="logo-img" src="" alt="MainLogo" style="display: none;" />
 		</a>
 
-		<div style="width: 100%; visibility: hidden;">
-			<input id="main_search" type="text" placeholder="Enter keywords">
+
+		<div style="width: 100%;">
+			<input id="main_search" type="text" placeholder="Enter name to search customer profile">
 		</div>
 
 		<!-- Top User Menu -->
@@ -213,49 +214,7 @@
 	    });
 	}
 	
-	function initMainSeach() {
-		
-	    var domSelector = "#main_search";
-	    var options = {
-	        url: window.baseAdminApi + "/post/keywords-for-search",
-	        getValue: "name",
-	        list: {
-	            match: {
-	                enabled: true
-	            },
-	            maxNumberOfElements: 10,
-	            showAnimation: {
-	                type: "slide",
-	                time: 200
-	            },
-	            hideAnimation: {
-	                type: "slide",
-	                time: 200
-	            },
-	            sort: {
-	                enabled: true
-	            },
-	            onSelectItemEvent: function () {
-	                var node = $(domSelector);
-	                var value = node.getSelectedItemData().name;
-	                if (value) {
-	                    node.val(value).trigger("change");
-	                }
-	            },
-	            onChooseEvent: function () {
-	                searchingByKeywords();
-	            }
-	        },
-	        theme: "round"
-	    };
-
-	    $(domSelector).easyAutocomplete(options).on('keyup', function (e) {
-	        if (e.keyCode == 13) {
-	            searchingByKeywords();
-	            $('.easy-autocomplete-container > ul').hide();
-	        }
-	    });
-	}
+	
 	
 	function navigationSetup(){
 		
