@@ -12,25 +12,26 @@ public class Analytics360Service {
 	static Map<String, Notebook> notebooks = new HashMap<String, Notebook>();
 	static {
 		//FIXME move to database
-		Notebook n = new Notebook("scoring", "Data Quality Scoring Model");
+		
+		Notebook n = new Notebook("analytics", "Customer Analytics with RFM and Visualization");
 		n.setAccessToken("12345");
 		notebooks.put(n.getId(), n);
 		
-		n = new Notebook("scoring", "Lead Scoring Model");
-		n.setAccessToken("12345");
-		notebooks.put( n.getId(), n);
-		
-		n = new Notebook("analytics", "Customer Analytics with RFM and Visualization");
-		n.setAccessToken("12345");
-		notebooks.put(n.getId(), n);
-		
-		n = new Notebook("processor", "Profile Data Identity Resolution");
-		n.setAccessToken("12345");
-		notebooks.put(n.getId(), n);
-		
-		n = new Notebook("scoring", "Customer Lifetime Value Scoring Model");
-		n.setAccessToken("12345");
-		notebooks.put(n.getId(), n);
+//		n = new Notebook("scoring", "Data Quality Scoring Model");
+//		n.setAccessToken("12345");
+//		notebooks.put(n.getId(), n);
+//		
+//		n = new Notebook("scoring", "Lead Scoring Model");
+//		n.setAccessToken("12345");
+//		notebooks.put( n.getId(), n);
+//		
+//		n = new Notebook("processor", "Profile Data Identity Resolution");
+//		n.setAccessToken("12345");
+//		notebooks.put(n.getId(), n);
+//		
+//		n = new Notebook("scoring", "Customer Lifetime Value Scoring Model");
+//		n.setAccessToken("12345");
+//		notebooks.put(n.getId(), n);
 	}
 
 	public static List<Notebook> getNotebooks(int startIndex, int numberResult){
