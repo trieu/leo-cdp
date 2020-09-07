@@ -54,6 +54,7 @@ public class IdentityResolutionJob extends ScheduledJob {
 				// here we have the best to unify all candidates into the One
 				IdentityResolutionJob.unifyData(bestProfile, needToBeUnified, Profile.MERGED_BY_EMAIL);
 				totalProcessed += needToBeUnified.size();
+				
 			}
 			
 			startIndex = startIndex + numberResult;
@@ -71,7 +72,7 @@ public class IdentityResolutionJob extends ScheduledJob {
 	 * @param needToBeUnified
 	 * @param mergeCode
 	 */
-	public static void unifyData(Profile bestProfile, List<Profile> needToBeUnified, int mergeCode) {
+	public static Profile unifyData(Profile bestProfile, List<Profile> needToBeUnified, int mergeCode) {
 		if(bestProfile != null && needToBeUnified.size()>0) {
 			String rootProfileId = bestProfile.getId();
 			
@@ -111,6 +112,7 @@ public class IdentityResolutionJob extends ScheduledJob {
 			
 			ProfileDaoUtil.update(bestProfile);
 		}
+		return bestProfile;
 	}
 
 }

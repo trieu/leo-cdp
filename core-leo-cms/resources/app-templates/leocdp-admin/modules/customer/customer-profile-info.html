@@ -28,6 +28,11 @@
 	#profile_key_info .fa {
 		font-size: 1.2em !important;
 	}
+	.event_text {
+		text-align: center;
+	    font-size: 11px;
+	    font-weight: bold;
+	}
 -->
 </style>
 
@@ -324,7 +329,7 @@
 <script id='view-event-tpl' type="text/html" >
  <li class="list-group-item" id="ev_<%- id %>">
    <div class="row">
-      <div class="col-md-1 text-center"> <i class="fa fa-internet-explorer" aria-hidden="true" style="font-size:2em" ></i> <br> <b><%- metricName %></b> </div>
+      <div class="col-md-1 text-center"> <i class="fa fa-internet-explorer" aria-hidden="true" style="font-size:2em" ></i> <br> <div class="event_text"><%- metricName %></div> </div>
       <div class="col-md-11">
          <small class="text-muted pull-right"> <%- createdAt %> </small>
          <h5 class="media-heading"> <a target="_blank" href="<%- srcTouchpoint.url %>" > <%- srcTouchpoint.name %> </a> </h5>
@@ -339,7 +344,7 @@
 <script id='action-event-tpl' type="text/html" >
  <li class="list-group-item" id="ev_<%- id %>" >
    <div class="row">
-      <div class="col-md-1 text-center">  <i class="fa fa-sign-in" aria-hidden="true" style="font-size:2em" ></i> <br> <b><%- metricName %></b> </div>
+      <div class="col-md-1 text-center">  <i class="fa fa-sign-in" aria-hidden="true" style="font-size:2em" ></i> <br> <div class="event_text"><%- metricName %></div> </div>
       <div class="col-md-11">
          <small class="text-muted pull-right"> <%- createdAt %> </small>
          <h5 class="media-heading"> <a target="_blank" href="<%- srcTouchpoint.url %>" > <%- srcTouchpoint.name %> </a> </h5>
@@ -354,7 +359,7 @@
 <script id='conversion-event-tpl' type="text/html" >
  <li class="list-group-item" id="ev_<%- id %>" >
    <div class="row">
-      <div class="col-md-1 text-center">  <i class="fa fa-cart-plus" aria-hidden="true" style="font-size:2em" ></i> <br> <b><%- metricName %></b> </div>
+      <div class="col-md-1 text-center">  <i class="fa fa-cart-plus" aria-hidden="true" style="font-size:2em" ></i> <br> <div class="event_text"><%- metricName %></div> </div>
       <div class="col-md-11">
          <small class="text-muted pull-right"> <%- createdAt %> </small>
          <h5 class="media-heading"> <a target="_blank" href="<%- srcTouchpoint.url %>" > <%- srcTouchpoint.name %> </a> </h5>

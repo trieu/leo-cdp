@@ -304,6 +304,9 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	protected int totalNPS = 0; 
 	
 	@Expose
+	Set<String> behavioralEvents = new HashSet<String>(100);
+	
+	@Expose
 	Map<String,Long> eventStatistics = new ConcurrentHashMap<String, Long>();
 
 	// --- END Quantitative Data Metrics
@@ -1058,6 +1061,17 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	public void updateEventCount(String eventName) {
 		long c = this.eventStatistics.getOrDefault(eventName, 0L) + 1;
 		this.eventStatistics.put(eventName, c);
+	}
+	public Set<String> getBehavioralEvents() {
+		return behavioralEvents;
+	}
+
+	public void setBehavioralEvents(Set<String> behavioralEvents) {
+		this.behavioralEvents = behavioralEvents;
+	}
+	
+	public void setBehavioralEvent(String eventName) {
+		this.behavioralEvents.add(eventName);
 	}
 
 	@Override

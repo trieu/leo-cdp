@@ -57,6 +57,7 @@ public class ProfileSingleDataView extends Profile implements SingleDataView {
 	
 	@Override
 	public void unifyDataView() {
+		// only load data when null
 		//TODO 
 		
 		// touchpoint model
@@ -64,9 +65,13 @@ public class ProfileSingleDataView extends Profile implements SingleDataView {
 			this.lastTouchpoint = TouchpointDaoUtil.getById(this.lastTouchpointId);
 		}
 		
-		this.lastTrackingEvent = TrackingEventDaoUtil.getLastTrackingEventsByProfileId(this.id);
+		
 		if(this.lastTrackingEvent == null) {
-			this.lastTrackingEvent = new TrackingEvent();
+			TrackingEvent lastTrackingEvent = TrackingEventDaoUtil.getLastTrackingEventsByProfileId(this.id);
+			if(lastTrackingEvent == null) {
+				lastTrackingEvent = new TrackingEvent();
+			}
+			this.lastTrackingEvent = lastTrackingEvent;
 		}
 		
 		if(this.topEngagedTouchpoints == null) {

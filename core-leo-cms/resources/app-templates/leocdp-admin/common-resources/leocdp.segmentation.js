@@ -101,8 +101,8 @@ var loadSegmentBuilder = window.loadSegmentBuilder || function(jsonQueryRules, r
 		},
 		operators : getOperatorsForNumberField()
 	}, {
-	    id: 'behavioral_event',
-	    label: 'Behavioral Event',
+	    id: 'behavioralEvents',
+	    label: 'Behavioral Events',
 	    type: 'string',
 	    input: 'select',
 	    values: {
@@ -116,14 +116,17 @@ var loadSegmentBuilder = window.loadSegmentBuilder || function(jsonQueryRules, r
 	      "rebuy": 'Repeat Purchase',
 	      "feedback_2nd": 'Second-time Feedback',
 	    },
-	    operators: ['equal', 'is_empty']
+	    operators: ['contains_any']
 	  } 
 	];
 	
 	var rulesOfQuery = jsonQueryRules || false;
 
+	var ops = _.union(getOperatorsForStringField(),getOperatorsForNumberField()); 
+	ops.push({ type: 'contains_any', optgroup: 'custom', nb_inputs: 1, multiple: true, apply_to: ['string'] })
 	$('#segment-builder-holder').queryBuilder({
 		plugins : [ 'bt-tooltip-errors' ],
+		operators: ops,
 		filters : dataFilter,
 		rules : rulesOfQuery
 	});
