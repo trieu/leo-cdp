@@ -144,6 +144,9 @@ var loadProfilesInSegment = window.loadProfilesInSegment || function(segmentId) 
 	$('#profile-list-panel').show();
     var usersession = getUserSession();
     if (usersession) {
+    	
+    	var urlGetProfilesBySegmentId = baseAdminApi + '/cdp/segment/profiles';
+    	
         $('#profile-list').DataTable({
         	"lengthMenu": [[20, 30, 50], [20, 30, 50]],
         	'processing': true,
@@ -151,7 +154,7 @@ var loadProfilesInSegment = window.loadProfilesInSegment || function(segmentId) 
             'searching': false,
             'serverMethod': 'POST',
             'ajax': {
-                url: baseAdminApi + '/cdp/segment/profiles',
+                url: urlGetProfilesBySegmentId,
                 contentType: 'application/json',
                 beforeSend: function (request) {
                     request.setRequestHeader("leouss", usersession);
