@@ -62,7 +62,7 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 	String description = ""; 
 	
 	@Expose
-	String dataPipelineUrl; // the URI of data pipeline processor for profile scoring and ranking
+	String dataPipelineUrl = ""; // the URI of data pipeline processor for profile scoring and ranking
 
 	@Expose
 	int type = SegmentType.AD_HOC_QUERY;
@@ -94,6 +94,9 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 
 	@Expose
 	int indexScore = 0; // the important score of segment
+	
+	@Expose
+	List<String> campaignIds = new ArrayList<String>(); // media or gamification campaigns are used for activating segment
 	
 	@Expose
 	protected Date createdAt = new Date();
@@ -194,8 +197,6 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 	public void setStatus(int status) {
 		this.status = status;
 	}
-
-	
 
 	public List<String> getKeywords() {
 		return keywords;
@@ -308,6 +309,19 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 		this.selectedFields = selectedFields;
 	}
 	
+	
+	public int getTotalActivationCampaign() {
+		return campaignIds.size();
+	}
+
+	public List<String> getCampaignIds() {
+		return campaignIds;
+	}
+	
+	public void addCampaignId(String cid) {
+		campaignIds.add(cid);
+	}
+
 	@Override
 	public String toString() {
 		return new Gson().toJson(this);

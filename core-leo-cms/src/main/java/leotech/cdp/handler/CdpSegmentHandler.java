@@ -34,7 +34,7 @@ public class CdpSegmentHandler extends SecuredWebDataHandler {
 	static final String API_CREATE_NEW = "/cdp/segment/new";
 	static final String API_SAVE_MODEL = "/cdp/segment/save";
 	static final String API_GET_MODEL = "/cdp/segment/get";
-	static final String API_REMOVE = "/cdp/segment/remove";
+	static final String API_DELETE = "/cdp/segment/delete";
 	static final String API_PROFILES_IN_SEGMENT = "/cdp/segment/profiles";
 
 	@Override
@@ -85,9 +85,9 @@ public class CdpSegmentHandler extends SecuredWebDataHandler {
 							return JsonDataPayload.fail("failed to save Segment data into database", 500);
 						}
 					}
-					case API_REMOVE : {
+					case API_DELETE : {
 						String id = paramJson.getString("id", "");
-						boolean rs = SegmentDataService.remove(id);
+						boolean rs = SegmentDataService.delete(id);
 						return JsonDataPayload.ok(uri, rs, loginUser, Segment.class);
 					}
 					default : {

@@ -3,5 +3,10 @@
         "classpath" : "leotech.cdp.scheduler.job.IdentityResolutionJob"
         ,"delay" : 8
         ,"period" : 360
+    },
+    {
+        "classpath" : "leotech.cdp.scheduler.job.SegmentDataCleaningJob"
+        ,"delay" : 3
+        ,"period" : 720
     }
 ]

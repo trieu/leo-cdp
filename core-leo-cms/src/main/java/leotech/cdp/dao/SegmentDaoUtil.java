@@ -10,10 +10,12 @@ import com.arangodb.ArangoDatabase;
 
 import leotech.cdp.model.customer.Segment;
 import leotech.cdp.query.ProfileQuery;
+import leotech.cms.model.Page;
 import leotech.system.config.AqlTemplate;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataTablePayload;
 import leotech.system.util.database.ArangoDbQuery;
+import leotech.system.util.database.ArangoDbUtil;
 
 /**
  * Segment Data Access Object
@@ -26,6 +28,9 @@ public class SegmentDaoUtil extends BaseLeoCdpDao {
 	
 	static final String AQL_GET_SEGMENTS_BY_PAGINATION = AqlTemplate.get("AQL_GET_SEGMENTS_BY_PAGINATION");
 	static final String AQL_GET_SEGMENT_BY_ID = AqlTemplate.get("AQL_GET_SEGMENT_BY_ID");
+	static final String AQL_GET_SEGMENTS_TO_DELETE_FOREVER = AqlTemplate.get("AQL_GET_SEGMENTS_TO_DELETE_FOREVER");
+	
+	
 
 	// update total size of segment
 	private static void setSizeOfSegment(Segment segment) {
@@ -77,6 +82,21 @@ public class SegmentDaoUtil extends BaseLeoCdpDao {
 		bindVars.put("numberResult", numberResult);
 		List<Segment> list = new ArangoDbQuery<Segment>(db, AQL_GET_SEGMENTS_BY_PAGINATION, bindVars, Segment.class).getResultsAsList();
 		return list;
+	}
+	
+	public static List<Segment> getSegmentsToDeleteForever() {
+		ArangoDatabase db = getCdpDbInstance();
+		List<Segment> list = new ArangoDbQuery<Segment>(db, AQL_GET_SEGMENTS_TO_DELETE_FOREVER, Segment.class).getResultsAsList();
+		return list;
+	}
+	
+	public static boolean delete(Segment segment) {
+		ArangoCollection col = segment.getCollection();
+		if (col != null) {
+			col.deleteDocument(segment.getId());
+			return true;
+		}
+		return false;
 	}
 	
 	public static JsonDataTablePayload filter(DataFilter filter){

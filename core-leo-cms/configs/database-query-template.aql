@@ -261,15 +261,22 @@ AQL_GET_PROFILE_BY_KEY_IDENTITIES =>
 ########### AQL LEO CDP - SEGMENT COLLECTION ########################################################################################################;
 
 AQL_GET_SEGMENTS_BY_PAGINATION =>
-	FOR p in cdp_segment  
-	SORT p.createdAt DESC
+	FOR d in cdp_segment  
+	FILTER d.status >= 0
+	SORT d.createdAt DESC
 	LIMIT @startIndex,@numberResult 
-	RETURN p
+	RETURN d
+;
+
+AQL_GET_SEGMENTS_TO_DELETE_FOREVER =>
+	FOR d in cdp_segment  
+	FILTER d.status < 0 AND LENGTH(d.campaignIds) == 0
+	RETURN d
 ;
 
 AQL_GET_SEGMENT_BY_ID =>
-	FOR e in cdp_segment FILTER e._key == @id  
-	RETURN e
+	FOR d in cdp_segment FILTER d._key == @id AND d.status >= 0
+	RETURN d
 ;
 
 ########### AQL LEO CDP - CONTEXT_SESSION COLLECTION ########################################################################################################;

@@ -136,12 +136,13 @@ public class SegmentDataService {
 		return payload;
 	}
 	
-	public static boolean remove(String id) {
+	public static boolean delete(String id) {
 		Segment sm = SegmentDaoUtil.getById(id);
-		// the data is not deleted, we need to remove it from valid data view, set status of object = -4
+		// the data is not deleted
+		// the system just remove it from valid data view, set status of object = -1
+		// the job scheduler will delete it after 1 week if no campaigns are linked to segment
 		sm.setStatus(Segment.STATUS_REMOVED);
 		
-		// TODO run in a thread to commit to database
 		SegmentDaoUtil.update(sm);
 		return sm != null;
 	}

@@ -181,13 +181,17 @@
             if (json.httpCode === 0 && json.errorMessage === '') {
         		// only super-admin role can remove the segment 
         		var readOnlyMode = json.canEditData === false;
-        		if( ! json.canDeleteData ){
-    				
-    			}
+        		
         		if( json.canDeleteData ){
-    				$('button.data-control-edit').click(saveSegment)
+        			$('button.data-control-delete').click(deleteSegment);
     			} else {
+    				$('button.data-control-delete').attr('disabled','disabled');
+    			}
+        		
+        		if( readOnlyMode ){
     				$('button.data-control-edit').attr('disabled','disabled');
+    			} else {
+    				$('button.data-control-edit').click(saveSegment);
     			}
         		
                 var segmentData = json.data.segmentData;
@@ -249,32 +253,64 @@
 	}
 	
 	var saveSegment = saveSegment || function() {
-		
-		// jquery builder final data
-		var result = $('#segment-builder-holder').queryBuilder('getRules');
-		if (!$.isEmptyObject(result)) {
-			segmentDataModel.jsonQueryRules = JSON.stringify(result)
+		if(typeof segmentDataModel === "object"){
+			// jquery builder final data
+			var result = $('#segment-builder-holder').queryBuilder('getRules');
+			if (!$.isEmptyObject(result)) {
+				segmentDataModel.jsonQueryRules = JSON.stringify(result)
+			}
+			var datetimeFilter = getDateFilterValues();
+			segmentDataModel.beginFilterDate = datetimeFilter.beginFilterDate;
+			segmentDataModel.endFilterDate = datetimeFilter.endFilterDate;
+			
+			//done set data model, POST to API
+			var dataJsonStr = JSON.stringify(segmentDataModel) ;
+	        var urlStr = baseAdminApi + '/cdp/segment/save';
+	        LeoAdminApiUtil.callPostAdminApi(urlStr,  { 'dataObject' : dataJsonStr }, function (json) {
+	            if (json.httpCode === 0 ) {
+	                if(json.data === ''){
+	                    $('#error-on-save').html('Data is not valid !').show().delay(5000).fadeOut('slow');
+	                } else {
+	                	var segmentId = json.data;
+	                	location.hash = "calljs-leoCdpRouter('Segment_Details','" + segmentId + "')";
+	                }
+	            } else {
+	                $('#error-on-save').html(json.errorMessage).show().delay(5000).fadeOut('slow');
+	                LeoAdminApiUtil.logErrorPayload(json);
+	            }
+	        });
 		}
-		var datetimeFilter = getDateFilterValues();
-		segmentDataModel.beginFilterDate = datetimeFilter.beginFilterDate;
-		segmentDataModel.endFilterDate = datetimeFilter.endFilterDate;
-		
-		//done set data model, POST to API
-		var dataJsonStr = JSON.stringify(segmentDataModel) ;
-        var urlStr = baseAdminApi + '/cdp/segment/save';
-        LeoAdminApiUtil.callPostAdminApi(urlStr,  { 'dataObject' : dataJsonStr }, function (json) {
-            if (json.httpCode === 0 ) {
-                if(json.data === ''){
-                    $('#error-on-save').html('Data is not valid !').show().delay(5000).fadeOut('slow');
-                } else {
-                	var segmentId = json.data;
-                	location.hash = "calljs-leoCdpRouter('Segment_Details','" + segmentId + "')";
-                }
-            } else {
-                $('#error-on-save').html(json.errorMessage).show().delay(5000).fadeOut('slow');
-                LeoAdminApiUtil.logErrorPayload(json);
-            }
-        });
 	}
+	var deleteSegment = deleteSegment || function() {
+		if(typeof segmentDataModel === "object" && segmentDataModel.id != '' ){
+			var urlStr = baseAdminApi + '/cdp/segment/delete';
+	        LeoAdminApiUtil.callPostAdminApi(urlStr,  { 'id' : segmentDataModel.id }, function (json) {
+	            if (json.httpCode === 0 ) {
+	                if(json.data === true){
+	                	iziToast.success({
+	                	    title: 'OK',
+	                	    message: 'Successfully deleted the segment "'+segmentDataModel.name +'"',
+	                	    onClosing: function(instance, toast, closedBy){
+	                	    	location.hash = "calljs-leoCdpRouter('Segment_Data_List')";
+	                	    }
+	                	});
+	                } 
+	                else {
+	                	iziToast.error({
+	                	    title: 'Error',
+	                	    message: json.data,
+	                	    onClosing: function(instance, toast, closedBy){
+	                	    	location.reload(true);
+	                	    }
+	                	});
+	                }
+	            } else {
+	                $('#error-on-save').html(json.errorMessage).show().delay(5000).fadeOut('slow');
+	                LeoAdminApiUtil.logErrorPayload(json);
+	            }
+	        });
+		}
+	}
+	
 	
 </script>
