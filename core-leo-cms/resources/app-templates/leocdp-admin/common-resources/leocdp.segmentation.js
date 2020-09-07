@@ -31,6 +31,45 @@ var loadSegmentStatistics = window.loadSegmentStatistics || function(segmentStat
 	}
 }
 
+var deleteSegment = deleteSegment || function() {
+	if(typeof segmentDataModel === "object" && segmentDataModel.id != '' ){
+		$('#delete_callback').val('');
+		$('#confirmDeleteDialog').modal({ focus: true });
+        var callback = "deleteSegment" + segmentDataModel.id;
+	    window[callback] = function () {
+	    	var urlStr = baseAdminApi + '/cdp/segment/delete';
+	        LeoAdminApiUtil.callPostAdminApi(urlStr, { 'id' : segmentDataModel.id }, function (json) {
+	            if (json.httpCode === 0 ) {
+	                if(json.data === true){
+	                	iziToast.success({
+	                	    title: 'OK',
+	                	    message: 'Successfully deleted the segment "'+segmentDataModel.name +'"',
+	                	    onClosing: function(instance, toast, closedBy){
+	                	    	location.hash = "calljs-leoCdpRouter('Segment_Data_List')";
+	                	    }
+	                	});
+	                } 
+	                else {
+	                	iziToast.error({
+	                	    title: 'Error',
+	                	    message: json.data,
+	                	    onClosing: function(instance, toast, closedBy){
+	                	    	location.reload(true);
+	                	    }
+	                	});
+	                }
+	            } else {
+	                $('#error-on-save').html(json.errorMessage).show().delay(5000).fadeOut('slow');
+	                LeoAdminApiUtil.logErrorPayload(json);
+	            }
+	        });
+	    }
+	    $('#delete_callback').val(callback);
+	    $('#deletedInfoTitle').html(segmentDataModel.name);
+	    $('#deletedInfoMsg').html('Do you want to delete this segment ?');
+	}
+}
+
 var loadSegmentBuilder = window.loadSegmentBuilder || function(jsonQueryRules, readOnlyMode, callback) {
 	
 	var dataFilter = [ {
@@ -142,95 +181,131 @@ var loadSegmentBuilder = window.loadSegmentBuilder || function(jsonQueryRules, r
 	}
 }
 
-// 
+ 
 var loadProfilesInSegment = window.loadProfilesInSegment || function(segmentId) {
+	var holder = $('#profilelist_holder').empty();
+	
+	var profilelist_tpl = _.template($('#profilelist_tpl').html());
+	var htmlTable = profilelist_tpl({tbid : new Date().getTime()});
+	holder.html(htmlTable);
+	
+	var selectorId = holder.find(' > table').attr('id');
+	var urlBySegmentId = baseAdminApi + '/cdp/segment/profiles';
+	
+    loadProfileViewByAjax(selectorId, urlBySegmentId, segmentId)
+}
+
+// 
+var loadProfileViewByAjax = window.loadProfileViewByAjax || function(selectorId, ajaxUrl, segmentId, jsonQueryRules, beginFilterDate, endFilterDate) {
+	console.log(selectorId)
 	$('#profile-list-panel').show();
     var usersession = getUserSession();
     if (usersession) {
     	
-    	var urlGetProfilesBySegmentId = baseAdminApi + '/cdp/segment/profiles';
+    	var paramsGetter;
+        if(segmentId !== ''){
+        	paramsGetter = function (data) {
+            	data.segmentId = segmentId;
+            	return JSON.stringify(data);
+            }
+        }
+        else {
+        	paramsGetter = function (data) {
+        		data.segmentId = "";
+            	data.jsonQueryRules = jsonQueryRules;
+            	data.beginFilterDate = beginFilterDate;
+            	data.endFilterDate = endFilterDate;
+            	console.log(data)
+            	return JSON.stringify(data);
+            }
+        }
+        
+        var columnDef =  [
+        	{
+                "render": function (data, type, row) {
+                	var name = 'Anonymous Person';
+                	try {
+                		if(row.firstName.length > 0 && row.lastName.length > 0){
+                    		name = textTruncate(row.firstName + ' ' + row.lastName,30);
+                    	}
+            		}
+            		catch(err) {
+            		   console.log(err)
+            		}
+                	
+                    var callJsViewStr = "#calljs-leoCdpRouter('Customer_Profile_Info','" + row.id + "')";
+                    return '<a target="_blank" title="Profile Report" href="' + callJsViewStr + '" >' + name + '</a>';
+                },
+                "targets": 0
+            },
+        	{
+                "render": function (data, type, row) {
+                    return data;
+                },
+                "targets": 1
+            },
+            {
+                "render": function (data, type, row) {
+                	var genderText = "No information";
+                	if(data === 0){
+                		genderText = "Female";
+                	}
+                	else if(data === 1){
+                		genderText = "Male";
+                	}
+                    return '<div class="datatable_text">'  + genderText + '</div>';
+                },
+                "targets": 2
+            },
+        	{
+                "render": function (data, type, row) {
+                    return '<div class="datatable_text">'  + textTruncate(row.lastTouchpoint.name, 30) + '</div>';
+                },
+                "targets": 3
+            },
+            {
+                "render": function (data, type, row) {
+                	//format email
+                	if(data != null || data != ''){
+                		var callJsViewStr = "#calljs-leoCdpRouter('Customer_Profile_Info','" + row.id + "')";
+                    	var link = '<a title="Profile Report" href="' + callJsViewStr + '" >' + textTruncate(data, 25) + '</a>';
+                    	return '<div class="datatable_text">'  + link + '</div>';
+                	}
+                	return '';
+                },
+                "targets": 4
+            },
+            {
+                "render": function (data, type, row) {
+                    var date = moment(new Date(data)).format('YYYY-MM-DD HH:mm:ss');
+                    return '<div class="datatable_text">'  + date + '</div>';
+                },
+                "targets": 6
+            },
+            {
+                "render": function (data, type, row) {
+                    var date = moment(new Date(data)).format('YYYY-MM-DD HH:mm:ss');
+                    return '<div class="datatable_text">'  + date + '</div>';
+                },
+                "targets": 7
+            }
+        ];
     	
-        $('#profile-list').DataTable({
+        $('#'+selectorId).DataTable({
         	"lengthMenu": [[20, 30, 50], [20, 30, 50]],
         	'processing': true,
             'serverSide': true,
             'searching': false,
             'serverMethod': 'POST',
             'ajax': {
-                url: urlGetProfilesBySegmentId,
+                url: ajaxUrl,
                 contentType: 'application/json',
                 beforeSend: function (request) {
                     request.setRequestHeader("leouss", usersession);
                 },
-                data: function (data) {
-                	data.segmentId = segmentId;
-                	return JSON.stringify(data);
-                }
+                data: paramsGetter
             },
-            'columnDefs': [
-            	{
-                    "render": function (data, type, row) {
-                    	var name = 'Anonymous Person';
-                    	if(row.firstName.length > 0 && row.lastName.length > 0){
-                    		name = textTruncate(row.firstName + ' ' + row.lastName,30);
-                    	}
-                        var callJsViewStr = "#calljs-leoCdpRouter('Customer_Profile_Info','" + row.id + "')";
-                        return '<a target="_blank" title="Profile Report" href="' + callJsViewStr + '" >' + name + '</a>';
-                    },
-                    "targets": 0
-                },
-            	{
-                    "render": function (data, type, row) {
-                        return data;
-                    },
-                    "targets": 1
-                },
-                {
-                    "render": function (data, type, row) {
-                    	var genderText = "No information";
-                    	if(data === 0){
-                    		genderText = "Female";
-                    	}
-                    	else if(data === 1){
-                    		genderText = "Male";
-                    	}
-                        return '<div class="datatable_text">'  + genderText + '</div>';
-                    },
-                    "targets": 2
-                },
-            	{
-                    "render": function (data, type, row) {
-                        return '<div class="datatable_text">'  + textTruncate(row.lastTouchpoint.name, 30) + '</div>';
-                    },
-                    "targets": 3
-                },
-                {
-                    "render": function (data, type, row) {
-                    	//format email
-                    	if(data != null || data != ''){
-                    		var callJsViewStr = "#calljs-leoCdpRouter('Customer_Profile_Info','" + row.id + "')";
-                        	var link = '<a title="Profile Report" href="' + callJsViewStr + '" >' + textTruncate(data, 25) + '</a>';
-                        	return '<div class="datatable_text">'  + link + '</div>';
-                    	}
-                    	return '';
-                    },
-                    "targets": 4
-                },
-                {
-                    "render": function (data, type, row) {
-                        var date = moment(new Date(data)).format('YYYY-MM-DD HH:mm:ss');
-                        return '<div class="datatable_text">'  + date + '</div>';
-                    },
-                    "targets": 6
-                },
-                {
-                    "render": function (data, type, row) {
-                        var date = moment(new Date(data)).format('YYYY-MM-DD HH:mm:ss');
-                        return '<div class="datatable_text">'  + date + '</div>';
-                    },
-                    "targets": 7
-                }
-            ],
+            'columnDefs': columnDef,
             'columns': [{
                     "data": "firstName" // 0
                 },

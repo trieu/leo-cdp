@@ -9,7 +9,7 @@
 		<h4 class="page-header" id="page_breadcrumb"></h4>
 	</div>
 	<div class="col-lg-3 text-center" style="padding: 10px">
-		<button type="button" class="btn btn-danger data-control-delete" onclick=""> Remove </button>
+		<button type="button" class="btn btn-danger data-control-delete" onclick=""> Delete </button>
 		<button type="button" class="btn btn-default" onclick="history.back()" > Cancel </button>
 		<button type="button" class="btn btn-success data-control-edit" onclick=""> Edit </button>
 	</div>
@@ -86,31 +86,37 @@
 		<div class="panel panel-leoadmin" id="profile-list-panel" style="display: none" >
 			<div class="panel-heading"> <b> <i class="fa fa-list" aria-hidden="true"></i> List of all profiles in segment </b>  </div>
 			<div class="panel-body">
-				<div class="table-responsive">
-					<table id="profile-list" class="display" style="width:100%;">
-	                    <thead>
-	                        <tr>
-	                            <th>Full Name</th>
-	                            <th>Age</th>
-	                            <th>Gender</th>
-	                            <th>Last seen touchpoint</th>
-	                            <th>Primary Email</th>
-	                            <th>Primary Phone</th>
-	                            <th>Created at</th>
-	                            <th>Last Updated at</th>
-	                        </tr>
-	                    </thead>
-	                </table>
+				<div class="table-responsive" id="profilelist_holder" >
+				
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
+<script id='profilelist_tpl' type="text/html" >
+ <table id="profilelist_<%- tbid %>" class="display" style="width:100%;">
+    <thead>
+        <tr>
+            <th>Full Name</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Last seen touchpoint</th>
+            <th>Primary Email</th>
+            <th>Primary Phone</th>
+            <th>Created at</th>
+            <th>Last Updated at</th>
+        </tr>
+    </thead>
+ </table>
+</script>
+
 <script src="/view/common-resources/leocdp.segmentation.js?admin=1"></script>
 
 <script>
-
+	
+	var segmentDataModel = false;
+	var segmentDataStats = false;
 	var initSegmentDetails = window.initSegmentDetails || function(id) {
 		// Date Range Filtering Controller
 		var urlStr = baseAdminApi + '/cdp/segment/get';
@@ -118,10 +124,13 @@
             if (json.httpCode === 0 && json.errorMessage === '') {
         		// only super-admin role can remove the segment 
         		
-        		if( ! json.canDeleteData ){
+            	if( json.canDeleteData ){
+        			$('button.data-control-delete').click(deleteSegment);
+    			} else {
     				$('button.data-control-delete').attr('disabled','disabled');
     			}
-        		if( !  json.canEditData ){
+        		
+        		if( ! json.canEditData ){
         			$('button.data-control-edit').attr('disabled','disabled');
         		} else {
         			
@@ -131,18 +140,18 @@
         			})
         		}
         		
-                var segmentData = json.data.segmentData;
-                var segmentStats = json.data.segmentStats;
-                var segmentId = segmentData.id;
-                var jsonQueryRules = JSON.parse( segmentData.jsonQueryRules);
+        		segmentDataModel = json.data.segmentData;
+        		segmentDataStats = json.data.segmentStats;
+                var segmentId = segmentDataModel.id;
+                var jsonQueryRules = JSON.parse( segmentDataModel.jsonQueryRules );
                 
-                document.title = 'Segment Details: ' + segmentData.name;
+                document.title = 'Segment Details: ' + segmentDataModel.name;
                 
-                setSegmentDataAndReports(segmentData)
+                setSegmentDataAndReports(segmentDataModel)
                
              	// init UI after setting data into DOM
               
-                loadSegmentStatistics(segmentStats);
+                loadSegmentStatistics(segmentDataStats);
                 loadSegmentBuilder(jsonQueryRules, true, false);
                 loadProfilesInSegment(segmentId)
             } else {
@@ -162,9 +171,6 @@
 	     } else {
 	    	 $('#sm_activeQuery').parent().hide()
 	     }
-	     
 	}
-
-
 	
 </script>

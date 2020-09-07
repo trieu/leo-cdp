@@ -241,6 +241,12 @@ div.gridholder {
   border-radius: 5px;
 }
 
+.control-label {
+	padding-top: 7px;
+    margin-bottom: 0;
+    text-align: right;
+}
+
 .segment_size {
   text-align: center;
   font-weight: bold;

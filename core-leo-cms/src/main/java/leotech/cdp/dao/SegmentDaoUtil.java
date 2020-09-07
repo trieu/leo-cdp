@@ -10,12 +10,10 @@ import com.arangodb.ArangoDatabase;
 
 import leotech.cdp.model.customer.Segment;
 import leotech.cdp.query.ProfileQuery;
-import leotech.cms.model.Page;
 import leotech.system.config.AqlTemplate;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataTablePayload;
 import leotech.system.util.database.ArangoDbQuery;
-import leotech.system.util.database.ArangoDbUtil;
 
 /**
  * Segment Data Access Object

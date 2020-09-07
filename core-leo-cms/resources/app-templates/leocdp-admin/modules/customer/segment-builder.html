@@ -6,9 +6,9 @@
 		<h4 class="page-header" id="page_breadcrumb"></h4>
 	</div>
 	<div class="col-lg-3 text-center" style="padding: 10px">
-		<button type="button" class="btn btn-danger data-control-delete" > Remove </button>
+		<button type="button" class="btn btn-danger data-control-delete" > Delete </button>
 		<button type="button" class="btn btn-default" onclick="history.back()"> Cancel </button>
-		<button type="button" class="btn btn-success data-control-edit"  > Save </button>
+		
 	</div>
 </div>
 
@@ -27,19 +27,23 @@
 				
 					<div id="error-on-save" class="alert alert-danger" style="display: none;"></div>
 					
-					<div class="form-group">
+					<div class="form-group row">
+						
 						<label class="control-label col-sm-2" for="sm_name">Name:</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="sm_name" placeholder="Enter segment name" name="name">
 						</div>
+						
 					</div>
-					<div class="form-group">
+					
+					<div class="form-group row">
 						<label class="control-label col-sm-2" for="sm_description">Description:</label>
 						<div class="col-sm-10">
 							<textarea class="form-control" rows="2" id="sm_description" name="description"  placeholder="Enter segment description" ></textarea>
 						</div>
 					</div>
-					<div class="form-group">
+					
+					<div class="form-group row">
 						<label class="control-label col-sm-2" for="type">Segment Type:</label>
 						<div class="col-sm-10"  id="sm_type" >
 							<div class="radio" title="Ad hoc query segmentation" >
@@ -75,7 +79,7 @@
 						</div>
 					</div>
 					
-					<div class="form-group">
+					<div class="form-group row">
 						<label class="control-label col-sm-2" for="activeQuery"> Auto Query: </label>
 						<div class="col-sm-10">
 							<div class="checkbox">
@@ -117,8 +121,9 @@
 					</div>
 				</div>
 				<div class="btn-group col-md-5 col-xs-12">
-					<button class="btn btn-warning" id="btn-reset-querybuilder"> Reset </button>
-					<button class="btn btn-primary" id="btn-segmentation-run-query"> Run Query </button>
+					<button class="btn btn-warning" id="btn-reset-querybuilder"> Reset Query </button>
+					<button class="btn btn-primary" id="btn-segmentation-get-size"> Get Size </button>
+					<button class="btn btn-success" onclick="saveSegment()"> Save Segment </button>
 				</div>
 				
 				<!-- Query Details -->
@@ -134,29 +139,33 @@
 		
 		<!--  3 profiles  -->
 		<div class="panel panel-leoadmin" id="profile-list-panel" style="display: none" >
-			<div class="panel-heading"> <b> <i class="fa fa-list" aria-hidden="true"></i> Matched Profiles from the Query Builder </b>  </div>
+			<div class="panel-heading"> <b> <i class="fa fa-list" aria-hidden="true"></i> All Profiles in Segment</b>  </div>
 			<div class="panel-body">
-				<div class="table-responsive">
-					<table id="profile-list" class="display" style="width:100%;">
-	                    <thead>
-	                        <tr>
-	                            <th>Full Name</th>
-	                            <th>Age</th>
-	                            <th>Gender</th>
-	                            <th>Last seen touchpoint</th>
-	                            <th>Primary Email</th>
-	                            <th>Primary Phone</th>
-	                            <th>Created at</th>
-	                            <th>Last Updated at</th>
-	                        </tr>
-	                    </thead>
-	                </table>
+				<div class="table-responsive" id="profilelist_holder" >
+				
 				</div>
 			</div>
 		</div>
 		
 	</div>
 </div>
+
+<script id='profilelist_tpl' type="text/html" >
+ <table id="profilelist_<%- tbid %>" class="display" style="width:100%;">
+    <thead>
+        <tr>
+            <th>Full Name</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Last seen touchpoint</th>
+            <th>Primary Email</th>
+            <th>Primary Phone</th>
+            <th>Created at</th>
+            <th>Last Updated at</th>
+        </tr>
+    </thead>
+ </table>
+</script>
 
 <script src="/view/common-resources/leocdp.segmentation.js?admin=1"></script>
 
@@ -184,7 +193,7 @@
 		
 		loadSegmentStatistics(segmentDataStats);
 		
-		$('#btn-segmentation-run-query').on('click', function() {
+		$('#btn-segmentation-get-size').on('click', function() {
 			var result = $('#segment-builder-holder').queryBuilder('getRules');
 			if (!$.isEmptyObject(result)) {
 				
@@ -211,7 +220,6 @@
 		            }
 		        });
 		        
-		        
 			}
 		});
 	}
@@ -227,12 +235,6 @@
         			$('button.data-control-delete').click(deleteSegment);
     			} else {
     				$('button.data-control-delete').attr('disabled','disabled');
-    			}
-        		
-        		if( readOnlyMode ){
-    				$('button.data-control-edit').attr('disabled','disabled');
-    			} else {
-    				$('button.data-control-edit').click(saveSegment);
     			}
         		
         		segmentDataStats = json.data.segmentStats;
@@ -262,8 +264,7 @@
             	
             	var segmentData = json.data.segmentData;
             	setSegmentDataForm(segmentData)
-            	
-    			$('button.data-control-edit').click(saveSegment);
+    			
                 document.title = 'New Segment Builder';
                
              	// init UI after setting data into DOM
@@ -321,36 +322,5 @@
 	        });
 		}
 	}
-	var deleteSegment = deleteSegment || function() {
-		if(typeof segmentDataModel === "object" && segmentDataModel.id != '' ){
-			var urlStr = baseAdminApi + '/cdp/segment/delete';
-	        LeoAdminApiUtil.callPostAdminApi(urlStr,  { 'id' : segmentDataModel.id }, function (json) {
-	            if (json.httpCode === 0 ) {
-	                if(json.data === true){
-	                	iziToast.success({
-	                	    title: 'OK',
-	                	    message: 'Successfully deleted the segment "'+segmentDataModel.name +'"',
-	                	    onClosing: function(instance, toast, closedBy){
-	                	    	location.hash = "calljs-leoCdpRouter('Segment_Data_List')";
-	                	    }
-	                	});
-	                } 
-	                else {
-	                	iziToast.error({
-	                	    title: 'Error',
-	                	    message: json.data,
-	                	    onClosing: function(instance, toast, closedBy){
-	                	    	location.reload(true);
-	                	    }
-	                	});
-	                }
-	            } else {
-	                $('#error-on-save').html(json.errorMessage).show().delay(5000).fadeOut('slow');
-	                LeoAdminApiUtil.logErrorPayload(json);
-	            }
-	        });
-		}
-	}
-	
 	
 </script>

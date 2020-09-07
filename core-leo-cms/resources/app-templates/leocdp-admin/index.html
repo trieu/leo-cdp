@@ -56,7 +56,10 @@
 
 	<!-- datatable -->
 	<link href="/public/js/datatablejs/datatables.min.css" rel="stylesheet">
+	<!--
 	<script type="text/javascript" src="/public/js/datatablejs/datatables.min.js"></script>
+	-->
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
 
 	<!-- datatable -->
 	<link href="/public/js/chosen/chosen.min.css" rel="stylesheet">
@@ -105,6 +108,11 @@
 	<!-- Chartjs -->
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" rel="stylesheet" type="text/css" >
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+	
+	<!-- Visualization libs for report -->
+	<script src="https://cdn.jsdelivr.net/npm/d3-time@1.0.10/dist/d3-time.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/d3-funnel@1.2.2/dist/d3-funnel.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/venn.js@0.2.20/build/venn.min.js"></script>
 
 	<!-- CodeMirror for HTML Editor -->
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.56.0/codemirror.css" rel="stylesheet" />
@@ -135,6 +143,31 @@
 	<link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast@1.4.0/dist/css/iziToast.min.css" />
 	<script src="https://cdn.jsdelivr.net/npm/izitoast@1.4.0/dist/js/iziToast.min.js"></script>
 
+	<!-- handlebars library -->
+	<script src="/public/js/utils/handlebars.min.js"></script>
+
+	<!-- Lodash library -->
+	<script src="/public/js/utils/lodash.min.js"></script>
+	
+	<!-- Web-socket  -->
+	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vertx/3.6.3/vertx-eventbus.min.js"></script>
+	
+	<!-- Library to copy text to clipboard -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
+	
+	<!-- modal box -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/eModal/1.2.69/eModal.min.js" ></script>
+
+	<!-- FilePond library -->
+	<script src="/public/js/filepond/filepond-plugin-image-crop.js"></script>
+	<script src="/public/js/filepond/filepond-plugin-image-resize.js"></script>
+	<script src="/public/js/filepond/filepond-plugin-image-preview.js"></script>
+	<script src="/public/js/filepond/filepond-plugin-file-validate-size.js"></script>
+	<script src="/public/js/filepond/filepond-plugin-image-exif-orientation.js"></script>
+	<script src="/public/js/filepond/filepond-plugin-file-validate-type.js"></script>
+	<script src="/public/js/filepond/filepond.js"></script>
+	<script src="/public/js/filepond/config-filepond.js"></script>
 </head>
 
 <body>
@@ -171,31 +204,7 @@
 
 	<!-- ///////////////////////////////////////////////////////////////////////////////////////////// -->
 	
-	<!-- handlebars library -->
-	<script src="/public/js/utils/handlebars.min.js"></script>
 
-	<!-- lodash library -->
-	<script src="/public/js/utils/lodash.min.js"></script>
-	
-	<!-- Web-socket  -->
-	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/vertx/3.6.3/vertx-eventbus.min.js"></script>
-	
-	<!-- Library to copy text to clipboard -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
-	
-	<!-- modal box -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/eModal/1.2.69/eModal.min.js" ></script>
-
-	<!-- FilePond library -->
-	<script src="/public/js/filepond/filepond-plugin-image-crop.js"></script>
-	<script src="/public/js/filepond/filepond-plugin-image-resize.js"></script>
-	<script src="/public/js/filepond/filepond-plugin-image-preview.js"></script>
-	<script src="/public/js/filepond/filepond-plugin-file-validate-size.js"></script>
-	<script src="/public/js/filepond/filepond-plugin-image-exif-orientation.js"></script>
-	<script src="/public/js/filepond/filepond-plugin-file-validate-type.js"></script>
-	<script src="/public/js/filepond/filepond.js"></script>
-	<script src="/public/js/filepond/config-filepond.js"></script>
 	
 	<!-- Media-player js -->
 	<script>
@@ -205,10 +214,7 @@
 	</script>
 	<script src="//{{baseStaticUrl}}/public/mediaplayer/mediaplayer.one.min.js"></script>
 	
-	<!-- Visualization libs for report -->
-	<script src="https://cdn.jsdelivr.net/npm/d3-time@1.0.10/dist/d3-time.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/d3-funnel@1.2.2/dist/d3-funnel.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/venn.js@0.2.20/build/venn.min.js"></script>
+	
 	
 	<!-- mermaid-js -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.7.0/mermaid.min.js"></script>
