@@ -4,25 +4,22 @@ var loadSegmentStatistics = window.loadSegmentStatistics || function(segmentStat
 	
 	if(segmentStats === false){
 		var data = [ {
-			name : 'high value',
 			count : 0,
 			color : '#000000'
 		}, {
-			name : 'total',
-			count : 1000,
+			count : 100,
 			color : '#f8b70a'
 		}, ];
 		var totalCount = 0; // total manually
 		var percentNum = 0;
 		renderDonutChart(domSelector, data, totalCount, width, height, radius, percentNum)
 	} else {
+		var remain = segmentStats.totalProfilesInCdp - segmentStats.totalProfilesInSegment;
 		var data = [ {
-			name : 'high value',
 			count : segmentStats.totalProfilesInSegment,
 			color : '#000000'
 		}, {
-			name : 'total',
-			count : segmentStats.totalProfilesInCdp,
+			count : remain ,
 			color : '#f8b70a'
 		}, ];
 		
@@ -34,7 +31,7 @@ var loadSegmentStatistics = window.loadSegmentStatistics || function(segmentStat
 	}
 }
 
-var loadSegmentBuilder = window.loadSegmentBuilder || function(jsonQueryRules, readOnlyMode) {
+var loadSegmentBuilder = window.loadSegmentBuilder || function(jsonQueryRules, readOnlyMode, callback) {
 	
 	var dataFilter = [ {
 		id : "firstName",
@@ -132,20 +129,14 @@ var loadSegmentBuilder = window.loadSegmentBuilder || function(jsonQueryRules, r
 	});
 	
 	if(readOnlyMode){
+		// disable and hide all controllers in segment builder 
 		$('#segment-builder-holder').find('input,select').attr('disabled','disabled');
 		$('#segment-builder-holder button').hide();
-	}
-
-	$('#btn-reset-querybuilder').on('click', function() {
-		$('#segment-builder-holder').queryBuilder('reset');
-	});
-
-	$('#btn-segmentation-run-query').on('click', function() {
-		var result = $('#segment-builder-holder').queryBuilder('getRules');
-		if (!$.isEmptyObject(result)) {
-			loadSegmentStatistics(JSON.stringify(result));
+	} else {
+		if(typeof callback === 'function'){
+			callback();
 		}
-	});
+	}
 }
 
 // 
@@ -153,7 +144,7 @@ var loadProfilesInSegment = window.loadProfilesInSegment || function(segmentId) 
 	$('#profile-list-panel').show();
     var usersession = getUserSession();
     if (usersession) {
-        dataTable = $('#profile-list').DataTable({
+        $('#profile-list').DataTable({
         	"lengthMenu": [[20, 30, 50], [20, 30, 50]],
         	'processing': true,
             'serverSide': true,

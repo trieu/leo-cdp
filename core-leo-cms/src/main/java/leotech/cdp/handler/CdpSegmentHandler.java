@@ -34,6 +34,8 @@ public class CdpSegmentHandler extends SecuredWebDataHandler {
 	static final String API_CREATE_NEW = "/cdp/segment/new";
 	static final String API_SAVE_MODEL = "/cdp/segment/save";
 	static final String API_GET_MODEL = "/cdp/segment/get";
+	static final String API_PROFILES_FROM_QUERY_BUILDER = "/cdp/segment/profiles/query-builder";
+	static final String API_GET_STATISTICS = "/cdp/segment/statistics";
 	static final String API_DELETE = "/cdp/segment/delete";
 	static final String API_PROFILES_IN_SEGMENT = "/cdp/segment/profiles";
 
@@ -60,6 +62,29 @@ public class CdpSegmentHandler extends SecuredWebDataHandler {
 							return payload;
 						}
 						return JsonDataPayload.fail("segmentId is not valid", 500);
+					}
+					case API_PROFILES_FROM_QUERY_BUILDER : {
+						// the list-view component at datatables.net needs Ajax POST method to avoid long URL 
+						String jsonQueryRules = paramJson.getString("jsonQueryRules", "");
+						String beginFilterDate = paramJson.getString("beginFilterDate", "");
+						String endFilterDate = paramJson.getString("endFilterDate", "");
+						if(!jsonQueryRules.isEmpty()) {
+							DataFilter filter = new DataFilter(uri, paramJson);
+							JsonDataTablePayload payload = SegmentDataService.getProfilesFromQueryBuilder(jsonQueryRules, beginFilterDate, endFilterDate, filter);
+							payload.checkPermission(loginUser, Segment.class);
+							return payload;
+						}
+						return JsonDataPayload.fail("segmentId is not valid", 500);
+					}
+					case API_GET_STATISTICS : {
+						String jsonQueryRules = paramJson.getString("jsonQueryRules", "");
+						String beginFilterDate = paramJson.getString("beginFilterDate", "");
+						String endFilterDate = paramJson.getString("endFilterDate", "");
+						
+						long querySize = SegmentDataService.computeSegmentSize(jsonQueryRules,  beginFilterDate, endFilterDate);
+						long totalProfilesInCdp = ProfileDataService.countTotalOfProfiles();
+						Map<String,Long> stats = ImmutableMap.of("totalProfilesInSegment", querySize, "totalProfilesInCdp", totalProfilesInCdp);
+						return JsonDataPayload.ok(uri, stats, loginUser, Segment.class);
 					}
 					case API_GET_MODEL : {
 						String id = paramJson.getString("id", "new");

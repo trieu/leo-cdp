@@ -163,6 +163,8 @@
 <script>
 
 	var segmentDataModel = false;
+	var segmentDataStats = false;
+	
 	var initSegmentBuilder = window.initSegmentBuilder || function(id) {
 		segmentDataModel = false;
 		// Date Range Filtering Controller
@@ -175,12 +177,51 @@
 		}
 	}
 	
+	var segmentQueryBuilderCallback = window.segmentQueryBuilderCallback || function(){
+		$('#btn-reset-querybuilder').on('click', function() {
+			$('#segment-builder-holder').queryBuilder('reset');
+		});
+		
+		loadSegmentStatistics(segmentDataStats);
+		
+		$('#btn-segmentation-run-query').on('click', function() {
+			var result = $('#segment-builder-holder').queryBuilder('getRules');
+			if (!$.isEmptyObject(result)) {
+				
+				var params = {};
+				params.jsonQueryRules = JSON.stringify(result);
+				
+				var datetimeFilter = getDateFilterValues();
+				params.beginFilterDate = datetimeFilter.beginFilterDate;
+				params.endFilterDate = datetimeFilter.endFilterDate;
+				
+				// call and show statistics
+				var urlStr = baseAdminApi + '/cdp/segment/statistics';
+		        LeoAdminApiUtil.callPostAdminApi(urlStr, params , function (json) {
+		            if (json.httpCode === 0 && typeof json.data === 'object') {
+		               loadSegmentStatistics(json.data);
+		            } else {
+		            	iziToast.error({
+	                	    title: 'Error',
+	                	    message: json.data,
+	                	    onClosing: function(instance, toast, closedBy){
+	                	    	location.reload(true);
+	                	    }
+	                	});
+		            }
+		        });
+		        
+		        
+			}
+		});
+	}
+	
 	var getSegmentBuilderData = window.getSegmentBuilderData || function(id) {
         var urlStr = baseAdminApi + '/cdp/segment/get';
         LeoAdminApiUtil.callPostAdminApi(urlStr, { 'id': id }, function (json) {
             if (json.httpCode === 0 && json.errorMessage === '') {
         		// only super-admin role can remove the segment 
-        		var readOnlyMode = json.canEditData === false;
+        		var readOnlyMode = ! json.canEditData;
         		
         		if( json.canDeleteData ){
         			$('button.data-control-delete').click(deleteSegment);
@@ -194,10 +235,10 @@
     				$('button.data-control-edit').click(saveSegment);
     			}
         		
+        		segmentDataStats = json.data.segmentStats;
                 var segmentData = json.data.segmentData;
-                var segmentStats = json.data.segmentStats;
                 var segmentId = segmentData.id;
-                var jsonQueryRules = JSON.parse( segmentData.jsonQueryRules);
+                var jsonQueryRules = JSON.parse( segmentData.jsonQueryRules );
                 
                 document.title = 'Segment Builder: ' + segmentData.name;
                 
@@ -205,8 +246,8 @@
                
              	// init UI after setting data into DOM
                 initDateFilterComponent(true, segmentData.beginFilterDate , segmentData.endFilterDate );
-                loadSegmentStatistics(segmentStats);
-                loadSegmentBuilder(jsonQueryRules, readOnlyMode);
+                
+                loadSegmentBuilder(jsonQueryRules, readOnlyMode, segmentQueryBuilderCallback);
                 loadProfilesInSegment(segmentId)
             } else {
                 LeoAdminApiUtil.logErrorPayload(json);
@@ -227,8 +268,7 @@
                
              	// init UI after setting data into DOM
              	//initDateFilterComponent(true);
-				loadSegmentBuilder(false);
-				loadSegmentStatistics(false);
+				loadSegmentBuilder(false, false, segmentQueryBuilderCallback);
                 initDateFilterComponent(true, segmentData.beginFilterDate , segmentData.endFilterDate );
                 loadProfilesInSegment('');
             } else {

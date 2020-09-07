@@ -50,7 +50,7 @@ var renderJourneyFlowChart = renderJourneyFlowChart || function(domSelector, def
 
 var renderDonutChart = renderDonutChart || function(domSelector, data, totalCount, width, height, radius, percentage){
 	
-	var arc = d3.arc().outerRadius(radius - 10).innerRadius(100);
+	var arc = d3.arc().outerRadius(radius - 12).innerRadius(100);
 
 	var pie = d3.pie()
 	    .sort(null)
@@ -58,7 +58,7 @@ var renderDonutChart = renderDonutChart || function(domSelector, data, totalCoun
 	        return d.count;
 	    });
 
-		var svg = d3.select(domSelector).append("svg")
+	var svg = d3.select(domSelector).append("svg")
 	    .attr("width", width)
 	    .attr("height", height)
 	    .append("g")
@@ -68,11 +68,10 @@ var renderDonutChart = renderDonutChart || function(domSelector, data, totalCoun
       .data(pie(data))
       .enter().append("g");    
 
-   	g.append("path")
-    	.attr("d", arc)
-      .style("fill", function(d,i) {
+   	g.append("path").attr("d", arc).style("fill", function(d,i) {
       	return d.data.color;
-      });
+    });
+   	
     g.append("text")
 	   .attr("text-anchor", "middle")
 		 .attr('font-size', '1.2em')

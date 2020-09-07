@@ -1,14 +1,6 @@
 
-<style>
-	.segment_size {
-	    text-align: center;
-    	font-weight: bold;
-    	font-size: 12px;
-    }
+<!-- Segment Listing -->
 
-</style>
-
-<!-- MAIN BODY here -->
 <div class="row">
 	<div class="col-lg-10">
 		<h4 class="page-header" id="page_breadcrumb"></h4>
@@ -17,7 +9,6 @@
 		<button type="button" class="btn btn-success data-control-insert" onclick="newSegmentBuilder()">New Segment</button>
 	</div>
 </div>
-
 
 <div class="row gridholder">
 	<div class="col-lg-12">
@@ -40,7 +31,6 @@
 	    </div>
 	</div>
 </div>
-
 
 <script>
 	var initSegmentList = initSegmentList || function() {
@@ -152,24 +142,25 @@
                     },
                     {
                         "render": function (data, type, row) {
-                            var callJsViewStr = "#calljs-leoCdpRouter('Segment_Details','" + row.id + "')";
-                            var html = '<a class="control" title="Segment Report" href="' + callJsViewStr + '" > <i class="fa fa-info-circle" aria-hidden="true"></i> View</a>';
+                            var html = '';
                         	if( canEditData ){
                         		
                         		var callJsEditStr = "#calljs-leoCdpRouter('Segment_Builder','" + row.id + "')";
-                        		html += ' <br> <a class="control" title="Segment Builder" href="' + callJsEditStr + '" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
+                        		html += ' <a class="control" title="Segment Builder" href="' + callJsEditStr + '" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
+                        		
+                        		var callJsActivateStr = "#calljs-leoCdpRouter('Activate_Segment','" + row.id + "')";
+                        		html += ' <br> <a class="control" title="Activate this segment" href="' + callJsActivateStr + '" > <i class="fa fa-line-chart" aria-hidden="true"></i> Activate</a>';
                         		
                         		var callJsCopyStr = "#calljs-leoCdpRouter('Segment_Builder_Copy','" + row.id + "')";
                         		html += ' <br> <a class="control" title="Copy this segment" href="' + callJsCopyStr + '" > <i class="fa fa-clone" aria-hidden="true"></i> Copy</a>';
                         		
-                        		var callJsCopyStr = "#calljs-leoCdpRouter('Activate_Segment','" + row.id + "')";
-                        		html += ' <br> <a class="control" title="Activate this segment" href="' + callJsCopyStr + '" > <i class="fa fa-line-chart" aria-hidden="true"></i> Activate</a>';
-                        		
                         	} else {
-                        		html += ' <br> <a class="control" title="Segment Builder Editor" href="javascript:" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
-                        		html += ' <br> <a class="control" title="Copy this segment" href="javascript:" > <i class="fa fa-clone" aria-hidden="true"></i> Copy</a>';
+                        		html += '<a class="control" title="Segment Builder Editor" href="javascript:" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
                         		html += ' <br> <a class="control" title="Activate this segment" href="javascript:" > <i class="fa fa-line-chart" aria-hidden="true"></i> Activate</a>';
+                        		html += ' <br> <a class="control" title="Copy this segment" href="javascript:" > <i class="fa fa-clone" aria-hidden="true"></i> Copy</a>';
                         	}
+                        	var callJsViewStr = "#calljs-leoCdpRouter('Segment_Details','" + row.id + "')";
+                            html += ' <br> <a class="control" title="Segment Report" href="' + callJsViewStr + '" > <i class="fa fa-info-circle" aria-hidden="true"></i> View</a>';
                             return html;
                         },
                         "targets": 8

@@ -1,6 +1,7 @@
 package leotech.cdp.service;
 
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -98,8 +99,8 @@ public class SegmentDataService {
 		return new Segment(beginFilterDate, endFilterDate);
 	}
 	
-	public static long computeSegmentSize(String name, String jsonQueryRules, List<String> selectedFields, String beginFilterDate, String endFilterDate) {
-		Segment sm = new Segment(name, jsonQueryRules, selectedFields, beginFilterDate, endFilterDate);
+	public static long computeSegmentSize( String jsonQueryRules, String beginFilterDate, String endFilterDate) {
+		Segment sm = new Segment( jsonQueryRules,  beginFilterDate, endFilterDate);
 		ProfileQuery profileQuery = sm.toProfileQuery();
 		long count  = ProfileDaoUtil.countProfilesByQuery(profileQuery);
 		return count;
@@ -124,6 +125,22 @@ public class SegmentDataService {
 		int draw = filter.getDraw();
 		
 		Segment sm = SegmentDaoUtil.getById(segmentId);
+		int startIndex = filter.getStart();
+		int numberResult = filter.getLength();
+		ProfileQuery profileQuery = sm.toProfileQuery(startIndex, numberResult);
+		List<ProfileSingleDataView> profilesInSegment = ProfileDaoUtil.getProfilesByQuery(profileQuery);
+		
+		long recordsTotal = sm.getTotalCount();
+		long recordsFiltered = ProfileDaoUtil.countProfilesByQuery(profileQuery);
+		
+		JsonDataTablePayload payload =  JsonDataTablePayload.data(filter.getUri(), profilesInSegment, recordsTotal, recordsFiltered, draw);
+		return payload;
+	}
+	
+	public static JsonDataTablePayload getProfilesFromQueryBuilder(String jsonQueryRules, String beginFilterDate, String endFilterDate , DataFilter filter) {
+		int draw = filter.getDraw();
+		
+		Segment sm = new Segment(jsonQueryRules, beginFilterDate, endFilterDate);
 		int startIndex = filter.getStart();
 		int numberResult = filter.getLength();
 		ProfileQuery profileQuery = sm.toProfileQuery(startIndex, numberResult);

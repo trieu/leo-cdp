@@ -10,7 +10,6 @@ public class SegmentDataCleaningJob  extends ScheduledJob {
 
 	@Override
 	public void doTheJob() {
-		// TODO Auto-generated method stub
 		 List<Segment> segments = SegmentDaoUtil.getSegmentsToDeleteForever();
 		 for (Segment segment : segments) {
 			 boolean ok = SegmentDaoUtil.delete(segment);

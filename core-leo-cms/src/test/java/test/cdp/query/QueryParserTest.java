@@ -61,7 +61,7 @@ public class QueryParserTest {
 		
 		long count  = ProfileDaoUtil.countProfilesByQuery(profileQuery);
 		
-		long count2 = SegmentDataService.computeSegmentSize("test", jsonQueryRules, selectedFields, beginFilterDate, endFilterDate);
+		long count2 = SegmentDataService.computeSegmentSize( jsonQueryRules,  beginFilterDate, endFilterDate);
 		
 		System.out.println(count);
 		System.out.println(count2);
