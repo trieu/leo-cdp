@@ -5,6 +5,7 @@ import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -98,6 +99,21 @@ public class RequestInfoUtil {
 
 		if (map == null) {
 			map = new HashMap<String, String>(0);
+		}
+		return map;
+	}
+	
+	public static Map<String, Set<String>> getMapSetFromRequestParams(MultiMap params, String paramName) {
+		Map<String, Set<String>> map = null;
+		String jsonStr = StringUtil.decodeUrlUTF8(params.get(paramName));
+		if (StringUtil.isNotEmpty(jsonStr)) {
+			Gson gson = new Gson();
+			Type strMapType = new TypeToken<Map<String, Set<String>>>() {}.getType();
+			map = gson.fromJson(jsonStr, strMapType);
+		}
+
+		if (map == null) {
+			map = new HashMap<String, Set<String>>(0);
 		}
 		return map;
 	}

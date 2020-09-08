@@ -2,6 +2,7 @@ package leotech.cdp.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import com.google.gson.Gson;
 
@@ -101,7 +102,7 @@ public class ProfileDataService {
 	}
 
 	public static Profile updateSocialLoginInfo(String loginId, String loginProvider, String firstName, String lastName, String email, String phone, String genderStr, int age,
-			String profileId, String observerId, String lastTouchpointId, String lastSeenIp, String usedDeviceId) {
+			String profileId, String observerId, String lastTouchpointId, String lastSeenIp, String usedDeviceId, Set<String> contentKeywords) {
 		Profile p = ProfileDaoUtil.getById(profileId);
 
 		p.setSocialMediaProfile(loginProvider, loginId);
@@ -139,6 +140,7 @@ public class ProfileDataService {
 		p.setLastObserverId(observerId);
 		p.setLastSeenIp(lastSeenIp);
 		p.setUpdatedAt(new Date());
+		p.setContentKeywords(contentKeywords);
 
 		// TODO run in a thread to commit to database
 		ProfileDaoUtil.update(p);

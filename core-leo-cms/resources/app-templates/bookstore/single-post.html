@@ -65,7 +65,7 @@
     <div id="subscription_placeholder" class="mdl-cell mdl-cell--12-col" style="display: none">
     	<h3> Subscription  Form </h3>
     	<form id="subscription_form" > </form>
-    	<div id="subscription_form_error"> </div>
+    	<div id="subscription_form_error" class="alert alert-danger" style="display: none;" > </div>
     </div>
    
 
@@ -202,6 +202,14 @@
             $('#postMainContent').addClass('mdl-grid');
         }
         
-        LeoForm.render('subscription_form','subscription_placeholder')
+        var contentKeywords = {
+        		"data-science" :"KHOA HỌC DỮ LIỆU", 
+        		"science" : "KHOA HỌC", 
+        		"technology" : "CÔNG NGHỆ - IT", 
+        		"philosophy" : "TRIẾT HỌC", 
+        		"marketing" :  "MARKETING",
+        		"artificial-intelligence" : "TRÍ TUỆ NHÂN TẠO"
+        };
+        LeoForm.render('subscription_form','subscription_placeholder', contentKeywords);
     }
 </script>

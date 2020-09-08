@@ -1,6 +1,7 @@
 package leotech.cdp.service;
 
 import java.util.Map;
+import java.util.Set;
 
 import org.joda.time.DateTime;
 
@@ -160,8 +161,12 @@ public class ContextSessionService {
 		
 		MultiMap formAttributes = req.formAttributes();
 		
+		Map<String, Set<String> > extDataStr = RequestInfoUtil.getMapSetFromRequestParams(formAttributes, "extData");
 		Map<String, String> profileData = RequestInfoUtil.getHashMapFromRequestParams(formAttributes,TrackingApiParam.PROFILE_DATA);
 		System.out.println(profileData);
+		System.out.println(extDataStr);
+		
+		Set<String> contentKeywords = extDataStr.get("contentKeywords");
 		
 		String firstName = profileData.getOrDefault("firstName", "");
 		String lastName = profileData.getOrDefault("lastName", "");
@@ -172,7 +177,8 @@ public class ContextSessionService {
 		String loginId = profileData.getOrDefault("loginId", "");
 		String loginProvider = profileData.getOrDefault("loginProvider", "");
 		
-		Profile profile = ProfileDataService.updateSocialLoginInfo(loginId , loginProvider,firstName, lastName, email, phone, genderStr, age, curProfileId, observerId, lastTouchpointId, sourceIP, usedDeviceId);
+		Profile profile = ProfileDataService.updateSocialLoginInfo(loginId , loginProvider,firstName, lastName, email, phone, 
+				genderStr, age, curProfileId, observerId, lastTouchpointId, sourceIP, usedDeviceId, contentKeywords);
 		String newProfileId = profile.getId();
 		
 		if(! newProfileId.equals(curProfileId)) {

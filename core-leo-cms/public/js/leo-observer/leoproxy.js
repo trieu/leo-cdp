@@ -68,7 +68,7 @@
         	LeoObserverProxy.messageHandler(e.data);
         });
 
-        var getObserverParams = function(metricName, eventData, profileObject) {
+        var getObserverParams = function(metricName, eventData, profileObject, extData) {
 			var tprefurl =  encodeURIComponent(document.referrer);
 			var tprefdomain = extractRootDomain(document.referrer);
 			
@@ -91,6 +91,9 @@
             }
             if(profileObject){
             	params['profiledata'] = JSON.stringify(profileObject); 
+            }
+            if(extData){
+            	params['extData'] = JSON.stringify(extData); 
             }
             return params;
         }
@@ -152,11 +155,11 @@
             }
         }
         
-        LeoObserverProxy.updateProfileBySession = function(profileObject) {
+        LeoObserverProxy.updateProfileBySession = function(profileObject, extData) {
             if (typeof profileObject === "object") {
                 var payload = JSON.stringify({
                     'call': 'updateProfile',
-                    'params': getObserverParams(false,false,profileObject)
+                    'params': getObserverParams(false,false,profileObject, extData)
                 });
                 sendMessage(payload);
             }

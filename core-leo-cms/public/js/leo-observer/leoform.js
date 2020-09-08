@@ -5,10 +5,15 @@
 
 // ------------ LEO Form ------------------
 (function() {
+	
+	var errorMsg = '<p> First name and email are required data, age must be larger than zero </p>';
+	var successInfo = '<div class="alert alert-success"><strong>Success!</strong> Your data is submitted successfully.</div>'
+	
     if (typeof window.LeoForm === "undefined") {
     	
-    	function render(formId, holderId){
-    		 $('#'+formId).jsonForm({
+    	function render(formId, holderId, contentKeywords){
+    		var formSelector = $('#'+formId);
+    		formSelector.jsonForm({
     	         schema: {
     	           firstname: {
     	             type: 'string',
@@ -33,10 +38,17 @@
     	           },
     	           age: {
     	             type: 'integer',
-    	             title: 'Age',
-    	             minimum: 16,
-    	             maximum: 150
-    	           }
+    	             title: 'Age'
+    	           },
+    	           contentKeywords: {
+	        	      "type": "array",
+	        	      "title": "Select all topics you like: ",
+	        	      "items": {
+	        	          "type": "string",
+	        	          "title": "Option",
+	        	          "enum": Object.keys(contentKeywords)
+	        	      }
+	        	    }
     	         },
     		     form: [
     		          {"key": "firstname"},
@@ -47,27 +59,34 @@
     		            "key": "genderStr",
     		            "type": "radios"
     		          },
+    		          { "key": "contentKeywords" , "type": "checkboxes", "titleMap": contentKeywords },
     		          {
 			              "type": "actions",
 			              "items": [
 			                {
 			                  "type": "submit",
 			                  "title": "Submit"
-			               }
-		              ]
-		            }
-    		        ]
+			                }
+			              ]
+		               }
+    		       ]
     	         ,
-    	         onSubmit: function (errors, values) {
+    	         onSubmit: function (errors, profileData) {
     	           if (errors) {
-    	             $('#subscription_form_error').html('<p> Missing info </p>');
+    	             $('#subscription_form_error').html(JSON.stringify(errors)).show().delay(5000).fadeOut('slow');;
     	           }
     	           else {
-    	          	 console.log(values)
-    	          	 if(values.firstname !== '' && values.email !== '' && values.age > 16){
-    	          		 LeoObserverProxy.updateProfileBySession(values)
+    	          	 if(profileData.firstname !== '' && profileData.email !== '' && profileData.age >= 0 ){
+    	          		 var extData = {};
+    	          		 extData.contentKeywords = profileData.contentKeywords.concat([]);
+    	          		 delete profileData.contentKeywords;
+    	          		 
+    	          		 console.log(profileData)
+    	          		 console.log(extData)
+    	          		 LeoObserverProxy.updateProfileBySession(profileData, extData);
+    	          		 $('#'+holderId).empty().html(successInfo).show().delay(5000).fadeOut('slow');
     	          	 } else {
-    	          		 $('#subscription_form_error').html('<p> Missing info </p>');
+    	          		 $('#subscription_form_error').html(errorMsg).show().delay(5000).fadeOut('slow');
     	          	 }
     	           }
     	         }
