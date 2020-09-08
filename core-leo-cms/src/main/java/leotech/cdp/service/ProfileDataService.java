@@ -100,7 +100,7 @@ public class ProfileDataService {
 		return pf;
 	}
 
-	public static Profile updateSocialLoginInfo(String loginId, String loginProvider, String firstName, String lastName, String email, String phone, 
+	public static Profile updateSocialLoginInfo(String loginId, String loginProvider, String firstName, String lastName, String email, String phone, String genderStr, int age,
 			String profileId, String observerId, String lastTouchpointId, String lastSeenIp, String usedDeviceId) {
 		Profile p = ProfileDaoUtil.getById(profileId);
 
@@ -122,6 +122,14 @@ public class ProfileDataService {
 		
 		if(StringUtil.isNotEmpty(phone)) {
 			p.setPrimaryPhone(phone);
+		}
+		
+		if(StringUtil.isNotEmpty(genderStr)) {
+			p.setGender(genderStr);
+		}
+		
+		if(age >= 16) {
+			p.setAge(age);
 		}
 
 		if(StringUtil.isNotEmpty(usedDeviceId)) {

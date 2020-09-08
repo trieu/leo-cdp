@@ -774,11 +774,45 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		return gender;
 	}
 
+	// 0: Female, 1: Male, 2: LGBT, 3: Lesbian, 4: Gay, 5: Bisexual, 6: Transgender, 7: Unknown
 	public void setGender(int gender) {
-		// 0: Female, 1: Male, 2: Lesbian, 3: Gay, 4: Bisexual, 5: Transgender
-		if (gender >= 0 && gender <= 5) {
+		if (gender >= 0 && gender <= 7) {
 			this.gender = gender;
 			setGenderProbability(100);
+		}
+	}
+	
+	public void setGender(String genderStr) {
+		System.out.println("setGender " + genderStr);
+		String s = genderStr.toLowerCase();
+		int gender = 7;
+		
+		if ("female".equals(s)) {
+			gender = 0;
+		} 
+		else if ("male".equals(s)) {
+			gender = 1;
+		} 
+		else if ("lgbt".equals(s)) {
+			gender = 2;
+		} 
+		else if ("lesbian".equals(s)) {
+			gender = 3;
+		} 
+		else if ("gay".equals(s)) {
+			gender = 4;
+		}
+		else if ("bisexual".equals(s)) {
+			gender = 5;
+		}
+		else if ("transgender".equals(s)) {
+			gender = 6;
+		}
+		
+		if (gender >= 0 && gender <= 7) {
+			this.gender = gender;
+			setGenderProbability(100);
+			System.out.println("this.gender " + this.gender);
 		}
 	}
 

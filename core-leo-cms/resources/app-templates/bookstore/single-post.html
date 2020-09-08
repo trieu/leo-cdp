@@ -61,6 +61,13 @@
     <div id="postMediaInfo" class="mdl-cell mdl-cell--12-col mdl-card__supporting-text no-padding ">
         {{{mediaInfo}}}
     </div>
+    
+    <div id="subscription_placeholder" class="mdl-cell mdl-cell--12-col" style="display: none">
+    	<h3> Subscription  Form </h3>
+    	<form id="subscription_form" > </form>
+    	<div id="subscription_form_error"> </div>
+    </div>
+   
 
     <div id="fbLikeBox" class="mdl-cell mdl-cell--12-col" style="display: none">
         <div style="margin: auto!important;width: 340px!important;display: block!important" class="fb-page"
@@ -79,6 +86,7 @@
     var playerReadyCalled = false;
     var contentClass = '{{contentClass}}';
     var postType = {{type}};
+    var videoSrc = '';
     
     if(postType == 4 || postType == 9 ){
     	$('#postMediaVideo, #postMediaAction').show();
@@ -97,6 +105,7 @@
             }, 3000);
         }
         autoSetPlayTime();
+        LeoObserverProxy.recordActionEvent("play_prvideo", {videoSrc: videoSrc});
     }
 
     function autoSetPlayTime(){
@@ -117,7 +126,7 @@
     function loadVideo() {
         var pmHolderId = 'videoPlaceholder';
 
-        var videoSrc = $('#' + pmHolderId).attr('data-video-source').trim();
+        videoSrc = $('#' + pmHolderId).attr('data-video-source').trim();
         if (videoSrc != '') {
             isYoutube = videoSrc.indexOf('youtube.com') > 0;
 
@@ -125,8 +134,7 @@
             var skipTime = 3; // show skip button after 3 seconds            
             var adConfigs = [];
 
-            window.player = MediaPlayerOne.create(autoplayVideo, pmHolderId, videoSrc, '', adUrls, skipTime,
-                adConfigs, playerReady);
+            window.player = MediaPlayerOne.create(autoplayVideo, pmHolderId, videoSrc, '', adUrls, skipTime, adConfigs, playerReady);
 
             window.player.on("fullscreenchange", function () {
                 if (window.player.isFullscreen()) {
@@ -170,7 +178,7 @@
 
     window.mediaPlayerOneReady = function () {
 
-        setTimeout(loadVideo, 3678);
+        setTimeout(loadVideo, 3000);
         setTimeout(function () {
             $('#videoProgressLoader').hide();
             $('#fbLikeBox').show();
@@ -193,5 +201,7 @@
         } else {
             $('#postMainContent').addClass('mdl-grid');
         }
+        
+        LeoForm.render('subscription_form','subscription_placeholder')
     }
 </script>

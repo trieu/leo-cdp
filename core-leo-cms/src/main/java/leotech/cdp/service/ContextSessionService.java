@@ -150,7 +150,7 @@ public class ContextSessionService {
 		return cmd.execute();
 	}
 
-	public static int updateProfileFromSocialLogin(HttpServerRequest req, MultiMap params, ContextSession ctxSession) {
+	public static int updateProfileInformation(HttpServerRequest req, MultiMap params, ContextSession ctxSession) {
 		String usedDeviceId = ctxSession.getUserDeviceId();
 		String sourceIP = RequestInfoUtil.getRemoteIP(req);
 		
@@ -167,10 +167,12 @@ public class ContextSessionService {
 		String lastName = profileData.getOrDefault("lastName", "");
 		String email = profileData.getOrDefault("email", "");
 		String phone = profileData.getOrDefault("phone", "");
+		int age = StringUtil.safeParseInt(profileData.getOrDefault("age", "0"));
+		String genderStr = profileData.getOrDefault("genderStr", "");
 		String loginId = profileData.getOrDefault("loginId", "");
 		String loginProvider = profileData.getOrDefault("loginProvider", "");
 		
-		Profile profile = ProfileDataService.updateSocialLoginInfo(loginId , loginProvider,firstName, lastName, email, phone, curProfileId, observerId, lastTouchpointId, sourceIP, usedDeviceId);
+		Profile profile = ProfileDataService.updateSocialLoginInfo(loginId , loginProvider,firstName, lastName, email, phone, genderStr, age, curProfileId, observerId, lastTouchpointId, sourceIP, usedDeviceId);
 		String newProfileId = profile.getId();
 		
 		if(! newProfileId.equals(curProfileId)) {

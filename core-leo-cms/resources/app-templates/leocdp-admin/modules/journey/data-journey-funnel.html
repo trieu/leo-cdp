@@ -146,12 +146,12 @@
 			    },
 	
 			    fields: [
+			    	{ name: "score", title : "Score", type: "number", align: 'center',  width: 40, validate: "required" },
 			        { name: "eventName", title : "Event Name", align: 'center' , type: "text", validate: "required" },
 			        { name: "eventLabel", title : "Event Label", align: 'center' , type: "text" },
 			        { name: "eventFunnelStageId", title : "Event Funnel Stage", type: "select", items: eventFunnelStages, valueField: "id", textField: "name" },
 			        { name: "customerFunnelStageId", title : "Customer Funnel Stage", type: "select", items: customerFunnelStages, valueField: "id", textField: "name" },
 			        { name: "dataType", type: "select", title : "Data Type", items: eventDataTypes, valueField: "id", textField: "name" },
-			        { name: "score", title : "Score", type: "number", align: 'center',  width: 40, validate: "required" },
 			        { type: "control" , width: 50, deleteButton: canDeleteData}
 			    ]
 			});  

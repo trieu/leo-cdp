@@ -35,7 +35,7 @@ public class LeoObserverHttpRouter extends BaseHttpRouter {
 	public static final String PREFIX_CLICK_REDIRECT = "/clr";
 
 	public static final String PREFIX_CONTEXT_SESSION_PROFILE_INIT = "/cxs-pf-init";
-	public static final String PREFIX_UPDATE_PROFILE_LOGIN_INFO = "/cxs-pf-update";
+	public static final String PREFIX_UPDATE_PROFILE_INFO = "/cxs-pf-update";
 	public static final String PREFIX_EVENT_VIEW = "/etv";
 	public static final String PREFIX_EVENT_ACTION = "/eta";
 	public static final String PREFIX_EVENT_CONVERSION = "/etc";
@@ -145,17 +145,17 @@ public class LeoObserverHttpRouter extends BaseHttpRouter {
 				return true;
 				
 			} 
-			else if(httpMethod.equalsIgnoreCase("POST") && uri.startsWith(PREFIX_UPDATE_PROFILE_LOGIN_INFO)) {
+			else if(httpMethod.equalsIgnoreCase("POST") && uri.startsWith(PREFIX_UPDATE_PROFILE_INFO)) {
 				
 				BaseHttpRouter.setCorsHeaders(outHeaders, origin);
 				outHeaders.set(CONTENT_TYPE, BaseApiHandler.CONTENT_TYPE_JSON);
 				
 				int status = 404;
 				// synch ContextSession with request
-				ContextSession currentSession = ContextSessionService.synchData(clientSessionKey, req, params,device);
+				ContextSession currentSession = ContextSessionService.synchData(clientSessionKey, req, params, device);
 				String profileId = currentSession.getProfileId();
 				if (StringUtil.isNotEmpty(profileId)) {
-					status = ContextSessionService.updateProfileFromSocialLogin(req, params, currentSession);
+					status = ContextSessionService.updateProfileInformation(req, params, currentSession);
 				} else {
 					status = 101;
 				}

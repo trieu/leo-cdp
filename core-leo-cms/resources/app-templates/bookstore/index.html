@@ -48,10 +48,14 @@
     <link rel="stylesheet" media="screen and (min-width: 640px)" href="//{{baseStaticUrl}}/view/resources/tablet.css">
     <link rel="stylesheet" media="screen and (min-width: 1256px)" href="//{{baseStaticUrl}}/view/resources/desktop.css">
 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous" />
+
     <!-- Common JS  -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lscache/1.3.0/lscache.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.11.0/underscore-min.js" ></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/JSV@4.0.2/lib/jsv.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jsonform@2.2.1/lib/jsonform.min.js"></script>
     
     <script src="//{{baseStaticUrl}}/public/js/utils/mdl-chips-input.js"></script>
     <script src="//{{baseStaticUrl}}/public/js/utils/handlebars.min.js"></script>
@@ -199,15 +203,26 @@
         console.debug('templateName: {{templateName}}');
     </script>
     
-    <script>
-    	//Leo Web Observer for Marketing Data Analytics
-    	window.leoObserverLogDomain = "cdp.bigdatavietnam.org";
-		window.leoObserverId = "bookstore_web_observer";
-		window.srcTouchpointName = encodeURIComponent(document.title);
-		window.srcTouchpointUrl = encodeURIComponent(location.protocol + '//' + location.host + location.pathname);
-		
+   <script>
 		(function() {
-		    var src = '//' + window.leoObserverLogDomain + '/public/js/leo-observer/leoproxy.js';
+		    //Leo Web Observer for channel: Video Content Website
+		    window.leoObserverId = "4Ql9nCEbJKgHcSRwtJhWdV";
+    		window.leoObserverLogDomain = "cdp.bigdatavietnam.org";
+    		window.leoObserverCdnDomain = "cdp.bigdatavietnam.org";
+			
+			window.srcTouchpointName = encodeURIComponent(document.title);
+			window.srcTouchpointUrl = encodeURIComponent(location.protocol + '//' + location.host + location.pathname);
+		
+			var leoproxyJsPath = '/public/js/leo-observer/leoproxy.js';
+		    var src = '//' + window.leoObserverCdnDomain + leoproxyJsPath;
+		    var jsNode = document.createElement('script');
+		    jsNode.async = true;
+		    jsNode.src = src;
+		    var s = document.getElementsByTagName('script')[0];
+		    s.parentNode.insertBefore(jsNode, s);
+		    
+		    var leoFormJsPath = '/public/js/leo-observer/leoform.js';
+		    var src = '//' + window.leoObserverCdnDomain + leoFormJsPath;
 		    var jsNode = document.createElement('script');
 		    jsNode.async = true;
 		    jsNode.src = src;
@@ -216,19 +231,22 @@
 		})();
 		
 		function leoObserverProxyReady() {
-			
-		    //Leo is ready, record view data
-		    LeoObserverProxy.recordViewEvent("pageview");
-		    
-		    // record action data
+		    //Leo is ready, record pageview data
+		    LeoObserverProxy.recordViewEvent("content_view");
+		}
+   </script>
+    
+    
+    
+    <script type="text/javascript">
+    	function initTrackingAction(){
+    		// record action data
 		    $('a[href^="/html/post"]').click(function(event) {
 		        //event.preventDefault(); // Don't follow the link
 		        // Log the clicked post url
 		        var url = location.href.substring(0, location.href.length - 1) + $(this).attr('href');
 		        console.log(url);
-		        LeoObserverProxy.recordActionEvent("itemclick", {
-		            post_url: url, product_id: '4545'
-		        });
+		        // LeoObserverProxy.recordActionEvent("itemclick", {post_url: url, product_id: '4545'});
 		    });
 		    
 		    $('a[href^="/html/page"]').click(function(event) {
@@ -237,17 +255,14 @@
 		        // Log the clicked page url
 		        var url = location.href.substring(0, location.href.length - 1) + $(this).attr('href');
 		        console.log(url);
-		        LeoObserverProxy.recordActionEvent("click", {
-		        	post_url: url, category_id: '5435' 
-		        });
+		        // LeoObserverProxy.recordActionEvent("click", {post_url: url, category_id: '5435' });
 		    });
+		    
 		    $('iframe').iframeTracker({
 		        blurCallback: function() {
 		            // record conversion data for business optimization
 		            console.log("click ads " + this._src);
-		            LeoObserverProxy.recordConversionEvent("click_ads", {
-		                ads_url: this._src
-		            });
+		            // LeoObserverProxy.recordConversionEvent("click_ads", { ads_url: this._src});
 		        },
 		        overCallback: function(element) {
 		            this._src = $(element).attr('src'); // Saving the iframe ads placement src 
@@ -257,7 +272,7 @@
 		        },
 		        _src: null
 		    });
-		}
+    	}
     </script>
 </body>
 

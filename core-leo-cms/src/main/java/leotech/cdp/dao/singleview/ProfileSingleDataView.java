@@ -101,22 +101,23 @@ public class ProfileSingleDataView extends Profile implements SingleDataView {
 		}
 		
 		// gender 
-		if(genderAsText == null) {
-			genderAsText = "unknown";
-			if(this.genderProbability == 100) {
-				if(this.gender == 1) {
-					genderAsText = "Male";
-				}
-				else if(this.gender == 0) {
-					genderAsText = "Female";
-				}
-			} else {
-				if(this.gender == 1) {
-					genderAsText = "Male with probability " + this.genderProbability + " %";
-				}
-				else if(this.gender == 0) {
-					genderAsText = "Female with probability " + this.genderProbability + " %";
-				}
+		genderAsText = "unknown";
+		if(this.genderProbability == 100) {
+			if(this.gender == 1) {
+				genderAsText = "Male";
+			}
+			else if(this.gender == 0) {
+				genderAsText = "Female";
+			}
+			else if(this.gender == 2) {
+				genderAsText = "LGBT";
+			}
+		} else {
+			if(this.gender == 1) {
+				genderAsText = "Male with probability " + this.genderProbability + " %";
+			}
+			else if(this.gender == 0) {
+				genderAsText = "Female with probability " + this.genderProbability + " %";
 			}
 		}
 		
