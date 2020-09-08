@@ -1,49 +1,11 @@
-<style>
+
+<<style>
 <!--
-	#attribution_description {
-	    text-align: center;
-	    font-size: 18px;
-	    width: 100%;
-	    font-weight: bold;
-	}
-	.user_profile_attrs {
-	    background-color: #463CC4;
-	    width: 50px;
-	    height: 20px;
-	    display: inline;
-	}
-	.persona_profile_attrs {
-	    background-color: #E91E0D;
-	    width: 50px;
-	    height: 20px;
-	    display: inline;
-	}
-	#attribution_description {
-	    text-align: center;
-	    font-size: 18px;
-	    width: 80%;
-	    margin:auto;
-	    font-weight: bold;
-	}
-	#profile_key_info .fa {
-		font-size: 1.2em !important;
-	}
-	.event_text {
-		text-align: center;
-	    font-size: 11px;
-	    font-weight: bold;
-	}
-	.scoring_field {
-		 background-color: #e8edca;
-		 color: #3300ff!important;
-		 font-size: 15px;
-		 padding: 5px;
-		 border-radius: 7px;
-		 width: 42%;
-	}
+.small_text {
+	fo
+}
 -->
 </style>
-
 
 <div>
      <div class="col-md-10" >
@@ -62,7 +24,12 @@
        <div id="profile_key_info" class="row">
        	   <!--  Begin Profile Key Information -->
            <div class="col-md-5">
-  
+  				<div class="row">
+	               <div class="text-center" >
+	                   <img id="profile_avatar" src="/public/images/avatars/profile-default-avatar.png" alt="Profile Avatar" class="rounded mx-auto d-block avatar">
+	               </div>
+               </div>
+               <hr>
            	   <ul class="nav nav-tabs" data-tab-content="profile_summary_tabs" >
 		       	  <li class="active" > <a href="javascript:" data-target-tab="panel_profile_summary" > <i class="fa  fa-user-circle-o" aria-hidden="true"></i> Profile Summary </a> </li>
 		       	  <li> <a href="javascript:" data-target-tab="panel_last_session_details" > <i class="fa fa-info-circle" aria-hidden="true"></i> Last Session </a> </li>
@@ -75,19 +42,6 @@
 		                   <tr>
 		                       <td>
 		                           <ol id="visitor_attributes" data-field="visitor_attributes">
-		                               
-		                               <li>
-		                                   <b> <i class="fa fa-id-card-o" aria-hidden="true"></i> Profile Type </b> 
-		                                   <p data-field="typeAsText" data-fieldholder="html"  data-fieldtype="string"  > CRM_CONTACT </p>
-		                               </li>
-		                               <li>
-		                                   <b> <i class="fa fa-clock-o" aria-hidden="true"></i> Creation Date </b> 
-		                                   <p data-field="createdAt" data-fieldholder="html"  data-fieldtype="date"  > 2020-06-11 09:35:37  </p>
-		                               </li>
-		                               <li>
-		                                   <b> <i class="fa fa-clock-o" aria-hidden="true"></i> Modification Date </b> 
-		                                   <p data-field="updatedAt" data-fieldholder="html"  data-fieldtype="date"  > 2020-06-11 09:35:37  </p>
-		                               </li>
 		                               
 		                               <li>
 		                                   <b> <i class="fa fa-star" aria-hidden="true"></i> Total Data Quality Score </b> 
@@ -151,11 +105,11 @@
 		                               </li>
 		                               <li>
 		                                   <b> Last Seen Touchpoint </b> 
-		                                   <p data-field="lastTouchpoint.name" data-fieldholder="html" data-fieldtype="string"  >   </p>
+		                                   <p class="small" data-field="lastTouchpoint.name" data-fieldholder="html" data-fieldtype="string"  >   </p>
 		                               </li>
 		                               <li>
 		                                   <b> Touchpoint URL</b> 
-		                                   <p data-field="lastTouchpoint.url" data-fieldholder="url" data-fieldtype="string"  >   </p>
+		                                   <p class="small" data-field="lastTouchpoint.url" data-fieldholder="url" data-fieldtype="string"  >   </p>
 		                               </li>
 		                               <li>
 		                                   <b> Observer ID </b> 
@@ -191,13 +145,6 @@
            </div>
            
            <div class="col-md-7">
-               
-               <div class="row">
-	               <div class="text-center" >
-	                   <img id="profile_avatar" src="/public/images/avatars/profile-default-avatar.png" alt="Profile Avatar" class="rounded mx-auto d-block avatar">
-	               </div>
-               </div>
-               <hr>
                <h4> <i class="fa fa-address-card-o" aria-hidden="true"></i> Personal Information </h4>
                <table border=0 class="underlined" style="width: 100%;">
                    <tr>
@@ -206,6 +153,18 @@
                            		<li>
                                    <b> <i class="fa fa-id-badge" aria-hidden="true"></i> UUID </b> 
                                    <p data-field="id" data-fieldholder="html"  data-fieldtype="string"  > </p>
+                               </li>
+                                <li>
+		                           <b> <i class="fa fa-id-card-o" aria-hidden="true"></i> Profile Type </b> 
+                                   <p data-field="typeAsText" data-fieldholder="html"  data-fieldtype="string"  > - </p>
+                               </li>
+                               <li>
+                                   <b> <i class="fa fa-clock-o" aria-hidden="true"></i> Creation Date </b> 
+                                   <p data-field="createdAt" data-fieldholder="html"  data-fieldtype="date"  > 2020-06-11 09:35:37  </p>
+                               </li>
+                               <li>
+                                   <b> <i class="fa fa-clock-o" aria-hidden="true"></i> Modification Date </b> 
+                                   <p data-field="updatedAt" data-fieldholder="html"  data-fieldtype="date"  > 2020-06-11 09:35:37  </p>
                                </li>
                            	   <li>
                                    <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-id-badge"></i> First Name </b> 
@@ -233,7 +192,7 @@
                                </li>
                                <li>
                                    <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-map-marker"></i> Living Location  </b> 
-                                   <p data-field="livingLocation"  data-fieldholder="locationcode"  data-fieldtype="string"  > - </p>
+                                   <p class="small" data-field="livingLocation"  data-fieldholder="locationcode"  data-fieldtype="string"  > - </p>
                                </li>
                                <li>
                                    <b data-persona="key" class="editable_text" >  <i class="fa fa-fw fa-mobile"></i> Social Media Profiles </b> 
@@ -416,8 +375,9 @@
 <script type="text/javascript">
     ///Js code
     
+    var viewProfileId = '';
     var initProfile360Analytics = initProfile360Analytics || function(profileId) {
-    	console.log(profileId);
+    	viewProfileId = profileId;
     	//setup editable node
 		setupTabPanels();
 		loadCurrentProfile(profileId);
@@ -464,24 +424,26 @@
         	 //loadProfileAttribution();
              //loadMediaTouchpoints();
              //personalityDiagram();
-        	 
-        	 LeoAdminApiUtil.getSecuredData('/cdp/profile/tracking-events',{id:profileId,startIndex:0,numberResult:100}, function(json){ 
-        		 console.log(json.data) ;
-        		 var node = $('#profile_activitiy_flow');
-        		 _.forEach(json.data,function(e,i){
-        			 e.srcTouchpoint.name = textTruncate(e.srcTouchpoint.name,120);
-        			 e.srcTouchpoint.truncatedUrl = textTruncate(e.srcTouchpoint.url,120);
-        			 
-        			 var tplName = 'view-event-tpl';
-            		 if(e.metricName === 'click'){
-            			 tplName = 'action-event-tpl';
-            		 }
-            		 eventTpl = _.template($('#'+tplName).html());
-        			 var html = eventTpl(e);
-        			 node.append(html);
-       			});
-        	 });
-        	 
-         })
+        	 loadTop100RecentActivities(profileId);
+         });
+    }
+    
+    var loadTop100RecentActivities = loadTop100RecentActivities || function(profileId){
+    	 LeoAdminApiUtil.getSecuredData('/cdp/profile/tracking-events',{id:profileId, startIndex:0, numberResult:100}, function(json){ 
+    		 console.log(json.data) ;
+    		 var node = $('#profile_activitiy_flow');
+    		 _.forEach(json.data,function(e,i){
+    			 e.srcTouchpoint.name = textTruncate(e.srcTouchpoint.name,120);
+    			 e.srcTouchpoint.truncatedUrl = textTruncate(e.srcTouchpoint.url,120);
+    			 
+    			 var tplName = 'view-event-tpl';
+        		 if(e.metricName === 'click'){
+        			 tplName = 'action-event-tpl';
+        		 }
+        		 eventTpl = _.template($('#'+tplName).html());
+    			 var html = eventTpl(e);
+    			 node.append(html);
+   			});
+    	 });
     }
 </script>

@@ -22,7 +22,7 @@ LeoCdpAdmin.navFunctions.loadSelfLearningCourses = function(breadcrumbHtml) {
 LeoCdpAdmin.navFunctions.loadPrimaryDashboard = function(breadcrumbHtml) {
     LeoCdpAdmin.loadView('/view/modules/analytics/marketing-dashboard.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
-    	initSalesDashboard();
+    	initPrimaryDashboard();
     });
 }
 

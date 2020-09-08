@@ -335,3 +335,179 @@ var loadProfileAttribution = loadProfileAttribution || function () {
             ;
     })
 }
+
+function loadCustomerVenn() {
+    var sets = [{
+            sets: ["Email"],
+            figure: 27.92,
+            label: "Email",
+            size: 27.92
+        },
+        {
+            sets: ["Social Media"],
+            figure: 55.28,
+            label: "Social Media",
+            size: 55.28
+        },
+        {
+            sets: ["Search Engine"],
+            figure: 7.62,
+            label: "Search Engine",
+            size: 7.62
+        },
+        {
+            sets: ["Email", "Social Media"],
+            figure: 3.03,
+            label: "",
+            size: 3.03
+        },
+        {
+            sets: ["Email", "Search Engine"],
+            figure: 2.66,
+            label: "",
+            size: 1.66
+        },
+        {
+            sets: ["Social Media", "Search Engine"],
+            figure: 2.40,
+            label: "",
+            size: 2.40
+        },
+        {
+            sets: ["Email", "Social Media", "Search Engine"],
+            figure: 1.08,
+            label: "",
+            size: 1.08
+        }
+    ];
+
+    var chart = venn.VennDiagram()
+        .width($('#customer_source').width())
+        .height(360)
+
+    var div2 = d3.select("#customer_source").datum(sets).call(chart);
+    div2.selectAll("text").style("fill", "white");
+    div2.selectAll(".venn-circle path")
+        .style("fill-opacity", .8)
+        .style("stroke-width", 1)
+        .style("stroke-opacity", 1)
+        .style("stroke", "fff");
+
+    var tooltip = d3.select("body").append("div")
+        .attr("class", "venntooltip");
+
+    div2.selectAll("g")
+    .on("mouseover", function (d, i) {
+        // sort all the areas relative to the current item
+        venn.sortAreas(div2, d);
+
+        // Display a tooltip with the current size
+        tooltip.transition().duration(40).style("opacity", 1);
+        tooltip.text(d.size + "% of Segment Two saw " + d.label);
+
+        // highlight the current path
+        var selection = d3.select(this).transition("tooltip").duration(400);
+        selection.select("path")
+            .style("stroke-width", 3)
+            .style("fill-opacity", d.sets.length == 1 ? .8 : 0)
+            .style("stroke-opacity", 1);
+    })
+
+    .on("mousemove", function () {
+        tooltip.style("left", (d3.event.pageX) + "px")
+            .style("top", (d3.event.pageY - 28) + "px");
+    })
+
+    .on("mouseout", function (d, i) {
+        tooltip.transition().duration(2500).style("opacity", 0);
+        var selection = d3.select(this).transition("tooltip").duration(400);
+        selection.select("path")
+            .style("stroke-width", 3)
+            .style("fill-opacity", d.sets.length == 1 ? .8 : 0)
+            .style("stroke-opacity", 1);
+    });
+}
+
+function loadChannelPerformance() {
+    var data = [{
+        "channelName": "Ecommerce Website",
+        "lead": 181
+    }, {
+        "channelName": "Ecommerce App",
+        "lead": 189
+    }, {
+        "channelName": "Social Media Groups",
+        "lead": 387
+    }, {
+        "channelName": "Retail Store",
+        "lead": 187
+    }, {
+        "channelName": "Book Reseller",
+        "lead": 52
+    }];
+
+    // set the dimensions and margins of the graph
+    var containerWidth = $('#chart').width();
+    var margin = {
+            top: 20,
+            right: 20,
+            bottom: 30,
+            left: 180
+        },
+        width = containerWidth - margin.left - margin.right,
+        height = 350 - margin.top - margin.bottom;
+
+    // set the ranges
+    var y = d3.scaleBand()
+        .range([height, 0])
+        .padding(0.1);
+
+    var x = d3.scaleLinear()
+        .range([0, width]);
+
+    // append the svg object to the body of the page
+    // append a 'group' element to 'svg'
+    // moves the 'group' element to the top left margin
+    var svg = d3.select("#chart svg").attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")");;
+
+    // format the data
+    data.forEach(function (d) {
+        d.lead = +d.lead;
+    });
+
+    // Scale the range of the data in the domains
+    x.domain([0, d3.max(data, function (d) {
+        return d.lead;
+    })])
+    y.domain(data.map(function (d) {
+        return d.channelName;
+    }));
+    //y.domain([0, d3.max(data, function(d) { return d.lead; })]);
+
+    // append the rectangles for the bar chart
+    svg.selectAll(".bar")
+        .data(data)
+        .enter().append("rect")
+        .attr("class", "bar")
+        //.attr("x", function(d) { return x(d.lead); })
+        .attr("width", function (d) {
+            return x(d.lead);
+        })
+        .attr("y", function (d) {
+            return y(d.channelName);
+        })
+        .attr("height", y.bandwidth());
+
+    // add the x Axis
+    svg.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x));
+
+    // add the y Axis
+    svg.append("g")
+        .call(d3.axisLeft(y));
+}

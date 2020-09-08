@@ -1,3 +1,47 @@
+.venntooltip {
+    font-size: 14px;
+    position: absolute;
+    text-align: center;
+    width: 128px;
+    height: 85px;
+    background: #333;
+    color: #fff;
+    padding: 2px;
+    border: 0px;
+    border-radius: 8px;
+    opacity: 0;
+}
+
+div.vcenter {
+    width: 100%;
+}
+
+div.summary_metric { 
+	display: flex;
+	align-items: center;
+	text-align: left;
+	padding: 0 10px 0 20px;
+}
+
+.bar {
+    fill: steelblue;
+}
+
+.chart_box  {
+	margin-top: 4px;
+	padding-left: 4px;
+}
+.chart_header {
+	margin: 23px auto 3px;
+	text-align: center;
+	background-color: #FFF8DC;
+	color: #0000CD;
+	border-radius: 7px;
+	padding: 5px;
+}
+
+/* filepond uploader */
+
 .filepond--drop-label {
     color: hsl(223, 4%, 31%);
     font-size: 1.7em;
@@ -207,7 +251,8 @@ div.gridholder {
 }
 
 .table-responsive a.control {
-	font-size: 15px;
+	font-size: 14px;
+	color: #3300ff;
 }
 
 .table-responsive a.control:hover {
@@ -247,8 +292,56 @@ div.gridholder {
     text-align: right;
 }
 
+/* segment */
+
 .segment_size {
   text-align: center;
   font-weight: bold;
   font-size: 12px;
+}
+
+/* profile */
+
+#attribution_description {
+    text-align: center;
+    font-size: 18px;
+    width: 100%;
+    font-weight: bold;
+}
+.user_profile_attrs {
+    background-color: #463CC4;
+    width: 50px;
+    height: 20px;
+    display: inline;
+}
+.persona_profile_attrs {
+    background-color: #E91E0D;
+    width: 50px;
+    height: 20px;
+    display: inline;
+}
+#attribution_description {
+    text-align: center;
+    font-size: 18px;
+    width: 80%;
+    margin:auto;
+    font-weight: bold;
+}
+#profile_key_info .fa {
+	font-size: 1.2em !important;
+}
+.event_text {
+	text-align: center;
+    font-size: 11px;
+    font-weight: bold;
+}
+.scoring_field {
+	 background-color: #e8edca;
+	 color: #3300ff!important;
+	 font-size: 14px;
+	 font-weight: bold;
+	 padding: 5px;
+	 border-radius: 7px;
+	 width: 42%;
+	 
 }
