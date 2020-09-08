@@ -57,7 +57,7 @@
   
            	   <ul class="nav nav-tabs" data-tab-content="profile_summary_tabs" >
 		       	  <li class="active" > <a href="javascript:" data-target-tab="panel_profile_summary" > <i class="fa  fa-user-circle-o" aria-hidden="true"></i> Profile Summary </a> </li>
-		       	  <li> <a href="javascript:" data-target-tab="panel_last_session_details" > <i class="fa fa-info-circle" aria-hidden="true"></i> Last Session Details</a> </li>
+		       	  <li> <a href="javascript:" data-target-tab="panel_last_session_details" > <i class="fa fa-info-circle" aria-hidden="true"></i> Last Session </a> </li>
 			   </ul>
 			   <div class="tab-content" id="profile_summary_tabs" >
 
@@ -183,7 +183,7 @@
 	               </div>
                </div>
                <hr>
-               <h4> Personal Information </h4>
+               <h4> <i class="fa fa-address-card-o" aria-hidden="true"></i> Personal Information </h4>
                <table border=0 class="underlined" style="width: 100%;">
                    <tr>
                        <td>
@@ -205,11 +205,11 @@
                                    <p data-field="primaryPhone" data-fieldholder="html"  data-fieldtype="string"  > - </p>
                                </li>
                                <li>
-                                   <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-male"></i> Gender </b> 
+                                   <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-user-o"></i> Gender </b> 
                                    <p data-field="genderAsText" data-fieldholder="html"  data-fieldtype="string" > - </p>
                                </li>
                                <li>
-                                   <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-user-circle-o"></i> Age </b> 
+                                   <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-user-o"></i> Age </b> 
                                    <p data-field="age" data-fieldholder="html"  data-fieldtype="int"  > - </p> 
                                </li>
                                <li>
@@ -220,6 +220,7 @@
                                    <b data-persona="key" class="editable_text" >  <i class="fa fa-fw fa-mobile"></i> Social Media Profiles </b> 
                                    <p data-field="socialMediaProfiles" data-fieldholder="html_hashmap"  data-fieldtype="hashmap"  > - </p>
                                </li>
+                              
                            </ol>
                        </td>
                    </tr>
@@ -232,8 +233,9 @@
        <ul class="nav nav-tabs" data-tab-content="profile_ext_data_tabs" >
           
           <li class="active"><a href="javascript:" data-target-tab="panel_profile_activitiy_flow" > <i class="fa fa-list-ol" aria-hidden="true"></i> Activity Flow </a></li>
-          <li ><a href="javascript:" data-target-tab="panel_profile_journey_flow" style="display: none;" > <i class="fa fa-map-o" aria-hidden="true"></i> Journey Flow </a></li>
+          <li ><a href="javascript:" data-target-tab="panel_profile_ext_data"  > <i class="fa fa-info-circle" aria-hidden="true"></i> Personal Extension Data </a></li>
           
+          <li ><a href="javascript:" data-target-tab="panel_profile_journey_flow" style="display: none;" > <i class="fa fa-map-o" aria-hidden="true"></i> Journey Flow </a></li>
        	  <li ><a href="javascript:" data-target-tab="panel_profile_business_data" style="display: none;" > <i class="fa fa-briefcase" aria-hidden="true"></i> Business Data </a></li>
        	  <li ><a href="javascript:"data-target-tab="panel_business_transactions" style="display: none;" > <i class="fa fa-shopping-cart" aria-hidden="true"></i> Business Transactions</a></li>
 		  <li ><a href="javascript:" data-target-tab="panel_profile_ext_attributes" style="display: none;" > <i class="fa fa-info-circle" aria-hidden="true"></i> Extended Attributes </a></li>
@@ -248,6 +250,22 @@
 	     		<ul id="profile_activitiy_flow" class="list-group list-group-dividered list-group-full">
 	     			<!-- data  -->
 				</ul>
+			</div>
+			
+			<div class="tab-pane " id="panel_profile_ext_data" >
+				<h4> Extension Data </h4>
+			 	<table border=0 class="underlined" style="width: 100%;">
+                   <tr>
+                       <td>
+							<ol id="profile_ext_data" data-field="personal_attributes">
+								 <li>
+				                   <b data-persona="key" class="editable_text" >  <i class="fa fa-fw fa-list"></i> Interested Content Keywords </b> 
+				                   <p data-field="contentKeywords" data-fieldholder="html_hashmap"  data-fieldtype="hashmap"  > - </p>
+				               	</li>
+			               	</ol>
+               	  		</td>
+                   </tr>
+               </table>
 			</div>
 			
 			<div class="tab-pane " id="panel_profile_journey_flow" >
@@ -301,6 +319,8 @@
 			</div>
 		    
 	   </div>
+	   
+	   
        
        <div class="row" style="display: none;" >
        		<div class="line" ></div>
