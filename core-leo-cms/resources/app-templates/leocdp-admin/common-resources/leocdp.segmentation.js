@@ -277,6 +277,12 @@ var loadProfileViewByAjax = window.loadProfileViewByAjax || function(selectorId,
             },
             {
                 "render": function (data, type, row) {
+                    return '<div class="datatable_text text-center">'  + data + '</div>';
+                },
+                "targets": 5
+            },
+            {
+                "render": function (data, type, row) {
                     var date = moment(new Date(data)).format('YYYY-MM-DD HH:mm:ss');
                     return '<div class="datatable_text">'  + date + '</div>';
                 },
@@ -322,7 +328,7 @@ var loadProfileViewByAjax = window.loadProfileViewByAjax || function(selectorId,
                     "data": "primaryEmail" // 4
                 },
                 {
-                    "data": "primaryPhone" // 5
+                    "data": "totalLeadScore" // 5
                 },
                 {
                     "data": "createdAt" // 6

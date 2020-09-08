@@ -33,6 +33,14 @@
 	    font-size: 11px;
 	    font-weight: bold;
 	}
+	.scoring_field {
+		 background-color: #e8edca;
+		 color: #3300ff!important;
+		 font-size: 15px;
+		 padding: 5px;
+		 border-radius: 7px;
+		 width: 42%;
+	}
 -->
 </style>
 
@@ -42,8 +50,8 @@
  		<h4 class="page-header" id="page_breadcrumb" > </h4>
  	 </div> 
      <div class="col-lg-2 text-center" style="padding: 10px;">
-     	<button type="button" class="btn btn-danger data-control-delete" onclick="removeCurrentProfile()" > Remove </button>
-     	<button type="button" class="btn btn-success data-control-edit" onclick="editCurrentProfile()"  > Edit </button>
+     	<button type="button" class="btn btn-danger data-control-delete" onclick="removeCurrentProfile()" disabled="disabled" > Remove </button>
+     	<button type="button" class="btn btn-success data-control-edit" onclick="editCurrentProfile()" disabled="disabled"  > Edit </button>
      </div>
 </div>
 
@@ -67,10 +75,7 @@
 		                   <tr>
 		                       <td>
 		                           <ol id="visitor_attributes" data-field="visitor_attributes">
-		                               <li>
-		                                   <b> <i class="fa fa-id-badge" aria-hidden="true"></i> Profile UUID </b> 
-		                                   <p data-field="id" data-fieldholder="html"  data-fieldtype="string"  > </p>
-		                               </li>
+		                               
 		                               <li>
 		                                   <b> <i class="fa fa-id-card-o" aria-hidden="true"></i> Profile Type </b> 
 		                                   <p data-field="typeAsText" data-fieldholder="html"  data-fieldtype="string"  > CRM_CONTACT </p>
@@ -86,32 +91,42 @@
 		                               
 		                               <li>
 		                                   <b> <i class="fa fa-star" aria-hidden="true"></i> Total Data Quality Score </b> 
-		                                   <p data-field="totalDataQualityScore" data-fieldholder="html"  data-fieldtype="int"  > 0 </p>
+		                                   <p class="scoring_field" data-field="totalDataQualityScore" data-fieldholder="html"  data-fieldtype="int"  > 0 </p>
 		                               </li>
 		                               
 		                               <li>
 		                                   <b> <i class="fa fa-star" aria-hidden="true"></i> Total Lead Score </b> 
-		                                   <p data-field="totalLeadScore" data-fieldholder="html"  data-fieldtype="int"  > 0 </p>
+		                                   <p class="scoring_field" data-field="totalLeadScore" data-fieldholder="html"  data-fieldtype="int"  > 0 </p>
 		                               </li>
 		                               
 		                               <li>
 		                                   <b> <i class="fa fa-usd" aria-hidden="true"></i> Customer Acquisition Cost (CAC) in {{currency_code}} </b> 
-		                                   <p data-field="totalCAC" data-fieldholder="html"  data-fieldtype="int"  > 0 </p>
+		                                   <p class="scoring_field" data-field="totalCAC" data-fieldholder="html"  data-fieldtype="int"  > 0 </p>
 		                               </li>
 		                               
 		                               <li>
 		                                   <b> <i class="fa fa-usd" aria-hidden="true"></i> Customer Lifetime Value (CLV) in {{currency_code}} </b> 
-		                                   <p data-field="totalCLV" data-fieldholder="html"  data-fieldtype="int"  > 0 </p>
+		                                   <p class="scoring_field" data-field="totalCLV" data-fieldholder="html"  data-fieldtype="int"  > 0 </p>
 		                               </li>
 		                               
 		                               <li>
-		                                   <b> <i class="fa fa-star" aria-hidden="true"></i> Customer Satisfaction Score (CSC) </b> 
-		                                   <p data-field="totalCSAT" data-fieldholder="html"  data-fieldtype="int"  > 0 </p>
+		                                   <b> <i class="fa fa-smile-o" aria-hidden="true"></i> Customer Satisfaction Score (CSAT) </b> 
+		                                   <p class="scoring_field" data-field="totalCSAT" data-fieldholder="html"  data-fieldtype="int"  > 0 </p>
 		                               </li>
 		                               
-		                               <li style="display: none;" >
-		                                   <b> <i class="fa fa-star" aria-hidden="true"></i> Total Credit Score </b> 
-		                                   <p data-field="totalCreditScore" data-fieldholder="html"  data-fieldtype="int"  > 0 </p>
+		                               <li>
+		                                   <b> <i class="fa fa-smile-o" aria-hidden="true"></i> Net Promoter Score </b> 
+		                                   <p class="scoring_field" data-field="totalNPS" data-fieldholder="html"  data-fieldtype="int"  > 0 </p>
+		                               </li>
+		                               
+		                                <li>
+		                                   <b> <i class="fa fa-smile-o" aria-hidden="true"></i> Customer Effort Score </b> 
+		                                   <p class="scoring_field" data-field=totalCES data-fieldholder="html"  data-fieldtype="int"  > 0 </p>
+		                               </li>
+		                               
+		                               <li>
+		                                   <b> <i class="fa fa-heart" aria-hidden="true"></i> Customer Credit Score </b> 
+		                                   <p class="scoring_field" data-field="totalCreditScore" data-fieldholder="html"  data-fieldtype="int"  > 0 </p>
 		                               </li>
 		                               
 		                           </ol>
@@ -188,6 +203,10 @@
                    <tr>
                        <td>
                            <ol id="personal_attributes" data-field="personal_attributes">
+                           		<li>
+                                   <b> <i class="fa fa-id-badge" aria-hidden="true"></i> UUID </b> 
+                                   <p data-field="id" data-fieldholder="html"  data-fieldtype="string"  > </p>
+                               </li>
                            	   <li>
                                    <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-id-badge"></i> First Name </b> 
                                    <p data-field="firstName" data-fieldholder="html"  data-fieldtype="string"  class="editable_text" >  - </p>
@@ -260,7 +279,11 @@
 							<ol id="profile_ext_data" data-field="personal_attributes">
 								 <li>
 				                   <b data-persona="key" class="editable_text" >  <i class="fa fa-fw fa-list"></i> Interested Content Keywords </b> 
-				                   <p data-field="contentKeywords" data-fieldholder="html_hashmap"  data-fieldtype="hashmap"  > - </p>
+				                   <p data-field="contentKeywords" data-fieldholder="html_hashset"  data-fieldtype="hashmap"  > - </p>
+				               	</li>
+				               	<li>
+				                   <b data-persona="key" class="editable_text" >  <i class="fa fa-fw fa-list"></i> Summary Event Statistics </b> 
+				                   <p data-field="eventStatistics" data-fieldholder="html_list_key_value"  data-fieldtype="hashmap"  > - </p>
 				               	</li>
 			               	</ol>
                	  		</td>

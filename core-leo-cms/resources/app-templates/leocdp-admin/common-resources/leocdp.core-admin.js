@@ -477,6 +477,26 @@ LeoCdpAdmin.loadDataAndUpdateView = function(urlStr, params, dataProcessor, call
         				ulHtml += '</ul>';
         				$(this).html(ulHtml)
         			}
+        			else if(fieldholder === 'html_hashset'){
+        				var ulHtml = '<ul class="list-group" >';
+        				_.forOwn(value,function(value, key) {
+        					var icon = '';
+        					ulHtml = ulHtml + '<li class="list-group-item" ><i class="fa fa-check" aria-hidden="true"></i> ' + value + '</li>';
+              			});
+        				
+        				ulHtml += '</ul>';
+        				$(this).html(ulHtml)
+        			}
+        			else if(fieldholder === 'html_list_key_value'){
+        				var ulHtml = '<ul class="list-group" >';
+        				_.forOwn(value,function(value, key) {
+        					var icon = '';
+        					ulHtml = ulHtml + '<li class="list-group-item" > ' + key + ' <i class="fa fa-arrow-right" aria-hidden="true"></i> ' + value + '</li>';
+              			});
+        				
+        				ulHtml += '</ul>';
+        				$(this).html(ulHtml)
+        			}
         		} 
         		else if(toks.length === 2){
         			var value = LeoCdpAdmin.routerContext.dataObject[toks[0]][toks[1]];
