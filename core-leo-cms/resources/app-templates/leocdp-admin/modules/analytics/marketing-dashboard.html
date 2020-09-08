@@ -1,18 +1,14 @@
 <style>
-
     #customer_source {
     	width: 100%;
     	float: left;
     }
-    
     #chart text, #customer_source text {
     	font-size: 14px;
-    }
-    
+    }   
     svg {
     	margin: auto; display: block;
     }
-    
 </style>
 
 <div class="container-fluid">
@@ -31,7 +27,7 @@
         <div class="col-md-9 highlight_box">
         
          	<div class='text-center'>
-				<h4>Reporting date: <span> January 12, 2020 </span> &#8594;  <span> May 11, 2020 </span></h4> 
+				<h4>Reporting period: <span> January 12, 2020 </span> &#8594;  <span> May 11, 2020 </span></h4> 
 			</div>
 			
         	<div class="row float-right">
@@ -69,7 +65,11 @@
              	</div>
 	            <div class="col-md-6 ">
 	                 <h4 class="chart_header text-center" >Customer Data Funnel</h4>
-	                 <div id="profile_funnel"></div>
+	                 <div class="summary_metric">
+		               <div class="vcenter">
+		                  <div id="profile_funnel"></div>
+		               </div>
+		           	</div>
 	            </div>
             </div>
         </div>
@@ -124,100 +124,74 @@
     </div>
 
 </div>
-<br><br><br><br>
+<br><br><br>
 
 <script>
 	//select date
 
     var initPrimaryDashboard = window.initPrimaryDashboard || function () {
 		
-    	initDateFilterComponent();
+    	var dashboardFunnelOption = {
+   	   		block: {
+   	   			highlight: true
+   	   	    },
+   	        chart: {
+   	         	curve: {
+   	                 enabled: true,
+   	                 height: 20
+   	             },
+   	             bottomWidth : 0.50,
+   	             height: 380
+   	         },
+   	         tooltip: {
+   	             enabled: true
+   	         },
+   	         label: {
+   	             fontSize: '11px'
+   	         },
+   	         events: {
+   	             click: {
+   	                 block: function (data) {
+   	                     console.log(data.label.raw);
+   	                 }
+   	             }
+   	         }
+   	    };
+
+   	    function loadProfileFunnel() {
+   	        var data = [
+   	            ['Visitor', '', '#2980B9'],
+   		        ['Engaged Visitor', '', '#5499C7'],
+   		        ['Customer Lead', '', '#2e86c1'],
+   		        ['Prospective Customer', '', '#2874a6'],
+   		        ['First-time Customer', '', '#21618c'],
+   		        ['Customer Advocate', '', '#1b4f72'],
+   		        ['Repeat Customer', 1000000, '#154360']
+   	        ];
+   	        var chart = new D3Funnel('#profile_funnel');
+   	        chart.draw(data, dashboardFunnelOption);
+   	    }
+   	   
+   	    function loadEventFunnel() {
+   	        var data = [
+   	        	['Content View', '', '#00b7c2'],
+   		        ['Product View', '', '#5eaaa8'],
+   		        ['Customer Login','', '#07689f'],
+   		        ['Purchase Intent', '', '#1e5f74'],
+   		        ['First Purchase', '', '#0f4c75'],
+   		        ['Product Experience', '', '#133b5c'],
+   		        ['Repeat Purchase', 1000000, '#1d2d50']
+   	        ];
+   	        var chart = new D3Funnel('#event_funnel');
+   	        chart.draw(data, dashboardFunnelOption);
+   	    }
+		
+    	initDateFilterComponent(true);
         loadProfileFunnel();
         loadEventFunnel();
         
         //loadChannelPerformance();
       	//loadCustomerVenn();
-    }
-
-    function loadProfileFunnel() {
-        var data = [
-            ['Visitor', '', '#2980B9'],
-	        ['Engaged Visitor', '', '#5499C7'],
-	        ['Customer Lead', '', '#2e86c1'],
-	        ['Prospective Customer', '', '#2874a6'],
-	        ['First-time Customer', '', '#21618c'],
-	        ['Customer Advocate', '', '#1b4f72'],
-	        ['Repeat Customer', '', '#154360']
-        ];
-        var options = {
-      		block: {
-      			highlight: true
-      	    },
-            chart: {
-                curve: {
-                    enabled: true,
-                    height: 20
-                },
-                bottomWidth : 0.50,
-                height: 380
-            },
-            tooltip: {
-                enabled: true
-            },
-            label: {
-                fontSize: '11px'
-            },
-            events: {
-                click: {
-                    block: function (data) {
-                        console.log(data.label.raw);
-                    }
-                }
-            }
-        };
-        var chart = new D3Funnel('#profile_funnel');
-        chart.draw(data, options);
-    }
-    
-   
-    function loadEventFunnel() {
-        var data = [
-        	['Content View', '', '#1E90FF'],
-	        ['Product View', '', '#4169E1'],
-	        ['Customer Login','', '#6495ED'],
-	        ['Purchase Intent', '', '#4169E1'],
-	        ['First Purchase', '', '#0000FF'],
-	        ['Product Experience', '', '#4169E1'],
-	        ['Repeat Purchase', '', '#00008B']
-        ];
-        var options = {
-      		block: {
-      			highlight: true
-      	    },
-            chart: {
-            	curve: {
-                    enabled: true,
-                    height: 20
-                },
-                bottomWidth : 0.50,
-                height: 380
-            },
-            tooltip: {
-                enabled: true
-            },
-            label: {
-                fontSize: '11px'
-            },
-            events: {
-                click: {
-                    block: function (data) {
-                        console.log(data.label.raw);
-                    }
-                }
-            }
-        };
-        var chart = new D3Funnel('#event_funnel');
-        chart.draw(data, options);
     }
 
     

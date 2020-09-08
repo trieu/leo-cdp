@@ -222,7 +222,7 @@ div.gridholder {
 .highlight_box {
 	background-color: #e8e8e8;
     border-radius: 10px;
-    padding: 8px;
+    padding: 8px 8px 28px 8px;
 }
 
 .CodeMirror { 

@@ -27,10 +27,10 @@ public class BehavioralEventMetricDao {
 		eventRetailMetrics.put("play_prvideo", new BehavioralEventMetric("play_prvideo","Play Promotional Video", 3, EventMetric.FIRST_PARTY_DATA,
 				"5h7YUqx85hZfUE6DTAMdkd", "6WATzqgDF1RvlrqA9N4k0d"));
 		
-		eventRetailMetrics.put("social_login", new BehavioralEventMetric("social_login","Social Login", 10, EventMetric.FIRST_PARTY_DATA,
-				"1vuNx3edtc7LFnpInCiEhl", "10xtpPtiy4cV0UDfx3HPU0"));
+		eventRetailMetrics.put("social_login", new BehavioralEventMetric("social_login","Social Login", 4, EventMetric.FIRST_PARTY_DATA,
+				"1vuNx3edtc7LFnpInCiEhl", "6WATzqgDF1RvlrqA9N4k0d"));
 		
-		eventRetailMetrics.put("submit_contact", new BehavioralEventMetric("submit_contact","Submit Contact", 15, EventMetric.FIRST_PARTY_DATA,
+		eventRetailMetrics.put("submit_contact", new BehavioralEventMetric("submit_contact","Submit Contact", 20, EventMetric.FIRST_PARTY_DATA,
 				"1vuNx3edtc7LFnpInCiEhl", "10xtpPtiy4cV0UDfx3HPU0"));
 		
 		eventRetailMetrics.put("add_to_cart", new BehavioralEventMetric("add_to_cart", "Purchase Intent", 30, EventMetric.FIRST_PARTY_DATA,

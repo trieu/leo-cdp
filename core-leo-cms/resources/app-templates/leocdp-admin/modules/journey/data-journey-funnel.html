@@ -4,8 +4,6 @@
         <div class="col-lg-12">
             <h4 class="page-header" id="page_breadcrumb" > </h4>
         </div>
-        
-        <h3 class="text-center" > Data Journey Funnel for Retail Industry </h3>
     </div>
 
     <div class="row" >
@@ -21,7 +19,11 @@
              </div>
              <div class="col-md-4 ">
                  <h4 class="chart_header text-center" >Customer Data Funnel</h4>
-                 <div id="profile_funnel"></div>
+                 <div class="summary_metric">
+	               <div class="vcenter">
+	                  <div id="profile_funnel"></div>
+	               </div>
+	           	</div>
              </div>
              <div class="col-md-2"></div>
         </div>
@@ -83,13 +85,13 @@
 
 		function loadEventFunnel() {
 		    var data = [
-		        ['Content View', '', '#1E90FF'],
-		        ['Product View', '', '#4169E1'],
-		        ['Customer Login','', '#6495ED'],
-		        ['Purchase Intent', '', '#4169E1'],
-		        ['First Purchase', '', '#0000FF'],
-		        ['Product Experience', '', '#4169E1'],
-		        ['Repeat Purchase', '', '#00008B']
+		        ['Content View', '', '#00b7c2'],
+		        ['Product View', '', '#5eaaa8'],
+		        ['Customer Login','', '#07689f'],
+		        ['Purchase Intent', '', '#1e5f74'],
+		        ['First Purchase', '', '#0f4c75'],
+		        ['Product Experience', '', '#133b5c'],
+		        ['Repeat Purchase', '', '#1d2d50']
 		    ];
 		    var chart = new D3Funnel('#event_funnel');
 		    chart.draw(data, funnelOptions);
