@@ -12,7 +12,7 @@
     }
     ,
     {
-        "classpath" : "leotech.cdp.scheduler.job.ProfileDataAnalyticsJob"
+        "classpath" : "leotech.cdp.scheduler.job.ProfileScoringJob"
         ,"delay" : 5
         ,"period" : 300
     }

@@ -313,7 +313,7 @@ AQL_GET_CONVERSION_EVENTS_BY_PROFILE_ID =>
 ;
 
 AQL_GET_TRACKING_EVENTS_FOR_REPORTING_BY_PROFILE_ID =>
-FOR e in cdp_trackingevent FILTER e.refProfileId == @profileId
+	FOR e in cdp_trackingevent FILTER e.refProfileId == @profileId
         LET refTouchpoint = (
             FOR t IN cdp_touchpoint
             FILTER t._key == e.refTouchpointId
@@ -331,6 +331,12 @@ FOR e in cdp_trackingevent FILTER e.refProfileId == @profileId
                 "createAt":e.createdAt,
                 "refTouchpoint":refTouchpoint, 
                 "srcTouchpoint": srcTouchpoint}
+;
+
+AQL_UPDATE_TRACKING_EVENT_STATE_PROCESSED =>
+	FOR e IN cdp_trackingevent
+	    FILTER e._key == @id
+	    UPDATE e WITH { state: 1 } IN cdp_trackingevent
 ;
 
 ########### AQL LEO CDP - PRODUCT ITEM COLLECTION ########################################################################################################;

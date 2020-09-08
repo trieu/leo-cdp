@@ -11,7 +11,7 @@ import com.arangodb.ArangoDBException;
 import com.arangodb.ArangoDatabase;
 
 /**
- * util class For Database query data with ArangoDB
+ * utility class For Database query data with ArangoDB
  * 
  * @author tantrieuf31
  * @since 2019
@@ -33,6 +33,10 @@ public class ArangoDbQuery<T> {
 	
 	public ArangoDbQuery(ArangoDatabase db, String aql, Class<T> type) {
 		setRequiredData(db, aql, new HashMap<>(0), type);
+	}
+	
+	public ArangoDbQuery(ArangoDatabase db, String aql,  Map<String, Object> bindVars) {
+		setRequiredData(db, aql, bindVars, null);
 	}
 	
 	public ArangoDbQuery(ArangoDatabase db, String aql, Class<T> type, CallbackQuery<T> callback) {
@@ -105,6 +109,15 @@ public class ArangoDbQuery<T> {
 			}
 		}
 		return obj;
+	}
+	
+	public void update() {
+		try {
+			arangoDatabase.query(aql, bindVars, null);
+		} catch (ArangoDBException e) {
+			// TODO error log
+			e.printStackTrace();
+		} 
 	}
 
 }

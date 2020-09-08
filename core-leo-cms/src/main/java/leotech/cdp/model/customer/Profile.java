@@ -1055,18 +1055,35 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		this.totalCreditScore = totalCreditScore;
 	}
 
+	/**
+	 * 
+	 * @return Customer Satisfaction Score
+	 */
 	public int getTotalCSAT() {
 		return totalCSAT;
 	}
 
+	/**
+	 * Customer Satisfaction Score
+	 * 
+	 * @param totalCSAT
+	 */
 	public void setTotalCSAT(int totalCSAT) {
 		this.totalCSAT = totalCSAT;
 	}
 
+	/**
+	 * @return Customer Effort Score
+	 */
 	public int getTotalCES() {
 		return totalCES;
 	}
 
+	/**
+	 * Customer Effort Score
+	 * 
+	 * @param totalCES
+	 */
 	public void setTotalCES(int totalCES) {
 		this.totalCES = totalCES;
 	}
@@ -1096,6 +1113,11 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		long c = this.eventStatistics.getOrDefault(eventName, 0L) + 1;
 		this.eventStatistics.put(eventName, c);
 	}
+	
+	public void resetEventCount(String eventName) {
+		this.eventStatistics.put(eventName, 0L);
+	}
+	
 	public Set<String> getBehavioralEvents() {
 		return behavioralEvents;
 	}

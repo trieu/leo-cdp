@@ -158,11 +158,11 @@ public class GenerateCdpTestData {
 				userDeviceId, "127.0.0.1", "bookstore.bigdatavietnam.org", "", refTouchpointId, srcTouchpointId, profileId , profile.getType(), visitorId, "pro");
 		ContextSessionDaoUtil.create(ctxSession);
 		
-		String eventName = "pageview";
+		String eventName = "content_view";
 		// pageview event
 		EventTrackingService.trackViewEvent(createdAt, ctxSession, observerId, "pro", userDeviceId, sourceIP, deviceInfo,"Book Video Review", srcTouchpointUrl, refTouchpointUrl, touchpointRefDomain, eventName , null);
 		
-		eventName = "facebook-login";
+		eventName = "social_login";
 		Date loginTime = DateUtils.addSeconds(createdAt, RandomUtil.getRandomInteger(300, 9)); 
 		EventTrackingService.trackActionEvent(loginTime,ctxSession, observerId, "pro", userDeviceId, sourceIP, deviceInfo,"Book Video Review",srcTouchpointUrl, refTouchpointUrl,  touchpointRefDomain, eventName, 1, "", null);
 		

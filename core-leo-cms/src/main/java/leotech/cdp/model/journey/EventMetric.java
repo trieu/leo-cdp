@@ -11,10 +11,19 @@ import leotech.cdp.model.CdpPersistentObject;
 /**
  * @author Trieu Nguyen (Thomas)
  * 
- *  Event metric is meta data for quantify information
+ *  Event metric is meta-data for quantify event data stream
  *
  */
 public abstract class EventMetric extends CdpPersistentObject {
+	
+	public static final int LEAD_SCORING_METRIC = 1;
+	public static final int DATA_QUALITY_SCORING_METRIC = 2;
+	public static final int ACQUISITION_SCORING_METRIC = 3;
+	public static final int SATISFACTION_SCORING_METRIC = 4;
+	public static final int LIFETIME_VALUE_SCORING_METRIC = 5;
+	public static final int EFFORT_SCORING_METRIC = 6;
+	public static final int PROMOTER_SCORING_METRIC = 7;
+	public static final int CREDIT_SCORING_METRIC = 8;
 
 	public static final int FIRST_PARTY_DATA = 1;
 	public static final int SECOND_PARTY_DATA = 2;
@@ -38,6 +47,9 @@ public abstract class EventMetric extends CdpPersistentObject {
 	
 	@Expose
 	protected int score = 0;
+	
+	@Expose
+	protected int scoreModel = LEAD_SCORING_METRIC;
 
 	@Expose
 	protected int dataType = 0;
@@ -148,6 +160,14 @@ public abstract class EventMetric extends CdpPersistentObject {
 
 	public void setDataType(int dataType) {
 		this.dataType = dataType;
+	}
+
+	public int getScoreModel() {
+		return scoreModel;
+	}
+
+	public void setScoreModel(int scoreModel) {
+		this.scoreModel = scoreModel;
 	}
 
 	

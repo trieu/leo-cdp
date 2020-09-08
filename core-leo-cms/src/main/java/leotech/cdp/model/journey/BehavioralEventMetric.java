@@ -24,8 +24,6 @@ public class BehavioralEventMetric extends EventMetric {
 		this.customerFunnelStageId = customerFunnelStageId;
 	}
 
-	
-
 	@Override
 	public ArangoCollection getCollection() {
 		if (dbCollection == null) {
@@ -46,6 +44,22 @@ public class BehavioralEventMetric extends EventMetric {
 	@Override
 	public boolean isReadyForSave() {
 		return StringUtil.isNotEmpty(eventName);
+	}
+
+	public String getEventFunnelStageId() {
+		return eventFunnelStageId;
+	}
+
+	public void setEventFunnelStageId(String eventFunnelStageId) {
+		this.eventFunnelStageId = eventFunnelStageId;
+	}
+
+	public String getCustomerFunnelStageId() {
+		return customerFunnelStageId;
+	}
+
+	public void setCustomerFunnelStageId(String customerFunnelStageId) {
+		this.customerFunnelStageId = customerFunnelStageId;
 	}
 	
 	
