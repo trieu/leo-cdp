@@ -55,8 +55,8 @@ public class QueryParserTest {
 		profileQuery.setStartIndex(startIndex);
 		profileQuery.setNumberResult(numberResult);
 		
-		System.out.println(profileQuery.toArangoDataQuery());
-		System.out.println(profileQuery.toArangoCountingQuery());
+		System.out.println(profileQuery.getQueryWithFiltersAndPagination());
+		System.out.println(profileQuery.getCountingQueryWithDateTimeFilter());
 		System.out.println(profileQuery.updateStartIndexAndGetDataQuery(20));
 		
 		long count  = ProfileDaoUtil.countProfilesByQuery(profileQuery);

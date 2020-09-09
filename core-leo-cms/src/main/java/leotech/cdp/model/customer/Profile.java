@@ -232,11 +232,6 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	@Expose
 	protected Set<String> contentKeywords = new HashSet<>(50);
 
-	@Expose
-	protected Set<String> funnelMetrics = new HashSet<>(20);
-
-	@Expose
-	protected String funnelStage = "";
 
 	// --- END Marketing Data Model
 
@@ -304,10 +299,25 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	protected int totalNPS = 0; 
 	
 	@Expose
+	// summary view of statistics from Profile Analytics Jobs
+	Map<String,Long> eventStatistics = new ConcurrentHashMap<>();
+	
+	@Expose
+	// the timeline of first-time recorded event metrics
+	// E.g: {"content_view": "2020-05-05T02:56:12.102Z", "play_prvideo" : "2020-05-06T02:56:12.102Z" }
+	protected Map<String,Date> funnelStageTimeline = new ConcurrentHashMap<>();
+	
+	@Expose
+	// all recorded event metric names
 	Set<String> behavioralEvents = new HashSet<String>(100);
 	
 	@Expose
-	Map<String,Long> eventStatistics = new ConcurrentHashMap<String, Long>();
+	//the important metrics to show in analytics and reporting e.g: ["content_view","product_view"]
+	protected Set<String> funnelMetrics  = new HashSet<String>(100); 
+
+	@Expose
+	// current name of funnel stage: Prospective Customer or Engaged Visitor or First-time Customer
+	protected String funnelStage = "";
 
 	// --- END Quantitative Data Metrics
 
@@ -317,6 +327,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	@Expose
 	protected Map<String, Map<String, Integer>> predictionMetrics = new HashMap<>();
+	
 
 	@Override
 	public int compareTo(Profile o) {
@@ -979,14 +990,6 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		this.contentKeywords = contentKeywords;
 	}
 
-	public Set<String> getFunnelMetrics() {
-		return funnelMetrics;
-	}
-
-	public void setFunnelMetrics(Set<String> funnelMetrics) {
-		this.funnelMetrics = funnelMetrics;
-	}
-
 	public String getFunnelStage() {
 		return funnelStage;
 	}
@@ -1101,6 +1104,18 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		return total;
 	}
 	
+	public Set<String> getFunnelMetrics() {
+		return funnelMetrics;
+	}
+
+	public void setFunnelMetrics(Set<String> funnelMetrics) {
+		this.funnelMetrics = funnelMetrics;
+	}
+	
+	public void resetFunnelMetrics() {
+		this.funnelMetrics.clear();
+	}
+	
 	public Map<String, Long> getEventStatistics() {
 		return eventStatistics;
 	}
@@ -1118,6 +1133,10 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		this.eventStatistics.put(eventName, 0L);
 	}
 	
+	public void resetEventStatistics() {
+		this.eventStatistics.clear();
+	}
+	
 	public Set<String> getBehavioralEvents() {
 		return behavioralEvents;
 	}
@@ -1128,6 +1147,28 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	
 	public void setBehavioralEvent(String eventName) {
 		this.behavioralEvents.add(eventName);
+	}
+	
+	public void resetBehavioralEvent() {
+		this.behavioralEvents.clear();
+	}
+
+	public Map<String, Date> getFunnelStageTimeline() {
+		return funnelStageTimeline;
+	}
+
+	public void setFunnelStageTimeline(Map<String, Date> funnelStageTimeline) {
+		this.funnelStageTimeline = funnelStageTimeline;
+	}
+	
+	public void updateFunnelStageTimeline(String funnelStageName, Date date) {
+		if(! this.funnelStageTimeline.containsKey(funnelStageName) ) {
+			this.funnelStageTimeline.put(funnelStageName, date);
+		}
+	}
+	
+	public void resetFunnelStageTimeline() {
+		this.funnelStageTimeline.clear();
 	}
 
 	@Override

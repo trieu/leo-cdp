@@ -1,4 +1,3 @@
-
 <!-- Segment Builder -->
 
 <div class="row">
@@ -128,8 +127,10 @@
 					</div>
 				</div>
 				<div class="btn-group col-md-5 col-xs-12">
-					<button type="button" class="btn btn-warning" id="btn-reset-querybuilder"> Reset Query </button>
-					<button type="button" class="btn btn-primary" id="btn-segmentation-get-size"> Get Segment Size </button>
+					<button type="button" class="btn btn-warning" id="btn-reset-querybuilder"> 
+						<i class="fa fa-undo" aria-hidden="true"></i> Reset Query </button>
+					<button type="button" class="btn btn-primary" id="btn-segmentation-get-size"> 
+						<i class="fa fa-check-circle-o" aria-hidden="true"></i> Get Segment Size </button>
 				</div>
 				
 				<!-- Query Details -->
@@ -163,7 +164,7 @@
             <th>Full Name</th>
             <th>Age</th>
             <th>Gender</th>
-            <th>Last seen touchpoint</th>
+            <th>Last seen at touchpoint</th>
             <th>Primary Email</th>
             <th>Lead Score</th>
             <th>Created at</th>
@@ -202,9 +203,11 @@
 		$('#btn-segmentation-get-size').on('click', function() {
 			var result = $('#segment-builder-holder').queryBuilder('getRules');
 			if (!$.isEmptyObject(result)) {
+				var jsonQueryStr = JSON.stringify(result);
+				console.log('jsonQueryStr ' + jsonQueryStr)
 				
 				var params = {};
-				params.jsonQueryRules = JSON.stringify(result);
+				params.jsonQueryRules = jsonQueryStr;
 				
 				var datetimeFilter = getDateFilterValues();
 				params.beginFilterDate = datetimeFilter.beginFilterDate;

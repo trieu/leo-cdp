@@ -5,6 +5,13 @@ import java.util.List;
 import leotech.cdp.model.customer.Profile;
 import rfx.core.util.StringUtil;
 
+/**
+ * ProfileQuery Builder
+ * 
+ * @author tantrieuf31
+ * @since 2020
+ *
+ */
 public class ProfileQueryBuilder {
 
 	public static String buildAqlString(boolean filterCreateAt, String beginFilterDate, String endFilterDate,

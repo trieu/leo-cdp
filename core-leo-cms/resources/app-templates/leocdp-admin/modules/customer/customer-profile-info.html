@@ -4,8 +4,12 @@
  		<h4 class="page-header" id="page_breadcrumb" > </h4>
  	 </div> 
      <div class="col-lg-2 text-center" style="padding: 10px;">
-     	<button type="button" class="btn btn-danger data-control-delete" onclick="removeCurrentProfile()" disabled="disabled" > Remove </button>
-     	<button type="button" class="btn btn-success data-control-edit" onclick="editCurrentProfile()" disabled="disabled"  > Edit </button>
+     	<button type="button" class="btn btn-danger data-control-delete" onclick="removeCurrentProfile()" disabled="disabled" > 
+     		<i class="fa fa-trash" aria-hidden="true"></i> Delete 
+     	</button>
+     	<button type="button" class="btn btn-success data-control-edit" onclick="editCurrentProfile()" disabled="disabled"  > 
+     		<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit 
+     	</button>
      </div>
 </div>
 
@@ -16,14 +20,14 @@
        <div id="profile_key_info" class="row">
        	   <!--  Begin Profile Key Information -->
            <div class="col-md-5">
-  				<div class="row">
+  			 	<div class="row">
 	               <div class="text-center" >
 	                   <img id="profile_avatar" src="/public/images/avatars/profile-default-avatar.png" alt="Profile Avatar" class="rounded mx-auto d-block avatar">
 	               </div>
                </div>
                <hr>
            	   <ul class="nav nav-tabs" data-tab-content="profile_summary_tabs" >
-		       	  <li class="active" > <a href="javascript:" data-target-tab="panel_profile_summary" > <i class="fa  fa-user-circle-o" aria-hidden="true"></i> Profile Summary </a> </li>
+		       	  <li class="active" > <a href="javascript:" data-target-tab="panel_profile_summary" > <i class="fa  fa-user-circle-o" aria-hidden="true"></i> Profile Scores </a> </li>
 		       	  <li> <a href="javascript:" data-target-tab="panel_last_session_details" > <i class="fa fa-info-circle" aria-hidden="true"></i> Last Session </a> </li>
 			   </ul>
 			   <div class="tab-content" id="profile_summary_tabs" >
@@ -36,7 +40,7 @@
 		                           <ol id="visitor_attributes" data-field="visitor_attributes">
 		                               
 		                               <li>
-		                                   <b> <i class="fa fa-trophy" aria-hidden="true"></i> Total Lead Score () </b> 
+		                                   <b> <i class="fa fa-trophy" aria-hidden="true"></i> Total Lead Score </b> 
 		                                   <p class="scoring_field" data-field="totalLeadScore" data-fieldholder="html"  data-fieldtype="int"  > 0 </p>
 		                               </li>
 		                               
@@ -59,19 +63,19 @@
 		                                   <b> <i class="fa fa-smile-o" aria-hidden="true"></i> Customer Satisfaction Score (CSAT) </b> 
 		                                   <p class="scoring_field" data-field="totalCSAT" data-fieldholder="html"  data-fieldtype="int"  > 0 </p>
 		                               </li>
+		                                
+		                               <li>
+		                                   <b> <i class="fa fa-smile-o" aria-hidden="true"></i> Customer Effort Score (CES) </b> 
+		                                   <p class="scoring_field" data-field=totalCES data-fieldholder="html"  data-fieldtype="int"  > 0 </p>
+		                               </li>
 		                               
 		                               <li>
 		                                   <b> <i class="fa fa-smile-o" aria-hidden="true"></i> Net Promoter Score (NPS) </b> 
 		                                   <p class="scoring_field" data-field="totalNPS" data-fieldholder="html"  data-fieldtype="int"  > 0 </p>
 		                               </li>
 		                               
-		                                <li>
-		                                   <b> <i class="fa fa-smile-o" aria-hidden="true"></i> Customer Effort Score (CES) </b> 
-		                                   <p class="scoring_field" data-field=totalCES data-fieldholder="html"  data-fieldtype="int"  > 0 </p>
-		                               </li>
-		                               
 		                               <li>
-		                                   <b> <i class="fa fa-heart" aria-hidden="true"></i> Customer Credit Score (CCS) </b> 
+		                                   <b> <i class="fa fa-heart" aria-hidden="true"></i> Customer Credit Score (CCS)</b> 
 		                                   <p class="scoring_field" data-field="totalCreditScore" data-fieldholder="html"  data-fieldtype="int"  > 0 </p>
 		                               </li>
 		                               

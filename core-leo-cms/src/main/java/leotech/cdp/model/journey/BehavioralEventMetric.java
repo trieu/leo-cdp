@@ -6,9 +6,10 @@ import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
 import com.arangodb.model.PersistentIndexOptions;
 
+import leotech.cdp.service.FunnelDataService;
 import rfx.core.util.StringUtil;
 
-public class BehavioralEventMetric extends EventMetric {
+public class BehavioralEventMetric extends EventMetaData {
 	
 	public static final String COLLECTION_NAME = getCollectionName(BehavioralEventMetric.class);
 	static ArangoCollection dbCollection;
@@ -49,6 +50,10 @@ public class BehavioralEventMetric extends EventMetric {
 	public String getEventFunnelStageId() {
 		return eventFunnelStageId;
 	}
+	
+	public FunnelStage getEventFunnelStage() {
+		return FunnelDataService.getFunnelStageById(eventFunnelStageId);
+	}
 
 	public void setEventFunnelStageId(String eventFunnelStageId) {
 		this.eventFunnelStageId = eventFunnelStageId;
@@ -57,10 +62,13 @@ public class BehavioralEventMetric extends EventMetric {
 	public String getCustomerFunnelStageId() {
 		return customerFunnelStageId;
 	}
+	
+	public FunnelStage getCustomerFunnelStage() {
+		return FunnelDataService.getFunnelStageById(customerFunnelStageId);
+	}
 
 	public void setCustomerFunnelStageId(String customerFunnelStageId) {
 		this.customerFunnelStageId = customerFunnelStageId;
 	}
-	
 	
 }

@@ -6,6 +6,11 @@ import java.util.List;
 import com.itfsw.query.builder.ArangoDbBuilderFactory;
 import com.itfsw.query.builder.support.model.result.ArangoDbQueryResult;
 
+/**
+ * @author tantrieuf31
+ * @since 2020
+ *
+ */
 public class ProfileQuery {
 
 	boolean filterCreateAt = true;
@@ -25,29 +30,43 @@ public class ProfileQuery {
 
 	// ----- BEGIN query builder
 	
-	public String toArangoDataQuery() {
+	public String getQueryWithFiltersAndPagination() {
 		String aql = ProfileQueryBuilder.buildAqlString(filterCreateAt, beginFilterDate, endFilterDate,parsedFilterAql, startIndex, numberResult, selectedFields);
 		return aql;
 	}
 	
-	public String toArangoCountingQuery() {
+	public String getCountingQueryWithDateTimeFilter() {
 		String aql = ProfileQueryBuilder.buildCoutingQuery(filterCreateAt, beginFilterDate, endFilterDate,parsedFilterAql);
+		return aql;
+	}
+	
+	public String getCountingQueryTotal() {
+		String aql = ProfileQueryBuilder.buildCoutingQuery(parsedFilterAql);
 		return aql;
 	}
 	
 	public String updateStartIndexAndGetDataQuery(int startIndex) {
 		this.startIndex = startIndex;
-		return toArangoDataQuery();
+		return getQueryWithFiltersAndPagination();
 	}
 	
 	// ----- END query builder
 	
-	protected ProfileQuery() {
+	// BEGIN constructors
+	
+	public ProfileQuery() {
 		
 	}
 	
 	public ProfileQuery(String jsonQueryRules) {
 		super();
+		this.jsonQueryRules = jsonQueryRules;
+	}
+	
+	public ProfileQuery(String beginFilterDate, String endFilterDate, String jsonQueryRules) {
+		super();
+		this.beginFilterDate = beginFilterDate;
+		this.endFilterDate = endFilterDate;
 		this.jsonQueryRules = jsonQueryRules;
 	}
 
@@ -73,10 +92,10 @@ public class ProfileQuery {
 		this.startIndex = startIndex;
 		this.numberResult = numberResult;
 		this.selectedFields = selectedFields;
-		
 		setJsonQueryRules(jsonQueryRules);
-		
 	}
+	
+	// END constructors
 
 	public boolean isFilterCreateAt() {
 		return filterCreateAt;

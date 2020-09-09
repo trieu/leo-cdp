@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.arangodb.entity.DocumentField;
 import com.arangodb.entity.DocumentField.Type;
+import com.github.slugify.Slugify;
 import com.google.gson.annotations.Expose;
 
 import leotech.cdp.model.CdpPersistentObject;
@@ -14,8 +15,9 @@ import leotech.cdp.model.CdpPersistentObject;
  *  Event metric is meta-data for quantify event data stream
  *
  */
-public abstract class EventMetric extends CdpPersistentObject {
+public abstract class EventMetaData extends CdpPersistentObject {
 	
+	private static final int MAX_LEN_EVENT_NAME = 60;
 	public static final int LEAD_SCORING_METRIC = 1;
 	public static final int DATA_QUALITY_SCORING_METRIC = 2;
 	public static final int ACQUISITION_SCORING_METRIC = 3;
@@ -54,27 +56,27 @@ public abstract class EventMetric extends CdpPersistentObject {
 	@Expose
 	protected int dataType = 0;
 	
-	public EventMetric() {
+	public EventMetaData() {
 	}
 	
-	public EventMetric(String eventName) {
+	public EventMetaData(String eventName) {
 		super();
 		initBaseData(eventName);
 	}
 	
-	public EventMetric(String eventName, String eventLabel) {
+	public EventMetaData(String eventName, String eventLabel) {
 		super();
 		initBaseData(eventName);
 		this.eventLabel = eventLabel;
 	}
 	
-	public EventMetric(String eventName, int score) {
+	public EventMetaData(String eventName, int score) {
 		super();
 		initBaseData(eventName);
 		this.score = score;
 	}
 	
-	public EventMetric(String eventName, int score, int dataType) {
+	public EventMetaData(String eventName, int score, int dataType) {
 		super();
 		initBaseData(eventName);
 		this.score = score;
@@ -84,7 +86,7 @@ public abstract class EventMetric extends CdpPersistentObject {
 		}
 	}
 	
-	public EventMetric(String eventName, String eventLabel, int score, int dataType) {
+	public EventMetaData(String eventName, String eventLabel, int score, int dataType) {
 		super();
 		initBaseData(eventName);
 		this.score = score;
@@ -96,9 +98,10 @@ public abstract class EventMetric extends CdpPersistentObject {
 	}
 
 	private void initBaseData(String eventName) {
-		if(eventName.length() <= 50) {
+		if(eventName.length() <= MAX_LEN_EVENT_NAME) {
 			this.eventName = eventName.toLowerCase().replaceAll("[^a-z0-9]", "_");
-			this.id = id(this.eventName);
+			this.id = new Slugify().slugify(eventName);
+			
 			this.createdAt = new Date();
 			this.dataType = FIRST_PARTY_DATA;
 		} else {
@@ -170,6 +173,4 @@ public abstract class EventMetric extends CdpPersistentObject {
 		this.scoreModel = scoreModel;
 	}
 
-	
-	
 }

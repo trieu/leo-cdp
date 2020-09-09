@@ -240,7 +240,7 @@ var loadProfileViewByAjax = window.loadProfileViewByAjax || function(selectorId,
             },
         	{
                 "render": function (data, type, row) {
-                    return data;
+                    return '<div class="datatable_text">'  + data + '</div>';
                 },
                 "targets": 1
             },
@@ -253,13 +253,17 @@ var loadProfileViewByAjax = window.loadProfileViewByAjax || function(selectorId,
                 	else if(data === 1){
                 		genderText = "Male";
                 	}
+                	else if(data === 2){
+                		genderText = "LGBT";
+                	}
                     return '<div class="datatable_text">'  + genderText + '</div>';
                 },
                 "targets": 2
             },
         	{
                 "render": function (data, type, row) {
-                    return '<div class="datatable_text">'  + textTruncate(row.lastTouchpoint.name, 30) + '</div>';
+                	var fullText = row.lastTouchpoint.name;
+                    return '<div class="datatable_text" title="' + fullText + '" >'  + textTruncate(fullText, 30) + '</div>';
                 },
                 "targets": 3
             },

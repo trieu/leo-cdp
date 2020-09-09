@@ -7,7 +7,6 @@ import java.util.Map;
 
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
-import leotech.cdp.dao.BehavioralEventMetricDao;
 import leotech.cdp.model.journey.BehavioralEventMetric;
 import leotech.cdp.model.journey.FunnelStage;
 import leotech.cdp.service.FunnelDataService;
@@ -61,16 +60,16 @@ public class CdpFunnelHandler extends SecuredWebDataHandler {
 						
 						for (String funnelType : toks) {
 							if(funnelType.equals("event_retail")) {
-								List<FunnelStage> list = FunnelDataService.getEventRetailFunnelStages();
+								List<FunnelStage> list = FunnelDataService.getEventFunnelStages();
 								map.put(funnelType, list);
 							}
 							else if(funnelType.equals("customer_retail")) {
-								List<FunnelStage> list = FunnelDataService.getCustomerRetailFunnelStages();
+								List<FunnelStage> list = FunnelDataService.getCustomerFunnelStages();
 								map.put(funnelType, list);
 							}
 						}
 						
-						Collection<BehavioralEventMetric> metrics = BehavioralEventMetricDao.getEventRetailMetrics();
+						Collection<BehavioralEventMetric> metrics = FunnelDataService.getEventRetailMetrics();
 						map.put("behavioral_metrics", metrics);
 						
 						return JsonDataPayload.ok(uri, map, loginUser, FunnelStage.class);

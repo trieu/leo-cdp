@@ -258,6 +258,16 @@ AQL_GET_PROFILE_BY_KEY_IDENTITIES =>
 	RETURN { "deterministic" : rs1, "probabilistic" : rs2 }
 ;
 
+AQL_ANALYTICS_PROFILE_IN_FUNNEL_WITH_DATE_FILTER =>
+	FOR d IN cdp_profile
+	    FILTER d.status > 0 AND d.createdAt >= @beginFilterDate AND d.createdAt <= @endFilterDate
+	    COLLECT funnelStage = d.funnelStage WITH COUNT INTO length
+	    RETURN { 
+	        "funnelStage" : funnelStage, 
+	        "count" : length 
+	    } 
+;
+
 ########### AQL LEO CDP - SEGMENT COLLECTION ########################################################################################################;
 
 AQL_GET_SEGMENTS_BY_PAGINATION =>
@@ -337,6 +347,16 @@ AQL_UPDATE_TRACKING_EVENT_STATE_PROCESSED =>
 	FOR e IN cdp_trackingevent
 	    FILTER e._key == @id
 	    UPDATE e WITH { state: 1 } IN cdp_trackingevent
+;
+
+AQL_ANALYTICS_EVENT_IN_FUNNEL_WITH_DATE_FILTER => 
+	FOR e IN cdp_trackingevent
+	    FILTER e.createdAt >= @beginFilterDate AND e.createdAt <= @endFilterDate
+	    COLLECT metricName = e.metricName WITH COUNT INTO length
+	    RETURN { 
+	        "metricName" : metricName, 
+	        "count" : length 
+	    }
 ;
 
 ########### AQL LEO CDP - PRODUCT ITEM COLLECTION ########################################################################################################;

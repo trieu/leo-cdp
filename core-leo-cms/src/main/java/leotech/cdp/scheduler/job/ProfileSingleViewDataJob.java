@@ -1,20 +1,21 @@
 package leotech.cdp.scheduler.job;
 
+import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
-import leotech.cdp.dao.BehavioralEventMetricDao;
 import leotech.cdp.dao.ProfileDaoUtil;
 import leotech.cdp.dao.TrackingEventDaoUtil;
 import leotech.cdp.dao.singleview.EventSingleDataView;
 import leotech.cdp.dao.singleview.ProfileSingleDataView;
 import leotech.cdp.model.journey.BehavioralEventMetric;
-import leotech.cdp.model.journey.EventMetric;
+import leotech.cdp.model.journey.EventMetaData;
+import leotech.cdp.model.journey.FunnelStage;
 import leotech.cdp.service.EventTrackingService;
+import leotech.cdp.service.FunnelDataService;
 import rfx.core.job.ScheduledJob;
 import rfx.core.util.Utils;
 
-public class ProfileScoringJob  extends ScheduledJob {
+public class ProfileSingleViewDataJob  extends ScheduledJob {
 
 	
 	@Override
@@ -40,13 +41,18 @@ public class ProfileScoringJob  extends ScheduledJob {
 		
 		int totalLeadScore = 0;//profile.getTotalLeadScore();
 		int satisfyScore = 0;//profile.getTotalCSAT();
+		int clvScore = 0;
+		int cacScore = 0;
 		
-		//Set<String> funnelMetrics = profile.getFunnelMetrics();
+		profile.resetFunnelMetrics();
+		profile.resetEventStatistics();
+		profile.resetBehavioralEvent();
+		profile.resetFunnelStageTimeline();
 		
 		System.out.println("updateStatistics ProfileSingleDataView " + profileId);
 		
 		int startIndex = 0;
-		int numberResult = 100;
+		int numberResult = 200;
 		
 		// init to get first 100 events of profile
 		List<EventSingleDataView> events = EventTrackingService.getEventActivityFlowOfProfile(profileId , startIndex, numberResult);
@@ -55,20 +61,25 @@ public class ProfileScoringJob  extends ScheduledJob {
 		
 		while ( ! events.isEmpty() ) {
 			for (EventSingleDataView event : events) {
+				Date recoredDate = event.getCreatedAt();
 				String eventName = event.getMetricName();
-				profile.setBehavioralEvent(eventName);
-				profile.updateEventCount(eventName);
 				
 				//get metadata of event
-				BehavioralEventMetric metric = BehavioralEventMetricDao.getBehavioralEventMetricByName(eventName);
+				BehavioralEventMetric metric = FunnelDataService.getBehavioralEventMetricByName(eventName);
 				if(metric != null) {
 					int score = metric.getScore();
 					
-					if(metric.getScoreModel() == EventMetric.LEAD_SCORING_METRIC) {
+					if(metric.getScoreModel() == EventMetaData.LEAD_SCORING_METRIC) {
 						totalLeadScore += score;
 					}
-					else if(metric.getScoreModel() == EventMetric.SATISFACTION_SCORING_METRIC) {
+					else if(metric.getScoreModel() == EventMetaData.SATISFACTION_SCORING_METRIC) {
 						satisfyScore += score;
+					}
+					else if(metric.getScoreModel() == EventMetaData.LIFETIME_VALUE_SCORING_METRIC) {
+						clvScore += score;
+					}
+					else if(metric.getScoreModel() == EventMetaData.ACQUISITION_SCORING_METRIC) {
+						cacScore += score;
 					}
 					
 					if(highestScoreMetric == null) {
@@ -79,8 +90,16 @@ public class ProfileScoringJob  extends ScheduledJob {
 						}
 					}
 					
+					// set only valid event name from journey schema
+					profile.setBehavioralEvent(eventName);
+					
+					FunnelStage funnelStage = metric.getCustomerFunnelStage();
+					profile.updateFunnelStageTimeline(funnelStage.getName(), recoredDate);
 				}
 				TrackingEventDaoUtil.updateProcessedState(event);
+				
+				// what we have, track all 
+				profile.updateEventCount(eventName);
 			}
 			
 			//loop to the end to reach all events of profile in database
@@ -91,16 +110,19 @@ public class ProfileScoringJob  extends ScheduledJob {
 		//TODO update 8 scoring model here, extend with Jupyter Notebook and Rules Engine 
 		profile.setTotalLeadScore(totalLeadScore);
 		profile.setTotalCSAT(satisfyScore);
+		profile.setTotalCLV(clvScore);
+		profile.setTotalCAC(cacScore);
 		
 		//TODO update funnel
-		profile.setFunnelStage(highestScoreMetric.getCustomerFunnelStageId());
+		FunnelStage customerFunnelStage = highestScoreMetric.getCustomerFunnelStage();
+		profile.setFunnelStage(customerFunnelStage.getName());
 		//profile.setFunnelMetrics(funnelMetrics);
 		
 		ProfileDaoUtil.update(profile);
 	}
 	
 	public static void main(String[] args) {
-		new ProfileScoringJob().doTheJob();
+		new ProfileSingleViewDataJob().doTheJob();
 		Utils.exitSystemAfterTimeout(5000);
 	}
 

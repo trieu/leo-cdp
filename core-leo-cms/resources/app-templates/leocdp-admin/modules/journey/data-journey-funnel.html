@@ -71,13 +71,14 @@
 	
 		function loadProfileFunnel() {
 		    var data = [
+		    	['Human Profile', '', '#78A8C9'],
 		        ['Visitor', '', '#2980B9'],
-		        ['Engaged Visitor', '', '#5499C7'],
-		        ['Customer Lead', '', '#2e86c1'],
+		        ['Engaged Visitor', '', '#4C7DA3'],
+		        ['Customer Lead', '', '#416E90'],
 		        ['Prospective Customer', '', '#2874a6'],
 		        ['First-time Customer', '', '#21618c'],
 		        ['Customer Advocate', '', '#1b4f72'],
-		        ['Repeat Customer', '', '#154360']
+		        ['Repeat Customer', '', '#163247']
 		    ];
 		    var chart = new D3Funnel('#profile_funnel');
 		    chart.draw(data, funnelOptions);
@@ -85,12 +86,13 @@
 
 		function loadEventFunnel() {
 		    var data = [
-		        ['Content View', '', '#00b7c2'],
-		        ['Product View', '', '#5eaaa8'],
+		        ['Content View', '', '#719DBB'],
+		        ['Product View', '', '#7395AD'],
 		        ['Customer Login','', '#07689f'],
 		        ['Purchase Intent', '', '#1e5f74'],
 		        ['First Purchase', '', '#0f4c75'],
 		        ['Product Experience', '', '#133b5c'],
+		        ['Customer Feedback','', '#1b4f72'],
 		        ['Repeat Purchase', '', '#1d2d50']
 		    ];
 		    var chart = new D3Funnel('#event_funnel');

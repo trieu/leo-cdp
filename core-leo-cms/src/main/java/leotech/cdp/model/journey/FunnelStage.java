@@ -1,21 +1,23 @@
 package leotech.cdp.model.journey;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
 import com.arangodb.entity.DocumentField;
 import com.arangodb.entity.DocumentField.Type;
 import com.arangodb.model.PersistentIndexOptions;
+import com.github.slugify.Slugify;
 import com.google.gson.annotations.Expose;
 
 import leotech.cdp.model.CdpPersistentObject;
 import rfx.core.util.StringUtil;
 
 /**
- * @author mac
+ * funnel stage is metadata of Data Journey Funnel
+ * 
+ * @author tantrieuf31
+ * @since
  *
  */
 public class FunnelStage extends CdpPersistentObject {
@@ -37,7 +39,7 @@ public class FunnelStage extends CdpPersistentObject {
 	String type;
 
 	public FunnelStage() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public FunnelStage(int orderIndex, String name, String type) {
@@ -45,7 +47,13 @@ public class FunnelStage extends CdpPersistentObject {
 		this.orderIndex = orderIndex;
 		this.name = name;
 		this.type = type;
-		this.id = id(orderIndex + name + type);
+		
+		this.id = new Slugify().slugify(name);
+	}
+	
+	@Override
+	public boolean isReadyForSave() {
+		return StringUtil.isNotEmpty(id) && StringUtil.isNotEmpty(name);
 	}
 
 	public int getOrderIndex() {
@@ -90,15 +98,5 @@ public class FunnelStage extends CdpPersistentObject {
 		}
 		return dbCollection;
 	}
-	
-
-	@Override
-	public boolean isReadyForSave() {
-		// TODO Auto-generated method stub
-		return StringUtil.isNotEmpty(id) && StringUtil.isNotEmpty(name);
-	}
-
-
-
 	
 }

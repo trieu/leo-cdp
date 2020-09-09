@@ -15,7 +15,7 @@ import leotech.system.util.database.ArangoDbUtil;
  *         customer interactions.
  *
  */
-public class EventTrigger extends EventMetric {
+public class EventTrigger extends EventMetaData {
 
 	public static final String COLLECTION_NAME = getCollectionName(EventTrigger.class);
 	static ArangoCollection instance;
