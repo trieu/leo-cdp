@@ -1,5 +1,6 @@
 package leotech.cdp.model.analytics;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -25,6 +26,9 @@ import rfx.core.util.StringUtil;
  *
  */
 public class TrackingEvent extends CdpPersistentObject {
+	public static final int STATE_RAW_DATA = 0;
+	public static final int STATE_PROCESSED = 1;
+	public static final int STATE_ARCHIVED = -1;
 
 	public static final String COLLECTION_NAME = getCollectionName(TrackingEvent.class);
 	static ArangoCollection instance;
@@ -186,7 +190,7 @@ public class TrackingEvent extends CdpPersistentObject {
 	protected int partitionId = 0;
 	
 	@Expose
-	protected int state = 0;
+	int state = STATE_RAW_DATA; 
 	
 	// names of class or actor for processing data
 	@Expose
@@ -606,6 +610,9 @@ public class TrackingEvent extends CdpPersistentObject {
 	}
 
 	public List<String> getProcessors() {
+		if(this.processors == null) {
+			this.processors = new ArrayList<String>(0);
+		}
 		return processors;
 	}
 

@@ -17,7 +17,7 @@ import rfx.core.util.StringUtil;
 
 public class SegmentDataService {
 	
-	private static final int ONE_WEEK_SECONDS = 86400 * 7;
+	private static final int GO_BACK_TIME = 86400 * 7 * 16;// 16 weeks
 
 	public static Segment create(Segment sm) {
 		SegmentDaoUtil.create(sm);
@@ -94,7 +94,7 @@ public class SegmentDataService {
 	
 	public static Segment newInstance() {
 		// default is one week
-		String beginFilterDate = Instant.now().minusSeconds(ONE_WEEK_SECONDS).toString();
+		String beginFilterDate = Instant.now().minusSeconds(GO_BACK_TIME).toString();
 		String endFilterDate = Instant.now().toString();
 		return new Segment(beginFilterDate, endFilterDate);
 	}

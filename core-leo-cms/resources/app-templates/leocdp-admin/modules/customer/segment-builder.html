@@ -14,7 +14,7 @@
 
 <div class="container row">
 	
-	<h3> Segment Builder </h3>
+	<h3 id="segment_name">  </h3>
 	<p> Enter the name of segment and use query builder to search profiles </p>
 	
 	<div class="panel-group">
@@ -180,7 +180,7 @@
 		if(id === 'new'){
 			// init UI for new segment
 			$('button.data-control-delete').hide();
-			createNewSegmentModel()
+			createNewSegmentModel();
 		} else {
 			getSegmentBuilderData(id)
 		}
@@ -243,6 +243,7 @@
                 var jsonQueryRules = JSON.parse( segmentData.jsonQueryRules );
                 
                 document.title = 'Segment Builder: ' + segmentData.name;
+                $('#segment_name').text('Edit Segment: ' + segmentData.name);
                 
                 setSegmentDataForm(segmentData)
                
@@ -266,6 +267,7 @@
             	setSegmentDataForm(segmentData)
     			
                 document.title = 'New Segment Builder';
+            	 $('#segment_name').text('New Segment Builder: ');
                
              	// init UI after setting data into DOM
              	//initDateFilterComponent(true);
@@ -283,7 +285,8 @@
 		segmentDataModel = segmentData;
 		
 		$('#sm_name').val(segmentData.name).change(function() {
-			segmentDataModel.name = $(this).val()
+			segmentDataModel.name = $(this).val();
+			$('#segment_name').text('Edit Segment: ' + segmentDataModel.name);
 		});
 		$('#sm_description').val(segmentData.description).change(function() {
 			segmentDataModel.description = $(this).val()
