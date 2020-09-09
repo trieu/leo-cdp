@@ -83,7 +83,7 @@ public class Notebook extends CdpPersistentObject  {
 	protected String accessToken;
 	
 	@Override
-	public ArangoCollection getCollection() {
+	public ArangoCollection getDbCollection() {
 		if (instance == null) {
 			ArangoDatabase arangoDatabase = getDatabaseInstance();
 

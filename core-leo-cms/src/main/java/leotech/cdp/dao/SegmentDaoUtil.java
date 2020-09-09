@@ -39,7 +39,7 @@ public class SegmentDaoUtil extends BaseLeoCdpDao {
 	
 	public static String create(Segment segment) {
 		if (segment.isReadyForSave() ) {
-			ArangoCollection col = segment.getCollection();
+			ArangoCollection col = segment.getDbCollection();
 			if (col != null) {
 				setSizeOfSegment(segment);
 				col.insertDocument(segment);
@@ -51,7 +51,7 @@ public class SegmentDaoUtil extends BaseLeoCdpDao {
 
 	public static String update(Segment segment) {
 		if (segment.isReadyForSave()) {
-			ArangoCollection col = segment.getCollection();
+			ArangoCollection col = segment.getDbCollection();
 			if (col != null) {
 				String k = segment.getId();
 				if (k != null) {
@@ -89,7 +89,7 @@ public class SegmentDaoUtil extends BaseLeoCdpDao {
 	}
 	
 	public static boolean delete(Segment segment) {
-		ArangoCollection col = segment.getCollection();
+		ArangoCollection col = segment.getDbCollection();
 		if (col != null) {
 			col.deleteDocument(segment.getId());
 			return true;

@@ -26,7 +26,7 @@ public class TrackingEventDaoUtil  extends BaseLeoCdpDao{
 
 	public static boolean record(TrackingEvent e) {
 		if (e.isReadyForSave()) {
-			ArangoCollection col = e.getCollection();
+			ArangoCollection col = e.getDbCollection();
 			if (col != null) {
 				col.insertDocument(e);
 				return true;

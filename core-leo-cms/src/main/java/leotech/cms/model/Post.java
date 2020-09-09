@@ -47,7 +47,7 @@ public class Post extends MediaNode {
 
 
 	@Override
-	public ArangoCollection getCollection() throws ArangoDBException {
+	public ArangoCollection getDbCollection() throws ArangoDBException {
 		return theCollection();
 	}
 

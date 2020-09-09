@@ -45,7 +45,7 @@ public class CrawledYouTubeVideoDaoUtil {
     public static String save(CrawledYouTubeVideo video) {
 	if (video.isReadyForSave()) {
 	    try {
-		ArangoCollection col = video.getCollection();
+		ArangoCollection col = video.getDbCollection();
 		if (col != null) {
 		String videoID = video.getVideoID();
 		video.setModificationTime(System.currentTimeMillis());

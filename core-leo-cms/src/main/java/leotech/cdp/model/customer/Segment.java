@@ -36,7 +36,7 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 	static ArangoCollection dbCol;
 
 	@Override
-	public ArangoCollection getCollection() {
+	public ArangoCollection getDbCollection() {
 		if (dbCol == null) {
 			ArangoDatabase arangoDatabase = getDatabaseInstance();
 
@@ -75,6 +75,7 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 	String jsonQueryRules;
 
 	@Expose
+	// default fields to expose for report !?
 	List<String> selectedFields = Arrays.asList("id", "primaryEmail", "primaryPhone", "createdAt", "firstName","lastName", "age", "gender");
 	
 	@Expose

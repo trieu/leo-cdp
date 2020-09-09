@@ -9,7 +9,7 @@ public class Creative extends CdpPersistentObject implements Comparable<Creative
     public static final String COLLECTION_NAME = CDP_COLLECTION_PREFIX + Creative.class.getSimpleName().toLowerCase();
 
     @Override
-    public ArangoCollection getCollection() {
+    public ArangoCollection getDbCollection() {
 	// TODO Auto-generated method stub
 	return null;
     }

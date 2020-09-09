@@ -76,7 +76,7 @@ public class FileMetadata extends CmsPersistentObject {
 	static ArangoCollection collection;
 
 	@Override
-	public ArangoCollection getCollection() {
+	public ArangoCollection getDbCollection() {
 		if (collection == null) {
 			ArangoDatabase arangoDatabase = ArangoDbUtil.getActiveArangoDbInstance();
 			collection = arangoDatabase.collection(COLLECTION_NAME);

@@ -3,6 +3,7 @@ package leotech.cdp.model.analytics;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.arangodb.ArangoCollection;
@@ -17,7 +18,10 @@ import rfx.core.util.DateTimeUtil;
 import rfx.core.util.StringUtil;
 
 /**
+ *  tracking data event, is collected by Leo Observer, the Truth of Universe is recorded here
+ * 
  * @author Trieu Nguyen
+ * @since 2020
  *
  */
 public class TrackingEvent extends CdpPersistentObject {
@@ -26,7 +30,7 @@ public class TrackingEvent extends CdpPersistentObject {
 	static ArangoCollection instance;
 
 	@Override
-	public ArangoCollection getCollection() {
+	public ArangoCollection getDbCollection() {
 		if (instance == null) {
 			ArangoDatabase arangoDatabase = getDatabaseInstance();
 
@@ -171,14 +175,22 @@ public class TrackingEvent extends CdpPersistentObject {
 	protected int feedbackScore = 0;
 
 	@Expose
-	int fraudScore = 0;
-
+	protected int fraudScore = 0;
+	
 	protected String environment;
 
 	@Expose
 	protected Map<String, String> eventData;
 
+	@Expose
 	protected int partitionId = 0;
+	
+	@Expose
+	protected int state = 0;
+	
+	// names of class or actor for processing data
+	@Expose
+	protected List<String> processors;
 
 	@Override
 	public boolean isReadyForSave() {
@@ -195,8 +207,8 @@ public class TrackingEvent extends CdpPersistentObject {
 	}
 
 	/**
-	 * passive tracking by a data crawler from social media (e.g: Facebook,
-	 * YouTube,...)
+	 * passive tracking by a data crawler from social media 
+	 * (e.g: Facebook, YouTube,...)
 	 * 
 	 * @param observerId
 	 * @param metricName
@@ -583,6 +595,22 @@ public class TrackingEvent extends CdpPersistentObject {
 
 	public void setConversion(boolean isConversion) {
 		this.isConversion = isConversion;
+	}
+
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int state) {
+		this.state = state;
+	}
+
+	public List<String> getProcessors() {
+		return processors;
+	}
+
+	public void setProcessors(List<String> processors) {
+		this.processors = processors;
 	}
 
 }

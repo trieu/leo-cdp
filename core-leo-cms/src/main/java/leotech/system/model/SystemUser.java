@@ -147,7 +147,7 @@ public class SystemUser implements PersistentArangoObject {
 	}
 
 	@Override
-	public ArangoCollection getCollection() {
+	public ArangoCollection getDbCollection() {
 		if (instance == null) {
 			ArangoDatabase arangoDatabase = ArangoDbUtil.getActiveArangoDbInstance();
 

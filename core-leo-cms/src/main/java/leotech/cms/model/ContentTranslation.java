@@ -30,7 +30,7 @@ public class ContentTranslation implements PersistentArangoObject {
 	}
 
 	@Override
-	public ArangoCollection getCollection() throws ArangoDBException {
+	public ArangoCollection getDbCollection() throws ArangoDBException {
 		if (collection == null) {
 			ArangoDatabase arangoDatabase = ArangoDbUtil.getActiveArangoDbInstance();
 

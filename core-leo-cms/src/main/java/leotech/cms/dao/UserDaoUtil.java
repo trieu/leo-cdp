@@ -25,7 +25,7 @@ public class UserDaoUtil {
 
 	public static String createNew(SystemUser user) {
 		if (user.isReadyForSave()) {
-			ArangoCollection col = user.getCollection();
+			ArangoCollection col = user.getDbCollection();
 			if (col != null) {
 				String _key = ArangoDbUtil.findKey(AQL_FIND_KEY_BY_USERLOGIN, "userLogin", user.getUserLogin());
 				if (_key == null) {
@@ -44,7 +44,7 @@ public class UserDaoUtil {
 	}
 
 	public static String deleteByKey(String key) {
-		ArangoCollection col = new SystemUser().getCollection();
+		ArangoCollection col = new SystemUser().getDbCollection();
 		if (col != null) {
 			col.deleteDocument(key);
 			return key;
@@ -201,7 +201,7 @@ public class UserDaoUtil {
 
 	public static String update(SystemUser user) {
 		if (user.isReadyForSave()) {
-			ArangoCollection col = user.getCollection();
+			ArangoCollection col = user.getDbCollection();
 			if (col != null) {
 				long currentTime = System.currentTimeMillis();
 				user.setModificationTime(currentTime);

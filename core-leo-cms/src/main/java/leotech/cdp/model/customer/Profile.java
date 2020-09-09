@@ -41,7 +41,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	static ArangoCollection dbCol;
 
 	@Override
-	public ArangoCollection getCollection() {
+	public ArangoCollection getDbCollection() {
 		if (dbCol == null) {
 			ArangoDatabase arangoDatabase = getDatabaseInstance();
 

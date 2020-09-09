@@ -22,7 +22,7 @@ public class CategoryDaoUtil {
 
 	public static String save(Category category) {
 		if (category.isReadyForSave()) {
-			ArangoCollection col = category.getCollection();
+			ArangoCollection col = category.getDbCollection();
 			if (col != null) {
 				String _key = ArangoDbUtil.findKey(AQL_FIND_KEY_BY_SLUG, "slug", category.getSlug());
 				if (_key == null) {
@@ -48,7 +48,7 @@ public class CategoryDaoUtil {
 	}
 
 	public static String deleteByKey(String key) {
-		ArangoCollection col = new Category().getCollection();
+		ArangoCollection col = new Category().getDbCollection();
 		if (col != null) {
 			col.deleteDocument(key);
 			return key;

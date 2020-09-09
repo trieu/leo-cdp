@@ -32,7 +32,7 @@ public class MediaJourneyMap extends CdpPersistentObject {
 	static ArangoCollection instance;
 
 	@Override
-	public ArangoCollection getCollection() {
+	public ArangoCollection getDbCollection() {
 		if (instance == null) {
 			ArangoDatabase arangoDatabase = getDatabaseInstance();
 

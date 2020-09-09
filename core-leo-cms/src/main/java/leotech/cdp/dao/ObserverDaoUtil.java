@@ -22,7 +22,7 @@ public class ObserverDaoUtil extends BaseLeoCdpDao {
 
 	public static String save(DataObserver e) {
 		if (e.isReadyForSave()) {
-			ArangoCollection col = e.getCollection();
+			ArangoCollection col = e.getDbCollection();
 			if (col != null) {
 				String id = e.getId();
 				String _key = ArangoDbUtil.findKey(AQL_FIND_KEY_AQL, "id", id);

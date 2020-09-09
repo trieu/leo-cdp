@@ -24,7 +24,7 @@ public class PageDaoUtil {
 
 	public static String save(Page page) {
 		if (page.isReadyForSave()) {
-			ArangoCollection col = page.getCollection();
+			ArangoCollection col = page.getDbCollection();
 			if (col != null) {
 				String id = page.getId();
 
@@ -44,7 +44,7 @@ public class PageDaoUtil {
 
 	public static boolean deletePage(String pageId) {
 		Page page = getById(pageId);
-		ArangoCollection col = page.getCollection();
+		ArangoCollection col = page.getDbCollection();
 		if (col != null) {
 			String _key = ArangoDbUtil.findKey(AQL_FIND_KEY_AQL, "id", pageId);
 			col.deleteDocument(_key);

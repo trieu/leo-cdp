@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import leotech.cdp.model.analytics.DashboardReport;
 import leotech.cdp.model.analytics.Notebook;
+import leotech.cdp.model.analytics.ReportUnit;
 
 public class Analytics360Service {
 	
@@ -51,7 +53,19 @@ public class Analytics360Service {
 		return htmlName;
 	}
 	
-	
+	public static DashboardReport getDashboardReport(String beginFilterDate, String endFilterDate) {
+		Map<String, Long> totalCustomerStatistics = new HashMap<String, Long>();
+		
+		Map<String, Long> totalEventStatistics = new HashMap<String, Long>();
+		
+		List<ReportUnit> customerEventFunnel = new ArrayList<ReportUnit>();
+		
+		List<ReportUnit> behavioralEventFunnel = new ArrayList<ReportUnit>();
+		
+		DashboardReport report = new DashboardReport(beginFilterDate, endFilterDate, totalCustomerStatistics, totalEventStatistics, behavioralEventFunnel, customerEventFunnel);
+		
+		return report;
+	}
 	
 	public static void main(String[] args) {
 		

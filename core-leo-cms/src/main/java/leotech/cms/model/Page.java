@@ -49,7 +49,7 @@ public class Page extends MediaNode {
 
 
 	@Override
-	public ArangoCollection getCollection() {
+	public ArangoCollection getDbCollection() {
 		return getCollection(collectionInstance, COLLECTION_NAME);
 	}
 

@@ -44,7 +44,7 @@ public class ProfileDaoUtil extends BaseLeoCdpDao {
 	
 	public static String create(Profile profile) {
 		if (profile.isReadyForSave() && checkLimitOfLicense()) {
-			ArangoCollection col = profile.getCollection();
+			ArangoCollection col = profile.getDbCollection();
 			if (col != null) {
 				col.insertDocument(profile);
 				return profile.getId();
@@ -55,7 +55,7 @@ public class ProfileDaoUtil extends BaseLeoCdpDao {
 
 	public static String update(Profile profile) {
 		if (profile.isReadyForSave()) {
-			ArangoCollection col = profile.getCollection();
+			ArangoCollection col = profile.getDbCollection();
 			if (col != null) {
 				String k = profile.getId();
 				if (k != null) {

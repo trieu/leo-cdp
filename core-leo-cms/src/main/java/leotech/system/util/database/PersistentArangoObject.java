@@ -12,10 +12,16 @@ import com.arangodb.ArangoCollection;
  */
 public interface PersistentArangoObject {
 
-	// the collection for storing
-	public ArangoCollection getCollection();
 
-	// check for data validation
+	/**
+	 * @return ArangoCollection, the database collection for storing
+	 */
+	public ArangoCollection getDbCollection();
+
+
+	/**
+	 * @return check true or false for data validation
+	 */
 	public boolean isReadyForSave();
 
 }

@@ -12,7 +12,6 @@ import com.google.gson.annotations.Expose;
 
 import leotech.cdp.model.CdpPersistentObject;
 
-
 /**
  * Reporting Unit for dashboard and time series analytics
  * 
@@ -20,13 +19,13 @@ import leotech.cdp.model.CdpPersistentObject;
  * @since 2020
  *
  */
-public class ReportUnit extends CdpPersistentObject implements Comparable<ReportUnit> {
+public class ReportUnit extends CdpPersistentObject implements Comparable<ReportUnit>{
 
 	public static final String COLLECTION_NAME = getCollectionName(ReportUnit.class);
 	static ArangoCollection instance;
-	
+
 	@Override
-	public ArangoCollection getCollection() {
+	public ArangoCollection getDbCollection() {
 		if (instance == null) {
 			ArangoDatabase arangoDatabase = getDatabaseInstance();
 
@@ -37,46 +36,51 @@ public class ReportUnit extends CdpPersistentObject implements Comparable<Report
 		}
 		return instance;
 	}
-	
+
 	@DocumentField(Type.KEY)
 	@Expose
 	String id;
-	
+
 	@Expose
 	int timestamp;
-	
+
 	@Expose
 	String metricName = "";
-	
+
 	@Expose
 	String eventKey = "";
 	
 	@Expose
+	String className = "";
+
+	@Expose
 	Map<String, String> eventKeyData;
-	
+
 	@Expose
 	long metricValue = 0;
-	
+
 	@Expose
 	Date createdAt;
-	
+
 	@Expose
 	Date updatedAt;
-	
+
 	@Expose
 	int timeUnit = 0;
 	
 	@Expose
-	// Total Customer Statistics, Total Event Statistics or Daily Event Funnel, Daily Customer Funnel
+	int orderIndex;
+
+	@Expose
+	// Total Customer Statistics, Total Event Statistics or Daily Event Funnel,
+	// Daily Customer Funnel
 	String groupName;
-	
+
 	int partitionId;
 
 	public ReportUnit() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	
 
 	public ReportUnit(String metricName, long metricValue) {
 		super();
@@ -87,115 +91,101 @@ public class ReportUnit extends CdpPersistentObject implements Comparable<Report
 		this.eventKeyData = new HashMap<String, String>();
 	}
 
-
-
 	public Map<String, String> getEventKeyData() {
 		return eventKeyData;
 	}
-
-
 
 	public void setEventKeyData(Map<String, String> eventKeyData) {
 		this.eventKeyData = eventKeyData;
 	}
 
-
-
 	public Date getCreatedAt() {
 		return createdAt;
 	}
-
-
 
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
 
-
-
 	public Date getUpdatedAt() {
 		return updatedAt;
 	}
-
-
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 
-
-
 	public int getTimeUnit() {
 		return timeUnit;
 	}
-
-
 
 	public void setTimeUnit(int timeUnit) {
 		this.timeUnit = timeUnit;
 	}
 
-
-
 	public String getId() {
 		return id;
 	}
-
-
 
 	public int getPartitionId() {
 		return partitionId;
 	}
 
-
-
 	public int getTimestamp() {
 		return timestamp;
 	}
-
-
 
 	public void setTimestamp(int timestamp) {
 		this.timestamp = timestamp;
 	}
 
-
-
 	public String getMetricName() {
 		return metricName;
 	}
-
-
 
 	public void setMetricName(String metricName) {
 		this.metricName = metricName;
 	}
 
-
-
 	public String getEventKey() {
 		return eventKey;
 	}
-
-
 
 	public void setEventKey(String eventKey) {
 		this.eventKey = eventKey;
 	}
 
-
-
 	public long getMetricValue() {
 		return metricValue;
 	}
-
-
 
 	public void setMetricValue(long metricValue) {
 		this.metricValue = metricValue;
 	}
 
+	public int getOrderIndex() {
+		return orderIndex;
+	}
 
+	public void setOrderIndex(int orderIndex) {
+		this.orderIndex = orderIndex;
+	}
+
+	public String getGroupName() {
+		return groupName;
+	}
+
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+
+	public String getClassName() {
+		return className;
+	}
+
+	public void setClassName(String className) {
+		this.className = className;
+	}
 
 	@Override
 	public boolean isReadyForSave() {
@@ -205,8 +195,12 @@ public class ReportUnit extends CdpPersistentObject implements Comparable<Report
 
 	@Override
 	public int compareTo(ReportUnit o) {
-		// TODO Auto-generated method stub
+		if(this.orderIndex > o.getOrderIndex()) {
+			return 1;
+		}
+		else if(this.orderIndex < o.getOrderIndex()) {
+			return -1;
+		}
 		return 0;
 	}
-
 }

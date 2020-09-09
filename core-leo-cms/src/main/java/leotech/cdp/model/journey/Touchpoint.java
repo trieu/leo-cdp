@@ -27,7 +27,7 @@ public class Touchpoint extends MediaChannel {
 	static ArangoCollection instance;
 
 	@Override
-	public ArangoCollection getCollection() {
+	public ArangoCollection getDbCollection() {
 		if (instance == null) {
 			ArangoDatabase arangoDatabase = getDatabaseInstance();
 

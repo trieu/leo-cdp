@@ -18,7 +18,7 @@ public class SystemConfigs implements PersistentArangoObject {
 	static ArangoCollection instance;
 	
 	@Override
-	public ArangoCollection getCollection() {
+	public ArangoCollection getDbCollection() {
 		if (instance == null) {
 			ArangoDatabase arangoDatabase = ArangoDbUtil.getActiveArangoDbInstance();
 

@@ -188,7 +188,7 @@ public class CrawledYouTubeVideo implements Comparable<CrawledYouTubeVideo>, Per
 	static ArangoCollection collectionInstance;
 
 	@Override
-	public ArangoCollection getCollection() {
+	public ArangoCollection getDbCollection() {
 		if (collectionInstance == null) {
 			ArangoDatabase arangoDatabase = ArangoDbUtil.getActiveArangoDbInstance();
 

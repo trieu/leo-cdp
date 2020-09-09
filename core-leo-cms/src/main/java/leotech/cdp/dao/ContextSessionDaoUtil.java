@@ -27,7 +27,7 @@ public class ContextSessionDaoUtil extends BaseLeoCdpDao {
 
 	public static ContextSession create(ContextSession s) {
 		if (s.isReadyForSave()) {
-			ArangoCollection col = s.getCollection();
+			ArangoCollection col = s.getDbCollection();
 			if (col != null) {
 				try {
 					col.insertDocument(s);
@@ -41,7 +41,7 @@ public class ContextSessionDaoUtil extends BaseLeoCdpDao {
 	
 	public static ContextSession update(ContextSession s) {
 		if (s.isReadyForSave()) {
-			ArangoCollection col = s.getCollection();
+			ArangoCollection col = s.getDbCollection();
 			if (col != null) {
 				try {
 					//String _key = ArangoDbUtil.findKey(AQL_FIND_KEY_AQL, "id", id);

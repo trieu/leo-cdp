@@ -39,7 +39,7 @@ public class Category extends TaxonomyNode {
 	static ArangoCollection collectionInstance;
 
 	@Override
-	public ArangoCollection getCollection() {
+	public ArangoCollection getDbCollection() {
 		return getCollection(collectionInstance, COLLECTION_NAME);
 	}
 

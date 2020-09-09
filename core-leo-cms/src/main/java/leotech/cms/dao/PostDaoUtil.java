@@ -44,7 +44,7 @@ public class PostDaoUtil {
 
 	public static String save(Post post) {
 		if (post.isReadyForSave() && checkLimitOfLicense()) {
-			ArangoCollection col = post.getCollection();
+			ArangoCollection col = post.getDbCollection();
 			if (col != null) {
 				String id = post.getId();
 				String _key = ArangoDbUtil.findKey(AQL_FIND_KEY_AQL, "id", id);

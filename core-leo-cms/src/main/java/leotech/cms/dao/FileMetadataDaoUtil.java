@@ -23,7 +23,7 @@ public class FileMetadataDaoUtil {
 
 	public static String save(FileMetadata fileMetadata) {
 		if (fileMetadata.isReadyForSave()) {
-			ArangoCollection col = fileMetadata.getCollection();
+			ArangoCollection col = fileMetadata.getDbCollection();
 			if (col != null) {
 				String _key = col.insertDocument(fileMetadata).getKey();
 				return _key;
@@ -35,7 +35,7 @@ public class FileMetadataDaoUtil {
 	public static boolean deleteByPath(String path) {
 		FileMetadata f = getByPath(path);
 		if (f != null) {
-			ArangoCollection col = f.getCollection();
+			ArangoCollection col = f.getDbCollection();
 			col.deleteDocument(f.getKey());
 			return true;
 		}

@@ -75,7 +75,7 @@ public class ProductItemDao extends BaseLeoCdpDao {
 	public static String save(ProductItem item) {
 		String id = null;
 		if (item.isReadyForSave()) {
-			ArangoCollection col = item.getCollection();
+			ArangoCollection col = item.getDbCollection();
 			if (col != null) {
 				String productId = item.getId();
 				id = isExistedDocument(productId,item.getSku(),item.getSiteDomain());				

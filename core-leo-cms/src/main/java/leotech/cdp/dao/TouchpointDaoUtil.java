@@ -30,7 +30,7 @@ public class TouchpointDaoUtil extends BaseLeoCdpDao {
 	public static String save(Touchpoint tp) {
 		if (tp.isReadyForSave()) {
 			ArangoDatabase db = getCdpDbInstance();
-			ArangoCollection col = tp.getCollection();
+			ArangoCollection col = tp.getDbCollection();
 			if (col != null) {
 				String id = tp.getId();
 				boolean isExisted = ArangoDbUtil.isExistedDocument(db,Touchpoint.COLLECTION_NAME, id);

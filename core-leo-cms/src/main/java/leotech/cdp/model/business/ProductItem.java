@@ -66,7 +66,7 @@ public class ProductItem extends CdpPersistentObject implements Serializable {
 	protected Date updatedAt;
 	
 	@Override
-	public ArangoCollection getCollection() {
+	public ArangoCollection getDbCollection() {
 		if (instance == null) {
 			ArangoDatabase arangoDatabase = getDatabaseInstance();
 

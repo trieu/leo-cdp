@@ -17,7 +17,7 @@ public class DeviceDaoUtil extends BaseLeoCdpDao {
 	
 	public static boolean save(Device d) {
 		if (d.isReadyForSave()) {
-			ArangoCollection col = d.getCollection();
+			ArangoCollection col = d.getDbCollection();
 			String id = d.getId();
 			if (col != null) {
 				ArangoDatabase db = getCdpDbInstance();

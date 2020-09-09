@@ -27,7 +27,7 @@ public class ProductItemDaoUtil extends BaseLeoCdpDao {
 	public static String save(ProductItem item) {
 		if (item.isReadyForSave()) {
 			ArangoDatabase db = getCdpDbInstance();
-			ArangoCollection col = item.getCollection();
+			ArangoCollection col = item.getDbCollection();
 			if (col != null) {
 				String id = item.getId();
 				boolean isExisted = ArangoDbUtil.isExistedDocument(db, ProductItem.COLLECTION_NAME, id);
