@@ -5,10 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import leotech.cdp.dao.ProfileDaoUtil;
 import leotech.cdp.model.analytics.DashboardReport;
 import leotech.cdp.model.analytics.Notebook;
 import leotech.cdp.model.analytics.ReportUnit;
-import leotech.cdp.query.ProfileQuery;
+import leotech.cdp.model.analytics.StatisticCollector;
+import leotech.cdp.model.analytics.StatisticTimelineCollector;
 
 public class Analytics360Service {
 	
@@ -57,10 +62,7 @@ public class Analytics360Service {
 	public static DashboardReport getDashboardReport(String beginFilterDate, String endFilterDate) {
 		Map<String, Long> totalCustomerStatistics = new HashMap<String, Long>();
 		totalCustomerStatistics.put("human profiles", ProfileDataService.countTotalOfProfiles());
-		totalCustomerStatistics.put("segments", SegmentDataService.countTotalOfSegments());
-		
-		ProfileQuery pq = new ProfileQuery("");
-		totalCustomerStatistics.put("identified users", ProfileDataService.countProfilesByQuery(pq)  );
+		totalCustomerStatistics.put("customer segments", SegmentDataService.countTotalOfSegments());
 		
 		
 		Map<String, Long> totalEventStatistics = new HashMap<String, Long>();
@@ -75,6 +77,19 @@ public class Analytics360Service {
 	}
 	
 	public static void main(String[] args) {
+		String beginFilterDate = "2020-01-05T02:56:12.102Z";
+		String endFilterDate = "2020-09-05T02:56:12.102Z";
 		
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		//DashboardReport d = Analytics360Service.getDashboardReport("2018-01-05T02:56:12.102Z", "2020-09-05T02:56:12.102Z");
+		
+		List<StatisticCollector> statsTotal = ProfileDaoUtil.collectProfileTotalStatistics();
+		System.out.println(gson.toJson(statsTotal));
+		
+		List<StatisticCollector> dailyStats = ProfileDaoUtil.collectProfileTotalStatistics(beginFilterDate, endFilterDate);
+		System.out.println(gson.toJson(dailyStats));
+		
+		List<StatisticTimelineCollector> timeseriesData = ProfileDaoUtil.collectProfileTotalStatisticsTimeline(beginFilterDate, endFilterDate);
+		System.out.println(gson.toJson(timeseriesData));
 	}
 }

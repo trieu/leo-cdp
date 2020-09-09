@@ -8,6 +8,7 @@ import java.util.Map;
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
 
+import leotech.cdp.model.customer.Profile;
 import leotech.cdp.model.customer.Segment;
 import leotech.cdp.query.ProfileQuery;
 import leotech.system.config.AqlTemplate;
@@ -24,6 +25,7 @@ import leotech.system.util.database.ArangoDbQuery;
  */
 public class SegmentDaoUtil extends BaseLeoCdpDao {
 	
+	static final String AQL_COUNT_TOTAL_ACTIVE_SEGMENTS = "RETURN LENGTH( FOR s in "+Segment.COLLECTION_NAME+" FILTER  s.status >= 0 RETURN s._key)";
 	static final String AQL_GET_SEGMENTS_BY_PAGINATION = AqlTemplate.get("AQL_GET_SEGMENTS_BY_PAGINATION");
 	static final String AQL_GET_SEGMENT_BY_ID = AqlTemplate.get("AQL_GET_SEGMENT_BY_ID");
 	static final String AQL_GET_SEGMENTS_TO_DELETE_FOREVER = AqlTemplate.get("AQL_GET_SEGMENTS_TO_DELETE_FOREVER");
@@ -132,7 +134,8 @@ public class SegmentDaoUtil extends BaseLeoCdpDao {
 	
 	public static long countTotalOfSegments() {
 		ArangoDatabase db = getCdpDbInstance();
-		return db.collection(Segment.COLLECTION_NAME).count().getCount();
+		long c =  new ArangoDbQuery<Long>(db, AQL_COUNT_TOTAL_ACTIVE_SEGMENTS, Long.class).getResultsAsObject();
+		return c;
 	}
 
 }

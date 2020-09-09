@@ -1,4 +1,4 @@
-############# AQL LEO CMS - POST COLLECTION ########################################################################################################;
+############# AQL LEO CMS - POST  ########################################################################################################;
 
 AQL_GET_POST_BY_ID =>
 	FOR p in cms_post FILTER p.id == @id  
@@ -54,7 +54,7 @@ AQL_GET_KEYWORDS_OF_ALL_POSTS =>
 	RETURN {"keywords" : FLATTEN(list,3)}
 ;
 
-########### AQL LEO CMS - PAGE COLLECTION ########################################################################################################;
+########### AQL LEO CMS - PAGE  ########################################################################################################;
 
 AQL_GET_PAGE_BY_ID =>
 	FOR p in cms_page FILTER p.id == @id  
@@ -85,7 +85,7 @@ AQL_GET_PUBLIC_PAGES_BY_CATEGORY =>
 	RETURN p
 ;
 
-########### AQL LEO CMS - CATEGORY COLLECTION ########################################################################################################;
+########### AQL LEO CMS - CATEGORY  ########################################################################################################;
 
 AQL_FIND_KEY_BY_SLUG =>
 	FOR p in cms_category FILTER p.slug == @slug  
@@ -102,7 +102,7 @@ AQL_GET_ALL_CATEGORIES_BY_NETWORK =>
 	RETURN p
 ;
 
-########### AQL LEO Platform - USER COLLECTION ########################################################################################################;
+########### AQL LEO Platform - USER LOGIN ########################################################################################################;
 AQL_FIND_KEY_BY_USERLOGIN => 
 	FOR u in system_user FILTER u.userLogin == @userLogin  
 	RETURN u._key
@@ -123,7 +123,7 @@ AQL_GET_ALL_USERS_IN_NETWORK =>
 	RETURN u
 ;
 
-########### AQL LEO CMS - FILE_METADATA COLLECTION ########################################################################################################;
+########### AQL LEO CMS - FILE_METADATA  ########################################################################################################;
 AQL_GET_FILE_METADATA_BY_PATH => 
 	FOR f in cms_filemetadata FILTER f.path == @path  
 	RETURN f
@@ -144,7 +144,7 @@ AQL_GET_FILE_METADATA_BY_OBJECT =>
 	RETURN f
 ;
 
-########### AQL LEO CDP - TOUCHPOINT COLLECTION ########################################################################################################;
+########### AQL LEO CDP - TOUCHPOINT  ########################################################################################################;
 
 AQL_GET_TOUCHPOINT_BY_ID =>
 	FOR e in cdp_touchpoint FILTER e._key == @id  
@@ -199,7 +199,7 @@ AQL_GET_TOUCHPOINT_FLOW_BY_PROFILE =>
                 "srcTouchpoints": srcTouchpoints}
 ;
 
-########### AQL LEO CDP - PROFILE COLLECTION ########################################################################################################;
+########### AQL LEO CDP - PROFILE  ########################################################################################################;
 
  
 AQL_GET_ACTIVE_PROFILES_BY_PAGINATION =>
@@ -258,17 +258,28 @@ AQL_GET_PROFILE_BY_KEY_IDENTITIES =>
 	RETURN { "deterministic" : rs1, "probabilistic" : rs2 }
 ;
 
-AQL_ANALYTICS_PROFILE_IN_FUNNEL_WITH_DATE_FILTER =>
+AQL_COLLECTOR_PROFILE_TOTAL =>
+	FOR d IN cdp_profile
+	    FILTER d.status > 0 
+	    COLLECT funnelStage = d.funnelStage WITH COUNT INTO length
+	    RETURN { "collectorKey" : funnelStage, "collectorCount" : length }
+;
+
+AQL_COLLECTOR_PROFILE_IN_DATE_RANGE =>
 	FOR d IN cdp_profile
 	    FILTER d.status > 0 AND d.createdAt >= @beginFilterDate AND d.createdAt <= @endFilterDate
 	    COLLECT funnelStage = d.funnelStage WITH COUNT INTO length
-	    RETURN { 
-	        "funnelStage" : funnelStage, 
-	        "count" : length 
-	    } 
+	    RETURN { "collectorKey" : funnelStage, "collectorCount" : length }
 ;
 
-########### AQL LEO CDP - SEGMENT COLLECTION ########################################################################################################;
+AQL_TIMELINE_COLLECTOR_PROFILE_IN_DATE_RANGE => 
+	FOR d IN cdp_profile
+	    FILTER d.createdAt >= @beginFilterDate AND d.createdAt <= @endFilterDate
+	   	COLLECT dateTime = DATE_TRUNC(d.createdAt, @truncatedUnit), collectorKey = d.funnelStage WITH COUNT INTO length
+	    RETURN { "dateTime" : dateTime, "collectorKey" : collectorKey, "collectorCount" : length }
+;
+
+########### AQL LEO CDP - SEGMENT  ########################################################################################################;
 
 AQL_GET_SEGMENTS_BY_PAGINATION =>
 	FOR d in cdp_segment  
@@ -289,7 +300,7 @@ AQL_GET_SEGMENT_BY_ID =>
 	RETURN d
 ;
 
-########### AQL LEO CDP - CONTEXT_SESSION COLLECTION ########################################################################################################;
+########### AQL LEO CDP - CONTEXT_SESSION  ########################################################################################################;
 
 AQL_GET_CONTEXT_SESSION_BY_KEY =>
 	FOR e in cdp_contextsession FILTER e.sessionKey == @sessionKey  
@@ -349,17 +360,28 @@ AQL_UPDATE_TRACKING_EVENT_STATE_PROCESSED =>
 	    UPDATE e WITH { state: 1 } IN cdp_trackingevent
 ;
 
-AQL_ANALYTICS_EVENT_IN_FUNNEL_WITH_DATE_FILTER => 
+
+AQL_COLLECTOR_EVENT_TOTAL => 
+	FOR e IN cdp_trackingevent
+	    COLLECT metricName = e.metricName WITH COUNT INTO length
+	    RETURN { "collectorKey" : metricName, "collectorCount" : length }
+;
+
+AQL_COLLECTOR_EVENT_IN_DATE_RANGE => 
 	FOR e IN cdp_trackingevent
 	    FILTER e.createdAt >= @beginFilterDate AND e.createdAt <= @endFilterDate
 	    COLLECT metricName = e.metricName WITH COUNT INTO length
-	    RETURN { 
-	        "metricName" : metricName, 
-	        "count" : length 
-	    }
+	    RETURN { "collectorKey" : metricName, "collectorCount" : length }
 ;
 
-########### AQL LEO CDP - PRODUCT ITEM COLLECTION ########################################################################################################;
+AQL_TIMELINE_COLLECTOR_EVENT_IN_DATE_RANGE => 
+	FOR e IN cdp_trackingevent
+	    FILTER e.createdAt >= @beginFilterDate AND e.createdAt <= @endFilterDate
+	   	COLLECT dateTime = DATE_TRUNC(e.createdAt, @truncatedUnit), collectorKey = e.metricName WITH COUNT INTO length
+	    RETURN { "dateTime" : dateTime, "collectorKey" : collectorKey, "collectorCount" : length }
+;
+
+########### AQL LEO CDP - PRODUCT ITEM  ########################################################################################################;
 
 AQL_GET_PRODUCT_ITEM_BY_ID =>
 	FOR e in cdp_productitem FILTER e._key == @id  
@@ -386,7 +408,7 @@ AQL_GET_PRODUCT_ITEMS_BY_FILTER =>
 	RETURN p
 ;
 
-########### AQL LEO CDP - DEVICE COLLECTION ########################################################################################################;
+########### AQL LEO CDP - DEVICE  ########################################################################################################;
 
 AQL_GET_DEVICE_BY_ID =>
 	FOR e in cdp_device FILTER e._key == @id

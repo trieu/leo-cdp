@@ -34,6 +34,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	
 	public static final int MERGED_BY_EMAIL = 101;
 	public static final int STATUS_REMOVED = -4;
+	public static final int STATUS_INVALID = -1;
 	public static final int STATUS_MERGED = 0;
 	public static final int STATUS_ACTIVE = 1;
 
@@ -68,6 +69,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 			dbCol.ensurePersistentIndex(Arrays.asList("usedDeviceIds[*]"),new PersistentIndexOptions().unique(false));
 			
 			dbCol.ensurePersistentIndex(Arrays.asList("funnelStage"),new PersistentIndexOptions().unique(false));
+			dbCol.ensurePersistentIndex(Arrays.asList("behavioralEvents[*]"),new PersistentIndexOptions().unique(false));
 			dbCol.ensurePersistentIndex(Arrays.asList("locationCode"),new PersistentIndexOptions().unique(false));
 
 			dbCol.ensurePersistentIndex(Arrays.asList("topEngagedTouchpointIds[*]"),new PersistentIndexOptions().unique(false));
@@ -308,13 +310,9 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	protected Map<String,Date> funnelStageTimeline = new ConcurrentHashMap<>();
 	
 	@Expose
-	// all recorded event metric names
-	Set<String> behavioralEvents = new HashSet<String>(100);
+	// all recorded event metric names ["content_view","product_view"]
+	protected Set<String> behavioralEvents = new HashSet<String>(100);
 	
-	@Expose
-	//the important metrics to show in analytics and reporting e.g: ["content_view","product_view"]
-	protected Set<String> funnelMetrics  = new HashSet<String>(100); 
-
 	@Expose
 	// current name of funnel stage: Prospective Customer or Engaged Visitor or First-time Customer
 	protected String funnelStage = "";
@@ -1104,17 +1102,6 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		return total;
 	}
 	
-	public Set<String> getFunnelMetrics() {
-		return funnelMetrics;
-	}
-
-	public void setFunnelMetrics(Set<String> funnelMetrics) {
-		this.funnelMetrics = funnelMetrics;
-	}
-	
-	public void resetFunnelMetrics() {
-		this.funnelMetrics.clear();
-	}
 	
 	public Map<String, Long> getEventStatistics() {
 		return eventStatistics;

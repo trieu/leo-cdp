@@ -14,7 +14,7 @@ import leotech.cdp.model.journey.FunnelStage;
 
 public class FunnelDataService {
 
-	private static final FunnelStage HUMAN_PROFILE_FUNNEL_STAGE = new FunnelStage(0, "Human Profile", "");
+	public static final FunnelStage HUMAN_PROFILE_FUNNEL_STAGE = new FunnelStage(0, "Human Profile", "");
 	static List<FunnelStage> eventFunnelStages = new ArrayList<FunnelStage>();
 	static List<FunnelStage> customerFunnelStages = new ArrayList<FunnelStage>();
 	

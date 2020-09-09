@@ -1,5 +1,6 @@
 package leotech.cdp.dao;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -10,9 +11,13 @@ import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
 
 import leotech.cdp.dao.singleview.ProfileSingleDataView;
+import leotech.cdp.model.analytics.StatisticCollector;
+import leotech.cdp.model.analytics.StatisticTimelineCollector;
 import leotech.cdp.model.customer.Profile;
+import leotech.cdp.model.journey.FunnelStage;
 import leotech.cdp.query.ProfileMatchingResult;
 import leotech.cdp.query.ProfileQuery;
+import leotech.cdp.service.FunnelDataService;
 import leotech.system.config.AqlTemplate;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataTablePayload;
@@ -22,7 +27,7 @@ import leotech.system.util.database.ArangoDbQuery.CallbackQuery;
 public class ProfileDaoUtil extends BaseLeoCdpDao {
 
 	
-	private static final String AQL_COUNT_TOTAL_ACTIVE_PROFILES = "RETURN LENGTH( FOR p in "+Profile.COLLECTION_NAME+" FILTER  p.status > 0 RETURN p._key)";
+	static final String AQL_COUNT_TOTAL_ACTIVE_PROFILES = "RETURN LENGTH( FOR p in "+Profile.COLLECTION_NAME+" FILTER  p.status > 0 RETURN p._key)";
 	static final String AQL_GET_PROFILES_BY_PAGINATION = AqlTemplate.get("AQL_GET_PROFILES_BY_PAGINATION");
 	static final String AQL_GET_ACTIVE_PROFILES_BY_PAGINATION = AqlTemplate.get("AQL_GET_ACTIVE_PROFILES_BY_PAGINATION");
 	
@@ -31,6 +36,11 @@ public class ProfileDaoUtil extends BaseLeoCdpDao {
 	static final String AQL_GET_PROFILE_BY_PRIMARY_EMAIL = AqlTemplate.get("AQL_GET_PROFILE_BY_PRIMARY_EMAIL");
 	static final String AQL_GET_PROFILE_BY_KEY_IDENTITIES = AqlTemplate.get("AQL_GET_PROFILE_BY_KEY_IDENTITIES");
 	static final String AQL_GET_PROFILE_REAL_TIME_IDENTITY_RESOLUTION = AqlTemplate.get("AQL_GET_PROFILE_REAL_TIME_IDENTITY_RESOLUTION");
+	
+	// statistics
+	static final String AQL_COLLECTOR_PROFILE_TOTAL = AqlTemplate.get("AQL_COLLECTOR_PROFILE_TOTAL");
+	static final String AQL_COLLECTOR_PROFILE_IN_DATE_RANGE = AqlTemplate.get("AQL_COLLECTOR_PROFILE_IN_DATE_RANGE");
+	static final String AQL_TIMELINE_COLLECTOR_PROFILE_IN_DATE_RANGE = AqlTemplate.get("AQL_TIMELINE_COLLECTOR_PROFILE_IN_DATE_RANGE");
 	
 	// --------------------------------------------------------- //
 	static final long FREE_LIMIT = 5000;
@@ -43,11 +53,19 @@ public class ProfileDaoUtil extends BaseLeoCdpDao {
 
 	
 	public static String create(Profile profile) {
-		if (profile.isReadyForSave() && checkLimitOfLicense()) {
+		if (profile.isReadyForSave() ) {
 			ArangoCollection col = profile.getDbCollection();
 			if (col != null) {
-				col.insertDocument(profile);
-				return profile.getId();
+				if( checkLimitOfLicense() ) {
+					col.insertDocument(profile);
+					return profile.getId();
+				}
+				else {
+					//invalid due to overflow free limit
+					profile.setStatus(Profile.STATUS_INVALID);
+					col.insertDocument(profile);
+					return profile.getId();
+				}
 			}
 		}
 		return null;
@@ -207,8 +225,6 @@ public class ProfileDaoUtil extends BaseLeoCdpDao {
 		return list;
 	}
 	
-
-	
 	public static List<ProfileSingleDataView> getProfilesByQuery(ProfileQuery profileQuery) {
 		ArangoDatabase db = getCdpDbInstance();
 		CallbackQuery<ProfileSingleDataView> callback = new CallbackQuery<ProfileSingleDataView>() {
@@ -242,5 +258,64 @@ public class ProfileDaoUtil extends BaseLeoCdpDao {
 		return c;
 	}
 	
-
+	public static List<StatisticCollector> collectProfileTotalStatistics(){
+		ArangoDatabase db = getCdpDbInstance();
+		CallbackQuery<StatisticCollector> callback = new CallbackQuery<StatisticCollector>() {
+			@Override
+			public StatisticCollector apply(StatisticCollector obj) {
+				FunnelStage funnelStage = FunnelDataService.getFunnelStageById(obj.getCollectorKey());
+				int index = funnelStage.getOrderIndex();
+				obj.setOrderIndex(index);
+				obj.setCollectorKey(funnelStage.getName());
+				return obj;
+			}
+		};
+		ArangoDbQuery<StatisticCollector> q = new ArangoDbQuery<StatisticCollector>(db, AQL_COLLECTOR_PROFILE_TOTAL, StatisticCollector.class, callback);
+		List<StatisticCollector> list = q.getResultsAsList();
+		Collections.sort(list);
+		return list;
+	}
+	
+	public static List<StatisticCollector> collectProfileTotalStatistics(String beginFilterDate, String endFilterDate){
+		ArangoDatabase db = getCdpDbInstance();
+		CallbackQuery<StatisticCollector> callback = new CallbackQuery<StatisticCollector>() {
+			@Override
+			public StatisticCollector apply(StatisticCollector obj) {
+				FunnelStage funnelStage = FunnelDataService.getFunnelStageById(obj.getCollectorKey());
+				int index = funnelStage.getOrderIndex();
+				obj.setOrderIndex(index);
+				obj.setCollectorKey(funnelStage.getName());
+				return obj;
+			}
+		};
+		Map<String, Object> bindVars = new HashMap<>(2);
+		bindVars.put("beginFilterDate", beginFilterDate);
+		bindVars.put("endFilterDate", endFilterDate);
+		ArangoDbQuery<StatisticCollector> q = new ArangoDbQuery<StatisticCollector>(db, AQL_COLLECTOR_PROFILE_IN_DATE_RANGE, bindVars, StatisticCollector.class,callback);
+		List<StatisticCollector> list = q.getResultsAsList();
+		Collections.sort(list);
+		return list;
+	}
+	
+	public static List<StatisticTimelineCollector> collectProfileTotalStatisticsTimeline(String beginFilterDate, String endFilterDate){
+		ArangoDatabase db = getCdpDbInstance();
+		CallbackQuery<StatisticTimelineCollector> callback = new CallbackQuery<StatisticTimelineCollector>() {
+			@Override
+			public StatisticTimelineCollector apply(StatisticTimelineCollector obj) {
+				FunnelStage funnelStage = FunnelDataService.getFunnelStageById(obj.getCollectorKey());
+				int index = funnelStage.getOrderIndex();
+				obj.setOrderIndex(index);
+				obj.setCollectorKey(funnelStage.getName());
+				return obj;
+			}
+		};
+		Map<String, Object> bindVars = new HashMap<>(3);
+		bindVars.put("beginFilterDate", beginFilterDate);
+		bindVars.put("endFilterDate", endFilterDate);
+		bindVars.put("truncatedUnit","days");// https://www.arangodb.com/docs/3.7/aql/functions-date.html#date_trunc
+		ArangoDbQuery<StatisticTimelineCollector> q = new ArangoDbQuery<StatisticTimelineCollector>(db, AQL_TIMELINE_COLLECTOR_PROFILE_IN_DATE_RANGE, bindVars, StatisticTimelineCollector.class,callback);
+		List<StatisticTimelineCollector> list = q.getResultsAsList();
+		Collections.sort(list);
+		return list;
+	}
 }

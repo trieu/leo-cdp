@@ -44,7 +44,6 @@ public class ProfileSingleViewDataJob  extends ScheduledJob {
 		int clvScore = 0;
 		int cacScore = 0;
 		
-		profile.resetFunnelMetrics();
 		profile.resetEventStatistics();
 		profile.resetBehavioralEvent();
 		profile.resetFunnelStageTimeline();
@@ -66,6 +65,8 @@ public class ProfileSingleViewDataJob  extends ScheduledJob {
 				
 				//get metadata of event
 				BehavioralEventMetric metric = FunnelDataService.getBehavioralEventMetricByName(eventName);
+				
+				// only event in defined funnel is processed
 				if(metric != null) {
 					int score = metric.getScore();
 					
@@ -96,6 +97,7 @@ public class ProfileSingleViewDataJob  extends ScheduledJob {
 					FunnelStage funnelStage = metric.getCustomerFunnelStage();
 					profile.updateFunnelStageTimeline(funnelStage.getName(), recoredDate);
 				}
+				
 				TrackingEventDaoUtil.updateProcessedState(event);
 				
 				// what we have, track all 
@@ -115,7 +117,7 @@ public class ProfileSingleViewDataJob  extends ScheduledJob {
 		
 		//TODO update funnel
 		FunnelStage customerFunnelStage = highestScoreMetric.getCustomerFunnelStage();
-		profile.setFunnelStage(customerFunnelStage.getName());
+		profile.setFunnelStage(customerFunnelStage.getId());
 		//profile.setFunnelMetrics(funnelMetrics);
 		
 		ProfileDaoUtil.update(profile);

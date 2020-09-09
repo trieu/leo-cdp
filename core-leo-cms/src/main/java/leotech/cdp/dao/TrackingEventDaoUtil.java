@@ -23,6 +23,13 @@ public class TrackingEventDaoUtil  extends BaseLeoCdpDao{
 	static final String AQL_GET_TRACKING_EVENTS_FOR_REPORTING_BY_PROFILE_ID = AqlTemplate.get("AQL_GET_TRACKING_EVENTS_FOR_REPORTING_BY_PROFILE_ID");
 	static final String AQL_UPDATE_TRACKING_EVENT_STATE_PROCESSED = AqlTemplate.get("AQL_UPDATE_TRACKING_EVENT_STATE_PROCESSED");
 	static final String AQL_GET_CONVERSION_EVENTS_BY_PROFILE_ID = AqlTemplate.get("AQL_GET_CONVERSION_EVENTS_BY_PROFILE_ID");
+	
+	// statistics
+	static final String AQL_COLLECTOR_EVENT_TOTAL = AqlTemplate.get("AQL_COLLECTOR_EVENT_TOTAL");
+	static final String AQL_COLLECTOR_EVENT_IN_DATE_RANGE = AqlTemplate.get("AQL_COLLECTOR_EVENT_IN_DATE_RANGE");
+	static final String AQL_TIMELINE_COLLECTOR_EVENT_IN_DATE_RANGE = AqlTemplate.get("AQL_TIMELINE_COLLECTOR_EVENT_IN_DATE_RANGE");
+	
+	
 
 	public static boolean record(TrackingEvent e) {
 		if (e.isReadyForSave()) {
