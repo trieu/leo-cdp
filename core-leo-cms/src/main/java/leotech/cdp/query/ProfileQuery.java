@@ -10,7 +10,7 @@ public class ProfileQuery {
 
 	boolean filterCreateAt = true;
 	boolean pagination = true;
-	boolean countingTotal = false;;
+	boolean countingTotal = false;
 
 	// default is 86400, number of seconds in Day
 	String beginFilterDate = Instant.now().minusSeconds(86400).toString();
@@ -46,6 +46,11 @@ public class ProfileQuery {
 		
 	}
 	
+	public ProfileQuery(String jsonQueryRules) {
+		super();
+		this.jsonQueryRules = jsonQueryRules;
+	}
+
 	public ProfileQuery(String beginFilterDate, String endFilterDate, String jsonQueryRules, List<String> selectedFields) {
 		super();
 		this.beginFilterDate = beginFilterDate;

@@ -6,15 +6,22 @@
 		<h4 class="page-header" id="page_breadcrumb"></h4>
 	</div>
 	<div class="col-lg-3 text-center" style="padding: 10px">
-		<button type="button" class="btn btn-danger data-control-delete" > Delete </button>
-		<button type="button" class="btn btn-default" onclick="history.back()"> Cancel </button>
+		<button type="button" class="btn btn-danger data-control-delete" > 
+			<i class="fa fa-trash" aria-hidden="true"></i> Delete 
+		</button>
+		<button type="button" class="btn btn-default" onclick="history.back()"> 
+			<i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Back 
+		</button>
+		<button type="button" class="btn btn-success" onclick="saveSegment()"> 
+			<i class="fa fa-check-square-o" aria-hidden="true"></i> Save 
+		</button>
 		
 	</div>
 </div>
 
 <div class="container row">
 	
-	<h3 id="segment_name">  </h3>
+	<h4 id="segment_name" class="highlight_text" >  </h4>
 	<p> Enter the name of segment and use query builder to search profiles </p>
 	
 	<div class="panel-group">
@@ -121,9 +128,8 @@
 					</div>
 				</div>
 				<div class="btn-group col-md-5 col-xs-12">
-					<button class="btn btn-warning" id="btn-reset-querybuilder"> Reset Query </button>
-					<button class="btn btn-primary" id="btn-segmentation-get-size"> Get Size </button>
-					<button class="btn btn-success" onclick="saveSegment()"> Save Segment </button>
+					<button type="button" class="btn btn-warning" id="btn-reset-querybuilder"> Reset Query </button>
+					<button type="button" class="btn btn-primary" id="btn-segmentation-get-size"> Get Segment Size </button>
 				</div>
 				
 				<!-- Query Details -->

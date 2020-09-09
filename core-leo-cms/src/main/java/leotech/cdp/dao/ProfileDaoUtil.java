@@ -111,7 +111,7 @@ public class ProfileDaoUtil extends BaseLeoCdpDao {
 		CallbackQuery<ProfileSingleDataView> callback = new CallbackQuery<ProfileSingleDataView>() {
 			@Override
 			public ProfileSingleDataView apply(ProfileSingleDataView obj) {
-				obj.unifyDataView();
+				obj.unifyData();
 				return obj;
 			}
 		};
@@ -178,7 +178,7 @@ public class ProfileDaoUtil extends BaseLeoCdpDao {
 		CallbackQuery<ProfileSingleDataView> callback = new CallbackQuery<ProfileSingleDataView>() {
 			@Override
 			public ProfileSingleDataView apply(ProfileSingleDataView obj) {
-				obj.unifyDataView();
+				obj.unifyData();
 				return obj;
 			}
 		};
@@ -198,11 +198,31 @@ public class ProfileDaoUtil extends BaseLeoCdpDao {
 		CallbackQuery<ProfileSingleDataView> callback = new CallbackQuery<ProfileSingleDataView>() {
 			@Override
 			public ProfileSingleDataView apply(ProfileSingleDataView obj) {
-				obj.unifyDataView();
+				obj.unifyData();
 				return obj;
 			}
 		};
 		ArangoDbQuery<ProfileSingleDataView> q = new ArangoDbQuery<ProfileSingleDataView>(db, AQL_GET_ACTIVE_PROFILES_BY_PAGINATION, bindVars, ProfileSingleDataView.class, callback);
+		List<ProfileSingleDataView> list = q.getResultsAsList();
+		return list;
+	}
+	
+
+	
+	public static List<ProfileSingleDataView> getProfilesByQuery(ProfileQuery profileQuery) {
+		ArangoDatabase db = getCdpDbInstance();
+		CallbackQuery<ProfileSingleDataView> callback = new CallbackQuery<ProfileSingleDataView>() {
+			@Override
+			public ProfileSingleDataView apply(ProfileSingleDataView obj) {
+				obj.unifyData();
+				return obj;
+			}
+		};
+		String aql = profileQuery.toArangoDataQuery();
+		
+		System.out.println("getProfilesByQuery " + aql);
+		
+		ArangoDbQuery<ProfileSingleDataView> q = new ArangoDbQuery<ProfileSingleDataView>(db, aql, ProfileSingleDataView.class, callback);
 		List<ProfileSingleDataView> list = q.getResultsAsList();
 		return list;
 	}
@@ -214,24 +234,6 @@ public class ProfileDaoUtil extends BaseLeoCdpDao {
 		System.out.println("countProfilesByQuery " + aql);
 		long c =  new ArangoDbQuery<Long>(db, aql, Long.class).getResultsAsObject();
 		return c;
-	}
-	
-	public static List<ProfileSingleDataView> getProfilesByQuery(ProfileQuery profileQuery) {
-		ArangoDatabase db = getCdpDbInstance();
-		CallbackQuery<ProfileSingleDataView> callback = new CallbackQuery<ProfileSingleDataView>() {
-			@Override
-			public ProfileSingleDataView apply(ProfileSingleDataView obj) {
-				obj.unifyDataView();
-				return obj;
-			}
-		};
-		String aql = profileQuery.toArangoDataQuery();
-		
-		System.out.println("getProfilesByQuery " + aql);
-		
-		ArangoDbQuery<ProfileSingleDataView> q = new ArangoDbQuery<ProfileSingleDataView>(db, aql, ProfileSingleDataView.class, callback);
-		List<ProfileSingleDataView> list = q.getResultsAsList();
-		return list;
 	}
 
 	public static long countTotalOfProfiles() {

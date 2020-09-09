@@ -162,4 +162,6 @@ public class EventTrackingService {
 		List<EventSingleDataView> eventActivities = TrackingEventDaoUtil.getEventsByProfileId(profileId,new DataFilter(startIndex, numberResults));
 		return eventActivities;
 	}
+	
+	
 }

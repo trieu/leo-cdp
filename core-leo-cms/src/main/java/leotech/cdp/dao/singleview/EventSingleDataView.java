@@ -3,11 +3,11 @@ package leotech.cdp.dao.singleview;
 import com.google.gson.annotations.Expose;
 
 import leotech.cdp.dao.TouchpointDaoUtil;
-import leotech.cdp.model.SingleDataView;
+import leotech.cdp.model.SingleViewAnalyticalObject;
 import leotech.cdp.model.analytics.TrackingEvent;
 import leotech.cdp.model.journey.Touchpoint;
 
-public class EventSingleDataView extends TrackingEvent implements SingleDataView {
+public class EventSingleDataView extends TrackingEvent implements SingleViewAnalyticalObject {
 	
 	@Expose
 	Touchpoint refTouchpoint;
@@ -17,7 +17,7 @@ public class EventSingleDataView extends TrackingEvent implements SingleDataView
 	
 	
 	@Override
-	public void unifyDataView() {
+	public void unifyData() {
 		this.refTouchpoint = TouchpointDaoUtil.getById(this.refTouchpointId);
 		this.srcTouchpoint = TouchpointDaoUtil.getById(this.srcTouchpointId);
 	}
@@ -37,7 +37,4 @@ public class EventSingleDataView extends TrackingEvent implements SingleDataView
 	public void setSrcTouchpoint(Touchpoint srcTouchpoint) {
 		this.srcTouchpoint = srcTouchpoint;
 	}
-
-	
-	
 }

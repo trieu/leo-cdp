@@ -171,6 +171,11 @@ public class Segment extends CdpPersistentObject implements Comparable<Segment> 
 		this.endFilterDate = endFilterDate;
 	}
 	
+	public Segment( String jsonQueryRules) {
+		super();
+		this.jsonQueryRules = jsonQueryRules;
+	}
+	
 	public ProfileQuery toProfileQuery() {
 		// default query
 		return toProfileQuery(0, 20);

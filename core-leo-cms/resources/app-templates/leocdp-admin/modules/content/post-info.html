@@ -46,10 +46,20 @@
 	        		<i class="fa fa-fw fa-pencil-square-o"></i> Edit 
 	        	</button>
                
-                <button type="button" class="btn btn-danger data-control-delete" onclick="LeoCdpAdmin.navFunctions.deletePost(postModel)"  >Delete</button>
-                <button type="button" class="btn btn-info" onclick="history.back()">Cancel</button>
+                <button type="button" class="btn btn-danger data-control-delete" onclick="LeoCdpAdmin.navFunctions.deletePost(postModel)"  >
+                	<i class="fa fa-trash" aria-hidden="true"></i>
+                	Delete
+                </button>
+                <br>  <br>
+                <button type="button" class="btn btn-info" onclick="history.back()">
+                	<i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+                	Back
+                </button>
                  
-                <button id="btn_preview_post" type="button" class="btn btn-success" data-slug="" onclick="previewPost(this)">View</button>
+                <button id="btn_preview_post" type="button" class="btn btn-success" data-slug="" onclick="previewPost(this)">
+                	<i class="fa fa-info-circle" aria-hidden="true"></i>
+                	Preview
+                </button>
             </div>
             <hr>
         </div>

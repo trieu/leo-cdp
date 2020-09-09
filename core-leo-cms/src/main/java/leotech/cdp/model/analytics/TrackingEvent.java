@@ -198,7 +198,7 @@ public class TrackingEvent extends CdpPersistentObject {
 
 	@Override
 	public boolean isReadyForSave() {
-		return StringUtil.isNotEmpty(this.metricName) && StringUtil.isNotEmpty(this.observerId)
+		return StringUtil.isNotEmpty(this.id) && StringUtil.isNotEmpty(this.metricName) && StringUtil.isNotEmpty(this.observerId)
 				&& StringUtil.isNotEmpty(this.srcTouchpointId) && this.timestamp > 0;
 	}
 
@@ -221,13 +221,15 @@ public class TrackingEvent extends CdpPersistentObject {
 	 */
 	public TrackingEvent(String observerId, String metricName, long metricValue, String srcTouchpointId) {
 		super();
+		
 		this.observerId = observerId;
 		this.metricName = metricName;
 		this.metricValue = metricValue;
 		this.srcTouchpointId = srcTouchpointId;
 		this.isActiveTracked = false;
-		this.createdAt = new Date();
+		
 		this.timestamp = DateTimeUtil.currentUnixTimestamp();
+		this.createdAt = new Date(1000L * this.timestamp);
 		
 		createId(observerId, metricName, metricValue, srcTouchpointId);
 	}

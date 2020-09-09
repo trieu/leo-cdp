@@ -78,7 +78,7 @@ public class TrackingEventDaoUtil  extends BaseLeoCdpDao{
 		CallbackQuery<EventSingleDataView> callback = new CallbackQuery<EventSingleDataView>() {
 			@Override
 			public EventSingleDataView apply(EventSingleDataView obj) {
-				obj.unifyDataView();
+				obj.unifyData();
 				return obj;
 			}
 		};
@@ -98,7 +98,7 @@ public class TrackingEventDaoUtil  extends BaseLeoCdpDao{
 		CallbackQuery<EventSingleDataView> callback = new CallbackQuery<EventSingleDataView>() {
 			@Override
 			public EventSingleDataView apply(EventSingleDataView obj) {
-				obj.unifyDataView();
+				obj.unifyData();
 				return obj;
 			}
 		};

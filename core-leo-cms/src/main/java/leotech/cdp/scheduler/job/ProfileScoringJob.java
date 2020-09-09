@@ -46,8 +46,9 @@ public class ProfileScoringJob  extends ScheduledJob {
 		System.out.println("updateStatistics ProfileSingleDataView " + profileId);
 		
 		int startIndex = 0;
-		int numberResult = 200;
+		int numberResult = 100;
 		
+		// init to get first 100 events of profile
 		List<EventSingleDataView> events = EventTrackingService.getEventActivityFlowOfProfile(profileId , startIndex, numberResult);
 		BehavioralEventMetric highestScoreMetric = null;
 		
@@ -58,6 +59,7 @@ public class ProfileScoringJob  extends ScheduledJob {
 				profile.setBehavioralEvent(eventName);
 				profile.updateEventCount(eventName);
 				
+				//get metadata of event
 				BehavioralEventMetric metric = BehavioralEventMetricDao.getBehavioralEventMetricByName(eventName);
 				if(metric != null) {
 					int score = metric.getScore();
@@ -81,12 +83,12 @@ public class ProfileScoringJob  extends ScheduledJob {
 				TrackingEventDaoUtil.updateProcessedState(event);
 			}
 			
-			//loop to the end of database
+			//loop to the end to reach all events of profile in database
 			startIndex = startIndex + numberResult;
 			events = EventTrackingService.getEventActivityFlowOfProfile(profileId , startIndex, numberResult);
 		}
 		
-		//update scoring
+		//TODO update 8 scoring model here, extend with Jupyter Notebook and Rules Engine 
 		profile.setTotalLeadScore(totalLeadScore);
 		profile.setTotalCSAT(satisfyScore);
 		

@@ -11,6 +11,7 @@ import leotech.cdp.dao.ProfileDaoUtil;
 import leotech.cdp.dao.singleview.ProfileSingleDataView;
 import leotech.cdp.model.customer.Profile;
 import leotech.cdp.model.customer.ProfileType;
+import leotech.cdp.query.ProfileQuery;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataTablePayload;
 import leotech.system.model.SystemUser;
@@ -230,7 +231,6 @@ public class ProfileDataService {
 		return dataObj;
 	}
 	
-	
 	public static boolean remove(String profileId) {
 		Profile pf = ProfileDaoUtil.getById(profileId);
 		// the data is not deleted, we need to remove it from valid data view, set status of object = -4
@@ -243,6 +243,10 @@ public class ProfileDataService {
 	
 	public static long countTotalOfProfiles() {
 		return ProfileDaoUtil.countTotalOfProfiles();
+	}
+	
+	public static long countProfilesByQuery(ProfileQuery pq) {
+		return ProfileDaoUtil.countProfilesByQuery(pq);
 	}
 
 }

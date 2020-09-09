@@ -9,14 +9,14 @@ import com.google.gson.annotations.Expose;
 
 import leotech.cdp.dao.TouchpointDaoUtil;
 import leotech.cdp.dao.TrackingEventDaoUtil;
-import leotech.cdp.model.SingleDataView;
+import leotech.cdp.model.SingleViewAnalyticalObject;
 import leotech.cdp.model.analytics.TrackingEvent;
 import leotech.cdp.model.customer.Profile;
 import leotech.cdp.model.customer.ProfileType;
 import leotech.cdp.model.journey.Touchpoint;
 import leotech.system.model.DeviceInfo;
 
-public class ProfileSingleDataView extends Profile implements SingleDataView {
+public class ProfileSingleDataView extends Profile implements SingleViewAnalyticalObject {
 
 	@Expose
 	Touchpoint lastTouchpoint;
@@ -56,7 +56,7 @@ public class ProfileSingleDataView extends Profile implements SingleDataView {
 	}
 	
 	@Override
-	public void unifyDataView() {
+	public void unifyData() {
 		// only load data when null
 		//TODO 
 		

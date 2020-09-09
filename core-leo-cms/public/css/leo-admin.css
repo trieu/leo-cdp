@@ -300,6 +300,13 @@ div.gridholder {
   font-size: 12px;
 }
 
+.highlight_text {
+	background-color: #FFF8DC;
+    color: #0000CD;
+    border-radius: 6px;
+    padding: 5px;
+}
+
 /* profile */
 
 #attribution_description {

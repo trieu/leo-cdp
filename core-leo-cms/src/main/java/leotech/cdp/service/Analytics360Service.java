@@ -8,6 +8,7 @@ import java.util.Map;
 import leotech.cdp.model.analytics.DashboardReport;
 import leotech.cdp.model.analytics.Notebook;
 import leotech.cdp.model.analytics.ReportUnit;
+import leotech.cdp.query.ProfileQuery;
 
 public class Analytics360Service {
 	
@@ -55,6 +56,12 @@ public class Analytics360Service {
 	
 	public static DashboardReport getDashboardReport(String beginFilterDate, String endFilterDate) {
 		Map<String, Long> totalCustomerStatistics = new HashMap<String, Long>();
+		totalCustomerStatistics.put("human profiles", ProfileDataService.countTotalOfProfiles());
+		totalCustomerStatistics.put("segments", SegmentDataService.countTotalOfSegments());
+		
+		ProfileQuery pq = new ProfileQuery("");
+		totalCustomerStatistics.put("identified users", ProfileDataService.countProfilesByQuery(pq)  );
+		
 		
 		Map<String, Long> totalEventStatistics = new HashMap<String, Long>();
 		

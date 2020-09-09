@@ -5,19 +5,28 @@
 <!-- Segment Builder -->
 
 <div class="row">
-	<div class="col-lg-9">
+	<div class="col-lg-8">
 		<h4 class="page-header" id="page_breadcrumb"></h4>
 	</div>
-	<div class="col-lg-3 text-center" style="padding: 10px">
-		<button type="button" class="btn btn-danger data-control-delete" onclick=""> Delete </button>
-		<button type="button" class="btn btn-default" onclick="history.back()" > Cancel </button>
-		<button type="button" class="btn btn-success data-control-edit" onclick=""> Edit </button>
+	<div class="col-lg-4 text-center" style="padding: 10px">
+		<button type="button" class="btn btn-danger data-control-delete" onclick=""> 
+			<i class="fa fa-trash" aria-hidden="true"></i> Delete 
+		</button>
+		<button type="button" class="btn btn-info data-control-copy" onclick="" > 
+			<i class="fa fa-clone" aria-hidden="true"></i> Copy 
+		</button>
+		<button type="button" class="btn btn-success data-control-edit" onclick=""> 
+			<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit 
+		</button>
+		<button type="button" class="btn btn-primary data-control-activation" disabled="disabled"> 
+			<i class="fa fa-bolt" aria-hidden="true"></i> Activate 
+		</button>
 	</div>
 </div>
 
 <div class="container row">
 	
-	<h3> Segment Details </h3>
+	<h4 id="segment_name" class="highlight_text" >  </h4>
 	<p> Metadata, query details and matched profiles </p>
 	
 	<div class="panel-group">
@@ -146,6 +155,7 @@
                 var jsonQueryRules = JSON.parse( segmentDataModel.jsonQueryRules );
                 
                 document.title = 'Segment Details: ' + segmentDataModel.name;
+                $('#segment_name').text('Segment Details: ' + segmentDataModel.name);
                 
                 setSegmentDataAndReports(segmentDataModel)
                
