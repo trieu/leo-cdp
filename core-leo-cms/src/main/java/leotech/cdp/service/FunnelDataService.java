@@ -15,10 +15,10 @@ import leotech.cdp.model.journey.FunnelStage;
 public class FunnelDataService {
 
 	
-	public static final FunnelStage HUMAN_PROFILE_FUNNEL_STAGE = new FunnelStage(0, "Human Profile", "");
+	public static final FunnelStage CUSTOMER_PROFILE_FUNNEL_STAGE = new FunnelStage(0, "Customer Profile", "");
 	
 	public static final BehavioralEventMetric UNCLASSIFIED_EVENT = new BehavioralEventMetric("unclassified-event","Unclassified Event", 0, EventMetaData.FIRST_PARTY_DATA,
-			"unclassified-event", HUMAN_PROFILE_FUNNEL_STAGE.getId());
+			"unclassified-event", CUSTOMER_PROFILE_FUNNEL_STAGE.getId());
 	
 	static List<FunnelStage> eventFunnelStages = new ArrayList<FunnelStage>();
 	static List<FunnelStage> customerFunnelStages = new ArrayList<FunnelStage>();
@@ -45,7 +45,7 @@ public class FunnelDataService {
 		}
 		
 		//Customer Data Funnel
-		customerFunnelStages.add(HUMAN_PROFILE_FUNNEL_STAGE);
+		customerFunnelStages.add(CUSTOMER_PROFILE_FUNNEL_STAGE);
 		customerFunnelStages.add(new FunnelStage(1, "New Visitor", "customer_retail"));
 		customerFunnelStages.add(new FunnelStage(2, "Engaged Visitor", "customer_retail"));
 		customerFunnelStages.add(new FunnelStage(3, "Customer Lead", "customer_retail"));
@@ -102,7 +102,7 @@ public class FunnelDataService {
 	}
 	
 	public static FunnelStage getFunnelStageById(String id) {
-		return funnelDataCache.getOrDefault(id, HUMAN_PROFILE_FUNNEL_STAGE);
+		return funnelDataCache.getOrDefault(id, CUSTOMER_PROFILE_FUNNEL_STAGE);
 	}
 	
 	public static BehavioralEventMetric getBehavioralEventMetric(String id) {

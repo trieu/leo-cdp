@@ -18,7 +18,7 @@ import leotech.system.util.database.ArangoDbQuery.CallbackQuery;
 public class Analytics360Dao extends BaseLeoCdpDao {
 	
 	private static final String CUSTOMER_SEGMENTS = "Customer Segment";
-	private static final String HUMAN_PROFILES = "Human Profile";
+	private static final String HUMAN_PROFILES = "Customer Profile";
 	
 	// profile statistics
 	static final String AQL_PROFILE_COLLECTOR_TOTAL = AqlTemplate.get("AQL_PROFILE_COLLECTOR_TOTAL");
