@@ -81,8 +81,7 @@ function loadMediaInfoView(mediaInfo, type, editMode) {
         $('#mediaInfoDowdloadUrl').show().find('a').attr('href', mediaInfo);
 
         if (mediaInfo.indexOf('.pdf') > 0) {
-            html = '<iframe width="100%" height="800" frameborder="0" src="public/js/doc-viewerjs/index.html#' +
-                mediaInfo + `"></iframe>`;
+            html = '<iframe width="100%" height="800" frameborder="0" src="public/js/doc-viewerjs/index.html#' + mediaInfo + `"></iframe>`;
         } else if (
             mediaInfo.indexOf('.docx') > 0 || mediaInfo.indexOf('.doc') > 0 || mediaInfo.indexOf('.docm') > 0 ||
             mediaInfo.indexOf('.pptx') > 0 || mediaInfo.indexOf('.ppt') ||

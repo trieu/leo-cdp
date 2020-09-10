@@ -99,10 +99,13 @@ public class CdpAnalytics360Handler extends SecuredWebDataHandler {
 						
 						String beginFilterDate = RequestInfoUtil.getString(params,"beginFilterDate", "");
 						String endFilterDate = RequestInfoUtil.getString(params,"endFilterDate", "");
+						String timeUnit= RequestInfoUtil.getString(params,"timeUnit", Analytics360Service.MONTHS);
 						
 						if ( !beginFilterDate.isEmpty() && !endFilterDate.isEmpty() ) {
-							DashboardReport dashboard = Analytics360Service.getDashboardReport(beginFilterDate, endFilterDate);
+							DashboardReport dashboard = Analytics360Service.getDashboardReport(beginFilterDate, endFilterDate, timeUnit);
 							return JsonDataPayload.ok(uri, dashboard, loginUser, DashboardReport.class);
+						} else {
+							return JsonDataPayload.fail("beginFilterDate and endFilterDate must be a valid date", 500);
 						}
 					}
 

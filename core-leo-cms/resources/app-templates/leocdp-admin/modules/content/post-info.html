@@ -14,23 +14,13 @@
     <div class="row">
         <div class="col-lg-9">
             <!-- Headline Images -->
+            <h5 id="post_info_title" > </h5> 
             <div id="headline-images-div"></div>
 
             <!-- Post Content -->
             <hr>
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-lg-9">
-                            <h3>Content</h3>
-                        </div>
-                        <div class="col-lg-3" style="text-align: right;" id="mediaInfoDowdloadUrl" style="display: none">
-                            <a href="javascript:" class="btn btn-primary" target="_blank">
-                                <i class="fa fa-fw fa-download"></i> Download
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                
                 <div class="panel-body">
                     <div id="headlineVideo"></div>
                     <div id="mediaInfoPreview"></div>
@@ -41,27 +31,31 @@
 
         <div class="col-lg-3">
             <div class="row">
-               
-                <button type="button" class="btn btn-primary data-control-edit" id="btn_edit_post" > 
-	        		<i class="fa fa-fw fa-pencil-square-o"></i> Edit 
-	        	</button>
-               
-                <button type="button" class="btn btn-danger data-control-delete" onclick="LeoCdpAdmin.navFunctions.deletePost(postModel)"  >
-                	<i class="fa fa-trash" aria-hidden="true"></i>
-                	Delete
-                </button>
-                <br>  <br>
-                <button type="button" class="btn btn-info" onclick="history.back()">
+            
+            	<button type="button" class="btn btn-info" onclick="history.back()">
                 	<i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
                 	Back
                 </button>
-                 
-                <button id="btn_preview_post" type="button" class="btn btn-success" data-slug="" onclick="previewPost(this)">
+                
+            	<button type="button" class="btn btn-danger data-control-delete" onclick="LeoCdpAdmin.navFunctions.deletePost(postModel)"  >
+                	<i class="fa fa-trash" aria-hidden="true"></i>
+                	Delete
+                </button>
+                
+                <button type="button" class="btn btn-success data-control-edit" id="btn_edit_post" > 
+	        		<i class="fa fa-fw fa-pencil-square-o"></i> Edit 
+	        	</button>
+            </div>
+            <hr>
+            <div class="row"  >
+             	<button id="btn_preview_post" type="button" class="btn btn-primary" data-slug="" onclick="previewPost(this)">
                 	<i class="fa fa-info-circle" aria-hidden="true"></i>
                 	Preview
                 </button>
-            </div>
-            <hr>
+                <a id="mediaInfoDowdloadUrl" href="javascript:" class="btn btn-info" target="_blank" style="display: none;">
+                    <i class="fa fa-fw fa-download"></i> Download
+                </a>
+           </div>
         </div>
     </div>
 </div>
@@ -96,7 +90,8 @@
         			}
                 	
                     postModel = json.data;
-                    document.title = 'Post Information - ' + postModel.title;
+                    document.title = 'Leo CDP - Content Post: ' + postModel.title;
+                    $('#post_info_title').text(postModel.title)
 
                     var pageId = postModel.pageIds[0] || '';
                     var categoryKey = postModel.categoryKeys[0] || '';

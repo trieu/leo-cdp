@@ -91,12 +91,18 @@
         <div class="col-lg-3">
             <div id="error-on-save" class="alert alert-danger" style="display: none;"></div>
             <div class="action-div row-centered ">
-                <a href="javascript:postEditorSave()" class="btn btn-success">
-                    <i class="fa fa-fw fa-check"></i> Save
-                </a>
-                <button type="button" class="btn btn-info" onclick="history.back()">Cancel</button>
-                <button style="display: none;" type="button" class="btn btn-success" onclick="callLeoBotForIdeasRecommender('context-page')">Hi Leo</button>
-                <button type="button" class="btn btn-danger" onclick="LeoCdpAdmin.navFunctions.deletePost(postModel)">Delete</button>
+            	<button style="display: none;" type="button" class="btn btn-success" onclick="callLeoBotForIdeasRecommender('context-page')">Hi Leo</button>
+            
+                <button type="button" class="btn btn-info" onclick="history.back()">
+                	<i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+                	Back
+                </button>
+                <button type="button" class="btn btn-danger" onclick="LeoCdpAdmin.navFunctions.deletePost(postModel)">
+                	<i class="fa fa-trash" aria-hidden="true"></i> Delete
+                </button>
+                <button type="button" class="btn btn-success data-control-edit" onclick="postEditorSave()"  > 
+	        		<i class="fa fa-fw fa-check"></i> Save 
+	        	</button>  
             </div>
             <hr>
             <div class="action-div">

@@ -11,6 +11,10 @@ import leotech.cdp.model.analytics.Notebook;
 import leotech.cdp.model.analytics.StatisticCollector;
 
 public class Analytics360Service {
+	public static final String YEARS = "years";
+	public static final String MONTHS = "months";
+	public static final String DAYS = "days";
+	public static final String HOURS = "hours";
 	
 	static Map<String, Notebook> notebooks = new HashMap<String, Notebook>();
 	static {
@@ -55,17 +59,45 @@ public class Analytics360Service {
 		return htmlName;
 	}
 	
-	public static DashboardReport getDashboardReport(String beginFilterDate, String endFilterDate) {
+	public static DashboardReport getDashboardReport(String beginFilterDate, String endFilterDate, String timeUnit) {
 		
 		List<StatisticCollector> profileTotalStats = Analytics360Dao.collectProfileTotalStatistics();
 		
 		List<StatisticCollector> profileFunnelInDatetimeStats = Analytics360Dao.collectProfileFunnelStatistics(beginFilterDate, endFilterDate);
 		
-		List<StatisticCollector> profileTimeseriesStats = Analytics360Dao.collectProfileDailyStatistics(beginFilterDate, endFilterDate);
+		List<StatisticCollector> profileTimeseriesStats;
+		if(Analytics360Service.MONTHS.equals(timeUnit)) {
+			profileTimeseriesStats = Analytics360Dao.collectProfileMonthlyStatistics(beginFilterDate, endFilterDate);
+		} 
+		else if(Analytics360Service.HOURS.equals(timeUnit)) {
+			profileTimeseriesStats = Analytics360Dao.collectProfileHourlyStatistics(beginFilterDate, endFilterDate);
+		} 
+		else if(Analytics360Service.DAYS.equals(timeUnit)) {
+			profileTimeseriesStats = Analytics360Dao.collectProfileDailyStatistics(beginFilterDate, endFilterDate);
+		} 
+		else {
+			profileTimeseriesStats = Analytics360Dao.collectProfileYearlyStatistics(beginFilterDate, endFilterDate);
+		}
+		
 		
 		List<StatisticCollector> eventTotalStats = Analytics360Dao.collectTrackingEventTotalStatistics();
 		List<StatisticCollector> eventFunnelInDatetimeStats = Analytics360Dao.collectTrackingEventTotalStatistics(beginFilterDate, endFilterDate);
-		List<StatisticCollector> eventTimeseriesStats = Analytics360Dao.collectEventDailyStatistics(beginFilterDate, endFilterDate);
+		
+
+		List<StatisticCollector> eventTimeseriesStats;
+		if(Analytics360Service.MONTHS.equals(timeUnit)) {
+			eventTimeseriesStats = Analytics360Dao.collectEventMonthlyStatistics(beginFilterDate, endFilterDate);
+		} 
+		else if(Analytics360Service.HOURS.equals(timeUnit)) {
+			eventTimeseriesStats = Analytics360Dao.collectEventHourlyStatistics(beginFilterDate, endFilterDate);
+		} 
+		else if(Analytics360Service.DAYS.equals(timeUnit)) {
+			eventTimeseriesStats = Analytics360Dao.collectEventDailyStatistics(beginFilterDate, endFilterDate);
+		} 
+		else {
+			eventTimeseriesStats = Analytics360Dao.collectEventYearlyStatistics(beginFilterDate, endFilterDate);
+		}
+		
 		
 		DashboardReport report = new DashboardReport(beginFilterDate, endFilterDate, profileTotalStats, profileFunnelInDatetimeStats, profileTimeseriesStats, eventTotalStats, eventFunnelInDatetimeStats, eventTimeseriesStats);
 		

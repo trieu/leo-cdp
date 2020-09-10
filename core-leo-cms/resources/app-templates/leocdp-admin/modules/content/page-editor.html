@@ -53,11 +53,17 @@
         </div>
         <div class="col-lg-3">
             <div class="action-div row-centered ">
-                <a href="javascript:pageEditorSave()" class="btn btn-success">
-                    <i class="fa fa-fw fa-check"></i> Save
-                </a>
-                <button type="button" class="btn btn-info" onclick="history.back()">Cancel</button>
-                <button type="button" class="btn btn-danger" onclick="LeoCdpAdmin.navFunctions.deletePage(pageModel)">Delete</button>                
+                
+                <button type="button" class="btn btn-info" onclick="history.back()">
+                	<i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+                	Back
+                </button>
+                <button type="button" class="btn btn-danger" onclick="LeoCdpAdmin.navFunctions.deletePage(pageModel)">
+                	<i class="fa fa-trash" aria-hidden="true"></i> Delete
+                </button>
+                <button type="button" class="btn btn-success data-control-edit" onclick="pageEditorSave()"  > 
+	        		<i class="fa fa-fw fa-check"></i> Save 
+	        	</button>           
             </div>
             <hr>
             <div class="action-div">

@@ -10,16 +10,18 @@
     	margin: auto; display: block;
     }
     .fixed_panel {
-	    position: fixed;
+	   	position: fixed;
+	    right: 0;
 	    z-index: 1;
-	    top: 96px;
-	    width: 82%;
+	    top: 86px;
+	    width: 21%;
+	    padding-right: 40px;
 	}
 	.collector-count {
-		font-size:13.2px!important; 
+		font-size:12.8px!important; 
 	}
 	.collector-item {
-		padding: 5px!important; 
+		padding: 4px!important; 
 	}
 </style>
 
@@ -85,30 +87,32 @@
             </div>
         </div>
         
-        <div class="col-md-3 fixed_panel">
-        	
+        <div class="col-md-3 "> </div>
+        
+        <div class="fixed_panel">
+        	<!-- holder for Total Customer Statistics and Total Event Statistics -->
         </div>
         
     </div>
     
     <div class="fixed_panel row">    	
-    	<div class="col-md-3 " style="float: right;">
-        	<div class="row chart_box">
-	        	<h4 class="chart_header" > Total Customer Statistics</h4>
-	            <div class="summary_metric">
-	                <div class="vcenter" id="profile_total_stats" >
-	 
-	                </div>
-	            </div>
-	            
-	            <h4 class="chart_header" > Total Event Statistics </h4>
-	            <div class="summary_metric">
-	                <div class="vcenter" id="event_total_stats" >
-	                    
-	                </div>
-	            </div>
-        	</div>
-        </div>
+    	
+       	<div class="row chart_box">
+        	<h4 class="chart_header" > Total Customer Statistics</h4>
+            <div class="summary_metric">
+                <div class="vcenter" id="profile_total_stats" >
+ 
+                </div>
+            </div>
+            
+            <h4 class="chart_header" > Total Event Statistics </h4>
+            <div class="summary_metric">
+                <div class="vcenter" id="event_total_stats" >
+                    
+                </div>
+            </div>
+       	</div>
+        
     </div>
 
     <div class="row chart_box" style="display: none;" >
