@@ -281,7 +281,7 @@ var loadProfileViewByAjax = window.loadProfileViewByAjax || function(selectorId,
             },
             {
                 "render": function (data, type, row) {
-                    return '<div class="datatable_text text-center">'  + data + '</div>';
+                    return '<div class="datatable_text text-center">'  + new Number(data).toLocaleString() + '</div>';
                 },
                 "targets": 5
             },

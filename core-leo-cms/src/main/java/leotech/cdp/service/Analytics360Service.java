@@ -54,7 +54,9 @@ public class Analytics360Service {
 	public static DashboardReport getDashboardReport(String beginFilterDate, String endFilterDate) {
 		
 		List<StatisticCollector> profileTotalStats = Analytics360Dao.collectProfileTotalStatistics();
+		
 		List<StatisticCollector> profileFunnelInDatetimeStats = Analytics360Dao.collectProfileTotalStatistics(beginFilterDate, endFilterDate);
+		
 		List<StatisticCollector> profileTimeseriesStats = Analytics360Dao.collectProfileTotalStatisticsTimeseries(beginFilterDate, endFilterDate);
 		
 		List<StatisticCollector> eventTotalStats = Analytics360Dao.collectTrackingEventTotalStatistics();

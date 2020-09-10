@@ -26,8 +26,8 @@
         
         <div class="col-md-9 highlight_box">
         
-         	<div class='text-center'>
-				<h4>Reporting period: <span> January 12, 2020 </span> &#8594;  <span> May 11, 2020 </span></h4> 
+         	<div class='text-center' style="margin-bottom: 20px">
+				<h4> Reporting data from  <span id="beginReportDate" class="highlight_text"> January 12, 2020 </span> to <span id="endReportDate" class="highlight_text" > May 11, 2020 </span> </h4> 
 			</div>
 			
         	<div class="row float-right">
@@ -50,27 +50,21 @@
 		            </div>
 		        </div>
 		        <div class='col-md-2 col-xs-12 text-center'>
-		        	<button type="button" class="btn btn-success" style="width: 86%"> OK </button>
+		        	<button type="button" class="btn btn-success" style="width: 86%" onclick="showDashboardReport()" > OK </button>
 		        </div>
 		    </div>
 	       
             <div class="row chart_box">
-                <div class="col-md-6">
-	                 <h4 class="chart_header text-center" >Behavioral Event Funnel</h4>
-		           	 <div class="summary_metric">
-		               <div class="vcenter">
-		                  <div id="event_funnel"></div>
-		               </div>
-		           	</div>
-             	</div>
-	            <div class="col-md-6 ">
-	                 <h4 class="chart_header text-center" >Customer Data Funnel</h4>
+                <div class="col-md-2"></div>
+	            <div class="col-md-8 ">
+	                 <h4 class="chart_header text-center" >Customer Journey Funnel</h4>
 	                 <div class="summary_metric">
 		               <div class="vcenter">
 		                  <div id="profile_funnel"></div>
 		               </div>
 		           	</div>
 	            </div>
+	            <div class="col-md-2"></div>
             </div>
         </div>
         
@@ -78,29 +72,14 @@
         	<div class="row chart_box">
 	        	<h4 class="chart_header" > Total Customer Statistics</h4>
 	            <div class="summary_metric">
-	                <div class="vcenter">
-	                   
-	                    <h5> <span class="label label-default"> 33,801 </span> &nbsp; human profiles </h5>
-	                    <h5> <span class="label label-default"> 63 </span> &nbsp; segments </h5>
-	                    <h5> <span class="label label-default"> 12,432 </span> &nbsp; identified users </h5>
-	                    <h5> <span class="label label-default"> 1,489 </span> &nbsp; customers </h5>
-	                    <h5> <span class="label label-default"> 900 </span> &nbsp; new customers </h5>
-	                    <h5> <span class="label label-default"> 589 </span> &nbsp; repeat customers </h5>
+	                <div class="vcenter" id="profile_total_stats" >
 	 
 	                </div>
 	            </div>
 	            
 	            <h4 class="chart_header" > Total Event Statistics </h4>
 	            <div class="summary_metric">
-	                <div class="vcenter">
-	                
-	                    <h5> <span class="label label-default"> 61,656 </span> &nbsp; page views </h5>
-	                    <h5> <span class="label label-default"> 8,152 </span> &nbsp; product info views </h5>
-	                    <h5> <span class="label label-default"> 7,548 </span> &nbsp; product video views </h5>
-	                    <h5> <span class="label label-default"> 2,262 </span> &nbsp; add-to-cart clicks </h5>
-	                    <h5> <span class="label label-default"> 1,782 </span> &nbsp; purchases </h5>
-	                	<h5> <span class="label label-default"> 921 </span> &nbsp; first-time purchases </h5>
-	                	<h5> <span class="label label-default"> 861 </span> &nbsp; repeat purchases </h5>
+	                <div class="vcenter" id="event_total_stats" >
 	                    
 	                </div>
 	            </div>
@@ -130,7 +109,31 @@
 	//select date
 
     var initPrimaryDashboard = window.initPrimaryDashboard || function () {
+    	initDateFilterComponent(true);
+    	
+    	
+    	
+    	showDashboardReport();
 		
+        
+        //loadChannelPerformance();
+      	//loadCustomerVenn();
+    }
+	
+	
+	
+    var showDashboardReport = window.showDashboardReport || function() {
+    	var formatDateTime = 'YYYY-MM-DD HH:mm:ss';
+    	var datetimeFilter = getDateFilterValues();
+    	
+    	var beginReportDate = datetimeFilter.beginFilterDate;
+    	$('#beginReportDate').text(new moment(beginReportDate).format(formatDateTime))
+    	
+    	var endReportDate = datetimeFilter.endFilterDate;
+    	$('#endReportDate').text(new moment(endReportDate).format(formatDateTime))
+        
+    	var urlStr = baseAdminApi + '/cdp/analytics360/dashboard-primary';
+    	
     	var dashboardFunnelOption = {
    	   		block: {
    	   			highlight: true
@@ -147,7 +150,7 @@
    	             enabled: true
    	         },
    	         label: {
-   	             fontSize: '11px'
+   	             fontSize: '14px'
    	         },
    	         events: {
    	             click: {
@@ -158,40 +161,62 @@
    	         }
    	    };
 
-   	    function loadProfileFunnel() {
-   	        var data = [
-   	            ['Visitor', '', '#2980B9'],
-   		        ['Engaged Visitor', '', '#5499C7'],
-   		        ['Customer Lead', '', '#2e86c1'],
-   		        ['Prospective Customer', '', '#2874a6'],
-   		        ['First-time Customer', '', '#21618c'],
-   		        ['Customer Advocate', '', '#1b4f72'],
-   		        ['Repeat Customer', 1000000, '#154360']
-   	        ];
-   	        var chart = new D3Funnel('#profile_funnel');
-   	        chart.draw(data, dashboardFunnelOption);
-   	    }
-   	   
-   	    function loadEventFunnel() {
-   	        var data = [
-   	        	['Content View', '', '#00b7c2'],
-   		        ['Product View', '', '#5eaaa8'],
-   		        ['Customer Login','', '#07689f'],
-   		        ['Purchase Intent', '', '#1e5f74'],
-   		        ['First Purchase', '', '#0f4c75'],
-   		        ['Product Experience', '', '#133b5c'],
-   		        ['Repeat Purchase', 1000000, '#1d2d50']
-   	        ];
-   	        var chart = new D3Funnel('#event_funnel');
-   	        chart.draw(data, dashboardFunnelOption);
-   	    }
-		
-    	initDateFilterComponent(true);
-        loadProfileFunnel();
-        loadEventFunnel();
+  	    var visualizeFunnel = function (domSelector, list) {
+  	        var data = [];
+	  	    for(var i=0; i < list.length; i++){
+	  	    	var e = list[i];
+	  	    	var value = new Number(e.collectorCount).toLocaleString();
+	  	    	var colorCode = getColorCodeProfileFunnel(i);
+	  			data.push([e.collectorKey, value, colorCode ]);
+	  		}
+  	        var chart = new D3Funnel(domSelector);
+  	        chart.draw(data, dashboardFunnelOption);
+  	    }
+    	
+    	var renderItemTotal = function(domSelector, collectorKey, collectorCount ){
+    		var value = new Number(collectorCount).toLocaleString();
+    		var html = '<h5> '+ collectorKey +' &nbsp; <span class="label label-default"> ' + value + ' </span>  </h5>';
+    		$(domSelector).append(html)
+    	}
+    	
+    	var renderStatsTotal = function(profileTotalStats, eventTotalStats){
+    		var sel = '#profile_total_stats';
+    		$(sel).empty();
+    		for(var i=0; i < profileTotalStats.length; i++){
+    			var obj = profileTotalStats[i];
+    			renderItemTotal(sel, obj.collectorKey, obj.collectorCount);
+    		}
+    		
+    		var sel = '#event_total_stats';
+    		$(sel).empty();
+    		for(var i=0; i < eventTotalStats.length; i++){
+    			var obj = eventTotalStats[i];
+    			renderItemTotal(sel, obj.collectorKey, obj.collectorCount);
+    		}
+    	}
         
-        //loadChannelPerformance();
-      	//loadCustomerVenn();
+        LeoAdminApiUtil.getSecuredData(urlStr, datetimeFilter , function (json) {
+            if (json.httpCode === 0 && json.errorMessage === '') {
+        		
+        		var profileTotalStats = json.data.profileTotalStats;
+                var eventTotalStats = json.data.eventTotalStats;
+                renderStatsTotal(profileTotalStats, eventTotalStats);
+                
+                var profileFunnelData = json.data.profileFunnelInDatetimeStats;
+                visualizeFunnel('#profile_funnel', profileFunnelData);
+                
+                //var eventFunnelData = json.data.eventFunnelInDatetimeStats;
+                
+                
+               	//console.log(profileTotalStats)
+               	//console.log(eventTotalStats)
+               	
+               
+            } else {
+                LeoAdminApiUtil.logErrorPayload(json);
+            }
+        });
+        
     }
 
     

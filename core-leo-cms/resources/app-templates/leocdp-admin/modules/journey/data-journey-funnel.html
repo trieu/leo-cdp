@@ -8,24 +8,17 @@
 
     <div class="row" >
   		<div class="row col-lg-12 text-center">
-  			<div class="col-md-2"></div>
-  			<div class="col-md-4">
-                 <h4 class="chart_header text-center" >Behavioral Event Funnel</h4>
-	           	 <div class="summary_metric">
-	               <div class="vcenter">
-	                  <div id="event_funnel"></div>
-	               </div>
-	           	</div>
-             </div>
+  			<div class="col-md-4"></div>
+  			
              <div class="col-md-4 ">
-                 <h4 class="chart_header text-center" >Customer Data Funnel</h4>
+                 <h4 class="chart_header text-center" >Customer Journey Funnel</h4>
                  <div class="summary_metric">
 	               <div class="vcenter">
 	                  <div id="profile_funnel"></div>
 	               </div>
 	           	</div>
              </div>
-             <div class="col-md-2"></div>
+             <div class="col-md-4"></div>
         </div>
         
         <div class="col-lg-12" style="margin-top: 8px;">
@@ -45,8 +38,8 @@
 		  		block: { highlight: true },
 		        chart: {
 		        	curve: { enabled: true, height: 20 },
-		            bottomWidth : 0.52,
-		            height: 280
+		            bottomWidth : 0.58,
+		            height: 270
 		        },
 		        tooltip: {
 		            enabled: true
@@ -68,39 +61,23 @@
 	        { name: "Second-party Data", id: 2 },
 	        { name: "Third-party Data", id: 3 }
 	    ];
-	
-		function loadProfileFunnel() {
+	    
+
+		var loadProfileFunnel = function() {
 		    var data = [
-		    	['Human Profile', '', '#78A8C9'],
-		        ['Visitor', '', '#2980B9'],
-		        ['Engaged Visitor', '', '#4C7DA3'],
-		        ['Customer Lead', '', '#416E90'],
-		        ['Prospective Customer', '', '#2874a6'],
-		        ['First-time Customer', '', '#21618c'],
-		        ['Customer Advocate', '', '#1b4f72'],
-		        ['Repeat Customer', '', '#163247']
+		    	['Human Profile', '', getColorCodeProfileFunnel(0) ],
+		        ['New Visitor', '', getColorCodeProfileFunnel(1) ],
+		        ['Engaged Visitor', '', getColorCodeProfileFunnel(2)  ],
+		        ['Customer Lead', '', getColorCodeProfileFunnel(3) ],
+		        ['Prospective Customer', '', getColorCodeProfileFunnel(4) ],
+		        ['First-time Customer', '', getColorCodeProfileFunnel(5) ],
+		        ['Customer Advocate', '', getColorCodeProfileFunnel(6) ],
+		        ['Repeat Customer', '', getColorCodeProfileFunnel(7) ]
 		    ];
 		    var chart = new D3Funnel('#profile_funnel');
 		    chart.draw(data, funnelOptions);
 		}
-
-		function loadEventFunnel() {
-		    var data = [
-		        ['Content View', '', '#719DBB'],
-		        ['Product View', '', '#7395AD'],
-		        ['Customer Login','', '#07689f'],
-		        ['Purchase Intent', '', '#1e5f74'],
-		        ['First Purchase', '', '#0f4c75'],
-		        ['Product Experience', '', '#133b5c'],
-		        ['Customer Feedback','', '#1b4f72'],
-		        ['Repeat Purchase', '', '#1d2d50']
-		    ];
-		    var chart = new D3Funnel('#event_funnel');
-		    chart.draw(data, funnelOptions);
-		}
-	
 		loadProfileFunnel();
-	    loadEventFunnel();
 	    
 	    LeoAdminApiUtil.getSecuredData('/cdp/funnels-and-event-metrics',{"funnelTypes":"event_retail,customer_retail"}, function(json){ 
 			 //console.log(json.data);	

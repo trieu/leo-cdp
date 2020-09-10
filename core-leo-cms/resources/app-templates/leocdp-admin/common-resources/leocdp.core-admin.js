@@ -449,7 +449,7 @@ LeoCdpAdmin.loadDataAndUpdateView = function(urlStr, params, dataProcessor, call
         			
         			if(fieldholder === 'html'){
         				if(fieldtype === 'int' || fieldtype === 'float' ){
-            				value = value.toLocaleString();
+            				value = new Number(value).toLocaleString();
             			}
         				$(this).html(value)
         			}

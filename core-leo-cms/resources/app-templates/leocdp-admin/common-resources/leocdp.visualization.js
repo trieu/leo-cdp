@@ -6,6 +6,16 @@
  * 
  */
 
+function getColorCodeProfileFunnel(i){
+	var colorCodes = ['#78A8C9', '#2980B9', '#4C7DA3', '#416E90', '#2874a6', '#21618c', '#1b4f72', '#163247'];
+	return ( i >= 0 && i <= 7  ) ? colorCodes[i] : colorCodes[0];
+}
+
+function getColorCodeEventFunnel(i){
+	var colorCodes = ['#719DBB', '#7395AD', '#07689f' , '#1e5f74', '#0f4c75', '#133b5c', '#1b4f72', '#1d2d50'];
+	return ( i >= 0 && i <= 7  ) ? colorCodes[i] : colorCodes[0];
+}
+
 var renderJourneyFlowChart = renderJourneyFlowChart || function(domSelector, defaultMetricName, journeyStages, journeyStageMetrics, journeyNodes, journeyLinks) {
 	var configSankey = {
 		margin : {

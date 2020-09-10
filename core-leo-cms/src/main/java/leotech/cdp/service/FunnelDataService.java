@@ -46,7 +46,7 @@ public class FunnelDataService {
 		
 		//Customer Data Funnel
 		customerFunnelStages.add(HUMAN_PROFILE_FUNNEL_STAGE);
-		customerFunnelStages.add(new FunnelStage(1, "Visitor", "customer_retail"));
+		customerFunnelStages.add(new FunnelStage(1, "New Visitor", "customer_retail"));
 		customerFunnelStages.add(new FunnelStage(2, "Engaged Visitor", "customer_retail"));
 		customerFunnelStages.add(new FunnelStage(3, "Customer Lead", "customer_retail"));
 		customerFunnelStages.add(new FunnelStage(4, "Prospective Customer", "customer_retail"));
@@ -60,7 +60,7 @@ public class FunnelDataService {
 		
 		// TODO remove hard-code data later
 		eventMetaDataList.put("content-view", new BehavioralEventMetric("content-view","Content View", 1, EventMetaData.FIRST_PARTY_DATA,
-				"content-view", "visitor"));
+				"content-view", "new-visitor"));
 		
 		eventMetaDataList.put("product-view", new BehavioralEventMetric("product-view","Product View", 2, EventMetaData.FIRST_PARTY_DATA,
 				"product-view", "engaged-visitor"));

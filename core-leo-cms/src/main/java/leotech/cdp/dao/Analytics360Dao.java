@@ -17,8 +17,8 @@ import leotech.system.util.database.ArangoDbQuery.CallbackQuery;
 
 public class Analytics360Dao extends BaseLeoCdpDao {
 	
-	private static final String CUSTOMER_SEGMENTS = "customer segments";
-	private static final String HUMAN_PROFILES = "human profiles";
+	private static final String CUSTOMER_SEGMENTS = "Customer Segment";
+	private static final String HUMAN_PROFILES = "Human Profile";
 	
 	// profile statistics
 	static final String AQL_PROFILE_COLLECTOR_TOTAL = AqlTemplate.get("AQL_PROFILE_COLLECTOR_TOTAL");
@@ -37,6 +37,14 @@ public class Analytics360Dao extends BaseLeoCdpDao {
 		CallbackQuery<StatisticCollector> callback = StatisticCollector.callbackProfileStatisticCollector();
 		List<StatisticCollector> list = collectTotalStatistics(aql,callback);
 		
+		for (StatisticCollector statisticCollector1 : list) {
+			for (StatisticCollector statisticCollector2 : list) {
+				if(statisticCollector1.getOrderIndex() < statisticCollector2.getOrderIndex()) {
+					statisticCollector1.unionSetCollectorCount(statisticCollector2.getCollectorCount());
+				}
+			}
+		}
+		
 		List<StatisticCollector> profileStats = new ArrayList<StatisticCollector>(list.size() + 2);
 		long totalHumanProfile = ProfileDataService.countTotalOfProfiles();
 		long totalSegments = SegmentDataService.countTotalOfSegments();
@@ -51,7 +59,15 @@ public class Analytics360Dao extends BaseLeoCdpDao {
 	public static List<StatisticCollector> collectProfileTotalStatistics(String beginFilterDate, String endFilterDate){
 		String aql = AQL_PROFILE_COLLECTOR_IN_DATE_RANGE;
 		CallbackQuery<StatisticCollector> callback = StatisticCollector.callbackProfileStatisticCollector();
-		return collectTotalStatisticsInDateRange(beginFilterDate, endFilterDate, aql, callback);
+		List<StatisticCollector> list =  collectTotalStatisticsInDateRange(beginFilterDate, endFilterDate, aql, callback);
+		for (StatisticCollector statisticCollector1 : list) {
+			for (StatisticCollector statisticCollector2 : list) {
+				if(statisticCollector1.getOrderIndex() < statisticCollector2.getOrderIndex()) {
+					statisticCollector1.unionSetCollectorCount(statisticCollector2.getCollectorCount());
+				}
+			}
+		}
+		return list;
 	}
 	
 	public static List<StatisticCollector> collectProfileTotalStatisticsTimeseries(String beginFilterDate, String endFilterDate){
