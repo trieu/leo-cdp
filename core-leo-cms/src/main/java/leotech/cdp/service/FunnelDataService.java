@@ -14,7 +14,12 @@ import leotech.cdp.model.journey.FunnelStage;
 
 public class FunnelDataService {
 
+	
 	public static final FunnelStage HUMAN_PROFILE_FUNNEL_STAGE = new FunnelStage(0, "Human Profile", "");
+	
+	public static final BehavioralEventMetric UNCLASSIFIED_EVENT = new BehavioralEventMetric("unclassified-event","Unclassified Event", 0, EventMetaData.FIRST_PARTY_DATA,
+			"unclassified-event", HUMAN_PROFILE_FUNNEL_STAGE.getId());
+	
 	static List<FunnelStage> eventFunnelStages = new ArrayList<FunnelStage>();
 	static List<FunnelStage> customerFunnelStages = new ArrayList<FunnelStage>();
 	
@@ -54,37 +59,37 @@ public class FunnelDataService {
 		}
 		
 		// TODO remove hard-code data later
-		eventMetaDataList.put("content_view", new BehavioralEventMetric("content_view","Content View", 1, EventMetaData.FIRST_PARTY_DATA,
+		eventMetaDataList.put("content-view", new BehavioralEventMetric("content-view","Content View", 1, EventMetaData.FIRST_PARTY_DATA,
 				"content-view", "visitor"));
 		
-		eventMetaDataList.put("product_view", new BehavioralEventMetric("product_view","Product View", 2, EventMetaData.FIRST_PARTY_DATA,
+		eventMetaDataList.put("product-view", new BehavioralEventMetric("product-view","Product View", 2, EventMetaData.FIRST_PARTY_DATA,
 				"product-view", "engaged-visitor"));
 		
-		eventMetaDataList.put("play_prvideo", new BehavioralEventMetric("play_prvideo","Play Promotional Video", 3, EventMetaData.FIRST_PARTY_DATA,
+		eventMetaDataList.put("play-prvideo", new BehavioralEventMetric("play-prvideo","Play PR Video", 3, EventMetaData.FIRST_PARTY_DATA,
 				"product-view", "engaged-visitor"));
 		
-		eventMetaDataList.put("social_login", new BehavioralEventMetric("social_login","Social Login", 4, EventMetaData.FIRST_PARTY_DATA,
+		eventMetaDataList.put("social-login", new BehavioralEventMetric("social-login","Social Login", 4, EventMetaData.FIRST_PARTY_DATA,
 				"customer-login", "engaged-visitor"));
 		
-		eventMetaDataList.put("submit_contact", new BehavioralEventMetric("submit_contact","Submit Contact", 20, EventMetaData.FIRST_PARTY_DATA,
+		eventMetaDataList.put("submit-contact", new BehavioralEventMetric("submit-contact","Submit Contact", 20, EventMetaData.FIRST_PARTY_DATA,
 				"purchase-intent", "customer-lead"));
 		
-		eventMetaDataList.put("add_to_cart", new BehavioralEventMetric("add_to_cart", "Purchase Intent", 30, EventMetaData.FIRST_PARTY_DATA,
+		eventMetaDataList.put("add-to-cart", new BehavioralEventMetric("add-to-cart", "Purchase Intent", 30, EventMetaData.FIRST_PARTY_DATA,
 				"purchase-intent", "prospective-customer"));
 		
 		eventMetaDataList.put("buy", new BehavioralEventMetric("buy", "First Purchase", 50, EventMetaData.FIRST_PARTY_DATA,
 				"first-purchase", "first-time-customer"));
 		
-		eventMetaDataList.put("feedback_1st", new BehavioralEventMetric("feedback_1st","First-time Feedback", 70, EventMetaData.FIRST_PARTY_DATA,
+		eventMetaDataList.put("feedback-1st", new BehavioralEventMetric("feedback-1st","First-time Feedback", 70, EventMetaData.FIRST_PARTY_DATA,
 				"customer-feedback", "first-time-customer"));
 		
-		eventMetaDataList.put("social_sharing", new BehavioralEventMetric("social_sharing","Social Sharing", 75, EventMetaData.FIRST_PARTY_DATA,
+		eventMetaDataList.put("social-sharing", new BehavioralEventMetric("social-sharing","Social Sharing", 75, EventMetaData.FIRST_PARTY_DATA,
 				"customer-feedback", "customer-advocate"));
 		
 		eventMetaDataList.put("rebuy", new BehavioralEventMetric("rebuy", "Repeat Purchase", 100, EventMetaData.FIRST_PARTY_DATA,
 				"repeat-purchase", "repeat-customer"));
 		
-		eventMetaDataList.put("feedback_2nd", new BehavioralEventMetric("feedback_2nd","Second-time Feedback", 120, EventMetaData.FIRST_PARTY_DATA,
+		eventMetaDataList.put("feedback-2nd", new BehavioralEventMetric("feedback-2nd","Second-time Feedback", 120, EventMetaData.FIRST_PARTY_DATA,
 				"customer-feedback", "repeat-customer"));
 	}
 	
@@ -98,6 +103,10 @@ public class FunnelDataService {
 	
 	public static FunnelStage getFunnelStageById(String id) {
 		return funnelDataCache.getOrDefault(id, HUMAN_PROFILE_FUNNEL_STAGE);
+	}
+	
+	public static BehavioralEventMetric getBehavioralEventMetric(String id) {
+		return eventMetaDataList.getOrDefault(id, UNCLASSIFIED_EVENT);
 	}
 
 	public static Collection<BehavioralEventMetric> getEventRetailMetrics() {

@@ -306,11 +306,11 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	
 	@Expose
 	// the timeline of first-time recorded event metrics
-	// E.g: {"content_view": "2020-05-05T02:56:12.102Z", "play_prvideo" : "2020-05-06T02:56:12.102Z" }
+	// E.g: {"content-view": "2020-05-05T02:56:12.102Z", "play_prvideo" : "2020-05-06T02:56:12.102Z" }
 	protected Map<String,Date> funnelStageTimeline = new ConcurrentHashMap<>();
 	
 	@Expose
-	// all recorded event metric names ["content_view","product_view"]
+	// all recorded event metric names ["content-view","product-view"]
 	protected Set<String> behavioralEvents = new HashSet<String>(100);
 	
 	@Expose

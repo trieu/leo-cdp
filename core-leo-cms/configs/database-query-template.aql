@@ -258,21 +258,21 @@ AQL_GET_PROFILE_BY_KEY_IDENTITIES =>
 	RETURN { "deterministic" : rs1, "probabilistic" : rs2 }
 ;
 
-AQL_COLLECTOR_PROFILE_TOTAL =>
+AQL_PROFILE_COLLECTOR_TOTAL =>
 	FOR d IN cdp_profile
 	    FILTER d.status > 0 
 	    COLLECT funnelStage = d.funnelStage WITH COUNT INTO length
 	    RETURN { "collectorKey" : funnelStage, "collectorCount" : length }
 ;
 
-AQL_COLLECTOR_PROFILE_IN_DATE_RANGE =>
+AQL_PROFILE_COLLECTOR_IN_DATE_RANGE =>
 	FOR d IN cdp_profile
 	    FILTER d.status > 0 AND d.createdAt >= @beginFilterDate AND d.createdAt <= @endFilterDate
 	    COLLECT funnelStage = d.funnelStage WITH COUNT INTO length
 	    RETURN { "collectorKey" : funnelStage, "collectorCount" : length }
 ;
 
-AQL_TIMELINE_COLLECTOR_PROFILE_IN_DATE_RANGE => 
+AQL_PROFILE_TIMESERIES_COLLECTOR => 
 	FOR d IN cdp_profile
 	    FILTER d.createdAt >= @beginFilterDate AND d.createdAt <= @endFilterDate
 	   	COLLECT dateTime = DATE_TRUNC(d.createdAt, @truncatedUnit), collectorKey = d.funnelStage WITH COUNT INTO length
@@ -361,20 +361,20 @@ AQL_UPDATE_TRACKING_EVENT_STATE_PROCESSED =>
 ;
 
 
-AQL_COLLECTOR_EVENT_TOTAL => 
+AQL_EVENT_COLLECTOR_TOTAL => 
 	FOR e IN cdp_trackingevent
 	    COLLECT metricName = e.metricName WITH COUNT INTO length
 	    RETURN { "collectorKey" : metricName, "collectorCount" : length }
 ;
 
-AQL_COLLECTOR_EVENT_IN_DATE_RANGE => 
+AQL_EVENT_COLLECTOR_TOTAL_IN_DATE_RANGE => 
 	FOR e IN cdp_trackingevent
 	    FILTER e.createdAt >= @beginFilterDate AND e.createdAt <= @endFilterDate
 	    COLLECT metricName = e.metricName WITH COUNT INTO length
 	    RETURN { "collectorKey" : metricName, "collectorCount" : length }
 ;
 
-AQL_TIMELINE_COLLECTOR_EVENT_IN_DATE_RANGE => 
+AQL_EVENT_TIMESERIES_COLLECTOR => 
 	FOR e IN cdp_trackingevent
 	    FILTER e.createdAt >= @beginFilterDate AND e.createdAt <= @endFilterDate
 	   	COLLECT dateTime = DATE_TRUNC(e.createdAt, @truncatedUnit), collectorKey = e.metricName WITH COUNT INTO length

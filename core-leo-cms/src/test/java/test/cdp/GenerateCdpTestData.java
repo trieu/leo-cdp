@@ -158,7 +158,7 @@ public class GenerateCdpTestData {
 				userDeviceId, "127.0.0.1", "bookstore.bigdatavietnam.org", "", refTouchpointId, srcTouchpointId, profileId , profile.getType(), visitorId, "pro");
 		ContextSessionDaoUtil.create(ctxSession);
 		
-		String eventName = "content_view";
+		String eventName = "content-view";
 		// pageview event
 		EventTrackingService.trackViewEvent(createdAt, ctxSession, observerId, "pro", userDeviceId, sourceIP, deviceInfo,"Book Video Review", srcTouchpointUrl, refTouchpointUrl, touchpointRefDomain, eventName , null);
 		

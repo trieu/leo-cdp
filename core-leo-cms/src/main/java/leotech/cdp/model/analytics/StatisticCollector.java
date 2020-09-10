@@ -1,10 +1,46 @@
 package leotech.cdp.model.analytics;
 
-public class StatisticCollector implements Comparable<StatisticCollector>{
+import java.util.Date;
 
-	String collectorKey;
-	long collectorCount;
-	int orderIndex;
+import leotech.cdp.model.journey.BehavioralEventMetric;
+import leotech.cdp.model.journey.FunnelStage;
+import leotech.cdp.service.FunnelDataService;
+import leotech.system.util.database.ArangoDbQuery.CallbackQuery;
+
+public class StatisticCollector implements Comparable<StatisticCollector>{
+	
+	public static CallbackQuery<StatisticCollector> callbackProfileStatisticCollector() {
+		CallbackQuery<StatisticCollector> cb = new CallbackQuery<StatisticCollector>() {
+			@Override
+			public StatisticCollector apply(StatisticCollector obj) {
+				FunnelStage funnelStage = FunnelDataService.getFunnelStageById(obj.getCollectorKey());
+				int index = funnelStage.getOrderIndex();
+				obj.setOrderIndex(index);
+				obj.setCollectorKey(funnelStage.getName());
+				return obj;
+			}
+		};
+		return cb;
+	}
+	
+	public static CallbackQuery<StatisticCollector> callbackEventStatisticCollector() {
+		CallbackQuery<StatisticCollector> cb = new CallbackQuery<StatisticCollector>() {
+			@Override
+			public StatisticCollector apply(StatisticCollector obj) {
+				BehavioralEventMetric metric = FunnelDataService.getBehavioralEventMetric(obj.getCollectorKey());
+				int index = metric.getScore();
+				obj.setOrderIndex(index);
+				obj.setCollectorKey(metric.getEventLabel());
+				return obj;
+			}
+		};
+		return cb;
+	}
+
+	String collectorKey = "";
+	long collectorCount = 0;
+	int orderIndex = 0;
+	Date dateTime = null;
 
 	public StatisticCollector() {
 		// TODO Auto-generated constructor stub
@@ -24,14 +60,19 @@ public class StatisticCollector implements Comparable<StatisticCollector>{
 	public void setCollectorKey(String collectorKey) {
 		this.collectorKey = collectorKey;
 	}
-	
-
 	public long getCollectorCount() {
 		return collectorCount;
 	}
 
 	public void setCollectorCount(long collectorCount) {
 		this.collectorCount = collectorCount;
+	}
+
+	public Date getDateTime() {
+		return dateTime;
+	}
+	public void setDateTime(Date dateTime) {
+		this.dateTime = dateTime;
 	}
 
 	@Override
