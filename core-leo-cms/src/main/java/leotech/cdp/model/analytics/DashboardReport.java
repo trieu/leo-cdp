@@ -1,14 +1,17 @@
 package leotech.cdp.model.analytics;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 
+/**
+ * the data object for primary default reporting
+ * 
+ * @author tantrieuf31
+ * @since 2020
+ *
+ */
 public class DashboardReport {
 
 	@Expose
@@ -18,37 +21,45 @@ public class DashboardReport {
 	String endFilterDate;
 
 	@Expose
-	Map<String, Long> totalCustomerStatistics = new HashMap<String, Long>();
+	List<StatisticCollector> profileTotalStats;
 
 	@Expose
-	Map<String, Long> totalEventStatistics = new HashMap<String, Long>();
+	List<StatisticCollector> profileFunnelInDatetimeStats;
 
 	@Expose
-	List<ReportUnit> behavioralEventFunnel = new ArrayList<ReportUnit>(10);
+	List<StatisticCollector> profileTimeseriesStats;
 
 	@Expose
-	List<ReportUnit> customerEventFunnel = new ArrayList<ReportUnit>(10);
+	List<StatisticCollector> eventTotalStats;
+
+	@Expose
+	List<StatisticCollector> eventFunnelInDatetimeStats;
+
+	@Expose
+	List<StatisticCollector> eventTimeseriesStats;
 
 	public DashboardReport() {
 
 	}
 
-	public DashboardReport(String beginFilterDate, String endFilterDate, Map<String, Long> totalCustomerStatistics,
-			Map<String, Long> totalEventStatistics, List<ReportUnit> behavioralEventFunnel,
-			List<ReportUnit> customerEventFunnel) {
+	public DashboardReport(String beginFilterDate, String endFilterDate, List<StatisticCollector> profileTotalStats,
+			List<StatisticCollector> profileFunnelInDatetimeStats, List<StatisticCollector> profileTimeseriesStats,
+			List<StatisticCollector> eventTotalStats, List<StatisticCollector> eventFunnelInDatetimeStats,
+			List<StatisticCollector> eventTimeseriesStats) {
 		super();
-
 		this.beginFilterDate = beginFilterDate;
 		this.endFilterDate = endFilterDate;
+		this.profileTotalStats = profileTotalStats;
+		this.profileFunnelInDatetimeStats = profileFunnelInDatetimeStats;
+		this.profileTimeseriesStats = profileTimeseriesStats;
+		this.eventTotalStats = eventTotalStats;
+		this.eventFunnelInDatetimeStats = eventFunnelInDatetimeStats;
+		this.eventTimeseriesStats = eventTimeseriesStats;
+	}
 
-		this.totalCustomerStatistics = totalCustomerStatistics;
-		this.totalEventStatistics = totalEventStatistics;
-
-		this.behavioralEventFunnel = behavioralEventFunnel;
-		Collections.sort(this.behavioralEventFunnel);
-
-		this.customerEventFunnel = customerEventFunnel;
-		Collections.sort(this.customerEventFunnel);
+	@Override
+	public String toString() {
+		return new Gson().toJson(this);
 	}
 
 	public String getBeginFilterDate() {
@@ -67,41 +78,52 @@ public class DashboardReport {
 		this.endFilterDate = endFilterDate;
 	}
 
-	public Map<String, Long> getTotalCustomerStatistics() {
-		return totalCustomerStatistics;
+	public List<StatisticCollector> getProfileTotalStats() {
+		return profileTotalStats;
 	}
 
-	public void setTotalCustomerStatistics(Map<String, Long> totalCustomerStatistics) {
-		this.totalCustomerStatistics = totalCustomerStatistics;
+	public void setProfileTotalStats(List<StatisticCollector> profileTotalStats) {
+		this.profileTotalStats = profileTotalStats;
 	}
 
-	public Map<String, Long> getTotalEventStatistics() {
-		return totalEventStatistics;
+	public List<StatisticCollector> getProfileFunnelInDatetimeStats() {
+		return profileFunnelInDatetimeStats;
 	}
 
-	public void setTotalEventStatistics(Map<String, Long> totalEventStatistics) {
-		this.totalEventStatistics = totalEventStatistics;
+	public void setProfileFunnelInDatetimeStats(List<StatisticCollector> profileFunnelInDatetimeStats) {
+		this.profileFunnelInDatetimeStats = profileFunnelInDatetimeStats;
 	}
 
-	public List<ReportUnit> getBehavioralEventFunnel() {
-		return behavioralEventFunnel;
+	public List<StatisticCollector> getProfileTimeseriesStats() {
+		return profileTimeseriesStats;
 	}
 
-	public void setBehavioralEventFunnel(List<ReportUnit> behavioralEventFunnel) {
-		this.behavioralEventFunnel = behavioralEventFunnel;
+	public void setProfileTimeseriesStats(List<StatisticCollector> profileTimeseriesStats) {
+		this.profileTimeseriesStats = profileTimeseriesStats;
 	}
 
-	public List<ReportUnit> getCustomerEventFunnel() {
-		return customerEventFunnel;
+	public List<StatisticCollector> getEventTotalStats() {
+		return eventTotalStats;
 	}
 
-	public void setCustomerEventFunnel(List<ReportUnit> customerEventFunnel) {
-		this.customerEventFunnel = customerEventFunnel;
+	public void setEventTotalStats(List<StatisticCollector> eventTotalStats) {
+		this.eventTotalStats = eventTotalStats;
 	}
 
-	@Override
-	public String toString() {
-		return new Gson().toJson(this);
+	public List<StatisticCollector> getEventFunnelInDatetimeStats() {
+		return eventFunnelInDatetimeStats;
+	}
+
+	public void setEventFunnelInDatetimeStats(List<StatisticCollector> eventFunnelInDatetimeStats) {
+		this.eventFunnelInDatetimeStats = eventFunnelInDatetimeStats;
+	}
+
+	public List<StatisticCollector> getEventTimeseriesStats() {
+		return eventTimeseriesStats;
+	}
+
+	public void setEventTimeseriesStats(List<StatisticCollector> eventTimeseriesStats) {
+		this.eventTimeseriesStats = eventTimeseriesStats;
 	}
 
 }

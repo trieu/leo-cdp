@@ -16,7 +16,7 @@ public class StatisticCollector implements Comparable<StatisticCollector>{
 				FunnelStage funnelStage = FunnelDataService.getFunnelStageById(obj.getCollectorKey());
 				int index = funnelStage.getOrderIndex();
 				obj.setOrderIndex(index);
-				obj.setCollectorKey(funnelStage.getName());
+				obj.setCollectorKey(funnelStage.getName().toLowerCase() + "s");
 				return obj;
 			}
 		};
@@ -43,7 +43,14 @@ public class StatisticCollector implements Comparable<StatisticCollector>{
 	Date dateTime = null;
 
 	public StatisticCollector() {
-		// TODO Auto-generated constructor stub
+		
+	}
+
+	public StatisticCollector(String collectorKey, long collectorCount, int orderIndex) {
+		super();
+		this.collectorKey = collectorKey;
+		this.collectorCount = collectorCount;
+		this.orderIndex = orderIndex;
 	}
 
 	public int getOrderIndex() {

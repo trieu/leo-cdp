@@ -83,6 +83,7 @@ public class CdpAnalytics360Handler extends SecuredWebDataHandler {
 					case API_LIST_ALL : {
 						int startIndex =   RequestInfoUtil.getInteger(params,"startIndex", 0);
 						int numberResult = RequestInfoUtil.getInteger(params,"numberResult", 10);
+						
 						List<Notebook> list = Analytics360Service.getNotebooks(startIndex, numberResult);
 						return JsonDataPayload.ok(uri, list, loginUser, Notebook.class);
 					}

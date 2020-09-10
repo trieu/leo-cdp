@@ -1,5 +1,6 @@
 package leotech.cdp.dao;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -8,11 +9,16 @@ import java.util.Map;
 import com.arangodb.ArangoDatabase;
 
 import leotech.cdp.model.analytics.StatisticCollector;
+import leotech.cdp.service.ProfileDataService;
+import leotech.cdp.service.SegmentDataService;
 import leotech.system.config.AqlTemplate;
 import leotech.system.util.database.ArangoDbQuery;
 import leotech.system.util.database.ArangoDbQuery.CallbackQuery;
 
 public class Analytics360Dao extends BaseLeoCdpDao {
+	
+	private static final String CUSTOMER_SEGMENTS = "customer segments";
+	private static final String HUMAN_PROFILES = "human profiles";
 	
 	// profile statistics
 	static final String AQL_PROFILE_COLLECTOR_TOTAL = AqlTemplate.get("AQL_PROFILE_COLLECTOR_TOTAL");
@@ -25,12 +31,21 @@ public class Analytics360Dao extends BaseLeoCdpDao {
 	static final String AQL_EVENT_TIMESERIES_COLLECTOR = AqlTemplate.get("AQL_EVENT_TIMESERIES_COLLECTOR");
 	
 	
-	
 	// ---- Profile Statistics ---- //
 	public static List<StatisticCollector> collectProfileTotalStatistics(){
 		String aql = AQL_PROFILE_COLLECTOR_TOTAL;
 		CallbackQuery<StatisticCollector> callback = StatisticCollector.callbackProfileStatisticCollector();
-		return collectTotalStatistics(aql,callback);
+		List<StatisticCollector> list = collectTotalStatistics(aql,callback);
+		
+		List<StatisticCollector> profileStats = new ArrayList<StatisticCollector>(list.size() + 2);
+		long totalHumanProfile = ProfileDataService.countTotalOfProfiles();
+		long totalSegments = SegmentDataService.countTotalOfSegments();
+		
+		profileStats.add(new StatisticCollector(HUMAN_PROFILES, totalHumanProfile, -2));
+		profileStats.add(new StatisticCollector(CUSTOMER_SEGMENTS, totalSegments, -1));
+		profileStats.addAll(list);
+		
+		return profileStats;
 	}
 	
 	public static List<StatisticCollector> collectProfileTotalStatistics(String beginFilterDate, String endFilterDate){
