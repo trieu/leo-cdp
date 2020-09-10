@@ -71,7 +71,7 @@ public class ContentQueryApiHandler extends SecuredWebDataHandler {
 				String userIp = StringUtil.safeString(params.get("__userIp"));
 				String userAgent = StringUtil.safeString(params.get("__userAgent"));
 				String trackingTitle = "homepage";
-				ThirdPartyTrackingUtil.pageView(trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
+				ThirdPartyTrackingUtil.contentView(trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
 				ThirdPartyTrackingUtil.event("user-tracking", "username:" + loginUser.getUserLogin(), trackingTitle,
 						uri, loginUser.getUserLogin(), userIp, userAgent);
 
@@ -90,7 +90,7 @@ public class ContentQueryApiHandler extends SecuredWebDataHandler {
 					String userIp = StringUtil.safeString(params.get("__userIp"));
 					String userAgent = StringUtil.safeString(params.get("__userAgent"));
 					String trackingTitle = "landing-page:contentClass:" + contentClass;
-					ThirdPartyTrackingUtil.pageView(trackingTitle, uri, loginUser.getUserLogin(), userIp,
+					ThirdPartyTrackingUtil.contentView(trackingTitle, uri, loginUser.getUserLogin(), userIp,
 							userAgent);
 					ThirdPartyTrackingUtil.event("user-tracking", "username:" + loginUser.getUserLogin(),
 							trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
@@ -114,7 +114,7 @@ public class ContentQueryApiHandler extends SecuredWebDataHandler {
 					String userIp = StringUtil.safeString(params.get("__userIp"));
 					String userAgent = StringUtil.safeString(params.get("__userAgent"));
 					String trackingTitle = "landing-page:categories:" + categoryStr;
-					ThirdPartyTrackingUtil.pageView(trackingTitle, uri, loginUser.getUserLogin(), userIp,
+					ThirdPartyTrackingUtil.contentView(trackingTitle, uri, loginUser.getUserLogin(), userIp,
 							userAgent);
 					ThirdPartyTrackingUtil.event("user-tracking", "username:" + loginUser.getUserLogin(),
 							trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
@@ -150,7 +150,7 @@ public class ContentQueryApiHandler extends SecuredWebDataHandler {
 					String userIp = StringUtil.safeString(params.get("__userIp"));
 					String userAgent = StringUtil.safeString(params.get("__userAgent"));
 					String trackingTitle = "search-page:keywords:" + keywordsStr;
-					ThirdPartyTrackingUtil.pageView(trackingTitle, uri, loginUser.getUserLogin(), userIp,
+					ThirdPartyTrackingUtil.contentView(trackingTitle, uri, loginUser.getUserLogin(), userIp,
 							userAgent);
 					ThirdPartyTrackingUtil.event("user-tracking", "username:" + loginUser.getUserLogin(),
 							trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);

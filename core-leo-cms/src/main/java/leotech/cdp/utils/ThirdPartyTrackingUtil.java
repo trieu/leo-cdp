@@ -23,7 +23,7 @@ public class ThirdPartyTrackingUtil {
 	return ga;
     }
 
-    public static void pageView(String title, String uri, String userId, String userIp, String userAgent) {
+    public static void contentView(String title, String uri, String userId, String userIp, String userAgent) {
 	if(enableTracking.get()) {
 	    gaInstance().pageView().documentTitle(title).documentPath(uri).clientId(userId).userIp(userIp).userAgent(userAgent).send();
 	}

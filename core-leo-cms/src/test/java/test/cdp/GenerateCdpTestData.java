@@ -162,7 +162,7 @@ public class GenerateCdpTestData {
 		// pageview event
 		EventTrackingService.trackViewEvent(createdAt, ctxSession, observerId, "pro", userDeviceId, sourceIP, deviceInfo,"Book Video Review", srcTouchpointUrl, refTouchpointUrl, touchpointRefDomain, eventName , null);
 		
-		eventName = "social_login";
+		eventName = "social-login";
 		Date loginTime = DateUtils.addSeconds(createdAt, RandomUtil.getRandomInteger(300, 9)); 
 		EventTrackingService.trackActionEvent(loginTime,ctxSession, observerId, "pro", userDeviceId, sourceIP, deviceInfo,"Book Video Review",srcTouchpointUrl, refTouchpointUrl,  touchpointRefDomain, eventName, 1, "", null);
 		

@@ -96,7 +96,7 @@ public class PostApiHandler extends SecuredWebDataHandler {
 				String userIp = StringUtil.safeString(params.get("__userIp"));
 				String userAgent = StringUtil.safeString(params.get("__userAgent"));
 				String trackingTitle = "landing-page: " + contentClass + "-" + keywordStr;
-				ThirdPartyTrackingUtil.pageView(trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
+				ThirdPartyTrackingUtil.contentView(trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);
 				ThirdPartyTrackingUtil.event("user-tracking", "username:" + loginUser.getUserLogin(), trackingTitle,
 						uri, loginUser.getUserLogin(), userIp, userAgent);
 
@@ -126,7 +126,7 @@ public class PostApiHandler extends SecuredWebDataHandler {
 						String userIp = StringUtil.safeString(params.get("__userIp"));
 						String userAgent = StringUtil.safeString(params.get("__userAgent"));
 						String trackingTitle = "content-post: " + post.getContentClass() + "-" + post.getTitle();
-						ThirdPartyTrackingUtil.pageView(trackingTitle, uri, loginUser.getUserLogin(), userIp,
+						ThirdPartyTrackingUtil.contentView(trackingTitle, uri, loginUser.getUserLogin(), userIp,
 								userAgent);
 						ThirdPartyTrackingUtil.event("user-tracking", "username:" + loginUser.getUserLogin(),
 								trackingTitle, uri, loginUser.getUserLogin(), userIp, userAgent);

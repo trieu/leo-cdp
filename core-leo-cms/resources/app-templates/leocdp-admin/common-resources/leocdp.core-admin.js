@@ -511,7 +511,6 @@ LeoCdpAdmin.loadDataAndUpdateView = function(urlStr, params, dataProcessor, call
         			}
         		}
         	}).promise().done( function() {
-    			console.log('Done loadDataAndUpdatePageView ' + urlStr);
     			if(typeof callback === 'function') callback();
     	    });
         	

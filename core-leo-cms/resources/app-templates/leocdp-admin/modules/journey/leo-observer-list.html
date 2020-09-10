@@ -48,12 +48,13 @@
 			(function() {
 			    //Leo Web Observer for channel: __channelName__
 	    		window.leoObserverLogDomain = "__leoObserverLogDomain__";
+	    		window.leoObserverCdnDomain = "__leoObserverCdnDomain__";
 				window.leoObserverId = "__leoObserverId__";
 				window.srcTouchpointName = encodeURIComponent(document.title);
 				window.srcTouchpointUrl = encodeURIComponent(location.protocol + '//' + location.host + location.pathname);
 			
 				var leoproxyJsPath = '/public/js/leo-observer/leoproxy.js';
-			    var src = '//' + window.leoObserverLogDomain + leoproxyJsPath;
+			    var src = location.protocol + '//' + window.leoObserverCdnDomain + leoproxyJsPath;
 			    var jsNode = document.createElement('script');
 			    jsNode.async = true;
 			    jsNode.src = src;
@@ -62,8 +63,13 @@
 			})();
 			
 			function leoObserverProxyReady() {
-			    //Leo is ready, record pageview data
-			    LeoObserverProxy.recordViewEvent("pageview");
+			    //Leo is ready, record event data
+			    var isProductView = location.href.indexOf('/product/') > 0;
+			  	if( isProductView ) {
+			  		LeoObserverProxy.recordViewEvent("product-view");
+			  	} else {
+			    	LeoObserverProxy.recordViewEvent("content-view");
+			  	}
 			}
 				</textarea></div>
 			</div>  
@@ -83,6 +89,7 @@
 		var mediaChannelName = json.name;
 		var type = json.type;
 		var observerLogDomain = "cdp.bigdatavietnam.org";
+		var observerCdnDomain = "cdp.bigdatavietnam.org";
 		
 		if(type < 12){
 			$('#webDataObserverCodeDialog').modal({
@@ -104,9 +111,10 @@
 			setTimeout(function() {
 				//copy from textarea template into editor, then selectAll for copy
 				var tpl = $('#webDataObserverCodeDialog .code').val().trim();
-				var code = tpl.replace('__leoObserverId__',mediaChannelId)
-				code = code.replace('__channelName__',mediaChannelName)
-				code = code.replace('__leoObserverLogDomain__',observerLogDomain)
+				var code = tpl.replace('__leoObserverId__', mediaChannelId)
+				code = code.replace('__channelName__', mediaChannelName)
+				code = code.replace('__leoObserverLogDomain__', observerLogDomain);
+				code = code.replace('__leoObserverCdnDomain__', observerCdnDomain);
 				editor.getDoc().setValue( '<script>\n' + code + '\n<\/script>' )
 				editor.refresh();
 				editor.execCommand('selectAll')

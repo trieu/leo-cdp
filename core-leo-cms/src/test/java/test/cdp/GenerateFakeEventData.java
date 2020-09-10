@@ -71,7 +71,7 @@ public class GenerateFakeEventData {
 	}
 
 	static void generateEvents(Date loggedAt, String locationCode, String visitorId, String profileId, DeviceInfo deviceInfo, String userDeviceId, int profileType) {
-		String eventName = "pageview";
+		String eventName = "content-view";
 		
 		String sourceIP = "127.0.0.1";
 		int addedMinutes = RandomUtil.getRandomInteger(300, 50);
@@ -90,6 +90,7 @@ public class GenerateFakeEventData {
 		String srcTouchpointUrl = getRamdomlyTouchpointUrl();
 		Touchpoint srcTouchpoint = TouchpointDataService.getOrCreateWebTouchpointForTesting(createdAt,
 				"bookstore.bigdatavietnam.org", MediaChannelType.WEB_URL, srcTouchpointUrl, true);
+		
 		String refTouchpointId = refTouchPoint.getId();
 		String srcTouchpointId = srcTouchpoint.getId();
 
@@ -163,7 +164,7 @@ public class GenerateFakeEventData {
 			
 			System.out.println(livingLocation);
 			
-			//generateEvents(loggedAt, locationCode, visitorId, profile.getId(), deviceInfo, userDeviceId, profile.getType());
+			generateEvents(loggedAt, locationCode, visitorId, profile.getId(), deviceInfo, userDeviceId, profile.getType());
 		}
 		Utils.exitSystemAfterTimeout(5000);
 
