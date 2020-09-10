@@ -99,7 +99,8 @@ public class Analytics360Service {
 		}
 		
 		
-		DashboardReport report = new DashboardReport(beginFilterDate, endFilterDate, profileTotalStats, profileFunnelInDatetimeStats, profileTimeseriesStats, eventTotalStats, eventFunnelInDatetimeStats, eventTimeseriesStats);
+		DashboardReport report = new DashboardReport();
+		
 		
 		return report;
 	}

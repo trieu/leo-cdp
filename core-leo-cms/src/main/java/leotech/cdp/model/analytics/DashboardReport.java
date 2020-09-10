@@ -21,41 +21,29 @@ public class DashboardReport {
 	String endFilterDate;
 
 	@Expose
+	String timeUnit;
+
+	@Expose
 	List<StatisticCollector> profileTotalStats;
 
 	@Expose
-	List<StatisticCollector> profileFunnelInDatetimeStats;
+	List<StatisticCollector> profileFunnelData;
 
 	@Expose
-	List<StatisticCollector> profileTimeseriesStats;
+	List<StatisticCollector> profileTimeseriesData;
 
 	@Expose
 	List<StatisticCollector> eventTotalStats;
 
 	@Expose
-	List<StatisticCollector> eventFunnelInDatetimeStats;
-
-	@Expose
-	List<StatisticCollector> eventTimeseriesStats;
+	List<StatisticCollector> eventTimeseriesData;
 
 	public DashboardReport() {
 
 	}
+	
 
-	public DashboardReport(String beginFilterDate, String endFilterDate, List<StatisticCollector> profileTotalStats,
-			List<StatisticCollector> profileFunnelInDatetimeStats, List<StatisticCollector> profileTimeseriesStats,
-			List<StatisticCollector> eventTotalStats, List<StatisticCollector> eventFunnelInDatetimeStats,
-			List<StatisticCollector> eventTimeseriesStats) {
-		super();
-		this.beginFilterDate = beginFilterDate;
-		this.endFilterDate = endFilterDate;
-		this.profileTotalStats = profileTotalStats;
-		this.profileFunnelInDatetimeStats = profileFunnelInDatetimeStats;
-		this.profileTimeseriesStats = profileTimeseriesStats;
-		this.eventTotalStats = eventTotalStats;
-		this.eventFunnelInDatetimeStats = eventFunnelInDatetimeStats;
-		this.eventTimeseriesStats = eventTimeseriesStats;
-	}
+	
 
 	@Override
 	public String toString() {
@@ -78,6 +66,14 @@ public class DashboardReport {
 		this.endFilterDate = endFilterDate;
 	}
 
+	public String getTimeUnit() {
+		return timeUnit;
+	}
+
+	public void setTimeUnit(String timeUnit) {
+		this.timeUnit = timeUnit;
+	}
+
 	public List<StatisticCollector> getProfileTotalStats() {
 		return profileTotalStats;
 	}
@@ -86,20 +82,20 @@ public class DashboardReport {
 		this.profileTotalStats = profileTotalStats;
 	}
 
-	public List<StatisticCollector> getProfileFunnelInDatetimeStats() {
-		return profileFunnelInDatetimeStats;
+	public List<StatisticCollector> getProfileFunnelData() {
+		return profileFunnelData;
 	}
 
-	public void setProfileFunnelInDatetimeStats(List<StatisticCollector> profileFunnelInDatetimeStats) {
-		this.profileFunnelInDatetimeStats = profileFunnelInDatetimeStats;
+	public void setProfileFunnelData(List<StatisticCollector> profileFunnelData) {
+		this.profileFunnelData = profileFunnelData;
 	}
 
-	public List<StatisticCollector> getProfileTimeseriesStats() {
-		return profileTimeseriesStats;
+	public List<StatisticCollector> getProfileTimeseriesData() {
+		return profileTimeseriesData;
 	}
 
-	public void setProfileTimeseriesStats(List<StatisticCollector> profileTimeseriesStats) {
-		this.profileTimeseriesStats = profileTimeseriesStats;
+	public void setProfileTimeseriesData(List<StatisticCollector> profileTimeseriesData) {
+		this.profileTimeseriesData = profileTimeseriesData;
 	}
 
 	public List<StatisticCollector> getEventTotalStats() {
@@ -110,20 +106,14 @@ public class DashboardReport {
 		this.eventTotalStats = eventTotalStats;
 	}
 
-	public List<StatisticCollector> getEventFunnelInDatetimeStats() {
-		return eventFunnelInDatetimeStats;
+	
+
+	public List<StatisticCollector> getEventTimeseriesData() {
+		return eventTimeseriesData;
 	}
 
-	public void setEventFunnelInDatetimeStats(List<StatisticCollector> eventFunnelInDatetimeStats) {
-		this.eventFunnelInDatetimeStats = eventFunnelInDatetimeStats;
-	}
-
-	public List<StatisticCollector> getEventTimeseriesStats() {
-		return eventTimeseriesStats;
-	}
-
-	public void setEventTimeseriesStats(List<StatisticCollector> eventTimeseriesStats) {
-		this.eventTimeseriesStats = eventTimeseriesStats;
+	public void setEventTimeseriesData(List<StatisticCollector> eventTimeseriesData) {
+		this.eventTimeseriesData = eventTimeseriesData;
 	}
 
 }

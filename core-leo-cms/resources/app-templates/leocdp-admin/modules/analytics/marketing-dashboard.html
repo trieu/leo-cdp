@@ -167,7 +167,7 @@
    	                 height: 20
    	             },
    	             bottomWidth : 0.50,
-   	             height: 380
+   	             height: 420
    	         },
    	         tooltip: {
    	             enabled: true
@@ -228,7 +228,9 @@
                 var profileFunnelData = json.data.profileFunnelInDatetimeStats;
                 visualizeFunnel('#profile_funnel', profileFunnelData);
                 
-                //var eventFunnelData = json.data.eventFunnelInDatetimeStats;
+                var eventFunnelData = json.data.eventFunnelInDatetimeStats;
+                
+                moment().format("MMM YYYY");
                 
                 
                	//console.log(profileTotalStats)
