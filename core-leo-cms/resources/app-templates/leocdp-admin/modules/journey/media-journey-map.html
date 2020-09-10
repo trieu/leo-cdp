@@ -89,6 +89,10 @@
 	   		     	{ type: "control" , width: 50, deleteButton: canDeleteData}
 	   		    ]
 	   		});  
+	   		
+	   		if( ! canInsertData || ! canEditData ){
+	   			$("#media_channels_table").find('.jsgrid-button').click(errorNoAuthorization);
+	   		}
 	   	})
     }    
     

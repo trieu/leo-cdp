@@ -24,11 +24,11 @@ public class Analytics360Test {
 		System.out.println(gson.toJson(statsTotalP));
 		System.out.println("\n--------\n");
 		
-		List<StatisticCollector> dailyStatsP = Analytics360Dao.collectProfileTotalStatistics(beginFilterDate, endFilterDate);
+		List<StatisticCollector> dailyStatsP = Analytics360Dao.collectProfileFunnelStatistics(beginFilterDate, endFilterDate);
 		System.out.println(gson.toJson(dailyStatsP));
 		System.out.println("\n--------\n");
 		
-		List<StatisticCollector> timeseriesDataP = Analytics360Dao.collectProfileTotalStatisticsTimeseries(beginFilterDate, endFilterDate);
+		List<StatisticCollector> timeseriesDataP = Analytics360Dao.collectProfileDailyStatistics(beginFilterDate, endFilterDate);
 		System.out.println(gson.toJson(timeseriesDataP));
 		System.out.println("\n--------\n");
 		
@@ -42,7 +42,7 @@ public class Analytics360Test {
 		System.out.println(gson.toJson(dailyStatsE));
 		System.out.println("\n--------\n");
 		
-		List<StatisticCollector> timeseriesDataE = Analytics360Dao.collectTrackingEventTotalStatisticsTimeseries(beginFilterDate, endFilterDate);
+		List<StatisticCollector> timeseriesDataE = Analytics360Dao.collectEventDailyStatistics(beginFilterDate, endFilterDate);
 		System.out.println(gson.toJson(timeseriesDataE));
 		Utils.exitSystemAfterTimeout(1000);
 	}

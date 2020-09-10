@@ -23,8 +23,12 @@ import leotech.system.util.database.ArangoDbQuery.CallbackQuery;
 
 public class Analytics360Dao extends BaseLeoCdpDao {
 	
-	private static final String CUSTOMER_SEGMENTS = "Customer Segment";
-	private static final String HUMAN_PROFILES = "Customer Profile";
+	private static final String YEARS = "years";
+	private static final String MONTHS = "months";
+	private static final String DAYS = "days";
+	private static final String HOURS = "hours";
+	private static final String CUSTOMER_SEGMENT = "Customer Segment";
+	private static final String CUSTOMER_PROFILE = "Customer Profile";
 	
 	// profile statistics
 	static final String AQL_PROFILE_COLLECTOR_TOTAL = AqlTemplate.get("AQL_PROFILE_COLLECTOR_TOTAL");
@@ -38,6 +42,10 @@ public class Analytics360Dao extends BaseLeoCdpDao {
 	
 	
 	// ---- Profile Statistics ---- //
+	
+	/**
+	 * @return data for Total Customer Statistics box
+	 */
 	public static List<StatisticCollector> collectProfileTotalStatistics(){
 		String aql = AQL_PROFILE_COLLECTOR_TOTAL;
 		CallbackQuery<StatisticCollector> callback = StatisticCollector.callbackProfileStatisticCollector();
@@ -51,18 +59,23 @@ public class Analytics360Dao extends BaseLeoCdpDao {
 			}
 		}
 		
-		List<StatisticCollector> profileStats = new ArrayList<StatisticCollector>(list.size() + 2);
 		long totalHumanProfile = ProfileDataService.countTotalOfProfiles();
 		long totalSegments = SegmentDataService.countTotalOfSegments();
 		
-		profileStats.add(new StatisticCollector(HUMAN_PROFILES, totalHumanProfile, -2));
-		profileStats.add(new StatisticCollector(CUSTOMER_SEGMENTS, totalSegments, -1));
+		List<StatisticCollector> profileStats = new ArrayList<StatisticCollector>(list.size() + 2);
+		profileStats.add(new StatisticCollector(CUSTOMER_PROFILE, totalHumanProfile, -2));
+		profileStats.add(new StatisticCollector(CUSTOMER_SEGMENT, totalSegments, -1));
 		profileStats.addAll(list);
 		
 		return profileStats;
 	}
 	
-	public static List<StatisticCollector> collectProfileTotalStatistics(String beginFilterDate, String endFilterDate){
+	/**
+	 * @param beginFilterDate
+	 * @param endFilterDate
+	 * @return data for 
+	 */
+	public static List<StatisticCollector> collectProfileFunnelStatistics(String beginFilterDate, String endFilterDate){
 		String aql = AQL_PROFILE_COLLECTOR_IN_DATE_RANGE;
 		CallbackQuery<StatisticCollector> callback = StatisticCollector.callbackProfileStatisticCollector();
 		
@@ -97,16 +110,36 @@ public class Analytics360Dao extends BaseLeoCdpDao {
 		return finalResults;
 	}
 	
-	public static List<StatisticCollector> collectProfileTotalStatisticsTimeseries(String beginFilterDate, String endFilterDate){
+	public static List<StatisticCollector> collectProfileHourlyStatistics(String beginFilterDate, String endFilterDate){
 		String aql = AQL_PROFILE_TIMESERIES_COLLECTOR;
 		CallbackQuery<StatisticCollector> callback = StatisticCollector.callbackProfileStatisticCollector();
-		return collectTotalStatisticsTimeseries(beginFilterDate, endFilterDate, aql, callback);
+		return collectTimeseriesData(HOURS,beginFilterDate, endFilterDate, aql, callback);
 	}
+	
+	public static List<StatisticCollector> collectProfileDailyStatistics(String beginFilterDate, String endFilterDate){
+		String aql = AQL_PROFILE_TIMESERIES_COLLECTOR;
+		CallbackQuery<StatisticCollector> callback = StatisticCollector.callbackProfileStatisticCollector();
+		return collectTimeseriesData(DAYS,beginFilterDate, endFilterDate, aql, callback);
+	}
+	
+	public static List<StatisticCollector> collectProfileMonthlyStatistics(String beginFilterDate, String endFilterDate){
+		String aql = AQL_PROFILE_TIMESERIES_COLLECTOR;
+		CallbackQuery<StatisticCollector> callback = StatisticCollector.callbackProfileStatisticCollector();
+		return collectTimeseriesData(MONTHS,beginFilterDate, endFilterDate, aql, callback);
+	}
+	
+	public static List<StatisticCollector> collectProfileYearlyStatistics(String beginFilterDate, String endFilterDate){
+		String aql = AQL_PROFILE_TIMESERIES_COLLECTOR;
+		CallbackQuery<StatisticCollector> callback = StatisticCollector.callbackProfileStatisticCollector();
+		return collectTimeseriesData(YEARS,beginFilterDate, endFilterDate, aql, callback);
+	}
+	
 	// ---- Profile Statistics ---- //
 	
 	
 	
 	// ---- Tracking Event Statistics ---- //
+	
 	public static List<StatisticCollector> collectTrackingEventTotalStatistics(){
 		String aql = AQL_EVENT_COLLECTOR_TOTAL;
 		CallbackQuery<StatisticCollector> callback = StatisticCollector.callbackEventStatisticCollector();
@@ -119,19 +152,35 @@ public class Analytics360Dao extends BaseLeoCdpDao {
 		return collectTotalStatisticsInDateRange(beginFilterDate, endFilterDate, aql, callback);
 	}
 	
-	public static List<StatisticCollector> collectTrackingEventTotalStatisticsTimeseries(String beginFilterDate, String endFilterDate){
+	public static List<StatisticCollector> collectEventHourlyStatistics(String beginFilterDate, String endFilterDate){
 		String aql = AQL_EVENT_TIMESERIES_COLLECTOR;
 		CallbackQuery<StatisticCollector> callback = StatisticCollector.callbackEventStatisticCollector();
-		return collectTotalStatisticsTimeseries(beginFilterDate, endFilterDate, aql, callback);
+		return collectTimeseriesData(HOURS,beginFilterDate, endFilterDate, aql, callback);
 	}
+	
+	public static List<StatisticCollector> collectEventDailyStatistics(String beginFilterDate, String endFilterDate){
+		String aql = AQL_EVENT_TIMESERIES_COLLECTOR;
+		CallbackQuery<StatisticCollector> callback = StatisticCollector.callbackEventStatisticCollector();
+		return collectTimeseriesData(DAYS,beginFilterDate, endFilterDate, aql, callback);
+	}
+	
+	public static List<StatisticCollector> collectEventMonthlyStatistics(String beginFilterDate, String endFilterDate){
+		String aql = AQL_EVENT_TIMESERIES_COLLECTOR;
+		CallbackQuery<StatisticCollector> callback = StatisticCollector.callbackEventStatisticCollector();
+		return collectTimeseriesData(MONTHS,beginFilterDate, endFilterDate, aql, callback);
+	}
+	
+	public static List<StatisticCollector> collectEventYearlyStatistics(String beginFilterDate, String endFilterDate){
+		String aql = AQL_EVENT_TIMESERIES_COLLECTOR;
+		CallbackQuery<StatisticCollector> callback = StatisticCollector.callbackEventStatisticCollector();
+		return collectTimeseriesData(YEARS,beginFilterDate, endFilterDate, aql, callback);
+	}
+	
 	// ---- Tracking Event Statistics ---- //
 	
 	
-	
-	
-	
 
-	public static List<StatisticCollector> collectTotalStatistics(String aql, CallbackQuery<StatisticCollector> callback){
+	protected static List<StatisticCollector> collectTotalStatistics(String aql, CallbackQuery<StatisticCollector> callback){
 		ArangoDatabase db = getCdpDbInstance();
 		ArangoDbQuery<StatisticCollector> q = new ArangoDbQuery<StatisticCollector>(db, aql, StatisticCollector.class, callback);
 		List<StatisticCollector> list = q.getResultsAsList();
@@ -139,7 +188,7 @@ public class Analytics360Dao extends BaseLeoCdpDao {
 		return list;
 	}
 	
-	public static List<StatisticCollector> collectTotalStatisticsInDateRange(String beginFilterDate, String endFilterDate, String aql, CallbackQuery<StatisticCollector> callback){
+	protected static List<StatisticCollector> collectTotalStatisticsInDateRange(String beginFilterDate, String endFilterDate, String aql, CallbackQuery<StatisticCollector> callback){
 		ArangoDatabase db = getCdpDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(2);
 		bindVars.put("beginFilterDate", beginFilterDate);
@@ -150,12 +199,12 @@ public class Analytics360Dao extends BaseLeoCdpDao {
 		return list;
 	}
 	
-	public static List<StatisticCollector> collectTotalStatisticsTimeseries(String beginFilterDate, String endFilterDate, String aql, CallbackQuery<StatisticCollector> callback){
+	protected static List<StatisticCollector> collectTimeseriesData(String truncatedTimeUnit, String beginFilterDate, String endFilterDate, String aql, CallbackQuery<StatisticCollector> callback){
 		ArangoDatabase db = getCdpDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(3);
 		bindVars.put("beginFilterDate", beginFilterDate);
 		bindVars.put("endFilterDate", endFilterDate);
-		bindVars.put("truncatedUnit","days");// https://www.arangodb.com/docs/3.7/aql/functions-date.html#date_trunc
+		bindVars.put("truncatedUnit",truncatedTimeUnit);// https://www.arangodb.com/docs/3.7/aql/functions-date.html#date_trunc
 		ArangoDbQuery<StatisticCollector> q = new ArangoDbQuery<StatisticCollector>(db, aql, bindVars, StatisticCollector.class,callback);
 		List<StatisticCollector> list = q.getResultsAsList();
 		Collections.sort(list);

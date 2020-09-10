@@ -180,7 +180,7 @@
                         		var callJsEditStr = "#calljs-leoCdpRouter('Customer_Profile_Editor','" + row.id + "')";
                         		html += ' <br><a class="control" title="Profile Editor" href="' + callJsEditStr + '" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
                         	} else {
-                        		html += ' <br><a class="control" title="Profile Editor" href="javascript:" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
+                        		html += ' <br><a class="control" title="Profile Editor" href="javascript:errorNoAuthorization()" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
                         	}
                             return html;
                         },

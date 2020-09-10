@@ -72,7 +72,7 @@
                 },
                 "columnDefs": [{
                         "render": function (data, type, row) {
-                        	var callJsStr = 'javascript:';
+                        	var callJsStr = 'javascript:errorNoAuthorization()';
                         	if( canEditLoginData ){
                         		callJsStr = "#calljs-leoCdpRouter('User_Login_Editor','" + row.key + "')";
                         	}

@@ -384,3 +384,13 @@ if (LeoAdminApiUtil.isLoaded !== true) {
 	}());
 }
 
+var errorNoAuthorization = errorNoAuthorization || function(){
+	iziToast.error({
+	    title: 'Error',
+	    message: 'You don not have authorization to use this function, please contact your system administrator.',
+	    onClosing: function(instance, toast, closedBy){
+	    	// log error
+	    }
+	});
+}
+

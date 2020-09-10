@@ -39,13 +39,13 @@
 		        chart: {
 		        	curve: { enabled: true, height: 20 },
 		            bottomWidth : 0.58,
-		            height: 286
+		            height: 275
 		        },
 		        tooltip: {
 		            enabled: true
 		        },
 		        label: {
-		            fontSize: '12px'
+		            fontSize: '13px'
 		        },
 		        events: {
 		            click: {
@@ -135,6 +135,10 @@
 			        { type: "control" , width: 50, deleteButton: canDeleteData}
 			    ]
 			});  
+			 
+			if( ! canInsertData || ! canEditData ){
+		   		$("#behavioral_metrics_table").find('.jsgrid-button').click(errorNoAuthorization);
+		    }
 		});
 	}
 

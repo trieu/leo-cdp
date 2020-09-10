@@ -154,8 +154,8 @@
                         		html += ' <br> <a class="control" title="Copy this segment" href="' + callJsCopyStr + '" > <i class="fa fa-clone" aria-hidden="true"></i> Copy</a>';
                         		
                         	} else {
-                        		html += '<a class="control" title="Segment Builder Editor" href="javascript:" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
-                        		html += ' <br> <a class="control" title="Copy this segment" href="javascript:" > <i class="fa fa-clone" aria-hidden="true"></i> Copy</a>';
+                        		html += '<a class="control" title="Segment Builder Editor" href="javascript:errorNoAuthorization()" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
+                        		html += ' <br> <a class="control" title="Copy this segment" href="javascript:errorNoAuthorization()" > <i class="fa fa-clone" aria-hidden="true"></i> Copy</a>';
                         	}
                         	var callJsViewStr = "#calljs-leoCdpRouter('Segment_Details','" + row.id + "')";
                             html += ' <br> <a class="control" title="Segment Report" href="' + callJsViewStr + '" > <i class="fa fa-info-circle" aria-hidden="true"></i> View</a>';
