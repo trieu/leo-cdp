@@ -6,6 +6,7 @@ import leotech.cdp.model.journey.BehavioralEventMetric;
 import leotech.cdp.model.journey.FunnelStage;
 import leotech.cdp.service.FunnelDataService;
 import leotech.system.util.database.ArangoDbQuery.CallbackQuery;
+import rfx.core.util.StringUtil;
 
 public class StatisticCollector implements Comparable<StatisticCollector>{
 	
@@ -84,6 +85,19 @@ public class StatisticCollector implements Comparable<StatisticCollector>{
 	}
 	public void setDateTime(Date dateTime) {
 		this.dateTime = dateTime;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return this.hashCode() == obj.hashCode();
+	}
+	
+	@Override
+	public int hashCode() {
+		if(StringUtil.isNotEmpty(collectorKey)) {
+			return this.collectorKey.hashCode();
+		}
+		return 0;
 	}
 
 	@Override

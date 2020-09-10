@@ -16,6 +16,12 @@
 	    top: 96px;
 	    width: 82%;
 	}
+	.collector-count {
+		font-size:13.2px!important; 
+	}
+	.collector-item {
+		padding: 5px!important; 
+	}
 </style>
 
 <div class="container-fluid">
@@ -136,8 +142,6 @@
       	//loadCustomerVenn();
     }
 	
-	
-	
     var showDashboardReport = window.showDashboardReport || function() {
     	var formatDateTime = 'YYYY-MM-DD HH:mm:ss';
     	var datetimeFilter = getDateFilterValues();
@@ -191,7 +195,7 @@
     	
     	var renderItemTotal = function(domSelector, collectorKey, collectorCount ){
     		var value = new Number(collectorCount).toLocaleString();
-    		var html = '<h5> '+ collectorKey +' &nbsp; <span class="label label-default"> ' + value + ' </span>  </h5>';
+    		var html = '<h5 class="collector-item"> '+ collectorKey +' &nbsp; <span class="label label-default collector-count" > ' + value + ' </span>  </h5>';
     		$(domSelector).append(html)
     	}
     	

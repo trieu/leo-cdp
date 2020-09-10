@@ -15,11 +15,11 @@ public class MediaJourneyMapDao {
 		
 		MediaChannel google = new MediaChannel("Google - Search Engine", MediaChannelType.SEARCH_ENGINE, false, "https://google.com");
 		MediaChannel facebook = new MediaChannel("Facebook - Social Media", MediaChannelType.SOCIAL_MEDIA_PLATFORM, false, "https://www.facebook.com/");
-		MediaChannel affiliate = new MediaChannel("Affiliate Marketing", MediaChannelType.WEB_URL, true, "http://xemgiday.com/");
+		MediaChannel affiliate = new MediaChannel("Affiliate Marketing Website", MediaChannelType.WEB_URL, true, "http://xemgiday.com/");
 		MediaChannel emailMarketing = new MediaChannel("Email Marketing", MediaChannelType.EMAIl_CONTACT, false, "mailto:support@bigdatavietnam.org");
-		MediaChannel videoHub = new MediaChannel("Video Content Website", MediaChannelType.UNIFIED_CONTENT_HUB, true, "https://bookstore.bigdatavietnam.org/");
-		MediaChannel ecommerce = new MediaChannel("E-commerce Website", MediaChannelType.ECOMMERCE_PLATFORM, true, "http://demo.ecommerce.com/");
-		MediaChannel retailStore = new MediaChannel("Retail Store", MediaChannelType.RETAIL_STORE, true, "https://plus.codes/7P28QPF3+JJ");
+		MediaChannel videoHub = new MediaChannel("Content Video Hub", MediaChannelType.UNIFIED_CONTENT_HUB, true, "https://bookstore.bigdatavietnam.org/");
+		MediaChannel ecommerce = new MediaChannel("Demo Bookshop", MediaChannelType.ECOMMERCE_PLATFORM, true, "http://demobookshop.leocdp.com/");
+		MediaChannel retailStore = new MediaChannel("Book Retail Store", MediaChannelType.RETAIL_STORE, true, "https://plus.codes/7P28QPF3+JJ");
 		
 		Map<String,MediaChannel> mediaChannelMap = new HashMap<>();
 		mediaChannelMap.put(google.getName(), google);

@@ -39,7 +39,7 @@ public class FunnelStage extends CdpPersistentObject {
 	String type;
 
 	public FunnelStage() {
-		
+
 	}
 
 	public FunnelStage(int orderIndex, String name, String type) {
@@ -47,10 +47,10 @@ public class FunnelStage extends CdpPersistentObject {
 		this.orderIndex = orderIndex;
 		this.name = name;
 		this.type = type;
-		
+
 		this.id = new Slugify().slugify(name);
 	}
-	
+
 	@Override
 	public boolean isReadyForSave() {
 		return StringUtil.isNotEmpty(id) && StringUtil.isNotEmpty(name);
@@ -86,6 +86,14 @@ public class FunnelStage extends CdpPersistentObject {
 	}
 
 	@Override
+	public int hashCode() {
+		if(StringUtil.isNotEmpty(id)) {
+			return this.id.hashCode();
+		}
+		return 0;
+	}
+
+	@Override
 	public ArangoCollection getDbCollection() {
 		if (dbCollection == null) {
 			ArangoDatabase arangoDatabase = getDatabaseInstance();
@@ -99,5 +107,5 @@ public class FunnelStage extends CdpPersistentObject {
 		}
 		return dbCollection;
 	}
-	
+
 }

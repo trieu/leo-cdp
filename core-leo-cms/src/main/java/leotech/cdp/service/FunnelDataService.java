@@ -45,7 +45,7 @@ public class FunnelDataService {
 		}
 		
 		//Customer Data Funnel
-		customerFunnelStages.add(CUSTOMER_PROFILE_FUNNEL_STAGE);
+		//customerFunnelStages.add(CUSTOMER_PROFILE_FUNNEL_STAGE);
 		customerFunnelStages.add(new FunnelStage(1, "New Visitor", "customer_retail"));
 		customerFunnelStages.add(new FunnelStage(2, "Engaged Visitor", "customer_retail"));
 		customerFunnelStages.add(new FunnelStage(3, "Customer Lead", "customer_retail"));
