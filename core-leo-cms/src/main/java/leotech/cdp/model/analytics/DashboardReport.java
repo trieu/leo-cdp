@@ -42,8 +42,26 @@ public class DashboardReport {
 
 	}
 	
-
 	
+	
+
+	public DashboardReport(String beginFilterDate, String endFilterDate, String timeUnit,
+			List<StatisticCollector> profileTotalStats, List<StatisticCollector> profileFunnelData,
+			List<StatisticCollector> profileTimeseriesData, List<StatisticCollector> eventTotalStats,
+			List<StatisticCollector> eventTimeseriesData) {
+		super();
+		this.beginFilterDate = beginFilterDate;
+		this.endFilterDate = endFilterDate;
+		this.timeUnit = timeUnit;
+		this.profileTotalStats = profileTotalStats;
+		this.profileFunnelData = profileFunnelData;
+		this.profileTimeseriesData = profileTimeseriesData;
+		this.eventTotalStats = eventTotalStats;
+		this.eventTimeseriesData = eventTimeseriesData;
+	}
+
+
+
 
 	@Override
 	public String toString() {

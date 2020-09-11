@@ -225,10 +225,10 @@
                 var eventTotalStats = json.data.eventTotalStats;
                 renderStatsTotal(profileTotalStats, eventTotalStats);
                 
-                var profileFunnelData = json.data.profileFunnelInDatetimeStats;
+                var profileFunnelData = json.data.profileFunnelData;
                 visualizeFunnel('#profile_funnel', profileFunnelData);
                 
-                var eventFunnelData = json.data.eventFunnelInDatetimeStats;
+                var eventFunnelData = json.data.eventTimeseriesData;
                 
                 moment().format("MMM YYYY");
                 

@@ -63,20 +63,20 @@ public class Analytics360Service {
 		
 		List<StatisticCollector> profileTotalStats = Analytics360Dao.collectProfileTotalStatistics();
 		
-		List<StatisticCollector> profileFunnelInDatetimeStats = Analytics360Dao.collectProfileFunnelStatistics(beginFilterDate, endFilterDate);
+		List<StatisticCollector> profileFunnelData = Analytics360Dao.collectProfileFunnelStatistics(beginFilterDate, endFilterDate);
 		
-		List<StatisticCollector> profileTimeseriesStats;
+		List<StatisticCollector> profileTimeseriesData;
 		if(Analytics360Service.MONTHS.equals(timeUnit)) {
-			profileTimeseriesStats = Analytics360Dao.collectProfileMonthlyStatistics(beginFilterDate, endFilterDate);
+			profileTimeseriesData = Analytics360Dao.collectProfileMonthlyStatistics(beginFilterDate, endFilterDate);
 		} 
 		else if(Analytics360Service.HOURS.equals(timeUnit)) {
-			profileTimeseriesStats = Analytics360Dao.collectProfileHourlyStatistics(beginFilterDate, endFilterDate);
+			profileTimeseriesData = Analytics360Dao.collectProfileHourlyStatistics(beginFilterDate, endFilterDate);
 		} 
 		else if(Analytics360Service.DAYS.equals(timeUnit)) {
-			profileTimeseriesStats = Analytics360Dao.collectProfileDailyStatistics(beginFilterDate, endFilterDate);
+			profileTimeseriesData = Analytics360Dao.collectProfileDailyStatistics(beginFilterDate, endFilterDate);
 		} 
 		else {
-			profileTimeseriesStats = Analytics360Dao.collectProfileYearlyStatistics(beginFilterDate, endFilterDate);
+			profileTimeseriesData = Analytics360Dao.collectProfileYearlyStatistics(beginFilterDate, endFilterDate);
 		}
 		
 		
@@ -84,24 +84,22 @@ public class Analytics360Service {
 		List<StatisticCollector> eventFunnelInDatetimeStats = Analytics360Dao.collectTrackingEventTotalStatistics(beginFilterDate, endFilterDate);
 		
 
-		List<StatisticCollector> eventTimeseriesStats;
+		List<StatisticCollector> eventTimeseriesData;
 		if(Analytics360Service.MONTHS.equals(timeUnit)) {
-			eventTimeseriesStats = Analytics360Dao.collectEventMonthlyStatistics(beginFilterDate, endFilterDate);
+			eventTimeseriesData = Analytics360Dao.collectEventMonthlyStatistics(beginFilterDate, endFilterDate);
 		} 
 		else if(Analytics360Service.HOURS.equals(timeUnit)) {
-			eventTimeseriesStats = Analytics360Dao.collectEventHourlyStatistics(beginFilterDate, endFilterDate);
+			eventTimeseriesData = Analytics360Dao.collectEventHourlyStatistics(beginFilterDate, endFilterDate);
 		} 
 		else if(Analytics360Service.DAYS.equals(timeUnit)) {
-			eventTimeseriesStats = Analytics360Dao.collectEventDailyStatistics(beginFilterDate, endFilterDate);
+			eventTimeseriesData = Analytics360Dao.collectEventDailyStatistics(beginFilterDate, endFilterDate);
 		} 
 		else {
-			eventTimeseriesStats = Analytics360Dao.collectEventYearlyStatistics(beginFilterDate, endFilterDate);
+			eventTimeseriesData = Analytics360Dao.collectEventYearlyStatistics(beginFilterDate, endFilterDate);
 		}
-		
-		
-		DashboardReport report = new DashboardReport();
-		
-		
+
+		DashboardReport report = new DashboardReport(beginFilterDate, endFilterDate, timeUnit, profileTotalStats, profileFunnelData, profileTimeseriesData, eventTotalStats, eventTimeseriesData);
+
 		return report;
 	}
 	
