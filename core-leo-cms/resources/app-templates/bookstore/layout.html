@@ -69,7 +69,8 @@
 
                 <!-- Ads -->
                 <div id="headerAdPlacement" class="mdl-card__actions mdl-card--border mdl-typography--text-center">
-                     <strong>Ad Placement</strong>
+                     <strong>Ads</strong>
+                     <div class="leoads-placement" data-leoads-placement="101"></div>
                 </div>
 
                 {{#each headlines}}
@@ -100,7 +101,8 @@
             {{#doIf templateName '==' "single-page" }}
                 <!-- Ads -->
                 <div id="headerAdPlacement" class="mdl-card__actions mdl-card--border mdl-typography--text-center">
-                     <strong>Ad Placement</strong>
+                     <strong>Ads</strong>
+                     <div class="leoads-placement" data-leoads-placement="101"></div>
                 </div>
 
                 {{#each pages}}
@@ -126,9 +128,10 @@
             <!-- the list has one item only -->
             <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp">
                 <!-- Ads -->
-                <div style="display: none" id="articleAdPlacement"
+                <div  id="articleAdPlacement"
                     class="mdl-card__actions mdl-card--border mdl-typography--text-center">
-                    <strong>Advertiment</strong>
+                    <strong>Ads</strong>
+                     <div class="leoads-placement" data-leoads-placement="101"></div>
                 </div>
 
                 {{#each posts}}
@@ -147,9 +150,10 @@
                     </ul>
                 </div>
 
-                <div id="bottomAdPlacement" class="mdl-card__actions mdl-card--border mdl-typography--text-center">
+                <div style="display: none;" id="bottomAdPlacement" class="mdl-card__actions mdl-card--border mdl-typography--text-center">
                     <!-- BottomAds -->
                      <strong>Ad Placement</strong>
+                      
                 </div>
             </div>
             <!-- ////////////// -->
@@ -167,8 +171,8 @@
             {{#doIf templateName '==' "list-post" }}
                 <!-- Ads -->
                 <div id="headerAdPlacement" class="mdl-card__actions mdl-card--border mdl-typography--text-center">
-                    <strong>Ad Placement</strong>
-                   
+                    <strong>Ads</strong>
+                   <div class="leoads-placement" data-leoads-placement="101"></div>
                 </div>
 
                 {{#each posts}}
@@ -230,7 +234,6 @@
             {{#doIf templateName '==' "404" }}
             {{#renderHtmlView "bookstore/404" this }}{{/renderHtmlView}}
             {{/doIf}}
-
 
         </div>
 

@@ -14,14 +14,15 @@ import leotech.system.model.JsonDataPayload;
 /**
  * @author trieu
  * 
- *  App Data API Delivery Handler for Content Hub, Page, Post, Category and User Login
+ *  API Data Delivery Handler for Ads, Content Hub, Page, Post, Category and User Login
  *
  */
 public class DeliveryApiRouter extends BaseApiRouter {
 	
 	public static final String COMMENT_PREFIX = "/comment";
 	public static final String BOOKMARK_PREFIX = "/bookmark";
-	public static final String ADS_PREFIX = "/ads";
+	
+	
 
 	public DeliveryApiRouter(RoutingContext context) {
 		super(context);
@@ -68,11 +69,7 @@ public class DeliveryApiRouter extends BaseApiRouter {
 			else if (uri.startsWith(BOOKMARK_PREFIX)) {
 				// TODO
 			}
-
-			else if (uri.startsWith(ADS_PREFIX)) {
-				// SSP Bid Request processing
-				// AdBiddingHandler.handle(context);
-			}
+			
 		} catch (Throwable e) {
 			e.printStackTrace();
 			payload = JsonDataPayload.fail(e.getMessage(), 500);
@@ -91,7 +88,6 @@ public class DeliveryApiRouter extends BaseApiRouter {
 			if (uri.startsWith(QUERY_PREFIX) || uri.startsWith(SEARCH_PREFIX)) {
 				payload = new ContentQueryApiHandler().httpGetApiHandler(userSession, uri, params);
 			}
-
 			else if (uri.startsWith(CMS_POST_PREFIX)) {
 				payload = new PostApiHandler().httpGetApiHandler(userSession, uri, params);
 			}

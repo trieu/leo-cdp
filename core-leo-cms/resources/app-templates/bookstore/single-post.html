@@ -62,21 +62,14 @@
         {{{mediaInfo}}}
     </div>
     
+    
+    <!-- Leo Form Data Collector  -->
     <div id="subscription_placeholder" class="mdl-cell mdl-cell--12-col" style="display: none">
-    	<h3> Subscription  Form </h3>
+    	<h3> Feedback Form </h3>
     	<form id="subscription_form" > </form>
     	<div id="subscription_form_error" class="alert alert-danger" style="display: none;" > </div>
     </div>
-   
-
-    <div id="fbLikeBox" class="mdl-cell mdl-cell--12-col" style="display: none">
-        <div style="margin: auto!important;width: 340px!important;display: block!important" class="fb-page"
-            data-href="https://www.facebook.com/bigdatavn/" data-small-header="true" data-adapt-container-width="true"
-            data-hide-cover="false" data-show-facepile="true">
-            <blockquote cite="https://www.facebook.com/bigdatavn/" class="fb-xfbml-parse-ignore"><a
-                    href="https://www.facebook.com/bigdatavn/">BigDataVietnam.org</a></blockquote>
-        </div>
-    </div>
+    
 
 </div>
 <script>
@@ -90,7 +83,6 @@
     
     if(postType == 4 || postType == 9 ){
     	$('#postMediaVideo, #postMediaAction').show();
-    	$('#fbLikeBox').hide();
 	}
     
 
@@ -144,7 +136,6 @@
             });
         } else {
             $('#postMediaVideo, #btnPlayerVolume, #btnPlayerFullscreen').hide();
-            $('#fbLikeBox').show();
         }
         autoPlaylistSetup();
     }
@@ -181,7 +172,6 @@
         setTimeout(loadVideo, 3000);
         setTimeout(function () {
             $('#videoProgressLoader').hide();
-            $('#fbLikeBox').show();
         }, 5000);
 
         loadSessionUserInfo(function () {

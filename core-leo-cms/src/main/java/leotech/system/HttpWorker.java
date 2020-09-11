@@ -103,8 +103,7 @@ public class HttpWorker extends BaseWorker {
 			try {
 				String className = httpRoutingConfigs.getClassNameHttpRouter();
 				Class<?> myClass = Class.forName(className);
-				BaseHttpRouter obj = (BaseHttpRouter) myClass.getConstructor(RoutingContext.class)
-						.newInstance(context);
+				BaseHttpRouter obj = (BaseHttpRouter) myClass.getConstructor(RoutingContext.class).newInstance(context);
 				obj.handle();
 			} catch (Throwable e) {
 				e.printStackTrace();

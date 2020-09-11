@@ -16,45 +16,45 @@ import io.vertx.ext.web.RoutingContext;
 
 public class AdBiddingHandler extends CoreSupplyServlet<LocalSessionAgent> {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Override
-    protected LocalSessionAgent getAgent(final HttpServletRequest request, final HttpServletResponse response)
-	    throws RequestException {
-	return new LocalSessionAgent(request, response);
-    }
-
-    @Override
-    protected Exchange<LocalSessionAgent> getServer() {
-	return new LocalExchangeServer();
-    }
-
-    public AdBiddingHandler() throws ServletException {
-	init();
-    }
-
-    public void handle(final VertxHttpServletRequest request, final VertxHttpServletResponse response)
-	    throws ServletException, IOException {
-	String uri = request.getRequestURI();
-	String site = request.getParameter("site");
-	System.out.println("URI: " + uri);
-	if (site != null) {
-	    try {
-		doGet(request, response);
-	    } catch (Exception e) {
-		e.printStackTrace();
-		response.getWriter().write("error");
-	    }
+	@Override
+	protected LocalSessionAgent getAgent(final HttpServletRequest request, final HttpServletResponse response)
+			throws RequestException {
+		return new LocalSessionAgent(request, response);
 	}
-	response.flushBuffer();
-	response.writeToVertx();
-    }
 
-    public static void handle(RoutingContext ctx) {
-	try {
-	    new AdBiddingHandler().handle(new VertxHttpServletRequest(ctx), new VertxHttpServletResponse(ctx));
-	} catch (Exception e) {
-	    e.printStackTrace();
+	@Override
+	protected Exchange<LocalSessionAgent> getServer() {
+		return new LocalExchangeServer();
 	}
-    }
+
+	public AdBiddingHandler() throws ServletException {
+		init();
+	}
+
+	public void handle(final VertxHttpServletRequest request, final VertxHttpServletResponse response)
+			throws ServletException, IOException {
+		String uri = request.getRequestURI();
+		String site = request.getParameter("site");
+		System.out.println("URI: " + uri);
+		if (site != null) {
+			try {
+				doGet(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+				response.getWriter().write("error");
+			}
+		}
+		response.flushBuffer();
+		response.writeToVertx();
+	}
+
+	public static void handle(RoutingContext ctx) {
+		try {
+			new AdBiddingHandler().handle(new VertxHttpServletRequest(ctx), new VertxHttpServletResponse(ctx));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

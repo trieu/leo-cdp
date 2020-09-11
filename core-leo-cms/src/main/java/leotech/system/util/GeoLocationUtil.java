@@ -25,7 +25,7 @@ import io.netty.handler.codec.http.cookie.ServerCookieDecoder;
 import io.netty.handler.codec.http.cookie.ServerCookieEncoder;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
-import leotech.starter.router.DeliveryApiRouter;
+import leotech.system.common.BaseHttpRouter;
 import leotech.system.model.GeoLocation;
 import leotech.system.model.OsmGeoLocation;
 import rfx.core.configs.WorkerConfigs;
@@ -109,14 +109,14 @@ public class GeoLocationUtil {
 
 			Cookie cookie = new DefaultCookie(COOKIE_LOCATION_ID, String.valueOf(loc.getGeoNameId()));
 			cookie.setHttpOnly(false);
-			cookie.setMaxAge(DeliveryApiRouter.COOKIE_AGE_1_WEEK);
+			cookie.setMaxAge(BaseHttpRouter.COOKIE_AGE_1_WEEK);
 			cookie.setPath("/");
 			cookie.setDomain(COOKIE_DOMAIN);
 			resp.headers().add("Set-Cookie", ServerCookieEncoder.LAX.encode(cookie));
 
 			Cookie cookie2 = new DefaultCookie(COOKIE_LOCATION_CITY, String.valueOf(loc.getCityName()));
 			cookie2.setHttpOnly(false);
-			cookie2.setMaxAge(DeliveryApiRouter.COOKIE_AGE_1_WEEK);
+			cookie2.setMaxAge(BaseHttpRouter.COOKIE_AGE_1_WEEK);
 			cookie2.setPath("/");
 			cookie2.setDomain(COOKIE_DOMAIN);
 			resp.headers().add("Set-Cookie", ServerCookieEncoder.LAX.encode(cookie2));

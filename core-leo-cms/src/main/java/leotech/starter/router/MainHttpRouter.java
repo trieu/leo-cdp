@@ -4,15 +4,20 @@ import static io.netty.handler.codec.http.HttpHeaderNames.CONNECTION;
 import static io.netty.handler.codec.http.HttpHeaderNames.CONTENT_TYPE;
 
 import java.io.File;
+import java.util.List;
 
 import org.apache.http.HttpStatus;
 import org.apache.http.entity.ContentType;
+
+import com.google.gson.Gson;
 
 import io.netty.handler.codec.http.HttpHeaderNames;
 import io.vertx.core.MultiMap;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.RoutingContext;
+import leotech.ads.model.DisplayAdData;
+import leotech.ads.service.AdsQueryService;
 import leotech.cms.model.renderable.WebData;
 import leotech.cms.service.WebDataServiceUtil;
 import leotech.system.common.BaseApiHandler;
@@ -21,6 +26,7 @@ import leotech.system.common.BaseHttpRouter;
 import leotech.system.common.PublicFileHttpRouter;
 import leotech.system.common.SecuredApiProxyHandler;
 import leotech.system.model.DeviceInfo;
+import leotech.system.model.JsonDataPayload;
 import leotech.system.service.AppMetadataService;
 import leotech.system.template.HandlebarsTemplateUtil;
 import leotech.system.template.TemplateUtil;
@@ -50,6 +56,8 @@ public class MainHttpRouter extends BaseHttpRouter {
 
 	public static final String VIEW_ROUTER = "/view";
 	public static final String HOME_ROUTER = "/";
+	
+
 
 	public MainHttpRouter(RoutingContext context) {
 		super(context);
@@ -160,6 +168,8 @@ public class MainHttpRouter extends BaseHttpRouter {
 			resp.setStatusCode(model.getHttpStatusCode());
 			resp.end(html);
 		}
+		
+		
 
 		// Ads.TXT
 		else if (path.equalsIgnoreCase(ADS_TXT)) {

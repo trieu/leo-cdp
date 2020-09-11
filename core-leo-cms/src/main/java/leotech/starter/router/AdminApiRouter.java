@@ -1,8 +1,12 @@
 package leotech.starter.router;
 
+import java.util.List;
+
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
+import leotech.ads.model.DisplayAdData;
+import leotech.ads.service.AdsQueryService;
 import leotech.cdp.handler.CdpAnalytics360Handler;
 import leotech.cdp.handler.CdpCampaignHandler;
 import leotech.cdp.handler.CdpFunnelHandler;
@@ -31,6 +35,10 @@ public class AdminApiRouter extends BaseApiRouter {
 	public static final String CDP_TOUCHPOINT_PREFIX = "/cdp/touchpoint";
 	public static final String CDP_ANALYTICS_360_PREFIX = "/cdp/analytics360";
 	public static final String CDP_CAMPAIGN_PREFIX = "/cdp/campaign";
+	
+	// Leo Ads System
+	public static final String ADS_QUERY = "/ads/query";
+	public static final String PLACEMENT_PARAM = "pms";
 
 	public AdminApiRouter(RoutingContext context) {
 		super(context);
@@ -188,6 +196,16 @@ public class AdminApiRouter extends BaseApiRouter {
 			//
 			else if (uri.startsWith(CMS_POST_PREFIX)) {
 				payload = new CmsAdminPostApiHandler().httpGetApiHandler(userSession, uri, params);
+			}
+			//
+			//////// Ads Server System ///////
+			else if (uri.startsWith(ADS_QUERY)) {
+				// TODO SSP Bid Request processing
+				//AdBiddingHandler.handle(context);
+				List<String> pmIds = params.getAll(PLACEMENT_PARAM);
+				List<DisplayAdData> ads = AdsQueryService.getAds(pmIds);
+				payload = JsonDataPayload.ok(uri, ads);
+				payload.setReturnOnlyData(true);
 			}
 		} catch (Throwable e) {
 			e.printStackTrace();
