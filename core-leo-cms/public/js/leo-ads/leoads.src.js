@@ -609,7 +609,7 @@ if (!window._LeoAdRenderProcessed) {
         function getBaseUrlTracking() {
             //FIXME add more server 1 .. 5
             // var c = getRandomInt(1, 1);
-            var url = getProtocol() + '//demotrack.leocdp.net/track/ads';
+            var url = getProtocol() + '//cdp.bigdatavietnam.org/track/ads';
             return url;
         }
 

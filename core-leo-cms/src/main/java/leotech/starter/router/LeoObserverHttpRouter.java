@@ -89,7 +89,11 @@ public class LeoObserverHttpRouter extends BaseHttpRouter {
 			String eventName = StringUtil.safeString(params.get(TrackingApiParam.EVENT_METRIC_NAME)).toLowerCase();
 			String clientSessionKey = StringUtil.safeString(params.get(TrackingApiParam.CTX_SESSION_KEY));
 
-			if (uri.startsWith(PREFIX_CONTEXT_SESSION_PROFILE_INIT) && StringUtil.isEmpty(clientSessionKey)) {
+			if(httpMethod.equalsIgnoreCase("GET") && uri.startsWith("/track/ads")) {
+				//TODO
+				resp.end("");
+			}
+			else if (uri.startsWith(PREFIX_CONTEXT_SESSION_PROFILE_INIT) && StringUtil.isEmpty(clientSessionKey)) {
 				
 				BaseHttpRouter.setCorsHeaders(outHeaders, origin);
 				outHeaders.set(CONTENT_TYPE, BaseApiHandler.CONTENT_TYPE_JSON);
@@ -132,15 +136,17 @@ public class LeoObserverHttpRouter extends BaseHttpRouter {
 				}
 
 				if (status >= 200 && status < 300) {
-					resp.end(new Gson().toJson(new ObserverResponse(currentSession.getVisitorId(),currentSession.getSessionKey(), OK, status)));
+					ObserverResponse rs = new ObserverResponse(currentSession.getVisitorId(),currentSession.getSessionKey(), OK, status);
+					resp.end(new Gson().toJson(rs));
 				} else if (status == 500) {
-					resp.end(new Gson()
-							.toJson(new ObserverResponse(currentSession.getVisitorId(),currentSession.getSessionKey(), FAILED, status)));
+					ObserverResponse rs = new ObserverResponse(currentSession.getVisitorId(),currentSession.getSessionKey(), FAILED, status);
+					resp.end(new Gson().toJson(rs));
 				} else if (status == 102) {
-					resp.end(new Gson().toJson(new ObserverResponse(currentSession.getVisitorId(),currentSession.getSessionKey(), OK, status)));
+					ObserverResponse rs = new ObserverResponse(currentSession.getVisitorId(),currentSession.getSessionKey(), OK, status);
+					resp.end(new Gson().toJson(rs));
 				} else {
-					resp.end(new Gson()
-							.toJson(new ObserverResponse(currentSession.getVisitorId(),currentSession.getSessionKey(), INVALID, status)));
+					ObserverResponse rs = new ObserverResponse(currentSession.getVisitorId(),currentSession.getSessionKey(), INVALID, status);
+					resp.end(new Gson().toJson(rs));
 				}
 				return true;
 				
