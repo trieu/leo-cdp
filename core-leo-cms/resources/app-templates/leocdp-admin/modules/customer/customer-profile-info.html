@@ -219,7 +219,17 @@
 
 			<!-- tab 1 Activity Flow  -->
 			<div class="tab-pane active" id="panel_profile_activitiy_flow" >
-				<h4>Top 100 recent activities</h4>
+				<div class="row">
+					<div class="col-lg-6">
+						<h4>Top 100 recent activities </h4> 
+					</div>
+					<div class="col-lg-6 text-right">
+						<button type="button" class="btn btn-info" onclick="loadTop100RecentActivities()"  > 
+				     		<i class="fa fa-refresh" aria-hidden="true"></i> Refresh 
+				     	</button>
+					</div>
+				</div>
+				
 	     		<ul id="profile_activitiy_flow" class="list-group list-group-dividered list-group-full">
 	     			<!-- data  -->
 				</ul>
@@ -419,14 +429,18 @@
         	 //loadProfileAttribution();
              //loadMediaTouchpoints();
              //personalityDiagram();
-        	 loadTop100RecentActivities(profileId);
+        	 loadTop100RecentActivities();
          });
     }
     
-    var loadTop100RecentActivities = loadTop100RecentActivities || function(profileId){
-    	 LeoAdminApiUtil.getSecuredData('/cdp/profile/tracking-events',{id:profileId, startIndex:0, numberResult:100}, function(json){ 
+    var loadTop100RecentActivities = loadTop100RecentActivities || function(){
+    	
+    	 var node = $('#profile_activitiy_flow');
+		 node.empty().html('<br> <br> <div style="font-size:30px;" class="text-center" > <i class="fa fa-spinner" aria-hidden="true"></i> </div> <br><br>'); 
+		 
+    	 LeoAdminApiUtil.getSecuredData('/cdp/profile/tracking-events',{id: viewProfileId, startIndex:0, numberResult:100}, function(json){ 
     		 console.log(json.data) ;
-    		 var node = $('#profile_activitiy_flow');
+    		 node.css('height','500px').empty();
     		 _.forEach(json.data,function(e,i){
     			 e.srcTouchpoint.name = textTruncate(e.srcTouchpoint.name,120);
     			 e.srcTouchpoint.truncatedUrl = textTruncate(e.srcTouchpoint.url,120);

@@ -91,6 +91,8 @@
         	}
         }
     	
+    	
+    	
     	var codeIsReady = function(){
     		
         	LeoEventObserver.initFingerprint();
@@ -99,7 +101,10 @@
         		sendMessage("LeoObserverProxyLoaded");
         	},500);
         	
-        	setInterval(function(){
+        	// init for first-time loads
+        	var count = 20;
+        	var timerId = -1;
+			var queueProcessor = function(){
         		
         		var len = queueTracking.length;
         		while(len > 0) { 
@@ -123,7 +128,13 @@
             		synchVisitorCall = false;
         		}
         		
-        	},360);
+        		count = count - 1;
+        		if(count <= 0 && timerId > 0){
+        			clearInterval(timerId);
+        			setInterval(queueProcessor,1500);
+        		}
+        	}
+			timerId = setInterval(queueProcessor,360);
     	}
 
         loadScript('//' + ROOT_DOMAIN +'/public/js/leo-observer/hash.min.js',function(){

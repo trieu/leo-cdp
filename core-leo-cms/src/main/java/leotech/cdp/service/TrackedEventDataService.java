@@ -1,5 +1,6 @@
 package leotech.cdp.service;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,22 @@ import leotech.system.util.DeviceInfoUtil;
  */
 public class TrackedEventDataService {
 
-	private static final String PRODUCT_VIEW = "product-view";
+	// 3 important metric events for retail or e-commerce 
+	public static final String PRODUCT_VIEW = "product-view";
+	public static final String ADD_TO_CART = "add-to-cart";
+	public static final String BUY = "buy";
+	
+	// re-targeting 
+	public static final String ADS_RETARGETING = "ads-retargeting";
+	public static final String EMAIL_RETARGETING = "email-retargeting";
+	public static final String WEB_PUSH_RETARGETING = "web-push-retargeting";
+	public static final String APP_PUSH_RETARGETING = "app-push-retargeting";
+	public static final String SMS_RETARGETING = "sms-retargeting";
+	
+	// marketing cross-sales or value-added services to optimize CLV scoring model 
+	public static final String EMAIL_MARKETING = "email-marketing";
+	public static final String WEB_PUSH_MARKETING = "web-push-marketing";
+	public static final String APP_PUSH_MARKETING = "app-push-marketing";
 
 	//
 	public static int trackViewEvent(Date createdAt, ContextSession ctxSession, String srcObserverId, String environment,
@@ -57,6 +73,11 @@ public class TrackedEventDataService {
 				deviceType, sourceIP, createdAt);
 		e.setEnvironment(environment);
 		e.setEventData(eventData);
+		
+		// event trigger for job scheduler
+		if(eventName.equals(PRODUCT_VIEW)) {
+			e.setProcessors(Arrays.asList(ADS_RETARGETING));
+		} 
 
 		TrackingEventDao.record(e);
 
@@ -101,6 +122,11 @@ public class TrackedEventDataService {
 		e.setEnvironment(environment);
 		e.setFeedbackText(feedbackText);
 		e.setEventData(eventData);
+		
+		// event trigger for job scheduler
+		if(eventName.equals(ADD_TO_CART)) {
+			 e.setProcessors(Arrays.asList(WEB_PUSH_MARKETING, ADS_RETARGETING, EMAIL_RETARGETING, APP_PUSH_MARKETING, SMS_RETARGETING));
+		}
 
 		TrackingEventDao.record(e);
 
@@ -147,6 +173,11 @@ public class TrackedEventDataService {
 		e.setEventData(eventData);
 		e.setTransactionCode(transactionCode);
 		e.setConversion(true);
+		
+		// event trigger for job scheduler
+		if(eventName.equals(BUY)) {
+			 e.setProcessors(Arrays.asList(EMAIL_MARKETING, WEB_PUSH_MARKETING, APP_PUSH_MARKETING));
+		}
 
 		TrackingEventDao.record(e);
 

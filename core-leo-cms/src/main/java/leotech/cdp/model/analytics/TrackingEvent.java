@@ -617,6 +617,13 @@ public class TrackingEvent extends CdpPersistentObject {
 		}
 		return processors;
 	}
+	
+	public boolean deleteProcessor(String jobName) {
+		if(this.processors != null) {
+			return this.processors.removeIf( s -> s.equals(jobName) );
+		}
+		return false;
+	}
 
 	public void setProcessors(List<String> processors) {
 		this.processors = processors;
