@@ -10,11 +10,12 @@ import com.google.gson.annotations.SerializedName;
 import rfx.core.util.DateTimeUtil;
 
 /**
- * @author TrieuNT <br>
+ * @author tantrieuf31 <br>
  * 
  *         Line Item is delivered to Internet audience
  */
 // @Entity(value = "creative", noClassnameStored = true)
+@Deprecated
 public class LineItem extends AdItem {
 
 	// Line Item Types
@@ -27,45 +28,7 @@ public class LineItem extends AdItem {
 	public final static int TYPE_CLICK_TRACKING = 7;
 	public final static int TYPE_HEADER_BIDDING = 8;
 
-	// Platform Medium for Ad Delivery
-	public final static int PLATFORM_PC = 1; // all popular screen on desktop:
-												// Laptop, Macbook, ...
-	public final static int PLATFORM_MOBILE_WEB = 2;// Android Chrome Browser,
-													// Safari, Windown Mobile
-													// Browser
-	public final static int PLATFORM_TABLET = 3;// Safari iPad
-	public final static int PLATFORM_NATIVE_APP = 4;// Android Native app, iOS
-													// native app
-	public final static int PLATFORM_SMART_TV = 5;// Sony Android Smart TV, or
-													// Internet TV
-	public final static int PLATFORM_IPTV_OTT = 6;// OTT services
-	public final static int PLATFORM_VIRTUAL_REALITY_APP = 7;// Virtual reality
-																// like Samsung
-																// Gear,
-																// Facebook
-																// Oculus
-
-	// status
-	public static final int ADSTATUS_PAUSED = 0;// paused ad by bad data
-	public static final int ADSTATUS_PENDING = 1;// valid ad, waiting for
-													// approval
-	public static final int ADSTATUS_RUNNING = 2;// deliverable ad unit
-	public static final int ADSTATUS_OVERBOOKING_TOTAL = 3;// the ad performance
-															// metrics is over,
-															// the goal is
-															// reached
-	public static final int ADSTATUS_EXPIRED = 4;// expiration
-	public static final int ADSTATUS_OVERBOOKING_DAILY = 5;// the daily goal is
-															// reached
-	public static final int ADSTATUS_OVERBOOKING_HOURLY = 6;// the hourly goal
-															// is reached
-	public static final int ADSTATUS_OVERBOOKING_FLIGHT = 7;// the goal of
-															// flight is reached
-	public static final int ADSTATUS_OVER_USER_BUDGET = 8;// the ad performance
-															// metrics is over,
-															// the goal is
-															// reached
-
+	
 	// popular ad duration time for Preroll-TVC
 	public static final String TIME_00_00_30 = "00:00:30";
 	public static final String TIME_00_00_15 = "00:00:15";
@@ -82,7 +45,7 @@ public class LineItem extends AdItem {
 	@Expose
 	@SerializedName("status")
 	// @Indexed
-	private int status = ADSTATUS_PAUSED;// 0 is invalid, 1 is pending, 2 is
+	private int status = AdStatus.ADSTATUS_PAUSED;// 0 is invalid, 1 is pending, 2 is
 											// running, 4 is expired or
 											// over-booking
 
@@ -203,7 +166,7 @@ public class LineItem extends AdItem {
 	@SerializedName("litypes")
 	// @Indexed
 	// @Property("litypes")
-	protected int type = TYPE_HOUSE;
+	protected int deliveryType = TYPE_HOUSE;
 
 	@Expose
 	// @Indexed
@@ -230,7 +193,7 @@ public class LineItem extends AdItem {
 		long time = DateTimeUtil.currentUnixTimestamp();
 		this.createdDate = new Date(time * 1000L);
 		this.createdDateLong = createdDate.getTime();
-		this.status = ADSTATUS_PENDING;
+		this.status = AdStatus.ADSTATUS_PENDING;
 	}
 
 	public void validateDataAfterJsonDeserialization() {
@@ -508,12 +471,12 @@ public class LineItem extends AdItem {
 		this.updatedDate = updatedDate;
 	}
 
-	public int getType() {
-		return type;
+	public int getDeliveryType() {
+		return deliveryType;
 	}
 
-	public void setType(int type) {
-		this.type = type;
+	public void setDeliveryType(int deliveryType) {
+		this.deliveryType = deliveryType;
 	}
 
 	public int getAdvertiserId() {

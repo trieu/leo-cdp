@@ -90,17 +90,10 @@ public class ProductItem extends CdpPersistentObject implements Serializable {
 		this.fullUrl = "";
 	}
 	
+	@Deprecated
 	public ProductItem(String fullUrl) {
 		this.fullUrl = "";
 		this.id = id(fullUrl);
-	}
-	
-	public ProductItem(String fullUrl, String name, String siteDomain) {
-		this.fullUrl = fullUrl;
-		this.name = name;
-		this.siteDomain = siteDomain;
-		String keyHint = fullUrl +  name + siteDomain;
-		this.id = id(keyHint);
 	}
 
 	public ProductItem(String fullUrl, String name, String siteDomain, String sku) {
@@ -108,7 +101,24 @@ public class ProductItem extends CdpPersistentObject implements Serializable {
 		this.name = name;
 		this.siteDomain = siteDomain;
 		this.sku = sku;
-		String keyHint = fullUrl +  name + siteDomain + sku;
+		String keyHint = siteDomain + sku;
+		this.id = id(keyHint);
+	}
+
+	public ProductItem(String sku, String name, String description, String image, double originalPrice,
+			double salePrice, String priceCurrency, String fullUrl, String siteName, String siteDomain) {
+		super();
+		this.sku = sku;
+		this.name = name;
+		this.description = description;
+		this.image = image;
+		this.originalPrice = originalPrice;
+		this.salePrice = salePrice;
+		this.priceCurrency = priceCurrency;
+		this.fullUrl = fullUrl;
+		this.siteName = siteName;
+		this.siteDomain = siteDomain;
+		String keyHint = siteDomain + sku;
 		this.id = id(keyHint);
 	}
 
@@ -292,4 +302,6 @@ public class ProductItem extends CdpPersistentObject implements Serializable {
 	public void setOptionValues(List<String> otherOptionValues) {
 		this.optionValues = otherOptionValues;
 	}
+	
+	
 }

@@ -34,35 +34,34 @@ public class DisplayAdData extends AdDataBaseModel {
 	@Expose
 	protected String js3rdCode;
 
-	public DisplayAdData(int placementId, String adMedia, String clickthroughUrl, String clickActionText, int adId,
+	public DisplayAdData(String placementId, String adMedia, String clickthroughUrl, String clickActionText, String campaignId,
 			int adType, int width, int height) {
 		super();
 		this.placementId = placementId;
 		this.adMedia = adMedia;
 		this.clickthroughUrl = clickthroughUrl;
 		this.clickActionText = clickActionText;
-		this.adId = adId;
+		this.campaignId = campaignId;
 		this.adType = adType;
 		this.width = width;
 		this.height = height;
 	}
 
-	public DisplayAdData(int adType, int width, int height, int placementId, String adCode) {
+	public DisplayAdData(int adType, int width, int height, String placementId, String adCode) {
 		super();
 		this.adType = adType;
 		this.width = width;
 		this.height = height;
 		this.placementId = placementId;
-		if (adType == LineItem.ADTYPE_BIDDING_AD) {
+		if (adType == AdType.ADTYPE_BIDDING_AD) {
 			this.backupAdCode = adCode;
 			this.adCode = adCode;
 		} else {
 			this.adCode = adCode;
 		}
-
 	}
 
-	public DisplayAdData(int adType, int width, int height, int placementId, String adCode, boolean hideLogo) {
+	public DisplayAdData(int adType, int width, int height, String placementId, String adCode, boolean hideLogo) {
 		super();
 		this.adType = adType;
 		this.width = width;
@@ -72,9 +71,9 @@ public class DisplayAdData extends AdDataBaseModel {
 		this.hideLogo = hideLogo;
 	}
 
-	public DisplayAdData(int adId, int adType, int width, int height, int placementId, String adCode) {
+	public DisplayAdData(String campaignId, int adType, int width, int height, String placementId, String adCode) {
 		super();
-		this.adId = adId;
+		this.campaignId = campaignId;
 		this.adType = adType;
 		this.width = width;
 		this.height = height;

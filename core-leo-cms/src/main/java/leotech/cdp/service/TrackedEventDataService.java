@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import leotech.cdp.dao.DeviceDaoUtil;
-import leotech.cdp.dao.TrackingEventDaoUtil;
+import leotech.cdp.dao.TrackingEventDao;
 import leotech.cdp.dao.singleview.EventSingleDataView;
 import leotech.cdp.model.analytics.ContextSession;
 import leotech.cdp.model.analytics.TrackingEvent;
@@ -20,7 +20,9 @@ import leotech.system.util.DeviceInfoUtil;
  * @author Trieu Nguyen (Thomas)
  *
  */
-public class EventTrackingService {
+public class TrackedEventDataService {
+
+	private static final String PRODUCT_VIEW = "product-view";
 
 	//
 	public static int trackViewEvent(Date createdAt, ContextSession ctxSession, String srcObserverId, String environment,
@@ -56,7 +58,7 @@ public class EventTrackingService {
 		e.setEnvironment(environment);
 		e.setEventData(eventData);
 
-		TrackingEventDaoUtil.record(e);
+		TrackingEventDao.record(e);
 
 		// TODO add to a thread
 		Device userDevice = DeviceInfoUtil.getUserDevice(deviceInfo);
@@ -100,7 +102,7 @@ public class EventTrackingService {
 		e.setFeedbackText(feedbackText);
 		e.setEventData(eventData);
 
-		TrackingEventDaoUtil.record(e);
+		TrackingEventDao.record(e);
 
 		// TODO add to a thread
 		Device userDevice = DeviceInfoUtil.getUserDevice(dv);
@@ -146,7 +148,7 @@ public class EventTrackingService {
 		e.setTransactionCode(transactionCode);
 		e.setConversion(true);
 
-		TrackingEventDaoUtil.record(e);
+		TrackingEventDao.record(e);
 
 		// TODO add to a thread
 		Device userDevice = DeviceInfoUtil.getUserDevice(device);
@@ -159,9 +161,14 @@ public class EventTrackingService {
 
 	public static List<EventSingleDataView> getEventActivityFlowOfProfile(String profileId, int startIndex,int numberResults) {
 		// Engagement Event Activities
-		List<EventSingleDataView> eventActivities = TrackingEventDaoUtil.getEventsByProfileId(profileId,new DataFilter(startIndex, numberResults));
+		List<EventSingleDataView> eventActivities = TrackingEventDao.getEventsByProfileId(profileId,new DataFilter(startIndex, numberResults));
 		return eventActivities;
 	}
 	
+	public static List<EventSingleDataView> getProductViewActivityFlowOfProfile(String profileId, int startIndex,int numberResults) {
+		// Product Event Activities
+		List<EventSingleDataView> eventActivities = TrackingEventDao.getTrackedEventsByProfileIdAndMetricName(profileId,PRODUCT_VIEW,new DataFilter(startIndex, numberResults));
+		return eventActivities;
+	}
 	
 }

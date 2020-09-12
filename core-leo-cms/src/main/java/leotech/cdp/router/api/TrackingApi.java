@@ -7,7 +7,7 @@ import io.vertx.core.MultiMap;
 import io.vertx.core.http.HttpServerRequest;
 import leotech.cdp.model.analytics.ContextSession;
 import leotech.cdp.service.DeviceDataService;
-import leotech.cdp.service.EventTrackingService;
+import leotech.cdp.service.TrackedEventDataService;
 import leotech.system.model.DeviceInfo;
 import leotech.system.util.RequestInfoUtil;
 import rfx.core.util.StringUtil;
@@ -34,7 +34,7 @@ public class TrackingApi {
 		
 		Date createdAt = new Date();
 
-		return EventTrackingService.trackViewEvent(createdAt, ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
+		return TrackedEventDataService.trackViewEvent(createdAt, ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
 				srcTouchpointName, srcTouchpointUrl, refTouchpointUrl, touchpointRefDomain, eventName, eventJsonData);
 	}
 
@@ -58,7 +58,7 @@ public class TrackingApi {
 		
 		Date createdAt = new Date();
 
-		return EventTrackingService.trackActionEvent(createdAt, ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
+		return TrackedEventDataService.trackActionEvent(createdAt, ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
 				srcTouchpointName,srcTouchpointUrl, refTouchpointUrl,  touchpointRefDomain, eventName, eventCount, "", eventJsonData);
 	}
 
@@ -86,7 +86,7 @@ public class TrackingApi {
 		
 		Date createdAt = new Date();
 
-		return EventTrackingService.trackConversionEvent(createdAt,  ctxSession, srcObserverId, environment, srcEventKey, deviceId, sourceIP,
+		return TrackedEventDataService.trackConversionEvent(createdAt,  ctxSession, srcObserverId, environment, srcEventKey, deviceId, sourceIP,
 				device, srcTouchpointName, srcTouchpointUrl, refTouchpointUrl, touchpointRefDomain, eventName, eventCount, transactionCode, "", eventJsonData);
 	}
 

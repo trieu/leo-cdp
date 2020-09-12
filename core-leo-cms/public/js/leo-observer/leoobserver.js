@@ -876,6 +876,7 @@
     LeoEventObserver.getContextSession = getContextSession;
     LeoEventObserver.updateProfile = updateProfile;
     LeoEventObserver.initFingerprint = initFingerprint;
+    LeoEventObserver.visitorId = getUUID();
 
     global.LeoEventObserver = LeoEventObserver;
 

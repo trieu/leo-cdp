@@ -12,7 +12,7 @@
         var srcTouchpointUrl = window.srcTouchpointUrl;
         var srcTouchpointName = window.srcTouchpointName;
 
-        var LeoObserverProxy = {};
+        var LeoObserverProxy = { 'synchLeoVisitorCallback' : false };
         window.LeoObserverProxy = LeoObserverProxy;
 
         // addEventListener support for IE8
@@ -57,6 +57,9 @@
                 	f();
                 }
             }
+            else if (hash.indexOf('synchLeoVisitorId') === 0 && typeof LeoObserverProxy.synchLeoVisitorCallback === 'function') {
+            	LeoObserverProxy.synchLeoVisitorCallback(hash.substring('synchLeoVisitorId-'.length));
+            }  
         }
         
         // Listen to messages from parent window
@@ -114,6 +117,13 @@
             console.log('LeoObserverProxy.initLeoContextSession')
 		}
 		
+		 LeoObserverProxy.synchLeoVisitorId = function(callback) {
+			LeoObserverProxy.synchLeoVisitorCallback = callback;
+            var payload = JSON.stringify({
+                'call': 'synchLeoVisitorId'
+            });
+            sendMessage(payload);
+        }
 
         // event-view(pageview|screenview|storeview|trueview|placeview,contentId,sessionKey,visitorId)
         LeoObserverProxy.recordViewEvent = function(metricName, eventData) {

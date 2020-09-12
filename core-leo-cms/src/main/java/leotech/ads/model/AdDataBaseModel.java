@@ -20,7 +20,7 @@ public abstract class AdDataBaseModel {
 	protected String clickActionText;// Call to action text
 	
 	@Expose
-	protected int adId;
+	protected String campaignId;
 	
 	@Expose
 	protected String adBeacon;
@@ -29,7 +29,7 @@ public abstract class AdDataBaseModel {
 	protected int adType = 0;
 	
 	@Expose
-	protected int placementId = 0;
+	protected String placementId = "";
 	
 	@Expose
 	protected String adCode = "";// 3rd JavaScript code
@@ -53,9 +53,7 @@ public abstract class AdDataBaseModel {
 		return clickActionText;
 	}
 
-	public int getAdId() {
-		return adId;
-	}
+	
 
 	public String getAdBeacon() {
 		return adBeacon;
@@ -73,8 +71,14 @@ public abstract class AdDataBaseModel {
 		this.clickActionText = clickActionText;
 	}
 
-	public void setAdId(int adId) {
-		this.adId = adId;
+	
+
+	public String getCampaignId() {
+		return campaignId;
+	}
+
+	public void setCampaignId(String campaignId) {
+		this.campaignId = campaignId;
 	}
 
 	public int getAdType() {
@@ -103,12 +107,18 @@ public abstract class AdDataBaseModel {
 		this.adMedia = adMedia;
 	}
 
-	public int getPlacementId() {
+	
+
+	public String getPlacementId() {
 		return placementId;
 	}
 
-	public void setPlacementId(int placementId) {
+	public void setPlacementId(String placementId) {
 		this.placementId = placementId;
+	}
+
+	public void setAdBeacon(String adBeacon) {
+		this.adBeacon = adBeacon;
 	}
 
 	public void setAdType(int adType) {

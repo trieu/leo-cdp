@@ -28,7 +28,7 @@ import leotech.cdp.model.customer.Device;
 import leotech.cdp.model.customer.Profile;
 import leotech.cdp.model.journey.MediaChannelType;
 import leotech.cdp.model.journey.Touchpoint;
-import leotech.cdp.service.EventTrackingService;
+import leotech.cdp.service.TrackedEventDataService;
 import leotech.cdp.service.ProfileDataService;
 import leotech.cdp.service.TouchpointDataService;
 import leotech.system.model.DeviceInfo;
@@ -160,11 +160,11 @@ public class GenerateCdpTestData {
 		
 		String eventName = "content-view";
 		// pageview event
-		EventTrackingService.trackViewEvent(createdAt, ctxSession, observerId, "pro", userDeviceId, sourceIP, deviceInfo,"Book Video Review", srcTouchpointUrl, refTouchpointUrl, touchpointRefDomain, eventName , null);
+		TrackedEventDataService.trackViewEvent(createdAt, ctxSession, observerId, "pro", userDeviceId, sourceIP, deviceInfo,"Book Video Review", srcTouchpointUrl, refTouchpointUrl, touchpointRefDomain, eventName , null);
 		
 		eventName = "social-login";
 		Date loginTime = DateUtils.addSeconds(createdAt, RandomUtil.getRandomInteger(300, 9)); 
-		EventTrackingService.trackActionEvent(loginTime,ctxSession, observerId, "pro", userDeviceId, sourceIP, deviceInfo,"Book Video Review",srcTouchpointUrl, refTouchpointUrl,  touchpointRefDomain, eventName, 1, "", null);
+		TrackedEventDataService.trackActionEvent(loginTime,ctxSession, observerId, "pro", userDeviceId, sourceIP, deviceInfo,"Book Video Review",srcTouchpointUrl, refTouchpointUrl,  touchpointRefDomain, eventName, 1, "", null);
 		
 		
 		System.out.println(new Gson().toJson(profile));

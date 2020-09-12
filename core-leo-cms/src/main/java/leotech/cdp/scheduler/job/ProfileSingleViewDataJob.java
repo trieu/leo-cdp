@@ -4,13 +4,13 @@ import java.util.Date;
 import java.util.List;
 
 import leotech.cdp.dao.ProfileDaoUtil;
-import leotech.cdp.dao.TrackingEventDaoUtil;
+import leotech.cdp.dao.TrackingEventDao;
 import leotech.cdp.dao.singleview.EventSingleDataView;
 import leotech.cdp.dao.singleview.ProfileSingleDataView;
 import leotech.cdp.model.journey.BehavioralEventMetric;
 import leotech.cdp.model.journey.EventMetaData;
 import leotech.cdp.model.journey.FunnelStage;
-import leotech.cdp.service.EventTrackingService;
+import leotech.cdp.service.TrackedEventDataService;
 import leotech.cdp.service.FunnelDataService;
 import rfx.core.job.ScheduledJob;
 import rfx.core.util.Utils;
@@ -54,7 +54,7 @@ public class ProfileSingleViewDataJob  extends ScheduledJob {
 		int numberResult = 200;
 		
 		// init to get first 100 events of profile
-		List<EventSingleDataView> events = EventTrackingService.getEventActivityFlowOfProfile(profileId , startIndex, numberResult);
+		List<EventSingleDataView> events = TrackedEventDataService.getEventActivityFlowOfProfile(profileId , startIndex, numberResult);
 		BehavioralEventMetric highestScoreMetric = null;
 		
 		
@@ -98,7 +98,7 @@ public class ProfileSingleViewDataJob  extends ScheduledJob {
 					profile.updateFunnelStageTimeline(funnelStage.getName(), recoredDate);
 				}
 				
-				TrackingEventDaoUtil.updateProcessedState(event);
+				TrackingEventDao.updateProcessedState(event);
 				
 				// what we have, track all 
 				profile.updateEventCount(eventName);
@@ -106,7 +106,7 @@ public class ProfileSingleViewDataJob  extends ScheduledJob {
 			
 			//loop to the end to reach all events of profile in database
 			startIndex = startIndex + numberResult;
-			events = EventTrackingService.getEventActivityFlowOfProfile(profileId , startIndex, numberResult);
+			events = TrackedEventDataService.getEventActivityFlowOfProfile(profileId , startIndex, numberResult);
 		}
 		
 		//TODO update 8 scoring model here, extend with Jupyter Notebook and Rules Engine 

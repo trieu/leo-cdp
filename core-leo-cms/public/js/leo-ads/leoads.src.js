@@ -511,183 +511,6 @@ if (!window._LeoAdRenderProcessed) {
         return lscache;
     }));
 
-    /**
-     *  ##########################################################
-     *  Cookie util functions
-     */
-    (function (global, undefined) {
-        'use strict';
-
-        var factory = function (window) {
-            if (typeof window.document !== 'object') {
-                throw new Error(
-                    'LeoAdCookies.js requires a `window` with a `document` object');
-            }
-
-            var LeoAdCookies = function (key, value, options) {
-                return arguments.length === 1 ? LeoAdCookies.get(key) :
-                    LeoAdCookies.set(key, value, options);
-            };
-
-            // Allows for setter injection in unit tests
-            LeoAdCookies._document = window.document;
-
-            // Used to ensure cookie keys do not collide with built-in `Object` properties
-            LeoAdCookies._cacheKeyPrefix = 'cookey.';
-
-            LeoAdCookies._maxExpireDate = new Date('Fri, 31 Dec 9999 23:59:59 UTC');
-
-            LeoAdCookies.defaults = {
-                path: '/',
-                secure: false
-            };
-
-            LeoAdCookies.get = function (key) {
-                if (LeoAdCookies._cachedDocumentCookie !== LeoAdCookies._document.cookie) {
-                    LeoAdCookies._renewCache();
-                }
-
-                return LeoAdCookies._cache[LeoAdCookies._cacheKeyPrefix + key];
-            };
-
-            LeoAdCookies.set = function (key, value, options) {
-                options = LeoAdCookies._getExtendedOptions(options);
-                options.expires = LeoAdCookies
-                    ._getExpiresDate(value === undefined ? -1 : options.expires);
-
-                LeoAdCookies._document.cookie = LeoAdCookies
-                    ._generateAdCookiestring(key, value, options);
-
-                return LeoAdCookies;
-            };
-
-            LeoAdCookies.expire = function (key, options) {
-                return LeoAdCookies.set(key, undefined, options);
-            };
-
-            LeoAdCookies._getExtendedOptions = function (options) {
-                return {
-                    path: options && options.path || LeoAdCookies.defaults.path,
-                    domain: options && options.domain ||
-                        LeoAdCookies.defaults.domain,
-                    expires: options && options.expires ||
-                        LeoAdCookies.defaults.expires,
-                    secure: options && options.secure !== undefined ? options.secure : LeoAdCookies.defaults.secure
-                };
-            };
-
-            LeoAdCookies._isValidDate = function (date) {
-                return Object.prototype.toString.call(date) === '[object Date]' &&
-                    !isNaN(date.getTime());
-            };
-
-            LeoAdCookies._getExpiresDate = function (expires, now) {
-                now = now || new Date();
-
-                if (typeof expires === 'number') {
-                    expires = expires === Infinity ? LeoAdCookies._maxExpireDate :
-                        new Date(now.getTime() + expires * 1000);
-                } else if (typeof expires === 'string') {
-                    expires = new Date(expires);
-                }
-
-                if (expires && !LeoAdCookies._isValidDate(expires)) {
-                    throw new Error(
-                        '`expires` parameter cannot be converted to a valid Date instance');
-                }
-
-                return expires;
-            };
-
-            LeoAdCookies._generateAdCookiestring = function (key, value,
-                options) {
-                key = key.replace(/[^#$&+\^`|]/g, encodeURIComponent);
-                key = key.replace(/\(/g, '%28').replace(/\)/g, '%29');
-                value = (value + '').replace(/[^!#$&-+\--:<-\[\]-~]/g,
-                    encodeURIComponent);
-                options = options || {};
-
-                var AdCookiestring = key + '=' + value;
-                AdCookiestring += options.path ? ';path=' + options.path : '';
-                AdCookiestring += options.domain ? ';domain=' + options.domain :
-                    '';
-                AdCookiestring += options.expires ? ';expires=' +
-                    options.expires.toUTCString() : '';
-                AdCookiestring += options.secure ? ';secure' : '';
-
-                return AdCookiestring;
-            };
-
-            LeoAdCookies._getCacheFromString = function (documentCookie) {
-                var cookieCache = {};
-                var AdCookiesArray = documentCookie ? documentCookie
-                    .split('; ') : [];
-
-                for (var i = 0; i < AdCookiesArray.length; i++) {
-                    var cookieKvp = LeoAdCookies
-                        ._getKeyValuePairFromAdCookiestring(AdCookiesArray[i]);
-
-                    if (cookieCache[LeoAdCookies._cacheKeyPrefix + cookieKvp.key] === undefined) {
-                        cookieCache[LeoAdCookies._cacheKeyPrefix + cookieKvp.key] = cookieKvp.value;
-                    }
-                }
-
-                return cookieCache;
-            };
-
-            LeoAdCookies._getKeyValuePairFromAdCookiestring = function (
-                AdCookiestring) {
-                // "=" is a valid character in a cookie value according to RFC6265,
-                // so cannot `split('=')`
-                var separatorIndex = AdCookiestring.indexOf('=');
-
-                // IE omits the "=" when the cookie value is an empty string
-                separatorIndex = separatorIndex < 0 ? AdCookiestring.length :
-                    separatorIndex;
-
-                return {
-                    key: decodeURIComponent(AdCookiestring.substr(0,
-                        separatorIndex)),
-                    value: decodeURIComponent(AdCookiestring
-                        .substr(separatorIndex + 1))
-                };
-            };
-
-            LeoAdCookies._renewCache = function () {
-                LeoAdCookies._cache = LeoAdCookies
-                    ._getCacheFromString(LeoAdCookies._document.cookie);
-                LeoAdCookies._cachedDocumentCookie = LeoAdCookies._document.cookie;
-            };
-
-            LeoAdCookies._areEnabled = function () {
-                var testKey = 'LeoAdCookies.js';
-                var areEnabled = LeoAdCookies.set(testKey, 1).get(testKey) === '1';
-                LeoAdCookies.expire(testKey);
-                return areEnabled;
-            };
-
-            LeoAdCookies.enabled = LeoAdCookies._areEnabled();
-
-            return LeoAdCookies;
-        };
-
-        var AdCookiesExport = typeof global.document === 'object' ? factory(global) :
-            factory;
-
-        // AMD support
-        if (typeof define === 'function' && define.amd) {
-            define(function () {
-                return AdCookiesExport;
-            });
-            // CommonJS/Node.js support
-        } else if (typeof exports === 'object') {
-            // But always support CommonJS module 1.1.1 spec (`exports` cannot be a
-            // function)
-            exports.LeoAdCookies = AdCookiesExport;
-        } else {
-            global.LeoAdCookies = AdCookiesExport;
-        }
-    })(typeof window === 'undefined' ? this : window);
 
     /*
      *  ##########################################################
@@ -783,18 +606,6 @@ if (!window._LeoAdRenderProcessed) {
             return location.protocol;
         }
 
-        function getUUID() {
-            var key = 'leoadsvid';
-            var uuid = LeoAdCookies.get(key);
-            if (!uuid) {
-                uuid = generateUUID();
-                LeoAdCookies.set(key, uuid, {
-                    expires: 315569520
-                }); // Expires in 10 years
-            }
-            return uuid;
-        }
-
         function getBaseUrlTracking() {
             //FIXME add more server 1 .. 5
             // var c = getRandomInt(1, 1);
@@ -857,23 +668,24 @@ if (!window._LeoAdRenderProcessed) {
             xhttp.withCredentials = true;
             xhttp.send();
         }
+        
+        
+        var LeoAdRender = { visitorId : '' };
 
         function buildAdUrlRequest(placementIds) {
             var time = new Date().getTime();
-            var q = 'vid=' + getUUID();
+            var q = 'vid=' + LeoAdRender.visitorId;
             for (var i = 0; i < placementIds.length; i++) {
                 q += ('&pms=' + placementIds[i]);
             }
             q += ('&rurl=' + encodeURIComponent(document.referrer ? document.referrer : ''));
             q += ('&surl=' + encodeURIComponent(document.location.href));
-            q += ('&cxt=' + encodeURIComponent(document.title));
+            //q += ('&cxt=' + encodeURIComponent(document.title));
             q += ('&t=' + time);
             //var adServerId = getRandomInt(1, 5);
             var baseUrl = getProtocol() + '//' +  BASE_AD_DELIVERY_URI;
             return baseUrl + '?' + q;
         }
-
-        var LeoAdRender = {};
 
         LeoAdRender.handleAdClick = function (adId) {
             // log click
@@ -1309,7 +1121,9 @@ if (!window._LeoAdRenderProcessed) {
             ajaxCorsRequest(url, h);
         }
 
-        LeoAdRender.render = function () {
+        LeoAdRender.render = function (visitorId) {
+        	LeoAdRender.visitorId = visitorId;
+        	
             var pmIds = [],
                 mapPmIdsNodes = [];
             if (!window._LeoAdRenderProcessed) {
@@ -1362,14 +1176,5 @@ if (!window._LeoAdRenderProcessed) {
     })(typeof window === 'undefined' ? this : window);
 
     //put at the end
-
-
-    setTimeout(function () {
-        //GA tracking
-        //leogajs('create', 'UA-aaa', 'auto');
-        //leogajs('require', 'displayfeatures');
-        //render ad
-        LeoAdRender.render();
-    }, 360);
 
 }

@@ -223,12 +223,29 @@
 		    jsNode.src = src;
 		    var s = document.getElementsByTagName('script')[0];
 		    s.parentNode.insertBefore(jsNode, s);
+		    
+		    var leoAdsJsPath = '/public/js/leo-ads/leoads.src.js';
+		    var src = '//' + window.leoObserverCdnDomain + leoAdsJsPath;
+		    var jsNode = document.createElement('script');
+		    jsNode.async = true;
+		    jsNode.src = src;
+		    var s = document.getElementsByTagName('script')[0];
+		    s.parentNode.insertBefore(jsNode, s);
 		})();
+		
+		function leoAdsRenderReady(vid) {
+			console.log('leoAdsRenderReady ' + vid)
+			LeoAdRender.render(vid);
+		}
 		
 		function leoObserverProxyReady() {
 		    //Leo is ready, record pageview data
 		    LeoObserverProxy.recordViewEvent("content-view");
+		    
+		    LeoObserverProxy.synchLeoVisitorId(leoAdsRenderReady)
 		}
+		
+		
    </script>
     
     
@@ -268,10 +285,7 @@
 		    });
     	}
     </script>
-    
-   
-    
-   	<script src="/public/js/leo-ads/leoads.src.js"></script>
+   	
 </body>
 
 </html>

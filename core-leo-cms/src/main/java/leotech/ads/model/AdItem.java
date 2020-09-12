@@ -13,6 +13,7 @@ import com.google.gson.annotations.SerializedName;
 
 import rfx.core.util.DateTimeUtil;
 
+@Deprecated
 public abstract class AdItem {
 
 	// pricing model
@@ -27,30 +28,7 @@ public abstract class AdItem {
 	public static final int PRICING_MODEL_CPD = 5;// Cost Per Day
 	public static final int PRICING_MODEL_CPL = 6;// Cost Per Lead
 
-	// BEGIN primary ad types
-	public static final int ADTYPE_TAGGING_AD = 0;
-	public static final int ADTYPE_INSTREAM_VIDEO = 1;// standard VAST video Ad: Preroll, Midroll
-	public static final int ADTYPE_EXPANDABLE_OVERLAY = 2;/// Interactive HTML5 Overlay on Video
-	public static final int ADTYPE_IMAGE_OVERLAY = 3;// Static Image Overlay on Video
-	public static final int ADTYPE_BREAKING_NEWS_OVERLAY = 4;// Interactive Text
-																// Overlay on
-																// Video
-	public static final int ADTYPE_HTML5_DISPLAY_AD = 5;// standard display
-														// HTML5 banner: HTML5
-														// Interactive Ad with
-	public static final int ADTYPE_IMAGE_DISPLAY_AD = 6;// standard display
-														// Image banner: jpeg,
-														// gif, png
-	public static final int ADTYPE_OUTSTREAM_RICH_MEDIA = 7; // Inread,Inpage
-																// with flexible
-																// size
-	public static final int ADTYPE_SPONSORED_STORY_AD = 8;// Native sponsored content in Content Marketing
-	public static final int ADTYPE_BIDDING_AD = 9; // Ad Code of 3rd party
-	public static final int ADTYPE_STREAMING_VIDEO_AD = 10;// Instream Video in Live TV
-	public static final int ADTYPE_MASTHEAD_AD = 11;// masthead
-	public static final int ADTYPE_INFEED_AD = 12;// infeed
-	public static final int ADTYPE_OUTSTREAM_BALLOON = 13;
-	public static final int ADTYPE_INSTREAM_VAST_WRAPPER = 14;
+
 
 	@Expose
 	// @Id
@@ -97,7 +75,7 @@ public abstract class AdItem {
 	@Expose
 	@SerializedName("adType")
 
-	protected int adType = ADTYPE_INSTREAM_VIDEO;
+	protected int adType = 0;
 
 	@Expose
 	@SerializedName("prcModel")
@@ -171,9 +149,8 @@ public abstract class AdItem {
 	protected Map<Integer, Integer> placementAdFormats; // for publisher billing
 
 	/**
-	 * for Dayparts filtering: by specific time of day. Syntax: ["evd-09h",
-	 * "evd-20h"] means everyday at 09:00 and 20:00 or ["30052018-20h"] means at
-	 * 30 May 2018 at 20:00
+	 * for Dayparts filtering: by specific time of day. Syntax: ["evd-09h", "evd-20h"] means everyday at 09:00 and 20:00 
+	 * or ["30052018-20h"] means at 30 May 2018 at 20:00
 	 */
 	@Expose
 	@SerializedName("tgdps")

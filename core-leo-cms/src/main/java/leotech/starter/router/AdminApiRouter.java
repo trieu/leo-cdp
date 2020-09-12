@@ -23,6 +23,7 @@ import leotech.cms.handler.admin.CmsAdminPostApiHandler;
 import leotech.cms.handler.admin.SystemUserApiHandler;
 import leotech.system.common.BaseApiRouter;
 import leotech.system.model.JsonDataPayload;
+import leotech.system.util.RequestInfoUtil;
 
 public class AdminApiRouter extends BaseApiRouter {
 	
@@ -203,7 +204,10 @@ public class AdminApiRouter extends BaseApiRouter {
 				// TODO SSP Bid Request processing
 				//AdBiddingHandler.handle(context);
 				List<String> pmIds = params.getAll(PLACEMENT_PARAM);
-				List<DisplayAdData> ads = AdsQueryService.getAds(pmIds);
+				String vid = RequestInfoUtil.getString(params, "vid", "");
+				String surl = RequestInfoUtil.getString(params, "surl", "");
+				
+				List<DisplayAdData> ads = AdsQueryService.getAds(pmIds, vid, surl);
 				payload = JsonDataPayload.ok(uri, ads);
 				payload.setReturnOnlyData(true);
 			}

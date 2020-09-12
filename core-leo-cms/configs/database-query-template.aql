@@ -326,6 +326,13 @@ AQL_GET_TRACKING_EVENTS_BY_PROFILE_ID =>
 	RETURN e
 ;
 
+AQL_GET_TRACKING_EVENTS_BY_PROFILE_ID_AND_METRIC_NAME =>
+	FOR e in cdp_trackingevent FILTER e.refProfileId == @refProfileId AND e.metricName == @metricName
+	SORT e.timestamp DESC
+	LIMIT @startIndex,@numberResult 
+	RETURN e
+;
+
 AQL_GET_CONVERSION_EVENTS_BY_PROFILE_ID =>
 	FOR e in cdp_trackingevent FILTER e.refProfileId == @refProfileId AND e.isConversion == true
 	SORT e.timestamp DESC

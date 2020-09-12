@@ -1,5 +1,6 @@
 package leotech.cdp.dao.singleview;
 
+import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 
 import leotech.cdp.dao.TouchpointDaoUtil;
@@ -36,5 +37,10 @@ public class EventSingleDataView extends TrackingEvent implements SingleViewAnal
 
 	public void setSrcTouchpoint(Touchpoint srcTouchpoint) {
 		this.srcTouchpoint = srcTouchpoint;
+	}
+	
+	@Override
+	public String toString() {
+		return new Gson().toJson(this);
 	}
 }

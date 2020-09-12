@@ -8,7 +8,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 
 import leotech.cdp.dao.TouchpointDaoUtil;
-import leotech.cdp.dao.TrackingEventDaoUtil;
+import leotech.cdp.dao.TrackingEventDao;
 import leotech.cdp.model.SingleViewAnalyticalObject;
 import leotech.cdp.model.analytics.TrackingEvent;
 import leotech.cdp.model.customer.Profile;
@@ -67,7 +67,7 @@ public class ProfileSingleDataView extends Profile implements SingleViewAnalytic
 		
 		
 		if(this.lastTrackingEvent == null) {
-			TrackingEvent lastTrackingEvent = TrackingEventDaoUtil.getLastTrackingEventsByProfileId(this.id);
+			TrackingEvent lastTrackingEvent = TrackingEventDao.getLastTrackingEventsByProfileId(this.id);
 			if(lastTrackingEvent == null) {
 				lastTrackingEvent = new TrackingEvent();
 			}

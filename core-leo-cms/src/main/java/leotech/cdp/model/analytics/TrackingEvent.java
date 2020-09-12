@@ -528,7 +528,7 @@ public class TrackingEvent extends CdpPersistentObject {
 
 	public Map<String, String> getEventData() {
 		if (eventData == null) {
-			eventData = new HashMap<String, String>(5);
+			eventData = new HashMap<String, String>(0);
 		}
 		return eventData;
 	}

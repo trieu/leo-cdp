@@ -8,7 +8,7 @@ import io.vertx.core.json.JsonObject;
 import leotech.cdp.dao.singleview.EventSingleDataView;
 import leotech.cdp.dao.singleview.ProfileSingleDataView;
 import leotech.cdp.model.customer.Profile;
-import leotech.cdp.service.EventTrackingService;
+import leotech.cdp.service.TrackedEventDataService;
 import leotech.cdp.service.ProfileDataService;
 import leotech.system.common.SecuredWebDataHandler;
 import leotech.system.model.DataFilter;
@@ -133,7 +133,7 @@ public class CdpProfileHandler extends SecuredWebDataHandler {
 						String profileId = RequestInfoUtil.getString(params,"id", "");
 						int startIndex =   RequestInfoUtil.getInteger(params,"startIndex", 0);
 						int numberResult = RequestInfoUtil.getInteger(params,"numberResult", 20);
-						List<EventSingleDataView> list = EventTrackingService.getEventActivityFlowOfProfile(profileId, startIndex, numberResult);
+						List<EventSingleDataView> list = TrackedEventDataService.getEventActivityFlowOfProfile(profileId, startIndex, numberResult);
 						return JsonDataPayload.ok(uri, list, loginUser, Profile.class);
 					}
 					case API_SEARCH_SUGGESTION : {

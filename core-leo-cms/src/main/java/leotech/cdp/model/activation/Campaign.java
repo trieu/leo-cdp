@@ -2,7 +2,9 @@ package leotech.cdp.model.activation;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
@@ -10,10 +12,14 @@ import com.arangodb.model.PersistentIndexOptions;
 import com.google.gson.annotations.Expose;
 
 import leotech.cdp.model.CdpPersistentObject;
+import leotech.cdp.model.business.ProductItem;
 import leotech.cdp.model.journey.EventTrigger;
 import rfx.core.util.StringUtil;
 
 public class Campaign extends CdpPersistentObject implements Comparable<Campaign> {
+	
+	public static final int CAMPAIGN_TYPE_RETARGETING = 1; 
+	
 	public static final String COLLECTION_NAME = getCollectionName(Campaign.class);
 	static ArangoCollection dbCollection;
 	
@@ -55,6 +61,9 @@ public class Campaign extends CdpPersistentObject implements Comparable<Campaign
 	
 	@Expose
 	double revenue;
+	
+	@Expose
+	Map<String, ProductItem> mapSkuToProducts = new HashMap<String, ProductItem>();
 
 	public double getRatioRevenuePerCost() {
 		if(cost > 0 && revenue > 0) {
@@ -84,6 +93,13 @@ public class Campaign extends CdpPersistentObject implements Comparable<Campaign
 	}
 	
 	
+
+	public Campaign(String name, int type) {
+		super();
+		this.name = name;
+		this.type = type;
+		this.id = id(name + type);
+	}
 
 	public String getId() {
 		return id;
@@ -187,6 +203,20 @@ public class Campaign extends CdpPersistentObject implements Comparable<Campaign
 
 	public void setRevenue(double revenue) {
 		this.revenue = revenue;
+	}
+
+	
+
+	public Map<String, ProductItem> getMapSkuToProducts() {
+		return mapSkuToProducts;
+	}
+
+	public void setMapSkuToProducts(Map<String, ProductItem> mapSkuToProducts) {
+		this.mapSkuToProducts = mapSkuToProducts;
+	}
+	
+	public ProductItem getProductItemBySku(String productSku) {
+		return mapSkuToProducts.get(productSku);
 	}
 
 	@Override

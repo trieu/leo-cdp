@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 
 import io.vertx.core.json.JsonObject;
 import leotech.cdp.dao.ProfileDaoUtil;
+import leotech.cdp.dao.singleview.EventSingleDataView;
 import leotech.cdp.dao.singleview.ProfileSingleDataView;
 import leotech.cdp.model.customer.Profile;
 import leotech.cdp.model.customer.ProfileType;
@@ -247,6 +248,23 @@ public class ProfileDataService {
 	
 	public static long countProfilesByQuery(ProfileQuery pq) {
 		return ProfileDaoUtil.countProfilesByQuery(pq);
+	}
+	
+	public static EventSingleDataView getLastTrackingEventForRetargeting(String visitorId) {
+		Profile profile = ProfileDaoUtil.getByVisitorId(visitorId);
+		if(profile != null) {
+			String profileId = profile.getId();
+			System.out.println(" [#Activation Trigger#] getLastTrackingEventForRetargeting Profile is found, profileId " + profileId );
+
+			List<EventSingleDataView> events = TrackedEventDataService.getProductViewActivityFlowOfProfile(profileId, 0, 10);
+			if(events.size() > 0) {
+				// find the last recent product-view to get Product SKU
+				return events.get(0);
+			}
+		} else {
+			System.out.println(" [#Activation Trigger#] getLastTrackingEventForRetargeting Profile is not found for visitorId " + visitorId );
+		}
+		return null;
 	}
 
 }

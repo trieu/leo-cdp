@@ -47,7 +47,6 @@
         
         // Listen to messages from parent window
         bindEvent(window, 'message', function (e) {
-        	
         	//console.log("===> iframe.e.origin " + e.origin + " data " + e.data)
         	
         	if (e.origin !== PARENT_ORIGIN)
@@ -75,7 +74,7 @@
     
     <script>
         // the event queue
-    	var queueTracking = [], queueUpdating = [];
+    	var queueTracking = [], queueUpdating = [], synchVisitorCall = false;
     	
     	var proxyCallHandler = function(data){
         	if(data.call === 'getContextSession' && data.params) {
@@ -86,6 +85,9 @@
         	} 
         	else if(data.call === 'updateProfile' && data.params ){
         		queueUpdating.push(data);
+        	}
+        	else if(data.call === 'synchLeoVisitorId' ){
+        		synchVisitorCall = data;
         	}
         }
     	
@@ -113,7 +115,15 @@
         			len = len - 1;
         		}
         		
-        	},678);
+        		if(synchVisitorCall !== false){
+        			var data = synchVisitorCall;
+        			var vid = LeoEventObserver.visitorId;
+            		
+            		sendMessage("synchLeoVisitorId-" + vid);
+            		synchVisitorCall = false;
+        		}
+        		
+        	},360);
     	}
 
         loadScript('//' + ROOT_DOMAIN +'/public/js/leo-observer/hash.min.js',function(){

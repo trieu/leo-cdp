@@ -58,7 +58,7 @@ public class ProductDataCrawler {
 		return parseHtmlToProductItem(host, urlStr, html, null);
 	}
 
-	public static ProductItem parseHtmlToProductItem(String host, String urlStr, String html, ProductExtInfoParser parser) throws Exception {
+	public static ProductItem parseHtmlToProductItem(String siteDomain, String urlStr, String html, ProductExtInfoParser parser) throws Exception {
 		Document doc = Jsoup.parse(html);
 
 		String ogType = JsoupParserUtil.getAttr(doc, "meta[property=\"og:type\"]", "content").toLowerCase();
@@ -72,7 +72,9 @@ public class ProductDataCrawler {
 			name = JsoupParserUtil.getText(doc, "title");
 		}
 		// new product item
-		ProductItem p = new ProductItem(urlStr, name, host);
+		ProductItem p = new ProductItem(urlStr);
+		p.setName(name);
+		p.setSiteDomain(siteDomain);
 
 		String description = JsoupParserUtil.getAttr(doc, "meta[property='og:description']", "content");
 		p.setDescription(description);
