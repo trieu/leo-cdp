@@ -3,7 +3,7 @@ package leotech.cdp.model.analytics;
 import java.util.Date;
 
 import leotech.cdp.model.journey.BehavioralEventMetric;
-import leotech.cdp.model.journey.FunnelStage;
+import leotech.cdp.model.journey.DataFlowStage;
 import leotech.cdp.service.FunnelDataService;
 import leotech.system.util.database.ArangoDbQuery.CallbackQuery;
 import rfx.core.util.StringUtil;
@@ -14,7 +14,7 @@ public class StatisticCollector implements Comparable<StatisticCollector>{
 		CallbackQuery<StatisticCollector> cb = new CallbackQuery<StatisticCollector>() {
 			@Override
 			public StatisticCollector apply(StatisticCollector obj) {
-				FunnelStage funnelStage = FunnelDataService.getFunnelStageById(obj.getCollectorKey());
+				DataFlowStage funnelStage = FunnelDataService.getFunnelStageById(obj.getCollectorKey());
 				int index = funnelStage.getOrderIndex();
 				obj.setOrderIndex(index);
 				obj.setCollectorKey(funnelStage.getName());

@@ -9,21 +9,21 @@ import java.util.List;
 import java.util.Map;
 
 import leotech.cdp.model.journey.BehavioralEventMetric;
+import leotech.cdp.model.journey.DataFlowStage;
 import leotech.cdp.model.journey.EventMetaData;
-import leotech.cdp.model.journey.FunnelStage;
 
 public class FunnelDataService {
 
 	
-	public static final FunnelStage CUSTOMER_PROFILE_FUNNEL_STAGE = new FunnelStage(0, "Customer Profile", "");
+	public static final DataFlowStage CUSTOMER_PROFILE_FUNNEL_STAGE = new DataFlowStage(0, "Customer Profile", "", "default_data_flow");
 	
 	public static final BehavioralEventMetric UNCLASSIFIED_EVENT = new BehavioralEventMetric("unclassified-event","Unclassified Event", 0, EventMetaData.FIRST_PARTY_DATA,
 			"unclassified-event", CUSTOMER_PROFILE_FUNNEL_STAGE.getId());
 	
-	static List<FunnelStage> eventFunnelStages = new ArrayList<FunnelStage>();
-	static List<FunnelStage> customerFunnelStages = new ArrayList<FunnelStage>();
+	static List<DataFlowStage> eventStages = new ArrayList<DataFlowStage>();
+	static List<DataFlowStage> customerFunnelStages = new ArrayList<DataFlowStage>();
 	
-	static HashMap<String, FunnelStage> funnelDataCache = new HashMap<String, FunnelStage>();
+	static HashMap<String, DataFlowStage> funnelDataCache = new HashMap<String, DataFlowStage>();
 	
 	// local cache for all event metric definition
 	static final Map<String, BehavioralEventMetric> eventMetaDataList = new HashMap<>(10);
@@ -31,30 +31,30 @@ public class FunnelDataService {
 	static {
 		
 		//Behavioral Event Funnel
-		eventFunnelStages.add(new FunnelStage(0, "Content View", "event_retail"));
-		eventFunnelStages.add(new FunnelStage(1, "Product View", "event_retail"));
-		eventFunnelStages.add(new FunnelStage(2, "Customer Login", "event_retail"));
-		eventFunnelStages.add(new FunnelStage(3, "Purchase Intent", "event_retail"));
-		eventFunnelStages.add(new FunnelStage(4, "First Purchase", "event_retail"));
-		eventFunnelStages.add(new FunnelStage(5, "Product Experience", "event_retail"));
-		eventFunnelStages.add(new FunnelStage(6, "Customer Feedback", "event_retail"));
-		eventFunnelStages.add(new FunnelStage(7, "Repeat Purchase", "event_retail"));
+		eventStages.add(new DataFlowStage(0, "Content View", "event_retail", "retail_event_flow"));
+		eventStages.add(new DataFlowStage(1, "Product View", "event_retail", "retail_event_flow"));
+		eventStages.add(new DataFlowStage(2, "Customer Login", "event_retail", "retail_event_flow"));
+		eventStages.add(new DataFlowStage(3, "Purchase Intent", "event_retail", "retail_event_flow"));
+		eventStages.add(new DataFlowStage(4, "First Purchase", "event_retail", "retail_event_flow"));
+		eventStages.add(new DataFlowStage(5, "Product Experience", "event_retail", "retail_event_flow"));
+		eventStages.add(new DataFlowStage(6, "Customer Feedback", "event_retail", "retail_event_flow"));
+		eventStages.add(new DataFlowStage(7, "Repeat Purchase", "event_retail", "retail_event_flow"));
 		
-		for (FunnelStage funnelStage : eventFunnelStages) {
+		for (DataFlowStage funnelStage : eventStages) {
 			funnelDataCache.put(funnelStage.getId(), funnelStage);
 		}
 		
 		//Customer Data Funnel
 		//customerFunnelStages.add(CUSTOMER_PROFILE_FUNNEL_STAGE);
-		customerFunnelStages.add(new FunnelStage(1, "New Visitor", "customer_retail"));
-		customerFunnelStages.add(new FunnelStage(2, "Engaged Visitor", "customer_retail"));
-		customerFunnelStages.add(new FunnelStage(3, "Customer Lead", "customer_retail"));
-		customerFunnelStages.add(new FunnelStage(4, "Prospective Customer", "customer_retail"));
-		customerFunnelStages.add(new FunnelStage(5, "First-time Customer", "customer_retail"));
-		customerFunnelStages.add(new FunnelStage(6, "Customer Advocate", "customer_retail"));
-		customerFunnelStages.add(new FunnelStage(7, "Repeat Customer", "customer_retail"));
+		customerFunnelStages.add(new DataFlowStage(1, "New Visitor", "customer_retail", "retail_customer_flow"));
+		customerFunnelStages.add(new DataFlowStage(2, "Engaged Visitor", "customer_retail", "retail_customer_flow"));
+		customerFunnelStages.add(new DataFlowStage(3, "Customer Lead", "customer_retail", "retail_customer_flow"));
+		customerFunnelStages.add(new DataFlowStage(4, "Prospective Customer", "customer_retail", "retail_customer_flow"));
+		customerFunnelStages.add(new DataFlowStage(5, "First-time Customer", "customer_retail", "retail_customer_flow"));
+		customerFunnelStages.add(new DataFlowStage(6, "Customer Advocate", "customer_retail", "retail_customer_flow"));
+		customerFunnelStages.add(new DataFlowStage(7, "Repeat Customer", "customer_retail", "retail_customer_flow"));
 		
-		for (FunnelStage funnelStage : customerFunnelStages) {
+		for (DataFlowStage funnelStage : customerFunnelStages) {
 			funnelDataCache.put(funnelStage.getId(), funnelStage);
 		}
 		
@@ -93,15 +93,15 @@ public class FunnelDataService {
 				"customer-feedback", "repeat-customer"));
 	}
 	
-	public static List<FunnelStage> getEventFunnelStages() {
-		return eventFunnelStages;
+	public static List<DataFlowStage> getEventFunnelStages() {
+		return eventStages;
 	}
 
-	public static List<FunnelStage> getCustomerFunnelStages() {
+	public static List<DataFlowStage> getCustomerFunnelStages() {
 		return customerFunnelStages;
 	}
 	
-	public static FunnelStage getFunnelStageById(String id) {
+	public static DataFlowStage getFunnelStageById(String id) {
 		return funnelDataCache.getOrDefault(id, CUSTOMER_PROFILE_FUNNEL_STAGE);
 	}
 	

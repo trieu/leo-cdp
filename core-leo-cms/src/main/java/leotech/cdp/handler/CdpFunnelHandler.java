@@ -8,7 +8,7 @@ import java.util.Map;
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import leotech.cdp.model.journey.BehavioralEventMetric;
-import leotech.cdp.model.journey.FunnelStage;
+import leotech.cdp.model.journey.DataFlowStage;
 import leotech.cdp.service.FunnelDataService;
 import leotech.system.common.SecuredWebDataHandler;
 import leotech.system.model.JsonDataPayload;
@@ -30,7 +30,7 @@ public class CdpFunnelHandler extends SecuredWebDataHandler {
 	public JsonDataPayload httpPostApiHandler(String userSession, String uri, JsonObject paramJson) throws Exception {
 		SystemUser loginUser = getUserFromSession(userSession);
 		if (loginUser != null) {
-			if (isAuthorized(loginUser, FunnelStage.class)) {
+			if (isAuthorized(loginUser, DataFlowStage.class)) {
 				switch (uri) {
 					// TODO
 					default : {
@@ -49,7 +49,7 @@ public class CdpFunnelHandler extends SecuredWebDataHandler {
 	public JsonDataPayload httpGetApiHandler(String userSession, String uri, MultiMap params) throws Exception {
 		SystemUser loginUser = getUserFromSession(userSession);
 		if (loginUser != null) {
-			if (isAuthorized(loginUser, FunnelStage.class)) {
+			if (isAuthorized(loginUser, DataFlowStage.class)) {
 				switch (uri) {
 					case API_LIST_ALL_WITH_FUNNEL_TYPES : {
 						String funnelTypes = RequestInfoUtil.getString(params, "funnelTypes", "");
@@ -60,11 +60,11 @@ public class CdpFunnelHandler extends SecuredWebDataHandler {
 						
 						for (String funnelType : toks) {
 							if(funnelType.equals("event_retail")) {
-								List<FunnelStage> list = FunnelDataService.getEventFunnelStages();
+								List<DataFlowStage> list = FunnelDataService.getEventFunnelStages();
 								map.put(funnelType, list);
 							}
 							else if(funnelType.equals("customer_retail")) {
-								List<FunnelStage> list = FunnelDataService.getCustomerFunnelStages();
+								List<DataFlowStage> list = FunnelDataService.getCustomerFunnelStages();
 								map.put(funnelType, list);
 							}
 						}
@@ -72,7 +72,7 @@ public class CdpFunnelHandler extends SecuredWebDataHandler {
 						Collection<BehavioralEventMetric> metrics = FunnelDataService.getEventRetailMetrics();
 						map.put("behavioral_metrics", metrics);
 						
-						return JsonDataPayload.ok(uri, map, loginUser, FunnelStage.class);
+						return JsonDataPayload.ok(uri, map, loginUser, DataFlowStage.class);
 					}
 
 					default :

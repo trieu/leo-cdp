@@ -9,7 +9,7 @@ import leotech.cdp.dao.singleview.EventSingleDataView;
 import leotech.cdp.dao.singleview.ProfileSingleDataView;
 import leotech.cdp.model.journey.BehavioralEventMetric;
 import leotech.cdp.model.journey.EventMetaData;
-import leotech.cdp.model.journey.FunnelStage;
+import leotech.cdp.model.journey.DataFlowStage;
 import leotech.cdp.service.TrackedEventDataService;
 import leotech.cdp.service.FunnelDataService;
 import rfx.core.job.ScheduledJob;
@@ -94,7 +94,7 @@ public class ProfileSingleViewDataJob  extends ScheduledJob {
 					// set only valid event name from journey schema
 					profile.setBehavioralEvent(eventName);
 					
-					FunnelStage funnelStage = metric.getCustomerFunnelStage();
+					DataFlowStage funnelStage = metric.getCustomerFunnelStage();
 					profile.updateFunnelStageTimeline(funnelStage.getName(), recoredDate);
 				}
 				
@@ -116,7 +116,7 @@ public class ProfileSingleViewDataJob  extends ScheduledJob {
 		profile.setTotalCAC(cacScore);
 		
 		//TODO update funnel
-		FunnelStage customerFunnelStage = highestScoreMetric.getCustomerFunnelStage();
+		DataFlowStage customerFunnelStage = highestScoreMetric.getCustomerFunnelStage();
 		profile.setFunnelStage(customerFunnelStage.getId());
 		//profile.setFunnelMetrics(funnelMetrics);
 		

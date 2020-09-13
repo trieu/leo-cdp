@@ -14,14 +14,14 @@ public class BehavioralEventMetric extends EventMetaData {
 	public static final String COLLECTION_NAME = getCollectionName(BehavioralEventMetric.class);
 	static ArangoCollection dbCollection;
 	
-	String eventFunnelStageId;
+	String eventStageId;
 	
 	String customerFunnelStageId;
 	
 	
-	public BehavioralEventMetric(String eventName, String eventLabel, int score, int dataType, String eventFunnelStageId, String customerFunnelStageId) {
+	public BehavioralEventMetric(String eventName, String eventLabel, int score, int dataType, String eventStageId, String customerFunnelStageId) {
 		super(eventName, eventLabel, score, dataType);
-		this.eventFunnelStageId = eventFunnelStageId;
+		this.eventStageId = eventStageId;
 		this.customerFunnelStageId = customerFunnelStageId;
 	}
 
@@ -47,23 +47,23 @@ public class BehavioralEventMetric extends EventMetaData {
 		return StringUtil.isNotEmpty(eventName);
 	}
 
-	public String getEventFunnelStageId() {
-		return eventFunnelStageId;
+	public String getEventStageId() {
+		return eventStageId;
 	}
 	
-	public FunnelStage getEventFunnelStage() {
-		return FunnelDataService.getFunnelStageById(eventFunnelStageId);
+	public DataFlowStage getEventStage() {
+		return FunnelDataService.getFunnelStageById(eventStageId);
 	}
 
-	public void setEventFunnelStageId(String eventFunnelStageId) {
-		this.eventFunnelStageId = eventFunnelStageId;
+	public void setEventStageId(String eventStageId) {
+		this.eventStageId = eventStageId;
 	}
 
 	public String getCustomerFunnelStageId() {
 		return customerFunnelStageId;
 	}
 	
-	public FunnelStage getCustomerFunnelStage() {
+	public DataFlowStage getCustomerFunnelStage() {
 		return FunnelDataService.getFunnelStageById(customerFunnelStageId);
 	}
 

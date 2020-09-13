@@ -3,7 +3,7 @@ package leotech.cdp.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import leotech.cdp.model.journey.FunnelStage;
+import leotech.cdp.model.journey.DataFlowStage;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataTablePayload;
 

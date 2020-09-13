@@ -52,7 +52,7 @@ var initActivationRules = initActivationRules || function(){
     
     LeoAdminApiUtil.getSecuredData('/cdp/funnels-and-event-metrics',{"funnelTypes":"event_retail,customer_retail"}, function(json){ 
 		 //console.log(json.data);	
-		 var eventFunnelStages = json.data['event_retail'];
+		 var eventStages = json.data['event_retail'];
 		 var customerFunnelStages = json.data['customer_retail'];
 		 var behavioralMetricsData = json.data['behavioral_metrics'];
 		 
@@ -92,7 +92,7 @@ var initActivationRules = initActivationRules || function(){
 
 		    fields: [
 		        { name: "eventName", title : "Behavioral Event Name", type: "text", validate: "required" },
-		        { name: "eventFunnelStageId", title : "Event Funnel Stage", type: "select", items: eventFunnelStages, valueField: "id", textField: "name" },
+		        { name: "eventStageId", title : "Event Funnel Stage", type: "select", items: eventStages, valueField: "id", textField: "name" },
 		        { name: "customerFunnelStageId", title : "Customer Funnel Stage", type: "select", items: customerFunnelStages, valueField: "id", textField: "name" }
 		        
 		    ]

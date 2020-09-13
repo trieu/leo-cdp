@@ -9,7 +9,7 @@ import java.util.Map;
 import com.arangodb.ArangoDatabase;
 
 import leotech.cdp.model.analytics.StatisticCollector;
-import leotech.cdp.model.journey.FunnelStage;
+import leotech.cdp.model.journey.DataFlowStage;
 import leotech.cdp.service.Analytics360Service;
 import leotech.cdp.service.FunnelDataService;
 import leotech.cdp.service.ProfileDataService;
@@ -84,9 +84,9 @@ public class Analytics360Dao extends BaseLeoCdpDao {
 		}
 		
 		// seeding empty data from defined funnel
-		List<FunnelStage> stages = FunnelDataService.getCustomerFunnelStages();
+		List<DataFlowStage> stages = FunnelDataService.getCustomerFunnelStages();
 		Map<String, StatisticCollector> funnelData = new HashMap<>(stages.size());
-		for (FunnelStage stage : stages) {
+		for (DataFlowStage stage : stages) {
 			StatisticCollector defC = new StatisticCollector(stage.getName(), 0, stage.getOrderIndex());
 			funnelData.put(defC.getCollectorKey(), defC);
 		}
