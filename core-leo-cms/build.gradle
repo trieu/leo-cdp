@@ -247,7 +247,7 @@ task buildMainHttpStarter(type: Jar) {
         include "**"
     }
     version = '1.0'
-    baseName = 'leo-main-starter'
+    baseName = 'leo-main-http-starter'
     manifest {
    		attributes ('Implementation-Title': 'MainHttpStarter', 
         			'Implementation-Version': version ,
@@ -263,7 +263,7 @@ task buildDataObserverStarter(type: Jar) {
         include "**"
     }
     version = '1.0'
-    baseName = 'leo-data-observer'
+    baseName = 'leo-data-observer-starter'
     manifest {
    		attributes ('Implementation-Title': 'DataObserverStarter', 
         			'Implementation-Version': version ,
@@ -279,7 +279,7 @@ task buildUploadFileHttpStarter(type: Jar) {
         include "**"
     }
     version = '1.0'
-    baseName = 'leo-uploader'
+    baseName = 'leo-upload-file-http-starter'
     manifest {
    		attributes ('Implementation-Title': 'UploadFileHttpStarter', 
         			'Implementation-Version': version ,
@@ -289,33 +289,33 @@ task buildUploadFileHttpStarter(type: Jar) {
 	}
 }
 
-task buildInfoDeliveryHttpStarter(type: Jar) {	
+task buildDataDeliveryStarter(type: Jar) {	
 	dependsOn classes   
     from(sourceSets.main.output) {
         include "**"
     }
     version = '1.0'
-    baseName = 'leo-info-delivery'
+    baseName = 'leo-data-delivery-starter'
     manifest {
-   		attributes ('Implementation-Title': 'InfoDeliveryHttpStarter', 
+   		attributes ('Implementation-Title': 'DataDeliveryStarter', 
         			'Implementation-Version': version ,
-        			'Main-Class': ' leotech.starter.InfoDeliveryHttpStarter',
+        			'Main-Class': ' leotech.starter.DataDeliveryStarter',
         			'Class-Path' : getClasspathStringJars() 
         			)
 	}
 }
 
-task BuildAdminApiHttpStarter(type: Jar) {	
+task buildScheduledJobStarter(type: Jar) {	
 	dependsOn classes   
     from(sourceSets.main.output) {
         include "**"
     }
     version = '1.0'
-    baseName = 'leo-admin-system-api'
+    baseName = 'leo-scheduled-job-starter'
     manifest {
-   		attributes ('Implementation-Title': 'AdminApiHttpStarter', 
+   		attributes ('Implementation-Title': 'ScheduledJobStarter', 
         			'Implementation-Version': version ,
-        			'Main-Class': ' leotech.starter.AdminApiHttpStarter',
+        			'Main-Class': ' leotech.starter.ScheduledJobStarter',
         			'Class-Path' : getClasspathStringJars() 
         			)
 	}
