@@ -36,7 +36,7 @@ public class EmailTemplateTest {
 		File file = new File("/Users/mac/projects/leo-cms-framework/core-leo-cms/BUILD-OUTPUT/testemail.html");
 		file.createNewFile();
 		FileUtils.writeStringToFile(file.getAbsolutePath(),content);
-		EmailMessage messageModel = new EmailMessage("support@leocdp.com", "tantrieuf31.database@gmail.com", "Trieu", "121", "Leo CDP test", content);
+		EmailMessage messageModel = new EmailMessage("contact@uspa.tech", "tantrieuf31.database@gmail.com", "Trieu", "121", "Leo CDP test", content);
 		EmailSender.sendToSmtpServer(messageModel);
 		Utils.sleep(3000);
 	}

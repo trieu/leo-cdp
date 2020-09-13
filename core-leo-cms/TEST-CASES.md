@@ -2,12 +2,12 @@
 
 * Anonymous (No Personal Information): from last tracking event (product-view) data
 	1) Send Web Push
-	2) Re-targeting Banner Ad on Leo Affiliate Ad Server
-	3) Re-targeting Banner Ad on Facebook platform
+	2) Re-targeting Banner Ad 
+	
 * Registered User,  user submit to receive personalized information,
-	1) send email, not click after 2 minutes go step 2
-	2) push Web Push , not open
-	3) SMS click link then send email
+	1) send email marketing 
+	2) push Web Push
+	3) SMS !?
 	
 
 ## JS Code at https://demobookshop.leocdp.com/wp-admin/themes.php?page=tc-custom-javascript	
