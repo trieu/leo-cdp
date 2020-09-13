@@ -518,7 +518,7 @@ if (!window._LeoAdRenderProcessed) {
      * */
     (function (global, undefined) {
     	// TODO
-        var BASE_AD_DELIVERY_URI = 'admin.leocdp.com/ads/query';
+        var BASE_AD_DELIVERY_URI = window.leoAdServerDomain + '/ads/query';
         var adBeacons = {};
 
         function callBeaconLogTracking(opts) {
@@ -609,7 +609,7 @@ if (!window._LeoAdRenderProcessed) {
         function getBaseUrlTracking() {
             //FIXME add more server 1 .. 5
             // var c = getRandomInt(1, 1);
-            var url = getProtocol() + '//cdp.bigdatavietnam.org/track/ads';
+            var url = getProtocol() + '//' + window.leoObserverLogDomain +  '/track/ads';
             return url;
         }
 

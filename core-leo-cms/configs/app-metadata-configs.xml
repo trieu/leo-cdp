@@ -5,7 +5,7 @@
         <appId>10000</appId>
         <name>Leo CDP Admin</name>
         <uri>admin-leocdp</uri>
-        <domain>admin.leocdp.com</domain>
+        <domain>demo.leocdp.net</domain>
         <WebTemplateFolder>leocdp-admin</WebTemplateFolder>
         <AndroidAppId></AndroidAppId>
         <IosAppId></IosAppId>
@@ -14,8 +14,8 @@
         <PublicContentClass>standard</PublicContentClass>
         <PageTitle>Admin Leo CDP</PageTitle>
         <PageHeaderLogo>/public/images/leo-cdp-logo.png</PageHeaderLogo>
-        <BaseStaticUrl>//admin.leocdp.com</BaseStaticUrl>
-        <BaseAdminApiUrl>//admin.leocdp.com</BaseAdminApiUrl>
+        <BaseStaticUrl>//demo.leocdp.net</BaseStaticUrl>
+        <BaseAdminApiUrl>//demo.leocdp.net</BaseAdminApiUrl>
         <BaseDeliveryApiUrl>//api.leocdp.com</BaseDeliveryApiUrl>
         <BaseUploaderUrl>//uploader.leocdp.com</BaseUploaderUrl>
         <BaseLogCollectorUrl>//log.leocdp.com</BaseLogCollectorUrl>

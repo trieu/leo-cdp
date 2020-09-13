@@ -203,7 +203,7 @@ public class MainHttpRouter extends BaseHttpRouter {
 		try {
 			boolean isAdminReq = StringUtil.safeString(req.params().get("admin")).equals("1");
 			if (isAdminReq) {
-				networkDomain = AppMetadataService.ADMIN_LEO_PLATFORM;
+				networkDomain = AppMetadataService.ADMIN_BASE_DOMAIN;
 			}
 			String tplFolder = AppMetadataService.getWebTemplateFolder(networkDomain);
 			String relPath = "./resources/" + APP_TEMPLATES + HOME_ROUTER + tplFolder;

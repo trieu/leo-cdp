@@ -20,7 +20,7 @@ public class AppMetadataService {
 
 	// TODO add shared redis cache here, load MediaNetwork from database
 
-	public static final String ADMIN_LEO_PLATFORM = "admin.leocdp.com";
+	public static final String ADMIN_BASE_DOMAIN = "demo.leocdp.net";
 
 	// default app templates
 	public static final String DEFAULT_ADMIN_TEMPLATE_FOLDER = "leocdp-admin";
@@ -46,8 +46,7 @@ public class AppMetadataService {
 				mapHost2App.put(host, app);
 			}
 
-			System.out.println(CONFIGS_XML + " loaded OK with mapHostToMediaApp.size = "
-					+ mapHost2App.size());
+			System.out.println(CONFIGS_XML + " loaded OK with mapHostToMediaApp.size = "+ mapHost2App.size());
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
