@@ -27,8 +27,8 @@
                </div>
                <hr>
            	   <ul class="nav nav-tabs" data-tab-content="profile_summary_tabs" >
-		       	  <li class="active" > <a href="javascript:" data-target-tab="panel_profile_summary" > <i class="fa  fa-user-circle-o" aria-hidden="true"></i> Profile Scores </a> </li>
-		       	  <li> <a href="javascript:" data-target-tab="panel_last_session_details" > <i class="fa fa-info-circle" aria-hidden="true"></i> Last Session </a> </li>
+		       	  <li class="active" > <a href="javascript:" data-target-tab="panel_profile_summary" > <i class="fa  fa-star" aria-hidden="true"></i> Profile Scoring Data </a> </li>
+		       	  <li> <a href="javascript:" data-target-tab="panel_last_session_details" > <i class="fa fa-info-circle" aria-hidden="true"></i> Last Session Data </a> </li>
 			   </ul>
 			   <div class="tab-content" id="profile_summary_tabs" >
 
@@ -66,7 +66,12 @@
 		                                
 		                               <li>
 		                                   <b> <i class="fa fa-smile-o" aria-hidden="true"></i> Customer Effort Score (CES) </b> 
-		                                   <p class="scoring_field" data-field=totalCES data-fieldholder="html"  data-fieldtype="int"  > 0 </p>
+		                                   <p class="scoring_field" data-field="totalCES" data-fieldholder="html"  data-fieldtype="int"  > 0 </p>
+		                               </li>
+		                               
+		                               <li>
+		                                   <b> <i class="fa fa-commenting-o" aria-hidden="true"></i> Customer Feedback Score (CFS) </b> 
+		                                   <p class="scoring_field" data-field="totalCFS" data-fieldholder="html"  data-fieldtype="int"  > 0 </p>
 		                               </li>
 		                               
 		                               <li>
@@ -175,7 +180,7 @@
                                    <p data-field="primaryEmail" data-fieldholder="html"  data-fieldtype="string"  >  - </p>
                                </li>
                                <li>
-                                   <b data-persona="key" class="editable_text" >  <i class="fa fa-fw fa-mobile"></i> Primary Mobile Phone </b> 
+                                   <b data-persona="key" class="editable_text" >  <i class="fa fa-fw fa-phone-square"></i> Primary Mobile Phone </b> 
                                    <p data-field="primaryPhone" data-fieldholder="html"  data-fieldtype="string"  > - </p>
                                </li>
                                <li>

@@ -279,6 +279,12 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	@Expose
 	protected int totalCreditScore = 0;
+	
+	/**
+	 * Customer Feedback Score: can be positive or negative
+	 */
+	@Expose
+	protected int totalCFS = 0;
 
 	// Customer Satisfaction Score
 	@Expose
@@ -288,7 +294,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	@Expose
 	protected int totalCAC = 0; 
 
-	// Customer lifetime value
+	// Customer Lifetime Value
 	@Expose
 	protected int totalCLV = 0; 
 
@@ -1054,6 +1060,14 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	public void setTotalCreditScore(int totalCreditScore) {
 		this.totalCreditScore = totalCreditScore;
+	}
+
+	public int getTotalCFS() {
+		return totalCFS;
+	}
+
+	public void setTotalCFS(int totalCFS) {
+		this.totalCFS = totalCFS;
 	}
 
 	/**

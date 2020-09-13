@@ -1,10 +1,6 @@
 package leotech.system.util.email;
 
 import java.util.Properties;
-import java.util.Queue;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.ArrayBlockingQueue;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -16,31 +12,46 @@ import javax.mail.internet.MimeMessage;
 
 import leotech.cdp.model.activation.EmailMessage;
 import leotech.system.config.ActivationChannelConfigs;
+import redis.clients.jedis.ShardedJedisPool;
+import redis.clients.jedis.exceptions.JedisException;
+import rfx.core.configs.RedisConfigs;
+import rfx.core.nosql.jedis.RedisCommand;
 
 public class EmailSender {
 	
 	private static final String EMAIL_CONTENT_TEXT_HTML = "text/html";
-	public static final int MAX_SIZE_QUEUE = 100000;
-	static Queue<EmailMessage> queueEmailMessage = new ArrayBlockingQueue<EmailMessage>(MAX_SIZE_QUEUE);
-	static Timer timer = new Timer(true);
+	
+	protected static final class EmailSenderQueue {
 
-	// ------ BEGIN SMTP Server ------
-	public static void sendToSmtpServer(EmailMessage messageModel) {
-		sendToSmtpServer(messageModel, false);
-	}
-	
-	public static void sendToSmtpServer(EmailMessage messageModel, boolean flushNow) {
-		if(flushNow) {
-			flushEmailToSmtpServer(messageModel);
-		} else {
-			queueEmailMessage.add(messageModel);
-		}
+		final public static ShardedJedisPool pubSubQueue = RedisConfigs.load().get("pubSubQueue").getShardedJedisPool();
+		static String channel = "leocdp_email_queue";
 		
-		System.out.println(messageModel);
-		System.out.println(queueEmailMessage.size());
+		public static long publishToRedisPubSubQueue(EmailMessage emailMsg) {
+			String message = emailMsg.toString();
+			long rs = new RedisCommand<Long>(pubSubQueue) {
+				@Override
+				protected Long build() throws JedisException {
+					return jedis.publish(channel, message);
+				}
+			}.execute();
+			return rs;
+		}
 	}
 	
-	static int flushEmailToSmtpServer(EmailMessage messageModel) {
+
+	// ------ BEGIN public API Email Service ------
+	
+	public static void sendToSmtpServer(EmailMessage messageModel) {
+		flushEmailToSmtpServer(messageModel);
+	}
+	
+	public static void pushToEmailQueue(EmailMessage messageModel) {
+		EmailSenderQueue.publishToRedisPubSubQueue(messageModel);
+	}
+	
+	// ------ END public API Email Service ------
+	
+	protected static int flushEmailToSmtpServer(EmailMessage messageModel) {
 		try {
 			Session session = getSmtpSessionFromSystemEmailService();
 			Message message = buildMessage(messageModel, session);
@@ -51,47 +62,8 @@ public class EmailSender {
 		}
 		return 0;
 	}
-	
-	// ----- END SMTP Server ------
-	
-	
-	// ------ BEGIN SendGrid Service ------
-	
-	public static void sendToSendGridServer(EmailMessage messageModel) {
-		sendToSendGridServer(messageModel, false);
-	}
-	
-	public static void sendToSendGridServer(EmailMessage messageModel, boolean flushNow) {
-		if(flushNow) {
-			EmailSenderDataService.pushToRedisPubSubQueue(messageModel);
-		} else {
-			timer.schedule(new TimerTask() {
-				@Override
-				public void run() {
-					EmailSenderDataService.pushToRedisPubSubQueue(messageModel);
-				}
-			}, 1500);
-		}
-	}
-	
-	// ------ END SendGrid Service ------
 
-	
-	public static void flushMessageQueue() {
-		int c = 0;
-		for (int i = 0; i < 10; i++) {
-			EmailMessage messageModel = queueEmailMessage.poll();
-			if (messageModel == null) {
-				System.out.println("messageModel is null");
-				break;
-			}
-			c += flushEmailToSmtpServer(messageModel);
-		}
-		System.out.println("EmailSender has sent " + c + " messages");
-	}
-
-
-	static Message buildMessage(EmailMessage messageModel, Session session)
+	protected static Message buildMessage(EmailMessage messageModel, Session session)
 			throws MessagingException, AddressException {
 		Message message = new MimeMessage(session);
 		message.setFrom(messageModel.getParsedSenderEmailAddress());
@@ -101,7 +73,7 @@ public class EmailSender {
 		return message;
 	}
 
-	private static Session getSmtpSessionFromSystemEmailService() {
+	protected static Session getSmtpSessionFromSystemEmailService() {
 		ActivationChannelConfigs configs = ActivationChannelConfigs.loadSystemEmailServiceConfig();
 		String username = configs.getValue("smtp_username");
 		String password = configs.getValue("smtp_password");

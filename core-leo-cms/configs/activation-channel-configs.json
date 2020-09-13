@@ -2,27 +2,27 @@
 	"map": 
 	{
 		"------------ System email service channel ------------" : {"notes" : "Internal Email SMTP for login account management and authorized user" },
-		"system_email_smtp_service":
+		"system_email_service":
 		{
 			"configs" : 
 			{
-				"smtp_username" : "",
-				"smtp_password" : "",
-				"smtp_host": "",
-				"smtp_port": "465",
+				"smtp_username" : "tantrieuf31.database@gmail.com",
+				"smtp_password" : "Fx1gGWfL87wVEA3m",
+				"smtp_host": "smtp-relay.sendinblue.com",
+				"smtp_port": "587",
 				"smtp_auth": "true",
 				"smtp_starttls_enable": "true"
 			}
 		},
 		
 		"------------  Email Marketing service channel ------------" : {"notes" : "Default SMTP Server/Service to contact customer via email" },
-		"marketing_email_smtp_service":
+		"marketing_email_service":
 		{
 			"configs" : 
 			{
 				"smtp_username" : "",
 				"smtp_password" : "",
-				"smtp_host": "",
+				"smtp_host": "smtp-relay.sendinblue.com",
 				"smtp_port": "587",
 				"smtp_auth": "true",
 				"smtp_starttls_enable": "true"

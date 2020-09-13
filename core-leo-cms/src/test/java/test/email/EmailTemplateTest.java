@@ -37,7 +37,7 @@ public class EmailTemplateTest {
 		file.createNewFile();
 		FileUtils.writeStringToFile(file.getAbsolutePath(),content);
 		EmailMessage messageModel = new EmailMessage("support@leocdp.com", "tantrieuf31.database@gmail.com", "Trieu", "121", "Leo CDP test", content);
-		EmailSender.sendToSendGridServer(messageModel, true);
+		EmailSender.sendToSmtpServer(messageModel);
 		Utils.sleep(3000);
 //		EmailSender.flushMessageQueue();
 //		
