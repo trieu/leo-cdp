@@ -39,9 +39,6 @@ public class EmailTemplateTest {
 		EmailMessage messageModel = new EmailMessage("support@leocdp.com", "tantrieuf31.database@gmail.com", "Trieu", "121", "Leo CDP test", content);
 		EmailSender.sendToSmtpServer(messageModel);
 		Utils.sleep(3000);
-//		EmailSender.flushMessageQueue();
-//		
-//		Utils.sleep(10000);
 	}
 	
 	static String getHtmlMailWithProduct() throws IOException {
