@@ -20,8 +20,8 @@ import rfx.core.util.Utils;
 
 public class EmailTemplateTest {
 	
-	private static final String TESTONEPIXEL_PNG = "https://bit.ly/testonepixel-png?cb=1234&type=.png";
-	static String logo = "https://bit.ly/30GfCzf?type=.png";
+	//private static final String TESTONEPIXEL_PNG = "https://bit.ly/testonepixel-png?cb=1234&type=.png";
+	static String logo = "https://demobookshop.leocdp.com/wp-content/uploads/2020/09/bookshop-logo-416x416.png";
 	static TbBodyConfig tbBodyConfig = new TbBodyConfig("#F4F4F7",
             new TbBodyBorder("1px", "#EAEAEC"),
             new TbBodyDark("#f7f7f7", "#292828"));
@@ -69,7 +69,7 @@ public class EmailTemplateTest {
 		        .text("If you have any questions about this receipt, simply reply to this email or reach out to our support team for help.").and()
 		        .copyright("USPA").url("https://uspa.tech").suffix(". All rights reserved.").and()
 		        .footerText("[Company Name, LLC] 1234 Street Rd. Suite 1234").and()
-		        .footerImage(TESTONEPIXEL_PNG).width(1)
+		        //.footerImage(TESTONEPIXEL_PNG).width(1)
 		        .build();
 		String html = htmlTextEmail.getHtml();
 		return html;

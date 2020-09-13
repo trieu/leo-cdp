@@ -213,6 +213,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	protected Map<String, String> extPersonalAttributes = new HashMap<>(50);
 
 	// --- END key Personal attributes
+	
 
 	// --- BEGIN Marketing Data Model , inputed by Marketer
 
@@ -234,8 +235,8 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	@Expose
 	protected Set<String> contentKeywords = new HashSet<>(50);
 
-
 	// --- END Marketing Data Model
+	
 
 	// --- BEGIN Business Data Model
 
@@ -267,6 +268,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	protected Set<String> supportHistory = new HashSet<String>();
 
 	// --- END Business Data Model
+	
 
 	// --- BEGIN Quantitative Data Metrics
 
@@ -322,16 +324,18 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	@Expose
 	// current name of funnel stage: Prospective Customer or Engaged Visitor or First-time Customer
 	protected String funnelStage = "";
+	
+	@Expose
+	protected Map<String, Map<String, Integer>> predictionMetrics = new HashMap<>();
 
 	// --- END Quantitative Data Metrics
 
 	// when the database has more than 500,000 profile, need a good partitioning strategy
 	@Expose
 	protected int partitionId = 0;
-
-	@Expose
-	protected Map<String, Map<String, Integer>> predictionMetrics = new HashMap<>();
 	
+	@Expose
+	protected int dataContext = 1; // 1 is production data context, 0 is testing only, -1 is fake data
 
 	@Override
 	public int compareTo(Profile o) {
@@ -1170,6 +1174,14 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	
 	public void resetFunnelStageTimeline() {
 		this.funnelStageTimeline.clear();
+	}
+
+	public int getDataContext() {
+		return dataContext;
+	}
+
+	public void setDataContext(int dataContext) {
+		this.dataContext = dataContext;
 	}
 
 	@Override
