@@ -210,7 +210,7 @@
 			window.srcTouchpointName = encodeURIComponent(document.title);
 			window.srcTouchpointUrl = encodeURIComponent(location.protocol + '//' + location.host + location.pathname);
 		
-			var leoproxyJsPath = '/public/js/leo-observer/leoproxy.js';
+			var leoproxyJsPath = '/js/leo-observer/leoproxy.js';
 		    var src = '//' + window.leoObserverCdnDomain + leoproxyJsPath;
 		    var jsNode = document.createElement('script');
 		    jsNode.async = true;
@@ -218,7 +218,7 @@
 		    var s = document.getElementsByTagName('script')[0];
 		    s.parentNode.insertBefore(jsNode, s);
 		    
-		    var leoFormJsPath = '/public/js/leo-observer/leoform.js';
+		    var leoFormJsPath = '/js/leo-observer/leoform.js';
 		    var src = '//' + window.leoObserverCdnDomain + leoFormJsPath;
 		    var jsNode = document.createElement('script');
 		    jsNode.async = true;
@@ -226,7 +226,7 @@
 		    var s = document.getElementsByTagName('script')[0];
 		    s.parentNode.insertBefore(jsNode, s);
 		    
-		    var leoAdsJsPath = '/public/js/leo-ads/leoads.src.js';
+		    var leoAdsJsPath = '/js/leo-ads/leoads.src.js';
 		    var src = '//' + window.leoObserverCdnDomain + leoAdsJsPath;
 		    var jsNode = document.createElement('script');
 		    jsNode.async = true;

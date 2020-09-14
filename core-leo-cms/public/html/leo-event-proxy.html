@@ -100,8 +100,6 @@
         	},500);
         	
         	// init for first-time loads
-        	var count = 10;
-        	var timerId = -1;
 			var queueProcessor = function() {
         		var len = queueTracking.length;
         		while(len > 0) { 
@@ -120,18 +118,11 @@
         		if(synchVisitorCall !== false){
         			var data = synchVisitorCall;
         			var vid = LeoEventObserver.visitorId;
-            		
             		sendMessage("synchLeoVisitorId-" + vid);
             		synchVisitorCall = false;
         		}
-        		
-        		count = count - 1;
-        		if(count <= 0 && timerId > 0){
-        			clearInterval(timerId);
-        			setInterval(queueProcessor,1500);
-        		}
         	}
-			timerId = setInterval(queueProcessor,500);
+			setInterval(queueProcessor,500);
     	}
 
         loadScript('//' + ROOT_DOMAIN +'/public/js/leo-observer/hash.min.js',function(){

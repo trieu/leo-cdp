@@ -36,6 +36,7 @@ public class LeoObserverHttpRouter extends BaseHttpRouter {
 
 	public static final String PREFIX_CONTEXT_SESSION_PROFILE_INIT = "/cxs-pf-init";
 	public static final String PREFIX_UPDATE_PROFILE_INFO = "/cxs-pf-update";
+	
 	public static final String PREFIX_EVENT_VIEW = "/etv";
 	public static final String PREFIX_EVENT_ACTION = "/eta";
 	public static final String PREFIX_EVENT_CONVERSION = "/etc";
@@ -161,7 +162,7 @@ public class LeoObserverHttpRouter extends BaseHttpRouter {
 				ContextSession currentSession = ContextSessionService.synchData(clientSessionKey, req, params, device);
 				String profileId = currentSession.getProfileId();
 				if (StringUtil.isNotEmpty(profileId)) {
-					status = ContextSessionService.updateProfileInformation(req, params, currentSession);
+					status = ContextSessionService.updateProfileDataFromWebSdk(req, params, currentSession);
 				} else {
 					status = 101;
 				}

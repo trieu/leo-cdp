@@ -66,6 +66,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 			dbCol.ensurePersistentIndex(Arrays.asList("lastUsedDeviceId"), new PersistentIndexOptions().unique(false));
 
 			dbCol.ensurePersistentIndex(Arrays.asList("identities[*]"),new PersistentIndexOptions().unique(false));
+			
 			dbCol.ensurePersistentIndex(Arrays.asList("usedDeviceIds[*]"),new PersistentIndexOptions().unique(false));
 			
 			dbCol.ensurePersistentIndex(Arrays.asList("funnelStage"),new PersistentIndexOptions().unique(false));
@@ -202,6 +203,9 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	@Expose
 	protected Map<String, String> personalContacts = new HashMap<>(10);
+	
+	@Expose
+	protected Map<String, Set<String>> notificationUserIds = new HashMap<>(20); // for web push and app push
 
 	@Expose
 	protected Map<String, String> businessContacts = new HashMap<>(10);
@@ -610,7 +614,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		this.identities = identities;
 	}
 
-	public void setIdentity(String identity) {
+	public void addIdentityData(String identity) {
 		if (StringUtil.isNotEmpty(identity)) {
 			this.identities.add(identity);
 		}
@@ -699,6 +703,18 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	public void setSocialMediaProfile(String source, String id) {
 		this.socialMediaProfiles.put(source, id);
+	}
+	
+	public Map<String, Set<String>> getNotificationUserIds() {
+		return notificationUserIds;
+	}
+
+	public void setNotificationUserIds(Map<String, Set<String>> notificationUserIds) {
+		this.notificationUserIds = notificationUserIds;
+	}
+	
+	public Set<String> getNotificationUserIdsByProvider(String provider) {
+		return notificationUserIds.getOrDefault(provider, new HashSet<String>(0));
 	}
 
 	public Map<String, String> getPersonalContacts() {

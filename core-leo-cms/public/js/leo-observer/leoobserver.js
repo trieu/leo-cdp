@@ -804,8 +804,7 @@
     
     var updateProfile = function(params) {
     	 var h = function(resHeaders, text) {
-             //var data = JSON.parse(text);
-             
+             //var data = JSON.parse(text);             
          }
     	 
          params['visid'] =  getUUID();

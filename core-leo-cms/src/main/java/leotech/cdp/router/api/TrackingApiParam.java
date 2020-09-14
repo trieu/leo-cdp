@@ -11,6 +11,7 @@ public final class TrackingApiParam {
     public static final String LOGIN_ID = "loginid";
     public static final String LOGIN_PROVIDER = "loginprovider";
     public static final String PROFILE_DATA = "profiledata";
+    public static final String EXT_ID_DATA = "extiddata";
    
     public static final String OBSERVER_ID = "obsid";
     public static final String TOUCHPOINT_NAME = "tpname";

@@ -1,7 +1,11 @@
 package leotech.cdp.service;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.google.gson.Gson;
@@ -149,6 +153,23 @@ public class ProfileDataService {
 		return p;
 	}
 	
+	public static Profile setNotificationUserIds(String profileId, String provider, String userId) {
+		Profile p = ProfileDaoUtil.getById(profileId);
+
+		// web push User Id
+		Map<String, Set<String>> notificationUserIds = new HashMap<>(1);
+		notificationUserIds.put(provider, new HashSet<String>(Arrays.asList(userId)));
+		p.setNotificationUserIds(notificationUserIds);
+		
+		// for id resulution
+		String extId = userId + "@" + provider;
+		p.addIdentityData(extId);
+
+		// TODO run in a thread to commit to database
+		ProfileDaoUtil.update(p);
+		return p;
+	}
+	
 	public static List<Profile> list(int startIndex, int numberResult){
 		List<Profile> list = ProfileDaoUtil.listAllWithPagination(startIndex, numberResult);
 		return list;
@@ -193,7 +214,7 @@ public class ProfileDataService {
 			pf.setFirstName(firstName);
 			pf.setLastName(lastName);
 			pf.setSocialMediaProfile(source, refId);
-			pf.setIdentity(visitorId);
+			pf.addIdentityData(visitorId);
 		}
 		
 		// session touchpoint

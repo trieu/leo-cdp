@@ -117,7 +117,7 @@
             console.log('LeoObserverProxy.initLeoContextSession')
 		}
 		
-		 LeoObserverProxy.synchLeoVisitorId = function(callback) {
+		LeoObserverProxy.synchLeoVisitorId = function(callback) {
 			LeoObserverProxy.synchLeoVisitorCallback = callback;
             var payload = JSON.stringify({
                 'call': 'synchLeoVisitorId'

@@ -151,7 +151,7 @@ public class ContextSessionService {
 		return cmd.execute();
 	}
 
-	public static int updateProfileInformation(HttpServerRequest req, MultiMap params, ContextSession ctxSession) {
+	public static int updateProfileDataFromWebSdk(HttpServerRequest req, MultiMap params, ContextSession ctxSession) {
 		String usedDeviceId = ctxSession.getUserDeviceId();
 		String sourceIP = RequestInfoUtil.getRemoteIP(req);
 		
@@ -163,30 +163,41 @@ public class ContextSessionService {
 		
 		Map<String, Set<String> > extDataStr = RequestInfoUtil.getMapSetFromRequestParams(formAttributes, "extData");
 		Map<String, String> profileData = RequestInfoUtil.getHashMapFromRequestParams(formAttributes,TrackingApiParam.PROFILE_DATA);
+		
+		String loginProvider = profileData.getOrDefault("loginProvider", "");
+		String notificationProvider = profileData.getOrDefault("notificationProvider", "");
+		
 		System.out.println(profileData);
 		System.out.println(extDataStr);
 		
-		Set<String> contentKeywords = extDataStr.get("contentKeywords");
-		
-		String firstName = profileData.getOrDefault("firstName", "");
-		String lastName = profileData.getOrDefault("lastName", "");
-		String email = profileData.getOrDefault("email", "");
-		String phone = profileData.getOrDefault("phone", "");
-		int age = StringUtil.safeParseInt(profileData.getOrDefault("age", "0"));
-		String genderStr = profileData.getOrDefault("genderStr", "");
-		String loginId = profileData.getOrDefault("loginId", "");
-		String loginProvider = profileData.getOrDefault("loginProvider", "");
-		
-		Profile profile = ProfileDataService.updateSocialLoginInfo(loginId , loginProvider,firstName, lastName, email, phone, 
-				genderStr, age, curProfileId, observerId, lastTouchpointId, sourceIP, usedDeviceId, contentKeywords);
-		String newProfileId = profile.getId();
-		
-		if(! newProfileId.equals(curProfileId)) {
-			ctxSession.setProfileId(newProfileId);
-			ContextSessionDaoUtil.update(ctxSession);
+		if(!loginProvider.isEmpty()) {
+			Set<String> contentKeywords = extDataStr.get("contentKeywords");
+			
+			String firstName = profileData.getOrDefault("firstName", "");
+			String lastName = profileData.getOrDefault("lastName", "");
+			String email = profileData.getOrDefault("email", "");
+			String phone = profileData.getOrDefault("phone", "");
+			int age = StringUtil.safeParseInt(profileData.getOrDefault("age", "0"));
+			String genderStr = profileData.getOrDefault("genderStr", "");
+			String loginId = profileData.getOrDefault("loginId", "");
+			
+			
+			Profile profile = ProfileDataService.updateSocialLoginInfo(loginId, loginProvider,firstName, lastName, email, phone, 
+					genderStr, age, curProfileId, observerId, lastTouchpointId, sourceIP, usedDeviceId, contentKeywords);
+			String newProfileId = profile.getId();
+			
+			if(! newProfileId.equals(curProfileId)) {
+				ctxSession.setProfileId(newProfileId);
+				ContextSessionDaoUtil.update(ctxSession);
+			}
 		}
+		else if(!loginProvider.isEmpty()) {
+			String notificationUserId = profileData.getOrDefault("notificationUserId", "");
+			ProfileDataService.setNotificationUserIds(curProfileId, notificationProvider, notificationUserId);
+		}
+		
 		
 		return 102;
 	}
-
+	
 }
