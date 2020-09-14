@@ -170,7 +170,7 @@ public class ContextSessionService {
 		System.out.println(profileData);
 		System.out.println(extDataStr);
 		
-		if(!loginProvider.isEmpty()) {
+		if(! loginProvider.isEmpty() ) {
 			Set<String> contentKeywords = extDataStr.get("contentKeywords");
 			
 			String firstName = profileData.getOrDefault("firstName", "");
@@ -191,7 +191,7 @@ public class ContextSessionService {
 				ContextSessionDaoUtil.update(ctxSession);
 			}
 		}
-		else if(!loginProvider.isEmpty()) {
+		else if( ! notificationProvider.isEmpty()) {
 			String notificationUserId = profileData.getOrDefault("notificationUserId", "");
 			ProfileDataService.setNotificationUserIds(curProfileId, notificationProvider, notificationUserId);
 		}

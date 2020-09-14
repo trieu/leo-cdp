@@ -19,7 +19,6 @@ LOCAL_FOLDER="/Users/mac/projects/leo-cms-framework/core-leo-cms/BUILD-OUTPUT/de
 # remote path
 
 REMOTE_FOLDER="/build/leocdp/"
-REMOTE_DEPS_FOLDER="/build/leocdp/deps/"
 
 # server list
 
@@ -40,6 +39,11 @@ scp -i $SSH_KEY $DATA_OBSERVER_FILE $SERVER_TRACK:$REMOTE_FOLDER
 if [ $CHECK -eq $CHECK_RESULT ]; then
 	echo "COPY all deps"
 	scp -i $SSH_KEY -r $LOCAL_FOLDER $SERVER_DEMO:$REMOTE_FOLDER
+fi
+
+if [ $CHECK -eq $CHECK_RESULT ]; then
+	echo "COPY all deps"
+	scp -i $SSH_KEY -r $LOCAL_FOLDER $SERVER_TRACK:$REMOTE_FOLDER
 fi
 
 echo "-------- Synch OK $SERVER_DEMO at $(date) ------------- \n"

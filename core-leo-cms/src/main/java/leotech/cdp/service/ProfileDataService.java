@@ -155,6 +155,7 @@ public class ProfileDataService {
 	
 	public static Profile setNotificationUserIds(String profileId, String provider, String userId) {
 		Profile p = ProfileDaoUtil.getById(profileId);
+		System.out.println("setNotificationUserIds " + profileId + " provider " + provider + " userId " + userId );
 
 		// web push User Id
 		Map<String, Set<String>> notificationUserIds = new HashMap<>(1);
@@ -162,7 +163,7 @@ public class ProfileDataService {
 		p.setNotificationUserIds(notificationUserIds);
 		
 		// for id resulution
-		String extId = userId + "@" + provider;
+		String extId = userId + "#" + provider;
 		p.addIdentityData(extId);
 
 		// TODO run in a thread to commit to database
