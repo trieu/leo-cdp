@@ -1,4 +1,4 @@
-package leotech.system.util.email;
+package leotech.system.activation;
 
 import java.util.Properties;
 

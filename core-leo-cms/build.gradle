@@ -83,7 +83,7 @@ dependencies {
 	// high-quality thumbnails from existing images
 	compile group: 'net.coobird', name: 'thumbnailator', version: '0.4.11'
 	
-	// ---- BEGIN DEFAULT EMAIL MARKETING CORE ----
+	// ------ BEGIN DEFAULT CORE LIBS for MARKETING ACTIVATION ----
 	
 	// core STMP client for email marketing
 	compile group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
@@ -94,7 +94,8 @@ dependencies {
 	// SendinBlue's API v3 Java Library https://github.com/sendinblue/APIv3-java-library
 	compile group: 'com.sendinblue', name: 'sib-api-v3-sdk', version: '4.1.1'
 	
-	// ---- END DEFAULT EMAIL MARKETING CORE ----
+	
+	// ------ END DEFAULT CORE LIBS for MARKETING ACTIVATION ----
 	
 	// deps of https://github.com/USPA-Technology/QueryBuilder
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.10.6'
@@ -105,6 +106,7 @@ dependencies {
     	// common	 	
     	,'io.vertx:vertx-core:3.8.5'			
 		,'io.vertx:vertx-web:3.8.5'
+		,'io.vertx:vertx-web-client:3.8.5'
 		,'io.vertx:vertx-codegen:3.8.5'
 		,'com.google.code.gson:gson:2.8.2'
 		
@@ -175,6 +177,8 @@ dependencies {
 		// Email Test
 		,'com.sun.mail:javax.mail:1.6.2'
     )
+    
+    
 }
 
 

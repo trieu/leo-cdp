@@ -20,13 +20,33 @@
 		{
 			"configs" : 
 			{
-				"smtp_username" : "",
-				"smtp_password" : "",
+				"smtp_username" : "tantrieuf31.database@gmail.com",
+				"smtp_password" : "Fx1gGWfL87wVEA3m",
 				"smtp_host": "smtp-relay.sendinblue.com",
 				"smtp_port": "587",
 				"smtp_auth": "true",
 				"smtp_starttls_enable": "true"
 			}
+		},
+		
+		"------------  Push Notification service channel ------------" : {"notes" : "Default OneSignal App Configs" },
+		"push_notification_service":
+		{
+			"configs" : 
+			{
+				"appId" : "bb7af92b-a85f-43de-8ed4-954c798df5be",
+				"restApiKey" : "MGFlNzI0MDktNTBiNS00ZDMwLWE3MWItYzkyNGJlMmQ2NzIy"
+			}
+		},
+		
+		"------------  Mobile SMS Notification service channel ------------" : {"notes" : "Default Mobile SMS Configs" },
+		"mobile_gateway_sms_service":
+		{
+			"configs" : 
+			{
+				"Authorization" : "Basic VGVzdGluZ2Jhbms6cGFzc3dvcmQ="
+			}
 		}
+		
 	}
 }

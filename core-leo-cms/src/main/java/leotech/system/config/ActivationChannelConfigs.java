@@ -17,6 +17,9 @@ public class ActivationChannelConfigs {
 
 	public static final String MARKETING_EMAIL_SERVICE = "marketing_email_service";
 	public static final String SYSTEM_EMAIL_SERVICE = "system_email_service";
+	public static final String PUSH_NOTIFICATION_SERVICE = "push_notification_service";
+	public static final String MOBILE_GATEWAY_SMS_SERVICE = "mobile_gateway_sms_service";
+	
 	public static final String FILE_ACTIVATION_CHANNEL_CONFIGS_JSON = "./configs/activation-channel-configs.json";
 	
 	HashMap<String, String> configs;
@@ -81,8 +84,17 @@ public class ActivationChannelConfigs {
 	public static ActivationChannelConfigs loadSystemEmailServiceConfig() {
 		return load(SYSTEM_EMAIL_SERVICE);
 	}
+	
 	public static ActivationChannelConfigs loadMarketingEmailServiceConfig() {
 		return load(MARKETING_EMAIL_SERVICE);
+	}
+	
+	public static ActivationChannelConfigs loadPushNoticationServiceConfig() {
+		return load(PUSH_NOTIFICATION_SERVICE);
+	}
+	
+	public static ActivationChannelConfigs loadMobileGatewaySmsServiceConfig() {
+		return load(MOBILE_GATEWAY_SMS_SERVICE);
 	}
 	
 }
