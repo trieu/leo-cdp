@@ -159,6 +159,8 @@ var loadSegmentBuilder = window.loadSegmentBuilder || function(jsonQueryRules, r
 	      "product-view": 'Product View',
 	      "social-login": 'Customer Login',
 	      "add-to-cart": 'Purchase Intent',
+	      "play-prvideo": 'Play PR Video',
+	      "submit-contact": 'Submit Contact Form',
 	      "buy": 'First Purchase',
 	      "feedback-1st": 'First-time Feedback',
 	      "social-sharing": 'Social Sharing',
