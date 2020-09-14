@@ -10,7 +10,7 @@ import leotech.cdp.dao.singleview.ProfileSingleDataView;
 import leotech.cdp.model.journey.BehavioralEventMetric;
 import leotech.cdp.model.journey.EventMetaData;
 import leotech.cdp.model.journey.DataFlowStage;
-import leotech.cdp.service.TrackedEventDataService;
+import leotech.cdp.service.EventDataService;
 import leotech.cdp.service.FunnelDataService;
 import rfx.core.job.ScheduledJob;
 import rfx.core.util.Utils;
@@ -54,7 +54,7 @@ public class ProfileSingleViewDataJob  extends ScheduledJob {
 		int numberResult = 200;
 		
 		// init to get first 100 events of profile
-		List<EventSingleDataView> events = TrackedEventDataService.getEventActivityFlowOfProfile(profileId , startIndex, numberResult);
+		List<EventSingleDataView> events = EventDataService.getEventActivityFlowOfProfile(profileId , startIndex, numberResult);
 		BehavioralEventMetric highestScoreMetric = null;
 		
 		
@@ -106,7 +106,7 @@ public class ProfileSingleViewDataJob  extends ScheduledJob {
 			
 			//loop to the end to reach all events of profile in database
 			startIndex = startIndex + numberResult;
-			events = TrackedEventDataService.getEventActivityFlowOfProfile(profileId , startIndex, numberResult);
+			events = EventDataService.getEventActivityFlowOfProfile(profileId , startIndex, numberResult);
 		}
 		
 		//TODO update 8 scoring model here, extend with Jupyter Notebook and Rules Engine 

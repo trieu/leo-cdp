@@ -7,7 +7,7 @@ import io.vertx.core.MultiMap;
 import io.vertx.core.http.HttpServerRequest;
 import leotech.cdp.model.analytics.ContextSession;
 import leotech.cdp.service.DeviceDataService;
-import leotech.cdp.service.TrackedEventDataService;
+import leotech.cdp.service.EventDataService;
 import leotech.system.model.DeviceInfo;
 import leotech.system.util.RequestInfoUtil;
 import rfx.core.util.StringUtil;
@@ -25,8 +25,7 @@ public class TrackingApi {
 		String touchpointRefDomain = StringUtil.decodeUrlUTF8(params.get(TrackingApiParam.TOUCHPOINT_REFERRER_DOMAIN));
 		
 		String deviceId = DeviceDataService.getDeviceId(params, device);
-		String environment = StringUtil.safeString(params.get(TrackingApiParam.DATA_ENVIRONMENT),
-				TrackingApiParam.DEV_ENV);
+		String environment = StringUtil.safeString(params.get(TrackingApiParam.DATA_ENVIRONMENT),TrackingApiParam.DEV_ENV);
 		Map<String, String> eventJsonData = RequestInfoUtil.getHashMapFromRequestParams(params,
 				TrackingApiParam.EVENT_JSON_DATA);
 
@@ -34,7 +33,7 @@ public class TrackingApi {
 		
 		Date createdAt = new Date();
 
-		return TrackedEventDataService.trackViewEvent(createdAt, ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
+		return EventDataService.trackView(createdAt, ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
 				srcTouchpointName, srcTouchpointUrl, refTouchpointUrl, touchpointRefDomain, eventName, eventJsonData);
 	}
 
@@ -58,7 +57,7 @@ public class TrackingApi {
 		
 		Date createdAt = new Date();
 
-		return TrackedEventDataService.trackActionEvent(createdAt, ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
+		return EventDataService.trackAction(createdAt, ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
 				srcTouchpointName,srcTouchpointUrl, refTouchpointUrl,  touchpointRefDomain, eventName, eventCount, "", eventJsonData);
 	}
 
@@ -86,7 +85,7 @@ public class TrackingApi {
 		
 		Date createdAt = new Date();
 
-		return TrackedEventDataService.trackConversionEvent(createdAt,  ctxSession, srcObserverId, environment, srcEventKey, deviceId, sourceIP,
+		return EventDataService.trackConversion(createdAt,  ctxSession, srcObserverId, environment, srcEventKey, deviceId, sourceIP,
 				device, srcTouchpointName, srcTouchpointUrl, refTouchpointUrl, touchpointRefDomain, eventName, eventCount, transactionCode, "", eventJsonData);
 	}
 

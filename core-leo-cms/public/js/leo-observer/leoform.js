@@ -6,7 +6,7 @@
 // ------------ LEO Form ------------------
 (function() {
 	
-	var errorMsg = '<p> First name and email are required data, age must be larger than zero </p>';
+	var errorMsg = '<p>  Your name, your email, phone and gender are required information </p>';
 	var successInfo = '<div class="alert alert-success"><strong>Success!</strong> Your data is submitted successfully.</div>'
 	
     if (typeof window.LeoForm === "undefined") {
@@ -17,32 +17,29 @@
     	         schema: {
     	           firstname: {
     	             type: 'string',
-    	             title: 'First Name',
+    	             title: 'Your Name',
     	             required: true
-    	           },
-    	           lastname: {
-    	               type: 'string',
-    	               title: 'Last Name',
-    	               required: true
     	           },
     	           email: {
     	               type: 'email',
-    	               title: 'Contact Email',
+    	               title: 'Your Email',
+    	               required: true
+    	           },
+    	           phone: {
+    	               "type": "number",
+    	               "title": "Your Phone",
+    	               "default": 84
     	               required: true
     	           },
     	           genderStr: {
     	               "type": "string",
-    	               "title": "Gender",
-    	               "enum": [ "Unknown", "Male", "Female", "LGBT"],
+    	               "title": "Your Gender",
+    	               "enum": [ "Unknown", "Male", "Female"],
     	               required: true
-    	           },
-    	           age: {
-    	             type: 'integer',
-    	             title: 'Age'
     	           },
     	           contentKeywords: {
 	        	      "type": "array",
-	        	      "title": "Select all topics you like: ",
+	        	      "title": "Select all topics you like to update information: ",
 	        	      "items": {
 	        	          "type": "string",
 	        	          "title": "Option",
@@ -52,8 +49,8 @@
     	         },
     		     form: [
     		          {"key": "firstname"},
-    		          {"key": "lastname"},
     		          {"key": "email"},
+    		          {"key": "phone"},
     		          {"key": "age"},
     		          {
     		            "key": "genderStr",
@@ -91,7 +88,7 @@
     	           }
     	         }
     	       });
-    	      $('#'+holderId).show();
+    	      jQuery('#'+holderId).show();
     	}
 
     	var LeoForm = {};

@@ -68,7 +68,8 @@ public class LeoObserverHttpRouter extends BaseHttpRouter {
 
 		String httpMethod = req.rawMethod();
 		String uri = req.uri();
-		System.out.println(httpMethod + " uri: " + uri);
+		
+		System.out.println(httpMethod + " : " + req.absoluteURI());
 
 		MultiMap reqHeaders = req.headers();
 		MultiMap params = req.params();
@@ -136,17 +137,19 @@ public class LeoObserverHttpRouter extends BaseHttpRouter {
 					resp.end(new Gson().toJson(new ObserverResponse("","", INVALID, status)));
 				}
 
+				String visitorId = currentSession.getVisitorId();
+				String sessionKey = currentSession.getSessionKey();
 				if (status >= 200 && status < 300) {
-					ObserverResponse rs = new ObserverResponse(currentSession.getVisitorId(),currentSession.getSessionKey(), OK, status);
+					ObserverResponse rs = new ObserverResponse(visitorId,sessionKey, OK, status);
 					resp.end(new Gson().toJson(rs));
 				} else if (status == 500) {
-					ObserverResponse rs = new ObserverResponse(currentSession.getVisitorId(),currentSession.getSessionKey(), FAILED, status);
+					ObserverResponse rs = new ObserverResponse(visitorId,sessionKey, FAILED, status);
 					resp.end(new Gson().toJson(rs));
 				} else if (status == 102) {
-					ObserverResponse rs = new ObserverResponse(currentSession.getVisitorId(),currentSession.getSessionKey(), OK, status);
+					ObserverResponse rs = new ObserverResponse(visitorId,sessionKey, OK, status);
 					resp.end(new Gson().toJson(rs));
 				} else {
-					ObserverResponse rs = new ObserverResponse(currentSession.getVisitorId(),currentSession.getSessionKey(), INVALID, status);
+					ObserverResponse rs = new ObserverResponse(visitorId,sessionKey, INVALID, status);
 					resp.end(new Gson().toJson(rs));
 				}
 				return true;
@@ -160,9 +163,11 @@ public class LeoObserverHttpRouter extends BaseHttpRouter {
 				int status = 404;
 				// synch ContextSession with request
 				ContextSession currentSession = ContextSessionService.synchData(clientSessionKey, req, params, device);
+				
+				// get profile from session
 				String profileId = currentSession.getProfileId();
 				if (StringUtil.isNotEmpty(profileId)) {
-					status = ContextSessionService.updateProfileDataFromWebSdk(req, params, currentSession);
+					status = ContextSessionService.updateProfileDataFromWebTouchpoint(req, params, currentSession, device);
 				} else {
 					status = 101;
 				}

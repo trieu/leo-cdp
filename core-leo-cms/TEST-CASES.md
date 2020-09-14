@@ -8,7 +8,9 @@
 	1) send email marketing 
 	2) push Web Push
 	3) SMS !?
-	
+
+
+1) Profile Report
 
 ## JS Code at https://demobookshop.leocdp.com/wp-admin/themes.php?page=tc-custom-javascript	
 

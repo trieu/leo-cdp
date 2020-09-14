@@ -107,13 +107,17 @@ public class ProfileDataService {
 		return pf;
 	}
 
-	public static Profile updateSocialLoginInfo(String loginId, String loginProvider, String firstName, String lastName, String email, String phone, String genderStr, int age,
-			String profileId, String observerId, String lastTouchpointId, String lastSeenIp, String usedDeviceId, Set<String> contentKeywords) {
+	public static Profile updateBasicProfileInfo(String profileId, String loginId, String loginProvider, String firstName, String lastName, String email, String phone, 
+			String genderStr, int age, String observerId, String lastTouchpointId, String lastSeenIp, String usedDeviceId, Set<String> contentKeywords) {
 		Profile p = ProfileDaoUtil.getById(profileId);
 
-		p.setSocialMediaProfile(loginProvider, loginId);
-		p.setIdentity(loginId, loginProvider);
-		p.setType(ProfileType.TYPE_SOCIAL_LOGIN);
+		if( StringUtil.isNotEmpty(loginId) && StringUtil.isNotEmpty(loginProvider) ) {
+			p.setSocialMediaProfile(loginProvider, loginId);
+			p.setIdentity(loginId, loginProvider);
+			p.setType(ProfileType.TYPE_SOCIAL_LOGIN);
+		} else {
+			p.setType(ProfileType.TYPE_IDENTIFIED);
+		}
 		
 		if(StringUtil.isNotEmpty(firstName)) {
 			p.setFirstName(firstName);
@@ -144,6 +148,7 @@ public class ProfileDataService {
 		}
 
 		p.setLastObserverId(observerId);
+		p.setLastTouchpointId(lastTouchpointId);
 		p.setLastSeenIp(lastSeenIp);
 		p.setUpdatedAt(new Date());
 		p.setContentKeywords(contentKeywords);
@@ -278,7 +283,7 @@ public class ProfileDataService {
 			String profileId = profile.getId();
 			System.out.println(" [#Activation Trigger#] getLastTrackingEventForRetargeting Profile is found, profileId " + profileId );
 
-			List<EventSingleDataView> events = TrackedEventDataService.getProductViewActivityFlowOfProfile(profileId, 0, 10);
+			List<EventSingleDataView> events = EventDataService.getProductViewActivityFlowOfProfile(profileId, 0, 10);
 			if(events.size() > 0) {
 				// find the last recent product-view to get Product SKU
 				return events.get(0);

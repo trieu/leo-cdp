@@ -1,5 +1,7 @@
 package leotech.cdp.service;
 
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -151,11 +153,19 @@ public class ContextSessionService {
 		return cmd.execute();
 	}
 
-	public static int updateProfileDataFromWebSdk(HttpServerRequest req, MultiMap params, ContextSession ctxSession) {
+	public static int updateProfileDataFromWebTouchpoint(HttpServerRequest req, MultiMap params, ContextSession ctxSession, DeviceInfo device) {
+		String srcObserverId = params.get(TrackingApiParam.OBSERVER_ID);
+		String deviceId = DeviceDataService.getDeviceId(params, device);
+		String environment = StringUtil.safeString(params.get(TrackingApiParam.DATA_ENVIRONMENT),TrackingApiParam.DEV_ENV);
+		String srcTouchpointName = "";
+		String srcTouchpointUrl = "";
+		String refTouchpointUrl = "";
+		String touchpointRefDomain = "";
+		
 		String usedDeviceId = ctxSession.getUserDeviceId();
 		String sourceIP = RequestInfoUtil.getRemoteIP(req);
 		
-		String lastTouchpointId = ctxSession.getSrcTouchpointId();
+		String sessionTouchpointId = ctxSession.getSrcTouchpointId();
 		String observerId = ctxSession.getObserverId();
 		String curProfileId = ctxSession.getProfileId();
 		
@@ -164,36 +174,54 @@ public class ContextSessionService {
 		Map<String, Set<String> > extDataStr = RequestInfoUtil.getMapSetFromRequestParams(formAttributes, "extData");
 		Map<String, String> profileData = RequestInfoUtil.getHashMapFromRequestParams(formAttributes,TrackingApiParam.PROFILE_DATA);
 		
+		String webformProvider = profileData.getOrDefault("webformProvider", "");
 		String loginProvider = profileData.getOrDefault("loginProvider", "");
 		String notificationProvider = profileData.getOrDefault("notificationProvider", "");
+		
+		Set<String> contentKeywords = extDataStr.getOrDefault("contentKeywords", new HashSet<String>(0));
+		
+		String firstName = profileData.getOrDefault("firstName", "");
+		String lastName = profileData.getOrDefault("lastName", "");
+		String email = profileData.getOrDefault("email", "");
+		String phone = profileData.getOrDefault("phone", "");
+		int age = StringUtil.safeParseInt(profileData.getOrDefault("age", "0"));
+		String genderStr = profileData.getOrDefault("genderStr", "");
+		String loginId = profileData.getOrDefault("loginId", "");
 		
 		System.out.println(profileData);
 		System.out.println(extDataStr);
 		
-		if(! loginProvider.isEmpty() ) {
-			Set<String> contentKeywords = extDataStr.get("contentKeywords");
+		// social login likes facebook
+		if( StringUtil.isNotEmpty(loginProvider) ) {
 			
-			String firstName = profileData.getOrDefault("firstName", "");
-			String lastName = profileData.getOrDefault("lastName", "");
-			String email = profileData.getOrDefault("email", "");
-			String phone = profileData.getOrDefault("phone", "");
-			int age = StringUtil.safeParseInt(profileData.getOrDefault("age", "0"));
-			String genderStr = profileData.getOrDefault("genderStr", "");
-			String loginId = profileData.getOrDefault("loginId", "");
-			
-			
-			Profile profile = ProfileDataService.updateSocialLoginInfo(loginId, loginProvider,firstName, lastName, email, phone, 
-					genderStr, age, curProfileId, observerId, lastTouchpointId, sourceIP, usedDeviceId, contentKeywords);
-			String newProfileId = profile.getId();
+			Profile updatedProfile = ProfileDataService.updateBasicProfileInfo(curProfileId, loginId, loginProvider,firstName, lastName, email, phone, 
+					genderStr, age,  observerId, sessionTouchpointId, sourceIP, usedDeviceId, contentKeywords);
+			String newProfileId = updatedProfile.getId();
 			
 			if(! newProfileId.equals(curProfileId)) {
 				ctxSession.setProfileId(newProfileId);
 				ContextSessionDaoUtil.update(ctxSession);
 			}
+			
+			String eventName = "social-login";
+			EventDataService.trackAction(new Date(), ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
+					srcTouchpointName,srcTouchpointUrl, refTouchpointUrl,  touchpointRefDomain, eventName , 1, "", null);
+			
 		}
-		else if( ! notificationProvider.isEmpty()) {
+		//  confirmed notification
+		else if( StringUtil.isNotEmpty(notificationProvider) ) {
 			String notificationUserId = profileData.getOrDefault("notificationUserId", "");
 			ProfileDataService.setNotificationUserIds(curProfileId, notificationProvider, notificationUserId);
+		}
+		// WEB FORM submit 
+		else if( StringUtil.isNotEmpty(webformProvider) ) {
+			
+			ProfileDataService.updateBasicProfileInfo(curProfileId, loginId, loginProvider,firstName, lastName, email, phone, 
+					genderStr, age,  observerId, sessionTouchpointId, sourceIP, usedDeviceId, contentKeywords);
+			String eventName = "submit-contact";
+			
+			EventDataService.trackAction(new Date(), ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
+					srcTouchpointName,srcTouchpointUrl, refTouchpointUrl,  touchpointRefDomain, eventName , 1, "", null);
 		}
 		
 		

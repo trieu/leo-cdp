@@ -23,7 +23,7 @@ import leotech.cdp.model.customer.Device;
 import leotech.cdp.model.customer.Profile;
 import leotech.cdp.model.journey.MediaChannelType;
 import leotech.cdp.model.journey.Touchpoint;
-import leotech.cdp.service.TrackedEventDataService;
+import leotech.cdp.service.EventDataService;
 import leotech.cdp.service.TouchpointDataService;
 import leotech.system.model.DeviceInfo;
 import leotech.system.util.DeviceInfoUtil;
@@ -100,7 +100,7 @@ public class GenerateFakeEventData {
 		ContextSessionDaoUtil.create(ctxSession);
 		
 		
-		TrackedEventDataService.trackViewEvent(createdAt, ctxSession, observerId, "pro", userDeviceId, sourceIP,
+		EventDataService.trackView(createdAt, ctxSession, observerId, "pro", userDeviceId, sourceIP,
 				deviceInfo, "Book Video Review", srcTouchpointUrl, refTouchpointUrl, touchpointRefDomain, eventName,
 				null);
 		String refTouchpointUrl2 = srcTouchpointUrl;
@@ -114,7 +114,7 @@ public class GenerateFakeEventData {
 			String srcTouchpointUrl2 = getRamdomlyTouchpointUrl();
 			
 			// pageview event
-			TrackedEventDataService.trackViewEvent(trackedTime, ctxSession, observerId, "pro", userDeviceId, sourceIP,
+			EventDataService.trackView(trackedTime, ctxSession, observerId, "pro", userDeviceId, sourceIP,
 					deviceInfo, "Book Video Review", srcTouchpointUrl2, refTouchpointUrl2, touchpointRefDomain, eventName,
 					null);
 			refTouchpointUrl2 = srcTouchpointUrl2;
