@@ -167,7 +167,7 @@ public class LeoObserverHttpRouter extends BaseHttpRouter {
 				// get profile from session
 				String profileId = currentSession.getProfileId();
 				if (StringUtil.isNotEmpty(profileId)) {
-					status = ContextSessionService.updateProfileDataFromWebTouchpoint(req, params, currentSession, device);
+					status = ContextSessionService.updateProfileData(req, params, currentSession, device);
 				} else {
 					status = 101;
 				}

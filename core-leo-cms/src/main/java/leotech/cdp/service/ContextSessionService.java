@@ -153,14 +153,11 @@ public class ContextSessionService {
 		return cmd.execute();
 	}
 
-	public static int updateProfileDataFromWebTouchpoint(HttpServerRequest req, MultiMap params, ContextSession ctxSession, DeviceInfo device) {
-		String srcObserverId = params.get(TrackingApiParam.OBSERVER_ID);
+	public static int updateProfileData(HttpServerRequest req, MultiMap params, ContextSession ctxSession, DeviceInfo device) {
+		
 		String deviceId = DeviceDataService.getDeviceId(params, device);
+		
 		String environment = StringUtil.safeString(params.get(TrackingApiParam.DATA_ENVIRONMENT),TrackingApiParam.DEV_ENV);
-		String srcTouchpointName = "";
-		String srcTouchpointUrl = "";
-		String refTouchpointUrl = "";
-		String touchpointRefDomain = "";
 		
 		String usedDeviceId = ctxSession.getUserDeviceId();
 		String sourceIP = RequestInfoUtil.getRemoteIP(req);
@@ -169,27 +166,32 @@ public class ContextSessionService {
 		String observerId = ctxSession.getObserverId();
 		String curProfileId = ctxSession.getProfileId();
 		
-		MultiMap formAttributes = req.formAttributes();
 		
-		Map<String, Set<String> > extDataStr = RequestInfoUtil.getMapSetFromRequestParams(formAttributes, "extData");
-		Map<String, String> profileData = RequestInfoUtil.getHashMapFromRequestParams(formAttributes,TrackingApiParam.PROFILE_DATA);
+		Map<String, Set<String> > extDataStr = RequestInfoUtil.getMapSetFromRequestParams(req.formAttributes(), "extData");
+		Map<String, String> formData = RequestInfoUtil.getHashMapFromRequestParams(req.formAttributes(),TrackingApiParam.PROFILE_DATA);
 		
-		String webformProvider = profileData.getOrDefault("webformProvider", "");
-		String loginProvider = profileData.getOrDefault("loginProvider", "");
-		String notificationProvider = profileData.getOrDefault("notificationProvider", "");
+		String webformProvider = formData.getOrDefault("webformProvider", "");
+		String loginProvider = formData.getOrDefault("loginProvider", "");
+		String notificationProvider = formData.getOrDefault("notificationProvider", "");
 		
 		Set<String> contentKeywords = extDataStr.getOrDefault("contentKeywords", new HashSet<String>(0));
 		
-		String firstName = profileData.getOrDefault("firstName", "");
-		String lastName = profileData.getOrDefault("lastName", "");
-		String email = profileData.getOrDefault("email", "");
-		String phone = profileData.getOrDefault("phone", "");
-		int age = StringUtil.safeParseInt(profileData.getOrDefault("age", "0"));
-		String genderStr = profileData.getOrDefault("genderStr", "");
-		String loginId = profileData.getOrDefault("loginId", "");
+		String firstName = formData.getOrDefault("firstName", "");
+		String lastName = formData.getOrDefault("lastName", "");
+		String email = formData.getOrDefault("email", "");
+		String phone = formData.getOrDefault("phone", "");
+		int age = StringUtil.safeParseInt(formData.getOrDefault("age", "0"));
+		String genderStr = formData.getOrDefault("genderStr", "");
+		String loginId = formData.getOrDefault("loginId", "");
 		
-		System.out.println(profileData);
-		System.out.println(extDataStr);
+		String srcObserverId = formData.getOrDefault(TrackingApiParam.OBSERVER_ID, "");
+		String srcTouchpointName = formData.getOrDefault(TrackingApiParam.TOUCHPOINT_NAME, "");
+		String srcTouchpointUrl = formData.getOrDefault(TrackingApiParam.TOUCHPOINT_URL, "");
+		String refTouchpointUrl = formData.getOrDefault(TrackingApiParam.TOUCHPOINT_REFERRER_URL, "");
+		String touchpointRefDomain = formData.getOrDefault(TrackingApiParam.TOUCHPOINT_REFERRER_DOMAIN, "");
+		
+//		System.out.println(formData);
+//		System.out.println(extDataStr);
 		
 		// social login likes facebook
 		if( StringUtil.isNotEmpty(loginProvider) ) {
@@ -210,7 +212,7 @@ public class ContextSessionService {
 		}
 		//  confirmed notification
 		else if( StringUtil.isNotEmpty(notificationProvider) ) {
-			String notificationUserId = profileData.getOrDefault("notificationUserId", "");
+			String notificationUserId = formData.getOrDefault("notificationUserId", "");
 			ProfileDataService.setNotificationUserIds(curProfileId, notificationProvider, notificationUserId);
 		}
 		// WEB FORM submit 
