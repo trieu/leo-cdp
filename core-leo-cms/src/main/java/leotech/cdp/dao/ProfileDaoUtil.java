@@ -235,6 +235,8 @@ public class ProfileDaoUtil extends BaseLeoCdpDao {
 		return list;
 	}
 	
+	
+	
 	public static long countProfilesByQuery(ProfileQuery profileQuery) {
 		ArangoDatabase db = getCdpDbInstance();
 		String aql = profileQuery.getCountingQueryWithDateTimeFilter();

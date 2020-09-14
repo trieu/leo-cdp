@@ -218,8 +218,17 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	// --- END key Personal attributes
 	
-
+	
 	// --- BEGIN Marketing Data Model , inputed by Marketer
+	
+	@Expose
+	protected int receiveNotification = 0;
+	
+	@Expose
+	protected int receiveEmail = 0;
+	
+	@Expose
+	protected int receiveMobileSms = 0;
 
 	@Expose
 	protected Set<String> personalProblems = new HashSet<>(20);
@@ -340,6 +349,8 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	
 	@Expose
 	protected int dataContext = 1; // 1 is production data context, 0 is testing only, -1 is fake data
+	
+	
 
 	@Override
 	public int compareTo(Profile o) {
@@ -634,6 +645,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		this.primaryEmail = primaryEmail;
 		if (this.type == ProfileType.TYPE_ANONYMOUS) {
 			this.type = ProfileType.TYPE_IDENTIFIED;
+			this.receiveEmail = 1;
 		}
 	}
 
@@ -645,6 +657,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		this.primaryPhone = primaryPhone;
 		if (this.type == ProfileType.TYPE_ANONYMOUS) {
 			this.type = ProfileType.TYPE_IDENTIFIED;
+			this.receiveMobileSms = 1;
 		}
 	}
 
@@ -711,6 +724,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	public void setNotificationUserIds(Map<String, Set<String>> notificationUserIds) {
 		this.notificationUserIds = notificationUserIds;
+		this.receiveNotification = 1;
 	}
 	
 	public Set<String> getNotificationUserIdsByProvider(String provider) {
@@ -1088,6 +1102,43 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	public void setTotalCFS(int totalCFS) {
 		this.totalCFS = totalCFS;
+	}
+	
+
+	public boolean isReceiveNotification() {
+		return receiveNotification == 1;
+	}
+	
+	public int getReceiveNotification() {
+		return receiveNotification;
+	}
+
+	public void setReceiveNotification(int receiveNotification) {
+		this.receiveNotification = receiveNotification;
+	}
+
+	public boolean isReceiveEmail() {
+		return receiveEmail == 1;
+	}
+	
+	public int getReceiveEmail() {
+		return receiveEmail;
+	}
+
+	public void setReceiveEmail(int receiveEmail) {
+		this.receiveEmail = receiveEmail;
+	}
+
+	public boolean isReceiveMobileSms() {
+		return receiveMobileSms == 1;
+	}
+	
+	public int getReceiveMobileSms() {
+		return receiveMobileSms;
+	}
+
+	public void setReceiveMobileSms(int receiveMobileSms) {
+		this.receiveMobileSms = receiveMobileSms;
 	}
 
 	/**

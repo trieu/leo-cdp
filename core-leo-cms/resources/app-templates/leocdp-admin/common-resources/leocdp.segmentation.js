@@ -73,6 +73,16 @@ var deleteSegment = deleteSegment || function() {
 var loadSegmentBuilder = window.loadSegmentBuilder || function(jsonQueryRules, readOnlyMode, callback) {
 	
 	var dataFilter = [ {
+		id : "visitorId",
+		label : "Visitor ID",
+		type : "string",
+		operators : getOperatorsForStringField()
+	}, {
+		id : "crmRefId",
+		label : "CRM ID",
+		type : "string",
+		operators : getOperatorsForStringField()
+	}, {
 		id : "firstName",
 		label : "First Name",
 		type : "string",
@@ -156,13 +166,59 @@ var loadSegmentBuilder = window.loadSegmentBuilder || function(jsonQueryRules, r
 	      "feedback-2nd": 'Second-time Feedback',
 	    },
 	    operators: ['contains_any']
-	  } 
+	  }, {
+			id : "dataContext",
+			label : "Data Context",
+			type : "integer",
+			input : "radio",
+			values : {
+				"1" : "Production Data",
+				"0" : "Test Data",
+				"-1" : "Fake Data"
+			},
+			operators : [ "equal" ]
+	   }, {
+			id : "receiveNotification",
+			label : "Receive Notification",
+			type : "integer",
+			input : "radio",
+			values : {
+				"0" : "No data",
+				"1" : "Subscribed",
+				"-1" : "Unsubscribed"
+			},
+			operators : [ "equal" ]
+		} , {
+			id : "receiveEmail",
+			label : "Receive Email",
+			type : "integer",
+			input : "radio",
+			values : {
+				"0" : "No data",
+				"1" : "Subscribed",
+				"-1" : "Unsubscribed"
+			},
+			operators : [ "equal" ]
+		} , {
+			id : "receiveMobileSms",
+			label : "Receive Mobile SMS",
+			type : "integer",
+			input : "radio",
+			values : {
+				"0" : "No data",
+				"1" : "Subscribed",
+				"-1" : "Unsubscribed"
+			},
+			operators : [ "equal" ]
+		}
 	];
 	
 	var rulesOfQuery = jsonQueryRules || false;
 
 	var ops = _.union(getOperatorsForStringField(),getOperatorsForNumberField()); 
-	ops.push({ type: 'contains_any', optgroup: 'custom', nb_inputs: 1, multiple: true, apply_to: ['string'] })
+	ops.push({ type: 'contains_any', optgroup: 'custom', nb_inputs: 1, multiple: true, apply_to: ['string'] });
+	
+	//init UI
 	$('#segment-builder-holder').queryBuilder({
 		plugins : [ 'bt-tooltip-errors' ],
 		operators: ops,
