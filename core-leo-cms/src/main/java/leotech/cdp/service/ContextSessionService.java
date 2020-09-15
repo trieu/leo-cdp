@@ -206,7 +206,7 @@ public class ContextSessionService {
 			}
 			
 			String eventName = "social-login";
-			EventDataService.trackAction(new Date(), ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
+			EventDataService.recordActionData(new Date(), ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
 					srcTouchpointName,srcTouchpointUrl, refTouchpointUrl,  touchpointRefDomain, eventName , 1, "", null);
 			
 		}
@@ -222,7 +222,7 @@ public class ContextSessionService {
 					genderStr, age,  observerId, sessionTouchpointId, sourceIP, usedDeviceId, contentKeywords);
 			String eventName = "submit-contact";
 			
-			EventDataService.trackAction(new Date(), ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
+			EventDataService.recordActionData(new Date(), ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
 					srcTouchpointName,srcTouchpointUrl, refTouchpointUrl,  touchpointRefDomain, eventName , 1, "", null);
 		}
 		

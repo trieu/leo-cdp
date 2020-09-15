@@ -160,11 +160,11 @@ public class GenerateCdpTestData {
 		
 		String eventName = "content-view";
 		// pageview event
-		EventDataService.trackView(createdAt, ctxSession, observerId, "pro", userDeviceId, sourceIP, deviceInfo,"Book Video Review", srcTouchpointUrl, refTouchpointUrl, touchpointRefDomain, eventName , null);
+		EventDataService.recordViewData(createdAt, ctxSession, observerId, "pro", userDeviceId, sourceIP, deviceInfo,"Book Video Review", srcTouchpointUrl, refTouchpointUrl, touchpointRefDomain, eventName , null);
 		
 		eventName = "social-login";
 		Date loginTime = DateUtils.addSeconds(createdAt, RandomUtil.getRandomInteger(300, 9)); 
-		EventDataService.trackAction(loginTime,ctxSession, observerId, "pro", userDeviceId, sourceIP, deviceInfo,"Book Video Review",srcTouchpointUrl, refTouchpointUrl,  touchpointRefDomain, eventName, 1, "", null);
+		EventDataService.recordActionData(loginTime,ctxSession, observerId, "pro", userDeviceId, sourceIP, deviceInfo,"Book Video Review",srcTouchpointUrl, refTouchpointUrl,  touchpointRefDomain, eventName, 1, "", null);
 		
 		
 		System.out.println(new Gson().toJson(profile));

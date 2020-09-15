@@ -100,7 +100,7 @@ public class GenerateFakeEventData {
 		ContextSessionDaoUtil.create(ctxSession);
 		
 		
-		EventDataService.trackView(createdAt, ctxSession, observerId, "pro", userDeviceId, sourceIP,
+		EventDataService.recordViewData(createdAt, ctxSession, observerId, "pro", userDeviceId, sourceIP,
 				deviceInfo, "Book Video Review", srcTouchpointUrl, refTouchpointUrl, touchpointRefDomain, eventName,
 				null);
 		String refTouchpointUrl2 = srcTouchpointUrl;
@@ -114,7 +114,7 @@ public class GenerateFakeEventData {
 			String srcTouchpointUrl2 = getRamdomlyTouchpointUrl();
 			
 			// pageview event
-			EventDataService.trackView(trackedTime, ctxSession, observerId, "pro", userDeviceId, sourceIP,
+			EventDataService.recordViewData(trackedTime, ctxSession, observerId, "pro", userDeviceId, sourceIP,
 					deviceInfo, "Book Video Review", srcTouchpointUrl2, refTouchpointUrl2, touchpointRefDomain, eventName,
 					null);
 			refTouchpointUrl2 = srcTouchpointUrl2;

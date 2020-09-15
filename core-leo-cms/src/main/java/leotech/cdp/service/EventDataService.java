@@ -41,7 +41,7 @@ public class EventDataService {
 	public static final String APP_PUSH_MARKETING = "app-push-marketing";
 
 	//
-	public static int trackView(Date createdAt, ContextSession ctxSession, String srcObserverId, String environment,
+	public static int recordViewData(Date createdAt, ContextSession ctxSession, String srcObserverId, String environment,
 			String deviceId, String sourceIP, DeviceInfo deviceInfo, String srcTouchpointName, String srcTouchpointUrl,
 			String refTouchpointUrl, String touchpointRefDomain, String eventName, Map<String, String> eventData) {
 		String deviceName = deviceInfo.deviceName;
@@ -90,7 +90,7 @@ public class EventDataService {
 		return 201;
 	}
 
-	public static int trackAction(Date createdAt, ContextSession ctxSession, String srcObserverId, String environment,
+	public static int recordActionData(Date createdAt, ContextSession ctxSession, String srcObserverId, String environment,
 			String deviceId, String sourceIP, DeviceInfo dv, String srcTouchpointName, String srcTouchpointUrl,
 			String refTouchpointUrl, String touchpointRefDomain, String eventName, long eventCount,
 			String feedbackText, Map<String, String> eventData) {
@@ -139,7 +139,7 @@ public class EventDataService {
 		return 221;
 	}
 
-	public static int trackConversion(Date createdAt, ContextSession ctxSession, String srcObserverId, String environment,
+	public static int recordConversionData(Date createdAt, ContextSession ctxSession, String srcObserverId, String environment,
 			String srcEventKey, String deviceId, String sourceIP, DeviceInfo device, String srcTouchpointName,
 			String srcTouchpointUrl, String refTouchpointUrl, String touchpointRefDomain, String eventName,
 			long eventCount, String transactionCode, String feedbackText, Map<String, String> eventData) {

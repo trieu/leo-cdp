@@ -5,15 +5,28 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import leotech.cdp.dao.ProfileDaoUtil;
 import leotech.cdp.dao.singleview.ProfileSingleDataView;
 import leotech.cdp.service.ProfileDataService;
 
-public class JobUpdateProfileSingleView extends ReactiveJob {
+/**
+ * single-view processing reactive job (triggered by external event)
+ * 
+ * @author tantrieuf31
+ * @since 2020
+ *
+ */
+public class JobUpdateProfileSingleView extends ReactiveProfileDataJob {
 
-	private static Queue<String> queueProfileIds = new ConcurrentLinkedQueue<>();
+	private static Queue<ProfileSingleDataView> queueProfiles = new ConcurrentLinkedQueue<>();
 	private static volatile JobUpdateProfileSingleView instance = null;
 	private static volatile Timer timer = null;
+	
+	public static JobUpdateProfileSingleView job() {
+		if(instance == null) {
+			instance = new JobUpdateProfileSingleView();
+		}
+		return instance;
+	}
 
 	protected JobUpdateProfileSingleView() {
 		initTimer();
@@ -26,8 +39,8 @@ public class JobUpdateProfileSingleView extends ReactiveJob {
 			timer.schedule(new TimerTask() {
 				@Override
 				public void run() {
-					for (int i = 0; i < 100; i++) {
-						String input = queueProfileIds.poll();
+					for (int i = 0; i < BATCH_PROCESSING_SIZE; i++) {
+						ProfileSingleDataView input = queueProfiles.poll();
 						if (input == null) {
 							break;
 						} 
@@ -45,22 +58,13 @@ public class JobUpdateProfileSingleView extends ReactiveJob {
 	}
 	
 	@Override
-	protected void doReactiveJob(String input) {
-		ProfileSingleDataView profile = ProfileDaoUtil.getSingleViewById(input);
+	protected void doReactiveJob(ProfileSingleDataView profile) {
 		ProfileDataService.updateProfileSingleDataView(profile , false);
 	}
 	
 	@Override
-	public JobUpdateProfileSingleView initAndGet() {
-		if(instance == null) {
-			instance = new JobUpdateProfileSingleView();
-		}
-		return instance;
-	}
-	
-	@Override
-	public void enque(String input) {
-		queueProfileIds.add(input);
+	public void enque(ProfileSingleDataView input) {
+		queueProfiles.add(input);
 	}
 	
 	

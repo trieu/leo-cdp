@@ -33,7 +33,7 @@ public class TrackingApi {
 		
 		Date createdAt = new Date();
 
-		return EventDataService.trackView(createdAt, ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
+		return EventDataService.recordViewData(createdAt, ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
 				srcTouchpointName, srcTouchpointUrl, refTouchpointUrl, touchpointRefDomain, eventName, eventJsonData);
 	}
 
@@ -57,7 +57,7 @@ public class TrackingApi {
 		
 		Date createdAt = new Date();
 
-		return EventDataService.trackAction(createdAt, ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
+		return EventDataService.recordActionData(createdAt, ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
 				srcTouchpointName,srcTouchpointUrl, refTouchpointUrl,  touchpointRefDomain, eventName, eventCount, "", eventJsonData);
 	}
 
@@ -85,7 +85,7 @@ public class TrackingApi {
 		
 		Date createdAt = new Date();
 
-		return EventDataService.trackConversion(createdAt,  ctxSession, srcObserverId, environment, srcEventKey, deviceId, sourceIP,
+		return EventDataService.recordConversionData(createdAt,  ctxSession, srcObserverId, environment, srcEventKey, deviceId, sourceIP,
 				device, srcTouchpointName, srcTouchpointUrl, refTouchpointUrl, touchpointRefDomain, eventName, eventCount, transactionCode, "", eventJsonData);
 	}
 

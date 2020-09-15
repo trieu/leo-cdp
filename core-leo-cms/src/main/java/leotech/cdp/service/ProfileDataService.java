@@ -15,6 +15,7 @@ import leotech.cdp.dao.ProfileDaoUtil;
 import leotech.cdp.dao.TrackingEventDao;
 import leotech.cdp.dao.singleview.EventSingleDataView;
 import leotech.cdp.dao.singleview.ProfileSingleDataView;
+import leotech.cdp.job.reactive.JobUpdateProfileSingleView;
 import leotech.cdp.model.customer.Profile;
 import leotech.cdp.model.customer.ProfileType;
 import leotech.cdp.model.journey.BehavioralEventMetric;
@@ -37,7 +38,7 @@ public class ProfileDataService {
 	}
 	
 	public static void updateProfileFromEvent(String profileId, String observerId, String srcTouchpointId, String touchpointRefDomain, String lastSeenIp, String userDeviceId, String eventName) {
-		Profile pf = ProfileDaoUtil.getById(profileId);
+		ProfileSingleDataView pf = ProfileDaoUtil.getSingleViewById(profileId);
 	
 		if(pf != null) {
 			
@@ -49,8 +50,7 @@ public class ProfileDataService {
 			pf.setLastUsedDeviceId(userDeviceId);
 			pf.updateEventCount(eventName);
 			
-			// TODO run in a thread to commit to database
-			ProfileDaoUtil.update(pf);
+			JobUpdateProfileSingleView.job().enque(pf);
 		}
 	}
 
