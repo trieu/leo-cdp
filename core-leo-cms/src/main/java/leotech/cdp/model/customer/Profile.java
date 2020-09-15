@@ -163,10 +163,10 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	// --- BEGIN key Personal attributes
 
 	@Expose
-	protected String firstName = "";
+	protected String firstName = "No information";
 
 	@Expose
-	protected String lastName = "";
+	protected String lastName = "No information";
 
 	@Expose
 	protected String primaryUsername = "";
@@ -181,13 +181,13 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	protected String primaryAvatar = "";
 
 	@Expose
-	protected String livingLocation = "";
+	protected String livingLocation = "No information";
 
 	@Expose
 	protected String locationCode = "";
 
 	@Expose
-	protected String mainNationality = "";
+	protected String mainNationality = "No information";
 
 	@Expose
 	protected int gender = -1;
