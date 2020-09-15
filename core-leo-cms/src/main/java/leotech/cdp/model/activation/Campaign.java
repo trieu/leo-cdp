@@ -205,8 +205,6 @@ public class Campaign extends CdpPersistentObject implements Comparable<Campaign
 		this.revenue = revenue;
 	}
 
-	
-
 	public Map<String, ProductItem> getMapSkuToProducts() {
 		return mapSkuToProducts;
 	}
