@@ -1,6 +1,6 @@
 package test.onesignal;
 
-import leotech.system.activation.PushNotificationSender;
+import leotech.system.communication.PushNotificationSender;
 import rfx.core.util.Utils;
 
 public class TestSimplePush {

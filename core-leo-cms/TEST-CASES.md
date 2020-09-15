@@ -7,7 +7,7 @@
 * Registered User,  user submit to receive personalized information,
 	1) send email marketing 
 	2) push Web Push
-	3) SMS !?
+	3) SMS 
 
 
 1) Profile Report

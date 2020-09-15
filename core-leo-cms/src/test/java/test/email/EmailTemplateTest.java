@@ -14,7 +14,7 @@ import io.rocketbase.mail.config.config.TbBoxConfig;
 import io.rocketbase.mail.config.config.TbBoxConfig.TbBoxDark;
 import io.rocketbase.mail.model.HtmlTextEmail;
 import leotech.cdp.model.activation.EmailMessage;
-import leotech.system.activation.EmailSender;
+import leotech.system.communication.EmailSender;
 import rfx.core.util.FileUtils;
 import rfx.core.util.Utils;
 

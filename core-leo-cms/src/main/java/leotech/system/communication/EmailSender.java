@@ -1,4 +1,4 @@
-package leotech.system.activation;
+package leotech.system.communication;
 
 import java.util.Properties;
 
