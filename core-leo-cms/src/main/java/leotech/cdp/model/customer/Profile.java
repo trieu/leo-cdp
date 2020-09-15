@@ -1032,6 +1032,11 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 		return funnelStage;
 	}
 
+	/**
+	 * update current funnel stage of customer
+	 * 
+	 * @param funnelStage
+	 */
 	public void setFunnelStage(String funnelStage) {
 		this.funnelStage = funnelStage;
 	}

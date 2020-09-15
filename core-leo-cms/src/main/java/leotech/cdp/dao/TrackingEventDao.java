@@ -29,7 +29,6 @@ public class TrackingEventDao extends BaseLeoCdpDao {
 	static final String AQL_UPDATE_TRACKING_EVENT_STATE_PROCESSED = AqlTemplate.get("AQL_UPDATE_TRACKING_EVENT_STATE_PROCESSED");
 	static final String AQL_GET_CONVERSION_EVENTS_BY_PROFILE_ID = AqlTemplate.get("AQL_GET_CONVERSION_EVENTS_BY_PROFILE_ID");
 	
-
 	
 	/**
 	 * record any event of profile

@@ -301,8 +301,8 @@ public class ProfileDataService {
 	public static boolean updateProfileSingleDataView(ProfileSingleDataView profile, boolean isAllEventsProcessor) {
 		String profileId = profile.getId();
 		
-		int totalLeadScore = 0;//profile.getTotalLeadScore();
-		int satisfyScore = 0;//profile.getTotalCSAT();
+		int totalLeadScore = 0;
+		int satisfyScore = 0;
 		int clvScore = 0;
 		int cacScore = 0;
 		
@@ -311,6 +311,11 @@ public class ProfileDataService {
 			profile.resetEventStatistics();
 			profile.resetBehavioralEvent();
 			profile.resetFunnelStageTimeline();
+		} else {
+			totalLeadScore = profile.getTotalLeadScore();
+			satisfyScore = profile.getTotalCSAT();
+			clvScore = profile.getTotalCLV();
+			cacScore = profile.getTotalCAC();
 		}
 	
 		
@@ -395,7 +400,6 @@ public class ProfileDataService {
 		//TODO update funnel
 		DataFlowStage customerFunnelStage = highestScoreMetric.getCustomerFunnelStage();
 		profile.setFunnelStage(customerFunnelStage.getId());
-		//profile.setFunnelMetrics(funnelMetrics);
 		
 		boolean ok = ProfileDaoUtil.update(profile) != null;
 		return ok;
