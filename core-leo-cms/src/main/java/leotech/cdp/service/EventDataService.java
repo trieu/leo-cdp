@@ -189,6 +189,12 @@ public class EventDataService {
 		ProfileDataService.updateProfileFromEvent(refProfileId, srcObserverId, srcTouchpointId, touchpointRefDomain, sourceIP, userDeviceId, eventName);
 		return 241;
 	}
+	
+	public static List<EventSingleDataView> getUnprocessedEventsOfProfile(String profileId, int startIndex,int numberResults) {
+		// Unprocessed Event Data for single-view profile analytics
+		List<EventSingleDataView> eventActivities = TrackingEventDao.getUnprocessedEventsByProfileId(profileId,new DataFilter(startIndex, numberResults));
+		return eventActivities;
+	}
 
 	public static List<EventSingleDataView> getEventActivityFlowOfProfile(String profileId, int startIndex,int numberResults) {
 		// Engagement Event Activities

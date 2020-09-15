@@ -12,10 +12,14 @@ import com.google.gson.Gson;
 
 import io.vertx.core.json.JsonObject;
 import leotech.cdp.dao.ProfileDaoUtil;
+import leotech.cdp.dao.TrackingEventDao;
 import leotech.cdp.dao.singleview.EventSingleDataView;
 import leotech.cdp.dao.singleview.ProfileSingleDataView;
 import leotech.cdp.model.customer.Profile;
 import leotech.cdp.model.customer.ProfileType;
+import leotech.cdp.model.journey.BehavioralEventMetric;
+import leotech.cdp.model.journey.DataFlowStage;
+import leotech.cdp.model.journey.EventMetaData;
 import leotech.cdp.query.ProfileQuery;
 import leotech.system.model.DataFilter;
 import leotech.system.model.JsonDataTablePayload;
@@ -292,6 +296,109 @@ public class ProfileDataService {
 			System.out.println(" [#Activation Trigger#] getLastTrackingEventForRetargeting Profile is not found for visitorId " + visitorId );
 		}
 		return null;
+	}
+	
+	public static boolean updateProfileSingleDataView(ProfileSingleDataView profile, boolean isAllEventsProcessor) {
+		String profileId = profile.getId();
+		
+		int totalLeadScore = 0;//profile.getTotalLeadScore();
+		int satisfyScore = 0;//profile.getTotalCSAT();
+		int clvScore = 0;
+		int cacScore = 0;
+		
+		if(isAllEventsProcessor) {
+			// now ignore unprocessed event, reset to zero to recompute
+			profile.resetEventStatistics();
+			profile.resetBehavioralEvent();
+			profile.resetFunnelStageTimeline();
+		}
+	
+		
+		System.out.println("updateProfileSingleDataView " + profileId);
+		
+		// init to get first 100 unprocessed events of profile
+		int startIndex = 0;
+		int numberResult = 100;
+		
+		List<EventSingleDataView> events;
+		if(isAllEventsProcessor) {
+			events = EventDataService.getEventActivityFlowOfProfile(profileId , startIndex, numberResult);
+		} else {
+			events = EventDataService.getUnprocessedEventsOfProfile(profileId , startIndex, numberResult);
+		}
+		
+		BehavioralEventMetric highestScoreMetric = null;
+		
+		while ( ! events.isEmpty() ) {
+			for (EventSingleDataView event : events) {
+				Date recoredDate = event.getCreatedAt();
+				String eventName = event.getMetricName();
+				
+				//get metadata of event
+				BehavioralEventMetric metric = FunnelDataService.getBehavioralEventMetricByName(eventName);
+				
+				// only event in defined funnel is processed
+				if(metric != null) {
+					int score = metric.getScore();
+					
+					if(metric.getScoreModel() == EventMetaData.LEAD_SCORING_METRIC) {
+						totalLeadScore += score;
+					}
+					else if(metric.getScoreModel() == EventMetaData.SATISFACTION_SCORING_METRIC) {
+						satisfyScore += score;
+					}
+					else if(metric.getScoreModel() == EventMetaData.LIFETIME_VALUE_SCORING_METRIC) {
+						clvScore += score;
+					}
+					else if(metric.getScoreModel() == EventMetaData.ACQUISITION_SCORING_METRIC) {
+						cacScore += score;
+					}
+					
+					if(highestScoreMetric == null) {
+						highestScoreMetric = metric;
+					} else {
+						if(score > highestScoreMetric.getScore()) {
+							highestScoreMetric = metric;
+						}
+					}
+					
+					// set only valid event name from journey schema
+					profile.setBehavioralEvent(eventName);
+					
+					DataFlowStage funnelStage = metric.getCustomerFunnelStage();
+					profile.updateFunnelStageTimeline(funnelStage.getName(), recoredDate);
+				}
+				
+				TrackingEventDao.updateProcessedState(event);
+				
+				// what we have, track all 
+				profile.updateEventCount(eventName);
+			}
+			
+			//loop to the end to reach all events of profile in database
+			startIndex = startIndex + numberResult;
+			
+			//go to next page of events
+			if(isAllEventsProcessor) {
+				events = EventDataService.getEventActivityFlowOfProfile(profileId , startIndex, numberResult);
+			} else {
+				events = EventDataService.getUnprocessedEventsOfProfile(profileId , startIndex, numberResult);
+			}
+		}
+		
+		//TODO update 8 scoring model here, extend with Jupyter Notebook and Rules Engine 
+		profile.setTotalLeadScore(totalLeadScore);
+		profile.setTotalCSAT(satisfyScore);
+		profile.setTotalCLV(clvScore);
+		profile.setTotalCAC(cacScore);
+		
+		//TODO update funnel
+		DataFlowStage customerFunnelStage = highestScoreMetric.getCustomerFunnelStage();
+		profile.setFunnelStage(customerFunnelStage.getId());
+		//profile.setFunnelMetrics(funnelMetrics);
+		
+		boolean ok = ProfileDaoUtil.update(profile) != null;
+		return ok;
 	}
 
 }

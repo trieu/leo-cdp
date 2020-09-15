@@ -107,7 +107,6 @@ public class UserTrackingUtil {
 					}
 				}
 			}
-		}, 2000, 2000);
-
+		}, 2000, 2000);	
 	}
 }

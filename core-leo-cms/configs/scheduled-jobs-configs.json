@@ -1,19 +1,13 @@
 [    
     {
-        "classpath" : "leotech.cdp.scheduler.job.IdentityResolutionJob"
+        "classpath" : "leotech.cdp.job.scheduled.IdentityResolutionJob"
         ,"delay" : 20
         ,"period" : 300
     }
     ,
     {
-        "classpath" : "leotech.cdp.scheduler.job.SegmentDataCleaningJob"
+        "classpath" : "leotech.cdp.job.scheduled.SegmentDataCleaningJob"
         ,"delay" : 30
         ,"period" : 720
-    }
-    ,
-    {
-        "classpath" : "leotech.cdp.scheduler.job.ProfileSingleViewDataJob"
-        ,"delay" : 5
-        ,"period" : 300
     }
 ]
