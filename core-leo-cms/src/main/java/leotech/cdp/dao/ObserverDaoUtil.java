@@ -13,7 +13,7 @@ import leotech.system.config.AqlTemplate;
 import leotech.system.util.database.ArangoDbQuery;
 import leotech.system.util.database.ArangoDbUtil;
 
-public class ObserverDaoUtil extends BaseLeoCdpDao {
+public class ObserverDaoUtil extends AbstractCdpDatabaseUtil {
 
 	static final String AQL_GET_OBSERVER_BY_ID = AqlTemplate.get("AQL_GET_OBSERVER_BY_ID");
 	static final String AQL_GET_OBSERVERS = AqlTemplate.get("AQL_GET_OBSERVERS");

@@ -2,6 +2,7 @@ package leotech.cdp.service;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -21,6 +22,7 @@ import leotech.system.model.DeviceInfo;
 import leotech.system.model.GeoLocation;
 import leotech.system.util.GeoLocationUtil;
 import leotech.system.util.RequestInfoUtil;
+import leotech.system.util.UrlUtil;
 import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.ShardedJedisPool;
 import redis.clients.jedis.exceptions.JedisException;
@@ -87,9 +89,12 @@ public class ContextSessionService {
 
 		return ctxSession;
 	}
+	
+	public static ContextSession synchData(HttpServerRequest req, MultiMap params, DeviceInfo device) {
+		return synchData(null, req, params, device);
+	}
 
-	public static ContextSession synchData(final String clientSessionKey, HttpServerRequest req, MultiMap params,
-			DeviceInfo device) {
+	public static ContextSession synchData(final String clientSessionKey, HttpServerRequest req, MultiMap params, DeviceInfo device) {
 		RedisCommand<ContextSession> cmd = new RedisCommand<ContextSession>(jedisPool) {
 			@Override
 			protected ContextSession build() throws JedisException {
@@ -157,7 +162,7 @@ public class ContextSessionService {
 		
 		String deviceId = DeviceDataService.getDeviceId(params, device);
 		
-		String environment = StringUtil.safeString(params.get(TrackingApiParam.DATA_ENVIRONMENT),TrackingApiParam.DEV_ENV);
+		String environment = StringUtil.safeString(params.get(TrackingApiParam.DATA_ENVIRONMENT),TrackingApiParam.PRO_ENV);
 		
 		String usedDeviceId = ctxSession.getUserDeviceId();
 		String sourceIP = RequestInfoUtil.getRemoteIP(req);
@@ -187,8 +192,8 @@ public class ContextSessionService {
 		String srcObserverId = formData.getOrDefault(TrackingApiParam.OBSERVER_ID, "");
 		String srcTouchpointName = formData.getOrDefault(TrackingApiParam.TOUCHPOINT_NAME, "");
 		String srcTouchpointUrl = formData.getOrDefault(TrackingApiParam.TOUCHPOINT_URL, "");
-		String refTouchpointUrl = formData.getOrDefault(TrackingApiParam.TOUCHPOINT_REFERRER_URL, "");
-		String touchpointRefDomain = formData.getOrDefault(TrackingApiParam.TOUCHPOINT_REFERRER_DOMAIN, "");
+		String refTouchpointUrl = StringUtil.safeString(req.getHeader("Referer"));
+		String touchpointRefDomain = UrlUtil.getHostName(refTouchpointUrl);
 		
 //		System.out.println(formData);
 //		System.out.println(extDataStr);
@@ -206,8 +211,8 @@ public class ContextSessionService {
 			}
 			
 			String eventName = "social-login";
-			EventDataService.recordActionData(new Date(), ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
-					srcTouchpointName,srcTouchpointUrl, refTouchpointUrl,  touchpointRefDomain, eventName , 1, "", null);
+			EventDataService.recordEvent(new Date(), ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
+					srcTouchpointName,srcTouchpointUrl, refTouchpointUrl,  touchpointRefDomain, eventName);
 			
 		}
 		//  confirmed notification
@@ -222,12 +227,18 @@ public class ContextSessionService {
 					genderStr, age,  observerId, sessionTouchpointId, sourceIP, usedDeviceId, contentKeywords);
 			String eventName = "submit-contact";
 			
-			EventDataService.recordActionData(new Date(), ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
-					srcTouchpointName,srcTouchpointUrl, refTouchpointUrl,  touchpointRefDomain, eventName , 1, "", null);
+			EventDataService.recordEvent(new Date(), ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
+					srcTouchpointName,srcTouchpointUrl, refTouchpointUrl,  touchpointRefDomain, eventName);
 		}
-		
 		
 		return 102;
 	}
 	
+	public static ContextSession getByProfileId(String profileId) {
+		List<ContextSession> sessions = ContextSessionDaoUtil.getSessionsByProfileId(profileId);
+		if(sessions.size() > 0) {
+			return sessions.get(0);
+		}
+		return null;
+	}
 }

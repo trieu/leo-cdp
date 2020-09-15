@@ -398,8 +398,11 @@ public class ProfileDataService {
 		profile.setTotalCAC(cacScore);
 		
 		//TODO update funnel
-		DataFlowStage customerFunnelStage = highestScoreMetric.getCustomerFunnelStage();
-		profile.setFunnelStage(customerFunnelStage.getId());
+		if(highestScoreMetric != null) {
+			DataFlowStage customerFunnelStage = highestScoreMetric.getCustomerFunnelStage();
+			profile.setFunnelStage(customerFunnelStage.getId());
+		}
+		
 		
 		boolean ok = ProfileDaoUtil.update(profile) != null;
 		System.out.println(ok + " updateProfileSingleDataView " + profileId + " updated totalLeadScore " + totalLeadScore);

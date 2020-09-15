@@ -4,7 +4,7 @@ import com.arangodb.ArangoDatabase;
 
 import leotech.system.util.database.ArangoDbUtil;
 
-public class BaseLeoCdpDao {
+public abstract class AbstractCdpDatabaseUtil {
 
 	private static final String LEO_CDP_DB_CONFIGS = "leoCdpDbConfigs";
 

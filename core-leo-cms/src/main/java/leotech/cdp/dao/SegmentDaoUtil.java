@@ -23,7 +23,7 @@ import leotech.system.util.database.ArangoDbQuery;
  * @since 2020
  *
  */
-public class SegmentDaoUtil extends BaseLeoCdpDao {
+public class SegmentDaoUtil extends AbstractCdpDatabaseUtil {
 	
 	static final String AQL_COUNT_TOTAL_ACTIVE_SEGMENTS = "RETURN LENGTH( FOR s in "+Segment.COLLECTION_NAME+" FILTER  s.status >= 0 RETURN s._key)";
 	static final String AQL_GET_SEGMENTS_BY_PAGINATION = AqlTemplate.get("AQL_GET_SEGMENTS_BY_PAGINATION");

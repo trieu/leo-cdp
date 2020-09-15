@@ -5,7 +5,7 @@ import java.util.UUID;
 import com.arangodb.ArangoDatabase;
 import com.devskiller.friendly_id.FriendlyId;
 
-import leotech.cdp.dao.BaseLeoCdpDao;
+import leotech.cdp.dao.AbstractCdpDatabaseUtil;
 import leotech.system.util.database.PersistentArangoObject;
 
 /**
@@ -23,7 +23,7 @@ public abstract class CdpPersistentObject implements PersistentArangoObject {
 	}
 	
 	public static final ArangoDatabase getDatabaseInstance() {
-		return BaseLeoCdpDao.getCdpDbInstance();
+		return AbstractCdpDatabaseUtil.getCdpDbInstance();
 	}
 	
 	public static final String id(String keyHint) {

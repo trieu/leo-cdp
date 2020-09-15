@@ -15,7 +15,7 @@ import leotech.system.model.JsonDataTablePayload;
 import leotech.system.util.database.ArangoDbQuery;
 import leotech.system.util.database.ArangoDbUtil;
 
-public class TouchpointDaoUtil extends BaseLeoCdpDao {
+public class TouchpointDaoUtil extends AbstractCdpDatabaseUtil {
 
 	static final String AQL_GET_TOUCHPOINT_BY_ID = AqlTemplate.get("AQL_GET_TOUCHPOINT_BY_ID");
 	static final String AQL_GET_TOUCHPOINT_BY_URL = AqlTemplate.get("AQL_GET_TOUCHPOINT_BY_URL");

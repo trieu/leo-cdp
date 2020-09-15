@@ -9,7 +9,7 @@ import leotech.cdp.model.journey.MediaChannel;
 import leotech.cdp.model.journey.MediaChannelType;
 import leotech.cdp.model.journey.MediaJourneyMap;
 
-public class MediaJourneyMapDao {
+public class MediaJourneyMapDao extends AbstractCdpDatabaseUtil {
 
 	public static MediaJourneyMap getDefaultMap() {
 		

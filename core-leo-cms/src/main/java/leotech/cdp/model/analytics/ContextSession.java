@@ -115,6 +115,10 @@ public class ContextSession extends CdpPersistentObject {
 		init(observerId, dateTime, dateTimeKey, locationCode, userDeviceId, ip, refMediaHost, appId, refTouchpointId,
 				srcTouchpointId, profileId, profileType, visitorId,  0, environment);
 	}
+	
+	public ContextSession() {
+		
+	}
 
 	private void init(String observerId, DateTime dateTime, String dateTimeKey, String locationCode,
 			String userDeviceId, String ip, String refMediaHost, String appId, String refTouchpointId,

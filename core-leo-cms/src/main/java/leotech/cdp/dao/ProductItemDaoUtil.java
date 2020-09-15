@@ -17,7 +17,7 @@ import leotech.system.model.JsonDataTablePayload;
 import leotech.system.util.database.ArangoDbQuery;
 import leotech.system.util.database.ArangoDbUtil;
 
-public class ProductItemDaoUtil extends BaseLeoCdpDao {
+public class ProductItemDaoUtil extends AbstractCdpDatabaseUtil {
 
 	static final String AQL_GET_PRODUCT_ITEM_BY_ID = AqlTemplate.get("AQL_GET_PRODUCT_ITEM_BY_ID");
 	static final String AQL_GET_PRODUCT_ITEM_BY_URL = AqlTemplate.get("AQL_GET_PRODUCT_ITEM_BY_FULL_URL");

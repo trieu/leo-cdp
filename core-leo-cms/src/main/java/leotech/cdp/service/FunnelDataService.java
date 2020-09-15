@@ -74,7 +74,22 @@ public class FunnelDataService {
 		eventMetaDataList.put("submit-contact", new BehavioralEventMetric("submit-contact","Submit Contact", 20, EventMetaData.FIRST_PARTY_DATA,
 				"purchase-intent", "customer-lead"));
 		
-		eventMetaDataList.put("add-to-cart", new BehavioralEventMetric("add-to-cart", "Purchase Intent", 30, EventMetaData.FIRST_PARTY_DATA,
+		eventMetaDataList.put("short-link-click", new BehavioralEventMetric("short-link-click","Short Link Click", 21, EventMetaData.FIRST_PARTY_DATA,
+				"purchase-intent", "prospective-customer"));
+		
+		eventMetaDataList.put("web-notification-click", new BehavioralEventMetric("web-notification-click","Web Notification Click", 23, EventMetaData.FIRST_PARTY_DATA,
+				"purchase-intent", "prospective-customer"));
+		
+		eventMetaDataList.put("app-notification-click", new BehavioralEventMetric("app-notification-click","App Notification Click", 24, EventMetaData.FIRST_PARTY_DATA,
+				"purchase-intent", "prospective-customer"));
+		
+		eventMetaDataList.put("email-click", new BehavioralEventMetric("email-click","Email Link Click", 25, EventMetaData.FIRST_PARTY_DATA,
+				"purchase-intent", "prospective-customer"));
+		
+		eventMetaDataList.put("like-product", new BehavioralEventMetric("like-product","Like a product", 30, EventMetaData.FIRST_PARTY_DATA,
+				"purchase-intent", "prospective-customer"));
+		
+		eventMetaDataList.put("add-to-cart", new BehavioralEventMetric("add-to-cart", "Purchase Intent", 40, EventMetaData.FIRST_PARTY_DATA,
 				"purchase-intent", "prospective-customer"));
 		
 		eventMetaDataList.put("buy", new BehavioralEventMetric("buy", "First Purchase", 50, EventMetaData.FIRST_PARTY_DATA,
@@ -91,6 +106,8 @@ public class FunnelDataService {
 		
 		eventMetaDataList.put("feedback-2nd", new BehavioralEventMetric("feedback-2nd","Second-time Feedback", 120, EventMetaData.FIRST_PARTY_DATA,
 				"customer-feedback", "repeat-customer"));
+		
+		
 	}
 	
 	public static List<DataFlowStage> getEventFunnelStages() {
@@ -106,7 +123,10 @@ public class FunnelDataService {
 	}
 	
 	public static BehavioralEventMetric getBehavioralEventMetric(String id) {
-		return eventMetaDataList.getOrDefault(id, UNCLASSIFIED_EVENT);
+		if(id != null) {
+			return eventMetaDataList.getOrDefault(id, UNCLASSIFIED_EVENT);
+		}
+		return UNCLASSIFIED_EVENT;
 	}
 
 	public static Collection<BehavioralEventMetric> getEventRetailMetrics() {

@@ -33,7 +33,7 @@ public class TrackingApi {
 		
 		Date createdAt = new Date();
 
-		return EventDataService.recordViewData(createdAt, ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
+		return EventDataService.recordEvent(createdAt, ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
 				srcTouchpointName, srcTouchpointUrl, refTouchpointUrl, touchpointRefDomain, eventName, eventJsonData);
 	}
 
@@ -53,15 +53,14 @@ public class TrackingApi {
 
 		Map<String, String> eventJsonData = RequestInfoUtil.getHashMapFromRequestParams(params,
 				TrackingApiParam.EVENT_JSON_DATA);
-		int eventCount = 1;
 		
 		Date createdAt = new Date();
 
-		return EventDataService.recordActionData(createdAt, ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
-				srcTouchpointName,srcTouchpointUrl, refTouchpointUrl,  touchpointRefDomain, eventName, eventCount, "", eventJsonData);
+		return EventDataService.recordEvent(createdAt, ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
+				srcTouchpointName,srcTouchpointUrl, refTouchpointUrl,  touchpointRefDomain, eventName, eventJsonData);
 	}
 
-	public static int recordConversionEvent(HttpServerRequest req, MultiMap params, DeviceInfo device,
+	public static int recordConversionEvent(HttpServerRequest req, MultiMap params, DeviceInfo deviceInfo,
 			ContextSession ctxSession, String eventName) {
 		String sourceIP = RequestInfoUtil.getRemoteIP(req);
 
@@ -73,20 +72,21 @@ public class TrackingApi {
 		String refTouchpointUrl = StringUtil.decodeUrlUTF8(params.get(TrackingApiParam.TOUCHPOINT_REFERRER_URL));
 		String touchpointRefDomain = StringUtil.decodeUrlUTF8(params.get(TrackingApiParam.TOUCHPOINT_REFERRER_DOMAIN));
 		
-		String deviceId = DeviceDataService.getDeviceId(params, device);
+		String deviceId = DeviceDataService.getDeviceId(params, deviceInfo);
 		
-		Map<String, String> eventJsonData = RequestInfoUtil.getHashMapFromRequestParams(params,
+		Map<String, String> eventData = RequestInfoUtil.getHashMapFromRequestParams(params,
 				TrackingApiParam.EVENT_JSON_DATA);
 
-		int eventCount = 1;
+	
 		String transactionCode = StringUtil.safeString(params.get(TrackingApiParam.TRANSACTION_CODE));
 		String environment = StringUtil.safeString(params.get(TrackingApiParam.DATA_ENVIRONMENT),
 				TrackingApiParam.DEV_ENV);
 		
 		Date createdAt = new Date();
 
-		return EventDataService.recordConversionData(createdAt,  ctxSession, srcObserverId, environment, srcEventKey, deviceId, sourceIP,
-				device, srcTouchpointName, srcTouchpointUrl, refTouchpointUrl, touchpointRefDomain, eventName, eventCount, transactionCode, "", eventJsonData);
+		String feedbackText = "";
+		return EventDataService.recordEvent(createdAt, ctxSession, srcObserverId, environment, deviceId, sourceIP, deviceInfo, srcTouchpointName, srcTouchpointUrl, 
+				refTouchpointUrl, touchpointRefDomain, eventName, eventData, feedbackText , transactionCode);
 	}
 
 }

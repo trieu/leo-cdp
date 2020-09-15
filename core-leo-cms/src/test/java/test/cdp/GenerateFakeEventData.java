@@ -1,6 +1,5 @@
 package test.cdp;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -100,9 +99,8 @@ public class GenerateFakeEventData {
 		ContextSessionDaoUtil.create(ctxSession);
 		
 		
-		EventDataService.recordViewData(createdAt, ctxSession, observerId, "pro", userDeviceId, sourceIP,
-				deviceInfo, "Book Video Review", srcTouchpointUrl, refTouchpointUrl, touchpointRefDomain, eventName,
-				null);
+		EventDataService.recordEvent(createdAt, ctxSession, observerId, "pro", userDeviceId, sourceIP,
+				deviceInfo, "Book Video Review", srcTouchpointUrl, refTouchpointUrl, touchpointRefDomain, eventName);
 		String refTouchpointUrl2 = srcTouchpointUrl;
 		
 		int randomPageviews = RandomUtil.getRandomInteger(20, 3);
@@ -114,9 +112,8 @@ public class GenerateFakeEventData {
 			String srcTouchpointUrl2 = getRamdomlyTouchpointUrl();
 			
 			// pageview event
-			EventDataService.recordViewData(trackedTime, ctxSession, observerId, "pro", userDeviceId, sourceIP,
-					deviceInfo, "Book Video Review", srcTouchpointUrl2, refTouchpointUrl2, touchpointRefDomain, eventName,
-					null);
+			EventDataService.recordEvent(trackedTime, ctxSession, observerId, "pro", userDeviceId, sourceIP,
+					deviceInfo, "Book Video Review", srcTouchpointUrl2, refTouchpointUrl2, touchpointRefDomain, eventName);
 			refTouchpointUrl2 = srcTouchpointUrl2;
 		}
 	}

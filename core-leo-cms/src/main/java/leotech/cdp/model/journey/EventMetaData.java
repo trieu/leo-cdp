@@ -100,7 +100,7 @@ public abstract class EventMetaData extends CdpPersistentObject {
 	private void initBaseData(String eventName) {
 		if(eventName.length() <= MAX_LEN_EVENT_NAME) {
 			this.eventName = eventName.toLowerCase().replaceAll("[^a-z0-9]", "-");
-			this.id = new Slugify().slugify(eventName);
+			this.id = new Slugify().slugify(this.eventName);
 			
 			this.createdAt = new Date();
 			this.dataType = FIRST_PARTY_DATA;

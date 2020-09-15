@@ -15,12 +15,10 @@ public class CampaignDataService {
 
 	static Map<String, ProductItem> getMapSkuToProducts() {
 		List<ProductItem> items = ProductItemDaoUtil.list(0, 20);
-		
 		Map<String, ProductItem> map = new HashMap<String, ProductItem>(items.size());
 		for (ProductItem productItem : items) {
 			map.put(productItem.getSku(),productItem);
 		}
-		
 		return map;
 	}
 
@@ -31,11 +29,9 @@ public class CampaignDataService {
 		return campaign;
 	}
 	
-	public static DisplayAdData getDisplayAdData(String placementId, String visitorId, String srcTouchpointId) {
-		
+	public static DisplayAdData getDisplayAdData(String touchpointId, String visitorId, String srcTouchpointId) {
 		// get running remarketing campaign
-		Campaign campaign = queryActiveCampaign(placementId, visitorId, srcTouchpointId);
-		
+		Campaign campaign = queryActiveCampaign(touchpointId, visitorId, srcTouchpointId);
 		
 		String productSku = "1000";
 		// get last action
@@ -62,7 +58,7 @@ public class CampaignDataService {
 			clickThrough = item.getFullUrl() + "#leoadscp=" + campaignId;
 		}
 		
-		DisplayAdData ad = new DisplayAdData(placementId, mediaFullUrl , clickThrough , adLabel , campaignId , adType , width, height);
+		DisplayAdData ad = new DisplayAdData(touchpointId, mediaFullUrl , clickThrough , adLabel , campaignId , adType , width, height);
 		//TODO generate becon here
 		String beacon = "_demobeacon_";
 		

@@ -16,7 +16,7 @@ import leotech.system.util.database.ArangoDbQuery;
 import leotech.system.util.database.ArangoDbQuery.CallbackQuery;
 import rfx.core.util.LogUtil;
 
-public class TrackingEventDao extends BaseLeoCdpDao {
+public class TrackingEventDao extends AbstractCdpDatabaseUtil {
 
 	private static final String CLASS_NAME = TrackingEventDao.class.getSimpleName();
 	
@@ -41,11 +41,12 @@ public class TrackingEventDao extends BaseLeoCdpDao {
 			ArangoCollection col = e.getDbCollection();
 			if (col != null) {
 				col.insertDocument(e);
+				System.out.println("record OK " + e.getMetricName() + " " + e.getId());
 				return true;
 			}
 		} else {
 			String json = new Gson().toJson(e);
-			LogUtil.e(CLASS_NAME, "invalid TrackingEvent \n" + json);
+			System.err.println("invalid TrackingEvent \n" + json);
 
 		}
 		return false;

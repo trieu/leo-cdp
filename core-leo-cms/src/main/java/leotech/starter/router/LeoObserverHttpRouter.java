@@ -13,6 +13,7 @@ import leotech.cdp.model.analytics.ContextSession;
 import leotech.cdp.router.api.TrackingApi;
 import leotech.cdp.router.api.TrackingApiParam;
 import leotech.cdp.service.ContextSessionService;
+import leotech.cdp.service.TargetMediaUnitService;
 import leotech.system.common.BaseApiHandler;
 import leotech.system.common.BaseHttpRouter;
 import leotech.system.common.PublicFileHttpRouter;
@@ -32,7 +33,7 @@ public class LeoObserverHttpRouter extends BaseHttpRouter {
 	public static final String FAILED = "failed";
 	public static final String OK = "ok";
 
-	public static final String PREFIX_CLICK_REDIRECT = "/clr";
+	public static final String PREFIX_REDIRECT_TARGET_MEDIA_UNIT = "/rtmu/";
 
 	public static final String PREFIX_CONTEXT_SESSION_PROFILE_INIT = "/cxs-pf-init";
 	public static final String PREFIX_UPDATE_PROFILE_INFO = "/cxs-pf-update";
@@ -175,17 +176,16 @@ public class LeoObserverHttpRouter extends BaseHttpRouter {
 			}
 
 			// click redirect for O2O synchronization
-			// E.g: https://domain/clr/5wbwf6yUxVBcr48AMbz9cb
-			else if (uri.startsWith(PREFIX_CLICK_REDIRECT)) {
-				String[] segments = uri.split("/");
-				String beacon = segments[segments.length - 1];
+			// E.g: https://demotrack.leocdp.net/rtmu/294HGH6ZYaYyOBqdTnjhG3
+			else if (uri.startsWith(PREFIX_REDIRECT_TARGET_MEDIA_UNIT)) {
+				String[] toks = uri.split("/");
+				String id = toks[toks.length - 1];
 
-				if (!beacon.isEmpty()) {
-					// TODO decode beacon and redirect to url, write log to DW
-					String url = "";
-					// AdLogHandler.clickRedirectTracking(req, params, resp,
-					// platformId, cid);
-					if (url.length() > 5) {
+				if (!id.isEmpty()) {
+					
+					String url = TargetMediaUnitService.recordEventAndGetLandingPageUrl(id, req, params, device);
+					// AdLogHandler.clickRedirectTracking(req, params, resp, platformId, cid);
+					if (url.length() > 10) {
 						resp.headers().add("Location", url);
 						resp.setStatusCode(301).end();
 					} else {
@@ -193,7 +193,7 @@ public class LeoObserverHttpRouter extends BaseHttpRouter {
 					}
 				} else {
 					resp.setStatusCode(404);
-					resp.end("beacon is INVALID");
+					resp.end("TargetMediaUnit ID is INVALID");
 				}
 				return true;
 			}

@@ -309,11 +309,13 @@ AQL_GET_CONTEXT_SESSION_BY_KEY =>
 
 AQL_GET_CONTEXT_SESSIONS_BY_VISITOR_ID =>
 	FOR e in cdp_contextsession FILTER e.visitorId == @visitorId  
+	SORT e.createAt DESC
 	RETURN e
 ;
 
 AQL_GET_CONTEXT_SESSIONS_BY_PROFILE_ID =>
 	FOR e in cdp_contextsession FILTER e.profileId == @profileId  
+	SORT e.createAt DESC
 	RETURN e
 ;
 
@@ -425,6 +427,18 @@ AQL_GET_PRODUCT_ITEMS_BY_FILTER =>
 
 AQL_GET_DEVICE_BY_ID =>
 	FOR e in cdp_device FILTER e._key == @id
+	RETURN e
+;
+
+########### AQL LEO CDP - TargetMediaUnit  ########################################################################################################;
+
+AQL_GET_TARGET_MEDIA_UNIT_BY_ID =>
+	FOR e in cdp_targetmediaunit FILTER e._key == @id
+	RETURN e
+;
+
+AQL_GET_TARGET_MEDIA_UNIT_BY_PROFILE_ID =>
+	FOR e in cdp_targetmediaunit FILTER e.refProfileId == @refProfileId
 	RETURN e
 ;
 

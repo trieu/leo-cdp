@@ -31,44 +31,48 @@ public class TrackingEvent extends CdpPersistentObject {
 	public static final int STATE_ARCHIVED = -1;
 
 	public static final String COLLECTION_NAME = getCollectionName(TrackingEvent.class);
-	static ArangoCollection instance;
+	static ArangoCollection dbCollection;
 
 	@Override
 	public ArangoCollection getDbCollection() {
-		if (instance == null) {
+		if (dbCollection == null) {
 			ArangoDatabase arangoDatabase = getDatabaseInstance();
 
-			instance = arangoDatabase.collection(COLLECTION_NAME);
+			dbCollection = arangoDatabase.collection(COLLECTION_NAME);
 
 			// ensure indexing key fields for fast lookup
-			instance.ensurePersistentIndex(Arrays.asList("refChannelId", "timestamp"),
+			dbCollection.ensurePersistentIndex(Arrays.asList("refChannelId", "timestamp"),
 					new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("refJourneyId", "timestamp"),
+			dbCollection.ensurePersistentIndex(Arrays.asList("refJourneyId", "timestamp"),
 					new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("refProfileId", "timestamp"),
+			
+			dbCollection.ensurePersistentIndex(Arrays.asList("refProfileId", "timestamp"),
 					new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("sessionKey", "timestamp"),
+			dbCollection.ensurePersistentIndex(Arrays.asList("refProfileId"),
 					new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("observerId", "timestamp"),
+			
+			dbCollection.ensurePersistentIndex(Arrays.asList("sessionKey", "timestamp"),
 					new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("collectionId", "timestamp"),
+			dbCollection.ensurePersistentIndex(Arrays.asList("observerId", "timestamp"),
 					new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("srcTouchpointId", "timestamp"),
+			dbCollection.ensurePersistentIndex(Arrays.asList("collectionId", "timestamp"),
 					new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("refTouchpointId", "timestamp"),
+			dbCollection.ensurePersistentIndex(Arrays.asList("srcTouchpointId", "timestamp"),
 					new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("refPostId", "timestamp"),
+			dbCollection.ensurePersistentIndex(Arrays.asList("refTouchpointId", "timestamp"),
 					new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("refMessageId", "timestamp"),
+			dbCollection.ensurePersistentIndex(Arrays.asList("refPostId", "timestamp"),
 					new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("refItemId", "timestamp"),
+			dbCollection.ensurePersistentIndex(Arrays.asList("refMessageId", "timestamp"),
 					new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("refServiceId", "timestamp"),
+			dbCollection.ensurePersistentIndex(Arrays.asList("refItemId", "timestamp"),
 					new PersistentIndexOptions().unique(false));
-			instance.ensurePersistentIndex(Arrays.asList("refCampaignId", "timestamp"),
+			dbCollection.ensurePersistentIndex(Arrays.asList("refServiceId", "timestamp"),
+					new PersistentIndexOptions().unique(false));
+			dbCollection.ensurePersistentIndex(Arrays.asList("refCampaignId", "timestamp"),
 					new PersistentIndexOptions().unique(false));
 		}
-		return instance;
+		return dbCollection;
 	}
 
 	@DocumentField(Type.KEY)

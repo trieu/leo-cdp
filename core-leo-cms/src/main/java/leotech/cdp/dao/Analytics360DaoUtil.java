@@ -18,7 +18,7 @@ import leotech.system.config.AqlTemplate;
 import leotech.system.util.database.ArangoDbQuery;
 import leotech.system.util.database.ArangoDbQuery.CallbackQuery;
 
-public class Analytics360Dao extends BaseLeoCdpDao {
+public class Analytics360DaoUtil extends AbstractCdpDatabaseUtil {
 	
 	
 	

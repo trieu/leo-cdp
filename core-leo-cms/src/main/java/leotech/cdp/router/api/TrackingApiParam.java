@@ -34,6 +34,7 @@ public final class TrackingApiParam {
     public static final String TRANSACTION_CODE = "tsc";
     
     public static final String DEV_ENV = "dev";
+    public static final String PRO_ENV = "pro";
     public static final String DATA_ENVIRONMENT = "envi";
 
 }

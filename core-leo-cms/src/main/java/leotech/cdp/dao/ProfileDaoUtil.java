@@ -19,7 +19,7 @@ import leotech.system.model.JsonDataTablePayload;
 import leotech.system.util.database.ArangoDbQuery;
 import leotech.system.util.database.ArangoDbQuery.CallbackQuery;
 
-public class ProfileDaoUtil extends BaseLeoCdpDao {
+public class ProfileDaoUtil extends AbstractCdpDatabaseUtil {
 
 	
 	static final String AQL_COUNT_TOTAL_ACTIVE_PROFILES = "RETURN LENGTH( FOR p in "+Profile.COLLECTION_NAME+" FILTER  p.status > 0 RETURN p._key)";

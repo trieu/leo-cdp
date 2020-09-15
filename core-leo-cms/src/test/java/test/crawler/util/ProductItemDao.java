@@ -15,11 +15,11 @@ import org.assertj.core.util.Arrays;
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoCursor;
 
-import leotech.cdp.dao.BaseLeoCdpDao;
+import leotech.cdp.dao.AbstractCdpDatabaseUtil;
 import leotech.cdp.model.business.ProductItem;
 import leotech.system.util.database.ArangoDbUtil;
 
-public class ProductItemDao extends BaseLeoCdpDao {
+public class ProductItemDao extends AbstractCdpDatabaseUtil {
 	
 	public static boolean importProductItems(List<String> filePaths) {
 		ObjectInputStream inOOS = null;

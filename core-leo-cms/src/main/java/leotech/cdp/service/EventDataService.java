@@ -40,10 +40,31 @@ public class EventDataService {
 	public static final String WEB_PUSH_MARKETING = "web-push-marketing";
 	public static final String APP_PUSH_MARKETING = "app-push-marketing";
 
-	//
-	public static int recordViewData(Date createdAt, ContextSession ctxSession, String srcObserverId, String environment,
+	public static int recordEvent(Date createdAt, ContextSession ctxSession, String srcObserverId, String environment,
+			String deviceId, String sourceIP, DeviceInfo deviceInfo, String srcTouchpointName, String srcTouchpointUrl,
+			String refTouchpointUrl, String touchpointRefDomain, String eventName, Map<String, String> eventData, String feedbackText) {
+		return recordEvent(createdAt, ctxSession, srcObserverId, environment, deviceId, sourceIP, deviceInfo, srcTouchpointName, 
+				srcTouchpointUrl, refTouchpointUrl, touchpointRefDomain, eventName, eventData, feedbackText, "");
+	}
+	
+	public static int recordEvent(Date createdAt, ContextSession ctxSession, String srcObserverId, String environment,
 			String deviceId, String sourceIP, DeviceInfo deviceInfo, String srcTouchpointName, String srcTouchpointUrl,
 			String refTouchpointUrl, String touchpointRefDomain, String eventName, Map<String, String> eventData) {
+		return recordEvent(createdAt, ctxSession, srcObserverId, environment, deviceId, sourceIP, deviceInfo, srcTouchpointName, 
+				srcTouchpointUrl, refTouchpointUrl, touchpointRefDomain, eventName, eventData, "", "");
+	}
+	
+	public static int recordEvent(Date createdAt, ContextSession ctxSession, String srcObserverId, String environment,
+			String deviceId, String sourceIP, DeviceInfo deviceInfo, String srcTouchpointName, String srcTouchpointUrl,
+			String refTouchpointUrl, String touchpointRefDomain, String eventName) {
+		return recordEvent(createdAt, ctxSession, srcObserverId, environment, deviceId, sourceIP, deviceInfo, srcTouchpointName, 
+				srcTouchpointUrl, refTouchpointUrl, touchpointRefDomain, eventName, null, "", "");
+	}
+	
+	//
+	public static int recordEvent(Date createdAt, ContextSession ctxSession, String srcObserverId, String environment,
+			String deviceId, String sourceIP, DeviceInfo deviceInfo, String srcTouchpointName, String srcTouchpointUrl,
+			String refTouchpointUrl, String touchpointRefDomain, String eventName, Map<String, String> eventData, String feedbackText, String transactionCode ) {
 		String deviceName = deviceInfo.deviceName;
 		String deviceOS = deviceInfo.deviceOs;
 
@@ -72,12 +93,21 @@ public class EventDataService {
 				refProfileType, srcTouchpointId, refTouchpointId, browserName, deviceId, deviceOS, deviceName,
 				deviceType, sourceIP, createdAt);
 		e.setEnvironment(environment);
+		e.setFeedbackText(feedbackText);
 		e.setEventData(eventData);
 		
 		// event trigger for job scheduler
 		if(eventName.equals(PRODUCT_VIEW)) {
 			e.setProcessors(Arrays.asList(ADS_RETARGETING));
 		} 
+		else if(eventName.equals(ADD_TO_CART)) {
+			 e.setProcessors(Arrays.asList(WEB_PUSH_MARKETING, ADS_RETARGETING, EMAIL_RETARGETING, APP_PUSH_MARKETING, SMS_RETARGETING));
+		} 
+		else if(eventName.equals(BUY)) {
+			e.setConversion(true);
+			e.setTransactionCode(transactionCode);
+			e.setProcessors(Arrays.asList(EMAIL_MARKETING, WEB_PUSH_MARKETING, APP_PUSH_MARKETING));
+		}
 
 		TrackingEventDao.record(e);
 
@@ -88,106 +118,6 @@ public class EventDataService {
 		
 		ProfileDataService.updateProfileFromEvent(refProfileId, srcObserverId, srcTouchpointId, touchpointRefDomain, sourceIP, userDeviceId, eventName);
 		return 201;
-	}
-
-	public static int recordActionData(Date createdAt, ContextSession ctxSession, String srcObserverId, String environment,
-			String deviceId, String sourceIP, DeviceInfo dv, String srcTouchpointName, String srcTouchpointUrl,
-			String refTouchpointUrl, String touchpointRefDomain, String eventName, long eventCount,
-			String feedbackText, Map<String, String> eventData) {
-
-		String deviceName = dv.deviceName;
-		String deviceOS = dv.deviceOs;
-
-		String browserName = dv.browserName;
-		String deviceType = dv.deviceType;
-
-		int refProfileType = ctxSession.getProfileType();
-		String refProfileId = ctxSession.getProfileId();
-		String sessionKey = ctxSession.getSessionKey();
-
-		// owned media has data from itself
-		boolean isFromOwnedMedia = ctxSession.getMediaHost().equals(touchpointRefDomain);
-
-		// touch-point info process
-		Touchpoint refTouchPoint = TouchpointDataService.getOrCreateWebTouchpoint(touchpointRefDomain,
-				MediaChannelType.WEB_URL, refTouchpointUrl, isFromOwnedMedia);
-		Touchpoint srcTouchpoint = TouchpointDataService.getOrCreateWebTouchpoint(srcTouchpointName,
-				MediaChannelType.WEB_URL, srcTouchpointUrl);
-		String refTouchpointId = refTouchPoint.getId();
-		String srcTouchpointId = srcTouchpoint.getId();
-
-		TrackingEvent e = new TrackingEvent(srcObserverId, sessionKey, eventName, eventCount, refProfileId,
-				refProfileType, srcTouchpointId, refTouchpointId, browserName, deviceId, deviceOS, deviceName,
-				deviceType, sourceIP, createdAt);
-		e.setEnvironment(environment);
-		e.setFeedbackText(feedbackText);
-		e.setEventData(eventData);
-		
-		// event trigger for job scheduler
-		if(eventName.equals(ADD_TO_CART)) {
-			 e.setProcessors(Arrays.asList(WEB_PUSH_MARKETING, ADS_RETARGETING, EMAIL_RETARGETING, APP_PUSH_MARKETING, SMS_RETARGETING));
-		}
-
-		TrackingEventDao.record(e);
-
-		// TODO add to a thread
-		Device userDevice = DeviceInfoUtil.getUserDevice(dv);
-		DeviceDaoUtil.save(userDevice);
-		String userDeviceId = userDevice.getId();
-		
-		ProfileDataService.updateProfileFromEvent(refProfileId, srcObserverId, srcTouchpointId, touchpointRefDomain,sourceIP, userDeviceId, eventName);
-		return 221;
-	}
-
-	public static int recordConversionData(Date createdAt, ContextSession ctxSession, String srcObserverId, String environment,
-			String srcEventKey, String deviceId, String sourceIP, DeviceInfo device, String srcTouchpointName,
-			String srcTouchpointUrl, String refTouchpointUrl, String touchpointRefDomain, String eventName,
-			long eventCount, String transactionCode, String feedbackText, Map<String, String> eventData) {
-		String deviceName = device.deviceName;
-		String deviceOS = device.deviceOs;
-
-		String browserName = device.browserName;
-		String deviceType = device.deviceType;
-
-		String refProfileId = ctxSession.getProfileId();
-		int refProfileType = ctxSession.getProfileType();
-		String sessionKey = ctxSession.getSessionKey();
-
-		// owned media has data from itself
-		boolean isFromOwnedMedia = ctxSession.getMediaHost().equals(touchpointRefDomain);
-	
-		// touch-point info process
-		Touchpoint refTouchPoint = TouchpointDataService.getOrCreateWebTouchpoint(touchpointRefDomain,
-				MediaChannelType.WEB_URL, refTouchpointUrl, isFromOwnedMedia);
-		Touchpoint srcTouchpoint = TouchpointDataService.getOrCreateWebTouchpoint(srcTouchpointName,
-				MediaChannelType.WEB_URL, srcTouchpointUrl);
-		String refTouchpointId = refTouchPoint.getId();
-		String srcTouchpointId = srcTouchpoint.getId();
-
-		TrackingEvent e = new TrackingEvent(srcObserverId, sessionKey, eventName, eventCount, refProfileId,
-				refProfileType, srcTouchpointId, refTouchpointId, browserName, deviceId, deviceOS, deviceName,
-				deviceType, sourceIP, createdAt);
-		e.setSrcEventKey(srcEventKey);
-		e.setEnvironment(environment);
-		e.setFeedbackText(feedbackText);
-		e.setEventData(eventData);
-		e.setTransactionCode(transactionCode);
-		e.setConversion(true);
-		
-		// event trigger for job scheduler
-		if(eventName.equals(BUY)) {
-			 e.setProcessors(Arrays.asList(EMAIL_MARKETING, WEB_PUSH_MARKETING, APP_PUSH_MARKETING));
-		}
-
-		TrackingEventDao.record(e);
-
-		// TODO add to a thread
-		Device userDevice = DeviceInfoUtil.getUserDevice(device);
-		DeviceDaoUtil.save(userDevice);
-		String userDeviceId = userDevice.getId();
-		
-		ProfileDataService.updateProfileFromEvent(refProfileId, srcObserverId, srcTouchpointId, touchpointRefDomain, sourceIP, userDeviceId, eventName);
-		return 241;
 	}
 	
 	public static List<EventSingleDataView> getUnprocessedEventsOfProfile(String profileId, int startIndex,int numberResults) {

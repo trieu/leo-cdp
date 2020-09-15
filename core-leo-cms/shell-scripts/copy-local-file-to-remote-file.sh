@@ -4,8 +4,8 @@
 
 SSH_KEY="/Users/mac/.ssh/mumbai.pem"
 
-LOCAL_FILE="/Users/mac/projects/leo-cms-framework/core-leo-cms/resources/app-templates/leocdp-admin/common-resources/leocdp.core-admin.js"
-REMOTE_FOLDER="/build/leocdp/resources/app-templates/leocdp-admin/common-resources/"
+LOCAL_FILE="/Users/mac/projects/leo-cms-framework/core-leo-cms/configs/database-query-template.aql"
+REMOTE_FOLDER="/build/leocdp/configs/database-query-template.aql"
 
 SERVER_NAME1="ubuntu@demo.leocdp.net"
 scp -i $SSH_KEY $LOCAL_FILE $SERVER_NAME1:$REMOTE_FOLDER

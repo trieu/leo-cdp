@@ -10,18 +10,14 @@ import com.arangodb.ArangoDBException;
 import com.arangodb.ArangoDatabase;
 
 import leotech.cdp.model.analytics.ContextSession;
-import leotech.cdp.model.journey.Touchpoint;
-import leotech.cms.model.Post;
 import leotech.system.config.AqlTemplate;
 import leotech.system.util.database.ArangoDbQuery;
 import leotech.system.util.database.ArangoDbUtil;
 
-public class ContextSessionDaoUtil extends BaseLeoCdpDao {
+public class ContextSessionDaoUtil extends AbstractCdpDatabaseUtil {
 
-	static final String AQL_GET_CONTEXT_SESSIONS_BY_VISITOR_ID = AqlTemplate
-			.get("AQL_GET_CONTEXT_SESSIONS_BY_VISITOR_ID");
-	static final String AQL_GET_CONTEXT_SESSIONS_BY_PROFILE_ID = AqlTemplate
-			.get("AQL_GET_CONTEXT_SESSIONS_BY_PROFILE_ID");
+	static final String AQL_GET_CONTEXT_SESSIONS_BY_VISITOR_ID = AqlTemplate.get("AQL_GET_CONTEXT_SESSIONS_BY_VISITOR_ID");
+	static final String AQL_GET_CONTEXT_SESSIONS_BY_PROFILE_ID = AqlTemplate.get("AQL_GET_CONTEXT_SESSIONS_BY_PROFILE_ID");
 	static final String AQL_GET_CONTEXT_SESSION_BY_KEY = AqlTemplate.get("AQL_GET_CONTEXT_SESSION_BY_KEY");
 	private static final String AQL_FIND_KEY_AQL = ArangoDbUtil.contentFindKeyAql(ContextSession.COLLECTION_NAME);
 
@@ -73,7 +69,7 @@ public class ContextSessionDaoUtil extends BaseLeoCdpDao {
 		return list;
 	}
 
-	public static List<ContextSession> geSessionsByProfileId(String profileId) {
+	public static List<ContextSession> getSessionsByProfileId(String profileId) {
 		ArangoDatabase db = getCdpDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("profileId", profileId);
