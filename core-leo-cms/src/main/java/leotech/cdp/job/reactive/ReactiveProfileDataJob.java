@@ -5,7 +5,7 @@ import leotech.cdp.dao.singleview.ProfileSingleDataView;
 public abstract class ReactiveProfileDataJob {
 	
 	protected static final int BATCH_PROCESSING_SIZE = 200;
-	protected static final int TIME_TO_PROCESS = 5000;//milisecs
+	protected static final int TIME_TO_PROCESS = 3571;//milisecs
 
 	abstract protected void initTimer();
 	

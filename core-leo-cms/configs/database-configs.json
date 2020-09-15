@@ -1,11 +1,11 @@
 {
 	"map" : {
 		"leoCdpDbConfigs" : {
-			"username" : "root"
-			,"password" : "123456"
+			"username" : "leodev"
+			,"password" : "SocialCEO@12345"
 			,"database" : "leo_cdp"
-			,"host" : "127.0.0.1"				
-			,"port" : 8529
+			,"host" : "65.0.1.209"				
+			,"port" : 8600
 			,"dbdriver" : "arangodb"
 			,"dbdriverclasspath" : "com.arangodb.ArangoDB"
 			,"enabled" : true

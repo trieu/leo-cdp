@@ -319,7 +319,7 @@ public class ProfileDataService {
 		}
 	
 		
-		System.out.println("updateProfileSingleDataView " + profileId);
+		System.out.println("updateProfileSingleDataView " + profileId + " totalLeadScore " + totalLeadScore);
 		
 		// init to get first 100 unprocessed events of profile
 		int startIndex = 0;
@@ -402,6 +402,7 @@ public class ProfileDataService {
 		profile.setFunnelStage(customerFunnelStage.getId());
 		
 		boolean ok = ProfileDaoUtil.update(profile) != null;
+		System.out.println(ok + " updateProfileSingleDataView " + profileId + " updated totalLeadScore " + totalLeadScore);
 		return ok;
 	}
 

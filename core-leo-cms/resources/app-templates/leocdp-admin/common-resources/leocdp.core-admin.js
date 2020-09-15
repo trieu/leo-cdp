@@ -444,11 +444,20 @@ LeoCdpAdmin.loadDataAndUpdateView = function(urlStr, params, dataProcessor, call
         		var field = $(this).data('field');
         		var toks = field.split('.');
         		if(toks.length === 1){
-        			var value = LeoCdpAdmin.routerContext.dataObject[toks[0]] ;
+        			var value = LeoCdpAdmin.routerContext.dataObject[toks[0]];
+        			
+        			
         			
         			if(fieldholder === 'html'){
         				if(fieldtype === 'int' || fieldtype === 'float' ){
-            				value = new Number(value).toLocaleString();
+        					if( value === undefined || value == null ){
+                				value = "No data";
+                			} else {
+                				value = new Number(value).toLocaleString();
+                				if(value == NaN || value == 'NaN'){
+                					value = "No data";
+                				}
+                			}
             			}
         				$(this).html(value)
         			}

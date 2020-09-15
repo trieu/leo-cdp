@@ -19,7 +19,7 @@ public class JobUpdateProfileSingleView extends ReactiveProfileDataJob {
 
 	private static Queue<ProfileSingleDataView> queueProfiles = new ConcurrentLinkedQueue<>();
 	private static volatile JobUpdateProfileSingleView instance = null;
-	private static volatile Timer timer = null;
+	private static Timer timer = null;
 	
 	public static JobUpdateProfileSingleView job() {
 		if(instance == null) {
@@ -34,19 +34,19 @@ public class JobUpdateProfileSingleView extends ReactiveProfileDataJob {
 	
 	@Override
 	protected void initTimer() {
-		if(timer != null) {
+		if(timer == null) {
 			timer = new Timer(true);
 			timer.schedule(new TimerTask() {
 				@Override
 				public void run() {
 					for (int i = 0; i < BATCH_PROCESSING_SIZE; i++) {
-						ProfileSingleDataView input = queueProfiles.poll();
-						if (input == null) {
+						ProfileSingleDataView profile = queueProfiles.poll();
+						if (profile == null) {
 							break;
 						} 
 						else {
 							try {
-								doReactiveJob(input);
+								doReactiveJob(profile);
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
@@ -63,9 +63,7 @@ public class JobUpdateProfileSingleView extends ReactiveProfileDataJob {
 	}
 	
 	@Override
-	public void enque(ProfileSingleDataView input) {
-		queueProfiles.add(input);
+	public void enque(ProfileSingleDataView profile) {
+		queueProfiles.add(profile);
 	}
-	
-	
 }
