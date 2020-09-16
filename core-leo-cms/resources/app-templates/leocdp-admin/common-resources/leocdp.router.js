@@ -64,23 +64,23 @@ LeoCdpAdmin.navRouters = {
 		},
 		
 		// 2.2 Media Channel 
-		"Media_Journey_Map" : {
-			"menuName" : "Media Journey Map",
-			"functionName" : "loadMediaJourneyMap",
-			"breadcrumb" : ["Customer Journey Hub", "Media Journey Map"],
-			"activeMenuItem" : "Media_Journey_Map"
+		"Data_Journey_Map" : {
+			"menuName" : "Data Journey Map",
+			"functionName" : "loadDataJourneyMap",
+			"breadcrumb" : ["Customer Journey Hub", "Data Journey Map"],
+			"activeMenuItem" : "Data_Journey_Map"
 		},
 		"Media_Channel_Report" : {
 			"menuName" : "Media Channel Report",
 			"functionName" : "loadMediaChannelReport",
-			"breadcrumb" : ["Customer Journey Hub", "Media Journey Map" , "Media Channel Report" ],
-			"activeMenuItem" : "Media_Journey_Map"
+			"breadcrumb" : ["Customer Journey Hub", "Data Journey Map" , "Media Channel Report" ],
+			"activeMenuItem" : "Data_Journey_Map"
 		},
 		"Media_Channel_Editor" : {
 			"menuName" : "Media Channel Editor",
 			"functionName" : "loadMediaChannelEditor",
-			"breadcrumb" : ["Customer Journey Hub", "Media Journey Map" , "Media Channel Editor" ],
-			"activeMenuItem" : "Media_Journey_Map"
+			"breadcrumb" : ["Customer Journey Hub", "Data Journey Map" , "Media Channel Editor" ],
+			"activeMenuItem" : "Data_Journey_Map"
 		},
 		
 		// 2.3 Customer Touchpoint
@@ -88,27 +88,27 @@ LeoCdpAdmin.navRouters = {
 			"menuName" : "Customer Touchpoint List",
 			"functionName" : "loadCustomerTouchpointList",
 			"breadcrumb" : ["Customer Journey Hub", "Touchpoint List"],
-			"activeMenuItem" : "Media_Journey_Map"
+			"activeMenuItem" : "Data_Journey_Map"
 		},
 		"Customer_Touchpoint_Report" : {
 			"menuName" : "Touchpoint Report",
 			"functionName" : "loadCustomerTouchpointReport",
 			"breadcrumb" : ["Customer Journey Hub", "Customer Touchpoint List" , "Customer Touchpoint Report" ],
-			"activeMenuItem" : "Media_Journey_Map"
+			"activeMenuItem" : "Data_Journey_Map"
 		},
 		"Customer_Touchpoint_Editor" : {
 			"menuName" : "Touchpoint Report",
 			"functionName" : "loadCustomerTouchpointEditor",
 			"breadcrumb" : ["Customer Journey Hub", "Customer Touchpoint List" , "Customer Touchpoint Editor" ],
-			"activeMenuItem" : "Media_Journey_Map"
+			"activeMenuItem" : "Data_Journey_Map"
 		},
 		
 		// 2.4 Event Metrics for Media Channel and Touchpoint
-		"Customer_Journey_Funnel" : {
-			"menuName" : "Customer Journey Funnel",
-			"functionName" : "loadDataJourneyFunnel",
-			"breadcrumb" : ["Customer Journey Hub", "Customer Journey Funnel"],
-			"activeMenuItem" : "Customer_Journey_Funnel"
+		"Data_Event_Funnel" : {
+			"menuName" : "Data Event Funnel",
+			"functionName" : "loadDataEventFunnel",
+			"breadcrumb" : ["Customer Journey Hub", "Data Event Funnel"],
+			"activeMenuItem" : "Data_Event_Funnel"
 		},
 		
 		// 2.5 Data Observer for touchpoint and media channel
@@ -136,19 +136,19 @@ LeoCdpAdmin.navRouters = {
 			"menuName" : "Journey Map List",
 			"functionName" : "loadJourneyMapList",
 			"breadcrumb" : ["Customer Journey Hub", "Journey Map List"],
-			"activeMenuItem" : "Media_Journey_Map"
+			"activeMenuItem" : "Data_Journey_Map"
 		},
 		"Journey_Map_Report" : {
 			"menuName" : "Journey Map Report",
 			"functionName" : "loadJourneyMapReport",
 			"breadcrumb" : ["Customer Journey Hub", "Journey Map List", "Journey Map Report"],
-			"activeMenuItem" : "Media_Journey_Map"
+			"activeMenuItem" : "Data_Journey_Map"
 		},
 		"Journey_Map_Studio" : {
 			"menuName" : "Journey Map Studio",
 			"functionName" : "loadJourneyMapStudio",
 			"breadcrumb" : ["Customer Journey Hub", "Journey Map List","Journey Map Studio"],
-			"activeMenuItem" : "Media_Journey_Map"
+			"activeMenuItem" : "Data_Journey_Map"
 		},
 		
 		// 2.7 TODO Product and Service Catalog
@@ -156,31 +156,31 @@ LeoCdpAdmin.navRouters = {
 			"menuName" : "Products and Services",
 			"functionName" : "loadProductsAndServices",
 			"breadcrumb" : ["Customer Journey Hub", "Products & Services"],
-			"activeMenuItem" : "Media_Journey_Map"
+			"activeMenuItem" : "Data_Journey_Map"
 		},
 		"Product_Report" : {
 			"menuName" : "Product Report",
 			"functionName" : "loadProductReport",
 			"breadcrumb" : ["Customer Journey Hub", "Products & Services", "Product Report"],
-			"activeMenuItem" : "Media_Journey_Map"
+			"activeMenuItem" : "Data_Journey_Map"
 		},
 		"Service_Report" : {
 			"menuName" : "Service Report",
 			"functionName" : "loadServiceReport",
 			"breadcrumb" : ["Customer Journey Hub", "Products & Services", "Service Report"],
-			"activeMenuItem" : "Media_Journey_Map"
+			"activeMenuItem" : "Data_Journey_Map"
 		},
 		"Product_Data_Editor" : {
 			"menuName" : "Product Data Editor",
 			"functionName" : "loadProductDataEditor",
 			"breadcrumb" : ["Customer Journey Hub", "Products & Services", "Product Data Editor"],
-			"activeMenuItem" : "Media_Journey_Map"
+			"activeMenuItem" : "Data_Journey_Map"
 		},
 		"Product_Data_Editor" : {
 			"menuName" : "Service Data Editor",
 			"functionName" : "loadServiceDataEditor",
 			"breadcrumb" : ["Customer Journey Hub", "Products & Services", "Service Data Editor"],
-			"activeMenuItem" : "Media_Journey_Map"
+			"activeMenuItem" : "Data_Journey_Map"
 		},
 		
 		// 2.8 Content Marketing List

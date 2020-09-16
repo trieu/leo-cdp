@@ -7,7 +7,7 @@ import leotech.cdp.service.ProfileDataService;
 public class TestMarketingAuto {
 
 	public static void main(String[] args) {
-		ProfileSingleDataView profile = ProfileDataService.getSingleViewById("3Ym4MjtbHVhJZYvaA3LvmL");
+		ProfileSingleDataView profile = ProfileDataService.getSingleViewById("4LI2peQtHoFFYmDisGT1cT");
 		CampaignDataService.doMarketingAutomation(profile );
 	}
 }
