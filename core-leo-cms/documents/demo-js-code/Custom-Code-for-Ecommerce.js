@@ -92,9 +92,14 @@ if( isProductView ) {
     	         schema: {
     	           firstname: {
     	             type: 'string',
-    	             title: 'Your Name',
+    	             title: 'Your First Name',
     	             required: true
     	           },
+    	           lastname: {
+      	             type: 'string',
+      	             title: 'Your Last Name',
+      	             required: true
+      	           },
     	           email: {
     	               type: 'email',
     	               title: 'Your Email',
@@ -123,6 +128,7 @@ if( isProductView ) {
     	         },
     		     form: [
     		          {"key": "firstname"},
+    		          {"key": "lastname"},
     		          {"key": "email"},
     		          {"key": "phone"},
     		          {

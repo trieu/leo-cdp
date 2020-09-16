@@ -162,10 +162,10 @@ public class LeoObserverHttpRouter extends BaseHttpRouter {
 				outHeaders.set(CONTENT_TYPE, BaseApiHandler.CONTENT_TYPE_JSON);
 				
 				int status = 404;
-				// synch ContextSession with request
+				// SYNCH ContextSession with request
 				ContextSession currentSession = ContextSessionService.synchData(clientSessionKey, req, params, device);
 				
-				// get profile from session
+				// UPDATE profile from POST data
 				String profileId = currentSession.getProfileId();
 				if (StringUtil.isNotEmpty(profileId)) {
 					status = ContextSessionService.updateProfileData(req, params, currentSession, device);

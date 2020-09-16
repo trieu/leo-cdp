@@ -3,7 +3,6 @@ package leotech.cdp.service;
 import java.time.Instant;
 import java.util.List;
 
-import com.arangodb.ArangoDatabase;
 import com.google.gson.Gson;
 
 import leotech.cdp.dao.ProfileDaoUtil;
@@ -141,9 +140,9 @@ public class SegmentDataService  {
 
 		long recordsTotal = sm.getTotalCount();
 		long recordsFiltered = ProfileDaoUtil.countProfilesByQuery(profileQuery);
+		
 
-		JsonDataTablePayload payload = JsonDataTablePayload.data(filter.getUri(), profilesInSegment, recordsTotal,
-				recordsFiltered, draw);
+		JsonDataTablePayload payload = JsonDataTablePayload.data(filter.getUri(), profilesInSegment, recordsTotal,recordsFiltered, draw);
 		return payload;
 	}
 

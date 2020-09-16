@@ -643,9 +643,9 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	public void setPrimaryEmail(String primaryEmail) {
 		this.primaryEmail = primaryEmail;
+		this.receiveEmail = 1;
 		if (this.type == ProfileType.TYPE_ANONYMOUS) {
 			this.type = ProfileType.TYPE_IDENTIFIED;
-			this.receiveEmail = 1;
 		}
 	}
 
@@ -655,9 +655,9 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 
 	public void setPrimaryPhone(String primaryPhone) {
 		this.primaryPhone = primaryPhone;
+		this.receiveMobileSms = 1;
 		if (this.type == ProfileType.TYPE_ANONYMOUS) {
 			this.type = ProfileType.TYPE_IDENTIFIED;
-			this.receiveMobileSms = 1;
 		}
 	}
 

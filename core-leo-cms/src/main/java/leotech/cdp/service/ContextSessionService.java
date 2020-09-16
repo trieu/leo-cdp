@@ -117,7 +117,6 @@ public class ContextSessionService {
 					p.set(newSessionKey, sessionJson);
 					p.expire(newSessionKey, AFTER_30_MINUTES);
 					p.sync();
-
 				} else {
 					// get from database for event recording
 					ctxSession = new Gson().fromJson(json, ContextSession.class);
@@ -159,9 +158,7 @@ public class ContextSessionService {
 	}
 
 	public static int updateProfileData(HttpServerRequest req, MultiMap params, ContextSession ctxSession, DeviceInfo device) {
-		
 		String deviceId = DeviceDataService.getDeviceId(params, device);
-		
 		String environment = StringUtil.safeString(params.get(TrackingApiParam.DATA_ENVIRONMENT),TrackingApiParam.PRO_ENV);
 		
 		String usedDeviceId = ctxSession.getUserDeviceId();
@@ -181,11 +178,11 @@ public class ContextSessionService {
 		
 		Set<String> contentKeywords = extDataStr.getOrDefault("contentKeywords", new HashSet<String>(0));
 		
-		String firstName = formData.getOrDefault("firstName", "");
-		String lastName = formData.getOrDefault("lastName", "");
+		String firstName = formData.getOrDefault("firstname", "");
+		String lastName = formData.getOrDefault("lastname", "");
 		String email = formData.getOrDefault("email", "");
 		String phone = formData.getOrDefault("phone", "");
-		int age = StringUtil.safeParseInt(formData.getOrDefault("age", "0"));
+		int age = StringUtil.safeParseInt(formData.get("age"));
 		String genderStr = formData.getOrDefault("genderStr", "");
 		String loginId = formData.getOrDefault("loginId", "");
 		
