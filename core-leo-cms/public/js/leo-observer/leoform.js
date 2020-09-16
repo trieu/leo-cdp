@@ -53,6 +53,7 @@
     	         },
     		     form: [
     		          {"key": "firstname"},
+    		          {"key": "lastname"},
     		          {"key": "email"},
     		          {"key": "phone"},
     		          {

@@ -1,5 +1,6 @@
 package leotech.cdp.job.reactive;
 
+import java.util.Map;
 import java.util.Queue;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -62,7 +63,8 @@ public class JobUpdateProfileSingleView extends ReactiveProfileDataJob {
 	protected void doReactiveJob(ProfileSingleDataView profile) {
 		ProfileDataService.updateProfileSingleDataView(profile , false);
 		
-		boolean triggerPush = profile.getEventStatistics().getOrDefault("product-view", 0L) > 2;
+		Map<String, Long> eventStatistics = profile.getEventStatistics();
+		boolean triggerPush = eventStatistics.getOrDefault("submit-contact", 0L) > 0 && eventStatistics.getOrDefault("product-view", 0L) > 1;
 		if(triggerPush) {
 			CampaignDataService.doMarketingAutomation(profile);
 		}

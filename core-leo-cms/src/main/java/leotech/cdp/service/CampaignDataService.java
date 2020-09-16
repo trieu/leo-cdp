@@ -13,6 +13,8 @@ import leotech.cdp.dao.singleview.EventSingleDataView;
 import leotech.cdp.dao.singleview.ProfileSingleDataView;
 import leotech.cdp.model.activation.Campaign;
 import leotech.cdp.model.business.ProductItem;
+import leotech.system.communication.MobileSmsSender;
+import rfx.core.util.StringUtil;
 
 public class CampaignDataService {
 
@@ -82,6 +84,7 @@ public class CampaignDataService {
 			oneSignalPlayerId = userIds.iterator().next();
 		}
 		String toEmailAddress =  profile.getPrimaryEmail();
+		String toPhone =  profile.getPrimaryPhone();
 		String name = profile.getFirstName();
 		String visitorId = profile.getVisitorId();
 		
@@ -110,5 +113,9 @@ public class CampaignDataService {
 		double price = item.getSalePrice();
 		String productLink = clickThrough;// FIXME
 		MarketingAutomationService.sendRecommendation(profileId, oneSignalPlayerId, toEmailAddress, name, productName, price, productLink );
+		
+		if(StringUtil.isNotEmpty(toPhone)) {
+			MobileSmsSender.send(toPhone, "You may like " + productName + " at https://demobookshop.leocdp.com" );
+		}
 	}
 }

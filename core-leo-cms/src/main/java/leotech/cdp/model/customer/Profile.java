@@ -117,7 +117,7 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	protected Date createdAt = new Date();
 
 	@Expose
-	protected Date updatedAt;
+	protected Date updatedAt ;
 
 	// --- BEGIN taxonomy meta data
 
@@ -163,10 +163,10 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	// --- BEGIN key Personal attributes
 
 	@Expose
-	protected String firstName = "No information";
+	protected String firstName = "";
 
 	@Expose
-	protected String lastName = "No information";
+	protected String lastName = "";
 
 	@Expose
 	protected String primaryUsername = "";
@@ -181,13 +181,13 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	protected String primaryAvatar = "";
 
 	@Expose
-	protected String livingLocation = "No information";
+	protected String livingLocation = "";
 
 	@Expose
 	protected String locationCode = "";
 
 	@Expose
-	protected String mainNationality = "No information";
+	protected String mainNationality = "";
 
 	@Expose
 	protected int gender = -1;

@@ -117,24 +117,26 @@ public class ProfileDataService {
 			p.setSocialMediaProfile(loginProvider, loginId);
 			p.setIdentity(loginId, loginProvider);
 			p.setType(ProfileType.TYPE_SOCIAL_LOGIN);
-		} else {
-			p.setType(ProfileType.TYPE_IDENTIFIED);
-		}
+		} 
 		
 		if(StringUtil.isNotEmpty(firstName)) {
 			p.setFirstName(firstName);
+			p.setType(ProfileType.TYPE_IDENTIFIED);
 		}
 		
 		if(StringUtil.isNotEmpty(lastName)) {
 			p.setLastName(lastName);
+			p.setType(ProfileType.TYPE_IDENTIFIED);
 		}
 		
 		if(StringUtil.isNotEmpty(email)) {
 			p.setPrimaryEmail(email);
+			p.setType(ProfileType.TYPE_IDENTIFIED);
 		}
 		
 		if(StringUtil.isNotEmpty(phone)) {
 			p.setPrimaryPhone(phone);
+			p.setType(ProfileType.TYPE_IDENTIFIED);
 		}
 		
 		if(StringUtil.isNotEmpty(genderStr)) {
@@ -394,6 +396,10 @@ public class ProfileDataService {
 		profile.setTotalCSAT(satisfyScore);
 		profile.setTotalCLV(clvScore);
 		profile.setTotalCAC(cacScore);
+		
+		if( StringUtil.isNotEmpty(profile.getFirstName()) || StringUtil.isNotEmpty(profile.getPrimaryEmail())) {
+			profile.setType(ProfileType.TYPE_IDENTIFIED);
+		}
 		
 		//TODO update funnel
 		if(highestScoreMetric != null) {

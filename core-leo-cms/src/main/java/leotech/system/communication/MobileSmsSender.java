@@ -21,28 +21,30 @@ public class MobileSmsSender {
 	static OkHttpClient client = new OkHttpClient();
 	
 	public static void send(String phoneNumber, String content) {
-		JsonObject message = new JsonObject();
-		message.put("destinations", new JsonArray().add(new JsonObject().put("to", phoneNumber)) );
-		message.put("text", content);
 		
-		JsonArray messages = new JsonArray();
-		messages.add(message);
-		
-		JsonObject jsonObject = new JsonObject();
-		jsonObject.put("messages", messages);
-	    
-		String json = jsonObject.encode();
-		System.out.println("MobileSmsSender " + json);
-		
-		RequestBody body = RequestBody.create(MediaType.parse("application/json"), json);
-		
-	    Request request = new Request.Builder()
-	      .url(URL_SECURED_BY_BASIC_AUTHENTICATION)
-	      .addHeader("Authorization", "Basic VGVzdGluZ2Jhbms6cGFzc3dvcmQ=")
-	      .post(body)
-	      .build();
 	  
 	    try {
+	    	JsonObject message = new JsonObject();
+			message.put("destinations", new JsonArray().add(new JsonObject().put("to", phoneNumber)) );
+			message.put("text", content);
+			
+			JsonArray messages = new JsonArray();
+			messages.add(message);
+			
+			JsonObject jsonObject = new JsonObject();
+			jsonObject.put("messages", messages);
+		    
+			String json = jsonObject.encode();
+			System.out.println("MobileSmsSender " + json);
+			
+			RequestBody body = RequestBody.create(MediaType.parse("application/json"), json);
+			
+		    Request request = new Request.Builder()
+		      .url(URL_SECURED_BY_BASIC_AUTHENTICATION)
+		      .addHeader("Authorization", "Basic VGVzdGluZ2Jhbms6cGFzc3dvcmQ=")
+		      .post(body)
+		      .build();
+		    
 	    	Call call = client.newCall(request);
 			Response response = call.execute();
 			System.out.println(response.body().string());
