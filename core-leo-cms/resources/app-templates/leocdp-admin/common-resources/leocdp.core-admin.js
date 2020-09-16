@@ -326,7 +326,6 @@ var initDateFilterComponent = function(withTime, beginDateTime, endDateTime){
 	        defaultDate: end
 	    });
 	}
-	
     
 }
 
@@ -447,7 +446,7 @@ LeoCdpAdmin.loadDataAndUpdateView = function(urlStr, params, dataProcessor, call
         			var value = LeoCdpAdmin.routerContext.dataObject[toks[0]];
         			
         			if(fieldholder === 'html'){
-        				if(fieldtype === 'int' || fieldtype === 'float' ){
+        				if(fieldtype === 'int' || fieldtype === 'float' ) {
         					if( value === undefined || value == null ){
                 				value = "No data";
                 			} else {
@@ -457,6 +456,9 @@ LeoCdpAdmin.loadDataAndUpdateView = function(urlStr, params, dataProcessor, call
                 				}
                 			}
             			}
+        				else if(fieldtype === 'date'){
+        					value = moment.utc(value).local().format('YYYY-MM-DD HH:mm:ss');
+        				}
         				$(this).html(value)
         			}
         			else if(fieldholder === 'url'){
@@ -544,7 +546,7 @@ LeoCdpAdmin.updateDataObjectOfView = function(urlStr, params, callback) {
         	value = parseFloat(value.replace(/,/g,''))
         }
         else if(fieldtype === 'date') {
-        	value = moment.utc(value).local().format('YYYY-MM-DD HH:mm:ss')
+        	value = new Date(value);
         }
         
         var toks = field.split('.');
