@@ -1,8 +1,6 @@
 package test.email;
 
-import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
 
 import io.rocketbase.mail.EmailTemplateBuilder;
 import io.rocketbase.mail.EmailTemplateBuilder.EmailTemplateConfigBuilder;
@@ -13,9 +11,7 @@ import io.rocketbase.mail.config.config.TbBodyConfig.TbBodyDark;
 import io.rocketbase.mail.config.config.TbBoxConfig;
 import io.rocketbase.mail.config.config.TbBoxConfig.TbBoxDark;
 import io.rocketbase.mail.model.HtmlTextEmail;
-import leotech.cdp.model.activation.EmailMessage;
-import leotech.system.communication.EmailSender;
-import rfx.core.util.FileUtils;
+import leotech.cdp.service.MarketingAutomationService;
 import rfx.core.util.Utils;
 
 public class EmailTemplateTest {
@@ -32,48 +28,21 @@ public class EmailTemplateTest {
 	            new TbBoxDark("#F4F4F7"));
 
 	public static void main(String[] args) throws IOException {
-		String content = getHtmlMailWithProduct();
-		File file = new File("/Users/mac/projects/leo-cms-framework/core-leo-cms/BUILD-OUTPUT/testemail.html");
-		file.createNewFile();
-		FileUtils.writeStringToFile(file.getAbsolutePath(),content);
-		EmailMessage messageModel = new EmailMessage("contact@uspa.tech", "tantrieuf31.database@gmail.com", "Trieu", "121", "Leo CDP test", content);
-		EmailSender.sendToSmtpServer(messageModel);
+		
+		String profileId = "112";
+		String name = "Trieu";
+		double price = 19.95F;
+		
+		String toEmailAddress = "tantrieuf31.database@gmail.com";
+		String productName = "The Truth About Predictive Marketing Automation: A Complete Guide to Strategy & Execution";
+		String productLink = "https://demotrack.leocdp.net/rtmu/pMDwdSsxyrNB1nJxuqNLd";
+		String oneSignalPlayerId = "e1aa2468-a352-46e3-8dc3-79de273d1d28";
+		
+		MarketingAutomationService.sendRecommendation(profileId, oneSignalPlayerId, toEmailAddress, name, productName, price, productLink);
 		Utils.sleep(3000);
 	}
 	
-	static String getHtmlMailWithProduct() throws IOException {
-		EmailTemplateConfigBuilder builder = EmailTemplateBuilder.builder();
-		
-		TbConfiguration config = TbConfiguration.newInstance();
-		config.getContent().setFull(true);
-		
-		config.setBody(tbBodyConfig);
-		config.setBox(tbBoxConfig);
-		config.getHeader().setColor("#1100fa");
-		config.getTable().getItem().setColor("#1100fa");
-		config.getFooter().setColor("#1100fa");
-
-		String name = "Trieu";
-		HtmlTextEmail htmlTextEmail = builder
-		        .configuration(config)
-		        .header().logo(logo).logoHeight(120).text("Leo CDP ").and()
-		        .text("Hi "+name  +",").and()
-		        .text("Thanks for using Leo CDP. This is an invoice for your recent purchase").and()
-		        .tableSimple("#.## 'USD'")
-		        .headerRow("Description", "Amount")
-		        .itemRow("Special Product Some extra explanations in separate line", BigDecimal.valueOf(1333, 2))
-		        .itemRow("Short service", BigDecimal.valueOf(103, 1))
-		        .footerRow("Total", BigDecimal.valueOf(2363, 2))
-		        .and()
-		        .button("Download", "https://bigdatavietnam.org").gray().right().and()
-		        .text("If you have any questions about this receipt, simply reply to this email or reach out to our support team for help.").and()
-		        .copyright("USPA").url("https://uspa.tech").suffix(". All rights reserved.").and()
-		        .footerText("[Company Name, LLC] 1234 Street Rd. Suite 1234").and()
-		        //.footerImage(TESTONEPIXEL_PNG).width(1)
-		        .build();
-		String html = htmlTextEmail.getHtml();
-		return html;
-	}
+	
 
 	private static String getHtmlEmail() throws IOException {
 		EmailTemplateConfigBuilder builder = EmailTemplateBuilder.builder();
