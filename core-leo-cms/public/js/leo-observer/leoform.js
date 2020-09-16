@@ -17,9 +17,14 @@
     	         schema: {
     	           firstname: {
     	             type: 'string',
-    	             title: 'Your Name',
+    	             title: 'Your First Name',
     	             required: true
     	           },
+    	           lastname: {
+      	             type: 'string',
+      	             title: 'Your Last Name',
+      	             required: true
+      	           },
     	           email: {
     	               type: 'email',
     	               title: 'Your Email',
@@ -86,9 +91,9 @@
     	          		 formData.tprefdomain = extractRootDomain(document.referrer);
     	          		 
     	          		 LeoObserverProxy.updateProfileBySession(formData, extData);
-    	          		 jQuery('#'+holderId).empty().html(successInfo).show().delay(5000).fadeOut('slow');
+    	          		 jQuery('#'+holderId).empty().html(successInfo).show().delay(7000).fadeOut('slow');
     	          	 } else {
-    	          		 jQuery('#leo_form_error').html(errorMsg).show().delay(5000).fadeOut('slow');
+    	          		 jQuery('#leo_form_error').html(errorMsg).show().delay(7000).fadeOut('slow');
     	          	 }
     	           }
     	         }
