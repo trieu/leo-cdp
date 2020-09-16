@@ -168,11 +168,11 @@
                                </li>
                                <li>
                                    <b> <i class="fa fa-clock-o" aria-hidden="true"></i> Creation Date </b> 
-                                   <p data-field="createdAt" data-fieldholder="html"  data-fieldtype="date"  > 2020-06-11 09:35:37  </p>
+                                   <p data-field="createdAt" data-fieldholder="html"  data-fieldtype="date"  > - </p>
                                </li>
                                <li>
                                    <b> <i class="fa fa-clock-o" aria-hidden="true"></i> Modification Date </b> 
-                                   <p data-field="updatedAt" data-fieldholder="html"  data-fieldtype="date"  > 2020-06-11 09:35:37  </p>
+                                   <p data-field="updatedAt" data-fieldholder="html"  data-fieldtype="date"  > -  </p>
                                </li>
                            	   <li>
                                    <b data-persona="key" class="editable_text" > <i class="fa fa-fw fa-id-badge"></i> First Name </b> 
@@ -456,6 +456,7 @@
     		 _.forEach(json.data,function(e,i){
     			 e.srcTouchpoint.name = textTruncate(e.srcTouchpoint.name,120);
     			 e.srcTouchpoint.truncatedUrl = textTruncate(e.srcTouchpoint.url,120);
+    			 e.createdAt = moment.utc(e.createdAt).local().format('YYYY-MM-DD HH:mm:ss');
     			 
     			 var tplName = 'view-event-tpl';
         		 if(e.metricName === 'click'){

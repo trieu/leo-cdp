@@ -115,7 +115,9 @@ public class CampaignDataService {
 		MarketingAutomationService.sendRecommendation(profileId, oneSignalPlayerId, toEmailAddress, name, productName, price, productLink );
 		
 		if(StringUtil.isNotEmpty(toPhone)) {
-			MobileSmsSender.send(toPhone, "You may like " + productName + " at https://demobookshop.leocdp.com" );
+			if(toPhone.length() > 8) {
+				MobileSmsSender.send(toPhone, "You may like " + productName + " at https://demobookshop.leocdp.com" );
+			}
 		}
 	}
 }

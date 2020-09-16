@@ -163,15 +163,18 @@
                     },
                     {
                         "render": function (data, type, row) {
-                            var date = moment(new Date(data)).format('YYYY-MM-DD HH:mm:ss');
+                            var date = moment.utc(data).local().format('YYYY-MM-DD HH:mm:ss');
                             return '<div class="small">'  + date + '</div>';
                         },
                         "targets": 6
                     },
                     {
                         "render": function (data, type, row) {
-                            var date = moment(new Date(data)).format('YYYY-MM-DD HH:mm:ss');
-                            return '<div class="small">'  + date + '</div>';
+                        	if(data){
+                        		var date = moment.utc(data).local().format('YYYY-MM-DD HH:mm:ss');
+                                return '<div class="small">'  + date + '</div>';
+                        	}
+                        	return '-';
                         },
                         "targets": 7
                     },

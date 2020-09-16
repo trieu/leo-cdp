@@ -345,14 +345,14 @@ var loadProfileViewByAjax = window.loadProfileViewByAjax || function(selectorId,
             },
             {
                 "render": function (data, type, row) {
-                    var date = moment(new Date(data)).format('YYYY-MM-DD HH:mm:ss');
+                    var date = moment.utc(new Date(data)).local().format('YYYY-MM-DD HH:mm:ss');
                     return '<div class="small">'  + date + '</div>';
                 },
                 "targets": 6
             },
             {
                 "render": function (data, type, row) {
-                    var date = moment(new Date(data)).format('YYYY-MM-DD HH:mm:ss');
+                	var date = moment.utc(new Date(data)).local().format('YYYY-MM-DD HH:mm:ss');
                     return '<div class="small">'  + date + '</div>';
                 },
                 "targets": 7

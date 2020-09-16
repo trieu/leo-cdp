@@ -63,10 +63,15 @@ public class JobUpdateProfileSingleView extends ReactiveProfileDataJob {
 	protected void doReactiveJob(ProfileSingleDataView profile) {
 		ProfileDataService.updateProfileSingleDataView(profile , false);
 		
-		Map<String, Long> eventStatistics = profile.getEventStatistics();
-		boolean triggerPush = eventStatistics.getOrDefault("submit-contact", 0L) > 0 && eventStatistics.getOrDefault("product-view", 0L) > 1;
-		if(triggerPush) {
-			CampaignDataService.doMarketingAutomation(profile);
+		try {
+			Map<String, Long> eventStatistics = profile.getEventStatistics();
+			boolean triggerPush = eventStatistics.getOrDefault("submit-contact", 0L) > 0 && eventStatistics.getOrDefault("product-view", 0L) > 1;
+			if(triggerPush) {
+				CampaignDataService.doMarketingAutomation(profile);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	

@@ -1194,6 +1194,9 @@ public class Profile extends CdpPersistentObject implements Comparable<Profile> 
 	
 	
 	public Map<String, Long> getEventStatistics() {
+		if(eventStatistics == null) {
+			eventStatistics = new HashMap<String, Long>(0);
+		}
 		return eventStatistics;
 	}
 

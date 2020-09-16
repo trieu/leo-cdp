@@ -8,8 +8,9 @@ import rfx.core.util.Utils;
 public class TestUpdateProfileSingleView {
 
 	public static void main(String[] args) {
-		String profileId = "7NasWV3VpfMcCz8YQfJEKc";
-		ProfileSingleDataView profile = ProfileDaoUtil.getSingleViewById(profileId );
+		String profileId = "7ivU9rTJQjhJlLeqiMzlaj";
+		
+		ProfileSingleDataView profile = ProfileDaoUtil.getSingleViewById(profileId);
 		if(profile != null) {
 			JobUpdateProfileSingleView.job().enque(profile);
 		}

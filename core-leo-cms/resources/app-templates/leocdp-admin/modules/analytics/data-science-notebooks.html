@@ -101,7 +101,7 @@
                     },
                     {
                         "render": function (data, type, row) {
-                            var date = moment(new Date(data)).format('YYYY-MM-DD HH:mm:ss');
+                        	var date = moment.utc(new Date(data)).local().format('YYYY-MM-DD HH:mm:ss');
                             return date;
                         },
                         "targets": 5
@@ -109,7 +109,7 @@
                     {
                         "render": function (data, type, row) {
                         	if(data){
-                        		var date = moment(new Date(data)).format('YYYY-MM-DD HH:mm:ss');
+                        		var date = moment.utc(new Date(data)).local().format('YYYY-MM-DD HH:mm:ss');
                                 return date;
                         	}
                             return "-";

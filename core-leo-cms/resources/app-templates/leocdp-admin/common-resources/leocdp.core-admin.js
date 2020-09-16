@@ -446,8 +446,6 @@ LeoCdpAdmin.loadDataAndUpdateView = function(urlStr, params, dataProcessor, call
         		if(toks.length === 1){
         			var value = LeoCdpAdmin.routerContext.dataObject[toks[0]];
         			
-        			
-        			
         			if(fieldholder === 'html'){
         				if(fieldtype === 'int' || fieldtype === 'float' ){
         					if( value === undefined || value == null ){
@@ -546,7 +544,7 @@ LeoCdpAdmin.updateDataObjectOfView = function(urlStr, params, callback) {
         	value = parseFloat(value.replace(/,/g,''))
         }
         else if(fieldtype === 'date') {
-        	value = new Date(value)
+        	value = moment.utc(value).local().format('YYYY-MM-DD HH:mm:ss')
         }
         
         var toks = field.split('.');

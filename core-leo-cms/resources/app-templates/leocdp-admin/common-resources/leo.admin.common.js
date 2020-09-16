@@ -375,7 +375,8 @@ if (LeoAdminApiUtil.isLoaded !== true) {
 
 		obj.formater = {
 			toDateString: function (data) {
-				return moment(parseFloat(data)).format('YYYY-MM-DD HH:mm:ss')
+				var date = moment.utc(parseFloat(data)).local().format('YYYY-MM-DD HH:mm:ss');
+				return date;
 			}
 		}
 
