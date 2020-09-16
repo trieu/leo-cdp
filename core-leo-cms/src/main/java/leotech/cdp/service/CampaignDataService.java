@@ -116,7 +116,7 @@ public class CampaignDataService {
 		
 		if(StringUtil.isNotEmpty(toPhone)) {
 			if(toPhone.length() > 8) {
-				MobileSmsSender.send(toPhone, "You may like " + productName + " at https://demobookshop.leocdp.com" );
+				MobileSmsSender.send(toPhone, "You may like " + productName + " at " + productLink );
 			}
 		}
 	}
