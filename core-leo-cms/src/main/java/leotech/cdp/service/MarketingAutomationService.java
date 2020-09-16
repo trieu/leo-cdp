@@ -18,6 +18,7 @@ import io.rocketbase.mail.model.HtmlTextEmail;
 import leotech.cdp.model.activation.EmailMessage;
 import leotech.system.communication.EmailSender;
 import leotech.system.communication.PushNotificationSender;
+import rfx.core.util.StringUtil;
 
 public class MarketingAutomationService {
 	static String logo = "https://demobookshop.leocdp.com/wp-content/uploads/2020/09/bookshop-logo-416x416.png";
@@ -101,13 +102,18 @@ public class MarketingAutomationService {
 
 	public static void sendRecommendation(String profileId, String oneSignalPlayerId , String toEmailAddress, String name, String productName, double price, String productLink) {
 		try {
-			String heading = "You may like this product";
-			PushNotificationSender.notifyUser(oneSignalPlayerId, heading, productName, productLink );
+			String heading = "You may like this product ";
 			
 			if(isValidEmailAddress(toEmailAddress)) {
 				String content = MarketingAutomationService.getHtmlMailWithProduct(name, productName, price, productLink);
 				EmailMessage messageModel = new EmailMessage("contact@uspa.tech", toEmailAddress, name, profileId, "Product you may like: " + productName, content);
 				EmailSender.sendToSmtpServer(messageModel);
+			}
+			
+			if(StringUtil.isNotEmpty(oneSignalPlayerId)) {
+				if(oneSignalPlayerId.length() > 5) {
+					PushNotificationSender.notifyUser(oneSignalPlayerId, heading, productName, productLink );
+				}
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
