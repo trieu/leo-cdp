@@ -13,10 +13,9 @@ public class AdsQueryService {
 		List<DisplayAdData> ads = new ArrayList<>(touchpointIds.size());
 		
 		//TODO generate srcTouchpointId
-		String srcTouchpointId = "";
 		
 		for (String touchpointId : touchpointIds) {
-			DisplayAdData ad = CampaignDataService.getDisplayAdData(touchpointId, visitorId, srcTouchpointId);
+			DisplayAdData ad = CampaignDataService.getDisplayAdData(touchpointId, visitorId);
 			ads.add(ad);
 		}
 		

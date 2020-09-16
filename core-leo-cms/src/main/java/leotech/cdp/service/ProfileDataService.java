@@ -37,7 +37,7 @@ public class ProfileDataService {
 		return updateOrCreate( observerId, srcTouchpointId, refTouchpointId, touchpointRefDomain,lastSeenIp, visitorId, userDeviceId, fingerprintId, "", "", "", "");
 	}
 	
-	public static void updateProfileFromEvent(String profileId, String observerId, String srcTouchpointId, String touchpointRefDomain, String lastSeenIp, String userDeviceId, String eventName) {
+	public static void triggerProfileFromEvent(String profileId, String observerId, String srcTouchpointId, String touchpointRefDomain, String lastSeenIp, String userDeviceId, String eventName) {
 		ProfileSingleDataView pf = ProfileDaoUtil.getSingleViewById(profileId);
 	
 		if(pf != null) {
@@ -64,19 +64,17 @@ public class ProfileDataService {
 		if (pf == null) {
 			
 			int type = ProfileType.TYPE_ANONYMOUS;
-			if (StringUtil.isNotEmpty(email) || StringUtil.isNotEmpty(phone) || StringUtil.isNotEmpty(loginId)) {
+			if (StringUtil.isNotEmpty(email) || StringUtil.isNotEmpty(phone) ) {
 				type = ProfileType.TYPE_IDENTIFIED;
 			} else if (StringUtil.isNotEmpty(email) && StringUtil.isNotEmpty(phone)) {
 				type = ProfileType.TYPE_CRM_CONTACT;
 			}
 			
 			if (type == ProfileType.TYPE_ANONYMOUS) {
-				pf = Profile.newAnonymousProfile( observerId, srcTouchpointId, lastSeenIp, visitorId,
-						userDeviceId, fingerprintId);
+				pf = Profile.newAnonymousProfile( observerId, srcTouchpointId, lastSeenIp, visitorId, userDeviceId, fingerprintId);
 			} else if (type == ProfileType.TYPE_IDENTIFIED) {
 
-				pf = Profile.newIdentifiedProfile( observerId, srcTouchpointId, lastSeenIp, visitorId,
-						userDeviceId, email, fingerprintId);
+				pf = Profile.newIdentifiedProfile( observerId, srcTouchpointId, lastSeenIp, visitorId, userDeviceId, email, fingerprintId);
 
 				if (StringUtil.isNotEmpty(loginId)) {
 					pf.setIdentity(loginId, loginProvider);

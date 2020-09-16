@@ -6,6 +6,7 @@ import java.util.TimerTask;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import leotech.cdp.dao.singleview.ProfileSingleDataView;
+import leotech.cdp.service.CampaignDataService;
 import leotech.cdp.service.ProfileDataService;
 
 /**
@@ -60,6 +61,11 @@ public class JobUpdateProfileSingleView extends ReactiveProfileDataJob {
 	@Override
 	protected void doReactiveJob(ProfileSingleDataView profile) {
 		ProfileDataService.updateProfileSingleDataView(profile , false);
+		
+		boolean triggerPush = profile.getEventStatistics().getOrDefault("product-view", 0L) > 2;
+		if(triggerPush) {
+			CampaignDataService.doMarketingAutomation(profile);
+		}
 	}
 	
 	@Override

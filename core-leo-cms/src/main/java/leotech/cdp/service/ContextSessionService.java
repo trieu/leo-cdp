@@ -226,6 +226,10 @@ public class ContextSessionService {
 			
 			EventDataService.recordEvent(new Date(), ctxSession, srcObserverId, environment, deviceId, sourceIP, device,
 					srcTouchpointName,srcTouchpointUrl, refTouchpointUrl,  touchpointRefDomain, eventName);
+			
+			if(StringUtil.isNotEmpty(email) && StringUtil.isNotEmpty(firstName)) {
+				MarketingAutomationService.sendThanksEmail(curProfileId, email, firstName);
+			}
 		}
 		
 		return 102;

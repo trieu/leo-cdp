@@ -60,6 +60,44 @@ public class MarketingAutomationService {
 		return html;
 	}
 	
+	static String getThanksEmail(String name) throws IOException {
+		EmailTemplateConfigBuilder builder = EmailTemplateBuilder.builder();
+		
+		TbConfiguration config = TbConfiguration.newInstance();
+		config.getContent().setFull(true);
+		
+		config.setBody(tbBodyConfig);
+		config.setBox(tbBoxConfig);
+		config.getHeader().setColor("#1100fa");
+		config.getTable().getItem().setColor("#1100fa");
+		config.getFooter().setColor("#1100fa");
+
+		
+		HtmlTextEmail htmlTextEmail = builder
+		        .configuration(config)
+		        .header().logo(logo).logoHeight(120).text("Email Confirmation ").and()
+		        .text("Hi "+name  +",").and()
+		        .text("Thanks for your information ").and()
+		       
+		        .copyright("USPA").url("https://uspa.tech").suffix(". All rights reserved.").and()
+		        .footerText("This is a demo email from Leo CDP").and()
+		        //.footerImage(TESTONEPIXEL_PNG).width(1)
+		        .build();
+		String html = htmlTextEmail.getHtml();
+		return html;
+	}
+	
+	public static void sendThanksEmail(String profileId, String toEmailAddress, String name) {
+		try {
+			String content = MarketingAutomationService.getThanksEmail(name);
+			EmailMessage messageModel = new EmailMessage("contact@uspa.tech", toEmailAddress, name, profileId, "Thanks for your information", content);
+			EmailSender.sendToSmtpServer(messageModel);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	
 	public static void sendRecommendation(String profileId, String oneSignalPlayerId , String toEmailAddress, String name, String productName, double price, String productLink) {
 		try {
 			String content = MarketingAutomationService.getHtmlMailWithProduct(name, productName, price, productLink);

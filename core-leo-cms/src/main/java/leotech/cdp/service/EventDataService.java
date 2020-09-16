@@ -102,6 +102,7 @@ public class EventDataService {
 		} 
 		else if(eventName.equals(ADD_TO_CART)) {
 			 e.setProcessors(Arrays.asList(WEB_PUSH_MARKETING, ADS_RETARGETING, EMAIL_RETARGETING, APP_PUSH_MARKETING, SMS_RETARGETING));
+			
 		} 
 		else if(eventName.equals(BUY)) {
 			e.setConversion(true);
@@ -116,7 +117,7 @@ public class EventDataService {
 		DeviceDaoUtil.save(userDevice);
 		String userDeviceId = userDevice.getId();
 		
-		ProfileDataService.updateProfileFromEvent(refProfileId, srcObserverId, srcTouchpointId, touchpointRefDomain, sourceIP, userDeviceId, eventName);
+		ProfileDataService.triggerProfileFromEvent(refProfileId, srcObserverId, srcTouchpointId, touchpointRefDomain, sourceIP, userDeviceId, eventName);
 		return 201;
 	}
 	

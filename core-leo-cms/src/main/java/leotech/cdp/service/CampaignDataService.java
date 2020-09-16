@@ -1,13 +1,16 @@
 package leotech.cdp.service;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import leotech.ads.model.AdType;
 import leotech.ads.model.DisplayAdData;
 import leotech.cdp.dao.ProductItemDaoUtil;
 import leotech.cdp.dao.singleview.EventSingleDataView;
+import leotech.cdp.dao.singleview.ProfileSingleDataView;
 import leotech.cdp.model.activation.Campaign;
 import leotech.cdp.model.business.ProductItem;
 
@@ -22,16 +25,20 @@ public class CampaignDataService {
 		return map;
 	}
 
-	public static Campaign queryActiveCampaign(String placementId, String visitorId, String srcTouchpointId) {
+	public static Campaign queryActiveCampaign(String touchpointId, String visitorId) {
 		Campaign campaign = new Campaign("demo retargeting", Campaign.CAMPAIGN_TYPE_RETARGETING);
 		
 		campaign.setMapSkuToProducts(getMapSkuToProducts());
 		return campaign;
 	}
+	public static Campaign queryActiveCampaign(String visitorId) {
+		return queryActiveCampaign("", visitorId);
+	}
 	
-	public static DisplayAdData getDisplayAdData(String touchpointId, String visitorId, String srcTouchpointId) {
+	
+	public static DisplayAdData getDisplayAdData(String touchpointId, String visitorId) {
 		// get running remarketing campaign
-		Campaign campaign = queryActiveCampaign(touchpointId, visitorId, srcTouchpointId);
+		Campaign campaign = queryActiveCampaign(touchpointId, visitorId);
 		
 		String productSku = "1000";
 		// get last action
@@ -65,5 +72,43 @@ public class CampaignDataService {
 		ad.setBeaconData(beacon );
 		
 		return ad;
+	}
+	
+	public static void doMarketingAutomation(ProfileSingleDataView profile) {
+		String profileId = profile.getId();
+		String oneSignalPlayerId = "";
+		Set<String> userIds = profile.getNotificationUserIds().getOrDefault("onesignal", new HashSet<String>());
+		if( ! userIds.isEmpty()) {
+			oneSignalPlayerId = userIds.iterator().next();
+		}
+		String toEmailAddress =  profile.getPrimaryEmail();
+		String name = profile.getFirstName();
+		String visitorId = profile.getVisitorId();
+		
+		Campaign campaign = queryActiveCampaign(visitorId);
+		
+		String campaignId = campaign.getId();
+		String productSku = "1000";
+		// get last action
+		
+		EventSingleDataView lastAction = ProfileDataService.getLastTrackingEventForRetargeting(visitorId);
+		if(lastAction != null) {
+			//FIXME remove fake SKU data later
+			System.out.println(" [lastAction] " + lastAction);
+			productSku = lastAction.getEventData().getOrDefault("product-sku", "1000");
+		}
+		ProductItem item = campaign.getProductItemBySku(productSku);
+		
+		String clickThrough;
+		if(item.getFullUrl().contains("#")) {
+			clickThrough = item.getFullUrl() + "leoadscp=" + campaignId;
+		} else {
+			clickThrough = item.getFullUrl() + "#leoadscp=" + campaignId;
+		}
+		
+		String productName = item.getName();
+		double price = item.getSalePrice();
+		String productLink = clickThrough;// FIXME
+		MarketingAutomationService.sendRecommendation(profileId, oneSignalPlayerId, toEmailAddress, name, productName, price, productLink );
 	}
 }
