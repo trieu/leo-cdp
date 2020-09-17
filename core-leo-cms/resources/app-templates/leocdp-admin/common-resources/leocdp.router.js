@@ -9,12 +9,12 @@
 LeoCdpAdmin.navRouters = {
 		"defaultRouter" : {
 			"menuName" : "Primary Dashboard",
-			"functionName" : "loadPrimaryDashboard",
-			"breadcrumb" : ["Unified Analytics Hub", "Primary Dashboard"],
-			"activeMenuItem" : "Primary_Dashboard"
+			"functionName" : "loadMainDataDashboard",
+			"breadcrumb" : ["Unified Analytics Hub", "Main Data Dashboard"],
+			"activeMenuItem" : "Main_Data_Dashboard"
 		},
 		
-		// 0  Main Analytics Dashboard
+		// 0  Knowledge-base for end-users
 		"Learn_Leo_CDP": {
 			"menuName" : "Self-Learning Courses",
 			"functionName" : "loadSelfLearningCourses",
@@ -22,22 +22,15 @@ LeoCdpAdmin.navRouters = {
 			"activeMenuItem" : "USPA_Knowledge_Hub"
 		},
 		
-		// 1.1 Main Analytics Dashboard
-		"Primary_Dashboard": {
-			"menuName" : "Primary Dashboard",
-			"functionName" : "loadPrimaryDashboard",
-			"breadcrumb" : ["Unified Analytics Hub", "Primary Dashboard"],
-			"activeMenuItem" : "Primary_Dashboard"
+		// 1.1 Main Data Analytics Dashboard
+		"Main_Data_Dashboard": {
+			"menuName" : "Main Data Dashboard",
+			"functionName" : "loadMainDataDashboard",
+			"breadcrumb" : ["Unified Analytics Hub", "Main Data Dashboard"],
+			"activeMenuItem" : "Main_Data_Dashboard"
 		},
 		
-		// 1.2 TODO Content Dashboard
-		"Content_Dashboard" : {
-			"menuName" : "Content Dashboard",
-			"functionName" : "loadContentDashboard",
-			"breadcrumb" : ["Creative Content Hub", "Content Dashboard"]
-		},
-		
-		// 1.3 Analytics 360 Notebooks
+		// 1.2 Analytics 360 Notebooks
 		"Data_Science_Notebooks": {
 			"menuName" : "Data Science Notebooks",
 			"functionName" : "loadDataScienceNotebooks",
@@ -50,170 +43,107 @@ LeoCdpAdmin.navRouters = {
 		"Customer_Persona_List" : {
 			"menuName" : "Customer Persona List",
 			"functionName" : "loadCustomerPersonaList",
-			"breadcrumb" : ["Customer Journey Hub", "Customer Persona List"]
+			"breadcrumb" : ["Customer Journey Map", "Customer Persona List"]
 		},
 		"Customer_Persona_Report" : {
 			"menuName" : "Customer Persona Report",
 			"functionName" : "loadCustomerPersonaReport",
-			"breadcrumb" : ["Customer Journey Hub", "Customer Persona List", "Persona Report"]
+			"breadcrumb" : ["Customer Journey Map", "Customer Persona List", "Persona Report"]
 		},
 		"Customer_Persona_Editor" : {
 			"menuName" : "Customer Persona Details",
 			"functionName" : "loadCustomerPersonaDetails",
-			"breadcrumb" : ["Customer Journey Hub", "Customer Persona List", "Persona Editor"]
+			"breadcrumb" : ["Customer Journey Map", "Customer Persona List", "Persona Editor"]
 		},
 		
 		// 2.2 Media Channel 
-		"Data_Journey_Map" : {
-			"menuName" : "Data Journey Map",
+		"Customer_Journey_Map" : {
+			"menuName" : "Customer Journey Map",
 			"functionName" : "loadDataJourneyMap",
-			"breadcrumb" : ["Customer Journey Hub", "Data Journey Map"],
-			"activeMenuItem" : "Data_Journey_Map"
+			"breadcrumb" : ["Customer Journey Map", "Customer Journey Map"],
+			"activeMenuItem" : "Customer_Journey_Map"
 		},
 		"Media_Channel_Report" : {
 			"menuName" : "Media Channel Report",
 			"functionName" : "loadMediaChannelReport",
-			"breadcrumb" : ["Customer Journey Hub", "Data Journey Map" , "Media Channel Report" ],
-			"activeMenuItem" : "Data_Journey_Map"
+			"breadcrumb" : ["Customer Journey Map", "Customer Journey Map" , "Media Channel Report" ],
+			"activeMenuItem" : "Customer_Journey_Map"
 		},
 		"Media_Channel_Editor" : {
 			"menuName" : "Media Channel Editor",
 			"functionName" : "loadMediaChannelEditor",
-			"breadcrumb" : ["Customer Journey Hub", "Data Journey Map" , "Media Channel Editor" ],
-			"activeMenuItem" : "Data_Journey_Map"
+			"breadcrumb" : ["Customer Journey Map", "Customer Journey Map" , "Media Channel Editor" ],
+			"activeMenuItem" : "Customer_Journey_Map"
 		},
 		
 		// 2.3 Customer Touchpoint
 		"Customer_Touchpoint_List" : {
 			"menuName" : "Customer Touchpoint List",
 			"functionName" : "loadCustomerTouchpointList",
-			"breadcrumb" : ["Customer Journey Hub", "Touchpoint List"],
-			"activeMenuItem" : "Data_Journey_Map"
+			"breadcrumb" : ["Customer Journey Map", "Touchpoint List"],
+			"activeMenuItem" : "Customer_Journey_Map"
 		},
 		"Customer_Touchpoint_Report" : {
 			"menuName" : "Touchpoint Report",
 			"functionName" : "loadCustomerTouchpointReport",
-			"breadcrumb" : ["Customer Journey Hub", "Customer Touchpoint List" , "Customer Touchpoint Report" ],
-			"activeMenuItem" : "Data_Journey_Map"
+			"breadcrumb" : ["Customer Journey Map", "Customer Touchpoint List" , "Customer Touchpoint Report" ],
+			"activeMenuItem" : "Customer_Journey_Map"
 		},
 		"Customer_Touchpoint_Editor" : {
 			"menuName" : "Touchpoint Report",
 			"functionName" : "loadCustomerTouchpointEditor",
-			"breadcrumb" : ["Customer Journey Hub", "Customer Touchpoint List" , "Customer Touchpoint Editor" ],
-			"activeMenuItem" : "Data_Journey_Map"
+			"breadcrumb" : ["Customer Journey Map", "Customer Touchpoint List" , "Customer Touchpoint Editor" ],
+			"activeMenuItem" : "Customer_Journey_Map"
 		},
 		
 		// 2.4 Event Metrics for Media Channel and Touchpoint
-		"Data_Event_Funnel" : {
-			"menuName" : "Data Event Funnel",
+		"Customer_Journey_Funnel" : {
+			"menuName" : "Customer Journey Funnel",
 			"functionName" : "loadDataEventFunnel",
-			"breadcrumb" : ["Customer Journey Hub", "Data Event Funnel"],
-			"activeMenuItem" : "Data_Event_Funnel"
+			"breadcrumb" : ["Customer Journey Map", "Customer Journey Funnel"],
+			"activeMenuItem" : "Customer_Journey_Funnel"
 		},
 		
 		// 2.5 Data Observer for touchpoint and media channel
-		"Leo_Observer_List" : {
-			"menuName" : "Leo Observer List",
+		"Leo_Event_Observer" : {
+			"menuName" : "Leo Event Observer",
 			"functionName" : "loadLeoObserverList",
-			"breadcrumb" : ["Customer Journey Hub", "Leo Observer List"],
-			"activeMenuItem" : "Leo_Observer_List"
+			"breadcrumb" : ["Customer Journey Map", "Leo Event Observer"],
+			"activeMenuItem" : "Leo_Event_Observer"
 		},
-		"Data_Observer_Report" : {
-			"menuName" : "Data Observer Report",
+		"Leo_Observer_Report" : {
+			"menuName" : "Leo Observer Report",
 			"functionName" : "loadDataObserverReport",
-			"breadcrumb" : ["Customer Journey Hub", "Data Observer List", "Data Observer Report"],
-			"activeMenuItem" : "Leo_Observer_List"
+			"breadcrumb" : ["Customer Journey Map", "Leo Event Observer", "Leo Observer Report"],
+			"activeMenuItem" : "Leo_Event_Observer"
 		},
-		"Data_Observer_Configs" : {
-			"menuName" : "Data Observer Configs",
+		"Leo_Observer_Configs" : {
+			"menuName" : "Leo Observer Configs",
 			"functionName" : "loadDataObserverConfigs",
-			"breadcrumb" : ["Customer Journey Hub", "Data Observer List", "Data Observer Configs"],
-			"activeMenuItem" : "Leo_Observer_List"
+			"breadcrumb" : ["Customer Journey Map", "Leo Event Observer", "Leo Observer Configs"],
+			"activeMenuItem" : "Leo_Event_Observer"
 		},
 		
 		// 2.6 Journey Map List, Report and Editor
 		"Journey_Map_List" : {
 			"menuName" : "Journey Map List",
 			"functionName" : "loadJourneyMapList",
-			"breadcrumb" : ["Customer Journey Hub", "Journey Map List"],
-			"activeMenuItem" : "Data_Journey_Map"
+			"breadcrumb" : ["Customer Journey Map", "Journey Map List"],
+			"activeMenuItem" : "Customer_Journey_Map"
 		},
 		"Journey_Map_Report" : {
 			"menuName" : "Journey Map Report",
 			"functionName" : "loadJourneyMapReport",
-			"breadcrumb" : ["Customer Journey Hub", "Journey Map List", "Journey Map Report"],
-			"activeMenuItem" : "Data_Journey_Map"
+			"breadcrumb" : ["Customer Journey Map", "Journey Map List", "Journey Map Report"],
+			"activeMenuItem" : "Customer_Journey_Map"
 		},
 		"Journey_Map_Studio" : {
 			"menuName" : "Journey Map Studio",
 			"functionName" : "loadJourneyMapStudio",
-			"breadcrumb" : ["Customer Journey Hub", "Journey Map List","Journey Map Studio"],
-			"activeMenuItem" : "Data_Journey_Map"
+			"breadcrumb" : ["Customer Journey Map", "Journey Map List","Journey Map Studio"],
+			"activeMenuItem" : "Customer_Journey_Map"
 		},
 		
-		// 2.7 TODO Product and Service Catalog
-		"Products_and_Services" : {
-			"menuName" : "Products and Services",
-			"functionName" : "loadProductsAndServices",
-			"breadcrumb" : ["Customer Journey Hub", "Products & Services"],
-			"activeMenuItem" : "Data_Journey_Map"
-		},
-		"Product_Report" : {
-			"menuName" : "Product Report",
-			"functionName" : "loadProductReport",
-			"breadcrumb" : ["Customer Journey Hub", "Products & Services", "Product Report"],
-			"activeMenuItem" : "Data_Journey_Map"
-		},
-		"Service_Report" : {
-			"menuName" : "Service Report",
-			"functionName" : "loadServiceReport",
-			"breadcrumb" : ["Customer Journey Hub", "Products & Services", "Service Report"],
-			"activeMenuItem" : "Data_Journey_Map"
-		},
-		"Product_Data_Editor" : {
-			"menuName" : "Product Data Editor",
-			"functionName" : "loadProductDataEditor",
-			"breadcrumb" : ["Customer Journey Hub", "Products & Services", "Product Data Editor"],
-			"activeMenuItem" : "Data_Journey_Map"
-		},
-		"Product_Data_Editor" : {
-			"menuName" : "Service Data Editor",
-			"functionName" : "loadServiceDataEditor",
-			"breadcrumb" : ["Customer Journey Hub", "Products & Services", "Service Data Editor"],
-			"activeMenuItem" : "Data_Journey_Map"
-		},
-		
-		// 2.8 Content Marketing List
-		"Content_Category_List" : {
-			"menuName" : "Content Category List",
-			"functionName" : "loadContentCategoryList",
-			"breadcrumb" : ["Customer Journey Hub", "Content Category List"],
-			"activeMenuItem" : "Content_Category_List"
-		},
-		
-		// 2.9 Content Marketing Pages
-		"Pages_in_Category" : {
-			"menuName" : "Pages in Category",
-			"functionName" : "loadPagesInCategory",
-			"breadcrumb" : ["Customer Journey Hub", "Content Category List", "Pages in Category"],
-			"activeMenuItem" : "Content_Category_List"
-		},
-		
-		// 2.10 Content Page Info with Posts
-		"Page_Information" : {
-			"menuName" : "Page Information",
-			"functionName" : "loadPageInfo",
-			"breadcrumb" : ["Customer Journey Hub", "Content Category List", "Pages in Category","Page Information"],
-			"activeMenuItem" : "Content_Category_List"
-		},
-		
-		// 2.11 Content Post Info
-		"Post_Information" : {
-			"menuName" : "Post Information",
-			"functionName" : "loadPostInfo",
-			"breadcrumb" : ["Customer Journey Hub", "Content Category List", "Pages in Category","Page Information","Post Information"],
-			"activeMenuItem" : "Content_Category_List"
-		},
 		
 		// 4.1 Customer Profile 
 		"Customer_Profile_List" : {
@@ -242,77 +172,112 @@ LeoCdpAdmin.navRouters = {
 		},
 		
 		// 4.2 Customer Segmentation
-		"Segment_Data_List" : {
-			"menuName" : "Segment Data List",
+		"Segmentation_List" : {
+			"menuName" : "Segmentation List",
 			"functionName" : "loadSegmentList",
-			"breadcrumb" : ["Customer Data Hub", "Segment Data List"],
-			"activeMenuItem" : "Segment_Data_List"
+			"breadcrumb" : ["Customer Data Hub", "Segmentation List"],
+			"activeMenuItem" : "Segmentation_List"
 		},
 		"Segment_Builder" : {
 			"menuName" : "Segment Builder",
 			"functionName" : "loadSegmentBuilder",
-			"breadcrumb" : ["Customer Data Hub", "Segment Data List", "Segment Builder"],
-			"activeMenuItem" : "Segment_Data_List"
+			"breadcrumb" : ["Customer Data Hub", "Segmentation List", "Segment Builder"],
+			"activeMenuItem" : "Segmentation_List"
 		},
 		"Segment_Details" : {
 			"menuName" : "Segment Details",
 			"functionName" : "loadSegmentDetails",
-			"breadcrumb" : ["Customer Data Hub", "Segment Data List", "Segment Details"],
-			"activeMenuItem" : "Segment_Data_List"
+			"breadcrumb" : ["Customer Data Hub", "Segmentation List", "Segment Details"],
+			"activeMenuItem" : "Segmentation_List"
 		},
 		"Segment_Activation" : {
 			"menuName" : "Segment Activation",
 			"functionName" : "loadSegmentActivation",
-			"breadcrumb" : ["Customer Data Hub", "Segment Data List", "Segment Activation"],
-			"activeMenuItem" : "Segment_Data_List"
+			"breadcrumb" : ["Customer Data Hub", "Segmentation List", "Segment Activation"],
+			"activeMenuItem" : "Segmentation_List"
 		},
 		
-		
-		// 4.3 Customer Data Import from tab-separated values (TSV) file 
-		"Customer_Data_Import" : {
-			"menuName" : "Customer Data Import",
-			"functionName" : "loadCustomerDataImport",
-			"breadcrumb" : ["Customer Data Hub", "Customer Data Import"],
-			"activeMenuItem" : "Customer_Data_Import"
+		// 2.7 TODO Product and Service Catalog
+		"Products_and_Services" : {
+			"menuName" : "Products and Services",
+			"functionName" : "loadProductsAndServices",
+			"breadcrumb" : ["Digital Marketing Assets", "Products & Services"],
+			"activeMenuItem" : "Digital_Marketing_Assets"
+		},
+		"Product_Report" : {
+			"menuName" : "Product Report",
+			"functionName" : "loadProductReport",
+			"breadcrumb" : ["Digital Marketing Assets", "Products & Services", "Product Report"],
+			"activeMenuItem" : "Digital_Marketing_Assets"
+		},
+		"Service_Report" : {
+			"menuName" : "Service Report",
+			"functionName" : "loadServiceReport",
+			"breadcrumb" : ["Digital Marketing Assets", "Products & Services", "Service Report"],
+			"activeMenuItem" : "Digital_Marketing_Assets"
+		},
+		"Product_Data_Editor" : {
+			"menuName" : "Product Data Editor",
+			"functionName" : "loadProductDataEditor",
+			"breadcrumb" : ["Digital Marketing Assets", "Products & Services", "Product Data Editor"],
+			"activeMenuItem" : "Digital_Marketing_Assets"
+		},
+		"Product_Data_Editor" : {
+			"menuName" : "Service Data Editor",
+			"functionName" : "loadServiceDataEditor",
+			"breadcrumb" : ["Digital Marketing Assets", "Products & Services", "Service Data Editor"],
+			"activeMenuItem" : "Digital_Marketing_Assets"
 		},
 		
-		// 4.4 Customer Data Export to tab-separated values (TSV) file
-		"Customer_Data_Export" : {
-			"menuName" : "Customer Data Export",
-			"functionName" : "loadCustomerDataExport",
-			"breadcrumb" : ["Customer Data Hub", "Customer Data Export"],
-			"activeMenuItem" : "Customer_Data_Export"
+		// 4.1 Content Marketing List
+		"Digital_Marketing_Assets" : {
+			"menuName" : "Digital Marketing Assets",
+			"functionName" : "loadContentCategoryList",
+			"breadcrumb" : ["Customer Journey Map", "Digital Marketing Assets"],
+			"activeMenuItem" : "Digital_Marketing_Assets"
 		},
 		
-		// 4.1 Personalization AI Models 
+		// 4.2 Content Marketing Pages
+		"Pages_in_Category" : {
+			"menuName" : "Media Pages",
+			"functionName" : "loadPagesInCategory",
+			"breadcrumb" : ["Customer Journey Map", "Digital Marketing Assets", "Media Pages"],
+			"activeMenuItem" : "Digital_Marketing_Assets"
+		},
+		
+		// 4.3 Content Page Info with Posts
+		"Page_Information" : {
+			"menuName" : "Page Information",
+			"functionName" : "loadPageInfo",
+			"breadcrumb" : ["Customer Journey Map", "Digital Marketing Assets", "Media Pages","Page Information"],
+			"activeMenuItem" : "Digital_Marketing_Assets"
+		},
+		
+		// 4.4 Content Post Info
+		"Post_Information" : {
+			"menuName" : "Post Information",
+			"functionName" : "loadPostInfo",
+			"breadcrumb" : ["Customer Journey Map", "Digital Marketing Assets", "Media Pages","Page Information","Post Information"],
+			"activeMenuItem" : "Digital_Marketing_Assets"
+		},
+		
+		// 4.5 Customer Personalization Models 
 		"Personalization_Models" : {
 			"menuName" : "Personalization Models",
 			"functionName" : "loadPersonalizationModels",
 			"breadcrumb" : ["Personalization AI Hub", "Personalization AI Models"],
-			"activeMenuItem" : "Segment_Data_List"
+			"activeMenuItem" : "Segmentation_List"
 		},
 		
-		// 4.1 Personalization AI Widgets
-		"Personalization_Widgets" : {
-			"menuName" : "Personalization Widgets",
+		// 4.6 Affiliate Advertising Widgets
+		"Affiliate_Ad_Widgets" : {
+			"menuName" : "Affiliate Ad Widgets",
 			"functionName" : "loadPersonalizationWidgets",
 			"breadcrumb" : ["Personalization AI Hub", "Personalization Widgets"],
-			"activeMenuItem" : "Segment_Data_List"
+			"activeMenuItem" : "Segmentation_List"
 		},
 		
-		// 5.1 Voucher/Coupon Management
-		"Activation_Rules" : {
-			"menuName" : "Activation Rules",
-			"functionName" : "loadActivationRules",
-			"breadcrumb" : ["Customer Activation", "Activation Rules"]
-		},
-		"Coupon_Report" : {
-			"menuName" : "Coupon Report",
-			"functionName" : "loadCouponReport",
-			"breadcrumb" : ["Customer Activation", "Coupon Management", "Coupon Report"]
-		},
-		
-		// 5.2 Email Marketing Activation Campaigns
+		// 4.7 Email Marketing Campaigns
 		"Email_Campaigns" : {
 			"menuName" : "Email Campaign List",
 			"functionName" : "loadEmailCampaigns",
@@ -329,7 +294,7 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Customer Activation", "Email Campaigns", "Email Campaign Editor"]
 		},
 		
-		// 5.3 Push Message Marketing Activation Campaigns
+		// 4.8 Push Message Marketing Campaigns
 		"Push_Message_Campaigns" : {
 			"menuName" : "Push Message Campaigns",
 			"functionName" : "loadPushMessageCampaigns",
@@ -346,7 +311,7 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Customer Activation", "Push Message Campaigns", "Campaign Editor"]
 		},
 		
-		// User Login Management
+		// 5.1 User Login Management
 		"User_Login_List" : {
 			"menuName" : "User Login List",
 			"functionName" : "loadUserLoginList",
@@ -364,6 +329,16 @@ LeoCdpAdmin.navRouters = {
 			"functionName" : "loadMyLoginInfo",
 			"breadcrumb" : ["My Login Information"]
 		},
+		
+		// 5.2 Customer Data API to manually track, Import/Export  tab-separated values (TSV) file 
+		"Data_API_Management" : {
+			"menuName" : "Data API Management",
+			"functionName" : "loadCustomerDataImport",
+			"breadcrumb" : ["Customer Data Hub", "Data API Management"],
+			"activeMenuItem" : "Data_API_Management"
+		},
+	
+		// 5.3 System Monitor and Configs 
 		"System_Configuration" : {
 			"menuName" : "System Configuration",
 			"functionName" : "loadSystemInfoConfigs",

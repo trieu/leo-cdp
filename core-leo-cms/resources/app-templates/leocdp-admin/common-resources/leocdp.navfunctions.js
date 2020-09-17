@@ -19,7 +19,7 @@ LeoCdpAdmin.navFunctions.loadSelfLearningCourses = function(breadcrumbHtml) {
 
 //###################### Analytics 360 Hub ######################
 
-LeoCdpAdmin.navFunctions.loadPrimaryDashboard = function(breadcrumbHtml) {
+LeoCdpAdmin.navFunctions.loadMainDataDashboard = function(breadcrumbHtml) {
     LeoCdpAdmin.loadView('/view/modules/analytics/marketing-dashboard.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
     	initPrimaryDashboard();
@@ -65,14 +65,14 @@ LeoCdpAdmin.navFunctions.loadCustomerTouchpointList = function(breadcrumbHtml) {
 }
 
 LeoCdpAdmin.navFunctions.loadDataJourneyMap = function(breadcrumbHtml) {
-	LeoCdpAdmin.loadView('/view/modules/journey/data-journey-map.html?admin=1', pageDomSelector, function () {
+	LeoCdpAdmin.loadView('/view/modules/journey/customer-journey-map.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
     	initMediaJourneyMap();
     });
 }
 
 LeoCdpAdmin.navFunctions.loadDataEventFunnel = function(breadcrumbHtml) {
-	LeoCdpAdmin.loadView('/view/modules/journey/data-event-funnel.html?admin=1', pageDomSelector, function () {
+	LeoCdpAdmin.loadView('/view/modules/journey/customer-journey-funnel.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
     	initBehavioralEventList();
     });
@@ -239,7 +239,7 @@ LeoCdpAdmin.navFunctions.deletePage = function(pageModel) {
 	         LeoAdminApiUtil.callPostAdminApi(urlStr, params, function (json) {
 	             if (json.httpCode === 0 && json.errorMessage === '') {
 	                 if (json.data) {
-	                     location.hash = 'calljs-leoCdpRouter("Content_Category_List")';
+	                     location.hash = 'calljs-leoCdpRouter("Digital_Marketing_Assets")';
 	                 }
 	             }
 	         });
@@ -286,7 +286,7 @@ LeoCdpAdmin.navFunctions.deletePost = function(postModel) {
 	         LeoAdminApiUtil.callPostAdminApi(urlStr, params, function (json) {
 	             if (json.httpCode === 0 && json.errorMessage === '') {
 	                 if (json.data) {
-	                	 location.hash = 'calljs-leoCdpRouter("Content_Category_List")';
+	                	 location.hash = 'calljs-leoCdpRouter("Digital_Marketing_Assets")';
 	                 }
 	             }
 	         });
