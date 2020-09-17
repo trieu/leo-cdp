@@ -82,10 +82,10 @@
 				</a>
 				<ul id="analytics_hub_menu" class="collapse in" aria-expanded="true">
 					<li>
-						<a id="Primary_Dashboard" href="#calljs-leoCdpRouter('Primary_Dashboard')"> <i class="fa fa-fw  fa-bar-chart"></i>  Primary Dashboard </a>
+						<a id="Primary_Dashboard" href="#calljs-leoCdpRouter('Primary_Dashboard')"> <i class="fa fa-fw  fa-bar-chart"></i> Main Data Dashboard </a>
 					</li>
 					<li>
-						<a id="Data_Science_Notebooks" href="#calljs-leoCdpRouter('Data_Science_Notebooks')"> <i class="fa fa-fw fa-book"></i> Data Science Notebooks</a>
+						<a id="Data_Science_Notebooks" href="#calljs-leoCdpRouter('Data_Science_Notebooks')"> <i class="fa fa-fw fa-book"></i> Data Science Notebook</a>
 					</li>
 				</ul>
 			</li>
@@ -93,29 +93,20 @@
 			<!--  2 - Customer Journey Map   -->
 			<li id="nav_journey_hub" style="display: ;" >
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#journey_hub_menu"> <i class="fa fa-fw fa-map"></i>
-				 	Customer Journey Hub<i id="journey_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
+				 	Customer Journey Hub <i id="journey_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
 				<ul id="journey_hub_menu" class="collapse in" aria-expanded="true">
 					
 					<li>
-						<a id="Data_Event_Funnel" href="#calljs-leoCdpRouter('Data_Event_Funnel')"> <i class="fa fa-fw fa-list-ol"></i> Data Event Funnel </a>
+						<a id="Data_Event_Funnel" href="#calljs-leoCdpRouter('Data_Event_Funnel')"><i class="fa fa-fw fa-list-ol"></i> Customer Journey Funnel</a>
 					</li>
 					
 					<li>
-						<a id="Data_Journey_Map" href="#calljs-leoCdpRouter('Data_Journey_Map')"> <i class="fa fa-fw fa-map-o"></i> Data Journey Map</a>
-					</li>	
-					
-					<li style="display: none;" >
-						<a id="Products_and_Services" href="#calljs-leoCdpRouter('Products_and_Services')"> <i class="fa fa-fw fa-database"></i> Products and Services</a>
+						<a id="Data_Journey_Map" href="#calljs-leoCdpRouter('Data_Journey_Map')"> <i class="fa fa-fw fa-map-o"></i> Customer Journey Map</a>
 					</li>
 					
 					<li>
-						<a id="Leo_Observer_List" href="#calljs-leoCdpRouter('Leo_Observer_List')"> <i class="fa fa-fw fa-camera"></i> Leo Observer List</a>
-					</li>
-					
-					<li>
-						<a id="Content_Category_List" href="#calljs-leoCdpRouter('Content_Category_List')" title="Content Category List for Inbound Marketing" > 
-							<i class="fa fa-fw fa-list-ul" ></i> Content Category List </a>
+						<a id="Leo_Observer_List" href="#calljs-leoCdpRouter('Leo_Observer_List')"> <i class="fa fa-fw fa-camera"></i> Event Observer List</a>
 					</li>
 					
 				</ul>
@@ -129,19 +120,29 @@
 				<ul id="customer_hub_menu" class="collapse in" aria-expanded="true">
 					
 					<li>
-						<a id="Customer_Profile_List" href="#calljs-leoCdpRouter('Customer_Profile_List')"> <i class="fa fa-fw fa-address-card-o"></i> Customer Profile List</a>
+						<a id="Customer_Profile_List" href="#calljs-leoCdpRouter('Customer_Profile_List')"> <i class="fa fa-fw fa-list-ul"></i> Customer Profile List</a>
 					</li>
 					
 					<li>
-						<a id="Segment_Data_List" href="#calljs-leoCdpRouter('Segment_Data_List')"> <i class="fa fa-fw fa-object-group"></i> Segment Data List</a>
+						<a id="Segment_Data_List" href="#calljs-leoCdpRouter('Segment_Data_List')"> <i class="fa fa-object-group" aria-hidden="true"></i> Segmentation List</a>
+					</li>
+					
+				</ul>
+			</li>
+			
+			<li id="nav_customer_hub" >
+				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#marketing_hub_menu"> <i class="fa fa-fw fa-line-chart"></i>
+					Marketing Automation <i id="marketing_data_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
+				</a>
+				<ul id="marketing_hub_menu" class="collapse in" aria-expanded="true">
+					
+					<li>
+						<a id="Content_Category_List" href="#calljs-leoCdpRouter('Content_Category_List')" title="Digital Media Assets for Marketing" > 
+							<i class="fa fa-fw fa-sitemap" ></i> Digital Media Assets </a>
 					</li>
 					
 					<li>
-						<a id="Customer_Data_Import" href="#calljs-leoCdpRouter('Customer_Data_Import')"> <i class="fa fa-fw fa-download"></i> Customer Data Import</a>
-					</li>
-					
-					<li>
-						<a id="Customer_Data_Export" href="#calljs-leoCdpRouter('Customer_Data_Export')"> <i class="fa fa-fw fa-upload"></i> Customer Data Export</a>
+						<a id="Customer_Data_Export" href="#calljs-leoCdpRouter('Customer_Data_Export')"> <i class="fa fa-fw fa-calendar-check-o"></i> Campaign Management</a>
 					</li>
 					
 				</ul>
@@ -154,9 +155,12 @@
 				</a>
 				<ul id="system_management_menu" class="collapse in" aria-expanded="true">
 					<li>
-						<a id="User_Login_List" href="#calljs-leoCdpRouter('User_Login_List')"> <i class="fa fa-user-plus" aria-hidden="true"></i>  User Login List</a>
+						<a id="User_Login_List" href="#calljs-leoCdpRouter('User_Login_List')"> <i class="fa fa-user-plus" aria-hidden="true"></i>  User Login Management</a>
 					</li>
-					<li >
+					<li>
+						<a id="Customer_Data_Import" href="#calljs-leoCdpRouter('Customer_Data_Import')"> <i class="fa fa-fw fa-exchange"></i> Data API Management</a>
+					</li>
+					<li>
 						<a id="System_Configuration" href="#calljs-leoCdpRouter('System_Configuration')"> <i class="fa fa-cog" aria-hidden="true"></i> System Configuration</a>
 					</li>
 				</ul>
@@ -181,7 +185,7 @@
 	/////////////////////////////// READY //////////////////////////////////
 	
 	function pageWrapperResize(){
-		$('#page-wrapper').attr('style', 'width:'+($(window).width() - 228 ) + 'px!important');
+		$('#page-wrapper').attr('style', 'width:'+($(window).width() - 227 ) + 'px!important');
 	}
 	
 	$(window).resize(function() {

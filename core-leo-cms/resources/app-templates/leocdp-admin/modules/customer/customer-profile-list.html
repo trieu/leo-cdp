@@ -48,11 +48,11 @@
                     <thead>
                         <tr>
                             <th>UUID</th>
-                            <th>Full Name</th>
-                            <th>Type</th>
-                            <th>Last seen touchpoint</th>
-                            <th>Primary Email</th>
+                            <th>Is Lead</th>
                             <th>Lead Score</th>
+                            <th>Full Name</th>
+                            <th>Last-seen Touchpoint</th>
+                            <th>Primary Email</th>
                             <th>Created at</th>
                             <th>Updated at</th>
                             <th>Actions</th>
@@ -115,11 +115,25 @@
                 	{
                         "render": function (data, type, row) {
                         	var callJsViewStr = "#calljs-leoCdpRouter('Customer_Profile_Info','" + row.id + "')";
-                            return '<a title="Profile Report" href="' + callJsViewStr + '" >'+textTruncate(data,10)+'</a>';
+                        	var title = 'View Profile Report'
+                            return '<a title="' + title + '" href="' + callJsViewStr + '" >'+textTruncate(data,8)+'</a>';
                         },
                         "targets": 0
                     },
-                   
+                    {
+                        "render": function (data, type, row) {
+                        	var isLead = data !== 'ANONYMOUS' && row.totalLeadScore > 0;
+                        	var html = getCheckedBoxIcon(isLead);
+                            return '<div class="datatable_text text-center">'  + html + '</div>';
+                        },
+                        "targets": 1
+                    },
+                    {
+                        "render": function (data, type, row) {
+                        	return '<div class="datatable_text text-center">'  + new Number(data).toLocaleString() + '</div>';
+                        },
+                        "targets": 2
+                    },
                     {
                         "render": function (data, type, row) {
                         	var name = 'Anonymous Person';
@@ -129,19 +143,13 @@
                             var callJsViewStr = "#calljs-leoCdpRouter('Customer_Profile_Info','" + row.id + "')";
                             return '<a title="Profile Report" href="' + callJsViewStr + '" >' + name + '</a>';
                         },
-                        "targets": 1
-                    },
-                    {
-                        "render": function (data, type, row) {
-                            return '<div class="datatable_text">'  + data + '</div>';
-                        },
-                        "targets": 2
+                        "targets": 3
                     },
                 	{
                         "render": function (data, type, row) {
                         	return '<div class="datatable_text">'  + textTruncate(row.lastTouchpoint.name, 30) + '</div>';
                         },
-                        "targets": 3
+                        "targets": 4
                     },
                     {
                         "render": function (data, type, row) {
@@ -152,12 +160,6 @@
                             	return '<div class="datatable_text">'  + link + '</div>';
                         	}
                         	return '';
-                        },
-                        "targets": 4
-                    },
-                    {
-                        "render": function (data, type, row) {
-                        	return '<div class="datatable_text text-center">'  + new Number(data).toLocaleString() + '</div>';
                         },
                         "targets": 5
                     },
@@ -197,19 +199,19 @@
                         "data": "id" // 0
                     },
                     {
-                        "data": "firstName" // 1
+                        "data": "typeAsText" // 1
                     },
                     {
-                        "data": "typeAsText" // 2
+                        "data": "totalLeadScore" // 2
                     },
                     {
-                        "data": "lastTouchpoint" // 3
+                        "data": "firstName" // 3
                     },
                     {
-                        "data": "primaryEmail" // 4
+                        "data": "lastTouchpoint" // 4
                     },
                     {
-                        "data": "totalLeadScore" // 5
+                        "data": "primaryEmail" // 5
                     },
                     {
                         "data": "createdAt" // 6

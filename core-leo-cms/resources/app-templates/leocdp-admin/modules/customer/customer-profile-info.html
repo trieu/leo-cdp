@@ -153,7 +153,7 @@
            </div>
            
            <div class="col-md-7">
-               <h4> <i class="fa fa-address-card-o" aria-hidden="true"></i> Personal Information </h4>
+               <h4> <i class="fa fa-address-card-o" aria-hidden="true"></i> Personal Information <span id="is_verified_profile" ></span> </h4>
                <table border=0 class="underlined" style="width: 100%;">
                    <tr>
                        <td>
@@ -415,18 +415,30 @@
          var params = {'id': profileId };
          var dataProcessor = function(data){
         	 var noinfo = 'No information';
-        	 if(data.age === 0){
+        	 
+        	 if(data.age <= 0){
         		 data.age = noinfo;
-        	 }
+        	 } 
         	 if(data.livingLocation === ''){
         		 data.livingLocation = noinfo;
         	 }
         	 if(data.primaryPhone === ''){
         		 data.primaryPhone = noinfo;
         	 }
+        	 if(data.firstName === ''){
+        		 data.firstName = noinfo;
+        	 }
+        	 if(data.lastName === ''){
+        		 data.lastName = noinfo;
+        	 }
         	 if(data.primaryEmail === ''){
         		 data.primaryEmail = noinfo;
+        	 } else {
+        		//FIXME
+        		 $('#is_verified_profile').html(getCheckedBoxIcon(true));
         	 }
+        	 
+        	 
         	 return data;
          }
          

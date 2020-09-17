@@ -584,3 +584,11 @@ var getOperatorsForNumberField = function(){
 function roundNumber(value, decimals) {
     return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
 }
+
+function getCheckedBoxIcon(data){
+	var html = '<i style="font-size:1.4em;color:#3300ff" class="fa fa-check-square-o" aria-hidden="true"></i>';
+	if( ! data ){
+		html = '<i style="font-size:1.4em;color:#3300ff" class="fa fa-square-o" aria-hidden="true"></i>';
+	}
+	return html;
+}

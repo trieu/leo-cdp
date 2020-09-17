@@ -18,11 +18,11 @@
 	        <table id="segment-list" class="display" style="width:100%">
 	            <thead>
 	                <tr>
-	                    <th>Name</th>
+	                    <th>Segment Name</th>
 	                    <th>Description</th>
 	                    <th>Type</th>
 	                    <th>Total Profiles</th>
-	                    <th>Query Details</th>
+	                    <th>Auto Query</th>
 	                    <th>Status</th>
 	                    <th>Created at</th>
 	                    <th>Updated at</th>
@@ -79,7 +79,7 @@
                 	{
                         "render": function (data, type, row) {
                         	var callJsViewStr = "#calljs-leoCdpRouter('Segment_Details','" + row.id + "')";
-                            return '<a title="Segment Report: '+data+'" href="' + callJsViewStr + '" >'+textTruncate(data,50)+'</a>';
+                            return '<i class="fa fa-arrow-right" aria-hidden="true"></i> <a title="Segment Report: '+data+'" href="' + callJsViewStr + '" >'+textTruncate(data,50)+'</a>';
                         },
                         "targets": 0
                     },
@@ -104,8 +104,7 @@
                     },
                     {
                         "render": function (data, type, row) {
-                        	
-                        	return '<div class="datatable_text">' + data + '</div>';
+                        	return '<div class="datatable_text text-center" >' + getCheckedBoxIcon(data) + '</div>';
                         },
                         "targets": 4
                     },
@@ -113,10 +112,10 @@
                         "render": function (data, type, row) {
                         	var statusText = 'REMOVED';
                         	if(data === 0){
-                        		statusText = 'PASSIVE';
+                        		statusText = 'DISABLED';
                         	}
                         	else if(data === 1){
-                        		statusText = 'ACTIVE';
+                        		statusText = 'ENABLED';
                         	}
                         	else if(data === 2){
                         		statusText = 'ACTIVATED';

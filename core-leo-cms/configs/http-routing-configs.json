@@ -11,7 +11,7 @@
 		},
 		
 		"------------ Local mainAdminLeoCDP ------------" : {"notes" : "Local Leo CDP - Admin Dashboard System" },
-		"mainAdminLeoCDP": {
+		"localMainAdminLeoCDP": {
 			"name": "MainHttpWorker",
 			"host": "127.0.0.1",
 			"port": 9070,
@@ -22,7 +22,7 @@
 		},
 		
 		"------------ Local dataObserverWorker ------------" : {"notes" : "Local Leo CDP - Data Observer System" },
-		"dataObserverWorker": {
+		"localLeoObserverWorker": {
 			"name": "dataObserverWorker",
 			"host": "127.0.0.1",
 			"port": 9080,
@@ -32,8 +32,8 @@
 			"defaultDbConfig" : "leoCdpDbConfigs"
 		},
 		
-		"------------ DEV Cloud awsMainAdminLeoCDP ------------" : {"notes" : "AWS Cloud - Admin Leo CDP" },
-		"devMainAdminLeoCDP": {
+		"------------ AWS DEV Cloud awsMainAdminLeoCDP ------------" : {"notes" : "AWS Cloud - Admin Leo CDP" },
+		"awsMainAdminLeoCDP": {
 			"name": "awsMainAdminLeoCDP",
 			"host": "127.0.0.1",
 			"port": 9070,
@@ -43,8 +43,8 @@
 			"defaultDbConfig" : "awsLeoCdpDbConfigs"
 		},
 		
-		"------------ DEV Cloud dataObserverWorker ------------" : {"notes" : "AWS Cloud Leo CDP - Data Observer System" },
-		"devDataObserverWorker": {
+		"------------ AWS DEV Cloud dataObserverWorker ------------" : {"notes" : "AWS Cloud Leo CDP - Data Observer System" },
+		"awsLeoObserverWorker": {
 			"name": "awsDataObserverWorker",
 			"host": "127.0.0.1",
 			"port": 9080,

@@ -6,7 +6,6 @@ import java.util.Map;
 import com.arangodb.ArangoCursor;
 import com.arangodb.ArangoDB;
 import com.arangodb.ArangoDatabase;
-import com.google.gson.Gson;
 
 import leotech.system.config.DbConfigs;
 import rfx.core.util.StringUtil;
@@ -62,8 +61,10 @@ public class ArangoDbUtil {
 		if (db == null) {
 			DbConfigs dbConfig = DbConfigs.load(dbConfigKey);
 			
-			System.out.println("DbConfigs.load " + dbConfigKey );
-			System.out.println(new Gson().toJson(dbConfig));
+			System.out.println("--------------------------------");
+			System.out.println("[DbConfigs] load" + dbConfigKey );
+			System.out.println("Host: "+dbConfig.getHost() + " Database: " + dbConfig.getDatabase() + " Port: " + dbConfig.getPort());
+			System.out.println("--------------------------------");
 			
 			String dbName = dbConfig.getDatabase();
 			String host = dbConfig.getHost();

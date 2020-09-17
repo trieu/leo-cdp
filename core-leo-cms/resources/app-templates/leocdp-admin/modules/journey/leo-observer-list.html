@@ -142,10 +142,10 @@
 		    	if(jsonStr !== ''){
 			    	var btnHtml = '<button type="button" class="btn btn-success" onclick="getObserverCode(this)" ';
 			    	btnHtml += (' data-json="' + jsonStr  + '" ' );
-			    	btnHtml += '><i class="fa fa-code" style="font-size:1.4em" aria-hidden="true"></i> Get Code </button>'
+			    	btnHtml += '><i class="fa fa-code" style="font-size:1.2em" aria-hidden="true"></i> Get Tag Code </button>'
 			        return btnHtml;
 		    	}
-		    	return '<span style="font-size:12px">Leo Observer can only collect event data from owned media channels</span>';
+		    	return '<span style="font-size:11.5px">Leo Observer can only collect event data from owned media channels</span>';
 		    },
 		    
 		    insertTemplate: function(value) {
@@ -237,11 +237,11 @@
 	
 	   		    fields: [
 	   		    	{ name: "index", title : "Index", type: "number", width: 20, editing: false, validate: "required" },
-	   		        { name: "name", title : "Channel Name", type: "text", width: 80, validate: "required" , align: "center"},
-	   		     	{ name: "typeName", title : "Channel Type", type: "text", validate: "required" , align: "center"},
+	   		        { name: "name", title : "Media Channel Name", type: "text", width: 80, validate: "required" , align: "center"},
+	   		     	{ name: "typeName", title : "Media Channel Type", type: "text", validate: "required" , align: "center"},
 	   		     	{ name: "isOwnedMedia", title : "Is Owned Media", type: "checkbox", width: 50, validate: "required", align: "center" },
 	   		     	{ name: "url", title : "URL", type: "text", validate: "required", width: 160 },
-	   		     	{ name: "dataObserverCode", title : "Leo Observer Code", type: "DataObserverCode", width: 64}
+	   		     	{ name: "dataObserverCode", title : "Data Observer Tag", type: "DataObserverCode", width: 64}
 	   		    ]
 	   		});  
 	   	})

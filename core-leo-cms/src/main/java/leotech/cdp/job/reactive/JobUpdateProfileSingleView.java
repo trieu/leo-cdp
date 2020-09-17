@@ -60,8 +60,6 @@ public class JobUpdateProfileSingleView extends ReactiveProfileDataJob {
 	@Override
 	protected void doReactiveJob(ProfileSingleDataView profile) {
 		ProfileDataService.updateProfileSingleDataView(profile , false);
-		
-		
 	}
 	
 	@Override
