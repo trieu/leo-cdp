@@ -1,0 +1,98 @@
+### DEMO ADMIN LEO CDP ###
+server {
+
+    server_name demo.leocdp.net;
+
+    location / {
+             proxy_pass http://127.0.0.1:9070/;
+             proxy_set_header X-Forwarded-Proto $scheme;
+             proxy_set_header X-Forwarded-Port $server_port;
+             proxy_set_header Host            $host;
+             proxy_set_header X-Forwarded-For $remote_addr;
+	     expires 1M;
+             access_log off;
+             add_header Cache-Control "public";
+    }
+ 
+    listen [::]:443 ssl; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+
+    ssl_certificate /etc/letsencrypt/live/demo.leocdp.net/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/demo.leocdp.net/privkey.pem; # managed by Certbot
+}
+
+server {
+    if ($host = demo.leocdp.net) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+    listen 80;
+    listen [::]:80;
+
+    server_name demo.leocdp.net;
+    return 404; # managed by Certbot
+}
+
+### DEMO TRACKING ###
+
+server {
+
+    server_name demotrack.leocdp.net;
+
+    location / {
+             proxy_pass http://127.0.0.1:9080/;
+             proxy_set_header X-Forwarded-Proto $scheme;
+             proxy_set_header X-Forwarded-Port $server_port;
+             proxy_set_header Host            $host;
+             proxy_set_header X-Forwarded-For $remote_addr;
+             expires 1M;
+             access_log off;
+             add_header Cache-Control "public";
+      }
+
+    listen [::]:443 ssl ipv6only=on; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/demotrack.leocdp.net/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/demotrack.leocdp.net/privkey.pem; # managed by Certbot
+}
+server {
+    if ($host = demotrack.leocdp.net) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+
+    listen 80;
+    listen [::]:80;
+
+    server_name demotrack.leocdp.net;
+    return 404; # managed by Certbot
+}
+
+### DEMO STATIC FILES ###
+server {
+    server_name demostatic.leocdp.net;
+
+    root /Users/mac/projects/leo-cms-framework/core-leo-cms/public;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/demostatic.leocdp.net/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/demostatic.leocdp.net/privkey.pem; # managed by Certbot
+
+}
+server {
+    if ($host = demostatic.leocdp.net) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    listen 80;
+    server_name demostatic.leocdp.net;
+    return 404; # managed by Certbot
+
+}
