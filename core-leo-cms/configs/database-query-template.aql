@@ -87,6 +87,11 @@ AQL_GET_PUBLIC_PAGES_BY_CATEGORY =>
 
 ########### AQL LEO CMS - CATEGORY  ########################################################################################################;
 
+AQL_GET_ALL_CATEGORIES =>
+	FOR p in cms_category
+	RETURN p
+;
+
 AQL_FIND_KEY_BY_SLUG =>
 	FOR p in cms_category FILTER p.slug == @slug  
 	RETURN p._key

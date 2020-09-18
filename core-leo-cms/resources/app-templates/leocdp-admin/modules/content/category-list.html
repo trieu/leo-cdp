@@ -1,8 +1,8 @@
 <div class="row">
-    <div class="col-lg-10">
+    <div class="col-lg-12">
         <h4 class="page-header" id="page_breadcrumb" > </h4>
     </div>
-    <div class="col-lg-2 text-center" style="padding: 10px">
+    <div class="col-lg-2 text-center" style="padding: 10px; display: none;">
         <button type="button" class="btn btn-success data-control data-control-insert" onclick="loadCategoryForm(false)"  > 
         	<i class="fa fa-fw fa-plus-circle"></i> New Asset Category 
         </button>
@@ -15,14 +15,9 @@
                 <table id="category-list" class="display" style="width:100%">
                  <thead>
                      <tr>
-                         <th>ID</th>
                          <th>Name</th>
                          <th>Description</th>
                          <th>Privacy Status</th>
-                         <th>Creation Time</th>
-                         <th>Modification Time</th>
-                         <th>Navigation Order</th>
-                         <th>Actions</th>
                      </tr>
                  </thead>
              </table>
@@ -37,7 +32,7 @@
         if (usersession) {
             $('#category-list').DataTable({
                 "order": [
-                    [5, "asc"]
+                    [0, "asc"]
                 ],
                 "ajax": {
                     "url": baseAdminApi + '/category/list-all',
@@ -47,9 +42,9 @@
                         d.usersession = usersession;
                     },
                     "dataSrc": function ( json ) {
-                    	var canInsertData = json.canInsertData;
-            	    	var canEditData = json.canEditData;
-                		var canDeleteData = json.canDeleteData;
+                    	canInsertData = json.canInsertData;
+            	    	anEditData = json.canEditData;
+                		canDeleteData = json.canDeleteData;
                 		
                 		if( ! canEditData ){
                 			canEditData = false;
@@ -68,7 +63,7 @@
                             var callJsStr = "#calljs-leoCdpRouter('Pages_in_Category','" + row.key + "')";
                             return '<a title="' + data + '" href="' + callJsStr + '" >' + data + '</a>';
                         },
-                        "targets": 1
+                        "targets": 0
                     },
                     {
                         "render": function (data, type, row) {
@@ -80,37 +75,11 @@
                             }
                             return '<i class="fa fa-folder-o" style="font-size:16px"> Public</i>';
                         },
-                        "targets": 3
-                    },
-                    {
-                        "render": function (data, type, row) {
-                            var date = LeoAdminApiUtil.formater.toDateString(data);
-                            return date;
-                        },
-                        "targets": 4
-                    },
-                    {
-                        "render": function (data, type, row) {
-                            var date = LeoAdminApiUtil.formater.toDateString(data);
-                            return date;
-                        },
-                        "targets": 5
-                    },
-                    {
-                        "render": function (data, type, row) {
-                            var html = '<a class="control" title="' + row.title + '" href="javascript:errorNoAuthorization()" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
-                            if( canEditData ){
-                            	var callJsStr = "#calljs-loadCategoryForm('" + data + "')";
-                                html = '<a class="control" title="' + row.title + '" href="' + callJsStr + '" > <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>';
-                        	}
-                            return html;
-                        },
-                        "targets": 7
+                        "targets": 2
                     }
+                   
                 ],
-                "columns": [{
-                        "data": "key"
-                    },
+                "columns": [
                     {
                         "data": "name"
                     },
@@ -119,21 +88,21 @@
                     },
                     {
                         "data": "privacyStatus"
-                    },
-                    {
-                        "data": "creationTime"
-                    },
-                    {
-                        "data": "modificationTime"
-                    },
-                    {
-                        "data": "navigationOrder"
-                    },
-                    {
-                        "data": "key"
                     }
                 ]
             });
         }
     }    
+    
+    function loadCategoryForm(id) {
+        LeoCdpAdmin.loadView('/view/modules/content/category-form.html?admin=1', pageDomSelector, function () {
+            if (id) {
+                // load from API
+                loadDataCategoryInfo(id);
+            } else {
+                // create new
+                loadDataCategoryInfo(false);
+            }
+        });
+    }
 </script>

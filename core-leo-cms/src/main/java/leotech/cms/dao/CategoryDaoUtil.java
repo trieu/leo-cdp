@@ -9,16 +9,19 @@ import java.util.Map;
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDatabase;
 
+import leotech.cdp.dao.AbstractCdpDatabaseUtil;
 import leotech.cms.model.Category;
 import leotech.system.config.AqlTemplate;
 import leotech.system.util.database.ArangoDbQuery;
 import leotech.system.util.database.ArangoDbUtil;
 
-public class CategoryDaoUtil {
+public class CategoryDaoUtil extends AbstractCdpDatabaseUtil {
 
 	private static final String AQL_FIND_KEY_BY_SLUG = AqlTemplate.get("AQL_FIND_KEY_BY_SLUG");
 	static final String AQL_GET_CATEGORY_BY_KEY = AqlTemplate.get("AQL_GET_CATEGORY_BY_KEY");
 	static final String AQL_GET_ALL_CATEGORIES_BY_NETWORK = AqlTemplate.get("AQL_GET_ALL_CATEGORIES_BY_NETWORK");
+	static final String AQL_GET_ALL_CATEGORIES = AqlTemplate.get("AQL_GET_ALL_CATEGORIES");
+	
 
 	public static String save(Category category) {
 		if (category.isReadyForSave()) {
@@ -55,13 +58,18 @@ public class CategoryDaoUtil {
 		}
 		return "";
 	}
+	
+	public static List<Category> getAllCategories() {
+		ArangoDatabase db = getCdpDbInstance();
+		List<Category> list = new ArangoDbQuery<Category>(db, AQL_GET_ALL_CATEGORIES, Category.class).getResultsAsList();
+		return list;
+	}
 
 	public static List<Category> listAllByNetwork(long networkId) {
-		ArangoDatabase db = ArangoDbUtil.getActiveArangoDbInstance();
+		ArangoDatabase db = getCdpDbInstance();
 		Map<String, Object> bindVars = new HashMap<>(1);
 		bindVars.put("networkId", networkId);
-		List<Category> list = new ArangoDbQuery<Category>(db, AQL_GET_ALL_CATEGORIES_BY_NETWORK, bindVars,
-				Category.class).getResultsAsList();
+		List<Category> list = new ArangoDbQuery<Category>(db, AQL_GET_ALL_CATEGORIES_BY_NETWORK, bindVars, Category.class).getResultsAsList();
 
 		Collections.sort(list, new Comparator<Category>() {
 			@Override

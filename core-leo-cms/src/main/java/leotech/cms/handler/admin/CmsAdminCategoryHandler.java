@@ -6,15 +6,13 @@ import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonObject;
 import leotech.cms.dao.CategoryDaoUtil;
 import leotech.cms.model.Category;
-import leotech.cms.model.Page;
 import leotech.cms.service.CategoryDataService;
 import leotech.system.common.SecuredWebDataHandler;
-import leotech.system.model.AppMetadata;
 import leotech.system.model.JsonDataPayload;
 import leotech.system.model.SystemUser;
 
 public class CmsAdminCategoryHandler extends SecuredWebDataHandler {
-	// for Admin CMS, only for ROLE_ADMIN and ROLE_SUPER_ADMIN
+	// for Admin CMS, only for ROLE_SUPER_ADMIN
 	static final String API_LIST_ALL = "/category/list-all";
 	static final String API_CREATE_NEW = "/category/create-new";
 	static final String API_UPDATE_INFO = "/category/update-info";
@@ -28,7 +26,7 @@ public class CmsAdminCategoryHandler extends SecuredWebDataHandler {
 			if (isAuthorized(loginUser, Category.class)) {
 				switch (uri) {
 					case API_LIST_ALL : {
-						List<Category> list = CategoryDaoUtil.listAllByNetwork(AppMetadata.DEFAULT_ID);
+						List<Category> list = CategoryDaoUtil.getAllCategories();
 						return JsonDataPayload.ok(uri, list, loginUser, Category.class);
 					}
 					case API_GET_INFO : {

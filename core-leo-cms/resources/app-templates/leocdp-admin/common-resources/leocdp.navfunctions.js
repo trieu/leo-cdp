@@ -120,10 +120,10 @@ LeoCdpAdmin.navFunctions.loadCustomerProfileEditor = function (profileId, breadc
     });
 }
 
-LeoCdpAdmin.navFunctions.loadCustomerActivation = function (profileId, breadcrumbHtml) {
-    LeoCdpAdmin.loadView('/view/modules/customer/customer-activation.html?admin=1', pageDomSelector, function () {
+LeoCdpAdmin.navFunctions.loadCampaignManagement = function (breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/modules/marketing/campaign-management.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
-    	initCustomerActivation(profileId);
+    	initCampaignManagement();
     });
 }
 
@@ -159,23 +159,14 @@ LeoCdpAdmin.navFunctions.loadSegmentActivation = function (segmentId, breadcrumb
 
 // --- Customer Data Import and Export functions ---
 
-LeoCdpAdmin.navFunctions.loadCustomerDataImport = function (breadcrumbHtml) {
-    LeoCdpAdmin.loadView('/view/modules/customer/customer-data-import.html?admin=1', pageDomSelector, function () {
-    	$('#page_breadcrumb').html(breadcrumbHtml);
-    });
-}
 
-LeoCdpAdmin.navFunctions.loadCustomerDataExport = function (breadcrumbHtml) {
-    LeoCdpAdmin.loadView('/view/modules/customer/customer-data-export.html?admin=1', pageDomSelector, function () {
-    	$('#page_breadcrumb').html(breadcrumbHtml);
-    });
-}
 
-//###################### Creative Content Hub ######################
+
+//###################### Marketing Data Hub ######################
 
 // --- Category functions ---
 
-LeoCdpAdmin.navFunctions.loadContentCategoryList = function (breadcrumbHtml) {
+LeoCdpAdmin.navFunctions.loadDigitalAssetCategories = function (breadcrumbHtml) {
     LeoCdpAdmin.loadView('/view/modules/content/category-list.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
     	initContentCategoryList();
@@ -189,18 +180,6 @@ LeoCdpAdmin.navFunctions.loadPagesInCategory = function(catKey, breadcrumbHtml) 
     });
 }
 
-
-function loadCategoryForm(id) {
-    LeoCdpAdmin.loadView('/view/modules/content/category-form.html?admin=1', pageDomSelector, function () {
-        if (id) {
-            // load from API
-            loadDataCategoryInfo(id);
-        } else {
-            // create new
-            loadDataCategoryInfo(false);
-        }
-    });
-}
 
 // --- Page functions ---
 
@@ -383,6 +362,20 @@ LeoCdpAdmin.navFunctions.loadMyLoginInfo = function(breadcrumbHtml) {
     LeoCdpAdmin.loadView('/view/modules/system/user-login-info.html?admin=1', pageDomSelector, function () {
     	$('#page_breadcrumb').html(breadcrumbHtml);
     	initMyLoginInfo();
+    });
+}
+
+LeoCdpAdmin.navFunctions.loadDataApiManagement = function (breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/modules/system/data-api-management.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+    	initDataApiManagement()
+    });
+}
+
+LeoCdpAdmin.navFunctions.loadDataApiConfigs = function (id, breadcrumbHtml) {
+    LeoCdpAdmin.loadView('/view/modules/system/data-api-configs.html?admin=1', pageDomSelector, function () {
+    	$('#page_breadcrumb').html(breadcrumbHtml);
+    	initDataApiConfigs(id);
     });
 }
 

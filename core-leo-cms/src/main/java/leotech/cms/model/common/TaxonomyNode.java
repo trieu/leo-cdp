@@ -85,8 +85,7 @@ public abstract class TaxonomyNode extends CmsPersistentObject {
 			collection = arangoDatabase.collection(colName);
 
 			// ensure indexing key fields
-			collection.ensureFulltextIndex(Arrays.asList("name"), new FulltextIndexOptions().minLength(2));
-			collection.ensureFulltextIndex(Arrays.asList("description"), new FulltextIndexOptions().minLength(10));
+			collection.ensureFulltextIndex(Arrays.asList("name"), new FulltextIndexOptions().minLength(5));
 			collection.ensurePersistentIndex(Arrays.asList("slug"), new PersistentIndexOptions().unique(true));
 			collection.ensureHashIndex(Arrays.asList("parentId"), new HashIndexOptions());
 			collection.ensureHashIndex(Arrays.asList("networkId"), new HashIndexOptions());

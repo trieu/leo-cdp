@@ -1,4 +1,6 @@
-<!-- Navigation -->
+
+<!-- Main Navigation Menu -->
+
 <nav id="main_cms_navigation" class="navbar navbar-fixed-top" role="navigation" style="display: none;">
 
 	<div class="navbar-header">
@@ -47,22 +49,28 @@
 				<a href="javascript:" class="dropdown-toggle" data-toggle="dropdown">
 					<i class="fa fa-book"></i>  Knowledge Base  <b class="caret"></b>
 				</a>
-				<ul class="dropdown-menu" style="width: 190px">
+				<ul class="dropdown-menu" style="width: 270px">
 					
 					<li>
-						<a href="#calljs-leoCdpRouter('Learn_Leo_CDP')"> <i class="fa fa-book" aria-hidden="true"></i> Leo CDP 101 </a>
+						<a href="#calljs-leoCdpRouter('Learn_Leo_CDP')"> <i class="fa fa-book" aria-hidden="true"></i> Why is Big Data for Marketing ?</a>
 					</li>
 					<li>
-						<a href="#calljs-leoCdpRouter('Learn_Leo_CDP')"> <i class="fa fa-book" aria-hidden="true"></i> Media Journey Map </a>
+						<a href="#calljs-leoCdpRouter('Learn_Leo_CDP')"> <i class="fa fa-book" aria-hidden="true"></i> USPA framework for beginner</a>
 					</li>
 					<li>
-						<a href="#calljs-leoCdpRouter('Learn_Leo_CDP')"> <i class="fa fa-book" aria-hidden="true"></i> Customer Analytics </a>
+						<a href="#calljs-leoCdpRouter('Learn_Leo_CDP')"> <i class="fa fa-book" aria-hidden="true"></i> Leo CDP for beginner</a>
 					</li>
 					<li>
-						<a href="#calljs-leoCdpRouter('Learn_Leo_CDP')"> <i class="fa fa-book" aria-hidden="true"></i> Data Segmentation </a>
+						<a href="#calljs-leoCdpRouter('Learn_Leo_CDP')"> <i class="fa fa-book" aria-hidden="true"></i> How to design Customer Journey</a>
 					</li>
 					<li>
-						<a href="#calljs-leoCdpRouter('Learn_Leo_CDP')"> <i class="fa fa-book" aria-hidden="true"></i> Customer Activation </a>
+						<a href="#calljs-leoCdpRouter('Learn_Leo_CDP')"> <i class="fa fa-book" aria-hidden="true"></i> How to do customer analytics</a>
+					</li>
+					<li>
+						<a href="#calljs-leoCdpRouter('Learn_Leo_CDP')"> <i class="fa fa-book" aria-hidden="true"></i> How to segment customer </a>
+					</li>
+					<li>
+						<a href="#calljs-leoCdpRouter('Learn_Leo_CDP')"> <i class="fa fa-book" aria-hidden="true"></i> How to do Marketing Automation </a>
 					</li>
 					
 				</ul>
@@ -75,17 +83,19 @@
 	<div id="main-navbar" class="collapse navbar-collapse navbar-ex1-collapse">
 		<ul class="nav navbar-nav side-nav">
 			
-			<!--  1 - Start with KPI metric goals and the dashboard   -->
+			<!--  1 - Unified Data Hub Menu   -->
 			<li id="nav_analytics_hub" style="display: ;" >
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#analytics_hub_menu"> <i class="fa fa-fw fa-line-chart"></i>
 				 	Unified Analytics Hub <i id="data_analytics_hub_collapse_icon" class="fa fa-fw fa-caret-down"> </i>
 				</a>
 				<ul id="analytics_hub_menu" class="collapse in" aria-expanded="true">
 					<li>
-						<a id="Main_Data_Dashboard" href="#calljs-leoCdpRouter('Main_Data_Dashboard')"> <i class="fa fa-fw  fa-bar-chart"></i> Main Data Dashboard </a>
+						<a id="Main_Data_Dashboard" href="#calljs-leoCdpRouter('Main_Data_Dashboard')" title="Main Data Analytics Dashboard" > 
+							<i class="fa fa-fw  fa-bar-chart"></i> Main Data Dashboard </a>
 					</li>
 					<li>
-						<a id="Data_Science_Notebooks" href="#calljs-leoCdpRouter('Data_Science_Notebooks')"> <i class="fa fa-fw fa-book"></i> Data Science Notebooks</a>
+						<a id="Data_Science_Notebooks" href="#calljs-leoCdpRouter('Data_Science_Notebooks')" title="Jupyter Notebooks for Data Science and Data Analyst" > 
+							<i class="fa fa-fw fa-book"></i> Data Science Notebooks </a>
 					</li>
 				</ul>
 			</li>
@@ -98,15 +108,18 @@
 				<ul id="journey_hub_menu" class="collapse in" aria-expanded="true">
 					
 					<li>
-						<a id="Customer_Journey_Funnel" href="#calljs-leoCdpRouter('Customer_Journey_Funnel')"><i class="fa fa-fw fa-list-ol"></i> Customer Journey Funnel</a>
+						<a id="Customer_Journey_Funnel" href="#calljs-leoCdpRouter('Customer_Journey_Funnel')" title="Customer Journey Funnel" >
+							<i class="fa fa-fw fa-list-ol"></i> Customer Journey Funnel </a>
 					</li>
 					
 					<li>
-						<a id="Customer_Journey_Map" href="#calljs-leoCdpRouter('Customer_Journey_Map')"> <i class="fa fa-fw fa-map-o"></i> Customer Journey Map</a>
+						<a id="Customer_Journey_Map" href="#calljs-leoCdpRouter('Customer_Journey_Map')" title="Customer Journey Map"> 
+							<i class="fa fa-fw fa-map-o"></i> Customer Journey Map </a>
 					</li>
 					
 					<li>
-						<a id="Leo_Event_Observer" href="#calljs-leoCdpRouter('Leo_Event_Observer')"> <i class="fa fa-fw fa-camera"></i> Leo Event Observer</a>
+						<a id="Leo_Event_Observer" href="#calljs-leoCdpRouter('Leo_Event_Observer')" title="Leo Event Observer with JavaScript Tag" >
+							<i class="fa fa-fw fa-camera"></i> Leo Event Observer </a>
 					</li>
 					
 				</ul>
@@ -120,48 +133,52 @@
 				<ul id="customer_hub_menu" class="collapse in" aria-expanded="true">
 					
 					<li>
-						<a id="Customer_Profile_List" href="#calljs-leoCdpRouter('Customer_Profile_List')"> <i class="fa fa-fw fa-list-ul"></i> Customer Profile List</a>
+						<a id="Customer_Profile_List" href="#calljs-leoCdpRouter('Customer_Profile_List')" title="All customer profile" > 
+							<i class="fa fa-fw fa-list-ul"></i> Customer Profile List </a>
 					</li>
 					
 					<li>
-						<a id="Segmentation_List" href="#calljs-leoCdpRouter('Segmentation_List')"> <i class="fa fa-object-group" aria-hidden="true"></i> Segmentation List</a>
+						<a id="Segmentation_List" href="#calljs-leoCdpRouter('Segmentation_List')" title="All segmentation list "> 
+							<i class="fa fa-object-group" aria-hidden="true"></i> Segmentation List </a>
 					</li>
 					
 				</ul>
 			</li>
 			
-			<li id="nav_customer_hub" >
+			<!-- 4 - Marketing Data Hub Menu -->
+			<li id="nav_marketing_hub" >
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#marketing_hub_menu"> <i class="fa fa-fw fa-line-chart"></i>
-					Marketing Data Hub<i id="marketing_automation_collapse_icon" class="fa fa-fw fa-caret-down"></i>
+					Marketing Data Hub <i id="marketing_data_hub_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
 				<ul id="marketing_hub_menu" class="collapse in" aria-expanded="true">
-					
 					<li>
-						<a id="Digital_Marketing_Assets" href="#calljs-leoCdpRouter('Digital_Marketing_Assets')" title="Digital Marketing Assets for Marketing" > 
-							<i class="fa fa-fw fa-database" ></i> Digital Marketing Assets </a>
+						<a id="Digital_Asset_Categories" href="#calljs-leoCdpRouter('Digital_Asset_Categories')" title="Digital Asset Categories for Marketing Campaign" > 
+							<i class="fa fa-fw fa-database" ></i> Digital Asset Categories </a>
 					</li>
-					
 					<li>
-						<a id="Email_Campaigns" href="#calljs-leoCdpRouter('Email_Campaigns')"> <i class="fa fa-fw fa-calendar-check-o"></i> Campaign Management</a>
+						<a id="Campaign_Management" href="#calljs-leoCdpRouter('Campaign_Management')" title="All Marketing Campaigns"> 
+							<i class="fa fa-fw fa-calendar-check-o"></i> Campaign Management </a>
 					</li>
-					
 				</ul>
 			</li>
 
-			<!--  4 - Core System Management  -->
+			<!--  5 - Core System Management  -->
 			<li id="nav_system_management" >
 				<a class="top_nav_item" href="javascript:;" data-toggle="collapse" data-target="#system_management_menu"> <i class="fa fa-cogs" aria-hidden="true"></i>
 					System Management <i id="system_management_collapse_icon" class="fa fa-fw fa-caret-down"></i>
 				</a>
 				<ul id="system_management_menu" class="collapse in" aria-expanded="true">
 					<li>
-						<a id="User_Login_List" href="#calljs-leoCdpRouter('User_Login_List')"> <i class="fa fa-user-plus" aria-hidden="true"></i>  User Login Management</a>
+						<a id="User_Login_List" href="#calljs-leoCdpRouter('User_Login_List')"> 
+							<i class="fa fa-user-plus" aria-hidden="true"></i>  User Login Management </a>
 					</li>
 					<li>
-						<a id="Data_API_Management" href="#calljs-leoCdpRouter('Data_API_Management')"> <i class="fa fa-fw fa-exchange"></i> Data API Management</a>
+						<a id="Data_API_Management" href="#calljs-leoCdpRouter('Data_API_Management')"> 
+							<i class="fa fa-fw fa-exchange"></i> Data API Management </a>
 					</li>
 					<li>
-						<a id="System_Configuration" href="#calljs-leoCdpRouter('System_Configuration')"> <i class="fa fa-cog" aria-hidden="true"></i> System Configuration</a>
+						<a id="System_Configuration" href="#calljs-leoCdpRouter('System_Configuration')">
+							<i class="fa fa-cog" aria-hidden="true"></i> System Configuration </a>
 					</li>
 				</ul>
 			</li>
@@ -182,28 +199,6 @@
 
 
 <script>
-	/////////////////////////////// READY //////////////////////////////////
-	
-	function pageWrapperResize(){
-		$('#page-wrapper').attr('style', 'width:'+($(window).width() - 227 ) + 'px!important');
-	}
-	
-	$(window).resize(function() {
-		pageWrapperResize();
-	});
-	
-	function loadCommonModalHtml() {
-	    var list = [
-	        '/view/common-widgets/query-filter-modal.html?admin=1',
-	        '/view/common-widgets/post-type-selection-modal.html?admin=1',
-	        '/view/common-widgets/confirm-delete-data-modal.html?admin=1',
-	        '/view/common-widgets/leo-recommender.html?admin=1'
-	    ];
-	    list.forEach(function (e) {
-	        loadModalboxHtml(e);
-	    });
-	}
-	
 	window.currentUserProfile = {'displayName':''};
 	function loadUserInfoWidget() {
 	    var urlStr = baseAdminApi + '/user/get-info';
@@ -215,6 +210,24 @@
 	                window.currentUserProfile = user;
 	            }
 	        }
+	    });
+	}
+
+	/////////////////////////////// READY //////////////////////////////////
+	
+	function pageWrapperResize(){
+		$('#page-wrapper').attr('style', 'width:'+($(window).width() - 227 ) + 'px!important');
+	}
+	
+	function loadCommonModalHtml() {
+	    var list = [
+	        '/view/common-widgets/query-filter-modal.html?admin=1',
+	        '/view/common-widgets/post-type-selection-modal.html?admin=1',
+	        '/view/common-widgets/confirm-delete-data-modal.html?admin=1',
+	        '/view/common-widgets/leo-recommender.html?admin=1'
+	    ];
+	    list.forEach(function (e) {
+	        loadModalboxHtml(e);
 	    });
 	}
 	
@@ -242,9 +255,17 @@
         });
         $("#customer_hub_menu").on("show.bs.collapse", function(){
         	$("#customer_data_hub_collapse_icon").attr('class','fa fa-fw fa-caret-down');
-        });    	
+        });  
         
-     	// 4 system menu
+     	// 4 marketing menu
+		$("#marketing_hub_menu").on("hide.bs.collapse", function(){
+        	$("#marketing_data_hub_collapse_icon").attr('class','fa fa-fw fa-caret-left');
+        });
+        $("#marketing_hub_menu").on("show.bs.collapse", function(){
+        	$("#marketing_data_hub_collapse_icon").attr('class','fa fa-fw fa-caret-down');
+        });
+        
+     	// 5 system menu
 		$("#system_management_menu").on("hide.bs.collapse", function(){
         	$("#system_management_collapse_icon").attr('class','fa fa-fw fa-caret-left');
         });
@@ -255,7 +276,7 @@
 
 	function mainViewReady() {
 		if (isMobileDevice()) {
-			var msg ='<div class="alert alert-info"> <strong> Leo CDP Admin</strong> is not supported on mobile browsers! </div>';
+			var msg ='<div class="alert alert-info"> <strong> The Leo CDP Admin </strong> is currently not supported on mobile browsers! </div>';
 			$('#page-main-notification').show().html(msg);
 		} else {
 			pageWrapperResize();
@@ -266,6 +287,10 @@
 			
 			$('#main_cms_navigation').show();
 			$('#logo-img').attr('src',window.pageHeaderLogo).show();
+			
+			$(window).resize(function() {
+				pageWrapperResize();
+			});
 		}
 	};
 </script>

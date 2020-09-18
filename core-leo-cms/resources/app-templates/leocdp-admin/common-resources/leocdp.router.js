@@ -2,7 +2,7 @@
  * 
  * @author tantrieuf31 (Thomas)
  * 
- * this script contains all functional web-app routers for CDP end-users
+ * this script contains all functional admin web view routers for CDP end-users
  * 
  */
 
@@ -14,6 +14,7 @@ LeoCdpAdmin.navRouters = {
 			"activeMenuItem" : "Main_Data_Dashboard"
 		},
 		
+		
 		// 0  Knowledge-base for end-users
 		"Learn_Leo_CDP": {
 			"menuName" : "Self-Learning Courses",
@@ -21,6 +22,8 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Leo CDP Knowledge Base", "Self-Learning Courses"],
 			"activeMenuItem" : "USPA_Knowledge_Hub"
 		},
+		
+		////////////////////////// 1) UNIFIED ANALYTICS MODULE //////////////////////////
 		
 		// 1.1 Main Data Analytics Dashboard
 		"Main_Data_Dashboard": {
@@ -38,6 +41,8 @@ LeoCdpAdmin.navRouters = {
 			"activeMenuItem" : "Data_Science_Notebooks"
 		
 		},
+		
+		////////////////////////// 2) JOURNEY DATA MODULE //////////////////////////
 		
 		// 2.1 Targeted Persona
 		"Customer_Persona_List" : {
@@ -144,8 +149,9 @@ LeoCdpAdmin.navRouters = {
 			"activeMenuItem" : "Customer_Journey_Map"
 		},
 		
+		////////////////////////// 3) CUSTOMER DATA MODULE //////////////////////////
 		
-		// 4.1 Customer Profile 
+		// 3.1 Customer Profile 
 		"Customer_Profile_List" : {
 			"menuName" : "Customer Profile List",
 			"functionName" : "loadCustomerProfileList",
@@ -164,14 +170,8 @@ LeoCdpAdmin.navRouters = {
 			"breadcrumb" : ["Customer Data Hub", "Customer Profile List", "Customer Profile Editor"],
 			"activeMenuItem" : "Customer_Profile_List"
 		},
-		"Customer_Activation" : {
-			"menuName" : "Customer Activation",
-			"functionName" : "loadCustomerActivation",
-			"breadcrumb" : ["Customer Data Hub", "Customer Profile List", "Customer Activation"],
-			"activeMenuItem" : "Customer_Profile_List"
-		},
 		
-		// 4.2 Customer Segmentation
+		// 3.2 Customer Segmentation
 		"Segmentation_List" : {
 			"menuName" : "Segmentation List",
 			"functionName" : "loadSegmentList",
@@ -197,51 +197,22 @@ LeoCdpAdmin.navRouters = {
 			"activeMenuItem" : "Segmentation_List"
 		},
 		
-		// 2.7 TODO Product and Service Catalog
-		"Products_and_Services" : {
-			"menuName" : "Products and Services",
-			"functionName" : "loadProductsAndServices",
-			"breadcrumb" : ["Digital Marketing Assets", "Products & Services"],
-			"activeMenuItem" : "Digital_Marketing_Assets"
-		},
-		"Product_Report" : {
-			"menuName" : "Product Report",
-			"functionName" : "loadProductReport",
-			"breadcrumb" : ["Digital Marketing Assets", "Products & Services", "Product Report"],
-			"activeMenuItem" : "Digital_Marketing_Assets"
-		},
-		"Service_Report" : {
-			"menuName" : "Service Report",
-			"functionName" : "loadServiceReport",
-			"breadcrumb" : ["Digital Marketing Assets", "Products & Services", "Service Report"],
-			"activeMenuItem" : "Digital_Marketing_Assets"
-		},
-		"Product_Data_Editor" : {
-			"menuName" : "Product Data Editor",
-			"functionName" : "loadProductDataEditor",
-			"breadcrumb" : ["Digital Marketing Assets", "Products & Services", "Product Data Editor"],
-			"activeMenuItem" : "Digital_Marketing_Assets"
-		},
-		"Product_Data_Editor" : {
-			"menuName" : "Service Data Editor",
-			"functionName" : "loadServiceDataEditor",
-			"breadcrumb" : ["Digital Marketing Assets", "Products & Services", "Service Data Editor"],
-			"activeMenuItem" : "Digital_Marketing_Assets"
-		},
+		////////////////////////// 4) MARKETING DATA MODULE //////////////////////////
 		
-		// 4.1 Content Marketing List
-		"Digital_Marketing_Assets" : {
-			"menuName" : "Digital Marketing Assets",
-			"functionName" : "loadContentCategoryList",
-			"breadcrumb" : ["Customer Journey Map", "Digital Marketing Assets"],
-			"activeMenuItem" : "Digital_Marketing_Assets"
+		
+		// 4.1 Digital Marketing Asset Management
+		"Digital_Asset_Categories" : {
+			"menuName" : "Digital Asset Categories",
+			"functionName" : "loadDigitalAssetCategories",
+			"breadcrumb" : ["Marketing Data Hub", "Digital Asset Categories"],
+			"activeMenuItem" : "Digital_Asset_Categories"
 		},
 		
 		// 4.2 Content Marketing Pages
 		"Pages_in_Category" : {
 			"menuName" : "Media Pages",
 			"functionName" : "loadPagesInCategory",
-			"breadcrumb" : ["Customer Journey Map", "Digital Marketing Assets", "Media Pages"],
+			"breadcrumb" : ["Marketing Data Hub", "Digital Marketing Assets", "Media Pages"],
 			"activeMenuItem" : "Digital_Marketing_Assets"
 		},
 		
@@ -249,7 +220,7 @@ LeoCdpAdmin.navRouters = {
 		"Page_Information" : {
 			"menuName" : "Page Information",
 			"functionName" : "loadPageInfo",
-			"breadcrumb" : ["Customer Journey Map", "Digital Marketing Assets", "Media Pages","Page Information"],
+			"breadcrumb" : ["Marketing Data Hub", "Digital Marketing Assets", "Media Pages","Page Information"],
 			"activeMenuItem" : "Digital_Marketing_Assets"
 		},
 		
@@ -257,11 +228,50 @@ LeoCdpAdmin.navRouters = {
 		"Post_Information" : {
 			"menuName" : "Post Information",
 			"functionName" : "loadPostInfo",
-			"breadcrumb" : ["Customer Journey Map", "Digital Marketing Assets", "Media Pages","Page Information","Post Information"],
+			"breadcrumb" : ["Marketing Data Hub", "Digital Marketing Assets", "Media Pages","Page Information","Post Information"],
 			"activeMenuItem" : "Digital_Marketing_Assets"
 		},
 		
-		// 4.5 Customer Personalization Models 
+		// 4.5 TODO Product and Service Catalog
+		"Products_and_Services" : {
+			"menuName" : "Products and Services",
+			"functionName" : "loadProductsAndServices",
+			"breadcrumb" : ["Marketing Data Hub", "Products & Services"],
+			"activeMenuItem" : "Digital_Marketing_Assets"
+		},
+		"Product_Report" : {
+			"menuName" : "Product Report",
+			"functionName" : "loadProductReport",
+			"breadcrumb" : ["Marketing Data Hub", "Products & Services", "Product Report"],
+			"activeMenuItem" : "Digital_Marketing_Assets"
+		},
+		"Service_Report" : {
+			"menuName" : "Service Report",
+			"functionName" : "loadServiceReport",
+			"breadcrumb" : ["Marketing Data Hub", "Products & Services", "Service Report"],
+			"activeMenuItem" : "Digital_Marketing_Assets"
+		},
+		"Product_Data_Editor" : {
+			"menuName" : "Product Data Editor",
+			"functionName" : "loadProductDataEditor",
+			"breadcrumb" : ["Marketing Data Hub", "Products & Services", "Product Data Editor"],
+			"activeMenuItem" : "Digital_Marketing_Assets"
+		},
+		"Product_Data_Editor" : {
+			"menuName" : "Service Data Editor",
+			"functionName" : "loadServiceDataEditor",
+			"breadcrumb" : ["Marketing Data Hub", "Products & Services", "Service Data Editor"],
+			"activeMenuItem" : "Digital_Marketing_Assets"
+		},
+		
+		"Campaign_Management" : {
+			"menuName" : "Campaign Management",
+			"functionName" : "loadCampaignManagement",
+			"breadcrumb" : ["Marketing Data Hub", "Campaign Management"],
+			"activeMenuItem" : "Campaign_Management"
+		},
+		
+		// 4.6 Customer Personalization Models 
 		"Personalization_Models" : {
 			"menuName" : "Personalization Models",
 			"functionName" : "loadPersonalizationModels",
@@ -269,47 +279,49 @@ LeoCdpAdmin.navRouters = {
 			"activeMenuItem" : "Segmentation_List"
 		},
 		
-		// 4.6 Affiliate Advertising Widgets
+		// 4.7 Affiliate Advertising Widgets
 		"Affiliate_Ad_Widgets" : {
 			"menuName" : "Affiliate Ad Widgets",
-			"functionName" : "loadPersonalizationWidgets",
-			"breadcrumb" : ["Personalization AI Hub", "Personalization Widgets"],
+			"functionName" : "loadAffiliateAdWidgets",
+			"breadcrumb" : ["Personalization AI Hub", "Affiliate Ad Widgets"],
 			"activeMenuItem" : "Segmentation_List"
 		},
 		
-		// 4.7 Email Marketing Campaigns
+		// 4.8 Email Marketing Campaigns
 		"Email_Campaigns" : {
 			"menuName" : "Email Campaign List",
 			"functionName" : "loadEmailCampaigns",
-			"breadcrumb" : ["Customer Activation", "Email Campaigns"]
+			"breadcrumb" : ["Marketing Data Hub", "Email Campaigns"]
 		},
 		"Email_Campaign_Report" : {
 			"menuName" : "Email Campaign Report",
 			"functionName" : "loadEmailCampaignReport",
-			"breadcrumb" : ["Customer Activation", "Email Campaigns", "Email Campaign Report"]
+			"breadcrumb" : ["Marketing Data Hub", "Email Campaigns", "Email Campaign Report"]
 		},
 		"Email_Campaign_Editor" : {
 			"menuName" : "Email Campaign Editor",
 			"functionName" : "loadEmailCampaignEditor",
-			"breadcrumb" : ["Customer Activation", "Email Campaigns", "Email Campaign Editor"]
+			"breadcrumb" : ["Marketing Data Hub", "Email Campaigns", "Email Campaign Editor"]
 		},
 		
-		// 4.8 Push Message Marketing Campaigns
+		// 4.9 Push Message Marketing Campaigns
 		"Push_Message_Campaigns" : {
 			"menuName" : "Push Message Campaigns",
 			"functionName" : "loadPushMessageCampaigns",
-			"breadcrumb" : ["Customer Activation", "Push Message Campaigns"]
+			"breadcrumb" : ["Marketing Data Hub", "Push Message Campaigns"]
 		},
 		"Push_Message_Campaign_Report" : {
 			"menuName" : "Push Message Campaign Report",
 			"functionName" : "loadPushMessageCampaignReport",
-			"breadcrumb" : ["Customer Activation", "Push Message Campaigns", "Campaign Report"]
+			"breadcrumb" : ["Marketing Data Hub", "Push Message Campaigns", "Campaign Report"]
 		},
 		"Push_Message_Campaign_Editor" : {
 			"menuName" : "Push Message Campaign Editor",
 			"functionName" : "loadPushMessageCampaignEditor",
-			"breadcrumb" : ["Customer Activation", "Push Message Campaigns", "Campaign Editor"]
+			"breadcrumb" : ["Marketing Data Hub", "Push Message Campaigns", "Campaign Editor"]
 		},
+		
+		////////////////////////// 5) SYSTEM DATA MODULE //////////////////////////
 		
 		// 5.1 User Login Management
 		"User_Login_List" : {
@@ -333,8 +345,8 @@ LeoCdpAdmin.navRouters = {
 		// 5.2 Customer Data API to manually track, Import/Export  tab-separated values (TSV) file 
 		"Data_API_Management" : {
 			"menuName" : "Data API Management",
-			"functionName" : "loadCustomerDataImport",
-			"breadcrumb" : ["Customer Data Hub", "Data API Management"],
+			"functionName" : "loadDataApiManagement",
+			"breadcrumb" : ["System Management", "Data API Management"],
 			"activeMenuItem" : "Data_API_Management"
 		},
 	

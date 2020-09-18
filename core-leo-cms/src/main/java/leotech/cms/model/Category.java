@@ -11,14 +11,15 @@ public class Category extends TaxonomyNode {
 	public static final int WEB_CONTENT = 1;
 	public static final int SOCIAL_MEDIA_CONTENT = 2;
 	public static final int EMAIL_CONTENT = 3;
-	public static final int PUSH_MESSAGE_CONTENT = 4;
+	public static final int WEB_PUSH_MESSAGE_CONTENT = 4;
+	public static final int APP_PUSH_MESSAGE_CONTENT = 5;
 
 	// version 2.0
-	public static final int APP_CONTENT = 5;
-	public static final int UPLOADED_VIDEO = 6;
-	public static final int AR_VR_CONTENT = 7;
-	public static final int EBOOK_CONTENT = 8;
-	public static final int PRESENTATION_CONTENT = 9;
+	public static final int MOBILE_APP_CONTENT = 6;
+	public static final int UPLOADED_VIDEO_CONTENT = 7;
+	public static final int AR_VR_CONTENT_CONTENT = 8;
+	public static final int EBOOK_CONTENT = 9;
+	public static final int PRESENTATION_CONTENT = 10;
 
 	@Expose
 	int type = WEB_CONTENT;
