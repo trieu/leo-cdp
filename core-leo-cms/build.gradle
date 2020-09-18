@@ -1,4 +1,4 @@
-group 'leocms'
+group 'leocdp'
 version '1.0'
 
 apply plugin: 'java'
@@ -45,7 +45,7 @@ dependencies {
 	compile group: 'com.google.apis', name: 'google-api-services-blogger', version: 'v3-rev82-1.25.0'
 	
 	// Facebook API
-	compile group: 'com.restfb', name: 'restfb', version: '3.8.0'
+	compile group: 'com.restfb', name: 'restfb', version: '3.10.0'
 	
 	// Boilerpipe Text Extraction library
 	compile group: 'net.htmlparser.jericho', name: 'jericho-html', version: '3.4'
@@ -63,7 +63,7 @@ dependencies {
 	compile group: 'com.univocity', name: 'univocity-parsers', version: '2.9.0'
 	
 	// PDF utils
-	compile group: 'org.apache.pdfbox', name: 'pdfbox', version: '2.0.20'
+	compile group: 'org.apache.pdfbox', name: 'pdfbox', version: '2.0.21'
 	
 	// Google Analytics API
 	compile group: 'com.brsanthu', name: 'google-analytics-java', version: '2.0.0'	
@@ -72,16 +72,16 @@ dependencies {
 	compile group: 'org.jeasy', name: 'easy-rules-core', version: '4.0.0'
 	
 	// To backup database, we can use AWS Amazon S3 for raw data storage
-	compile group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.11.847'
+	compile group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.11.864'
 	
 	// A library for summarizing data in streams for which it is infeasible to store all events 
 	compile group: 'com.clearspring.analytics', name: 'stream', version: '2.9.8'
 	
-	// for Java batch processing system
-	compile group: 'org.jobrunr', name: 'jobrunr', version: '0.9.13'
+	// To use Java 8 lambda's to create a background job
+	compile group: 'org.jobrunr', name: 'jobrunr', version: '0.9.19'
 	
-	// high-quality thumbnails from existing images
-	compile group: 'net.coobird', name: 'thumbnailator', version: '0.4.11'
+	// High-quality thumbnails from existing images
+	compile group: 'net.coobird', name: 'thumbnailator', version: '0.4.12'
 	
 	// ------ BEGIN DEFAULT CORE LIBS for MARKETING ACTIVATION ----
 	
@@ -140,7 +140,7 @@ dependencies {
 		,'com.google.openlocationcode:openlocationcode:1.0.4'
 
 		// Arangodb driver: primary database of Leo CDP
-		,'com.arangodb:arangodb-java-driver:6.7.3'
+		,'com.arangodb:arangodb-java-driver:6.7.4'
             
 		// for Math library
 		,'org.apache.commons:commons-math3:3.6.1'			
